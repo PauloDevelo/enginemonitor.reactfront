@@ -15,6 +15,7 @@ import {
 } from 'reactstrap';
 
 import { FormattedMessage } from 'react-intl';
+import appmsg from "./App.messages";
 
 class App extends Component {
     constructor(props) {
@@ -39,7 +40,7 @@ class App extends Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink href="/components/"><FormattedMessage id="component" defaultMessage="Component" /></NavLink>
+                                <NavLink href="/components/"><FormattedMessage {...appmsg.component} /></NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="https://github.com/reactstrap/reactstrap">Github</NavLink>
@@ -51,7 +52,7 @@ class App extends Component {
                     <Container>
                         <Row>
                             <Col>
-                                <h1><FormattedMessage id="welcome" defaultMessage="Welcome to React" /></h1>
+                                <h1><FormattedMessage {...appmsg.welcome} /></h1>
                                 <p>
                                     <Button
                                         tag="a"
@@ -60,7 +61,7 @@ class App extends Component {
                                         href="http://reactstrap.github.io"
                                         target="_blank"
                                     >
-                                        <FormattedMessage id="viewreactdoc" defaultMessage="View Reactstrap Docs" />
+                                        <FormattedMessage {...appmsg.viewreactdoc} />
                                     </Button>
                                 </p>
                             </Col>
