@@ -1,5 +1,8 @@
 {
     "component": "Component",
     "welcome": "Welcome to React",
-		"viewreactdoc": "View Reactstrap Docs"
+		"viewreactdoc": "View Reactstrap Docs",
+		"installedOn": "Installed on ",
+		"today": "Today, ",
+		"edit": "Edit"
 }
