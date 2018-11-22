@@ -1,8 +1,13 @@
 {
-    "component": "Composant",
-    "welcome": "Bienvenue dans React",
-		"viewreactdoc": "Voir Reactstrap Docs",
 	  "installedOn": "Installé le ",
 		"today": "Aujourd'hui, ",
-		"edit": "Editer"
+		"edit": "Editer",
+		"modalTitle": "Edition des information du moteur",
+		"save": "Sauver",
+		"cancel": "Annuler",
+		"brand": "Marque",
+		"model": "Modèle",
+		"installDateLabel": "Date d'installation",
+		"engineAge": "Age du moteur",
+		"serialPort": "Port Série"
 }

@@ -2,6 +2,10 @@ import React, {
 	Component 
 } from 'react';
 
+import {
+	Button
+} from 'reactstrap'
+
 import { 
 	FormattedMessage,
 	FormattedDate,
@@ -9,6 +13,8 @@ import {
 } from 'react-intl';
 
 import engineinfomsg from "./EngineInfo.messages";
+
+
 
 class EngineInfo extends Component {
     constructor(props) {
@@ -44,7 +50,7 @@ class EngineInfo extends Component {
 								<span> </span>
 								<FormattedTime value={this.state.currentDate} hour='numeric' minute='numeric' second='numeric'/>
 							</span>
-							<a href="#" className="btn btn-primary btn-sm float-right"><FormattedMessage {...engineinfomsg.edit} /></a>
+							<Button color="primary" size="sm" className="float-right" onClick={this.props.toggleModal}><FormattedMessage {...engineinfomsg.edit} /></Button>					
 							<div>
 								<span>{this.props.brand} {this.props.model} </span>
 								<span className="font-weight-bold">{this.props.age} h</span>		

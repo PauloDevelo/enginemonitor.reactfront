@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 
 import EngineInfo from './EngineInfo';
+import ModalEngineInfo from './ModalEngineInfo';
 
 import axios from "axios";
 
@@ -16,16 +17,42 @@ else if(mode === 'demo'){
 }
 
 class App extends Component {
-    constructor(props) {
-        super(props);
+	constructor(props) {
+		super(props);
 
-        this.state = {
-					brand: undefined,
-					model: undefined,
-					age: undefined,
-					installation: Date.now()
-        };
-    }
+		this.state = {
+			modalEngineInfo: false,
+
+			brand: undefined,
+			model: undefined,
+			age: undefined,
+			installation: Date.now()
+		};
+
+		this.toggleModalEngineInfo = this.toggleModalEngineInfo.bind(this);
+		this.saveEngineInfo = this.saveEngineInfo.bind(this);
+	}
+	
+	toggleModalEngineInfo() {
+    this.setState(
+			function (prevState, props){
+				return { modalEngineInfo: !prevState.modalEngineInfo }
+			});
+  }
+	
+	saveEngineInfo(engineInfo){
+		this.toggleModalEngineInfo();
+		this.setState(
+			function (prevState, props){
+				return { 
+					brand: engineInfo.brand,
+					model: engineInfo.model,
+					age: engineInfo.age,
+					installation: new Date(engineInfo.installation)
+				}
+			});
+	}
+
 	
 	componentDidMount() {
 		axios
@@ -51,7 +78,7 @@ class App extends Component {
 					brand: undefined,
 					model: undefined,
 					age: undefined,
-					installation: undefined
+					installation: Date.now()
 				});
 
 				// store the new state object in the component's state
@@ -61,15 +88,23 @@ class App extends Component {
     
 	render() {
 		return (
-			<div id="root" className="d-flex flex-wrap flex-row mb-3">
-				<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
-					<EngineInfo brand={this.state.brand} model={this.state.model} age={this.state.age} installation={this.state.installation}/>
-					<div id="tasksTable" className="p-2 m-2 border border-primary rounded shadow"></div>
+			<div>
+				<div id="root" className="d-flex flex-wrap flex-row mb-3">
+					<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
+						<EngineInfo brand={this.state.brand} model={this.state.model} age={this.state.age} installation={this.state.installation} toggleModal={this.toggleModalEngineInfo}/>
+						<div id="tasksTable" className="p-2 m-2 border border-primary rounded shadow"></div>
+					</div>
+					<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
+						<div id="carrouselTaskDetails" className="p-2 m-2 border border-primary rounded shadow"></div>
+						<div id="taskHistoric" className="p-2 m-2 border border-primary rounded shadow"></div>
+					</div>
 				</div>
-				<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
-					<div id="carrouselTaskDetails" className="p-2 m-2 border border-primary rounded shadow"></div>
-					<div id="taskHistoric" className="p-2 m-2 border border-primary rounded shadow"></div>
-				</div>
+				
+				<ModalEngineInfo visible={this.state.modalEngineInfo} 
+					toggle={this.toggleModalEngineInfo} 
+					save={this.saveEngineInfo} 
+					brand={this.state.brand} model={this.state.model} age={this.state.age} installation={this.state.installation}
+				/>
 			</div>
 		);
 	}
