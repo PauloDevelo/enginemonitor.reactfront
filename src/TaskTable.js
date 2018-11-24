@@ -39,7 +39,6 @@ export default class TaskTable extends React.Component {
 		
 		if(this.props.tasks){
 			listLines = this.props.tasks.map((task) => {
-			//var shortenDescription = shorten(task.description.replace(/\n/g,"<br />"));
 			var shortenDescription = shorten(task.description.replace(/\n/g,'<br />'));
 			var dueDate = new Date(task.nextDueDate);
 			var todoText = undefined;

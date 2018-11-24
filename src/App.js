@@ -33,6 +33,8 @@ class App extends Component {
 
 		this.toggleModalEngineInfo = this.toggleModalEngineInfo.bind(this);
 		this.saveEngineInfo = this.saveEngineInfo.bind(this);
+		this.getEngineInfo = this.getEngineInfo.bind(this);
+		this.getTaskList = this.getTaskList.bind(this);
 	}
 	
 	toggleModalEngineInfo() {
@@ -54,8 +56,8 @@ class App extends Component {
 				}
 			});
 	}
-
-	componentDidMount() {
+	
+	getEngineInfo(){
 		axios
       .get(baseUrl + "/engine-monitor/webapi/enginemaintenance/engineinfo")
       .then(response => {
@@ -85,7 +87,9 @@ class App extends Component {
 				// store the new state object in the component's state
 				this.setState(newState);
 			});
-		
+	}
+	
+	getTaskList(){
 		axios
       .get(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks")
       .then(response => {
@@ -109,6 +113,11 @@ class App extends Component {
 				// store the new state object in the component's state
 				this.setState(newState);
 			});
+	}
+
+	componentDidMount() {
+		this.getEngineInfo();
+		this.getTaskList();
 	}
     
 	render() {
