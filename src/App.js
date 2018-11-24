@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import EngineInfo from './EngineInfo';
 import ModalEngineInfo from './ModalEngineInfo';
+import TaskTable from './TaskTable';
 
 import axios from "axios";
 
@@ -26,7 +27,8 @@ class App extends Component {
 			brand: undefined,
 			model: undefined,
 			age: undefined,
-			installation: Date.now()
+			installation: Date.now(),
+			tasks:undefined
 		};
 
 		this.toggleModalEngineInfo = this.toggleModalEngineInfo.bind(this);
@@ -53,7 +55,6 @@ class App extends Component {
 			});
 	}
 
-	
 	componentDidMount() {
 		axios
       .get(baseUrl + "/engine-monitor/webapi/enginemaintenance/engineinfo")
@@ -84,6 +85,30 @@ class App extends Component {
 				// store the new state object in the component's state
 				this.setState(newState);
 			});
+		
+		axios
+      .get(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks")
+      .then(response => {
+			
+        // create a new "State" object without mutating 
+				// the original State object. 
+				const newState = Object.assign({}, this.state, {
+					tasks: response.data,
+				});
+
+				// store the new state object in the component's state
+				this.setState(function(prevState, props){ return newState; });
+      })
+      .catch(error => {
+				// create a new "State" object without mutating 
+				// the original State object. 
+				const newState = Object.assign({}, this.state, {
+					tasks: undefined,
+				});
+
+				// store the new state object in the component's state
+				this.setState(newState);
+			});
 	}
     
 	render() {
@@ -92,7 +117,7 @@ class App extends Component {
 				<div id="root" className="d-flex flex-wrap flex-row mb-3">
 					<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
 						<EngineInfo brand={this.state.brand} model={this.state.model} age={this.state.age} installation={this.state.installation} toggleModal={this.toggleModalEngineInfo}/>
-						<div id="tasksTable" className="p-2 m-2 border border-primary rounded shadow"></div>
+						<TaskTable tasks={this.state.tasks}/>
 					</div>
 					<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
 						<div id="carrouselTaskDetails" className="p-2 m-2 border border-primary rounded shadow"></div>

@@ -9,5 +9,6 @@
 		"model": "Model",
 		"installDateLabel": "Installation Date",
 		"engineAge": "Engine Age",
-		"serialPort": "Serial Port"
+		"serialPort": "Serial Port",
+		"tasklistTitle": "Task list"
 }
