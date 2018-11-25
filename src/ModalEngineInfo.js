@@ -11,6 +11,24 @@ import engineinfomsg from "./EngineInfo.messages";
 import MyForm from "./MyForm"
 import MyInput from "./MyInput"
 
+function convertDateOrDefault(date){
+	var installationDateStr = '';
+	if(date !== undefined){
+		if(date.toISOString !== undefined){
+			installationDateStr = date.toISOString().substr(0, 10);
+		}
+		else{
+			installationDateStr = new Date(date).toISOString().substr(0, 10);
+		}
+	}
+	else{
+		installationDateStr = Date.now().toISOString().substr(0, 10);
+	}
+	
+	return installationDateStr;
+}
+
+
 class ModalEngineIno extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +37,9 @@ class ModalEngineIno extends React.Component {
 			brand: '',
 			model: '',
 			age: 0,
-			installation: Date.now()
+			installation: convertDateOrDefault(Date.now()),
+			
+			prevprops: props
 		}
 		
 		this.handleChange = this.handleChange.bind(this);
@@ -28,22 +48,46 @@ class ModalEngineIno extends React.Component {
   }
 	
 	setDefaultState(newProps) {
+		var installationDateStr = convertDateOrDefault(newProps.installation);
+
+		var newEngineInfo = {
+			brand: newProps.brand,
+			model: newProps.model,
+			age: newProps.age,
+			installation: installationDateStr,
+			
+			prevprops: newProps
+		};
+
 		this.setState(function(prevState, props){
-				return {
-					brand: newProps.brand,
-					model: newProps.model,
-					age: newProps.age,
-					installation: newProps.installation.toISOString().substr(0, 10)
-				};
+				return newEngineInfo;
 		});
 	}
 	
-	componentWillReceiveProps(nextProps) {
-			this.setDefaultState(nextProps);
-	}
-	
-	componentWillMount() {
-		if (this.props.brand) this.setDefaultState(this.prop);
+	static getDerivedStateFromProps(nextProps, prevState){
+		if(prevState.prevprops.visible === false && nextProps.visible === true){
+			
+			var installationDateStr = convertDateOrDefault(nextProps.installation);
+			
+			var newEngineInfo = {
+				brand: nextProps.brand,
+				model: nextProps.model,
+				age: nextProps.age,
+				installation: installationDateStr,
+				
+				prevprops: nextProps
+			};
+			
+			return newEngineInfo;
+		}
+		else if(prevState.prevprops.visible === true && nextProps.visible === false){
+			return {
+				prevprops: {visible: nextProps.visible}
+			}
+		}
+		else{
+			return null;
+		}
 	}
 	
 	handleSubmit(event) {

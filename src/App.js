@@ -30,6 +30,7 @@ class App extends Component {
 			model: undefined,
 			age: undefined,
 			installation: Date.now(),
+			
 			tasks:undefined
 		};
 
@@ -38,6 +39,7 @@ class App extends Component {
 		this.saveEngineInfo = this.saveEngineInfo.bind(this);
 		this.getEngineInfo = this.getEngineInfo.bind(this);
 		this.getTaskList = this.getTaskList.bind(this);
+		this.createNewTask = this.createNewTask.bind(this);
 	}
 	
 	toggleModalEngineInfo() {
@@ -67,8 +69,16 @@ class App extends Component {
 			});
 	}
 	
-	createNewTask(){
-		
+	createNewTask(task){
+		axios
+      .post(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks", task)
+      .then(response => {
+				this.toggleModalCreateTask();
+        this.getTaskList();
+      })
+      .catch(error => {
+				console.log( error );
+			});
 	}
 	
 	getEngineInfo(){
@@ -89,8 +99,8 @@ class App extends Component {
 				this.setState(function(prevState, props){ return newState; });
       })
       .catch(error => {
-				// create a new "State" object without mutating 
-				// the original State object. 
+				console.log( error );
+			
 				const newState = Object.assign({}, this.state, {
 					brand: undefined,
 					model: undefined,
@@ -118,8 +128,8 @@ class App extends Component {
 				this.setState(function(prevState, props){ return newState; });
       })
       .catch(error => {
-				// create a new "State" object without mutating 
-				// the original State object. 
+				console.log( error );
+			
 				const newState = Object.assign({}, this.state, {
 					tasks: undefined,
 				});

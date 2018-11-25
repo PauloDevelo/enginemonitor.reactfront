@@ -38,6 +38,9 @@ class MyInput extends Component {
 		this.inputElem = inputElem;
 	}
 	
+	componentDidMount(){
+		this.validate();
+	}
 	
 	render(){
 		var required = this.props.required !== undefined;
