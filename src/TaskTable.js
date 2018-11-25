@@ -80,7 +80,7 @@ export default class TaskTable extends React.Component {
     return (
 			<div className="p-2 m-2 border border-primary rounded shadow">
 				<span className="mb-2"><b><FormattedMessage {...tasktablemsg.tasklistTitle} /></b>
-				<Button color="primary" size="sm" className="float-right mb-2"><FormattedMessage {...tasktablemsg.createbutton} /></Button></span>
+				<Button color="primary" size="sm" className="float-right mb-2" onClick={this.props.toggleModal}><FormattedMessage {...tasktablemsg.createbutton} /></Button></span>
 				<Table responsive>
 					<thead className="thead-light">
 						<tr>

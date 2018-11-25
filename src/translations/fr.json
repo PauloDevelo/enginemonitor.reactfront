@@ -10,5 +10,19 @@
 	"installDateLabel": "Date d'installation",
 	"engineAge": "Age du moteur",
 	"serialPort": "Port Série",
-	"tasklistTitle": "Liste des taches"
+	"tasklistTitle": "Liste des taches",
+	"createbutton": "Créer",
+	"taskname": "Nom",
+	"todo": "A faire",
+	"taskdesc": "Description",
+	"shouldhavebeendone": "Aurait due être fait le ",
+	"shouldbedone": "Devrait être fait ",
+	"shouldhavebeendonein": "Aurait due être fait il y a ",
+	"shouldbedonein1": "Devrait être fait dans ",
+	"shouldhavebeendonein2": " moteur ou le ",
+	"shouldbedonein2": " moteur ou le ",
+	"modalCreateTaskTitle": "Création d'une tache",
+	"name": "Nom",
+	"engineHours": "Période en heure moteur",
+	"month": "Période en mois"
 }

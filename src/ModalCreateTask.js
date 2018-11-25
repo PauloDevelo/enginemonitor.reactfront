@@ -6,7 +6,7 @@ import {
 	FormattedMessage,
 } from 'react-intl';
 
-import engineinfomsg from "./EngineInfo.messages";
+import createtaskmsg from "./ModalCreateTask.messages";
 
 import MyForm from "./MyForm"
 import MyInput from "./MyInput"
@@ -16,10 +16,10 @@ class ModalEngineIno extends React.Component {
     super(props);
 		
 		this.state = {
-			brand: '',
-			model: '',
-			age: 0,
-			installation: Date.now()
+			name: '',
+			engineHours: 0,
+			month: 0,
+			description: ''
 		}
 		
 		this.handleChange = this.handleChange.bind(this);
@@ -30,10 +30,10 @@ class ModalEngineIno extends React.Component {
 	setDefaultState(newProps) {
 		this.setState(function(prevState, props){
 				return {
-					brand: newProps.brand,
-					model: newProps.model,
-					age: newProps.age,
-					installation: newProps.installation.toISOString().substr(0, 10)
+					name: newProps.name,
+					engineHours: newProps.engineHours,
+					month: newProps.month,
+					description: newProps.description
 				};
 		});
 	}
@@ -49,8 +49,6 @@ class ModalEngineIno extends React.Component {
 	handleSubmit(event) {
     var currentState = Object.assign({}, this.state);
 
-		currentState.installation = Date.parse(currentState.installation);
-		
 		this.props.save(currentState);
   }
 	
@@ -67,18 +65,18 @@ class ModalEngineIno extends React.Component {
   render() {
     return (
 			<Modal isOpen={this.props.visible} toggle={this.props.toggle} className={this.props.className}>
-				<ModalHeader toggle={this.props.toggle}><FormattedMessage {...engineinfomsg.modalTitle} /></ModalHeader>
+				<ModalHeader toggle={this.props.toggle}><FormattedMessage {...createtaskmsg.modalCreateTaskTitle} /></ModalHeader>
 				<ModalBody>
-					<MyForm submit={this.handleSubmit} id="formEngineInfo">
-						<MyInput name="brand" 				label={engineinfomsg.brand} 						type="text" 	value={this.state.brand} 				handleChange={this.handleChange} required/>
-						<MyInput name="model" 				label={engineinfomsg.model} 						type="text" 	value={this.state.model} 				handleChange={this.handleChange} required/>
-						<MyInput name="installation" 	label={engineinfomsg.installDateLabel} 	type="date" 	value={this.state.installation} handleChange={this.handleChange} required/>
-						<MyInput name="age" 					label={engineinfomsg.engineAge} 				type="number" value={this.state.age} 					handleChange={this.handleChange} required min="0" />
+					<MyForm submit={this.handleSubmit} id="createTaskForm">
+						<MyInput name="name" 				label={createtaskmsg.name} 				type="text" 	value={this.state.name} 				handleChange={this.handleChange} required/>
+						<MyInput name="engineHours" label={createtaskmsg.engineHours} type="number" value={this.state.engineHours} 	handleChange={this.handleChange} min={'0'} />
+						<MyInput name="month" 			label={createtaskmsg.month} 			type="number" value={this.state.month} 				handleChange={this.handleChange} min={'0'} required/>
+						<MyInput name="description" label={createtaskmsg.description} type="text" 	value={this.state.description} 	handleChange={this.handleChange} required />
 					</MyForm>
 				</ModalBody>
 				<ModalFooter>
-					<Button type="submit" form="formEngineInfo" color="success"><FormattedMessage {...engineinfomsg.save} /></Button>
-					<Button color="secondary" onClick={this.props.toggle}><FormattedMessage {...engineinfomsg.cancel} /></Button>
+					<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...createtaskmsg.save} /></Button>
+					<Button color="secondary" onClick={this.props.toggle}><FormattedMessage {...createtaskmsg.cancel} /></Button>
 				</ModalFooter>
 			</Modal>
     );
