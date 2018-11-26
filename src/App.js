@@ -8,7 +8,6 @@ import ModalCreateTask from './ModalCreateTask';
 
 import axios from "axios";
 
-
 var mode = 'dev'; //prod or demo
 var baseUrl = "http://localhost:8081";
 if(mode === 'prod'){
