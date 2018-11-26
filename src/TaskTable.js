@@ -66,8 +66,6 @@ export default class TaskTable extends React.Component {
 			var classNames = getTrContext(task.level) + " small mb-0 mt-0";
 				
 			return(
-				
-				//tr.css("cursor", "pointer");
 				<tr key={task.id} style={trStyle} className={classNames}>
 
 					<td>{task.name}</td>
@@ -78,22 +76,22 @@ export default class TaskTable extends React.Component {
 		}
 
     return (
-			<div className="p-2 m-2 border border-primary rounded shadow">
-				<span className="mb-2"><b><FormattedMessage {...tasktablemsg.tasklistTitle} /></b>
-				<Button color="primary" size="sm" className="float-right mb-2" onClick={this.props.toggleModal}><FormattedMessage {...tasktablemsg.createbutton} /></Button></span>
-				<Table responsive>
-					<thead className="thead-light">
-						<tr>
-							<th><FormattedMessage {...tasktablemsg.taskname} /></th>
-							<th><FormattedMessage {...tasktablemsg.todo} /></th>
-							<th><FormattedMessage {...tasktablemsg.taskdesc} /></th>
-						</tr>
-					</thead>
-					<tbody>
-						{listLines}
-					</tbody>
-				</Table>
-			</div>
+		<div className="p-2 m-2 border border-primary rounded shadow">
+			<span className="mb-2"><b><FormattedMessage {...tasktablemsg.tasklistTitle} /></b>
+			<Button color="primary" size="sm" className="float-right mb-2" onClick={this.props.toggleModal}><FormattedMessage {...tasktablemsg.createbutton} /></Button></span>
+			<Table responsive>
+				<thead className="thead-light">
+					<tr>
+						<th><FormattedMessage {...tasktablemsg.taskname} /></th>
+						<th><FormattedMessage {...tasktablemsg.todo} /></th>
+						<th><FormattedMessage {...tasktablemsg.taskdesc} /></th>
+					</tr>
+				</thead>
+				<tbody>
+					{listLines}
+				</tbody>
+			</Table>
+		</div>
     );
   }
 }

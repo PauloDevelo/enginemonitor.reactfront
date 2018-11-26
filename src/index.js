@@ -25,9 +25,9 @@ const language = navigator.language.split(/[-_]/)[0];  // language without regio
 
 
 ReactDOM.render(<IntlProvider locale={language} messages={messages[language]}>
-									<App />
-								</IntlProvider>, 
-								document.getElementById('root'));
+					<App />
+				</IntlProvider>, 
+				document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

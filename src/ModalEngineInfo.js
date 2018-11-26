@@ -30,9 +30,9 @@ function convertDateOrDefault(date){
 
 
 class ModalEngineIno extends React.Component {
-  constructor(props) {
-    super(props);
-		
+	constructor(props) {
+		super(props);
+			
 		this.state = {
 			brand: '',
 			model: '',
@@ -41,11 +41,11 @@ class ModalEngineIno extends React.Component {
 			
 			prevprops: props
 		}
-		
+
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.setDefaultState = this.setDefaultState.bind(this);
-  }
+	}
 	
 	setDefaultState(newProps) {
 		var installationDateStr = convertDateOrDefault(newProps.installation);
@@ -60,7 +60,7 @@ class ModalEngineIno extends React.Component {
 		};
 
 		this.setState(function(prevState, props){
-				return newEngineInfo;
+			return newEngineInfo;
 		});
 	}
 	
@@ -91,40 +91,40 @@ class ModalEngineIno extends React.Component {
 	}
 	
 	handleSubmit(event) {
-    var currentState = Object.assign({}, this.state);
+    	var currentState = Object.assign({}, this.state);
 
 		currentState.installation = Date.parse(currentState.installation);
 		
 		this.props.save(currentState);
-  }
+  	}
 	
 	handleChange(event) {
 		const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+		const value = target.type === 'checkbox' ? target.checked : target.value;
+		const name = target.name;
 
-    this.setState(function(prevState, props){
+		this.setState(function(prevState, props){
 			return { [name]: value }
 		});
-  }
+  	}
 
   render() {
     return (
-			<Modal isOpen={this.props.visible} toggle={this.props.toggle} className={this.props.className}>
-				<ModalHeader toggle={this.props.toggle}><FormattedMessage {...engineinfomsg.modalTitle} /></ModalHeader>
-				<ModalBody>
-					<MyForm submit={this.handleSubmit} id="formEngineInfo">
-						<MyInput name="brand" 				label={engineinfomsg.brand} 						type="text" 	value={this.state.brand} 				handleChange={this.handleChange} required/>
-						<MyInput name="model" 				label={engineinfomsg.model} 						type="text" 	value={this.state.model} 				handleChange={this.handleChange} required/>
-						<MyInput name="installation" 	label={engineinfomsg.installDateLabel} 	type="date" 	value={this.state.installation} handleChange={this.handleChange} required/>
-						<MyInput name="age" 					label={engineinfomsg.engineAge} 				type="number" value={this.state.age} 					handleChange={this.handleChange} required min="0" />
-					</MyForm>
-				</ModalBody>
-				<ModalFooter>
-					<Button type="submit" form="formEngineInfo" color="success"><FormattedMessage {...engineinfomsg.save} /></Button>
-					<Button color="secondary" onClick={this.props.toggle}><FormattedMessage {...engineinfomsg.cancel} /></Button>
-				</ModalFooter>
-			</Modal>
+		<Modal isOpen={this.props.visible} toggle={this.props.toggle} className={this.props.className}>
+			<ModalHeader toggle={this.props.toggle}><FormattedMessage {...engineinfomsg.modalTitle} /></ModalHeader>
+			<ModalBody>
+				<MyForm submit={this.handleSubmit} id="formEngineInfo">
+					<MyInput name="brand" 				label={engineinfomsg.brand} 						type="text" 	value={this.state.brand} 				handleChange={this.handleChange} required/>
+					<MyInput name="model" 				label={engineinfomsg.model} 						type="text" 	value={this.state.model} 				handleChange={this.handleChange} required/>
+					<MyInput name="installation" 	label={engineinfomsg.installDateLabel} 	type="date" 	value={this.state.installation} handleChange={this.handleChange} required/>
+					<MyInput name="age" 					label={engineinfomsg.engineAge} 				type="number" value={this.state.age} 					handleChange={this.handleChange} required min="0" />
+				</MyForm>
+			</ModalBody>
+			<ModalFooter>
+				<Button type="submit" form="formEngineInfo" color="success"><FormattedMessage {...engineinfomsg.save} /></Button>
+				<Button color="secondary" onClick={this.props.toggle}><FormattedMessage {...engineinfomsg.cancel} /></Button>
+			</ModalFooter>
+		</Modal>
     );
   }
 }
