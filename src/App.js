@@ -46,96 +46,100 @@ class App extends Component {
 			function (prevState, props){
 				return { modalEngineInfo: !prevState.modalEngineInfo }
 			});
-  }
+  	}
 	
 	toggleModalCreateTask() {
     this.setState(
 			function (prevState, props){
 				return { modalCreateTask: !prevState.modalCreateTask }
 			});
-  }
+  	}
 	
 	saveEngineInfo(engineInfo){
-		this.toggleModalEngineInfo();
-		this.setState(
-			function (prevState, props){
-				return { 
-					brand: engineInfo.brand,
-					model: engineInfo.model,
-					age: engineInfo.age,
-					installation: new Date(engineInfo.installation)
-				}
-			});
+		axios.post(baseUrl + "/engine-monitor/webapi/enginemaintenance/engineinfo", engineInfo)
+		.then(response => {
+			this.toggleModalEngineInfo();
+			this.setState(
+				function (prevState, props){
+					return { 
+						brand: engineInfo.brand,
+						model: engineInfo.model,
+						age: engineInfo.age,
+						installation: new Date(engineInfo.installation)
+					}
+				});
+		})
+		.catch(error => {
+			console.log( error );
+		});
 	}
 	
 	createNewTask(task){
 		axios
-      .post(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks", task)
-      .then(response => {
-				this.toggleModalCreateTask();
-        this.getTaskList();
-      })
-      .catch(error => {
-				console.log( error );
-			});
+		.post(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks", task)
+		.then(response => {
+			this.toggleModalCreateTask();
+			this.getTaskList();
+		})
+		.catch(error => {
+			console.log( error );
+		});
 	}
 	
 	getEngineInfo(){
 		axios
-      .get(baseUrl + "/engine-monitor/webapi/enginemaintenance/engineinfo")
-      .then(response => {
-
-        // create a new "State" object without mutating 
-				// the original State object. 
-				const newState = Object.assign({}, this.state, {
-					brand: response.data.brand,
-					model: response.data.model,
-					age: response.data.age,
-					installation: new Date(response.data.installation)
-				});
-
-				// store the new state object in the component's state
-				this.setState(function(prevState, props){ return newState; });
-      })
-      .catch(error => {
-				console.log( error );
-			
-				const newState = Object.assign({}, this.state, {
-					brand: undefined,
-					model: undefined,
-					age: undefined,
-					installation: Date.now()
-				});
-
-				// store the new state object in the component's state
-				this.setState(newState);
+      	.get(baseUrl + "/engine-monitor/webapi/enginemaintenance/engineinfo")
+      	.then(response => {
+        	// create a new "State" object without mutating 
+			// the original State object. 
+			const newState = Object.assign({}, this.state, {
+				brand: response.data.brand,
+				model: response.data.model,
+				age: response.data.age,
+				installation: new Date(response.data.installation)
 			});
+
+			// store the new state object in the component's state
+			this.setState(function(prevState, props){ return newState; });
+      	})
+      	.catch(error => {
+			console.log( error );
+		
+			const newState = Object.assign({}, this.state, {
+				brand: undefined,
+				model: undefined,
+				age: undefined,
+				installation: Date.now()
+			});
+
+			// store the new state object in the component's state
+			this.setState(newState);
+		});
 	}
 	
 	getTaskList(){
 		axios
-      .get(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks")
-      .then(response => {
-			
-        // create a new "State" object without mutating 
-				// the original State object. 
-				const newState = Object.assign({}, this.state, {
-					tasks: response.data,
-				});
-
-				// store the new state object in the component's state
-				this.setState(function(prevState, props){ return newState; });
-      })
-      .catch(error => {
-				console.log( error );
-			
-				const newState = Object.assign({}, this.state, {
-					tasks: undefined,
-				});
-
-				// store the new state object in the component's state
-				this.setState(newState);
+      	.get(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks")
+      	.then(response => {			
+        	// create a new "State" object without mutating 
+			// the original State object. 
+			const newState = Object.assign({}, this.state, {
+				tasks: response.data,
 			});
+
+			// store the new state object in the component's state
+			this.setState(function(prevState, props){ return newState; });
+      	})
+      	.catch(error => {
+			console.log( error );
+		
+			const newState = Object.assign({}, this.state, {
+				tasks: undefined,
+			});
+
+			// store the new state object in the component's state
+			this.setState(newState);
+		});
 	}
 
 	componentDidMount() {
