@@ -24,5 +24,9 @@
 	"modalCreateTaskTitle": "Création d'une tache",
 	"name": "Nom",
 	"engineHours": "Période en heure moteur",
-	"month": "Période en mois"
+	"month": "Période en mois",
+	"tobedonemonth": "A effectuer tous les ",
+	"monthunit": " mois",
+	"orevery": " ou tous les ",
+	"monthperiod": "{month, plural, one {mois} other {# mois}}"  
 }

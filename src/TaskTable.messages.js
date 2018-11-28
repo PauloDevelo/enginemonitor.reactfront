@@ -57,6 +57,21 @@ const messages: Messages = {
     defaultMessage: " engine or ",
 		description: "Sentence"
   },
+  tobedonemonth: {
+    id: "tobedonemonth",
+    defaultMessage: "To do every ",
+		description: "Sentence"
+  },
+  orevery: {
+    id: "orevery",
+    defaultMessage: " or every ",
+		description: "Sentence"
+  },
+  monthperiod: {
+    id: "monthperiod",
+    defaultMessage: "{month, plural, one {month} other {# months}}",
+    description: "Month period"
+  }        
 };
 
 const definedMessages: typeof messages = defineMessages(messages);

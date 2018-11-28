@@ -5,6 +5,7 @@ import EngineInfo from './EngineInfo';
 import ModalEngineInfo from './ModalEngineInfo';
 import TaskTable from './TaskTable';
 import ModalCreateTask from './ModalCreateTask';
+import CarouselTaskDetails from './CarouselTaskDetails'
 
 import axios from "axios";
 
@@ -30,7 +31,8 @@ class App extends Component {
 			age: undefined,
 			installation: Date.now(),
 			
-			tasks:undefined
+			tasks:undefined,
+			currentTask:undefined
 		};
 
 		this.toggleModalEngineInfo = this.toggleModalEngineInfo.bind(this);
@@ -39,17 +41,18 @@ class App extends Component {
 		this.getEngineInfo = this.getEngineInfo.bind(this);
 		this.getTaskList = this.getTaskList.bind(this);
 		this.createNewTask = this.createNewTask.bind(this);
+		this.changeCurrentTask = this.changeCurrentTask.bind(this);
 	}
 	
 	toggleModalEngineInfo() {
-    this.setState(
+    	this.setState(
 			function (prevState, props){
 				return { modalEngineInfo: !prevState.modalEngineInfo }
 			});
   	}
 	
 	toggleModalCreateTask() {
-    this.setState(
+    	this.setState(
 			function (prevState, props){
 				return { modalCreateTask: !prevState.modalCreateTask }
 			});
@@ -116,15 +119,33 @@ class App extends Component {
 			this.setState(newState);
 		});
 	}
+
+	changeCurrentTask(task){
+		if (this.state.currentTask && this.state.currentTask.id !== task.id){
+			this.setState(function(prevState, props){
+				return{
+					currentTask: task
+				}
+			})
+		}
+	}
 	
 	getTaskList(){
 		axios
       	.get(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks")
-      	.then(response => {			
-        	// create a new "State" object without mutating 
-			// the original State object. 
+      	.then(response => {	
+			var newCurrentTask = this.state.currentTask;		
+			if (this.state.currentTask === undefined){
+				if(response.data.length > 0){
+					newCurrentTask = response.data[0];
+				}
+			}
+
+			// create a new "State" object without mutating 
+			// the original State object.
 			const newState = Object.assign({}, this.state, {
 				tasks: response.data,
+				currentTask: newCurrentTask,
 			});
 
 			// store the new state object in the component's state
@@ -153,10 +174,10 @@ class App extends Component {
 				<div id="root" className="d-flex flex-wrap flex-row mb-3">
 					<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
 						<EngineInfo brand={this.state.brand} model={this.state.model} age={this.state.age} installation={this.state.installation} toggleModal={this.toggleModalEngineInfo}/>
-						<TaskTable tasks={this.state.tasks} toggleModal={this.toggleModalCreateTask}/>
+						<TaskTable tasks={this.state.tasks} toggleModal={this.toggleModalCreateTask} changeCurrentTask={this.changeCurrentTask}/>
 					</div>
 					<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
-						<div id="carrouselTaskDetails" className="p-2 m-2 border border-primary rounded shadow"></div>
+						<CarouselTaskDetails tasks={this.state.tasks} currentTask={this.state.currentTask} changeCurrentTask={this.changeCurrentTask}/>
 						<div id="taskHistoric" className="p-2 m-2 border border-primary rounded shadow"></div>
 					</div>
 				</div>
