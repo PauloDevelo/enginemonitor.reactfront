@@ -2,7 +2,12 @@ import {defineMessages} from "react-intl";
 import {type Messages} from "./MessageDescriptor"
 
 const messages: Messages = {
-	modalCreateTaskTitle: {
+	modalEditTaskTitle: {
+    id: "modalEditTaskTitle",
+    defaultMessage: "Task edition",
+		description: "Panel title"
+  },
+  modalCreationTaskTitle: {
     id: "modalCreateTaskTitle",
     defaultMessage: "Task creation",
 		description: "Panel title"
@@ -35,6 +40,11 @@ const messages: Messages = {
 	cancel: {
     id: "cancel",
     defaultMessage: "Cancel",
+		description: "Button"
+  },
+  delete: {
+    id: "delete",
+    defaultMessage: "Delete",
 		description: "Button"
   },
 };

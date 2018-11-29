@@ -93,7 +93,7 @@ export default class CarouselTaskDetails extends React.Component {
 								<CardText dangerouslySetInnerHTML={{ __html: descriptionFormatted }}></CardText>
 							</CardBody>
 							<CardFooter className='pl-5 pr-5'>
-								<Button color='primary' className='float-left'>Editer</Button>
+								<Button color='primary' className='float-left' onClick={() => this.props.toggleModal() }>Editer</Button>
 								<Button color='primary' className='float-right'>Acquitter</Button>
 							</CardFooter>
 						</Card>
@@ -120,6 +120,7 @@ export default class CarouselTaskDetails extends React.Component {
 }
 
 CarouselTaskDetails.propTypes = {
+	toggleModal: PropTypes.func,
 	tasks: PropTypes.array,
 	currentTask: PropTypes.object,
 	changeCurrentTask: PropTypes.func.isRequired,

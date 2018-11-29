@@ -4,11 +4,12 @@ import React, { Component } from 'react';
 import EngineInfo from './EngineInfo';
 import ModalEngineInfo from './ModalEngineInfo';
 import TaskTable from './TaskTable';
-import ModalCreateTask from './ModalCreateTask';
+import ModalEditTask from './ModalEditTask';
 import CarouselTaskDetails from './CarouselTaskDetails'
 import HistoryTaskTable from './HistoryTaskTable'
 
 import axios from "axios";
+import axiosRetry from 'axios-retry';
 
 var mode = 'dev'; //prod or demo
 var baseUrl = "http://localhost:8081";
@@ -25,7 +26,7 @@ class App extends Component {
 
 		this.state = {
 			modalEngineInfo: false,
-			modalCreateTask: false,
+			modalEditTask: false,
 
 			brand: undefined,
 			model: undefined,
@@ -33,17 +34,21 @@ class App extends Component {
 			installation: new Date(),
 			
 			tasks:[],
+			editedTask:undefined,
 			currentTask:undefined,
 			currentHistoryTask: []
 		};
 
 		this.toggleModalEngineInfo = this.toggleModalEngineInfo.bind(this);
-		this.toggleModalCreateTask = this.toggleModalCreateTask.bind(this);
+		this.toggleModalEditTask = this.toggleModalEditTask.bind(this);
 		this.saveEngineInfo = this.saveEngineInfo.bind(this);
 		this.refreshEngineInfo = this.refreshEngineInfo.bind(this);
 		this.refreshTaskList = this.refreshTaskList.bind(this);
-		this.createNewTask = this.createNewTask.bind(this);
+		this.createOrSaveTask = this.createOrSaveTask.bind(this);
 		this.changeCurrentTask = this.changeCurrentTask.bind(this);
+		this.deleteTask = this.deleteTask.bind(this);
+
+		axiosRetry(axios, { retries: 60, retryDelay: () => 1000 });
 	}
 	
 	toggleModalEngineInfo() {
@@ -53,10 +58,13 @@ class App extends Component {
 			});
   	}
 	
-	toggleModalCreateTask() {
+	toggleModalEditTask(isCreationMode) {
     	this.setState(
 			function (prevState, props){
-				return { modalCreateTask: !prevState.modalCreateTask }
+				return { 
+					modalEditTask: !prevState.modalEditTask,
+					editedTask: isCreationMode?undefined:this.state.currentTask
+				}
 			});
   	}
 	
@@ -79,12 +87,43 @@ class App extends Component {
 		});
 	}
 	
-	createNewTask(task){
+	createOrSaveTask(task){
 		axios
 		.post(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks", task)
 		.then(response => {
-			this.toggleModalCreateTask();
-			this.getTaskList();
+			this.toggleModalEditTask();
+			this.refreshTaskList(() =>{
+				var newCurrentTaskIndex = 0;
+				while(newCurrentTaskIndex < this.state.tasks.length && this.state.tasks[newCurrentTaskIndex].id !== response.data.id)newCurrentTaskIndex++;
+
+				if(newCurrentTaskIndex < this.state.tasks.length){
+					this.changeCurrentTask(this.state.tasks[newCurrentTaskIndex]);
+				}
+			});
+		})
+		.catch(error => {
+			console.log( error );
+		});
+	}
+
+	deleteTask(){
+		var taskIndex = 0;
+		var nextTaskIndex = 0
+		while(taskIndex < this.state.tasks.length && this.state.tasks[taskIndex].id !== this.state.editedTask.id)taskIndex++;
+		if(taskIndex === this.state.tasks.length - 1)
+			nextTaskIndex = taskIndex - 1;
+		else
+			nextTaskIndex = taskIndex;
+
+		axios
+		.delete(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks/" + this.state.editedTask.id)
+		.then(response => {
+			this.toggleModalEditTask();
+			this.refreshTaskList(()=>{
+				if(nextTaskIndex !== -1){
+					this.changeCurrentTask(this.state.tasks[nextTaskIndex]);
+				}
+			});
 		})
 		.catch(error => {
 			console.log( error );
@@ -149,7 +188,7 @@ class App extends Component {
 		});
 	}
 	
-	refreshTaskList(){
+	refreshTaskList(complete){
 		axios
       	.get(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks")
       	.then(response => {	
@@ -164,7 +203,13 @@ class App extends Component {
 			});
 
 			// store the new state object in the component's state
-			this.setState(function(prevState, props){ return newState; });
+			this.setState(
+				function(prevState, props){ return newState; },
+				() =>{
+					if(complete !== undefined && typeof complete === "function"){
+						complete();
+				}
+			});
       	})
       	.catch(error => {
 			console.log( error );
@@ -189,10 +234,10 @@ class App extends Component {
 				<div id="root" className="d-flex flex-wrap flex-row mb-3">
 					<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
 						<EngineInfo brand={this.state.brand} model={this.state.model} age={this.state.age} installation={this.state.installation} toggleModal={this.toggleModalEngineInfo}/>
-						<TaskTable tasks={this.state.tasks} toggleModal={this.toggleModalCreateTask} changeCurrentTask={this.changeCurrentTask}/>
+						<TaskTable tasks={this.state.tasks} toggleModal={() => this.toggleModalEditTask(true)} changeCurrentTask={this.changeCurrentTask}/>
 					</div>
 					<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
-						<CarouselTaskDetails tasks={this.state.tasks} currentTask={this.state.currentTask} changeCurrentTask={this.changeCurrentTask}/>
+						<CarouselTaskDetails tasks={this.state.tasks} currentTask={this.state.currentTask} changeCurrentTask={this.changeCurrentTask} toggleModal={() => this.toggleModalEditTask(false)}/>
 						<HistoryTaskTable taskHistory={this.state.currentHistoryTask}/>
 					</div>
 				</div>
@@ -202,9 +247,11 @@ class App extends Component {
 					save={this.saveEngineInfo} 
 					brand={this.state.brand} model={this.state.model} age={this.state.age} installation={this.state.installation}
 				/>
-				<ModalCreateTask visible={this.state.modalCreateTask} 
-					toggle={this.toggleModalCreateTask} 
-					save={this.createNewTask} 
+				<ModalEditTask visible={this.state.modalEditTask} 
+					toggle={this.toggleModalEditTask} 
+					save={this.createOrSaveTask} 
+					delete={this.deleteTask}
+					task={this.state.editedTask}
 				/>
 			</div>
 		);

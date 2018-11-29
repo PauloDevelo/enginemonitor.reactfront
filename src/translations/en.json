@@ -30,5 +30,6 @@
 	"orevery": " or every ",
 	"monthperiod": "{month, plural, one {month} other {# months}}",
 	"ackDate": "Realisation date",
-	"remarks": "Remarks"
+	"remarks": "Remarks",
+	"modalEditTaskTitle": "Task edition"
 }
