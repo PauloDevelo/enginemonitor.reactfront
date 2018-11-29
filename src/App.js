@@ -30,11 +30,11 @@ class App extends Component {
 			brand: undefined,
 			model: undefined,
 			age: undefined,
-			installation: Date.now(),
+			installation: new Date(),
 			
-			tasks:undefined,
+			tasks:[],
 			currentTask:undefined,
-			currentHistoryTask: undefined
+			currentHistoryTask: []
 		};
 
 		this.toggleModalEngineInfo = this.toggleModalEngineInfo.bind(this);
@@ -140,7 +140,7 @@ class App extends Component {
 			console.log( error );
 		
 			const newState = Object.assign({}, this.state, {
-				currentHistoryTask: undefined,
+				currentHistoryTask: [],
 				currentTask: task,
 			});
 
@@ -170,7 +170,7 @@ class App extends Component {
 			console.log( error );
 		
 			const newState = Object.assign({}, this.state, {
-				tasks: undefined,
+				tasks: [],
 			});
 
 			// store the new state object in the component's state

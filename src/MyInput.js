@@ -6,6 +6,8 @@ import {
 	FormattedMessage
 } from 'react-intl';
 
+import PropTypes from 'prop-types';
+
 class MyInput extends Component {
 	
 	constructor(props){
@@ -56,5 +58,17 @@ class MyInput extends Component {
 		)
 	}
 }
+
+MyInput.propTypes = {
+	name: PropTypes.string,
+	min: PropTypes.number,
+	max: PropTypes.number,
+	label: PropTypes.object.isRequired,
+	type: PropTypes.string.isRequired,
+	required: PropTypes.bool,
+	value: PropTypes.any.isRequired,
+	placeholder: PropTypes.string,
+	handleChange: PropTypes.func.isRequired
+};
 
 export default MyInput;

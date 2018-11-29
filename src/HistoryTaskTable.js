@@ -5,19 +5,20 @@ import {
 	FormattedMessage, FormattedDate
 } from 'react-intl';
 
+import PropTypes from 'prop-types';
+
 import tasktablemsg from "./TaskTable.messages";
 
 import { shorten } from './TaskHelper'; 
 
-export default function HistoryTaskTable(props)
-{
+export default function HistoryTaskTable({taskHistory}){
     var history = [];
-    if(props.taskHistory){
+    if(taskHistory){
         const trStyle = {
             cursor: 'pointer',
         };
 
-        history = props.taskHistory.map(entry => {
+        history = taskHistory.map(entry => {
             var remarks = entry.remarks.replace(/\n/g, '<br />');
 
             var entryDate = new Date(entry.UTCDate)
@@ -54,3 +55,7 @@ export default function HistoryTaskTable(props)
         </div>
     );
 }
+
+HistoryTaskTable.propTypes = {
+	taskHistory: PropTypes.array.isRequired,
+};

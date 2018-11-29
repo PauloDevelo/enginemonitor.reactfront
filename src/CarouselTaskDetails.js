@@ -76,7 +76,7 @@ export default class CarouselTaskDetails extends React.Component {
 		var carouselItems = [];
 		if(this.props.tasks){
 			carouselItems = this.props.tasks.map((task) => {
-				var active = this.props.currentTaskId && this.props.currentTaskId  === task.id;
+				var active = this.props.currentTask && this.props.currentTask.id  === task.id;
 				var badgeText = getBadgeText(task.level);
 				var badgeContext = getContext(task.level);
 

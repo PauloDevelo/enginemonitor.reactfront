@@ -6,6 +6,8 @@ import {
 	FormattedMessage,
 } from 'react-intl';
 
+import PropTypes from 'prop-types';
+
 import engineinfomsg from "./EngineInfo.messages";
 
 import MyForm from "./MyForm"
@@ -29,7 +31,7 @@ function convertDateOrDefault(date){
 }
 
 
-class ModalEngineIno extends React.Component {
+class ModalEngineInfo extends React.Component {
 	constructor(props) {
 		super(props);
 			
@@ -114,10 +116,10 @@ class ModalEngineIno extends React.Component {
 			<ModalHeader toggle={this.props.toggle}><FormattedMessage {...engineinfomsg.modalTitle} /></ModalHeader>
 			<ModalBody>
 				<MyForm submit={this.handleSubmit} id="formEngineInfo">
-					<MyInput name="brand" 				label={engineinfomsg.brand} 						type="text" 	value={this.state.brand} 				handleChange={this.handleChange} required/>
-					<MyInput name="model" 				label={engineinfomsg.model} 						type="text" 	value={this.state.model} 				handleChange={this.handleChange} required/>
+					<MyInput name="brand" 			label={engineinfomsg.brand} 			type="text" 	value={this.state.brand} 		handleChange={this.handleChange} required/>
+					<MyInput name="model" 			label={engineinfomsg.model} 			type="text" 	value={this.state.model} 		handleChange={this.handleChange} required/>
 					<MyInput name="installation" 	label={engineinfomsg.installDateLabel} 	type="date" 	value={this.state.installation} handleChange={this.handleChange} required/>
-					<MyInput name="age" 					label={engineinfomsg.engineAge} 				type="number" value={this.state.age} 					handleChange={this.handleChange} required min="0" />
+					<MyInput name="age" 			label={engineinfomsg.engineAge} 		type="number" 	value={this.state.age} 			handleChange={this.handleChange} required min={0} />
 				</MyForm>
 			</ModalBody>
 			<ModalFooter>
@@ -129,4 +131,16 @@ class ModalEngineIno extends React.Component {
   }
 }
 
-export default ModalEngineIno;
+ModalEngineInfo.propTypes = {
+	visible: PropTypes.bool.isRequired,
+	toggle: PropTypes.func.isRequired,
+	save: PropTypes.func.isRequired,
+	className: PropTypes.string,
+	brand: PropTypes.string,
+	model: PropTypes.string,
+	age: PropTypes.number,
+	installation: PropTypes.object
+
+};
+
+export default ModalEngineInfo;

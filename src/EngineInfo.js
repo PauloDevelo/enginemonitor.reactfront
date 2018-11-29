@@ -12,9 +12,9 @@ import {
 	FormattedTime,
 } from 'react-intl';
 
+import PropTypes from 'prop-types';
+
 import engineinfomsg from "./EngineInfo.messages";
-
-
 
 class EngineInfo extends Component {
     constructor(props) {
@@ -62,5 +62,12 @@ class EngineInfo extends Component {
         );
     }
 }
+
+EngineInfo.propTypes = {
+	brand: PropTypes.string,
+	model: PropTypes.string,
+	age: PropTypes.number,
+	toggleModal: PropTypes.func.isRequired,
+};
 
 export default EngineInfo;

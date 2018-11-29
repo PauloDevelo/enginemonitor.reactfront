@@ -6,12 +6,14 @@ import {
 	FormattedMessage,
 } from 'react-intl';
 
+import PropTypes from 'prop-types';
+
 import createtaskmsg from "./ModalCreateTask.messages";
 
 import MyForm from "./MyForm"
 import MyInput from "./MyInput"
 
-class ModalEngineIno extends React.Component {
+class ModalCreateTask extends React.Component {
   constructor(props) {
     super(props);
 		
@@ -93,10 +95,10 @@ class ModalEngineIno extends React.Component {
 			<ModalHeader toggle={this.props.toggle}><FormattedMessage {...createtaskmsg.modalCreateTaskTitle} /></ModalHeader>
 			<ModalBody>
 				<MyForm submit={this.handleSubmit} id="createTaskForm">
-					<MyInput name="name" 				label={createtaskmsg.name} 				type="text" 	value={this.state.name} 				handleChange={this.handleChange} required/>
-					<MyInput name="engineHours" label={createtaskmsg.engineHours} type="number" value={this.state.engineHours} 	handleChange={this.handleChange} min={'0'} />
-					<MyInput name="month" 			label={createtaskmsg.month} 			type="number" value={this.state.month} 				handleChange={this.handleChange} min={'1'} required/>
-					<MyInput name="description" label={createtaskmsg.description} type="text" 	value={this.state.description} 	handleChange={this.handleChange} required />
+					<MyInput name="name" 		label={createtaskmsg.name} 			type="text" 	value={this.state.name} 		handleChange={this.handleChange} required/>
+					<MyInput name="engineHours" label={createtaskmsg.engineHours} 	type="number" 	value={this.state.engineHours} 	handleChange={this.handleChange} min={0} />
+					<MyInput name="month" 		label={createtaskmsg.month} 		type="number" 	value={this.state.month} 		handleChange={this.handleChange} min={1} required/>
+					<MyInput name="description" label={createtaskmsg.description} 	type="text" 	value={this.state.description} 	handleChange={this.handleChange} required />
 				</MyForm>
 			</ModalBody>
 			<ModalFooter>
@@ -108,4 +110,12 @@ class ModalEngineIno extends React.Component {
   }
 }
 
-export default ModalEngineIno;
+ModalCreateTask.propTypes = {
+	visible: PropTypes.bool.isRequired,
+	toggle: PropTypes.func.isRequired,
+	save: PropTypes.func.isRequired,
+	className: PropTypes.string,
+
+};
+
+export default ModalCreateTask;

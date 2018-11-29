@@ -1,14 +1,9 @@
 import React from 'react';
 import { Table, Button } from 'reactstrap';
-
-import { 
-	FormattedMessage
-} from 'react-intl';
-
+import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
 import tasktablemsg from "./TaskTable.messages";
-
 import { getContext, getTodoText, shorten } from './TaskHelper'; 
-
 
 const getTrContext = (level) => "table-" + getContext(level)
 
@@ -54,5 +49,11 @@ export const TaskTable = ({tasks, changeCurrentTask, toggleModal}) => {
 		</div>
 	);
 }
+
+TaskTable.propTypes = {
+	tasks: PropTypes.array.isRequired,
+	changeCurrentTask: PropTypes.func.isRequired,
+	toggleModal: PropTypes.func.isRequired,
+};
 
 export default TaskTable;
