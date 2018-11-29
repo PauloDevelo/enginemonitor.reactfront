@@ -58,7 +58,7 @@ export default class CarouselTaskDetails extends React.Component {
 	}
 
 	static getDerivedStateFromProps(nextProps, prevState){
-		if(nextProps.tasks){
+		if(nextProps.tasks && nextProps.currentTask){
 			var activeIndex = nextProps.tasks.findIndex(task => task.id === nextProps.currentTask.id);
 			if(prevState.activeIndex !== activeIndex){
 				return { 

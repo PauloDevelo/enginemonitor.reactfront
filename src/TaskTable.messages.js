@@ -71,7 +71,22 @@ const messages: Messages = {
     id: "monthperiod",
     defaultMessage: "{month, plural, one {month} other {# months}}",
     description: "Month period"
-  }        
+  },
+  ackDate: {
+    id: "ackDate",
+    defaultMessage: "Realisation date",
+    description: "Colum header"
+  },
+  remarks: {
+    id: "remarks",
+    defaultMessage: "Remarks",
+    description: "Colum header"
+  },
+  engineAge: {
+		id: "engineAge",
+    defaultMessage: "Engine Age",
+		description: "Label"
+	}
 };
 
 const definedMessages: typeof messages = defineMessages(messages);

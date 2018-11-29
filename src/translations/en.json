@@ -28,5 +28,7 @@
 	"tobedonemonth": "To do every ",
 	"monthunit": " month",
 	"orevery": " or every ",
-	"monthperiod": "{month, plural, one {month} other {# months}}"   
+	"monthperiod": "{month, plural, one {month} other {# months}}",
+	"ackDate": "Realisation date",
+	"remarks": "Remarks"
 }

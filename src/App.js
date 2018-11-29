@@ -6,6 +6,7 @@ import ModalEngineInfo from './ModalEngineInfo';
 import TaskTable from './TaskTable';
 import ModalCreateTask from './ModalCreateTask';
 import CarouselTaskDetails from './CarouselTaskDetails'
+import HistoryTaskTable from './HistoryTaskTable'
 
 import axios from "axios";
 
@@ -32,14 +33,15 @@ class App extends Component {
 			installation: Date.now(),
 			
 			tasks:undefined,
-			currentTask:undefined
+			currentTask:undefined,
+			currentHistoryTask: undefined
 		};
 
 		this.toggleModalEngineInfo = this.toggleModalEngineInfo.bind(this);
 		this.toggleModalCreateTask = this.toggleModalCreateTask.bind(this);
 		this.saveEngineInfo = this.saveEngineInfo.bind(this);
-		this.getEngineInfo = this.getEngineInfo.bind(this);
-		this.getTaskList = this.getTaskList.bind(this);
+		this.refreshEngineInfo = this.refreshEngineInfo.bind(this);
+		this.refreshTaskList = this.refreshTaskList.bind(this);
 		this.createNewTask = this.createNewTask.bind(this);
 		this.changeCurrentTask = this.changeCurrentTask.bind(this);
 	}
@@ -89,7 +91,7 @@ class App extends Component {
 		});
 	}
 	
-	getEngineInfo(){
+	refreshEngineInfo(){
 		axios
       	.get(baseUrl + "/engine-monitor/webapi/enginemaintenance/engineinfo")
       	.then(response => {
@@ -121,31 +123,44 @@ class App extends Component {
 	}
 
 	changeCurrentTask(task){
-		if (this.state.currentTask && this.state.currentTask.id !== task.id){
-			this.setState(function(prevState, props){
-				return{
-					currentTask: task
-				}
-			})
-		}
+		axios
+      	.get(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks/" + task.id + "/historic")
+      	.then(response => {	
+			// create a new "State" object without mutating 
+			// the original State object.
+			const newState = Object.assign({}, this.state, {
+				currentHistoryTask: response.data,
+				currentTask: task,
+			});
+
+			// store the new state object in the component's state
+			this.setState(function(prevState, props){ return newState; });
+      	})
+      	.catch(error => {
+			console.log( error );
+		
+			const newState = Object.assign({}, this.state, {
+				currentHistoryTask: undefined,
+				currentTask: task,
+			});
+
+			// store the new state object in the component's state
+			this.setState(function(prevState, props){ return newState; });
+		});
 	}
 	
-	getTaskList(){
+	refreshTaskList(){
 		axios
       	.get(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks")
       	.then(response => {	
-			var newCurrentTask = this.state.currentTask;		
-			if (this.state.currentTask === undefined){
-				if(response.data.length > 0){
-					newCurrentTask = response.data[0];
-				}
+			if (this.state.currentTask === undefined && response.data.length > 0){
+				this.changeCurrentTask(response.data[0]);
 			}
 
 			// create a new "State" object without mutating 
 			// the original State object.
 			const newState = Object.assign({}, this.state, {
 				tasks: response.data,
-				currentTask: newCurrentTask,
 			});
 
 			// store the new state object in the component's state
@@ -164,8 +179,8 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		this.getEngineInfo();
-		this.getTaskList();
+		this.refreshEngineInfo();
+		this.refreshTaskList();
 	}
     
 	render() {
@@ -178,7 +193,7 @@ class App extends Component {
 					</div>
 					<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
 						<CarouselTaskDetails tasks={this.state.tasks} currentTask={this.state.currentTask} changeCurrentTask={this.changeCurrentTask}/>
-						<div id="taskHistoric" className="p-2 m-2 border border-primary rounded shadow"></div>
+						<HistoryTaskTable taskHistory={this.state.currentHistoryTask}/>
 					</div>
 				</div>
 				

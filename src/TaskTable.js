@@ -7,16 +7,8 @@ import {
 
 import tasktablemsg from "./TaskTable.messages";
 
-import { getContext, getTodoText } from './TaskHelper'; 
+import { getContext, getTodoText, shorten } from './TaskHelper'; 
 
-function shorten(longStr){
-	var shortenStr = longStr;
-	if(shortenStr.length > 80){
-		shortenStr = longStr.substring(0, 80) + ' ...';
-	}
-	
-	return shortenStr;
-}
 
 function getTrContext(level){
 	return "table-" + getContext(level);
@@ -27,14 +19,14 @@ export default class TaskTable extends React.Component {
 		var listLines = [];
 		
 		if(this.props.tasks){
-			listLines = this.props.tasks.map((task) => {
-			var shortenDescription = shorten(task.description.replace(/\n/g,'<br />'));
-			var todoText = getTodoText(task)	
 			const trStyle = {
 				cursor: 'pointer',
 			};
-				
-			var classNames = getTrContext(task.level) + " small mb-0 mt-0";
+
+			listLines = this.props.tasks.map((task) => {
+			var shortenDescription = shorten(task.description.replace(/\n/g,'<br />'));
+			var todoText = getTodoText(task)		
+			var classNames = getTrContext(task.level) + " small";
 				
 			return(
 				<tr key={task.id} style={trStyle} className={classNames} onClick={() => this.props.changeCurrentTask(task) }>

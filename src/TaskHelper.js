@@ -68,3 +68,12 @@ export function getScheduleText(task){
 
     return title;
 }
+
+export function shorten(longStr){
+	var shortenStr = longStr;
+	if(shortenStr.length > 80){
+		shortenStr = longStr.substring(0, 80) + ' ...';
+	}
+	
+	return shortenStr;
+}
