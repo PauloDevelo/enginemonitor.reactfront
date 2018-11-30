@@ -18,7 +18,7 @@ import { getContext, getScheduleText } from './TaskHelper';
 
 import edittaskmsg from "./ModalEditTask.messages";
 
-import './CarouselTaskDetails.css';
+import './CardTaskDetails.css';
 
 function getBadgeText(level){
 	if(level === 1){
@@ -48,11 +48,11 @@ const CardTaskDetails = ({task, next, prev, toggleModal, nextVisibility, prevVis
 
     var descriptionFormatted = task.description.replace(/\n/g,"<br />");
 
-    var prevClassNames = "carousel-control-prev-icon";
+    var prevClassNames = "card-control-prev-icon";
     if(!prevVisibility)
         prevClassNames += ' invisible';
 
-    var nextClassNames = "carousel-control-next-icon";
+    var nextClassNames = "card-control-next-icon";
     if(!nextVisibility)
         nextClassNames += ' invisible';
 
