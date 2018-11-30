@@ -47,6 +47,16 @@ const messages: Messages = {
     defaultMessage: "Delete",
 		description: "Button"
   },
+  ack:{
+    id: "ack",
+    defaultMessage: "Acknowledge",
+		description: "Button"
+  },
+  edit:{
+    id: "edit",
+    defaultMessage: "Edit",
+		description: "Button"
+  },
 };
 
 const definedMessages: typeof messages = defineMessages(messages);

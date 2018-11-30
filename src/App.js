@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 
 import EngineInfo from './EngineInfo';
@@ -91,15 +90,15 @@ class App extends Component {
 		axios
 		.post(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks", task)
 		.then(response => {
-			this.toggleModalEditTask();
-			this.refreshTaskList();
+			this.refreshTaskList(() => this.changeCurrentTask(response.data));
+			
 		})
 		.catch(error => {
 			console.log( error );
 		});
 	}
 
-	deleteTask(){
+	deleteTask(complete){
 		var nextTaskIndex = 0
 		if(this.state.currentTaskIndex === this.state.tasks.length - 1)
 			nextTaskIndex = this.state.currentTaskIndex - 1;
@@ -109,7 +108,6 @@ class App extends Component {
 		axios
 		.delete(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks/" + this.state.editedTask.id)
 		.then(response => {
-			this.toggleModalEditTask();
 			this.refreshTaskList(()=>{
 				if(nextTaskIndex >= 0){
 					this.changeCurrentTaskIndex(nextTaskIndex);
@@ -135,7 +133,7 @@ class App extends Component {
 			});
 
 			// store the new state object in the component's state
-			this.setState(function(prevState, props){ return newState; });
+			this.setState((prevState, props) => newState);
       	})
       	.catch(error => {
 			console.log( error );
@@ -148,7 +146,7 @@ class App extends Component {
 			});
 
 			// store the new state object in the component's state
-			this.setState(newState);
+			this.setState((prevState, props) => newState);
 		});
 	}
 
@@ -161,8 +159,10 @@ class App extends Component {
 	}
 
 	changeCurrentTask(task){
-		var newCurrentTaskIndex = this.state.tasks.findIndex((t) => t === task);
-		this.changeCurrentTaskIndex(newCurrentTaskIndex);
+		if(task !== this.state.currentTask){
+			var newCurrentTaskIndex = this.state.tasks.findIndex((t, ind, tab) => t.id === task.id);
+			this.changeCurrentTaskIndex(newCurrentTaskIndex);
+		}
 	}
 
 	changeCurrentTaskIndex(newTaskIndex){
@@ -247,7 +247,6 @@ class App extends Component {
 	}
     
 	render() {
-
 		var prevVisibility = this.state.currentTaskIndex > 0;
 		var nextVisibility = this.state.currentTaskIndex < this.state.tasks.length - 1;
 		return (

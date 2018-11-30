@@ -10,9 +10,13 @@ import {
 	Badge
 } from 'reactstrap';
 
+import { FormattedMessage } from 'react-intl';
+
 import PropTypes from 'prop-types';
 
 import { getContext, getScheduleText } from './TaskHelper'; 
+
+import edittaskmsg from "./ModalEditTask.messages";
 
 import './CarouselTaskDetails.css';
 
@@ -63,8 +67,8 @@ const CardTaskDetails = ({task, next, prev, toggleModal, nextVisibility, prevVis
                     <div className="p-2" onClick={() => next()} style={cursorPointerStyle}><div className={nextClassNames}></div></div>
             </CardBody>
             <CardFooter className='pl-5 pr-5'>
-                <Button color='primary' className='float-left' onClick={() => toggleModal() }>Editer</Button>
-                <Button color='primary' className='float-right'>Acquitter</Button>
+                <Button color='primary' className='float-left' onClick={() => toggleModal() }><FormattedMessage {...edittaskmsg.edit} /></Button>
+                <Button color='primary' className='float-right'><FormattedMessage {...edittaskmsg.ack} /></Button>
             </CardFooter>
         </Card>
     );

@@ -14,22 +14,23 @@ import MyForm from "./MyForm"
 import MyInput from "./MyInput"
 
 class ModalEditTask extends React.Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
+			
+		this.state = {
+			name: '',
+			engineHours: '',
+			month: '',
+			description: '',
+			
+			prevprops: { visible: false }
+		}
 		
-	this.state = {
-		name: '',
-		engineHours: '',
-		month: '',
-		description: '',
-		
-		prevprops: { visible: false }
+		this.delete = this.delete.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.setDefaultState = this.setDefaultState.bind(this);
 	}
-	
-	this.handleChange = this.handleChange.bind(this);
-	this.handleSubmit = this.handleSubmit.bind(this);
-	this.setDefaultState = this.setDefaultState.bind(this);
-  }
 	
 	setDefaultState(newProps) {
 		if (newProps.name !== undefined){
@@ -81,13 +82,19 @@ class ModalEditTask extends React.Component {
 			return null;
 		}
 	}
-	
+
 	handleSubmit(event) {
 		var currentState = Object.assign({}, this.state);
 		currentState.engineHours = currentState.engineHours <= 0 || currentState.engineHours === undefined ? -1 :currentState.engineHours;
 
 		this.props.save(currentState);
-  	}
+		this.props.toggle();
+	}
+	
+	delete(){
+		this.props.delete();
+		this.props.toggle();
+	}
 
 	handleChange(event) {
 		const target = event.target;
@@ -127,7 +134,7 @@ class ModalEditTask extends React.Component {
 			<ModalFooter>
 				<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...edittaskmsg.save} /></Button>
 				<Button color="secondary" onClick={this.props.toggle}><FormattedMessage {...edittaskmsg.cancel} /></Button>
-				{this.props.task && <Button color="danger" onClick={this.props.delete}><FormattedMessage {...edittaskmsg.delete} /></Button>}
+				{this.props.task && <Button color="danger" onClick={this.delete}><FormattedMessage {...edittaskmsg.delete} /></Button>}
 			</ModalFooter>
 		</Modal>
     );

@@ -31,5 +31,7 @@
 	"monthperiod": "{month, plural, one {month} other {# months}}",
 	"ackDate": "Realisation date",
 	"remarks": "Remarks",
-	"modalEditTaskTitle": "Task edition"
+	"modalEditTaskTitle": "Task edition",
+	"delete": "Delete",
+	"ack": "Acknowledge"
 }
