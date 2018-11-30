@@ -56,15 +56,11 @@ class App extends Component {
 	}
 	
 	toggleModalEngineInfo() {
-    	this.setState(
-			function (prevState, props){
-				return { modalEngineInfo: !prevState.modalEngineInfo }
-			});
+    	this.setState((prevState, props) => { return { modalEngineInfo: !prevState.modalEngineInfo }; });
   	}
 	
 	toggleModalEditTask(isCreationMode) {
-    	this.setState(
-			function (prevState, props){
+    	this.setState( (prevState, props) => {
 				return { 
 					modalEditTask: !prevState.modalEditTask,
 					editedTask: isCreationMode?undefined:this.state.currentTask
@@ -75,10 +71,10 @@ class App extends Component {
 	saveEngineInfo(engineInfo){
 		axios.post(baseUrl + "/engine-monitor/webapi/enginemaintenance/engineinfo", engineInfo)
 		.then(response => {
-			this.toggleModalEngineInfo();
 			this.setState(
 				function (prevState, props){
 					return { 
+						modalEngineInfo: !prevState.modalEngineInfo,
 						brand: engineInfo.brand,
 						model: engineInfo.model,
 						age: engineInfo.age,
@@ -213,6 +209,7 @@ class App extends Component {
 			// the original State object.
 			const newState = Object.assign({}, this.state, {
 				tasks: response.data,
+				currentTask: response.data[this.state.currentTaskIndex]
 			});
 
 			// store the new state object in the component's state
@@ -221,18 +218,21 @@ class App extends Component {
 				() =>{
 					if(complete !== undefined && typeof complete === "function"){
 						complete();
+					}
 				}
-			});
+			);
       	})
       	.catch(error => {
 			console.log( error );
 		
 			const newState = Object.assign({}, this.state, {
 				tasks: [],
+				currentTask: undefined,
+				currentTaskIndex: undefined
 			});
 
 			// store the new state object in the component's state
-			this.setState(newState);
+			this.setState(function(prevState, props){ return newState; });
 		});
 	}
 
