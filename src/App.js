@@ -5,8 +5,8 @@ import EngineInfo from './EngineInfo';
 import ModalEngineInfo from './ModalEngineInfo';
 import TaskTable from './TaskTable';
 import ModalEditTask from './ModalEditTask';
-import CarouselTaskDetails from './CarouselTaskDetails'
 import HistoryTaskTable from './HistoryTaskTable'
+import CardTaskDetails from './CardTaskDetails'
 
 import axios from "axios";
 import axiosRetry from 'axios-retry';
@@ -34,8 +34,9 @@ class App extends Component {
 			installation: new Date(),
 			
 			tasks:[],
-			editedTask:undefined,
+			currentTaskIndex:undefined,
 			currentTask:undefined,
+			editedTask:undefined,
 			currentHistoryTask: []
 		};
 
@@ -45,8 +46,11 @@ class App extends Component {
 		this.refreshEngineInfo = this.refreshEngineInfo.bind(this);
 		this.refreshTaskList = this.refreshTaskList.bind(this);
 		this.createOrSaveTask = this.createOrSaveTask.bind(this);
+		this.changeCurrentTaskIndex = this.changeCurrentTaskIndex.bind(this);
 		this.changeCurrentTask = this.changeCurrentTask.bind(this);
 		this.deleteTask = this.deleteTask.bind(this);
+		this.nextTask = this.nextTask.bind(this);
+		this.previousTask = this.previousTask.bind(this);
 
 		axiosRetry(axios, { retries: 60, retryDelay: () => 1000 });
 	}
@@ -92,14 +96,7 @@ class App extends Component {
 		.post(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks", task)
 		.then(response => {
 			this.toggleModalEditTask();
-			this.refreshTaskList(() =>{
-				var newCurrentTaskIndex = 0;
-				while(newCurrentTaskIndex < this.state.tasks.length && this.state.tasks[newCurrentTaskIndex].id !== response.data.id)newCurrentTaskIndex++;
-
-				if(newCurrentTaskIndex < this.state.tasks.length){
-					this.changeCurrentTask(this.state.tasks[newCurrentTaskIndex]);
-				}
-			});
+			this.refreshTaskList();
 		})
 		.catch(error => {
 			console.log( error );
@@ -107,21 +104,19 @@ class App extends Component {
 	}
 
 	deleteTask(){
-		var taskIndex = 0;
 		var nextTaskIndex = 0
-		while(taskIndex < this.state.tasks.length && this.state.tasks[taskIndex].id !== this.state.editedTask.id)taskIndex++;
-		if(taskIndex === this.state.tasks.length - 1)
-			nextTaskIndex = taskIndex - 1;
+		if(this.state.currentTaskIndex === this.state.tasks.length - 1)
+			nextTaskIndex = this.state.currentTaskIndex - 1;
 		else
-			nextTaskIndex = taskIndex;
+			nextTaskIndex = this.state.currentTaskIndex;
 
 		axios
 		.delete(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks/" + this.state.editedTask.id)
 		.then(response => {
 			this.toggleModalEditTask();
 			this.refreshTaskList(()=>{
-				if(nextTaskIndex !== -1){
-					this.changeCurrentTask(this.state.tasks[nextTaskIndex]);
+				if(nextTaskIndex >= 0){
+					this.changeCurrentTaskIndex(nextTaskIndex);
 				}
 			});
 		})
@@ -161,15 +156,36 @@ class App extends Component {
 		});
 	}
 
+	nextTask(){
+		this.changeCurrentTaskIndex(this.state.currentTaskIndex + 1);
+	}
+
+	previousTask(){
+		this.changeCurrentTaskIndex(this.state.currentTaskIndex - 1);
+	}
+
 	changeCurrentTask(task){
+		var newCurrentTaskIndex = this.state.tasks.findIndex((t) => t === task);
+		this.changeCurrentTaskIndex(newCurrentTaskIndex);
+	}
+
+	changeCurrentTaskIndex(newTaskIndex){
+		if(newTaskIndex < 0 || newTaskIndex >= this.state.tasks.length){
+			console.log('Index out of bound: ' + newTaskIndex);
+			return;
+		}
+
+		var newCurrentTask = this.state.tasks[newTaskIndex];
+		var newCurrentTaskId = newCurrentTask.id;
 		axios
-      	.get(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks/" + task.id + "/historic")
+      	.get(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks/" + newCurrentTaskId + "/historic")
       	.then(response => {	
 			// create a new "State" object without mutating 
 			// the original State object.
 			const newState = Object.assign({}, this.state, {
 				currentHistoryTask: response.data,
-				currentTask: task,
+				currentTaskIndex: newTaskIndex,
+				currentTask: newCurrentTask
 			});
 
 			// store the new state object in the component's state
@@ -180,7 +196,8 @@ class App extends Component {
 		
 			const newState = Object.assign({}, this.state, {
 				currentHistoryTask: [],
-				currentTask: task,
+				currentTaskIndex: newTaskIndex,
+				currentTask: newCurrentTask
 			});
 
 			// store the new state object in the component's state
@@ -192,10 +209,6 @@ class App extends Component {
 		axios
       	.get(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks")
       	.then(response => {	
-			if (this.state.currentTask === undefined && response.data.length > 0){
-				this.changeCurrentTask(response.data[0]);
-			}
-
 			// create a new "State" object without mutating 
 			// the original State object.
 			const newState = Object.assign({}, this.state, {
@@ -225,10 +238,18 @@ class App extends Component {
 
 	componentDidMount() {
 		this.refreshEngineInfo();
-		this.refreshTaskList();
+		this.refreshTaskList(() => 
+			{
+				if (this.state.currentTaskIndex === undefined){
+					this.changeCurrentTaskIndex(0);
+				}
+			});
 	}
     
 	render() {
+
+		var prevVisibility = this.state.currentTaskIndex > 0;
+		var nextVisibility = this.state.currentTaskIndex < this.state.tasks.length - 1;
 		return (
 			<div>
 				<div id="root" className="d-flex flex-wrap flex-row mb-3">
@@ -237,7 +258,7 @@ class App extends Component {
 						<TaskTable tasks={this.state.tasks} toggleModal={() => this.toggleModalEditTask(true)} changeCurrentTask={this.changeCurrentTask}/>
 					</div>
 					<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
-						<CarouselTaskDetails tasks={this.state.tasks} currentTask={this.state.currentTask} changeCurrentTask={this.changeCurrentTask} toggleModal={() => this.toggleModalEditTask(false)}/>
+						<CardTaskDetails task={this.state.currentTask} toggleModal={() => this.toggleModalEditTask(false)} next={() => this.nextTask()} prev={() => this.previousTask()} prevVisibility={prevVisibility} nextVisibility={nextVisibility}/>
 						<HistoryTaskTable taskHistory={this.state.currentHistoryTask}/>
 					</div>
 				</div>
