@@ -19,7 +19,6 @@ class MyForm extends Component {
 		this.setForm = this.setForm.bind(this);
 	}
 	
-
 	validate(){
 		return this.formEl.checkValidity() === true;
 	}

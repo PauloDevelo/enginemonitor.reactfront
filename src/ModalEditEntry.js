@@ -10,8 +10,6 @@ import PropTypes from 'prop-types';
 
 import editentrymsg from "./ModalEditEntry.messages";
 
-import { convertDateOrDefault } from "./Helpers"
-
 import MyForm from "./MyForm"
 import MyInput from "./MyInput"
 
@@ -21,7 +19,7 @@ class ModalEditEntry extends React.Component {
 			
 		this.state = {
 			name: '',
-			UTCDate: convertDateOrDefault(Date.now()),
+			UTCDate: new Date().toISOString().substr(0, 10),
 			age: '',
 			remarks: '',
 			
@@ -39,7 +37,7 @@ class ModalEditEntry extends React.Component {
 			this.setState(function(prevState, props){
 				return {
                     name: newProps.name,
-                    UTCDate: convertDateOrDefault(newProps.UTCDate),
+                    UTCDate: newProps.UTCDate.toISOString().substr(0, 10),
                     age: newProps.age,
                     remarks: newProps.remarks,
 					
@@ -54,7 +52,7 @@ class ModalEditEntry extends React.Component {
 			return {
 				id: nextProps.entry.id,
 				name: nextProps.entry.name,
-				UTCDate: convertDateOrDefault(nextProps.entry.UTCDate),
+				UTCDate: nextProps.entry.UTCDate.toISOString().substr(0, 10),
 				age: nextProps.entry.age,
 				remarks: nextProps.entry.remarks,
 				prevprops: { visible: nextProps.visible}

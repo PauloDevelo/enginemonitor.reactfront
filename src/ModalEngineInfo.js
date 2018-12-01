@@ -13,8 +13,6 @@ import engineinfomsg from "./EngineInfo.messages";
 import MyForm from "./MyForm"
 import MyInput from "./MyInput"
 
-import { convertDateOrDefault } from "./Helpers"
-
 class ModalEngineInfo extends React.Component {
 	constructor(props) {
 		super(props);
@@ -23,7 +21,7 @@ class ModalEngineInfo extends React.Component {
 			brand: '',
 			model: '',
 			age: 0,
-			installation: convertDateOrDefault(Date.now()),
+			installation: new Date().toISOString().substr(0, 10),
 			
 			prevprops: props
 		}
@@ -38,7 +36,7 @@ class ModalEngineInfo extends React.Component {
 			brand: newProps.brand,
 			model: newProps.model,
 			age: newProps.age,
-			installation: convertDateOrDefault(newProps.installation),
+			installation: newProps.installation.toISOString().substr(0, 10),
 			
 			prevprops: newProps
 		};
@@ -54,7 +52,7 @@ class ModalEngineInfo extends React.Component {
 				brand: nextProps.brand,
 				model: nextProps.model,
 				age: nextProps.age,
-				installation: convertDateOrDefault(nextProps.installation),
+				installation: nextProps.installation.toISOString().substr(0, 10),
 				
 				prevprops: nextProps
 			};
