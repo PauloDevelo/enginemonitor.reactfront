@@ -13,23 +13,7 @@ import engineinfomsg from "./EngineInfo.messages";
 import MyForm from "./MyForm"
 import MyInput from "./MyInput"
 
-function convertDateOrDefault(date){
-	var installationDateStr = '';
-	if(date !== undefined){
-		if(date.toISOString !== undefined){
-			installationDateStr = date.toISOString().substr(0, 10);
-		}
-		else{
-			installationDateStr = new Date(date).toISOString().substr(0, 10);
-		}
-	}
-	else{
-		installationDateStr = Date.now().toISOString().substr(0, 10);
-	}
-	
-	return installationDateStr;
-}
-
+import { convertDateOrDefault } from "./Helpers"
 
 class ModalEngineInfo extends React.Component {
 	constructor(props) {
@@ -50,13 +34,11 @@ class ModalEngineInfo extends React.Component {
 	}
 	
 	setDefaultState(newProps) {
-		var installationDateStr = convertDateOrDefault(newProps.installation);
-
 		var newEngineInfo = {
 			brand: newProps.brand,
 			model: newProps.model,
 			age: newProps.age,
-			installation: installationDateStr,
+			installation: convertDateOrDefault(newProps.installation),
 			
 			prevprops: newProps
 		};
@@ -68,14 +50,11 @@ class ModalEngineInfo extends React.Component {
 	
 	static getDerivedStateFromProps(nextProps, prevState){
 		if(prevState.prevprops.visible === false && nextProps.visible === true){
-			
-			var installationDateStr = convertDateOrDefault(nextProps.installation);
-			
 			var newEngineInfo = {
 				brand: nextProps.brand,
 				model: nextProps.model,
 				age: nextProps.age,
-				installation: installationDateStr,
+				installation: convertDateOrDefault(nextProps.installation),
 				
 				prevprops: nextProps
 			};
@@ -94,10 +73,10 @@ class ModalEngineInfo extends React.Component {
 	
 	handleSubmit(event) {
     	var currentState = Object.assign({}, this.state);
-
-		currentState.installation = Date.parse(currentState.installation);
+		currentState.installation = new Date(currentState.installation);
 		
 		this.props.save(currentState);
+		this.props.toggle();
   	}
 	
 	handleChange(event) {
@@ -140,7 +119,6 @@ ModalEngineInfo.propTypes = {
 	model: PropTypes.string,
 	age: PropTypes.number,
 	installation: PropTypes.object
-
 };
 
 export default ModalEngineInfo;

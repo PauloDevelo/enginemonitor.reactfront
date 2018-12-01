@@ -11,7 +11,7 @@ import tasktablemsg from "./TaskTable.messages";
 
 import { shorten } from './TaskHelper'; 
 
-export default function HistoryTaskTable({taskHistory}){
+export default function HistoryTaskTable({taskHistory, toggleEntryModal}){
     var history = [];
     if(taskHistory){
         const trStyle = {
@@ -27,7 +27,7 @@ export default function HistoryTaskTable({taskHistory}){
             var ageStr = entry.age === -1?"":entry.age + 'h';
 
             return(
-                <tr key={entry.id} style={trStyle} className='small'>
+                <tr key={entry.id} style={trStyle} className='small' onClick={() => toggleEntryModal(false, entry)}>
                     <td><FormattedDate value={entryDate} /></td>
                     <td>{ageStr}</td>
                     <td dangerouslySetInnerHTML={{ __html: shortenRemarks }}></td>
@@ -57,5 +57,6 @@ export default function HistoryTaskTable({taskHistory}){
 }
 
 HistoryTaskTable.propTypes = {
-	taskHistory: PropTypes.array.isRequired,
+    taskHistory: PropTypes.array.isRequired,
+    toggleEntryModal: PropTypes.func.isRequired
 };

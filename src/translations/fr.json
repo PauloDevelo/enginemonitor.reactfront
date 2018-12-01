@@ -33,5 +33,8 @@
 	"remarks": "Remarques",
 	"modalEditTaskTitle": "Edition d'une tache",
 	"delete": "Supprimer",
-	"ack": "Acquitter"
+	"ack": "Acquitter",
+	"date": "Date",
+	"modalEditEntryTitle": "Edition d'une entrée",
+	"modalAckTitle": "Acquittement d'une tache"
 }
