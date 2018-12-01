@@ -27,9 +27,9 @@ class ModalEditTask extends React.Component {
 		}
 		
 		this.delete = this.delete.bind(this);
-		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.setDefaultState = this.setDefaultState.bind(this);
+		this.onInputChange = this.onInputChange.bind(this);
 	}
 	
 	setDefaultState(newProps) {
@@ -96,19 +96,13 @@ class ModalEditTask extends React.Component {
 		this.props.toggle();
 	}
 
-	handleChange(event) {
-		const target = event.target;
-		const value = target.type === 'checkbox' ? target.checked : target.value;
-		const name = target.name;
-		
-		this.setState(function(prevState, props){
-			return { [name]: value }
-		});
-		
+	onInputChange(name, newState){
 		if(this.state[name] === undefined){
 			console.log('The property ' + name + ' is not defined in the state:');
 			console.log(this.state);
 		}
+
+		this.setState((prevState, props) => newState);
 	}
 
   render() {
@@ -124,11 +118,11 @@ class ModalEditTask extends React.Component {
 		<Modal isOpen={this.props.visible} toggle={this.props.toggle} className={this.props.className}>
 			<ModalHeader toggle={this.props.toggle}>{title}</ModalHeader>
 			<ModalBody>
-				<MyForm submit={this.handleSubmit} id="createTaskForm">
-					<MyInput name="name" 		label={edittaskmsg.name} 		type="text" 	value={this.state.name} 		handleChange={this.handleChange} required/>
-					<MyInput name="engineHours" label={edittaskmsg.engineHours} type="number" 	value={this.state.engineHours} 	handleChange={this.handleChange} min={0} />
-					<MyInput name="month" 		label={edittaskmsg.month} 		type="number" 	value={this.state.month} 		handleChange={this.handleChange} min={1} required/>
-					<MyInput name="description" label={edittaskmsg.description} type="textarea" value={this.state.description} 	handleChange={this.handleChange} required />
+				<MyForm submit={this.handleSubmit} id="createTaskForm" onInputChange={this.onInputChange}>
+					<MyInput name="name" 		label={edittaskmsg.name} 		type="text" 	value={this.state.name} 		required/>
+					<MyInput name="engineHours" label={edittaskmsg.engineHours} type="number" 	value={this.state.engineHours} 	min={0} />
+					<MyInput name="month" 		label={edittaskmsg.month} 		type="number" 	value={this.state.month} 		min={1} required/>
+					<MyInput name="description" label={edittaskmsg.description} type="textarea" value={this.state.description} 	required />
 				</MyForm>
 			</ModalBody>
 			<ModalFooter>

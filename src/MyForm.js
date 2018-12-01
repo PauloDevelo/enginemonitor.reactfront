@@ -17,6 +17,7 @@ class MyForm extends Component {
 		this.validate = this.validate.bind(this);
 		this.submitHandler = this.submitHandler.bind(this);
 		this.setForm = this.setForm.bind(this);
+		this.handleInputChange = this.handleInputChange.bind(this);
 	}
 	
 	validate(){
@@ -26,8 +27,7 @@ class MyForm extends Component {
 	submitHandler(event){
 		event.preventDefault();
 
-		if (this.validate()) 
-		{
+		if (this.validate()){
 			this.props.submit();
 		}
 
@@ -36,6 +36,14 @@ class MyForm extends Component {
 	
 	setForm(form){
 		this.formEl = form;
+	}
+
+	handleInputChange(event) {
+		const target = event.target;
+		const value = target.type === 'checkbox' ? target.checked : target.value;
+		const name = target.name;
+
+		this.props.onInputChange(name, { [name]: value});
 	}
 
 	render() {
@@ -52,15 +60,23 @@ class MyForm extends Component {
 			classNames.push('.was-validated');
 		}
 
+		const { children } = this.props;
+		const childrenWithProps = React.Children.map(children, child =>{
+				var newProps = Object.assign({ handleChange: this.handleInputChange }, child.props);
+				return React.cloneElement(child, newProps);
+			}
+		);
+
 		return (
 			<Form innerRef={this.setForm} onSubmit={this.submitHandler} {...props} className={classNames.toString()} noValidate>
-				{this.props.children}
+				{childrenWithProps}
 			</Form>
 		);
 	}
 }
 
 MyForm.propTypes = {
+	onInputChange: PropTypes.isRequired,
 	children: PropTypes.node,
 	className: PropTypes.string,
 	submit: PropTypes.func.isRequired

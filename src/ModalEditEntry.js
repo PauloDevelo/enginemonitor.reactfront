@@ -27,9 +27,9 @@ class ModalEditEntry extends React.Component {
 		}
 		
 		this.delete = this.delete.bind(this);
-		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.setDefaultState = this.setDefaultState.bind(this);
+		this.onInputChange = this.onInputChange.bind(this);
 	}
 	
 	setDefaultState(newProps) {
@@ -81,19 +81,13 @@ class ModalEditEntry extends React.Component {
 		this.props.toggle();
 	}
 
-	handleChange(event) {
-		const target = event.target;
-		const value = target.type === 'checkbox' ? target.checked : target.value;
-		const name = target.name;
-		
-		this.setState(function(prevState, props){
-			return { [name]: value }
-		});
-		
+	onInputChange(name, newState){
 		if(this.state[name] === undefined){
 			console.log('The property ' + name + ' is not defined in the state:');
 			console.log(this.state);
 		}
+
+		this.setState((prevState, props) => newState);
 	}
 
     render() {
@@ -109,11 +103,11 @@ class ModalEditEntry extends React.Component {
             <Modal isOpen={this.props.visible} toggle={this.props.toggle} className={this.props.className}>
                 <ModalHeader toggle={this.props.toggle}>{title}</ModalHeader>
                 <ModalBody>
-                    <MyForm submit={this.handleSubmit} id="createTaskForm">
-                        <MyInput name="name" 	label={editentrymsg.name} 	    type="text" 	value={this.state.name} 	handleChange={this.handleChange} required/>
-                        <MyInput name="UTCDate" label={editentrymsg.date}       type="date" 	value={this.state.UTCDate} 	handleChange={this.handleChange} required/>
-                        <MyInput name="age" 	label={editentrymsg.engineAge} 	type="number" 	value={this.state.age} 		handleChange={this.handleChange} min={0} required/>
-                        <MyInput name="remarks" label={editentrymsg.remarks}    type="textarea" value={this.state.remarks} 	handleChange={this.handleChange} required />
+                    <MyForm submit={this.handleSubmit} id="createTaskForm" onInputChange={this.onInputChange}>
+                        <MyInput name="name" 	label={editentrymsg.name} 	    type="text" 	value={this.state.name} 	required/>
+                        <MyInput name="UTCDate" label={editentrymsg.date}       type="date" 	value={this.state.UTCDate} 	required/>
+                        <MyInput name="age" 	label={editentrymsg.engineAge} 	type="number" 	value={this.state.age} 		min={0} required/>
+                        <MyInput name="remarks" label={editentrymsg.remarks}    type="textarea" value={this.state.remarks} 	required />
                     </MyForm>
                 </ModalBody>
                 <ModalFooter>

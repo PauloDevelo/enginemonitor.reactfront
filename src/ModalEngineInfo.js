@@ -26,9 +26,9 @@ class ModalEngineInfo extends React.Component {
 			prevprops: props
 		}
 
-		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.setDefaultState = this.setDefaultState.bind(this);
+		this.onInputChange = this.onInputChange.bind(this);
 	}
 	
 	setDefaultState(newProps) {
@@ -77,26 +77,25 @@ class ModalEngineInfo extends React.Component {
 		this.props.toggle();
   	}
 	
-	handleChange(event) {
-		const target = event.target;
-		const value = target.type === 'checkbox' ? target.checked : target.value;
-		const name = target.name;
+	onInputChange(name, newState){
+		if(this.state[name] === undefined){
+			console.log('The property ' + name + ' is not defined in the state:');
+			console.log(this.state);
+		}
 
-		this.setState(function(prevState, props){
-			return { [name]: value }
-		});
-  	}
+		this.setState((prevState, props) => newState);
+	}
 
   render() {
     return (
 		<Modal isOpen={this.props.visible} toggle={this.props.toggle} className={this.props.className}>
 			<ModalHeader toggle={this.props.toggle}><FormattedMessage {...engineinfomsg.modalTitle} /></ModalHeader>
 			<ModalBody>
-				<MyForm submit={this.handleSubmit} id="formEngineInfo">
-					<MyInput name="brand" 			label={engineinfomsg.brand} 			type="text" 	value={this.state.brand} 		handleChange={this.handleChange} required/>
-					<MyInput name="model" 			label={engineinfomsg.model} 			type="text" 	value={this.state.model} 		handleChange={this.handleChange} required/>
-					<MyInput name="installation" 	label={engineinfomsg.installDateLabel} 	type="date" 	value={this.state.installation} handleChange={this.handleChange} required/>
-					<MyInput name="age" 			label={engineinfomsg.engineAge} 		type="number" 	value={this.state.age} 			handleChange={this.handleChange} required min={0} />
+				<MyForm submit={this.handleSubmit} id="formEngineInfo" onInputChange={this.onInputChange}>
+					<MyInput name="brand" 			label={engineinfomsg.brand} 			type="text" 	value={this.state.brand} 		required/>
+					<MyInput name="model" 			label={engineinfomsg.model} 			type="text" 	value={this.state.model} 		required/>
+					<MyInput name="installation" 	label={engineinfomsg.installDateLabel} 	type="date" 	value={this.state.installation} required/>
+					<MyInput name="age" 			label={engineinfomsg.engineAge} 		type="number" 	value={this.state.age} 			required min={0} />
 				</MyForm>
 			</ModalBody>
 			<ModalFooter>
