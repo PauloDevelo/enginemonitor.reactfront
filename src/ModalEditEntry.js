@@ -57,7 +57,7 @@ class ModalEditEntry extends React.Component {
 				UTCDate: convertDateOrDefault(nextProps.entry.UTCDate),
 				age: nextProps.entry.age,
 				remarks: nextProps.entry.remarks,
-				visible: nextProps.visible
+				prevprops: { visible: nextProps.visible}
 			};
 		}
 		else if(prevState.prevprops.visible === true && nextProps.visible === false){
