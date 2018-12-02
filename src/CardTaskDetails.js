@@ -32,7 +32,7 @@ function getBadgeText(level){
 	}
 }
 
-const CardTaskDetails = ({task, next, prev, toggleModal, nextVisibility, prevVisibility, toggleAckModal}) => {
+const CardTaskDetails = ({task, next, prev, toggleModal, nextVisibility, prevVisibility, toggleAckModal, classNames}) => {
     if (task === undefined){
         return <Card className="p-2 m-2 border border-primary rounded shadow"/>;
     }
@@ -56,7 +56,7 @@ const CardTaskDetails = ({task, next, prev, toggleModal, nextVisibility, prevVis
     if(!nextVisibility)
         nextClassNames += ' invisible';
 
-    return(<Card className="p-2 m-2 border border-primary rounded shadow">
+    return(<Card className={classNames}>
             <CardBody className="d-flex p-0">
                     <div className="p-2" onClick={prev} style={cursorPointerStyle}><div className={prevClassNames}></div></div>
                     <div className="p-2 flex-grow-1">
@@ -81,7 +81,8 @@ CardTaskDetails.propTypes = {
     prev: PropTypes.func.isRequired,
     prevVisibility: PropTypes.bool.isRequired,
     task: PropTypes.object,
-    toggleAckModal: PropTypes.func.isRequired
+    toggleAckModal: PropTypes.func.isRequired,
+    classNames: PropTypes.string
 };
 
 export default CardTaskDetails;

@@ -7,7 +7,7 @@ import { getContext, getTodoText, shorten } from './TaskHelper';
 
 const getTrContext = (level) => "table-" + getContext(level)
 
-export const TaskTable = ({tasks, changeCurrentTask, toggleModal}) => {
+export const TaskTable = ({tasks, changeCurrentTask, toggleModal, classNames}) => {
 	var listLines = [];
 	
 	if(tasks){
@@ -31,7 +31,7 @@ export const TaskTable = ({tasks, changeCurrentTask, toggleModal}) => {
 	}
 
 	return (
-		<div className="p-2 m-2 border border-primary rounded shadow">
+		<div className={classNames}>
 			<span className="mb-2"><b><FormattedMessage {...tasktablemsg.tasklistTitle} /></b>
 			<Button color="primary" size="sm" className="float-right mb-2" onClick={() => toggleModal() }><FormattedMessage {...tasktablemsg.createbutton} /></Button></span>
 			<Table responsive size="sm" hover>
@@ -54,6 +54,7 @@ TaskTable.propTypes = {
 	tasks: PropTypes.array.isRequired,
 	changeCurrentTask: PropTypes.func.isRequired,
 	toggleModal: PropTypes.func.isRequired,
+	classNames: PropTypes.string
 };
 
 export default TaskTable;

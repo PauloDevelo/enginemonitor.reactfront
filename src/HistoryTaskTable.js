@@ -11,7 +11,7 @@ import tasktablemsg from "./TaskTable.messages";
 
 import { shorten } from './TaskHelper'; 
 
-export default function HistoryTaskTable({taskHistory, toggleEntryModal}){
+export default function HistoryTaskTable({taskHistory, toggleEntryModal, classNames}){
     var history = [];
     if(taskHistory){
         const trStyle = {
@@ -39,7 +39,7 @@ export default function HistoryTaskTable({taskHistory, toggleEntryModal}){
     }
 
     return(
-        <div className="p-2 m-2 border border-primary rounded shadow">
+        <div className={classNames}>
             <Table responsive size="sm" hover>
                 <thead className="thead-light">
                     <tr>
@@ -58,5 +58,6 @@ export default function HistoryTaskTable({taskHistory, toggleEntryModal}){
 
 HistoryTaskTable.propTypes = {
     taskHistory: PropTypes.array.isRequired,
-    toggleEntryModal: PropTypes.func.isRequired
+    toggleEntryModal: PropTypes.func.isRequired,
+    classNames: PropTypes.string
 };

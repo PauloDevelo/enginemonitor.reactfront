@@ -42,7 +42,7 @@ class EngineInfo extends Component {
 	
     render() {
         return (
-            <div className="p-2 m-2 border border-primary rounded shadow">
+            <div className={this.props.classNames}>
 				<span className="small mb-3">
 					<FormattedMessage {...engineinfomsg.today} />
 					<FormattedDate value={this.state.currentDate} />
@@ -68,6 +68,7 @@ EngineInfo.propTypes = {
 	model: PropTypes.string,
 	age: PropTypes.number,
 	toggleModal: PropTypes.func.isRequired,
+	classNames: PropTypes.string
 };
 
 export default EngineInfo;

@@ -235,6 +235,7 @@ class App extends Component {
 	}
     
 	render() {
+		var panelClassNames = "p-2 m-2 border border-primary rounded shadow";
 		var prevVisibility = this.state.currentTaskIndex > 0;
 		var nextVisibility = this.state.currentTaskIndex < this.state.tasks.length - 1;
 		return (
@@ -245,10 +246,12 @@ class App extends Component {
 									model={this.state.model} 
 									age={this.state.age} 
 									installation={this.state.installation} 
-									toggleModal={this.toggleModalEngineInfo}/>
+									toggleModal={this.toggleModalEngineInfo}
+									classNames={panelClassNames}/>
 						<TaskTable 	tasks={this.state.tasks} 
 									toggleModal={() => this.toggleModalEditTask(true)} 
-									changeCurrentTask={this.changeCurrentTask}/>
+									changeCurrentTask={this.changeCurrentTask}
+									classNames={panelClassNames}/>
 					</div>
 					<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
 						<CardTaskDetails 	task={this.state.currentTask} 
@@ -257,9 +260,11 @@ class App extends Component {
 											prev={this.previousTask} 
 											prevVisibility={prevVisibility} 
 											nextVisibility={nextVisibility} 
-											toggleAckModal={()=>this.toggleModalEditEntry(true)}/>
+											toggleAckModal={()=>this.toggleModalEditEntry(true)}
+											classNames={panelClassNames}/>
 						<HistoryTaskTable 	taskHistory={this.state.currentHistoryTask} 
-											toggleEntryModal={this.toggleModalEditEntry}/>
+											toggleEntryModal={this.toggleModalEditEntry}
+											classNames={panelClassNames}/>
 					</div>
 				</div>
 				
