@@ -7,20 +7,8 @@ import ModalEditTask from './ModalEditTask';
 import HistoryTaskTable from './HistoryTaskTable'
 import CardTaskDetails from './CardTaskDetails'
 
-import {formatDateInUTC} from './Helpers' 
-
-import axios from "axios";
-import axiosRetry from 'axios-retry';
 import ModalEditEntry from './ModalEditEntry';
-
-var mode = 'dev'; //prod or demo
-var baseUrl = "http://localhost:8081";
-if(mode === 'prod'){
-	baseUrl = "http://arbutuspi:8080";
-}
-else if(mode === 'demo'){
-	baseUrl = "http://192.168.0.50:8080";
-}
+import EngineMonitorServiceProvider from './EngineMonitorServiceProvider';
 
 function createDefaultEntry(state){
 	return {
@@ -32,6 +20,9 @@ function createDefaultEntry(state){
 }
 
 class App extends Component {
+
+	enginemonitorserviceprov= new EngineMonitorServiceProvider();
+
 	constructor(props) {
 		super(props);
 
@@ -77,7 +68,7 @@ class App extends Component {
 		this.createOrSaveEntry = this.createOrSaveEntry.bind(this);
 		this.deleteEntry = this.deleteEntry.bind(this);
 		
-		axiosRetry(axios, { retries: 60, retryDelay: () => 1000 });
+		
 	}
 
 	toggleModalEditEntry(isCreationMode, entry) {
@@ -95,7 +86,7 @@ class App extends Component {
   	}
 	
 	toggleModalEngineInfo() {
-    	this.setState((prevState, props) => { return { modalEngineInfo: !prevState.modalEngineInfo }; });
+    	this.setState((prevState, props) => {return { modalEngineInfo: !prevState.modalEngineInfo }})
   	}
 	
 	toggleModalEditTask(isCreationMode) {
@@ -106,89 +97,58 @@ class App extends Component {
 				}
 			});
 	}
-	  
-	
 	
 	saveEngineInfo(engineInfo){
-		engineInfo.installation = formatDateInUTC(engineInfo.installation);
-		axios.post(baseUrl + "/engine-monitor/webapi/enginemaintenance/engineinfo", engineInfo)
-		.then(response => {
-			this.setState(
-				function (prevState, props){
+		this.enginemonitorserviceprov.saveEngineInfo(engineInfo,
+			(newEngineInfo) => {
+				this.setState((prevState, props) => {
 					return { 
-						brand: response.data.brand,
-						model: response.data.model,
-						age: response.data.age,
-						installation: new Date(response.data.installation)
+						brand: newEngineInfo.brand,
+						model: newEngineInfo.model,
+						age: newEngineInfo.age,
+						installation: new Date(newEngineInfo.installation)
 					}
-				});
-		})
-		.catch(error => {
-			console.log( error );
-		});
+				})
+			});
 	}
 
 	refreshEngineInfo(){
-		axios
-      	.get(baseUrl + "/engine-monitor/webapi/enginemaintenance/engineinfo")
-      	.then(response => {
-        	// create a new "State" object without mutating 
-			// the original State object. 
-			const newState = Object.assign({}, this.state, {
-				brand: response.data.brand,
-				model: response.data.model,
-				age: response.data.age,
-				installation: new Date(response.data.installation)
-			});
-
-			// store the new state object in the component's state
-			this.setState((prevState, props) => newState);
-      	})
-      	.catch(error => {
-			console.log( error );
-		
-			const newState = Object.assign({}, this.state, {
-				brand: undefined,
-				model: undefined,
-				age: undefined,
-				installation: Date.now()
-			});
-
-			// store the new state object in the component's state
-			this.setState((prevState, props) => newState);
-		});
+		this.enginemonitorserviceprov.refreshEngineInfo(
+			(newEngineInfo) => {
+				this.setState((prevState, props) => { 
+					return {
+						brand: newEngineInfo.brand,
+						model: newEngineInfo.model,
+						age: newEngineInfo.age,
+						installation: new Date(newEngineInfo.installation)
+					}
+				});
+			},
+			() => {
+				this.setState((prevState, props) => {
+					return {
+						brand: undefined,
+						model: undefined,
+						age: undefined,
+						installation: Date.now()
+					}
+				});
+			}
+		);
 	}
 	
 	createOrSaveTask(task){
-		axios
-		.post(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks", task)
-		.then(response => {
-			this.refreshTaskList(() => this.changeCurrentTask(response.data));
-		})
-		.catch(error => {
-			console.log( error );
-		});
+		this.enginemonitorserviceprov.createOrSaveTask(
+			(newTask) => this.refreshTaskList(() => this.changeCurrentTask(newTask))
+		);
 	}
 
 	deleteTask(complete){
-		var nextTaskIndex = 0
-		if(this.state.currentTaskIndex === this.state.tasks.length - 1)
-			nextTaskIndex = this.state.currentTaskIndex - 1;
-		else
-			nextTaskIndex = this.state.currentTaskIndex;
+		var nextTaskIndex = (this.state.currentTaskIndex === this.state.tasks.length - 1)?this.state.currentTaskIndex - 1:this.state.currentTaskIndex
 
-		axios
-		.delete(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks/" + this.state.editedTask.id)
-		.then(response => {
-			this.refreshTaskList(()=>{
-				if(nextTaskIndex >= 0){
-					this.changeCurrentTaskIndex(nextTaskIndex);
-				}
-			});
-		})
-		.catch(error => {
-			console.log( error );
-		});
+		this.enginemonitorserviceprov.deleteTask(this.state.editedTask.id,
+			() => this.refreshTaskList(() => this.changeCurrentTaskIndex(nextTaskIndex))
+		);
 	}
 	
 	nextTask(){
@@ -214,131 +174,107 @@ class App extends Component {
 
 		var newCurrentTask = this.state.tasks[newTaskIndex];
 		var newCurrentTaskId = newCurrentTask.id;
-		axios
-      	.get(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks/" + newCurrentTaskId + "/historic")
-      	.then(response => {	
-			response.data.forEach(entry => {
-				entry.UTCDate = new Date(entry.UTCDate)
-			});
-			// create a new "State" object without mutating 
-			// the original State object.
-			const newState = Object.assign({}, this.state, {
-				currentHistoryTask: response.data,
-				currentTaskIndex: newTaskIndex,
-				currentTask: newCurrentTask
-			});
 
-			// store the new state object in the component's state
-			this.setState(function(prevState, props){ return newState; });
-      	})
-      	.catch(error => {
-			console.log( error );
-		
-			const newState = Object.assign({}, this.state, {
-				currentHistoryTask: [],
-				currentTaskIndex: newTaskIndex,
-				currentTask: newCurrentTask
-			});
-
-			// store the new state object in the component's state
-			this.setState(function(prevState, props){ return newState; });
-		});
+		this.enginemonitorserviceprov.refreshHistoryTask(newCurrentTaskId,
+			(newHistoryTask) => {
+				newHistoryTask.forEach(entry => {
+					entry.UTCDate = new Date(entry.UTCDate)
+				});
+			
+				this.setState(function(prevState, props){ 
+					return {
+						currentHistoryTask: newHistoryTask,
+						currentTaskIndex: newTaskIndex,
+						currentTask: newCurrentTask
+					}; 
+				});
+			},
+			() => {
+				this.setState(function(prevState, props){ 
+					return {
+						currentHistoryTask: [],
+						currentTaskIndex: newTaskIndex,
+						currentTask: newCurrentTask
+					}; 
+				});
+			}
+		);
 	}
 	
 	refreshTaskList(complete){
-		axios
-      	.get(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks")
-      	.then(response => {	
-			// store the new state object in the component's state
-			this.setState((prevState, props) => {
-					var newCurrentTaskIndex = prevState.currentTask?response.data.findIndex(task => task.id === prevState.currentTask.id):0;
+		this.enginemonitorserviceprov.refreshTaskList(
+			(newTaskList) => {
+				// store the new state object in the component's state
+				this.setState(
+					(prevState, props) => {
+						var newCurrentTaskIndex = prevState.currentTask?newTaskList.findIndex(task => task.id === prevState.currentTask.id):0;
+						return {
+							tasks: newTaskList,
+							currentTask: newTaskList[newCurrentTaskIndex],
+							currentTaskIndex: newCurrentTaskIndex
+						}
+					},
+					() =>{
+						if(complete !== undefined && typeof complete === "function")complete();
+					}
+				);
+			},
+			() => {
+				// store the new state object in the component's state
+				this.setState((prevState, props) => { 
 					return {
-						tasks: response.data,
-						currentTask: response.data[newCurrentTaskIndex],
-						currentTaskIndex: newCurrentTaskIndex
-					}
-				},
-				() =>{
-					if(complete !== undefined && typeof complete === "function"){
-						complete();
-					}
-				}
-			);
-      	})
-      	.catch(error => {
-			console.log( error );
-		
-			const newState = Object.assign({}, this.state, {
-				tasks: [],
-				currentTask: undefined,
-				currentTaskIndex: undefined
-			});
-
-			// store the new state object in the component's state
-			this.setState(function(prevState, props){ return newState; });
-		});
+						tasks: [],
+						currentTask: undefined,
+						currentTaskIndex: undefined
+					}; 
+				});
+			}
+		);
 	}
 
 	createOrSaveEntry(entry, complete){
-		entry.UTCDate = formatDateInUTC(entry.UTCDate);
-		axios
-		.post(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks/" + this.state.currentTask.id + "/historic", entry)
-		.then(response => {
-			response.data.UTCDate = new Date(response.data.UTCDate);
+		this.enginemonitorserviceprov.createOrSaveEntry(this.state.currentTask.id, entry, 
+			(newEntry) => {
+				newEntry.UTCDate = new Date(newEntry.UTCDate);
 
-			this.refreshTaskList();
-			this.setState((prevState, props) => {
-				var newCurrentHistoryTask = prevState.currentHistoryTask.filter(entry => entry.id !== response.data.id);
-				
-				newCurrentHistoryTask.unshift(response.data);
-				newCurrentHistoryTask.sort((entrya, entryb) => {
-					return entrya.UTCDate - entryb.UTCDate;
-				});
+				this.refreshTaskList();
+				this.setState((prevState, props) => {
+					var newCurrentHistoryTask = prevState.currentHistoryTask.filter(entry => entry.id !== newEntry.id);
+					newCurrentHistoryTask.unshift(newEntry);
+					newCurrentHistoryTask.sort((entrya, entryb) => { return entrya.UTCDate - entryb.UTCDate; });
 
-				return({ 
-						currentHistoryTask: newCurrentHistoryTask
-					});
-				},
-				() => {
-					if(complete && typeof complete === 'function')
-						complete();
-				}
-			)
-		})
-		.catch(error => {
-			console.log( error );
-		});
+					return({ currentHistoryTask: newCurrentHistoryTask });
+					},
+					() => {
+						if(complete && typeof complete === 'function')complete();
+					}
+				)
+			}
+		);
 	}
 	
 	deleteEntry(entryId, complete){
-		axios
-		.delete(baseUrl + "/engine-monitor/webapi/enginemaintenance/tasks/" + this.state.currentTask.id + "/historic/" + entryId)
-		.then(response => {
-			this.refreshTaskList();
-			this.setState((prevState, props) => {
-				return({ 
-						currentHistoryTask: prevState.currentHistoryTask.slice(0).filter(e => e.id !== entryId) 
-					});
-				},
-				() => {
-					if(complete && typeof complete === 'function')
-						complete();
-				}
-			);
-		})	
-		.catch(error => {
-			console.log( error );
-		});
+		this.enginemonitorserviceprov.deleteEntry(this.state.currentTask.id, entryId, 
+			() => {
+				this.refreshTaskList();
+				this.setState((prevState, props) => {
+						return({ currentHistoryTask: prevState.currentHistoryTask.slice(0).filter(e => e.id !== entryId) });
+					},
+					() => {
+						if(complete && typeof complete === 'function')complete();
+					}
+				);
+			}
+		);
 	}
 
 	componentDidMount() {
 		this.refreshEngineInfo();
-		this.refreshTaskList(() => 
-			{
-				if (this.state.currentTaskIndex === undefined){
-					this.changeCurrentTaskIndex(0);
-				}
-			});
+		this.refreshTaskList(() => {
+			if (this.state.currentTaskIndex === undefined){
+				this.changeCurrentTaskIndex(0);
+			}
+		});
 	}
     
 	render() {
