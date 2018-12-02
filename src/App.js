@@ -49,29 +49,9 @@ class App extends Component {
 				remarks: '',
 			}
 		};
-
-		this.toggleModalEngineInfo = this.toggleModalEngineInfo.bind(this);
-		this.toggleModalEditTask = this.toggleModalEditTask.bind(this);
-		this.toggleModalEditEntry = this.toggleModalEditEntry.bind(this);
-
-		this.saveEngineInfo = this.saveEngineInfo.bind(this);
-		this.refreshEngineInfo = this.refreshEngineInfo.bind(this);
-
-		this.refreshTaskList = this.refreshTaskList.bind(this);
-		this.createOrSaveTask = this.createOrSaveTask.bind(this);
-		this.changeCurrentTaskIndex = this.changeCurrentTaskIndex.bind(this);
-		this.changeCurrentTask = this.changeCurrentTask.bind(this);
-		this.deleteTask = this.deleteTask.bind(this);
-		this.nextTask = this.nextTask.bind(this);
-		this.previousTask = this.previousTask.bind(this);
-
-		this.createOrSaveEntry = this.createOrSaveEntry.bind(this);
-		this.deleteEntry = this.deleteEntry.bind(this);
-		
-		
 	}
 
-	toggleModalEditEntry(isCreationMode, entry) {
+	toggleModalEditEntry = (isCreationMode, entry) => {
     	this.setState((prevState, props) => { 
 			var newState = { 
 				modalEditEntry: !prevState.modalEditEntry
@@ -85,35 +65,26 @@ class App extends Component {
 		});
   	}
 	
-	toggleModalEngineInfo() {
-    	this.setState((prevState, props) => {return { modalEngineInfo: !prevState.modalEngineInfo }})
-  	}
+	toggleModalEngineInfo = () => this.setState((prevState, props) => {return { modalEngineInfo: !prevState.modalEngineInfo }});
 	
-	toggleModalEditTask(isCreationMode) {
-    	this.setState( (prevState, props) => {
-				return { 
-					modalEditTask: !prevState.modalEditTask,
-					editedTask: isCreationMode?undefined:prevState.currentTask
-				}
-			});
-	}
+	toggleModalEditTask = (isCreationMode) => this.setState( (prevState, props) => {
+													return { 
+														modalEditTask: !prevState.modalEditTask,
+														editedTask: isCreationMode?undefined:prevState.currentTask
+													}
+												});
 	
-	saveEngineInfo(engineInfo){
-		this.enginemonitorserviceprov.saveEngineInfo(engineInfo,
-			(newEngineInfo) => {
-				this.setState((prevState, props) => {
-					return { 
-						brand: newEngineInfo.brand,
-						model: newEngineInfo.model,
-						age: newEngineInfo.age,
-						installation: new Date(newEngineInfo.installation)
-					}
-				})
-			});
-	}
+	
+	saveEngineInfo = (engineInfo) => this.enginemonitorserviceprov.saveEngineInfo(engineInfo, (newEngineInfo) => {
+																								this.setState((prevState, props) => {
+																									return { 
+																										brand: newEngineInfo.brand,
+																										model: newEngineInfo.model,
+																										age: newEngineInfo.age,
+																										installation: new Date(newEngineInfo.installation)
+																									}})});
 
-	refreshEngineInfo(){
-		this.enginemonitorserviceprov.refreshEngineInfo(
+	refreshEngineInfo = () => this.enginemonitorserviceprov.refreshEngineInfo(
 			(newEngineInfo) => {
 				this.setState((prevState, props) => { 
 					return {
@@ -135,15 +106,12 @@ class App extends Component {
 				});
 			}
 		);
-	}
 	
-	createOrSaveTask(task){
-		this.enginemonitorserviceprov.createOrSaveTask(
-			(newTask) => this.refreshTaskList(() => this.changeCurrentTask(newTask))
-		);
-	}
+	
+	createOrSaveTask = (task) => this.enginemonitorserviceprov.createOrSaveTask((newTask) => this.refreshTaskList(() => this.changeCurrentTask(newTask)));
+	
 
-	deleteTask(complete){
+	deleteTask = (complete) => {
 		var nextTaskIndex = (this.state.currentTaskIndex === this.state.tasks.length - 1)?this.state.currentTaskIndex - 1:this.state.currentTaskIndex
 
 		this.enginemonitorserviceprov.deleteTask(this.state.editedTask.id,
@@ -151,22 +119,17 @@ class App extends Component {
 		);
 	}
 	
-	nextTask(){
-		this.changeCurrentTaskIndex(this.state.currentTaskIndex + 1);
-	}
+	nextTask = () => this.changeCurrentTaskIndex(this.state.currentTaskIndex + 1);
+	previousTask = ()=> this.changeCurrentTaskIndex(this.state.currentTaskIndex - 1);
 
-	previousTask(){
-		this.changeCurrentTaskIndex(this.state.currentTaskIndex - 1);
-	}
-
-	changeCurrentTask(task){
+	changeCurrentTask = (task) => {
 		if(task !== this.state.currentTask){
 			var newCurrentTaskIndex = this.state.tasks.findIndex((t, ind, tab) => t.id === task.id);
 			this.changeCurrentTaskIndex(newCurrentTaskIndex);
 		}
 	}
 
-	changeCurrentTaskIndex(newTaskIndex){
+	changeCurrentTaskIndex = (newTaskIndex) => {
 		if(newTaskIndex < 0 || newTaskIndex >= this.state.tasks.length){
 			console.log('Index out of bound: ' + newTaskIndex);
 			return;
@@ -201,8 +164,7 @@ class App extends Component {
 		);
 	}
 	
-	refreshTaskList(complete){
-		this.enginemonitorserviceprov.refreshTaskList(
+	refreshTaskList = (complete) => this.enginemonitorserviceprov.refreshTaskList(
 			(newTaskList) => {
 				// store the new state object in the component's state
 				this.setState(
@@ -230,10 +192,8 @@ class App extends Component {
 				});
 			}
 		);
-	}
 
-	createOrSaveEntry(entry, complete){
-		this.enginemonitorserviceprov.createOrSaveEntry(this.state.currentTask.id, entry, 
+	createOrSaveEntry = (entry, complete) => this.enginemonitorserviceprov.createOrSaveEntry(this.state.currentTask.id, entry, 
 			(newEntry) => {
 				newEntry.UTCDate = new Date(newEntry.UTCDate);
 
@@ -251,10 +211,8 @@ class App extends Component {
 				)
 			}
 		);
-	}
 	
-	deleteEntry(entryId, complete){
-		this.enginemonitorserviceprov.deleteEntry(this.state.currentTask.id, entryId, 
+	deleteEntry = (entryId, complete) => this.enginemonitorserviceprov.deleteEntry(this.state.currentTask.id, entryId, 
 			() => {
 				this.refreshTaskList();
 				this.setState((prevState, props) => {
@@ -266,7 +224,6 @@ class App extends Component {
 				);
 			}
 		);
-	}
 
 	componentDidMount() {
 		this.refreshEngineInfo();
