@@ -14,7 +14,7 @@ function createDefaultEntry(state){
 	return {
 		name: state.currentTask.name,
 		UTCDate: new Date(),
-		age: state.age,
+		age: state.engineInfo.age,
 		remarks: '',
 	}
 }
@@ -31,10 +31,7 @@ class App extends Component {
 			modalEditTask: false,
 			modalEditEntry: false,
 
-			brand: undefined,
-			model: undefined,
-			age: undefined,
-			installation: new Date(),
+			engineInfo: undefined,
 			
 			tasks:[],
 			currentTaskIndex:undefined,
@@ -76,37 +73,19 @@ class App extends Component {
 	
 	
 	saveEngineInfo = (engineInfo) => this.enginemonitorserviceprov.saveEngineInfo(engineInfo, (newEngineInfo) => {
-																								this.setState((prevState, props) => {
-																									return { 
-																										brand: newEngineInfo.brand,
-																										model: newEngineInfo.model,
-																										age: newEngineInfo.age,
-																										installation: new Date(newEngineInfo.installation)
-																									}})});
+		newEngineInfo.installation = new Date(newEngineInfo.installation);
+		this.setState((prevState, props) => { return { engineInfo:newEngineInfo } });
+	});
 
 	refreshEngineInfo = () => this.enginemonitorserviceprov.refreshEngineInfo(
-			(newEngineInfo) => {
-				this.setState((prevState, props) => { 
-					return {
-						brand: newEngineInfo.brand,
-						model: newEngineInfo.model,
-						age: newEngineInfo.age,
-						installation: new Date(newEngineInfo.installation)
-					}
-				});
-			},
-			() => {
-				this.setState((prevState, props) => {
-					return {
-						brand: undefined,
-						model: undefined,
-						age: undefined,
-						installation: Date.now()
-					}
-				});
-			}
-		);
-	
+		(newEngineInfo) => {
+			newEngineInfo.installation = new Date(newEngineInfo.installation);
+			this.setState((prevState, props) => { return { engineInfo:newEngineInfo } });
+		},
+		() => {
+			this.setState((prevState, props) => { return { engineInfo: undefined } });
+		}
+	);
 	
 	createOrSaveTask = (task) => this.enginemonitorserviceprov.createOrSaveTask(task, (newtask) => this.refreshTaskList(() => this.changeCurrentTask(newtask)));
 	
@@ -120,6 +99,7 @@ class App extends Component {
 	}
 	
 	nextTask = () => this.changeCurrentTaskIndex(this.state.currentTaskIndex + 1);
+
 	previousTask = ()=> this.changeCurrentTaskIndex(this.state.currentTaskIndex - 1);
 
 	changeCurrentTask = (task) => {
@@ -165,33 +145,33 @@ class App extends Component {
 	}
 	
 	refreshTaskList = (complete) => this.enginemonitorserviceprov.refreshTaskList(
-			(newTaskList) => {
-				// store the new state object in the component's state
-				this.setState(
-					(prevState, props) => {
-						var newCurrentTaskIndex = prevState.currentTask?newTaskList.findIndex(task => task.id === prevState.currentTask.id):0;
-						return {
-							tasks: newTaskList,
-							currentTask: newTaskList[newCurrentTaskIndex],
-							currentTaskIndex: newCurrentTaskIndex
-						}
-					},
-					() =>{
-						if(complete !== undefined && typeof complete === "function")complete();
-					}
-				);
-			},
-			() => {
-				// store the new state object in the component's state
-				this.setState((prevState, props) => { 
+		(newTaskList) => {
+			// store the new state object in the component's state
+			this.setState(
+				(prevState, props) => {
+					var newCurrentTaskIndex = prevState.currentTask?newTaskList.findIndex(task => task.id === prevState.currentTask.id):0;
 					return {
-						tasks: [],
-						currentTask: undefined,
-						currentTaskIndex: undefined
-					}; 
-				});
-			}
-		);
+						tasks: newTaskList,
+						currentTask: newTaskList[newCurrentTaskIndex],
+						currentTaskIndex: newCurrentTaskIndex
+					}
+				},
+				() =>{
+					if(complete !== undefined && typeof complete === "function")complete();
+				}
+			);
+		},
+		() => {
+			// store the new state object in the component's state
+			this.setState((prevState, props) => { 
+				return {
+					tasks: [],
+					currentTask: undefined,
+					currentTaskIndex: undefined
+				}; 
+			});
+		}
+	);
 
 	createOrSaveEntry = (entry, complete) => this.enginemonitorserviceprov.createOrSaveEntry(this.state.currentTask.id, entry, 
 			(newEntry) => {
@@ -242,10 +222,7 @@ class App extends Component {
 			<div>
 				<div id="root" className="d-flex flex-wrap flex-row mb-3">
 					<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
-						<EngineInfo brand={this.state.brand} 
-									model={this.state.model} 
-									age={this.state.age} 
-									installation={this.state.installation} 
+						<EngineInfo data={this.state.engineInfo} 
 									toggleModal={this.toggleModalEngineInfo}
 									classNames={panelClassNames}/>
 						<TaskTable 	tasks={this.state.tasks} 
@@ -271,10 +248,7 @@ class App extends Component {
 				<ModalEngineInfo visible={this.state.modalEngineInfo} 
 					toggle={this.toggleModalEngineInfo} 
 					save={this.saveEngineInfo} 
-					brand={this.state.brand} 
-					model={this.state.model} 
-					age={this.state.age} 
-					installation={this.state.installation}
+					data={this.state.engineInfo}
 				/>
 				<ModalEditTask visible={this.state.modalEditTask} 
 					toggle={this.toggleModalEditTask} 

@@ -25,10 +25,10 @@ class ModalEngineInfo extends React.Component {
 	static getDerivedStateFromProps(nextProps, prevState){
 		if(prevState.prevprops.visible === false && nextProps.visible === true){
 			var newEngineInfo = {
-				brand: nextProps.brand,
-				model: nextProps.model,
-				age: nextProps.age,
-				installation: nextProps.installation.toISOString().substr(0, 10),
+				brand: nextProps.data.brand,
+				model: nextProps.data.model,
+				age: nextProps.data.age,
+				installation: nextProps.data.installation.toISOString().substr(0, 10),
 				
 				prevprops: nextProps
 			};
@@ -88,10 +88,7 @@ ModalEngineInfo.propTypes = {
 	toggle: PropTypes.func.isRequired,
 	save: PropTypes.func.isRequired,
 	className: PropTypes.string,
-	brand: PropTypes.string,
-	model: PropTypes.string,
-	age: PropTypes.number,
-	installation: PropTypes.object
+	data: PropTypes.object
 };
 
 export default ModalEngineInfo;
