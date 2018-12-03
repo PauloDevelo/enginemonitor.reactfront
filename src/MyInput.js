@@ -31,7 +31,7 @@ class MyInput extends Component {
 	
 	onChangeHandler(event){
 		this.validate();
-		this.props.handleChange(event);
+		if(typeof this.props.handleChange === 'function')this.props.handleChange(event);
 	}
 	
 	setInputElem(inputElem){
@@ -74,8 +74,7 @@ MyInput.propTypes = {
 	type: PropTypes.string.isRequired,
 	required: PropTypes.bool,
 	value: PropTypes.any.isRequired,
-	placeholder: PropTypes.string,
-	handleChange: PropTypes.func.isRequired
+	placeholder: PropTypes.string
 };
 
 export default MyInput;

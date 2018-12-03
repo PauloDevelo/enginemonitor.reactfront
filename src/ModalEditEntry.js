@@ -25,26 +25,6 @@ class ModalEditEntry extends React.Component {
 			
 			prevprops: { visible: false }
 		}
-		
-		this.delete = this.delete.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.setDefaultState = this.setDefaultState.bind(this);
-		this.onInputChange = this.onInputChange.bind(this);
-	}
-	
-	setDefaultState(newProps) {
-		if (newProps.name !== undefined){
-			this.setState(function(prevState, props){
-				return {
-                    name: newProps.name,
-                    UTCDate: newProps.UTCDate.toISOString().substr(0, 10),
-                    age: newProps.age,
-                    remarks: newProps.remarks,
-					
-					prevprops: { visible: newProps.visible }
-				};
-			});
-		}
 	}
 	
 	static getDerivedStateFromProps(nextProps, prevState){
@@ -68,7 +48,7 @@ class ModalEditEntry extends React.Component {
 		}
 	}
 
-	handleSubmit(event) {
+	handleSubmit = (event) => {
 		var currentState = Object.assign({}, this.state);
         currentState.UTCDate = new Date(this.state.UTCDate);
         
@@ -76,12 +56,12 @@ class ModalEditEntry extends React.Component {
 		this.props.toggle();
 	}
 	
-	delete(){
+	delete = () => {
 		this.props.delete(this.props.entry.id);
 		this.props.toggle();
 	}
 
-	onInputChange(name, newState){
+	onInputChange = (name, newState) => {
 		if(this.state[name] === undefined){
 			console.log('The property ' + name + ' is not defined in the state:');
 			console.log(this.state);
@@ -90,7 +70,7 @@ class ModalEditEntry extends React.Component {
 		this.setState((prevState, props) => newState);
 	}
 
-    render() {
+    render = () => {
         var title = undefined;
         if (this.props.entry.id === undefined){
             title = <FormattedMessage {...editentrymsg.modalAckTitle} />

@@ -13,18 +13,11 @@ class MyForm extends Component {
 		this.state = {
 			isValidated: false
 		}
-		
-		this.validate = this.validate.bind(this);
-		this.submitHandler = this.submitHandler.bind(this);
-		this.setForm = this.setForm.bind(this);
-		this.handleInputChange = this.handleInputChange.bind(this);
 	}
 	
-	validate(){
-		return this.formEl.checkValidity() === true;
-	}
+	validate = () => this.formEl.checkValidity() === true
 
-	submitHandler(event){
+	submitHandler = (event) => {
 		event.preventDefault();
 
 		if (this.validate()){
@@ -34,11 +27,9 @@ class MyForm extends Component {
 		this.setState({isValidated: true});
 	}
 	
-	setForm(form){
-		this.formEl = form;
-	}
+	setForm = (form) => this.formEl = form;
 
-	handleInputChange(event) {
+	handleInputChange = (event) => {
 		const target = event.target;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 		const name = target.name;
@@ -76,7 +67,7 @@ class MyForm extends Component {
 }
 
 MyForm.propTypes = {
-	onInputChange: PropTypes.isRequired,
+	onInputChange: PropTypes.func.isRequired,
 	children: PropTypes.node,
 	className: PropTypes.string,
 	submit: PropTypes.func.isRequired

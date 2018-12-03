@@ -7,27 +7,26 @@ import { getContext, getTodoText, shorten } from './TaskHelper';
 
 const getTrContext = (level) => "table-" + getContext(level)
 
+const TaskLine = ({task, trStyle, onClick}) => {
+	var shortenDescription = shorten(task.description.replace(/\n/g,'<br />'));
+	var todoText = getTodoText(task)		
+	var classNames = getTrContext(task.level) + " small";
+		
+	return(
+		<tr style={trStyle} className={classNames} onClick={() => onClick() }>
+			<td>{task.name}</td>
+			<td>{todoText}</td>
+			<td><div dangerouslySetInnerHTML={{ __html: shortenDescription }} /></td>
+		</tr>
+	);
+}
+
 export const TaskTable = ({tasks, changeCurrentTask, toggleModal, classNames}) => {
 	var listLines = [];
 	
 	if(tasks){
-		const trStyle = {
-			cursor: 'pointer',
-		};
-
-		listLines = tasks.map((task) => {
-			var shortenDescription = shorten(task.description.replace(/\n/g,'<br />'));
-			var todoText = getTodoText(task)		
-			var classNames = getTrContext(task.level) + " small";
-				
-			return(
-				<tr key={task.id} style={trStyle} className={classNames} onClick={() => changeCurrentTask(task) }>
-					<td>{task.name}</td>
-					<td>{todoText}</td>
-					<td><div dangerouslySetInnerHTML={{ __html: shortenDescription }} /></td>
-				</tr>
-			);
-		});
+		const trStyle = { cursor: 'pointer' };
+		listLines = tasks.map((task) => <TaskLine key={task.id} task={task} trStyle={trStyle} onClick={() => changeCurrentTask(task) } /> );
 	}
 
 	return (

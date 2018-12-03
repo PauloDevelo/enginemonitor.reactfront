@@ -1,11 +1,6 @@
 import React from 'react';
-
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
-import { 
-	FormattedMessage,
-} from 'react-intl';
-
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import edittaskmsg from "./ModalEditTask.messages";
@@ -25,28 +20,8 @@ class ModalEditTask extends React.Component {
 			
 			prevprops: { visible: false }
 		}
-		
-		this.delete = this.delete.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.setDefaultState = this.setDefaultState.bind(this);
-		this.onInputChange = this.onInputChange.bind(this);
 	}
-	
-	setDefaultState(newProps) {
-		if (newProps.name !== undefined){
-			this.setState(function(prevState, props){
-				return {
-					name: newProps.name,
-					engineHours: newProps.engineHours,
-					month: newProps.month,
-					description: newProps.description,
-					
-					prevprops: { visible: newProps.visible }
-				};
-			});
-		}
-	}
-	
+
 	static getDerivedStateFromProps(nextProps, prevState){
 		if(prevState.prevprops.visible === false && nextProps.visible === true){
 			var newTask = undefined;
@@ -83,7 +58,7 @@ class ModalEditTask extends React.Component {
 		}
 	}
 
-	handleSubmit(event) {
+	handleSubmit = (event) => {
 		var currentState = Object.assign({}, this.state);
 		currentState.engineHours = currentState.engineHours <= 0 || currentState.engineHours === undefined ? -1 :currentState.engineHours;
 
@@ -91,12 +66,12 @@ class ModalEditTask extends React.Component {
 		this.props.toggle();
 	}
 	
-	delete(){
+	delete = () => {
 		this.props.delete();
 		this.props.toggle();
 	}
 
-	onInputChange(name, newState){
+	onInputChange = (name, newState) => {
 		if(this.state[name] === undefined){
 			console.log('The property ' + name + ' is not defined in the state:');
 			console.log(this.state);
@@ -105,34 +80,34 @@ class ModalEditTask extends React.Component {
 		this.setState((prevState, props) => newState);
 	}
 
-  render() {
-	var title = undefined;
-	if (this.props.task === undefined){
-		title = <FormattedMessage {...edittaskmsg.modalCreationTaskTitle} />
-	}
-	else{
-		title = <FormattedMessage {...edittaskmsg.modalEditTaskTitle} />
-	}
+	render() {
+		var title = undefined;
+		if (this.props.task === undefined){
+			title = <FormattedMessage {...edittaskmsg.modalCreationTaskTitle} />
+		}
+		else{
+			title = <FormattedMessage {...edittaskmsg.modalEditTaskTitle} />
+		}
 
-    return (
-		<Modal isOpen={this.props.visible} toggle={this.props.toggle} className={this.props.className}>
-			<ModalHeader toggle={this.props.toggle}>{title}</ModalHeader>
-			<ModalBody>
-				<MyForm submit={this.handleSubmit} id="createTaskForm" onInputChange={this.onInputChange}>
-					<MyInput name="name" 		label={edittaskmsg.name} 		type="text" 	value={this.state.name} 		required/>
-					<MyInput name="engineHours" label={edittaskmsg.engineHours} type="number" 	value={this.state.engineHours} 	min={0} />
-					<MyInput name="month" 		label={edittaskmsg.month} 		type="number" 	value={this.state.month} 		min={1} required/>
-					<MyInput name="description" label={edittaskmsg.description} type="textarea" value={this.state.description} 	required />
-				</MyForm>
-			</ModalBody>
-			<ModalFooter>
-				<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...edittaskmsg.save} /></Button>
-				<Button color="secondary" onClick={this.props.toggle}><FormattedMessage {...edittaskmsg.cancel} /></Button>
-				{this.props.task && <Button color="danger" onClick={this.delete}><FormattedMessage {...edittaskmsg.delete} /></Button>}
-			</ModalFooter>
-		</Modal>
-    );
-  }
+		return (
+			<Modal isOpen={this.props.visible} toggle={this.props.toggle} className={this.props.className}>
+				<ModalHeader toggle={this.props.toggle}>{title}</ModalHeader>
+				<ModalBody>
+					<MyForm submit={this.handleSubmit} id="createTaskForm" onInputChange={this.onInputChange}>
+						<MyInput name="name" 		label={edittaskmsg.name} 		type="text" 	value={this.state.name} 		required/>
+						<MyInput name="engineHours" label={edittaskmsg.engineHours} type="number" 	value={this.state.engineHours} 	min={0} />
+						<MyInput name="month" 		label={edittaskmsg.month} 		type="number" 	value={this.state.month} 		min={1} required/>
+						<MyInput name="description" label={edittaskmsg.description} type="textarea" value={this.state.description} 	required />
+					</MyForm>
+				</ModalBody>
+				<ModalFooter>
+					<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...edittaskmsg.save} /></Button>
+					<Button color="secondary" onClick={this.props.toggle}><FormattedMessage {...edittaskmsg.cancel} /></Button>
+					{this.props.task && <Button color="danger" onClick={this.delete}><FormattedMessage {...edittaskmsg.delete} /></Button>}
+				</ModalFooter>
+			</Modal>
+		);
+	}
 }
 
 ModalEditTask.propTypes = {

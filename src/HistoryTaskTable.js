@@ -1,14 +1,8 @@
 import React from 'react';
 import { Table } from 'reactstrap';
-
-import { 
-	FormattedMessage, FormattedDate
-} from 'react-intl';
-
+import { FormattedMessage, FormattedDate } from 'react-intl';
 import PropTypes from 'prop-types';
-
 import tasktablemsg from "./TaskTable.messages";
-
 import { shorten } from './TaskHelper'; 
 
 export default function HistoryTaskTable({taskHistory, toggleEntryModal, classNames}){

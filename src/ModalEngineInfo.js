@@ -1,11 +1,6 @@
 import React from 'react';
-
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
-import { 
-	FormattedMessage,
-} from 'react-intl';
-
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import engineinfomsg from "./EngineInfo.messages";
@@ -25,25 +20,6 @@ class ModalEngineInfo extends React.Component {
 			
 			prevprops: props
 		}
-
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.setDefaultState = this.setDefaultState.bind(this);
-		this.onInputChange = this.onInputChange.bind(this);
-	}
-	
-	setDefaultState(newProps) {
-		var newEngineInfo = {
-			brand: newProps.brand,
-			model: newProps.model,
-			age: newProps.age,
-			installation: newProps.installation.toISOString().substr(0, 10),
-			
-			prevprops: newProps
-		};
-
-		this.setState(function(prevState, props){
-			return newEngineInfo;
-		});
 	}
 	
 	static getDerivedStateFromProps(nextProps, prevState){
@@ -69,7 +45,7 @@ class ModalEngineInfo extends React.Component {
 		}
 	}
 	
-	handleSubmit(event) {
+	handleSubmit = (event) => {
     	var currentState = Object.assign({}, this.state);
 		currentState.installation = new Date(currentState.installation);
 		
@@ -77,7 +53,7 @@ class ModalEngineInfo extends React.Component {
 		this.props.toggle();
   	}
 	
-	onInputChange(name, newState){
+	onInputChange = (name, newState) => {
 		if(this.state[name] === undefined){
 			console.log('The property ' + name + ' is not defined in the state:');
 			console.log(this.state);

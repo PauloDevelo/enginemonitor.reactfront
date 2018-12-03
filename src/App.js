@@ -108,7 +108,7 @@ class App extends Component {
 		);
 	
 	
-	createOrSaveTask = (task) => this.enginemonitorserviceprov.createOrSaveTask((newTask) => this.refreshTaskList(() => this.changeCurrentTask(newTask)));
+	createOrSaveTask = (task) => this.enginemonitorserviceprov.createOrSaveTask(task, (newtask) => this.refreshTaskList(() => this.changeCurrentTask(newtask)));
 	
 
 	deleteTask = (complete) => {
