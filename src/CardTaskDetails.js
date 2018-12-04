@@ -1,17 +1,6 @@
 import React from 'react';
-import { 
-    Button, 
-	Card,
-	CardBody,
-	CardTitle,
-	CardSubtitle,
-	CardFooter,
-	CardText,
-	Badge
-} from 'reactstrap';
-
+import { Button, Card, CardBody, CardTitle, CardSubtitle, CardFooter, CardText, Badge } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
-
 import PropTypes from 'prop-types';
 
 import { getContext, getScheduleText } from './TaskHelper'; 

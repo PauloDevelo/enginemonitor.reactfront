@@ -8,35 +8,17 @@ import engineinfomsg from "./EngineInfo.messages";
 import MyForm from "./MyForm"
 import MyInput from "./MyInput"
 
-class ModalEngineInfo extends React.Component {
-	constructor(props) {
-		super(props);
-			
-		this.state = {
-			prevprops: props
-		}
+const ModalEngineInfo = ({saveEngineInfo, visible, toggle, className, data}) => {
+	const handleSubmit = (data) => {
+		saveEngineInfo(data);
+		toggle();
 	}
-	
-	static getDerivedStateFromProps(nextProps, prevState){
-		if(prevState.prevprops.visible !== nextProps.visible){
-			return { prevprops: nextProps };
-		}
-		else{
-			return null;
-		}
-	}
-	
-	handleSubmit = (data) => {
-    	this.props.save(data);
-		this.props.toggle();
-	}
-	  
-  	render() {
-    	return (
-		<Modal isOpen={this.props.visible} toggle={this.props.toggle} className={this.props.className}>
-			<ModalHeader toggle={this.props.toggle}><FormattedMessage {...engineinfomsg.modalTitle} /></ModalHeader>
+
+	return (
+		<Modal isOpen={visible} toggle={toggle} className={className}>
+			<ModalHeader toggle={toggle}><FormattedMessage {...engineinfomsg.modalTitle} /></ModalHeader>
 			<ModalBody>
-			{this.props.visible && <MyForm submit={this.handleSubmit} id="formEngineInfo" initialData={this.props.data}>
+			{visible && <MyForm submit={handleSubmit} id="formEngineInfo" initialData={data}>
 					<MyInput name="brand" 			label={engineinfomsg.brand} 			type="text" 	required/>
 					<MyInput name="model" 			label={engineinfomsg.model} 			type="text" 	required/>
 					<MyInput name="installation" 	label={engineinfomsg.installDateLabel} 	type="date" 	required/>
@@ -45,17 +27,16 @@ class ModalEngineInfo extends React.Component {
 			</ModalBody>
 			<ModalFooter>
 				<Button type="submit" form="formEngineInfo" color="success"><FormattedMessage {...engineinfomsg.save} /></Button>
-				<Button color="secondary" onClick={this.props.toggle}><FormattedMessage {...engineinfomsg.cancel} /></Button>
+				<Button color="secondary" onClick={toggle}><FormattedMessage {...engineinfomsg.cancel} /></Button>
 			</ModalFooter>
 		</Modal>
-    );
-  }
+	);
 }
 
 ModalEngineInfo.propTypes = {
 	visible: PropTypes.bool.isRequired,
 	toggle: PropTypes.func.isRequired,
-	save: PropTypes.func.isRequired,
+	saveEngineInfo: PropTypes.func.isRequired,
 	className: PropTypes.string,
 	data: PropTypes.object
 };

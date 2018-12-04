@@ -41,19 +41,13 @@ class App extends Component {
 			modalEditEntry: false,
 
 			engineInfo: undefined,
-			
 			tasks:[],
 			currentTaskIndex:undefined,
 			currentTask:undefined,
 			editedTask: createDefaultTask(),
 			
 			currentHistoryTask: [],
-			editedEntry:{
-				name: '',
-				UTCDate: new Date(),
-				age: '',
-				remarks: '',
-			}
+			editedEntry:{ name: '', UTCDate: new Date(), age: '', remarks: '' }
 		};
 	}
 
@@ -256,19 +250,19 @@ class App extends Component {
 				
 				<ModalEngineInfo visible={this.state.modalEngineInfo} 
 					toggle={this.toggleModalEngineInfo} 
-					save={this.saveEngineInfo} 
+					saveEngineInfo={this.saveEngineInfo} 
 					data={this.state.engineInfo}
 				/>
 				<ModalEditTask visible={this.state.modalEditTask} 
 					toggle={this.toggleModalEditTask} 
-					save={this.createOrSaveTask} 
-					delete={this.deleteTask}
+					saveTask={this.createOrSaveTask} 
+					deleteTask={this.deleteTask}
 					task={this.state.editedTask}
 				/>
 				<ModalEditEntry visible={this.state.modalEditEntry}
 					toggle={this.toggleModalEditEntry} 
-					save={this.createOrSaveEntry} 
-					delete={this.deleteEntry}
+					saveEntry={this.createOrSaveEntry} 
+					deleteEntry={this.deleteEntry}
 					entry={this.state.editedEntry}
 				/>
 			</div>
