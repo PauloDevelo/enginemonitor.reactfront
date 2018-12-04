@@ -13,42 +13,12 @@ class ModalEditTask extends React.Component {
 		super(props);
 			
 		this.state = {
-			name: '',
-			engineHours: '',
-			month: '',
-			description: '',
-			
 			prevprops: { visible: false }
 		}
 	}
 
 	static getDerivedStateFromProps(nextProps, prevState){
-		if(prevState.prevprops.visible === false && nextProps.visible === true){
-			var newTask = undefined;
-			if(nextProps.task){
-				newTask = {
-					id: nextProps.task.id,
-					name: nextProps.task.name,
-					engineHours: nextProps.task.engineHours <= 0 ? 0 : nextProps.task.engineHours,
-					month: nextProps.task.month,
-					description: nextProps.task.description
-				};
-			}
-			else{
-				newTask = {
-					id: undefined,
-					name: '',
-					engineHours: '',
-					month: '',
-					description: ''
-				};
-			}
-
-			newTask.prevprops = { visible: nextProps.visible }
-
-			return newTask;
-		}
-		else if(prevState.prevprops.visible === true && nextProps.visible === false){
+		if(prevState.prevprops.visible !== nextProps.visible){
 			return {
 				prevprops: {visible: nextProps.visible}
 			}
@@ -58,11 +28,10 @@ class ModalEditTask extends React.Component {
 		}
 	}
 
-	handleSubmit = (event) => {
-		var currentState = Object.assign({}, this.state);
-		currentState.engineHours = currentState.engineHours <= 0 || currentState.engineHours === undefined ? -1 :currentState.engineHours;
+	handleSubmit = (data) => {
+		data.engineHours = data.engineHours <= 0 || data.engineHours === undefined ? -1 :data.engineHours;
 
-		this.props.save(currentState);
+		this.props.save(data);
 		this.props.toggle();
 	}
 	
@@ -71,18 +40,9 @@ class ModalEditTask extends React.Component {
 		this.props.toggle();
 	}
 
-	onInputChange = (name, newState) => {
-		if(this.state[name] === undefined){
-			console.log('The property ' + name + ' is not defined in the state:');
-			console.log(this.state);
-		}
-
-		this.setState((prevState, props) => newState);
-	}
-
 	render() {
 		var title = undefined;
-		if (this.props.task === undefined){
+		if (this.props.task.id === undefined){
 			title = <FormattedMessage {...edittaskmsg.modalCreationTaskTitle} />
 		}
 		else{
@@ -93,17 +53,17 @@ class ModalEditTask extends React.Component {
 			<Modal isOpen={this.props.visible} toggle={this.props.toggle} className={this.props.className}>
 				<ModalHeader toggle={this.props.toggle}>{title}</ModalHeader>
 				<ModalBody>
-					<MyForm submit={this.handleSubmit} id="createTaskForm" onInputChange={this.onInputChange}>
-						<MyInput name="name" 		label={edittaskmsg.name} 		type="text" 	value={this.state.name} 		required/>
-						<MyInput name="engineHours" label={edittaskmsg.engineHours} type="number" 	value={this.state.engineHours} 	min={0} />
-						<MyInput name="month" 		label={edittaskmsg.month} 		type="number" 	value={this.state.month} 		min={1} required/>
-						<MyInput name="description" label={edittaskmsg.description} type="textarea" value={this.state.description} 	required />
-					</MyForm>
+					{this.props.visible && <MyForm id="createTaskForm" submit={this.handleSubmit} initialData={this.props.task}>
+						<MyInput name="name" 		label={edittaskmsg.name} 		type="text" 	required/>
+						<MyInput name="engineHours" label={edittaskmsg.engineHours} type="number" 	min={0} />
+						<MyInput name="month" 		label={edittaskmsg.month} 		type="number" 	min={1} required/>
+						<MyInput name="description" label={edittaskmsg.description} type="textarea" required />
+					</MyForm>}
 				</ModalBody>
 				<ModalFooter>
 					<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...edittaskmsg.save} /></Button>
 					<Button color="secondary" onClick={this.props.toggle}><FormattedMessage {...edittaskmsg.cancel} /></Button>
-					{this.props.task && <Button color="danger" onClick={this.delete}><FormattedMessage {...edittaskmsg.delete} /></Button>}
+					{this.props.task.id && <Button color="danger" onClick={this.delete}><FormattedMessage {...edittaskmsg.delete} /></Button>}
 				</ModalFooter>
 			</Modal>
 		);
@@ -111,7 +71,7 @@ class ModalEditTask extends React.Component {
 }
 
 ModalEditTask.propTypes = {
-	task: PropTypes.object,
+	task: PropTypes.object.isRequired,
 	visible: PropTypes.bool.isRequired,
 	toggle: PropTypes.func.isRequired,
 	save: PropTypes.func.isRequired,

@@ -19,6 +19,15 @@ function createDefaultEntry(state){
 	}
 }
 
+function createDefaultTask(state){
+	return {
+		name: '',
+		engineHours: 100,
+		month: 12,
+		description: ''
+	}
+}
+
 class App extends Component {
 
 	enginemonitorserviceprov= new EngineMonitorServiceProvider();
@@ -36,7 +45,7 @@ class App extends Component {
 			tasks:[],
 			currentTaskIndex:undefined,
 			currentTask:undefined,
-			editedTask:undefined,
+			editedTask: createDefaultTask(),
 			
 			currentHistoryTask: [],
 			editedEntry:{
@@ -67,7 +76,7 @@ class App extends Component {
 	toggleModalEditTask = (isCreationMode) => this.setState( (prevState, props) => {
 													return { 
 														modalEditTask: !prevState.modalEditTask,
-														editedTask: isCreationMode?undefined:prevState.currentTask
+														editedTask: isCreationMode?createDefaultTask(prevState):prevState.currentTask
 													}
 												});
 	

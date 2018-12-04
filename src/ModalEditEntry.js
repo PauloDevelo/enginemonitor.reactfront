@@ -18,56 +18,29 @@ class ModalEditEntry extends React.Component {
 		super(props);
 			
 		this.state = {
-			name: '',
-			UTCDate: new Date().toISOString().substr(0, 10),
-			age: '',
-			remarks: '',
-			
 			prevprops: { visible: false }
 		}
 	}
 	
 	static getDerivedStateFromProps(nextProps, prevState){
-		if(prevState.prevprops.visible === false && nextProps.visible === true){
+		if(prevState.prevprops.visible !== nextProps.visible){
 			return {
-				id: nextProps.entry.id,
-				name: nextProps.entry.name,
-				UTCDate: nextProps.entry.UTCDate.toISOString().substr(0, 10),
-				age: nextProps.entry.age,
-				remarks: nextProps.entry.remarks,
 				prevprops: { visible: nextProps.visible}
 			};
-		}
-		else if(prevState.prevprops.visible === true && nextProps.visible === false){
-			return {
-				prevprops: {visible: nextProps.visible}
-			}
 		}
 		else{
 			return null;
 		}
 	}
 
-	handleSubmit = (event) => {
-		var currentState = Object.assign({}, this.state);
-        currentState.UTCDate = new Date(this.state.UTCDate);
-        
-		this.props.save(currentState);
+	handleSubmit = (formData) => {
+		this.props.save(formData);
 		this.props.toggle();
 	}
 	
 	delete = () => {
 		this.props.delete(this.props.entry.id);
 		this.props.toggle();
-	}
-
-	onInputChange = (name, newState) => {
-		if(this.state[name] === undefined){
-			console.log('The property ' + name + ' is not defined in the state:');
-			console.log(this.state);
-		}
-
-		this.setState((prevState, props) => newState);
 	}
 
     render = () => {
@@ -83,12 +56,15 @@ class ModalEditEntry extends React.Component {
             <Modal isOpen={this.props.visible} toggle={this.props.toggle} className={this.props.className}>
                 <ModalHeader toggle={this.props.toggle}>{title}</ModalHeader>
                 <ModalBody>
-                    <MyForm submit={this.handleSubmit} id="createTaskForm" onInputChange={this.onInputChange}>
-                        <MyInput name="name" 	label={editentrymsg.name} 	    type="text" 	value={this.state.name} 	required/>
-                        <MyInput name="UTCDate" label={editentrymsg.date}       type="date" 	value={this.state.UTCDate} 	required/>
-                        <MyInput name="age" 	label={editentrymsg.engineAge} 	type="number" 	value={this.state.age} 		min={0} required/>
-                        <MyInput name="remarks" label={editentrymsg.remarks}    type="textarea" value={this.state.remarks} 	required />
-                    </MyForm>
+                    {this.props.visible && 
+					<MyForm id="createTaskForm" 
+						submit={this.handleSubmit} 
+						initialData={this.props.entry}>
+                        <MyInput name="name" 	label={editentrymsg.name} 	    type="text" 	required/>
+                        <MyInput name="UTCDate" label={editentrymsg.date}       type="date" 	required/>
+                        <MyInput name="age" 	label={editentrymsg.engineAge} 	type="number" 	min={0} required/>
+                        <MyInput name="remarks" label={editentrymsg.remarks}    type="textarea" required />
+                    </MyForm>}
                 </ModalBody>
                 <ModalFooter>
                     <Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...editentrymsg.save} /></Button>

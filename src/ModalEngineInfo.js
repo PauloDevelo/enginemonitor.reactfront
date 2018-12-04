@@ -13,66 +13,35 @@ class ModalEngineInfo extends React.Component {
 		super(props);
 			
 		this.state = {
-			brand: '',
-			model: '',
-			age: 0,
-			installation: new Date().toISOString().substr(0, 10),
-			
 			prevprops: props
 		}
 	}
 	
 	static getDerivedStateFromProps(nextProps, prevState){
-		if(prevState.prevprops.visible === false && nextProps.visible === true){
-			var newEngineInfo = {
-				brand: nextProps.data.brand,
-				model: nextProps.data.model,
-				age: nextProps.data.age,
-				installation: nextProps.data.installation.toISOString().substr(0, 10),
-				
-				prevprops: nextProps
-			};
-			
-			return newEngineInfo;
-		}
-		else if(prevState.prevprops.visible === true && nextProps.visible === false){
-			return {
-				prevprops: {visible: nextProps.visible}
-			}
+		if(prevState.prevprops.visible !== nextProps.visible){
+			return { prevprops: nextProps };
 		}
 		else{
 			return null;
 		}
 	}
 	
-	handleSubmit = (event) => {
-    	var currentState = Object.assign({}, this.state);
-		currentState.installation = new Date(currentState.installation);
-		
-		this.props.save(currentState);
+	handleSubmit = (data) => {
+    	this.props.save(data);
 		this.props.toggle();
-  	}
-	
-	onInputChange = (name, newState) => {
-		if(this.state[name] === undefined){
-			console.log('The property ' + name + ' is not defined in the state:');
-			console.log(this.state);
-		}
-
-		this.setState((prevState, props) => newState);
 	}
-
-  render() {
-    return (
+	  
+  	render() {
+    	return (
 		<Modal isOpen={this.props.visible} toggle={this.props.toggle} className={this.props.className}>
 			<ModalHeader toggle={this.props.toggle}><FormattedMessage {...engineinfomsg.modalTitle} /></ModalHeader>
 			<ModalBody>
-				<MyForm submit={this.handleSubmit} id="formEngineInfo" onInputChange={this.onInputChange}>
-					<MyInput name="brand" 			label={engineinfomsg.brand} 			type="text" 	value={this.state.brand} 		required/>
-					<MyInput name="model" 			label={engineinfomsg.model} 			type="text" 	value={this.state.model} 		required/>
-					<MyInput name="installation" 	label={engineinfomsg.installDateLabel} 	type="date" 	value={this.state.installation} required/>
-					<MyInput name="age" 			label={engineinfomsg.engineAge} 		type="number" 	value={this.state.age} 			required min={0} />
-				</MyForm>
+			{this.props.visible && <MyForm submit={this.handleSubmit} id="formEngineInfo" initialData={this.props.data}>
+					<MyInput name="brand" 			label={engineinfomsg.brand} 			type="text" 	required/>
+					<MyInput name="model" 			label={engineinfomsg.model} 			type="text" 	required/>
+					<MyInput name="installation" 	label={engineinfomsg.installDateLabel} 	type="date" 	required/>
+					<MyInput name="age" 			label={engineinfomsg.engineAge} 		type="number" 	required min={0} />
+				</MyForm>}
 			</ModalBody>
 			<ModalFooter>
 				<Button type="submit" form="formEngineInfo" color="success"><FormattedMessage {...engineinfomsg.save} /></Button>
