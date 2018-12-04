@@ -5,36 +5,33 @@ import PropTypes from 'prop-types';
 import tasktablemsg from "./TaskTable.messages";
 import { shorten } from './TaskHelper'; 
 
+import './HistoryTaskTable.css';
+
+const TaskRow = ({entry, onClick}) => {
+    var remarks = entry.remarks.replace(/\n/g, '<br />');
+    var shortenRemarks = shorten(remarks);
+    var ageStr = entry.age === -1?"":entry.age + 'h';
+    var entryDate = new Date(entry.UTCDate)
+
+    return(
+        <tr className='small clickable' onClick={() => onClick()}>
+            <td><FormattedDate value={entryDate} /></td>
+            <td>{ageStr}</td>
+            <td dangerouslySetInnerHTML={{ __html: shortenRemarks }}></td>
+        </tr>
+    );
+}
+
 export default function HistoryTaskTable({taskHistory, toggleEntryModal, classNames}){
     var history = [];
     if(taskHistory){
-        const trStyle = {
-            cursor: 'pointer',
-        };
-
-        history = taskHistory.map(entry => {
-            var remarks = entry.remarks.replace(/\n/g, '<br />');
-
-            var entryDate = new Date(entry.UTCDate)
-            
-            var shortenRemarks = shorten(remarks);
-            var ageStr = entry.age === -1?"":entry.age + 'h';
-
-            return(
-                <tr key={entry.id} style={trStyle} className='small' onClick={() => toggleEntryModal(false, entry)}>
-                    <td><FormattedDate value={entryDate} /></td>
-                    <td>{ageStr}</td>
-                    <td dangerouslySetInnerHTML={{ __html: shortenRemarks }}></td>
-                </tr>
-            );
-        });
-
+        history = taskHistory.map(entry => <TaskRow key={entry.id} entry={entry} onClick={() => toggleEntryModal(false, entry)}/>);
         history.reverse();
     }
 
     return(
         <div className={classNames}>
-            <Table responsive size="sm" hover>
+            <Table responsive size="sm" hover striped>
                 <thead className="thead-light">
                     <tr>
                         <th><FormattedMessage {...tasktablemsg.ackDate} /></th>
