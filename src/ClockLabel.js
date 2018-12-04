@@ -21,11 +21,11 @@ class ClockLabel extends Component {
 	
     render = () => {
 		return (
-			<div>
+			<span>
 				<FormattedDate value={this.state.currentDate} />
 				<span> </span>
 				<FormattedTime value={this.state.currentDate} hour='numeric' minute='numeric' second='numeric'/>
-			</div>
+			</span>
 		)
 		
 	}
