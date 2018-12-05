@@ -174,8 +174,7 @@ class App extends Component {
 		);
 	}
 	
-	refreshTaskList = (complete) => this.enginemonitorserviceprov.refreshTaskList(
-		(newTaskList) => {
+	refreshTaskList = (complete) => this.enginemonitorserviceprov.refreshTaskList( (newTaskList) => {
 			// store the new state object in the component's state
 			this.setState(
 				(prevState, props) => {
@@ -203,24 +202,21 @@ class App extends Component {
 		}
 	);
 
-	createOrSaveEntry = (entry, complete) => this.enginemonitorserviceprov.createOrSaveEntry(this.state.currentTask.id, entry, 
-			(newEntry) => {
-				newEntry.UTCDate = new Date(newEntry.UTCDate);
+	createOrSaveEntry = (entry, complete) => this.enginemonitorserviceprov.createOrSaveEntry(this.state.currentTask.id, entry, (newEntry) => {
+		newEntry.UTCDate = new Date(newEntry.UTCDate);
 
-				this.refreshTaskList();
-				this.setState((prevState, props) => {
-					var newCurrentHistoryTask = prevState.currentHistoryTask.filter(entry => entry.id !== newEntry.id);
-					newCurrentHistoryTask.unshift(newEntry);
-					newCurrentHistoryTask.sort((entrya, entryb) => { return entrya.UTCDate - entryb.UTCDate; });
+		this.refreshTaskList();
+		this.setState((prevState, props) => {
+			var newCurrentHistoryTask = prevState.currentHistoryTask.filter(entry => entry.id !== newEntry.id);
+			newCurrentHistoryTask.unshift(newEntry);
+			newCurrentHistoryTask.sort((entrya, entryb) => { return entrya.UTCDate - entryb.UTCDate; });
 
-					return({ currentHistoryTask: newCurrentHistoryTask });
-					},
-					() => {
-						if(complete && typeof complete === 'function')complete();
-					}
-				)
+			return({ currentHistoryTask: newCurrentHistoryTask });
+			},
+			() => {
+				if(complete && typeof complete === 'function')complete();
 			}
-		);
+		)});
 	
 	deleteEntry = (entryId, onYes, onNo, onError) => {
 		this.setState((prevState, props) => {
