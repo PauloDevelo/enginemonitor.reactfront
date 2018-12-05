@@ -6,9 +6,11 @@ import TaskTable from './TaskTable';
 import ModalEditTask from './ModalEditTask';
 import HistoryTaskTable from './HistoryTaskTable'
 import CardTaskDetails from './CardTaskDetails'
-
+import ModalYesNoConfirmation from './ModalYesNoConfirmation'
 import ModalEditEntry from './ModalEditEntry';
 import EngineMonitorServiceProvider from './EngineMonitorServiceProvider';
+
+import appmsg from "./App.messages";
 
 function createDefaultEntry(state){
 	return {
@@ -39,6 +41,13 @@ class App extends Component {
 			modalEngineInfo: false,
 			modalEditTask: false,
 			modalEditEntry: false,
+			modalYesNo: false,
+
+			yes: (() => {}),
+			no: (() => {}),
+
+			yesNoTitle: appmsg.defaultTitle,
+			yesNoMsg: appmsg.defaultMsg,
 
 			engineInfo: undefined,
 			tasks:[],
@@ -50,6 +59,8 @@ class App extends Component {
 			editedEntry:{ name: '', UTCDate: new Date(), age: '', remarks: '' }
 		};
 	}
+
+	toggleModalYesNoConfirmation = () => this.setState((prevState, props) => {return { modalYesNo: !prevState.modalYesNo }});
 
 	toggleModalEditEntry = (isCreationMode, entry) => {
     	this.setState((prevState, props) => { 
@@ -93,12 +104,27 @@ class App extends Component {
 	createOrSaveTask = (task) => this.enginemonitorserviceprov.createOrSaveTask(task, (newtask) => this.refreshTaskList(() => this.changeCurrentTask(newtask)));
 	
 
-	deleteTask = (complete) => {
+	deleteTask = (onYes, onNo, onError) => {
 		var nextTaskIndex = (this.state.currentTaskIndex === this.state.tasks.length - 1)?this.state.currentTaskIndex - 1:this.state.currentTaskIndex
-
-		this.enginemonitorserviceprov.deleteTask(this.state.editedTask.id,
-			() => this.refreshTaskList(() => this.changeCurrentTaskIndex(nextTaskIndex))
-		);
+		
+		this.setState((prevState, props) => {
+			return {
+				modalYesNo: true,
+				yes: (() => {
+					this.toggleModalYesNoConfirmation();
+					this.enginemonitorserviceprov.deleteTask(prevState.editedTask.id,
+						() => this.refreshTaskList(() => this.changeCurrentTaskIndex(nextTaskIndex, onYes)),
+						() => { if(onError) onError(); }
+					);
+				}),
+				no: (() => {
+					this.toggleModalYesNoConfirmation();
+					if(onNo) onNo();
+				}),
+				yesNoTitle: appmsg.taskDeleteTitle,
+				yesNoMsg: appmsg.taskDeleteMsg,
+			};
+		});
 	}
 	
 	nextTask = () => this.changeCurrentTaskIndex(this.state.currentTaskIndex + 1);
@@ -112,7 +138,7 @@ class App extends Component {
 		}
 	}
 
-	changeCurrentTaskIndex = (newTaskIndex) => {
+	changeCurrentTaskIndex = (newTaskIndex, complete) => {
 		if(newTaskIndex < 0 || newTaskIndex >= this.state.tasks.length){
 			console.log('Index out of bound: ' + newTaskIndex);
 			return;
@@ -126,14 +152,15 @@ class App extends Component {
 				newHistoryTask.forEach(entry => {
 					entry.UTCDate = new Date(entry.UTCDate)
 				});
-			
-				this.setState(function(prevState, props){ 
+
+				this.setState((prevState, props) => { 
 					return {
 						currentHistoryTask: newHistoryTask,
 						currentTaskIndex: newTaskIndex,
 						currentTask: newCurrentTask
 					}; 
-				});
+				},
+				() => { if(complete) complete();});
 			},
 			() => {
 				this.setState(function(prevState, props){ 
@@ -195,18 +222,35 @@ class App extends Component {
 			}
 		);
 	
-	deleteEntry = (entryId, complete) => this.enginemonitorserviceprov.deleteEntry(this.state.currentTask.id, entryId, 
-			() => {
-				this.refreshTaskList();
-				this.setState((prevState, props) => {
-						return({ currentHistoryTask: prevState.currentHistoryTask.slice(0).filter(e => e.id !== entryId) });
-					},
-					() => {
-						if(complete && typeof complete === 'function')complete();
-					}
-				);
-			}
-		);
+	deleteEntry = (entryId, onYes, onNo, onError) => {
+		this.setState((prevState, props) => {
+			return {
+				modalYesNo: true,
+				yes: (() => {
+					this.toggleModalYesNoConfirmation();
+					this.enginemonitorserviceprov.deleteEntry(this.state.currentTask.id, entryId, 
+						() => {
+							this.refreshTaskList();
+							this.setState((prevState, props) => {
+									return({ currentHistoryTask: prevState.currentHistoryTask.slice(0).filter(e => e.id !== entryId) });
+								},
+								() => {
+									if(onYes && typeof onYes === 'function') onYes();
+								}
+							);
+						},
+						() => { if(onError) onError(); }
+					);
+				}),
+				no: (() => {
+					this.toggleModalYesNoConfirmation();
+					if(onNo) onNo();
+				}),
+				yesNoTitle: appmsg.entryDeleteTitle,
+				yesNoMsg: appmsg.entryDeleteMsg,
+			};
+		});
+	}
 
 	componentDidMount() {
 		this.refreshEngineInfo();
@@ -252,18 +296,29 @@ class App extends Component {
 					toggle={this.toggleModalEngineInfo} 
 					saveEngineInfo={this.saveEngineInfo} 
 					data={this.state.engineInfo}
+					className='modal-dialog-centered'
 				/>
 				<ModalEditTask visible={this.state.modalEditTask} 
 					toggle={this.toggleModalEditTask} 
 					saveTask={this.createOrSaveTask} 
 					deleteTask={this.deleteTask}
 					task={this.state.editedTask}
+					className='modal-dialog-centered'
 				/>
 				<ModalEditEntry visible={this.state.modalEditEntry}
 					toggle={this.toggleModalEditEntry} 
 					saveEntry={this.createOrSaveEntry} 
 					deleteEntry={this.deleteEntry}
 					entry={this.state.editedEntry}
+					className='modal-dialog-centered'
+				/>
+				<ModalYesNoConfirmation visible={this.state.modalYesNo}
+					toggle={this.toggleModalYesNoConfirmation}
+					yes={this.state.yes}
+					no={this.state.no}
+					title={this.state.yesNoTitle}
+					message={this.state.yesNoMsg} 
+					className='modal-dialog-centered'
 				/>
 			</div>
 		);

@@ -15,8 +15,7 @@ const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEn
 	};
 	
 	const handleDelete = () => {
-		deleteEntry(entry.id);
-		toggle();
+		deleteEntry(entry.id, toggle);
 	}
 
 	let title = undefined;

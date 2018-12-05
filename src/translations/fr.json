@@ -36,5 +36,13 @@
 	"ack": "Acquitter",
 	"date": "Date",
 	"modalEditEntryTitle": "Edition d'une entrée",
-	"modalAckTitle": "Acquittement d'une tache"
+	"modalAckTitle": "Acquittement d'une tache",
+	"yes": "Oui",
+	"no": "Non",
+	"defaultTitle": "",
+	"defaultMsg": "",
+	"taskDeletionTitle": "Suppression d'une tache",
+	"taskDeleteMsg": "Etes vous sure de vouloir supprimer cette tache et son historique ?",
+	"entryDeleteTitle": "Suppression d'une entrée",
+	"entryDeleteMsg": "Etes vous sure de vouloir supprimer cette entrée ?"
 }

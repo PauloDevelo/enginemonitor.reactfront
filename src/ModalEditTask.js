@@ -16,8 +16,7 @@ const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className})
 	}
 	
 	const handleDelete = () => {
-		deleteTask();
-		toggle();
+		deleteTask(toggle);
 	}
 
 	let title = undefined;
