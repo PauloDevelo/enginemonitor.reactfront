@@ -1,0 +1,77 @@
+.fade-appear {
+    opacity: 0.01;
+    z-index: 0;
+}
+
+.fade-appear.fade-appear-active {
+    opacity: 1;
+    transition: opacity 1000ms linear;
+}
+
+.card-enter {
+    opacity: 0.2;
+    z-index: 1;
+}
+
+.card-enter.card-enter-active {
+    opacity: 1;
+    transition: opacity 250ms ease-in;
+}
+
+.card-exit {
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.card-exit.card-exit-active {
+    opacity: 0;
+    position: absolute;
+}
+
+.tr-appear {
+    opacity: 0;
+}
+
+.tr-appear.tr-appear-active {
+    opacity: 1;
+    transition: opacity 250ms ease-in;
+}
+
+.tr-enter {
+    opacity: 0;
+}
+
+.tr-enter.tr-enter-active {
+    opacity: 1;
+    transition: opacity 250ms ease-in;
+}
+
+.tr-exit {
+    opacity: 1;
+}
+
+.tr-exit.tr-exit-active {
+    opacity: 0;
+    transition: opacity 250ms ease-in;
+}
+
+.modal-enter {
+    opacity: 0.01;
+    z-index: 0;
+}
+
+.modal-enter.modal-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in;
+}
+
+.modal-exit {
+    opacity: 1;
+    z-index: 1;
+}
+
+.modal-exit.modal-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in;
+}

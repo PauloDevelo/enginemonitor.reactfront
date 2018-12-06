@@ -1,11 +1,13 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import { FormattedMessage, FormattedDate } from 'react-intl';
+import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import PropTypes from 'prop-types';
 import tasktablemsg from "./TaskTable.messages";
 import { shorten } from './TaskHelper'; 
 
 import './HistoryTaskTable.css';
+import './transition.css';
 
 const TaskRow = ({entry, onClick}) => {
     var remarks = entry.remarks.replace(/\n/g, '<br />');
@@ -25,7 +27,14 @@ const TaskRow = ({entry, onClick}) => {
 export default function HistoryTaskTable({taskHistory, toggleEntryModal, classNames}){
     var history = [];
     if(taskHistory){
-        history = taskHistory.map(entry => <TaskRow key={entry.id} entry={entry} onClick={() => toggleEntryModal(false, entry)}/>);
+        
+        history = taskHistory.map(entry => {
+        return(
+            <CSSTransition key={entry.id} in={true} timeout={500} classNames="tr">
+                <TaskRow entry={entry} onClick={() => toggleEntryModal(false, entry)}/>
+            </CSSTransition>
+            )}
+        );
         history.reverse();
     }
 
@@ -39,9 +48,9 @@ export default function HistoryTaskTable({taskHistory, toggleEntryModal, classNa
                         <th><FormattedMessage {...tasktablemsg.remarks} /></th>
                     </tr>
                 </thead>
-                <tbody>
+                <TransitionGroup component="tbody">
                     {history}
-                </tbody>
+                </TransitionGroup>
             </Table>
         </div>
     );

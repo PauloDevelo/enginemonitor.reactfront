@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Button } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import PropTypes from 'prop-types';
 import tasktablemsg from "./TaskTable.messages";
 import { getContext, getTodoText, shorten } from './TaskHelper'; 
@@ -26,7 +27,13 @@ export const TaskTable = ({tasks, changeCurrentTask, toggleModal, classNames}) =
 	
 	if(tasks){
 		const trStyle = { cursor: 'pointer' };
-		listLines = tasks.map((task) => <TaskLine key={task.id} task={task} trStyle={trStyle} onClick={() => changeCurrentTask(task) } /> );
+	listLines = tasks.map((task) => {
+		return(
+			<CSSTransition key={task.id} in={true} timeout={500} classNames="tr">
+				<TaskLine task={task} trStyle={trStyle} onClick={() => changeCurrentTask(task) } />
+			</CSSTransition>
+		);
+	});
 	}
 
 	return (
@@ -41,9 +48,9 @@ export const TaskTable = ({tasks, changeCurrentTask, toggleModal, classNames}) =
 						<th><FormattedMessage {...tasktablemsg.taskdesc} /></th>
 					</tr>
 				</thead>
-				<tbody>
+				<TransitionGroup component="tbody">
 					{listLines}
-				</tbody>
+				</TransitionGroup>
 			</Table>
 		</div>
 	);

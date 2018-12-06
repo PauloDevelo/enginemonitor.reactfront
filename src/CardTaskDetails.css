@@ -20,3 +20,7 @@
 .card-control-next-icon:hover {
     opacity: 1.0;
 }
+
+.clickable {
+    cursor: pointer;
+}

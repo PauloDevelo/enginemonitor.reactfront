@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { CSSTransition } from 'react-transition-group'
 
 import EngineInfo from './EngineInfo';
 import ModalEngineInfo from './ModalEngineInfo';
@@ -10,6 +11,7 @@ import ModalYesNoConfirmation from './ModalYesNoConfirmation'
 import ModalEditEntry from './ModalEditEntry';
 import EngineMonitorServiceProvider from './EngineMonitorServiceProvider';
 
+import './transition.css';
 import appmsg from "./App.messages";
 
 function createDefaultEntry(state){
@@ -127,18 +129,18 @@ class App extends Component {
 		});
 	}
 	
-	nextTask = () => this.changeCurrentTaskIndex(this.state.currentTaskIndex + 1);
+	nextTask = (complete, fail) => this.changeCurrentTaskIndex(this.state.currentTaskIndex + 1, complete, fail);
 
-	previousTask = ()=> this.changeCurrentTaskIndex(this.state.currentTaskIndex - 1);
+	previousTask = (complete, fail)=> this.changeCurrentTaskIndex(this.state.currentTaskIndex - 1, complete, fail);
 
-	changeCurrentTask = (task) => {
+	changeCurrentTask = (task, complete, fail) => {
 		if(task !== this.state.currentTask){
 			var newCurrentTaskIndex = this.state.tasks.findIndex((t, ind, tab) => t.id === task.id);
-			this.changeCurrentTaskIndex(newCurrentTaskIndex);
+			this.changeCurrentTaskIndex(newCurrentTaskIndex, complete);
 		}
 	}
 
-	changeCurrentTaskIndex = (newTaskIndex, complete) => {
+	changeCurrentTaskIndex = (newTaskIndex, complete, fail) => {
 		if(newTaskIndex < 0 || newTaskIndex >= this.state.tasks.length){
 			console.log('Index out of bound: ' + newTaskIndex);
 			return;
@@ -160,16 +162,17 @@ class App extends Component {
 						currentTask: newCurrentTask
 					}; 
 				},
-				() => { if(complete) complete();});
+				() => { if(typeof complete === 'function') complete();});
 			},
 			() => {
-				this.setState(function(prevState, props){ 
+				this.setState((prevState, props) => { 
 					return {
 						currentHistoryTask: [],
 						currentTaskIndex: newTaskIndex,
 						currentTask: newCurrentTask
 					}; 
-				});
+				},
+				() => { if(typeof fail === 'function') fail();});
 			}
 		);
 	}
@@ -262,61 +265,63 @@ class App extends Component {
 		var prevVisibility = this.state.currentTaskIndex > 0;
 		var nextVisibility = this.state.currentTaskIndex < this.state.tasks.length - 1;
 		return (
-			<div>
-				<div id="root" className="d-flex flex-wrap flex-row mb-3">
-					<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
-						<EngineInfo data={this.state.engineInfo} 
-									toggleModal={this.toggleModalEngineInfo}
-									classNames={panelClassNames}/>
-						<TaskTable 	tasks={this.state.tasks} 
-									toggleModal={() => this.toggleModalEditTask(true)} 
-									changeCurrentTask={this.changeCurrentTask}
-									classNames={panelClassNames}/>
+			<CSSTransition in={true} appear={true} timeout={1000} classNames="fade">
+				<div>
+					<div id="root" className="d-flex flex-wrap flex-row mb-3">
+						<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
+							<EngineInfo data={this.state.engineInfo} 
+										toggleModal={this.toggleModalEngineInfo}
+										classNames={panelClassNames}/>
+							<TaskTable 	tasks={this.state.tasks} 
+										toggleModal={() => this.toggleModalEditTask(true)} 
+										changeCurrentTask={this.changeCurrentTask}
+										classNames={panelClassNames}/>
+						</div>
+						<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
+							<CardTaskDetails 	task={this.state.currentTask} 
+												toggleModal={() => this.toggleModalEditTask(false)} 
+												next={this.nextTask} 
+												prev={this.previousTask} 
+												prevVisibility={prevVisibility} 
+												nextVisibility={nextVisibility} 
+												toggleAckModal={()=>this.toggleModalEditEntry(true)}
+												classNames={panelClassNames}/>
+							<HistoryTaskTable 	taskHistory={this.state.currentHistoryTask} 
+												toggleEntryModal={this.toggleModalEditEntry}
+												classNames={panelClassNames}/>
+						</div>
 					</div>
-					<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
-						<CardTaskDetails 	task={this.state.currentTask} 
-											toggleModal={() => this.toggleModalEditTask(false)} 
-											next={this.nextTask} 
-											prev={this.previousTask} 
-											prevVisibility={prevVisibility} 
-											nextVisibility={nextVisibility} 
-											toggleAckModal={()=>this.toggleModalEditEntry(true)}
-											classNames={panelClassNames}/>
-						<HistoryTaskTable 	taskHistory={this.state.currentHistoryTask} 
-											toggleEntryModal={this.toggleModalEditEntry}
-											classNames={panelClassNames}/>
-					</div>
+					
+					<ModalEngineInfo visible={this.state.modalEngineInfo} 
+						toggle={this.toggleModalEngineInfo} 
+						saveEngineInfo={this.saveEngineInfo} 
+						data={this.state.engineInfo}
+						className='modal-dialog-centered'
+					/>
+					<ModalEditTask visible={this.state.modalEditTask} 
+						toggle={this.toggleModalEditTask} 
+						saveTask={this.createOrSaveTask} 
+						deleteTask={this.deleteTask}
+						task={this.state.editedTask}
+						className='modal-dialog-centered'
+					/>
+					<ModalEditEntry visible={this.state.modalEditEntry}
+						toggle={this.toggleModalEditEntry} 
+						saveEntry={this.createOrSaveEntry} 
+						deleteEntry={this.deleteEntry}
+						entry={this.state.editedEntry}
+						className='modal-dialog-centered'
+					/>
+					<ModalYesNoConfirmation visible={this.state.modalYesNo}
+						toggle={this.toggleModalYesNoConfirmation}
+						yes={this.state.yes}
+						no={this.state.no}
+						title={this.state.yesNoTitle}
+						message={this.state.yesNoMsg} 
+						className='modal-dialog-centered'
+					/>
 				</div>
-				
-				<ModalEngineInfo visible={this.state.modalEngineInfo} 
-					toggle={this.toggleModalEngineInfo} 
-					saveEngineInfo={this.saveEngineInfo} 
-					data={this.state.engineInfo}
-					className='modal-dialog-centered'
-				/>
-				<ModalEditTask visible={this.state.modalEditTask} 
-					toggle={this.toggleModalEditTask} 
-					saveTask={this.createOrSaveTask} 
-					deleteTask={this.deleteTask}
-					task={this.state.editedTask}
-					className='modal-dialog-centered'
-				/>
-				<ModalEditEntry visible={this.state.modalEditEntry}
-					toggle={this.toggleModalEditEntry} 
-					saveEntry={this.createOrSaveEntry} 
-					deleteEntry={this.deleteEntry}
-					entry={this.state.editedEntry}
-					className='modal-dialog-centered'
-				/>
-				<ModalYesNoConfirmation visible={this.state.modalYesNo}
-					toggle={this.toggleModalYesNoConfirmation}
-					yes={this.state.yes}
-					no={this.state.no}
-					title={this.state.yesNoTitle}
-					message={this.state.yesNoMsg} 
-					className='modal-dialog-centered'
-				/>
-			</div>
+			</CSSTransition>
 		);
 	}
 }
