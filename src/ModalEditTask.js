@@ -13,7 +13,7 @@ import './transition.css';
 
 const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className}) => {
 	const handleSubmit = (data) => {
-		data.engineHours = data.engineHours <= 0 || data.engineHours === undefined ? -1 :data.engineHours;
+		data.engineHours = data.engineHours === undefined || data.engineHours <= 0 ? -1 : data.engineHours;
 		saveTask(data);
 		toggle();
 	}

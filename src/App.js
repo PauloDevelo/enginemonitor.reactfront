@@ -181,6 +181,7 @@ class App extends Component {
 			// store the new state object in the component's state
 			this.setState(
 				(prevState, props) => {
+					newTaskList.forEach(task => task.engineHours = task.engineHours === -1?undefined:task.engineHours);
 					var newCurrentTaskIndex = prevState.currentTask?newTaskList.findIndex(task => task.id === prevState.currentTask.id):0;
 					return {
 						tasks: newTaskList,

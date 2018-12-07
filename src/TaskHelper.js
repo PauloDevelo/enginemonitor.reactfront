@@ -22,7 +22,7 @@ export function getContext(level){
 export function getTodoText(task){
     var dueDate = new Date(task.nextDueDate);
     var todoText = undefined;
-    if(task.engineHours === -1){
+    if(task.engineHours === undefined || task.engineHours <= 0){
         if(task.level === 3){
             todoText = <span><FormattedMessage {...tasktablemsg.shouldhavebeendone} /><b><FormattedDate value={dueDate} /></b></span>;
         }
@@ -47,7 +47,7 @@ export function getScheduleText(task){
     const {month} = task;
     var pluralisedMonthPeriod = <FormattedMessage {...tasktablemsg.monthperiod} values={{month}}/>
 
-    if(task.engineHours === -1){
+    if(task.engineHours === undefined || task.engineHours <= 0){
         title = <span>
                     <FormattedMessage {...tasktablemsg.tobedonemonth} />
                     <b>
