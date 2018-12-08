@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import { CSSTransition } from 'react-transition-group'
-
+import {
+	Collapse,
+	Navbar,
+	NavbarToggler,
+	NavbarBrand,
+	Nav,
+	NavItem,
+	NavLink,
+	UncontrolledDropdown,
+	DropdownToggle,
+	DropdownMenu,
+	DropdownItem } from 'reactstrap';
+  
 import EngineInfo from './EngineInfo';
 import ModalEngineInfo from './ModalEngineInfo';
 import TaskTable from './TaskTable';
@@ -9,7 +21,8 @@ import HistoryTaskTable from './HistoryTaskTable'
 import CardTaskDetails from './CardTaskDetails'
 import ModalYesNoConfirmation from './ModalYesNoConfirmation'
 import ModalEditEntry from './ModalEditEntry';
-import EngineMonitorServiceProvider from './EngineMonitorServiceProvider';
+import ModalLogin from './ModalLogin';
+import EngineMonitorServiceProxy from './EngineMonitorServiceProxy';
 
 import './transition.css';
 import appmsg from "./App.messages";
@@ -34,16 +47,21 @@ function createDefaultTask(state){
 
 class App extends Component {
 
-	enginemonitorserviceprov= new EngineMonitorServiceProvider();
+	enginemonitorserviceproxy = new EngineMonitorServiceProxy();
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
+			pos: undefined,
+			user: {},
+			loginErrors: undefined,
+
 			modalEngineInfo: false,
 			modalEditTask: false,
 			modalEditEntry: false,
 			modalYesNo: false,
+			navBar: true,
 
 			yes: (() => {}),
 			no: (() => {}),
@@ -53,14 +71,38 @@ class App extends Component {
 
 			engineInfo: undefined,
 			tasks:[],
-			currentTaskIndex:undefined,
-			currentTask:undefined,
+			currentTaskIndex: undefined,
+			currentTask: undefined,
 			editedTask: createDefaultTask(),
 			
 			currentHistoryTask: [],
 			editedEntry:{ name: '', UTCDate: new Date(), age: '', remarks: '' }
 		};
 	}
+
+	login = (credentials) => {
+		this.enginemonitorserviceproxy.authenticate(credentials, 
+				(user) => {
+					this.setState( (prevState, props) => { return { user: user, loginErrors: undefined } },
+										 () => {
+											this.refreshEngineInfo();
+											this.refreshTaskList();
+										  });
+				},
+				({errors}) => this.setState((prevState, props) => { return { loginErrors: errors } })
+		);
+	}
+
+	logout = () => {
+		this.setState( (prevState, props) => { return { user: undefined, loginErrors: undefined } },
+						() => {
+						this.refreshEngineInfo();
+						this.refreshTaskList();
+						});
+		this.enginemonitorserviceproxy.logout();
+	}
+
+	toggleNavBar = () => this.setState((prevState, props) => {return { navBar: !prevState.navBar }});
 
 	toggleModalYesNoConfirmation = () => this.setState((prevState, props) => {return { modalYesNo: !prevState.modalYesNo }});
 
@@ -87,13 +129,29 @@ class App extends Component {
 													}
 												});
 	
+	refreshCurrentUser = () => this.enginemonitorserviceproxy.refreshCurrentUser( ({user}) => this.setState((prevState, props) => { return { user:user } }),
+																				  ()       => this.setState((prevState, props) => { return { user: undefined } }))
+
+	refreshPosition = () => {
+		// Try HTML5 geolocation.
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition((position) => {
+			  var pos = {
+				lat: position.coords.latitude,
+				lng: position.coords.longitude
+			  };
+			  this.setState( (prevState, props) => { return { pos: pos } });
+
+			});
+		}
+	}
 	
-	saveEngineInfo = (engineInfo) => this.enginemonitorserviceprov.saveEngineInfo(engineInfo, (newEngineInfo) => {
+	saveEngineInfo = (engineInfo) => this.enginemonitorserviceproxy.saveEngineInfo(engineInfo, (newEngineInfo) => {
 		newEngineInfo.installation = new Date(newEngineInfo.installation);
 		this.setState((prevState, props) => { return { engineInfo:newEngineInfo } });
 	});
 
-	refreshEngineInfo = () => this.enginemonitorserviceprov.refreshEngineInfo(
+	refreshEngineInfo = () => this.enginemonitorserviceproxy.refreshEngineInfo(
 		(newEngineInfo) => {
 			newEngineInfo.installation = new Date(newEngineInfo.installation);
 			this.setState((prevState, props) => { return { engineInfo:newEngineInfo } });
@@ -103,7 +161,7 @@ class App extends Component {
 		}
 	);
 	
-	createOrSaveTask = (task) => this.enginemonitorserviceprov.createOrSaveTask(task, (newtask) => this.refreshTaskList(() => this.changeCurrentTask(newtask)));
+	createOrSaveTask = (task) => this.enginemonitorserviceproxy.createOrSaveTask(task, (newtask) => this.refreshTaskList(() => this.changeCurrentTask(newtask)));
 	
 
 	deleteTask = (onYes, onNo, onError) => {
@@ -114,7 +172,7 @@ class App extends Component {
 				modalYesNo: true,
 				yes: (() => {
 					this.toggleModalYesNoConfirmation();
-					this.enginemonitorserviceprov.deleteTask(prevState.editedTask.id,
+					this.enginemonitorserviceproxy.deleteTask(prevState.editedTask.id,
 						() => this.refreshTaskList(() => this.changeCurrentTaskIndex(nextTaskIndex, onYes)),
 						() => { if(onError) onError(); }
 					);
@@ -149,7 +207,7 @@ class App extends Component {
 		var newCurrentTask = this.state.tasks[newTaskIndex];
 		var newCurrentTaskId = newCurrentTask.id;
 
-		this.enginemonitorserviceprov.refreshHistoryTask(newCurrentTaskId,
+		this.enginemonitorserviceproxy.refreshHistoryTask(newCurrentTaskId,
 			(newHistoryTask) => {
 				newHistoryTask.forEach(entry => {
 					entry.UTCDate = new Date(entry.UTCDate)
@@ -177,7 +235,7 @@ class App extends Component {
 		);
 	}
 	
-	refreshTaskList = (complete) => this.enginemonitorserviceprov.refreshTaskList( (newTaskList) => {
+	refreshTaskList = (complete) => this.enginemonitorserviceproxy.refreshTaskList( (newTaskList) => {
 			// store the new state object in the component's state
 			this.setState(
 				(prevState, props) => {
@@ -206,7 +264,7 @@ class App extends Component {
 		}
 	);
 
-	createOrSaveEntry = (entry, complete) => this.enginemonitorserviceprov.createOrSaveEntry(this.state.currentTask.id, entry, (newEntry) => {
+	createOrSaveEntry = (entry, complete) => this.enginemonitorserviceproxy.createOrSaveEntry(this.state.currentTask.id, entry, (newEntry) => {
 		newEntry.UTCDate = new Date(newEntry.UTCDate);
 
 		this.refreshTaskList();
@@ -228,7 +286,7 @@ class App extends Component {
 				modalYesNo: true,
 				yes: (() => {
 					this.toggleModalYesNoConfirmation();
-					this.enginemonitorserviceprov.deleteEntry(this.state.currentTask.id, entryId, 
+					this.enginemonitorserviceproxy.deleteEntry(this.state.currentTask.id, entryId, 
 						() => {
 							this.refreshTaskList();
 							this.setState((prevState, props) => {
@@ -253,22 +311,45 @@ class App extends Component {
 	}
 
 	componentDidMount() {
+		this.refreshCurrentUser();
 		this.refreshEngineInfo();
 		this.refreshTaskList(() => {
 			if (this.state.currentTaskIndex === undefined){
 				this.changeCurrentTaskIndex(0);
 			}
 		});
+		this.refreshPosition();
 	}
     
 	render() {
+		let position = this.state.pos ? '(' + this.state.pos.lng.toFixed(4) + ', ' + this.state.pos.lat.toFixed(4) + ')':'';
+		let textMenu = this.state.user?this.state.user.email:"Login";
 		var panelClassNames = "p-2 m-2 border border-primary rounded shadow";
 		var prevVisibility = this.state.currentTaskIndex > 0;
 		var nextVisibility = this.state.currentTaskIndex < this.state.tasks.length - 1;
 		return (
 			<CSSTransition in={true} appear={true} timeout={1000} classNames="fade">
-				<div>
-					<div id="root" className="d-flex flex-wrap flex-row mb-3">
+				<div id="root">
+					<Navbar color="dark" dark expand="md">
+						<NavbarBrand href="/">Engine monitor {position}</NavbarBrand>
+						<NavbarToggler onClick={this.toggleNavBar} />
+						<Collapse isOpen={this.state.navBar} navbar>
+							<Nav className="ml-auto" navbar>
+								<UncontrolledDropdown nav inNavbar>
+									<DropdownToggle nav caret>
+									{textMenu}
+									</DropdownToggle>
+									<DropdownMenu right>
+										<DropdownItem onClick={this.logout}>
+											Logout
+										</DropdownItem>
+									</DropdownMenu>
+								</UncontrolledDropdown>
+							</Nav>
+						</Collapse>
+					</Navbar>
+
+					<div className="d-flex flex-wrap flex-row mb-3">
 						<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
 							<EngineInfo data={this.state.engineInfo} 
 										toggleModal={this.toggleModalEngineInfo}
@@ -321,6 +402,13 @@ class App extends Component {
 						message={this.state.yesNoMsg} 
 						className='modal-dialog-centered'
 					/>
+
+					<ModalLogin visible={this.state.user === undefined && this.enginemonitorserviceproxy.mode === 'auth'} 
+					login={this.login}
+					data={{ email: '', password: ''}} 
+					className='modal-dialog-centered'
+					loginErrors={this.state.loginErrors}/>
+
 				</div>
 			</CSSTransition>
 		);

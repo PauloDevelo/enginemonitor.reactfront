@@ -37,6 +37,17 @@ class MyInput extends Component {
 		delete props.label;
 		delete props.handleChange;
 
+		if (props.type === 'checkbox'){
+			return (
+				<FormGroup className={"form-group"} check inline={true}>
+					<Label check inline="true">
+						<FormattedMessage {...this.props.label} />{' '}
+						<Input innerRef={this.setInputElem} onChange={this.onChangeHandler} invalid={!this.state.isValid} {...props} />
+					</Label>
+				</FormGroup>
+			);
+		}
+
 		return ( 
 			<FormGroup className={"form-group"}>
 				<Label for={props.name}><FormattedMessage {...this.props.label} /></Label>
