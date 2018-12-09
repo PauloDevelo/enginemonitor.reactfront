@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group'
@@ -32,7 +34,7 @@ const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEn
 	return (
 		<CSSTransition in={visible} timeout={300} classNames="modal">
 			<Modal isOpen={visible} toggle={toggle} className={className} fade={false}>
-				<ModalHeader toggle={toggle}>{title}</ModalHeader>
+				<ModalHeader toggle={toggle}><FontAwesomeIcon icon={faCheckSquare} size="lg"/>{' '}{title}</ModalHeader>
 				<ModalBody>
 					{visible && 
 					<MyForm id="createTaskForm" 

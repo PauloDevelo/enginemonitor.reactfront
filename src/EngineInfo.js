@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button } from 'reactstrap'
+import { Button } from 'reactstrap';
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -13,7 +15,7 @@ export const EngineInfo = ({toggleModal, data, classNames}) => {
 				<FormattedMessage {...engineinfomsg.today} />
 				<ClockLabel />
 			</span>
-			{data && <Button color="primary" size="sm" className="float-right" onClick={toggleModal}><FormattedMessage {...engineinfomsg.edit} /></Button>}					
+			{data && <Button color="light" size="sm" className="float-right" onClick={toggleModal}><FontAwesomeIcon icon={faEdit} /></Button>}					
 			{data && 
 			<div>
 				<span>{data.brand} {data.model} </span>

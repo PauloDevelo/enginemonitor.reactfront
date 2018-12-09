@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group'
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -20,7 +22,7 @@ const ModalEngineInfo = ({saveEngineInfo, visible, toggle, className, data}) => 
 	return (
 		<CSSTransition in={visible} timeout={300} classNames="modal">
 			<Modal isOpen={visible} toggle={toggle} className={className} fade={false}>
-				<ModalHeader toggle={toggle}><FormattedMessage {...engineinfomsg.modalTitle} /></ModalHeader>
+				<ModalHeader toggle={toggle}><FontAwesomeIcon icon={faEdit} />{' '}<FormattedMessage {...engineinfomsg.modalTitle} /></ModalHeader>
 				<ModalBody>
 				{visible && <MyForm submit={handleSubmit} id="formEngineInfo" initialData={data}>
 						<MyInput name="brand" 			label={engineinfomsg.brand} 			type="text" 	required/>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Card, CardBody, CardTitle, CardSubtitle, CardFooter, CardText, Badge } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
+import { faEdit, faCheckSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import PropTypes from 'prop-types';
 
@@ -63,8 +65,8 @@ const CardTaskDetails = ({task, next, prev, toggleModal, nextVisibility, prevVis
                             <div className="p-2" onClick={next} style={cursorPointerStyle}><div className={nextClassNames}></div></div>
                     </CardBody>
                     <CardFooter className='pl-5 pr-5'>
-                        <Button color='primary' className='float-left' onClick={toggleModal}><FormattedMessage {...edittaskmsg.edit} /></Button>
-                        <Button color='primary' className='float-right' onClick={toggleAckModal}><FormattedMessage {...edittaskmsg.ack} /></Button>
+                        <Button color='light' className='float-left' onClick={toggleModal}><FontAwesomeIcon icon={faEdit} /></Button>
+                        <Button color='success' className='float-right' onClick={toggleAckModal}><FontAwesomeIcon icon={faCheckSquare} size="lg"/></Button>
                     </CardFooter>
                 </Card>
     );

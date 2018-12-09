@@ -327,7 +327,7 @@ class App extends Component {
 	render() {
 		let position = this.state.pos ? '(' + this.state.pos.lng.toFixed(4) + ', ' + this.state.pos.lat.toFixed(4) + ')':'';
 		let textMenu = this.state.user?this.state.user.email:"Login";
-		var panelClassNames = "p-2 m-2 border border-primary rounded shadow";
+		var panelClassNames = "p-2 m-2 border border-secondary rounded shadow";
 		var prevVisibility = this.state.currentTaskIndex > 0;
 		var nextVisibility = this.state.currentTaskIndex < this.state.tasks.length - 1;
 		return (

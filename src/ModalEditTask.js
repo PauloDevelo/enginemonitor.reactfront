@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import { CSSTransition } from 'react-transition-group'
 import PropTypes from 'prop-types';
@@ -33,7 +35,7 @@ const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className})
 	return (
 		<CSSTransition in={visible} timeout={300} classNames="modal">
 			<Modal isOpen={visible} toggle={toggle} className={className} fade={false}>
-				<ModalHeader toggle={toggle}>{title}</ModalHeader>
+				<ModalHeader toggle={toggle}><FontAwesomeIcon icon={faEdit} />{' '}{title}</ModalHeader>
 				<ModalBody>
 					{visible && <MyForm id="createTaskForm" submit={handleSubmit} initialData={task}>
 						<MyInput name="name" 		label={edittaskmsg.name} 		type="text" 	required/>

@@ -1,13 +1,15 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert } from 'reactstrap';
-import { CSSTransition } from 'react-transition-group'
+import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CSSTransition } from 'react-transition-group';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import loginmsg from "./Login.messages";
 
-import MyForm from "./MyForm"
-import MyInput from "./MyInput"
+import MyForm from "./MyForm";
+import MyInput from "./MyInput";
 
 import './transition.css';
 
@@ -30,7 +32,7 @@ const ModaLogin = ({login, visible, className, data, loginErrors}) => {
 	return (
 		<CSSTransition in={visible} timeout={300} classNames="modal">
 			<Modal isOpen={visible} className={className} fade={false}>
-				<ModalHeader><FormattedMessage {...loginmsg.modaltitle} /></ModalHeader>
+				<ModalHeader><FontAwesomeIcon icon={faSignInAlt} />{' '}<FormattedMessage {...loginmsg.modaltitle} /></ModalHeader>
 				<ModalBody>
 				    {visible && <MyForm submit={handleSubmit} id="formLogin" initialData={data}>
 						<MyInput name="email" 		label={loginmsg.email} 		type="email" 	required/>

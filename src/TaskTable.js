@@ -1,6 +1,8 @@
 import React from 'react';
 import { Table, Button } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
+import { faTasks, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import PropTypes from 'prop-types';
 import tasktablemsg from "./TaskTable.messages";
@@ -38,8 +40,8 @@ export const TaskTable = ({tasks, changeCurrentTask, toggleModal, classNames}) =
 
 	return (
 		<div className={classNames}>
-			<span className="mb-2"><b><FormattedMessage {...tasktablemsg.tasklistTitle} /></b>
-			<Button color="primary" size="sm" className="float-right mb-2" onClick={() => toggleModal() }><FormattedMessage {...tasktablemsg.createbutton} /></Button></span>
+			<span className="mb-2"><FontAwesomeIcon icon={faTasks} />{' '}<b><FormattedMessage {...tasktablemsg.tasklistTitle} /></b>
+			<Button color="light" size="sm" className="float-right mb-2" onClick={() => toggleModal() }><FontAwesomeIcon icon={faPlusSquare} /></Button></span>
 			<Table responsive size="sm" hover>
 				<thead className="thead-light">
 					<tr>
