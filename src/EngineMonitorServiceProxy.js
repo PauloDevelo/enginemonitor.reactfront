@@ -6,7 +6,7 @@ import {formatDateInUTC} from './Helpers'
 class EngineMonitorServiceProxy{
     config = undefined;
 
-    mode = 'dev'; //prod or demo
+    mode = 'auth'; //prod or demo
     baseUrl = "http://localhost:8081/engine-monitor/webapi/";
 
     constructor(){

@@ -44,5 +44,11 @@
 	"taskDeleteTitle": "Delete task",
 	"taskDeleteMsg": "Are you sure you want to delete this task?",
 	"entryDeleteTitle": "Delete entry",
-	"entryDeleteMsg": "Are you sure you want to delete this entry?"
+	"entryDeleteMsg": "Are you sure you want to delete this entry?",
+	"email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "modalLogintitle": "Login with an existing account",
+    "remember": "Remember me",
+    "invalid": "is invalid"
 }

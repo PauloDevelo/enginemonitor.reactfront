@@ -18,7 +18,7 @@ const messages: Messages = {
         description: "Label"
     },
     modaltitle: {
-        id: "modaltitle",
+        id: "modalLogintitle",
         defaultMessage: "Login with an existing account",
         description: "Modal title"
     },

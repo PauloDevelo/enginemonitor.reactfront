@@ -44,5 +44,11 @@
 	"taskDeletionTitle": "Suppression d'une tache",
 	"taskDeleteMsg": "Etes vous sure de vouloir supprimer cette tache et son historique ?",
 	"entryDeleteTitle": "Suppression d'une entrée",
-	"entryDeleteMsg": "Etes vous sure de vouloir supprimer cette entrée ?"
+	"entryDeleteMsg": "Etes vous sure de vouloir supprimer cette entrée ?",
+	"email": "Email",
+    "password": "Mot de passe",
+    "login": "Login",
+    "modalLogintitle": "Login avec un compte existant",
+    "remember": "Se souvenir de moi",
+    "invalid": "est invalide."
 }
