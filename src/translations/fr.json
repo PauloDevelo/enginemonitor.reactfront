@@ -50,5 +50,6 @@
     "login": "Login",
     "modalLogintitle": "Login avec un compte existant",
     "remember": "Se souvenir de moi",
-    "invalid": "est invalide."
+	"invalid": "est invalide.",
+	"signout": "Déconnection"
 }

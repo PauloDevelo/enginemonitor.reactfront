@@ -50,5 +50,6 @@
     "login": "Login",
     "modalLogintitle": "Login with an existing account",
     "remember": "Remember me",
-    "invalid": "is invalid"
+	"invalid": "is invalid",
+	"signout": "Signout"
 }

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CSSTransition } from 'react-transition-group'
 import {
 	Collapse,
@@ -341,7 +344,7 @@ class App extends Component {
 									</DropdownToggle>
 									<DropdownMenu right>
 										<DropdownItem onClick={this.logout}>
-											Logout
+										<FontAwesomeIcon icon={faSignOutAlt} />{' '}<FormattedMessage {...appmsg.signout} />
 										</DropdownItem>
 									</DropdownMenu>
 								</UncontrolledDropdown>

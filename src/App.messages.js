@@ -32,6 +32,11 @@ const messages: Messages = {
         defaultMessage: "Are you sure you want to delete this entry?",
 		description: "User message"
     },
+    signout: {
+        id: "signout",
+        defaultMessage: "Signout",
+		description: "Menu"
+    },
 }
 
 const definedMessages: typeof messages = defineMessages(messages);
