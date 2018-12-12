@@ -51,5 +51,9 @@
     "modalLogintitle": "Login with an existing account",
     "remember": "Remember me",
 	"invalid": "is invalid",
-	"signout": "Signout"
+	"signout": "Signout",
+	"firstname": "Firstname",
+	"modalSignupTitle": "Signup",
+	"alreadyexisting": "already exist",
+	"isrequired": "is required"
 }

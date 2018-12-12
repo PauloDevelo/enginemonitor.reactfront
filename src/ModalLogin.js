@@ -13,7 +13,7 @@ import MyInput from "./MyInput";
 
 import './transition.css';
 
-const ModaLogin = ({login, visible, className, data, loginErrors}) => {
+const ModaLogin = ({login, visible, className, data, loginErrors, toggleModalSignup}) => {
     const handleSubmit = (data) => {
 		login(data);
     }
@@ -42,6 +42,7 @@ const ModaLogin = ({login, visible, className, data, loginErrors}) => {
                     {alerts}
 				</ModalBody>
 				<ModalFooter>
+					<Button onClick={toggleModalSignup} color="success"><FormattedMessage {...loginmsg.signup} /></Button>
 					<Button type="submit" form="formLogin" color="success"><FormattedMessage {...loginmsg.login} /></Button>
 				</ModalFooter>
 			</Modal>
@@ -54,7 +55,8 @@ ModaLogin.propTypes = {
 	login: PropTypes.func.isRequired,
 	className: PropTypes.string,
     data: PropTypes.object,
-    loginErrors: PropTypes.object
+	loginErrors: PropTypes.object,
+	toggleModalSignup: PropTypes.func.isRequired
 };
 
 export default ModaLogin;

@@ -31,6 +31,41 @@ const messages: Messages = {
         id: "invalid",
         defaultMessage: "is invalid",
         description: "Error message"
+    },
+    modalSignupTitle: {
+        id: "modalSignupTitle",
+        defaultMessage: "Signup",
+        description: "Modal title"
+    },
+    name: {
+        id: "name",
+        defaultMessage: "Name",
+        description: "Label"
+    },
+    firstname: {
+        id: "firstname",
+        defaultMessage: "Firstname",
+        description: "Label"
+    },
+    cancel: {
+		id: "cancel",
+        defaultMessage: "Cancel",
+		description: "Button cancel"
+    },
+    signup: {
+		id: "signup",
+        defaultMessage: "Signup",
+		description: "Button cancel"
+    },
+    alreadyexisting: {
+        id: "alreadyexisting",
+        defaultMessage: "already exist",
+		description: "Error message"
+    },
+    isrequired: {
+        id: "isrequired",
+        defaultMessage: "is required",
+		description: "Error message"
     }
 };
 

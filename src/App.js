@@ -25,6 +25,7 @@ import CardTaskDetails from './CardTaskDetails'
 import ModalYesNoConfirmation from './ModalYesNoConfirmation'
 import ModalEditEntry from './ModalEditEntry';
 import ModalLogin from './ModalLogin';
+import ModalSignup from './ModalSignup';
 import EngineMonitorServiceProxy from './EngineMonitorServiceProxy';
 
 import './transition.css';
@@ -59,11 +60,13 @@ class App extends Component {
 			pos: undefined,
 			user: {},
 			loginErrors: undefined,
+			signupErrors: undefined,
 
 			modalEngineInfo: false,
 			modalEditTask: false,
 			modalEditEntry: false,
 			modalYesNo: false,
+			modalSignup: false,
 			navBar: true,
 
 			yes: (() => {}),
@@ -81,6 +84,12 @@ class App extends Component {
 			currentHistoryTask: [],
 			editedEntry:{ name: '', UTCDate: new Date(), age: '', remarks: '' }
 		};
+	}
+
+	signup = (newuser) => {
+		this.enginemonitorserviceproxy.signup(newuser,
+			(newUser) => this.toggleModalSignup(),
+			({errors}) => this.setState((prevState, props) => { return { signupErrors: errors } }));
 	}
 
 	login = (credentials) => {
@@ -108,6 +117,8 @@ class App extends Component {
 	toggleNavBar = () => this.setState((prevState, props) => {return { navBar: !prevState.navBar }});
 
 	toggleModalYesNoConfirmation = () => this.setState((prevState, props) => {return { modalYesNo: !prevState.modalYesNo }});
+
+	toggleModalSignup = () => this.setState((prevState, props) => {return { modalSignup: !prevState.modalSignup }});
 
 	toggleModalEditEntry = (isCreationMode, entry) => {
     	this.setState((prevState, props) => { 
@@ -405,12 +416,18 @@ class App extends Component {
 						message={this.state.yesNoMsg} 
 						className='modal-dialog-centered'
 					/>
-
 					<ModalLogin visible={this.state.user === undefined && this.enginemonitorserviceproxy.mode === 'auth'} 
-					login={this.login}
-					data={{ email: '', password: ''}} 
-					className='modal-dialog-centered'
-					loginErrors={this.state.loginErrors}/>
+						login={this.login}
+						data={{ email: '', password: ''}} 
+						className='modal-dialog-centered'
+						loginErrors={this.state.loginErrors}
+						toggleModalSignup={this.toggleModalSignup}/>
+					<ModalSignup visible={this.state.modalSignup && this.enginemonitorserviceproxy.mode === 'auth'} 
+						toggle={this.toggleModalSignup} 
+						signup={this.signup}
+						data={{ firstname:'', name:'', email: '', password: ''}} 
+						className='modal-dialog-centered'
+						signupErrors={this.state.signupErrors}/>																																																					
 
 				</div>
 			</CSSTransition>

@@ -28,6 +28,25 @@ class EngineMonitorServiceProxy{
         catch{}
     }
 
+    signup = (newuser, complete, fail) => {
+        var data = {
+            user: newuser
+        }
+        axios.post(this.baseUrl + "users/", data)
+		.then(res => {
+			if(res.errors){
+                console.log(res.errors);
+            }
+            if(typeof complete === 'function') complete(res.data);
+		})
+		.catch(error => {
+            console.log('Signup failed.');
+            console.log( error );
+            if(typeof fail === 'function') fail(error.response ? error.response.data: undefined);
+        });
+
+    }
+
     authenticate = (credentials, complete, fail) => {
         var data = {
             user: credentials
@@ -50,7 +69,7 @@ class EngineMonitorServiceProxy{
 		.catch(error => {
             console.log('Authentication failed.');
             console.log( error );
-            if(typeof fail === 'function') fail(error.response.data);
+            if(typeof fail === 'function') fail(error.response ? error.response.data: { errors:undefined});
         });
     }
 

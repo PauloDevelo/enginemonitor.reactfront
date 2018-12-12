@@ -51,5 +51,9 @@
     "modalLogintitle": "Login avec un compte existant",
     "remember": "Se souvenir de moi",
 	"invalid": "est invalide.",
-	"signout": "Déconnection"
+	"signout": "Déconnection",
+	"firstname": "Prénom",
+	"modalSignupTitle": "Signup",
+	"alreadyexisting": "existe déjà",
+	"isrequired": "est requis"
 }
