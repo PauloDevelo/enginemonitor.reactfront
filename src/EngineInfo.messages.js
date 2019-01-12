@@ -1,5 +1,5 @@
 import {defineMessages} from "react-intl";
-import {type Messages} from "./MessageDescriptor"
+import {type Messages} from "./MessageDescriptor";
 
 const messages: Messages = {
   installedOn: {
@@ -20,15 +20,30 @@ const messages: Messages = {
     defaultMessage: "Engine Edition",
 		description: "Engine Info Edition Modal"
 	},
+	modalCreationTitle: {
+		id: "modalCreationTitle",
+    defaultMessage: "Engine Creation",
+		description: "Engine Info Edition Modal"
+	},
 	save: {
 		id: "save",
     defaultMessage: "Save",
 		description: "Button save"
 	},
+	create: {
+		id: "createbutton",
+    defaultMessage: "Create",
+		description: "Button create"
+	},
 	cancel: {
 		id: "cancel",
     defaultMessage: "Cancel",
 		description: "Button cancel"
+	},
+	name: {
+		id: "name",
+    defaultMessage: "Name",
+		description: "Label"
 	},
 	brand: {
 		id: "brand",

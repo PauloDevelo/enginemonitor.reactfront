@@ -20,11 +20,11 @@ const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEn
 	};
 	
 	const handleDelete = () => {
-		deleteEntry(entry.id, toggle);
+		deleteEntry(entry._id, toggle);
 	}
 
 	let title = undefined;
-	if (entry.id === undefined){
+	if (entry._id === undefined){
 		title = <FormattedMessage {...editentrymsg.modalAckTitle} />
 	}
 	else{
@@ -49,7 +49,7 @@ const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEn
 				<ModalFooter>
 					<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...editentrymsg.save} /></Button>
 					<Button color="secondary" onClick={toggle}><FormattedMessage {...editentrymsg.cancel} /></Button>
-					{entry.id && <Button color="danger" onClick={handleDelete}><FormattedMessage {...editentrymsg.delete} /></Button>}
+					{entry._id && <Button color="danger" onClick={handleDelete}><FormattedMessage {...editentrymsg.delete} /></Button>}
 				</ModalFooter>
 			</Modal>
 		</CSSTransition>

@@ -25,7 +25,7 @@ const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className})
 	}
 
 	let title = undefined;
-	if (task.id === undefined){
+	if (task._id === undefined){
 		title = <FormattedMessage {...edittaskmsg.modalCreationTaskTitle} />
 	}
 	else{
@@ -47,7 +47,7 @@ const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className})
 				<ModalFooter>
 					<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...edittaskmsg.save} /></Button>
 					<Button color="secondary" onClick={toggle}><FormattedMessage {...edittaskmsg.cancel} /></Button>
-					{task.id && <Button color="danger" onClick={handleDelete}><FormattedMessage {...edittaskmsg.delete} /></Button>}
+					{task._id && <Button color="danger" onClick={handleDelete}><FormattedMessage {...edittaskmsg.delete} /></Button>}
 				</ModalFooter>
 			</Modal>
 		</CSSTransition>

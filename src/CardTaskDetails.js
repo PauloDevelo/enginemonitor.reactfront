@@ -1,14 +1,11 @@
 import React from 'react';
 import { Button, Card, CardBody, CardTitle, CardSubtitle, CardFooter, CardText, Badge } from 'reactstrap';
-import { FormattedMessage } from 'react-intl';
 import { faEdit, faCheckSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import PropTypes from 'prop-types';
 
 import { getContext, getScheduleText } from './TaskHelper'; 
-
-import edittaskmsg from "./ModalEditTask.messages";
 
 import './CardTaskDetails.css';
 import './transition.css';
@@ -27,7 +24,7 @@ function getBadgeText(level){
 
 const CardTaskDetails = ({task, next, prev, toggleModal, nextVisibility, prevVisibility, toggleAckModal, classNames}) => {
     if (task === undefined){
-        return <Card className="p-2 m-2 border border-primary rounded shadow"/>;
+        return <Card className={classNames}/>;
     }
 
     const cursorPointerStyle = {
@@ -54,7 +51,7 @@ const CardTaskDetails = ({task, next, prev, toggleModal, nextVisibility, prevVis
                     <CardBody className="d-flex p-0">
                             <div className="p-2" onClick={prev} style={cursorPointerStyle}><div className={prevClassNames}></div></div>
                                 <TransitionGroup className="p-2 flex-grow-1">
-                                    <CSSTransition key={task.id} timeout={250} classNames="card" >
+                                    <CSSTransition key={task._id} timeout={250} classNames="card" >
                                         <div >
                                             <CardTitle>{task.name} <Badge color={badgeContext} pill>{badgeText}</Badge></CardTitle>
                                             <CardSubtitle>{title}</CardSubtitle>

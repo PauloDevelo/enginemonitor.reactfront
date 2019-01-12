@@ -30,7 +30,7 @@ export default function HistoryTaskTable({taskHistory, toggleEntryModal, classNa
         
         history = taskHistory.map(entry => {
         return(
-            <CSSTransition key={entry.id} in={true} timeout={500} classNames="tr">
+            <CSSTransition key={entry._id} in={true} timeout={500} classNames="tr">
                 <TaskRow entry={entry} onClick={() => toggleEntryModal(false, entry)}/>
             </CSSTransition>
             )}

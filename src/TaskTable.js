@@ -31,7 +31,7 @@ export const TaskTable = ({tasks, changeCurrentTask, toggleModal, classNames}) =
 		const trStyle = { cursor: 'pointer' };
 	listLines = tasks.map((task) => {
 		return(
-			<CSSTransition key={task.id} in={true} timeout={500} classNames="tr">
+			<CSSTransition key={task._id} in={true} timeout={500} classNames="tr">
 				<TaskLine task={task} trStyle={trStyle} onClick={() => changeCurrentTask(task) } />
 			</CSSTransition>
 		);
