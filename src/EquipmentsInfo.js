@@ -12,7 +12,10 @@ import ClockLabel from './ClockLabel';
 export default function EquipmentsInfo({equipments, toggleModal, currentEquipmentIndex, changeCurrentEquipment, extraClassNames}){
 	var tabnavItems = [];
 	var tabPanes = [];
+	
 	var currentEquipmentId = undefined;
+	if(currentEquipmentIndex !== -1)
+		currentEquipmentId = equipments[currentEquipmentIndex]._id;
 
 	tabPanes = equipments.map((equipment, index) => {
 		return(
@@ -40,8 +43,6 @@ export default function EquipmentsInfo({equipments, toggleModal, currentEquipmen
 		)
 	});
 
-	if(currentEquipmentIndex !== undefined)
-		currentEquipmentId = equipments[currentEquipmentIndex]._id;
 
 	return (
 		<div className={extraClassNames}>

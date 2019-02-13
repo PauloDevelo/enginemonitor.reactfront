@@ -85,7 +85,7 @@ class App extends Component {
 			yesNoMsg: appmsg.defaultMsg,
 
 			equipments: [],
-			currentEquipmentIndex: undefined,
+			currentEquipmentIndex: -1,
 			editedEquipment: undefined,
 			tasks:[],
 			currentTaskIndex: undefined,
@@ -234,15 +234,15 @@ class App extends Component {
 			
 			await this.setStateAsync((prevState, props) => { 
 					let currentEquipmentIndex = prevState.currentEquipmentIndex; 
-					if (prevState.currentEquipmentIndex === undefined)
+					if (currentEquipmentIndex === -1)
 					{
 						if(equipments.length > 0 ){
 							currentEquipmentIndex = 0;
 						}
 					}
 					else{
-						if(equipments.length >= currentEquipmentIndex){
-							currentEquipmentIndex = undefined;
+						if(currentEquipmentIndex >= equipments.length){
+							currentEquipmentIndex = -1;
 						}
 					}
 					
@@ -252,30 +252,31 @@ class App extends Component {
 		}
 		catch(error){
 			this.setState((prevState, props) => {
-				return { equipments:[], currentEquipmentIndex:undefined }
+				return { equipments:[], currentEquipmentIndex:-1 }
 			});
 		}
 	}
 	
 	createOrSaveTask = async (taskToSave) => {
-		if(this.state.currentEquipmentIndex !== undefined){
-			const currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
-			let saveTask;
-			if(!taskToSave._id){
-				const {task} = await this.equipmentmonitorserviceproxy.createTask(currentEquipment._id, taskToSave);
-				saveTask = task;
-				
-			}
-			else{
-				const {task} = await this.equipmentmonitorserviceproxy.saveTask(currentEquipment._id, taskToSave);
-				saveTask = task;
-			}
-
-			await this.refreshTaskList();
-			this.changeCurrentTask(saveTask);
+		if(this.state.currentEquipmentIndex === -1){
+			throw Error("noEquipmentSelected");
 		}
+
+		const currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
+		let saveTask;
+		if(!taskToSave._id){
+			const {task} = await this.equipmentmonitorserviceproxy.createTask(currentEquipment._id, taskToSave);
+			saveTask = task;
+			
+		}
+		else{
+			const {task} = await this.equipmentmonitorserviceproxy.saveTask(currentEquipment._id, taskToSave);
+			saveTask = task;
+		}
+
+		await this.refreshTaskList();
+		this.changeCurrentTask(saveTask);
 	}
-	
 
 	deleteTask = (onYes, onNo, onError) => {
 		var nextTaskIndex = (this.state.currentTaskIndex === this.state.tasks.length - 1) ? this.state.currentTaskIndex - 1:this.state.currentTaskIndex
@@ -363,7 +364,7 @@ class App extends Component {
 	}
 	
 	refreshTaskList = async() => {
-		if(this.state.currentEquipmentIndex !== undefined){
+		if(this.state.currentEquipmentIndex !== -1){
 			let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
 			try{
 				const { tasks } = await this.equipmentmonitorserviceproxy.refreshTaskList(currentEquipment._id);
