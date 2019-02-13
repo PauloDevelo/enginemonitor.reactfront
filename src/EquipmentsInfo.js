@@ -40,7 +40,8 @@ export default function EquipmentsInfo({equipments, toggleModal, currentEquipmen
 			)
 		});
 
-		currentEquipmentId = equipments[currentEquipmentIndex]._id;
+		if(currentEquipmentIndex !== undefined)
+			currentEquipmentId = equipments[currentEquipmentIndex]._id;
 	}
 
 	return (
