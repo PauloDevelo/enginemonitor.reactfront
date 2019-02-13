@@ -88,7 +88,7 @@ class App extends Component {
 			currentEquipmentIndex: -1,
 			editedEquipment: undefined,
 			tasks:[],
-			currentTaskIndex: undefined,
+			currentTaskIndex: -1,
 			currentTask: undefined,
 			editedTask: createDefaultTask(),
 			
@@ -308,8 +308,17 @@ class App extends Component {
 		});
 	}
 	
-	nextTask = async() => await this.changeCurrentTaskIndex(this.state.currentTaskIndex + 1)
-	previousTask = async() => await this.changeCurrentTaskIndex(this.state.currentTaskIndex - 1)
+	nextTask = async() => {
+		if(this.state.currentTaskIndex + 1 < this.state.tasks.length){
+			await this.changeCurrentTaskIndex(this.state.currentTaskIndex + 1);
+		}
+	}
+
+	previousTask = async() => {
+		if(this.state.currentTaskIndex - 1 >= 0){
+			await this.changeCurrentTaskIndex(this.state.currentTaskIndex - 1);
+		}
+	}
 
 	changeCurrentTask = async (task) => {
 		if(task !== this.state.currentTask){
@@ -328,7 +337,7 @@ class App extends Component {
 			await this.setStateAsync((prevState, props) => { 
 				return {
 					currentHistoryTask: [],
-					currentTaskIndex: undefined,
+					currentTaskIndex: -1,
 					currentTask: undefined
 				}; 
 			});
@@ -376,7 +385,7 @@ class App extends Component {
 					return {
 						tasks: tasks,
 						currentTask: newCurrentTaskIndex === -1 ? undefined : tasks[newCurrentTaskIndex],
-						currentTaskIndex: newCurrentTaskIndex === -1 ? undefined : newCurrentTaskIndex
+						currentTaskIndex: newCurrentTaskIndex === -1 ? -1 : newCurrentTaskIndex
 					}
 				});
 			}
@@ -391,7 +400,7 @@ class App extends Component {
 
 	emptyTaskList = async () => {
 		await this.setStateAsync((prevState, props) => {
-			return { tasks: [], currentTask: undefined, currentTaskIndex: undefined, currentHistoryTask: [] };
+			return { tasks: [], currentTask: undefined, currentTaskIndex: -1, currentHistoryTask: [] };
 		});
 	}
 				
