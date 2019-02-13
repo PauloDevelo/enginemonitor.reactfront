@@ -1,4 +1,6 @@
 {
+	"loginfailed": "Le login a échoué",
+	"loginerror": "Erreur :",
 	"installedOn": "Installé le ",
 	"today": "Aujourd'hui, ",
 	"edit": "Editer",

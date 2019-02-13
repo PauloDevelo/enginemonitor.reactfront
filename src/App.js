@@ -25,6 +25,7 @@ import ModalEditEntry from './ModalEditEntry';
 import ModalLogin from './ModalLogin';
 import ModalSignup from './ModalSignup';
 import EquipmentMonitorServiceProxy from './EquipmentMonitorServiceProxy';
+import HttpError from './HttpError'
 
 import './transition.css';
 import appmsg from "./App.messages";
@@ -83,7 +84,7 @@ class App extends Component {
 			yesNoTitle: appmsg.defaultTitle,
 			yesNoMsg: appmsg.defaultMsg,
 
-			equipments: undefined,
+			equipments: [],
 			currentEquipmentIndex: undefined,
 			editedEquipment: undefined,
 			tasks:[],
@@ -96,35 +97,42 @@ class App extends Component {
 		};
 	}
 
-	signup = (newuser) => {
-		this.equipmentmonitorserviceproxy.signup(newuser,
-			(newUser) => this.toggleModalSignup(),
-			({errors}) => this.setState((prevState, props) => { return { signupErrors: errors } }));
+	setStateAsync = updater => new Promise(resolve => this.setState(updater, resolve))
+
+	signup = async (newuser) => {
+		try{
+			await this.equipmentmonitorserviceproxy.signup(newuser);
+			this.toggleModalSignup();
+		}
+		catch(errors){
+			if(errors instanceof HttpError){
+				this.setState((prevState, props) => { return { signupErrors: errors.data } });
+			}
+		}
 	}
 
-	login = (credentials) => {
-		this.equipmentmonitorserviceproxy.authenticate(credentials, 
-				(user) => {
-					this.setState( (prevState, props) => { return { user: user, loginErrors: undefined } },
-										 () => {
-											this.refreshEquipmentList(() => {
-												if(this.state.equipments.length > 0){
-													this.changeCurrentEquipment(0);
-												}
-											});
-										  });
-				},
-				({errors}) => this.setState((prevState, props) => { return { loginErrors: errors } })
-		);
+	login = async (credentials) => {
+		try{
+			const user = await this.equipmentmonitorserviceproxy.authenticate(credentials);
+			await this.setStateAsync((prevState, props) => { return { user: user, loginErrors: undefined } });
+			await this.refreshEquipmentList();
+
+			if(this.state.equipments.length > 0){
+				this.changeCurrentEquipment(0);
+			}
+		}
+		catch(errors){
+			if(errors instanceof HttpError){
+				this.setState((prevState, props) => { return { loginErrors: errors.data } });
+			}
+		}
 	}
 
-	logout = () => {
+	logout = async () => {
 		this.equipmentmonitorserviceproxy.logout();
-		this.setState( (prevState, props) => { return { user: undefined, loginErrors: undefined } },
-						() => {
-							this.refreshEquipmentList();
-							this.refreshTaskList();
-						});
+		await this.setStateAsync( (prevState, props) => { return { user: undefined, loginErrors: undefined } });
+		await this.refreshEquipmentList();
+		this.refreshTaskList();
 	}
 
 	toggleNavBar = () => this.setState((prevState, props) => {return { navBar: !prevState.navBar }});
@@ -159,15 +167,24 @@ class App extends Component {
 		});
 	}
 	
-	toggleModalEditTask = (isCreationMode) => this.setState( (prevState, props) => {
-													return { 
-														modalEditTask: !prevState.modalEditTask,
-														editedTask: isCreationMode ? createDefaultTask(prevState) : prevState.currentTask
-													}
-												});
+	toggleModalEditTask = (isCreationMode) => {
+		this.setState( (prevState, props) => {
+			return { 
+				modalEditTask: !prevState.modalEditTask,
+				editedTask: isCreationMode ? createDefaultTask(prevState) : prevState.currentTask
+			}
+		});
+	}
 	
-	refreshCurrentUser = () => this.equipmentmonitorserviceproxy.refreshCurrentUser( ({user}) => this.setState((prevState, props) => { return { user:user } }),
-																				  	 ()       => this.setState((prevState, props) => { return { user: undefined } }))
+	refreshCurrentUser = async () => {
+		try{
+			const {user} = await this.equipmentmonitorserviceproxy.refreshCurrentUser();
+			this.setState({ user:user });
+		}
+		catch(error){
+			this.setState({ user: undefined })
+		}
+	}
 
 	refreshPosition = () => {
 		// Try HTML5 geolocation.
@@ -183,76 +200,79 @@ class App extends Component {
 		}
 	}
 	
-	changeCurrentEquipment = (newEquipmentIndex) => {
-		this.setState((prevState, props) => { return ({ currentEquipmentIndex:newEquipmentIndex });},
-			() => this.refreshTaskList(() => {
-				if(this.state.tasks.length > 0){
-					this.changeCurrentTaskIndex(0);
-				}
-			})
-		);
+	changeCurrentEquipment = async (newEquipmentIndex) => {
+		await this.setStateAsync((prevState, props) => { return ({ currentEquipmentIndex:newEquipmentIndex });});
+		await this.refreshTaskList();
+
+		if(this.state.tasks.length > 0){
+			this.changeCurrentTaskIndex(0);
+		}
 	}
 
-	saveEquipmentInfo = (equipmentInfo) => {
-		this.equipmentmonitorserviceproxy.saveEquipment(equipmentInfo, ({equipment}) => {
-			equipment.installation = new Date(equipment.installation);
+	saveEquipmentInfo = async (equipmentInfo) => {
+		const {equipment} = await this.equipmentmonitorserviceproxy.saveEquipment(equipmentInfo);
+		equipment.installation = new Date(equipment.installation);
 
-			if(equipmentInfo._id){
-				this.setState((prevState, props) => {
-					prevState.equipments[prevState.currentEquipmentIndex] = equipment;
-					return { equipments: prevState.equipments }; 
-				});
-			}
-			else{
-				this.setState((prevState, props) => {
-					prevState.equipments.push(equipment);
-					return { equipments: prevState.equipments };
-				});
-			}
-		});
+		if(equipmentInfo._id){
+			this.setState((prevState, props) => {
+				prevState.equipments[prevState.currentEquipmentIndex] = equipment;
+				return { equipments: prevState.equipments }; 
+			});
+		}
+		else{
+			this.setState((prevState, props) => {
+				prevState.equipments.push(equipment);
+				return { equipments: prevState.equipments };
+			});
+		}
 	}
 
-	refreshEquipmentList = (complete) => {
-		this.equipmentmonitorserviceproxy.getEquipments(
-			({equipments}) => {
-				if(equipments){
-					equipments.forEach((equipment) => { equipment.installation = new Date(equipment.installation); });
+	refreshEquipmentList = async () => {
+		try{
+			const {equipments} = await this.equipmentmonitorserviceproxy.getEquipments();
+			equipments.forEach((equipment) => { equipment.installation = new Date(equipment.installation); });
+			
+			await this.setStateAsync((prevState, props) => { 
+					let currentEquipmentIndex = prevState.currentEquipmentIndex; 
+					if (prevState.currentEquipmentIndex === undefined)
+					{
+						if(equipments.length > 0 ){
+							currentEquipmentIndex = 0;
+						}
+					}
+					else{
+						if(equipments.length >= currentEquipmentIndex){
+							currentEquipmentIndex = undefined;
+						}
+					}
 					
-					this.setState((prevState, props) => { 
-							let currentEquipmentIndex = prevState.currentEquipmentIndex; 
-							if (prevState.currentEquipmentIndex === undefined)
-							{
-								if(equipments.length > 0 ){
-									currentEquipmentIndex = 0;
-								}
-							}
-							else{
-								if(equipments.length >= currentEquipmentIndex){
-									currentEquipmentIndex = undefined;
-								}
-							}
-							
-							return { equipments:equipments, currentEquipmentIndex:currentEquipmentIndex } 
-						},
-						() => { if(typeof complete === 'function') complete(); }
-					);
+					return { equipments:equipments, currentEquipmentIndex:currentEquipmentIndex } 
 				}
-			},
-			() => this.setState((prevState, props) => {
-				return { equipments:undefined, currentEquipmentIndex:undefined }
-			})
-		);
+			);
+		}
+		catch(error){
+			this.setState((prevState, props) => {
+				return { equipments:[], currentEquipmentIndex:undefined }
+			});
+		}
 	}
 	
-	createOrSaveTask = (task) => {
+	createOrSaveTask = async (taskToSave) => {
 		if(this.state.currentEquipmentIndex !== undefined){
-			let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
-			if(!task._id){
-				this.equipmentmonitorserviceproxy.createTask(currentEquipment._id, task, ({task}) => this.refreshTaskList(() => this.changeCurrentTask(task)));
+			const currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
+			let saveTask;
+			if(!taskToSave._id){
+				const {task} = await this.equipmentmonitorserviceproxy.createTask(currentEquipment._id, taskToSave);
+				saveTask = task;
+				
 			}
 			else{
-				this.equipmentmonitorserviceproxy.saveTask(currentEquipment._id, task, ({task}) => this.refreshTaskList(() => this.changeCurrentTask(task)));
+				const {task} = await this.equipmentmonitorserviceproxy.saveTask(currentEquipment._id, taskToSave);
+				saveTask = task;
 			}
+
+			await this.refreshTaskList();
+			this.changeCurrentTask(saveTask);
 		}
 	}
 	
@@ -265,57 +285,52 @@ class App extends Component {
 
 			return {
 				modalYesNo: true,
-				yes: (() => {
-					this.toggleModalYesNoConfirmation();
-					this.equipmentmonitorserviceproxy.deleteTask(currentEquipment._id, prevState.editedTask._id,
-						() => {
-							this.refreshTaskList(() => {
-								this.changeCurrentTaskIndex(nextTaskIndex, onYes);
-							});
-						},
-						() => { if(onError) onError(); }
-					);
-				}),
-				no: (() => {
+				yes: async() => {
+					try{
+						this.toggleModalYesNoConfirmation();
+						await this.equipmentmonitorserviceproxy.deleteTask(currentEquipment._id, prevState.editedTask._id);
+						await this.refreshTaskList();
+						await this.changeCurrentTaskIndex(nextTaskIndex);
+						onYes();
+					}
+					catch(error){
+						if(onError) onError();
+					}
+				},
+				no: () => {
 					this.toggleModalYesNoConfirmation();
 					if(onNo) onNo();
-				}),
+				},
 				yesNoTitle: appmsg.taskDeleteTitle,
 				yesNoMsg: appmsg.taskDeleteMsg,
 			};
 		});
 	}
 	
-	nextTask = (complete, fail) => this.changeCurrentTaskIndex(this.state.currentTaskIndex + 1, complete, fail);
+	nextTask = async() => await this.changeCurrentTaskIndex(this.state.currentTaskIndex + 1)
+	previousTask = async() => await this.changeCurrentTaskIndex(this.state.currentTaskIndex - 1)
 
-	previousTask = (complete, fail)=> this.changeCurrentTaskIndex(this.state.currentTaskIndex - 1, complete, fail);
-
-	changeCurrentTask = (task, complete, fail) => {
+	changeCurrentTask = async (task) => {
 		if(task !== this.state.currentTask){
 			var newCurrentTaskIndex = this.state.tasks.findIndex((t, ind, tab) => t._id === task._id);
-			this.changeCurrentTaskIndex(newCurrentTaskIndex, complete);
+			await this.changeCurrentTaskIndex(newCurrentTaskIndex);
 		}
 	}
 
-	changeCurrentTaskIndex = (newTaskIndex, complete, fail) => {
+	changeCurrentTaskIndex = async (newTaskIndex) => {
 		if(newTaskIndex < -1 || newTaskIndex >= this.state.tasks.length){
 			console.log('Index out of bound: ' + newTaskIndex);
 			return;
 		}
 
 		if (newTaskIndex === -1){
-			this.setState((prevState, props) => { 
+			await this.setStateAsync((prevState, props) => { 
 				return {
 					currentHistoryTask: [],
 					currentTaskIndex: undefined,
 					currentTask: undefined
 				}; 
-			},
-			() => { 
-				if (typeof complete === 'function') 
-					complete();
 			});
-			
 			return;
 		}
 
@@ -323,126 +338,110 @@ class App extends Component {
 		var newCurrentTask = this.state.tasks[newTaskIndex];
 		var newCurrentTaskId = newCurrentTask._id;
 
-		this.equipmentmonitorserviceproxy.refreshHistoryTask(currentEquipment._id, newCurrentTaskId,
-			({entries}) => {
-				entries.forEach(entry => {
-					entry.date = new Date(entry.date)
-				});
+		try{
+			const {entries} = await this.equipmentmonitorserviceproxy.refreshHistoryTask(currentEquipment._id, newCurrentTaskId);
+			entries.forEach(entry => { entry.date = new Date(entry.date) });
 
-				this.setState((prevState, props) => { 
-					return {
-						currentHistoryTask: entries,
-						currentTaskIndex: newTaskIndex,
-						currentTask: newCurrentTask
-					}; 
-				},
-				() => { if(typeof complete === 'function') complete();});
-			},
-			() => {
-				this.setState((prevState, props) => { 
-					return {
-						currentHistoryTask: [],
-						currentTaskIndex: newTaskIndex,
-						currentTask: newCurrentTask
-					}; 
-				},
-				() => { if(typeof fail === 'function') fail();});
-			}
-		);
-	}
-	
-	refreshTaskList = (complete) => {
-		if(this.state.equipments && this.state.currentEquipmentIndex !== undefined){
-			let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
-			this.equipmentmonitorserviceproxy.refreshTaskList(currentEquipment._id, ({ tasks }) => {
-				// store the new state object in the component's state
-				this.setState(
-					(prevState, props) => {
-						tasks.forEach(task => task.usagePeriodInHour = task.usagePeriodInHour === -1 ? undefined : task.usagePeriodInHour);
-						var newCurrentTaskIndex = prevState.currentTask ? tasks.findIndex(task => task._id === prevState.currentTask._id) : 0;
-						return {
-							tasks: tasks,
-							currentTask: newCurrentTaskIndex === -1 ? undefined : tasks[newCurrentTaskIndex],
-							currentTaskIndex: newCurrentTaskIndex === -1 ? undefined : newCurrentTaskIndex
-						}
-					},
-					() =>{
-						if(complete !== undefined && typeof complete === "function") complete();
-					}
-				);
-			},
-			() => {
-				// store the new state object in the component's state
-				this.setState((prevState, props) => { 
-					return {
-						tasks: [],
-						currentTask: undefined,
-						currentTaskIndex: undefined,
-						currentHistoryTask: []
-					}; 
-				});
-			});
-		}
-		else{
-			this.setState((prevState, props) => { 
+			await this.setStateAsync((prevState, props) => { 
 				return {
-					tasks: [],
-					currentTask: undefined,
-					currentTaskIndex: undefined,
-					currentHistoryTask: []
+					currentHistoryTask: entries,
+					currentTaskIndex: newTaskIndex,
+					currentTask: newCurrentTask
 				}; 
 			});
 		}
+		catch(error){
+			await this.setStateAsync((prevState, props) => { 
+				return {
+					currentHistoryTask: [],
+					currentTaskIndex: newTaskIndex,
+					currentTask: newCurrentTask
+				}; 
+			});
+			throw error;
+		}
 	}
-
-	createOrSaveEntry = (entry, complete) => {
-		let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
-		if(!entry._id){
-			this.equipmentmonitorserviceproxy.createEntry(currentEquipment._id, this.state.currentTask._id, entry, ({entry}) => this.onNewEntry(entry, complete));
+	
+	refreshTaskList = async() => {
+		if(this.state.currentEquipmentIndex !== undefined){
+			let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
+			try{
+				const { tasks } = await this.equipmentmonitorserviceproxy.refreshTaskList(currentEquipment._id);
+				tasks.forEach(task => task.usagePeriodInHour = task.usagePeriodInHour === -1 ? undefined : task.usagePeriodInHour);
+				
+				// store the new state object in the component's state
+				await this.setStateAsync((prevState, props) => {
+					var newCurrentTaskIndex = prevState.currentTask ? tasks.findIndex(task => task._id === prevState.currentTask._id) : 0;
+					return {
+						tasks: tasks,
+						currentTask: newCurrentTaskIndex === -1 ? undefined : tasks[newCurrentTaskIndex],
+						currentTaskIndex: newCurrentTaskIndex === -1 ? undefined : newCurrentTaskIndex
+					}
+				});
+			}
+			catch(error){
+				await this.emptyTaskList();
+			}
 		}
 		else{
-			this.equipmentmonitorserviceproxy.saveEntry(currentEquipment._id, this.state.currentTask._id, entry, ({entry}) => this.onNewEntry(entry, complete));
+			await this.emptyTaskList();
 		}
 	}
 
-	onNewEntry = (newEntry, complete) => {
+	emptyTaskList = async () => {
+		await this.setStateAsync((prevState, props) => {
+			return { tasks: [], currentTask: undefined, currentTaskIndex: undefined, currentHistoryTask: [] };
+		});
+	}
+				
+
+	createOrSaveEntry = async (entryToSave) => {
+		let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
+		if(!entryToSave._id){
+			const {entry} = await this.equipmentmonitorserviceproxy.createEntry(currentEquipment._id, this.state.currentTask._id, entryToSave);
+			await this.onNewEntry(entry);
+		}
+		else{
+			const {entry} = await this.equipmentmonitorserviceproxy.saveEntry(currentEquipment._id, this.state.currentTask._id, entryToSave);
+			await this.onNewEntry(entry)
+		}
+	}
+
+	onNewEntry = async (newEntry) => {
 		newEntry.date = new Date(newEntry.date);
-
 		this.refreshTaskList();
-		this.setState((prevState, props) => {
-				var newCurrentHistoryTask = prevState.currentHistoryTask.filter(entry => entry._id !== newEntry._id);
-				newCurrentHistoryTask.unshift(newEntry);
-				newCurrentHistoryTask.sort((entrya, entryb) => { return entrya.date - entryb.date; });
 
-				return({ currentHistoryTask: newCurrentHistoryTask });
-			},
-			() => {
-				if(complete && typeof complete === 'function')complete();
-			}
-		);
+		await this.setStateAsync((prevState, props) => {
+			var newCurrentHistoryTask = prevState.currentHistoryTask.filter(entry => entry._id !== newEntry._id);
+			newCurrentHistoryTask.unshift(newEntry);
+			newCurrentHistoryTask.sort((entrya, entryb) => { return entrya.date - entryb.date; });
+
+			return({ currentHistoryTask: newCurrentHistoryTask });
+		});
 	}
 	
 	deleteEntry = (entryId, onYes, onNo, onError) => {
 		this.setState((prevState, props) => {
-			let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
+			let currentEquipment = prevState.equipments[prevState.currentEquipmentIndex];
 
 			return {
 				modalYesNo: true,
-				yes: (() => {
+				yes: (async () => {
 					this.toggleModalYesNoConfirmation();
-					this.equipmentmonitorserviceproxy.deleteEntry(currentEquipment._id, this.state.currentTask._id, entryId, 
-						() => {
-							this.refreshTaskList();
-							this.setState((prevState, props) => {
-									return({ currentHistoryTask: prevState.currentHistoryTask.slice(0).filter(e => e._id !== entryId) });
-								},
-								() => {
-									if(onYes && typeof onYes === 'function') onYes();
-								}
-							);
-						},
-						() => { if(onError) onError(); }
-					);
+					try{
+						await this.equipmentmonitorserviceproxy.deleteEntry(currentEquipment._id, this.state.currentTask._id, entryId);
+						this.refreshTaskList();
+						this.setState((prevState, props) => {
+								return({ currentHistoryTask: prevState.currentHistoryTask.slice(0).filter(e => e._id !== entryId) });
+							},
+							() => {
+								if(onYes && typeof onYes === 'function') onYes();
+							}
+						);
+					}
+					catch(error){
+						if(onError) onError();
+					}
 				}),
 				no: (() => {
 					this.toggleModalYesNoConfirmation();
@@ -454,16 +453,14 @@ class App extends Component {
 		});
 	}
 
-	componentDidMount() {
-		this.refreshCurrentUser();
-		this.refreshEquipmentList(() => {
-			if(this.state.equipments.length > 0){
-				this.changeCurrentEquipment(0);
-			}
-		});
-		
-
+	async componentDidMount() {
 		this.refreshPosition();
+		await this.refreshCurrentUser();
+		await this.refreshEquipmentList();
+
+		if(this.state.equipments.length > 0){
+			this.changeCurrentEquipment(0);
+		}
 	}
     
 	render() {

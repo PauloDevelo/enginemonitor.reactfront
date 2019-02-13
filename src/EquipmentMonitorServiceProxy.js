@@ -1,5 +1,6 @@
 import axios from "axios";
 import axiosRetry from 'axios-retry';
+import HttpError from './HttpError'
 
 class EquipmentMonitorServiceProxy{
     config = undefined;
@@ -26,32 +27,26 @@ class EquipmentMonitorServiceProxy{
         catch{}
     }
 
-    signup = (newuser, complete, fail) => {
-        var data = {
-            user: newuser
-        }
-        axios.post(this.baseUrl + "users/", data)
-		.then(res => {
-			if(res.errors){
+    signup = async (newUser) => {
+        try{
+            const res = await axios.post(this.baseUrl + "users/", { user: newUser });
+            if(res.errors){
                 console.log(res.errors);
             }
-            if(typeof complete === 'function') complete(res.data);
-		})
-		.catch(error => {
+
+            return res.data;
+        }
+        catch(error){
             console.log('Signup failed.');
             console.log( error );
-            if(typeof fail === 'function') fail(error.response ? error.response.data: undefined);
-        });
-
+            throw new HttpError(error.response ? error.response.data.errors : undefined);
+        }
     }
 
-    authenticate = (credentials, complete, fail) => {
-        var data = {
-            user: credentials
-        }
-        axios.post(this.baseUrl + "users/login", data)
-		.then(res => {
-			if(res.errors){
+    authenticate = async (credentials) => {
+        try{
+            const res = await axios.post(this.baseUrl + "users/login", { user: credentials });
+            if(res.errors){
                 console.log(res.errors);
             }
 
@@ -61,14 +56,16 @@ class EquipmentMonitorServiceProxy{
                     sessionStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify(this.config));
                 }
 
-                if(typeof complete === 'function') complete(res.data.user);
+                return res.data.user;
             }
-		})
-		.catch(error => {
+            
+            throw new HttpError( { loginerror: "loginfailed"} )
+        }
+        catch(error){
             console.log('Authentication failed.');
             console.log( error );
-            if(typeof fail === 'function') fail(error.response ? error.response.data: { errors:undefined});
-        });
+            throw new HttpError(error.response ? error.response.data.errors : undefined);
+        }
     }
 
     logout = () => {
@@ -76,69 +73,90 @@ class EquipmentMonitorServiceProxy{
         this.config = undefined;
     }
 
-    refreshCurrentUser = (complete, fail) => this.get(this.baseUrl + "users/current", complete, fail);
+    refreshCurrentUser = async() => {
+        return await this.get(this.baseUrl + "users/current");
+    }
 
-    getEquipments = (complete, fail) => this.get(this.baseUrl + "equipments", complete, fail);
+    getEquipments = async() => {
+        return await this.get(this.baseUrl + "equipments");
+    }
     
-    saveEquipment = (equipment, complete, fail) => {
+    saveEquipment = async(equipment) => {
         if(equipment._id){
-            this.post(this.baseUrl + "equipments/" + equipment._id, { equipment: equipment }, complete, fail);
+            return await this.post(this.baseUrl + "equipments/" + equipment._id, { equipment: equipment });
         }
         else{
-            this.post(this.baseUrl + "equipments", { equipment: equipment }, complete, fail);
+            return await this.post(this.baseUrl + "equipments", { equipment: equipment });
         }
     }
 
-    refreshEquipmentInfo = (idEquipment, complete, fail) => this.get(this.baseUrl + "equipments/" + idEquipment, complete, fail);
+    refreshEquipmentInfo = async (idEquipment) =>{
+        return await this.get(this.baseUrl + "equipments/" + idEquipment);
+    } 
 
-    createTask = (equipmentId, task, complete, fail) => this.post(this.baseUrl + "tasks/" + equipmentId, { task: task }, complete, fail);
-    saveTask = (equipmentId, task, complete, fail) => this.post(this.baseUrl + "tasks/" + equipmentId + '/' + task._id, { task: task }, complete, fail);
-
-    deleteTask = (equipmentId, taskid, complete, fail) => this.delete(this.baseUrl + "tasks/" + equipmentId + '/' + taskid, complete, fail);
-    refreshHistoryTask = (equipmentId, taskid, complete, fail) => this.get(this.baseUrl + "entries/" + equipmentId + '/' + taskid, complete, fail);
-    refreshTaskList = (equipmentId, complete, fail) => this.get(this.baseUrl + "tasks/" + equipmentId, complete, fail);
-    
-    createEntry = (equipmentId, taskid, entry, complete, fail) => {
-        this.post(this.baseUrl + "entries/" + equipmentId + '/' + taskid, { entry: entry }, complete, fail);
+    createTask = async (equipmentId, task) =>{
+        return await this.post(this.baseUrl + "tasks/" + equipmentId, { task: task });
     }
 
-    saveEntry = (equipmentId, taskid, entry, complete, fail) => {
-        this.post(this.baseUrl + "entries/" + equipmentId + '/' + taskid + '/' + entry._id, { entry: entry }, complete, fail);
+    saveTask = async (equipmentId, task) => {
+        return await this.post(this.baseUrl + "tasks/" + equipmentId + '/' + task._id, { task: task });
     }
 
-    deleteEntry = (equipmentId, taskid, entryId, complete, fail) => this.delete(this.baseUrl + "entries/" + equipmentId + '/' + taskid + '/' + entryId, complete, fail);
+    deleteTask = async(equipmentId, taskid) => {
+        return await this.delete(this.baseUrl + "tasks/" + equipmentId + '/' + taskid);
+    }
 
-    post(url, data, complete, fail){
-        axios.post(url, data, this.config)
-		.then(response => {
-			if(typeof complete === 'function') complete(response.data);
-		})
-		.catch(error => {
-            console.log( error );
-            if(typeof fail === 'function') fail();
-		});
+    refreshHistoryTask = async(equipmentId, taskid) => {
+        return await this.get(this.baseUrl + "entries/" + equipmentId + '/' + taskid);
+    }
+
+    refreshTaskList = async(equipmentId, complete, fail) => {
+        return await this.get(this.baseUrl + "tasks/" + equipmentId);
     }
     
-    delete(url, complete, fail){
-        axios.delete(url, this.config)
-		.then(response => {
-			if(typeof complete === 'function') complete(response.data);
-		})	
-		.catch(error => {
-            console.log( error );
-            if(typeof fail === 'function') fail();
-		});
+    createEntry = async (equipmentId, taskid, entry) => {
+        return await this.post(this.baseUrl + "entries/" + equipmentId + '/' + taskid, { entry: entry });
     }
 
-    get(url, complete, fail){
-        axios.get(url, this.config)
-		.then(response => {
-			if(typeof complete === 'function') complete(response.data);
-		})	
-		.catch(error => {
+    saveEntry = async(equipmentId, taskid, entry) => {
+        return await this.post(this.baseUrl + "entries/" + equipmentId + '/' + taskid + '/' + entry._id, { entry: entry });
+    }
+
+    deleteEntry = async(equipmentId, taskid, entryId) => {
+        return await this.delete(this.baseUrl + "entries/" + equipmentId + '/' + taskid + '/' + entryId);
+    }
+
+    async post(url, data){
+        try{
+            const response = await axios.post(url, data, this.config);
+		    return response.data;
+        }
+        catch(error){
             console.log( error );
-            if(typeof fail === 'function') fail();
-		});
+            throw error;
+        }
+    }
+    
+    async delete(url){
+        try{
+            const response = await axios.delete(url, this.config);
+		    return response.data;
+        }
+        catch(error){
+            console.log( error );
+            throw error;
+        }
+    }
+
+    async get(url){
+        try{
+            const response = await axios.get(url, this.config);
+		    return response.data;
+        }
+        catch(error){
+            console.log( error );
+            throw error;
+        }
     }
 }
 

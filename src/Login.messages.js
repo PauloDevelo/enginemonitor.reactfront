@@ -66,6 +66,16 @@ const messages: Messages = {
         id: "isrequired",
         defaultMessage: "is required",
 		description: "Error message"
+    },
+    loginerror: {
+        id: "loginerror",
+        defaultMessage: "Error: ",
+        description: "Error message"
+    },
+    loginfailed: {
+        id: "loginfailed",
+        defaultMessage: "Login failed",
+        description: "Login failed"
     }
 };
 

@@ -14,10 +14,15 @@ import MyInput from "./MyInput"
 import './transition.css';
 
 const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className}) => {
-	const handleSubmit = (data) => {
+	const handleSubmit = async(data) => {
 		data.usagePeriodInHour = data.usagePeriodInHour === undefined || data.usagePeriodInHour <= 0 ? -1 : data.usagePeriodInHour;
-		saveTask(data);
-		toggle();
+		try{
+			await saveTask(data);
+			toggle();
+		}
+		catch(error){
+			console.log(error);
+		}
 	}
 	
 	const handleDelete = () => {

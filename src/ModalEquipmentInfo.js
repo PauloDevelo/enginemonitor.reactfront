@@ -14,9 +14,14 @@ import MyInput from "./MyInput"
 import './transition.css';
 
 const ModalEquipmentInfo = ({saveEquipmentInfo, visible, toggle, className, data}) => {
-	const handleSubmit = (data) => {
-		saveEquipmentInfo(data);
-		toggle();
+	const handleSubmit = async(data) => {
+		try{
+			await saveEquipmentInfo(data);
+			toggle();
+		}
+		catch(error){
+
+		}
 	}
 
 	let isCreation = data === undefined || data._id === undefined;

@@ -14,13 +14,23 @@ import MyInput from "./MyInput"
 import './transition.css';
 
 const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEntry }) => {
-	const handleSubmit = (formData) => {
-		saveEntry(formData);
-		toggle();
+	const handleSubmit = async (formData) => {
+		try{
+			await saveEntry(formData);
+			toggle();
+		}
+		catch(error){
+			console.log(error);
+		}
 	};
 	
 	const handleDelete = () => {
-		deleteEntry(entry._id, toggle);
+		try{
+			deleteEntry(entry._id, toggle);
+		}
+		catch(error){
+			
+		}
 	}
 
 	let title = undefined;
