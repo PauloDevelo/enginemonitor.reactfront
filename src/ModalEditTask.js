@@ -15,7 +15,7 @@ import './transition.css';
 
 const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className}) => {
 	const handleSubmit = (data) => {
-		data.engineHours = data.engineHours === undefined || data.engineHours <= 0 ? -1 : data.engineHours;
+		data.usagePeriodInHour = data.usagePeriodInHour === undefined || data.usagePeriodInHour <= 0 ? -1 : data.usagePeriodInHour;
 		saveTask(data);
 		toggle();
 	}
@@ -25,7 +25,7 @@ const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className})
 	}
 
 	let title = undefined;
-	if (task._id === undefined){
+	if (task === undefined || task._id === undefined){
 		title = <FormattedMessage {...edittaskmsg.modalCreationTaskTitle} />
 	}
 	else{
@@ -39,15 +39,15 @@ const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className})
 				<ModalBody>
 					{visible && <MyForm id="createTaskForm" submit={handleSubmit} initialData={task}>
 						<MyInput name="name" 		label={edittaskmsg.name} 		type="text" 	required/>
-						<MyInput name="engineHours" label={edittaskmsg.engineHours} type="number" 	min={0} />
-						<MyInput name="month" 		label={edittaskmsg.month} 		type="number" 	min={1} required/>
+						<MyInput name="usagePeriodInHour" label={edittaskmsg.usagePeriodInHour} type="number" 	min={0} />
+						<MyInput name="periodInMonth" 		label={edittaskmsg.month} 		type="number" 	min={1} required/>
 						<MyInput name="description" label={edittaskmsg.description} type="textarea" required />
 					</MyForm>}
 				</ModalBody>
 				<ModalFooter>
 					<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...edittaskmsg.save} /></Button>
 					<Button color="secondary" onClick={toggle}><FormattedMessage {...edittaskmsg.cancel} /></Button>
-					{task._id && <Button color="danger" onClick={handleDelete}><FormattedMessage {...edittaskmsg.delete} /></Button>}
+					{task && task._id && <Button color="danger" onClick={handleDelete}><FormattedMessage {...edittaskmsg.delete} /></Button>}
 				</ModalFooter>
 			</Modal>
 		</CSSTransition>
@@ -55,7 +55,6 @@ const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className})
 }
 
 ModalEditTask.propTypes = {
-	task: PropTypes.object.isRequired,
 	visible: PropTypes.bool.isRequired,
 	toggle: PropTypes.func.isRequired,
 	saveTask: PropTypes.func.isRequired,

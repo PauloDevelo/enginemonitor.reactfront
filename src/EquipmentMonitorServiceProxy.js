@@ -1,7 +1,7 @@
 import axios from "axios";
 import axiosRetry from 'axios-retry';
 
-class EngineMonitorServiceProxy{
+class EquipmentMonitorServiceProxy{
     config = undefined;
 
     mode = 'auth'; //prod or demo
@@ -21,7 +21,7 @@ class EngineMonitorServiceProxy{
         }
 
         try{
-            this.config = JSON.parse(sessionStorage.getItem('EngineMonitorServiceProxy.config'));
+            this.config = JSON.parse(sessionStorage.getItem('EquipmentMonitorServiceProxy.config'));
         }
         catch{}
     }
@@ -58,7 +58,7 @@ class EngineMonitorServiceProxy{
             if(res.data.user){
                 this.config = { headers: { Authorization: 'Token ' + res.data.user.token }};
                 if(credentials.remember){
-                    sessionStorage.setItem('EngineMonitorServiceProxy.config', JSON.stringify(this.config));
+                    sessionStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify(this.config));
                 }
 
                 if(typeof complete === 'function') complete(res.data.user);
@@ -72,41 +72,41 @@ class EngineMonitorServiceProxy{
     }
 
     logout = () => {
-        sessionStorage.setItem('EngineMonitorServiceProxy.config', JSON.stringify({}));
+        sessionStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify({}));
         this.config = undefined;
     }
 
     refreshCurrentUser = (complete, fail) => this.get(this.baseUrl + "users/current", complete, fail);
 
-    getBoats = (complete, fail) => this.get(this.baseUrl + "boats", complete, fail);
+    getEquipments = (complete, fail) => this.get(this.baseUrl + "equipments", complete, fail);
     
-    saveBoat = (boat, complete, fail) => {
-        if(boat._id){
-            this.post(this.baseUrl + "boats/" + boat._id, { boat: boat }, complete, fail);
+    saveEquipment = (equipment, complete, fail) => {
+        if(equipment._id){
+            this.post(this.baseUrl + "equipments/" + equipment._id, { equipment: equipment }, complete, fail);
         }
         else{
-            this.post(this.baseUrl + "boats", { boat: boat }, complete, fail);
+            this.post(this.baseUrl + "equipments", { equipment: equipment }, complete, fail);
         }
     }
 
-    refreshEngineInfo = (idBoat, complete, fail) => this.get(this.baseUrl + "boats/" + idBoat, complete, fail);
+    refreshEquipmentInfo = (idEquipment, complete, fail) => this.get(this.baseUrl + "equipments/" + idEquipment, complete, fail);
 
-    createTask = (boatId, task, complete, fail) => this.post(this.baseUrl + "tasks/" + boatId, { task: task }, complete, fail);
-    saveTask = (boatId, task, complete, fail) => this.post(this.baseUrl + "tasks/" + boatId + '/' + task._id, { task: task }, complete, fail);
+    createTask = (equipmentId, task, complete, fail) => this.post(this.baseUrl + "tasks/" + equipmentId, { task: task }, complete, fail);
+    saveTask = (equipmentId, task, complete, fail) => this.post(this.baseUrl + "tasks/" + equipmentId + '/' + task._id, { task: task }, complete, fail);
 
-    deleteTask = (boatId, taskid, complete, fail) => this.delete(this.baseUrl + "tasks/" + boatId + '/' + taskid, complete, fail);
-    refreshHistoryTask = (boatId, taskid, complete, fail) => this.get(this.baseUrl + "entries/" + boatId + '/' + taskid, complete, fail);
-    refreshTaskList = (boatId, complete, fail) => this.get(this.baseUrl + "tasks/" + boatId, complete, fail);
+    deleteTask = (equipmentId, taskid, complete, fail) => this.delete(this.baseUrl + "tasks/" + equipmentId + '/' + taskid, complete, fail);
+    refreshHistoryTask = (equipmentId, taskid, complete, fail) => this.get(this.baseUrl + "entries/" + equipmentId + '/' + taskid, complete, fail);
+    refreshTaskList = (equipmentId, complete, fail) => this.get(this.baseUrl + "tasks/" + equipmentId, complete, fail);
     
-    createEntry = (boatId, taskid, entry, complete, fail) => {
-        this.post(this.baseUrl + "entries/" + boatId + '/' + taskid, { entry: entry }, complete, fail);
+    createEntry = (equipmentId, taskid, entry, complete, fail) => {
+        this.post(this.baseUrl + "entries/" + equipmentId + '/' + taskid, { entry: entry }, complete, fail);
     }
 
-    saveEntry = (boatId, taskid, entry, complete, fail) => {
-        this.post(this.baseUrl + "entries/" + boatId + '/' + taskid + '/' + entry._id, { entry: entry }, complete, fail);
+    saveEntry = (equipmentId, taskid, entry, complete, fail) => {
+        this.post(this.baseUrl + "entries/" + equipmentId + '/' + taskid + '/' + entry._id, { entry: entry }, complete, fail);
     }
 
-    deleteEntry = (boatId, taskid, entryId, complete, fail) => this.delete(this.baseUrl + "entries/" + boatId + '/' + taskid + '/' + entryId, complete, fail);
+    deleteEntry = (equipmentId, taskid, entryId, complete, fail) => this.delete(this.baseUrl + "entries/" + equipmentId + '/' + taskid + '/' + entryId, complete, fail);
 
     post(url, data, complete, fail){
         axios.post(url, data, this.config)
@@ -142,4 +142,4 @@ class EngineMonitorServiceProxy{
     }
 }
 
-export default EngineMonitorServiceProxy;
+export default EquipmentMonitorServiceProxy;

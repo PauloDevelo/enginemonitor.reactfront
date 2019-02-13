@@ -37,9 +37,9 @@ const messages: Messages = {
         defaultMessage: "Date",
         description: "Label"
     },
-    engineAge: {
-		id: "engineAge",
-        defaultMessage: "Engine Age",
+    age: {
+		id: "age",
+        defaultMessage: "Equipment Age",
 		description: "Label"
     },
     remarks: {

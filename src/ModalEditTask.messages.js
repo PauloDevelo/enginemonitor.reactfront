@@ -17,9 +17,9 @@ const messages: Messages = {
     defaultMessage: "Name",
 		description: "Label"
   },
-	engineHours: {
-    id: "engineHours",
-    defaultMessage: "Period in engine hour",
+	usagePeriodInHour: {
+    id: "usagePeriodInHour",
+    defaultMessage: "Period in usage hour",
 		description: "Label"
   },
 	month: {

@@ -41,8 +41,8 @@ const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEn
 						submit={handleSubmit} 
 						initialData={entry}>
 						<MyInput name="name" 	label={editentrymsg.name} 	    type="text" 	required/>
-						<MyInput name="UTCDate" label={editentrymsg.date}       type="date" 	required/>
-						<MyInput name="age" 	label={editentrymsg.engineAge} 	type="number" 	min={0} required/>
+						<MyInput name="date" label={editentrymsg.date}       type="date" 	required/>
+						<MyInput name="age" 	label={editentrymsg.age} 	type="number" 	min={0} required/>
 						<MyInput name="remarks" label={editentrymsg.remarks}    type="textarea" required />
 					</MyForm>}
 				</ModalBody>

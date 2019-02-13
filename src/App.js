@@ -14,8 +14,8 @@ import {
 	DropdownMenu,
 	DropdownItem } from 'reactstrap';
   
-import EngineInfo from './EngineInfo';
-import ModalEngineInfo from './ModalEngineInfo';
+import EquipmentsInfo from './EquipmentsInfo';
+import ModalEquipmentInfo from './ModalEquipmentInfo';
 import TaskTable from './TaskTable';
 import ModalEditTask from './ModalEditTask';
 import HistoryTaskTable from './HistoryTaskTable'
@@ -24,26 +24,26 @@ import ModalYesNoConfirmation from './ModalYesNoConfirmation'
 import ModalEditEntry from './ModalEditEntry';
 import ModalLogin from './ModalLogin';
 import ModalSignup from './ModalSignup';
-import EngineMonitorServiceProxy from './EngineMonitorServiceProxy';
+import EquipmentMonitorServiceProxy from './EquipmentMonitorServiceProxy';
 
 import './transition.css';
 import appmsg from "./App.messages";
 
-function createDefaultBoats(state){
+function createDefaultEquipment(state){
 	return {
 		name: "",
-		engineBrand: "",
-		engineModel: "",
-		engineAge: "",
-		engineInstallation: new Date()
+		brand: "",
+		model: "",
+		age: "",
+		installation: new Date()
 	}
 }
 
 function createDefaultEntry(state){
 	return {
 		name: state.currentTask.name,
-		UTCDate: new Date(),
-		age: state.boats[state.currentBoatIndex].engineAge,
+		date: new Date(),
+		age: state.equipments[state.currentEquipmentIndex].age,
 		remarks: '',
 	}
 }
@@ -51,15 +51,15 @@ function createDefaultEntry(state){
 function createDefaultTask(state){
 	return {
 		name: '',
-		engineHours: 100,
-		month: 12,
+		usagePeriodInHour: 100,
+		periodInMonth: 12,
 		description: ''
 	}
 }
 
 class App extends Component {
 
-	enginemonitorserviceproxy = new EngineMonitorServiceProxy();
+	equipmentmonitorserviceproxy = new EquipmentMonitorServiceProxy();
 
 	constructor(props) {
 		super(props);
@@ -70,7 +70,7 @@ class App extends Component {
 			loginErrors: undefined,
 			signupErrors: undefined,
 
-			modalEngineInfo: false,
+			modalEquipmentInfo: false,
 			modalEditTask: false,
 			modalEditEntry: false,
 			modalYesNo: false,
@@ -83,33 +83,33 @@ class App extends Component {
 			yesNoTitle: appmsg.defaultTitle,
 			yesNoMsg: appmsg.defaultMsg,
 
-			boats: undefined,
-			currentBoatIndex: undefined,
-			editedBoat: undefined,
+			equipments: undefined,
+			currentEquipmentIndex: undefined,
+			editedEquipment: undefined,
 			tasks:[],
 			currentTaskIndex: undefined,
 			currentTask: undefined,
 			editedTask: createDefaultTask(),
 			
 			currentHistoryTask: [],
-			editedEntry:{ name: '', UTCDate: new Date(), age: '', remarks: '' }
+			editedEntry:{ name: '', date: new Date(), age: '', remarks: '' }
 		};
 	}
 
 	signup = (newuser) => {
-		this.enginemonitorserviceproxy.signup(newuser,
+		this.equipmentmonitorserviceproxy.signup(newuser,
 			(newUser) => this.toggleModalSignup(),
 			({errors}) => this.setState((prevState, props) => { return { signupErrors: errors } }));
 	}
 
 	login = (credentials) => {
-		this.enginemonitorserviceproxy.authenticate(credentials, 
+		this.equipmentmonitorserviceproxy.authenticate(credentials, 
 				(user) => {
 					this.setState( (prevState, props) => { return { user: user, loginErrors: undefined } },
 										 () => {
-											this.refreshBoatList(() => {
-												if(this.state.boats.length > 0){
-													this.changeCurrentBoat(0);
+											this.refreshEquipmentList(() => {
+												if(this.state.equipments.length > 0){
+													this.changeCurrentEquipment(0);
 												}
 											});
 										  });
@@ -119,10 +119,10 @@ class App extends Component {
 	}
 
 	logout = () => {
-		this.enginemonitorserviceproxy.logout();
+		this.equipmentmonitorserviceproxy.logout();
 		this.setState( (prevState, props) => { return { user: undefined, loginErrors: undefined } },
 						() => {
-							this.refreshBoatList();
+							this.refreshEquipmentList();
 							this.refreshTaskList();
 						});
 	}
@@ -147,12 +147,12 @@ class App extends Component {
 		});
   	}
 	
-	toggleModalEngineInfo = (isCreationMode) => {
+	toggleModalEquipmentInfo = (isCreationMode) => {
 		this.setState((prevState, props) => {
-			let newState = { modalEngineInfo: !prevState.modalEngineInfo };
+			let newState = { modalEquipmentInfo: !prevState.modalEquipmentInfo };
 
 			if(isCreationMode !== undefined){
-				newState.editedBoat = isCreationMode?createDefaultBoats(prevState):prevState.boats[prevState.currentBoatIndex];
+				newState.editedEquipment = isCreationMode?createDefaultEquipment(prevState):prevState.equipments[prevState.currentEquipmentIndex];
 			}
 
 			return newState;
@@ -162,12 +162,12 @@ class App extends Component {
 	toggleModalEditTask = (isCreationMode) => this.setState( (prevState, props) => {
 													return { 
 														modalEditTask: !prevState.modalEditTask,
-														editedTask: isCreationMode?createDefaultTask(prevState):prevState.currentTask
+														editedTask: isCreationMode ? createDefaultTask(prevState) : prevState.currentTask
 													}
 												});
 	
-	refreshCurrentUser = () => this.enginemonitorserviceproxy.refreshCurrentUser( ({user}) => this.setState((prevState, props) => { return { user:user } }),
-																				  ()       => this.setState((prevState, props) => { return { user: undefined } }))
+	refreshCurrentUser = () => this.equipmentmonitorserviceproxy.refreshCurrentUser( ({user}) => this.setState((prevState, props) => { return { user:user } }),
+																				  	 ()       => this.setState((prevState, props) => { return { user: undefined } }))
 
 	refreshPosition = () => {
 		// Try HTML5 geolocation.
@@ -183,8 +183,8 @@ class App extends Component {
 		}
 	}
 	
-	changeCurrentBoat = (newBoatIndex) => {
-		this.setState((prevState, props) => { return ({ currentBoatIndex:newBoatIndex });},
+	changeCurrentEquipment = (newEquipmentIndex) => {
+		this.setState((prevState, props) => { return ({ currentEquipmentIndex:newEquipmentIndex });},
 			() => this.refreshTaskList(() => {
 				if(this.state.tasks.length > 0){
 					this.changeCurrentTaskIndex(0);
@@ -193,82 +193,86 @@ class App extends Component {
 		);
 	}
 
-	saveBoatInfo = (boatInfo) => {
-		this.enginemonitorserviceproxy.saveBoat(boatInfo, ({boat}) => {
-			boat.engineInstallation = new Date(boat.engineInstallation);
+	saveEquipmentInfo = (equipmentInfo) => {
+		this.equipmentmonitorserviceproxy.saveEquipment(equipmentInfo, ({equipment}) => {
+			equipment.installation = new Date(equipment.installation);
 
-			if(boatInfo._id){
+			if(equipmentInfo._id){
 				this.setState((prevState, props) => {
-					prevState.boats[prevState.currentBoatIndex] = boat;
-					return prevState; 
+					prevState.equipments[prevState.currentEquipmentIndex] = equipment;
+					return { equipments: prevState.equipments }; 
 				});
 			}
 			else{
 				this.setState((prevState, props) => {
-					prevState.boats.push(boat);
-					return prevState; 
+					prevState.equipments.push(equipment);
+					return { equipments: prevState.equipments };
 				});
 			}
 		});
 	}
 
-	refreshBoatList = (complete) => {
-		this.enginemonitorserviceproxy.getBoats(
-			({boats}) => {
-				if(boats){
-					boats.forEach((boat) => { boat.engineInstallation = new Date(boat.engineInstallation); });
+	refreshEquipmentList = (complete) => {
+		this.equipmentmonitorserviceproxy.getEquipments(
+			({equipments}) => {
+				if(equipments){
+					equipments.forEach((equipment) => { equipment.installation = new Date(equipment.installation); });
 					
 					this.setState((prevState, props) => { 
-							let currentBoatIndex = prevState.currentBoatIndex; 
-							if (prevState.currentBoatIndex === undefined)
+							let currentEquipmentIndex = prevState.currentEquipmentIndex; 
+							if (prevState.currentEquipmentIndex === undefined)
 							{
-								if(boats.length > 0 ){
-									currentBoatIndex = 0;
+								if(equipments.length > 0 ){
+									currentEquipmentIndex = 0;
 								}
 							}
 							else{
-								if(boats.length >= currentBoatIndex){
-									currentBoatIndex = undefined;
+								if(equipments.length >= currentEquipmentIndex){
+									currentEquipmentIndex = undefined;
 								}
 							}
 							
-							return { boats:boats, currentBoatIndex:currentBoatIndex } 
+							return { equipments:equipments, currentEquipmentIndex:currentEquipmentIndex } 
 						},
 						() => { if(typeof complete === 'function') complete(); }
 					);
 				}
 			},
 			() => this.setState((prevState, props) => {
-				return { boats:undefined, currentBoatIndex:undefined }
+				return { equipments:undefined, currentEquipmentIndex:undefined }
 			})
 		);
 	}
 	
 	createOrSaveTask = (task) => {
-		if(this.state.currentBoatIndex !== undefined){
-			let currentBoat = this.state.boats[this.state.currentBoatIndex];
+		if(this.state.currentEquipmentIndex !== undefined){
+			let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
 			if(!task._id){
-				this.enginemonitorserviceproxy.createTask(currentBoat._id, task, ({task}) => this.refreshTaskList(() => this.changeCurrentTask(task)));
+				this.equipmentmonitorserviceproxy.createTask(currentEquipment._id, task, ({task}) => this.refreshTaskList(() => this.changeCurrentTask(task)));
 			}
 			else{
-				this.enginemonitorserviceproxy.saveTask(currentBoat._id, task, ({task}) => this.refreshTaskList(() => this.changeCurrentTask(task)));
+				this.equipmentmonitorserviceproxy.saveTask(currentEquipment._id, task, ({task}) => this.refreshTaskList(() => this.changeCurrentTask(task)));
 			}
 		}
 	}
 	
 
 	deleteTask = (onYes, onNo, onError) => {
-		var nextTaskIndex = (this.state.currentTaskIndex === this.state.tasks.length - 1)?this.state.currentTaskIndex - 1:this.state.currentTaskIndex
+		var nextTaskIndex = (this.state.currentTaskIndex === this.state.tasks.length - 1) ? this.state.currentTaskIndex - 1:this.state.currentTaskIndex
 		
 		this.setState((prevState, props) => {
-			let currentBoat = prevState.boats[prevState.currentBoatIndex];
+			let currentEquipment = prevState.equipments[prevState.currentEquipmentIndex];
 
 			return {
 				modalYesNo: true,
 				yes: (() => {
 					this.toggleModalYesNoConfirmation();
-					this.enginemonitorserviceproxy.deleteTask(currentBoat._id, prevState.editedTask._id,
-						() => this.refreshTaskList(() => this.changeCurrentTaskIndex(nextTaskIndex, onYes)),
+					this.equipmentmonitorserviceproxy.deleteTask(currentEquipment._id, prevState.editedTask._id,
+						() => {
+							this.refreshTaskList(() => {
+								this.changeCurrentTaskIndex(nextTaskIndex, onYes);
+							});
+						},
 						() => { if(onError) onError(); }
 					);
 				}),
@@ -294,19 +298,35 @@ class App extends Component {
 	}
 
 	changeCurrentTaskIndex = (newTaskIndex, complete, fail) => {
-		if(newTaskIndex < 0 || newTaskIndex >= this.state.tasks.length){
+		if(newTaskIndex < -1 || newTaskIndex >= this.state.tasks.length){
 			console.log('Index out of bound: ' + newTaskIndex);
 			return;
 		}
 
-		let currentBoat = this.state.boats[this.state.currentBoatIndex];
+		if (newTaskIndex === -1){
+			this.setState((prevState, props) => { 
+				return {
+					currentHistoryTask: [],
+					currentTaskIndex: undefined,
+					currentTask: undefined
+				}; 
+			},
+			() => { 
+				if (typeof complete === 'function') 
+					complete();
+			});
+			
+			return;
+		}
+
+		let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
 		var newCurrentTask = this.state.tasks[newTaskIndex];
 		var newCurrentTaskId = newCurrentTask._id;
 
-		this.enginemonitorserviceproxy.refreshHistoryTask(currentBoat._id, newCurrentTaskId,
+		this.equipmentmonitorserviceproxy.refreshHistoryTask(currentEquipment._id, newCurrentTaskId,
 			({entries}) => {
 				entries.forEach(entry => {
-					entry.UTCDate = new Date(entry.UTCDate)
+					entry.date = new Date(entry.date)
 				});
 
 				this.setState((prevState, props) => { 
@@ -332,18 +352,18 @@ class App extends Component {
 	}
 	
 	refreshTaskList = (complete) => {
-		if(this.state.boats && this.state.currentBoatIndex !== undefined){
-			let currentBoat = this.state.boats[this.state.currentBoatIndex];
-			this.enginemonitorserviceproxy.refreshTaskList(currentBoat._id, ({ tasks }) => {
+		if(this.state.equipments && this.state.currentEquipmentIndex !== undefined){
+			let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
+			this.equipmentmonitorserviceproxy.refreshTaskList(currentEquipment._id, ({ tasks }) => {
 				// store the new state object in the component's state
 				this.setState(
 					(prevState, props) => {
-						tasks.forEach(task => task.engineHours = task.engineHours === -1 ? undefined : task.engineHours);
+						tasks.forEach(task => task.usagePeriodInHour = task.usagePeriodInHour === -1 ? undefined : task.usagePeriodInHour);
 						var newCurrentTaskIndex = prevState.currentTask ? tasks.findIndex(task => task._id === prevState.currentTask._id) : 0;
 						return {
 							tasks: tasks,
-							currentTask: tasks[newCurrentTaskIndex],
-							currentTaskIndex: newCurrentTaskIndex
+							currentTask: newCurrentTaskIndex === -1 ? undefined : tasks[newCurrentTaskIndex],
+							currentTaskIndex: newCurrentTaskIndex === -1 ? undefined : newCurrentTaskIndex
 						}
 					},
 					() =>{
@@ -376,23 +396,23 @@ class App extends Component {
 	}
 
 	createOrSaveEntry = (entry, complete) => {
-		let currentBoat = this.state.boats[this.state.currentBoatIndex];
+		let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
 		if(!entry._id){
-			this.enginemonitorserviceproxy.createEntry(currentBoat._id, this.state.currentTask._id, entry, ({entry}) => this.onNewEntry(entry, complete));
+			this.equipmentmonitorserviceproxy.createEntry(currentEquipment._id, this.state.currentTask._id, entry, ({entry}) => this.onNewEntry(entry, complete));
 		}
 		else{
-			this.enginemonitorserviceproxy.saveEntry(currentBoat._id, this.state.currentTask._id, entry, (entry) => this.onNewEntry(entry, complete));
+			this.equipmentmonitorserviceproxy.saveEntry(currentEquipment._id, this.state.currentTask._id, entry, ({entry}) => this.onNewEntry(entry, complete));
 		}
 	}
 
 	onNewEntry = (newEntry, complete) => {
-		newEntry.UTCDate = new Date(newEntry.UTCDate);
+		newEntry.date = new Date(newEntry.date);
 
 		this.refreshTaskList();
 		this.setState((prevState, props) => {
 				var newCurrentHistoryTask = prevState.currentHistoryTask.filter(entry => entry._id !== newEntry._id);
 				newCurrentHistoryTask.unshift(newEntry);
-				newCurrentHistoryTask.sort((entrya, entryb) => { return entrya.UTCDate - entryb.UTCDate; });
+				newCurrentHistoryTask.sort((entrya, entryb) => { return entrya.date - entryb.date; });
 
 				return({ currentHistoryTask: newCurrentHistoryTask });
 			},
@@ -404,13 +424,13 @@ class App extends Component {
 	
 	deleteEntry = (entryId, onYes, onNo, onError) => {
 		this.setState((prevState, props) => {
-			let currentBoat = this.state.boats[this.state.currentBoatIndex];
+			let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
 
 			return {
 				modalYesNo: true,
 				yes: (() => {
 					this.toggleModalYesNoConfirmation();
-					this.enginemonitorserviceproxy.deleteEntry(currentBoat._id, this.state.currentTask._id, entryId, 
+					this.equipmentmonitorserviceproxy.deleteEntry(currentEquipment._id, this.state.currentTask._id, entryId, 
 						() => {
 							this.refreshTaskList();
 							this.setState((prevState, props) => {
@@ -436,9 +456,9 @@ class App extends Component {
 
 	componentDidMount() {
 		this.refreshCurrentUser();
-		this.refreshBoatList(() => {
-			if(this.state.boats.length > 0){
-				this.changeCurrentBoat(0);
+		this.refreshEquipmentList(() => {
+			if(this.state.equipments.length > 0){
+				this.changeCurrentEquipment(0);
 			}
 		});
 		
@@ -456,7 +476,7 @@ class App extends Component {
 			<CSSTransition in={true} appear={true} timeout={1000} classNames="fade">
 				<div id="root">
 					<Navbar color="dark" dark expand="md">
-						<NavbarBrand href="/">Engine monitor {position}</NavbarBrand>
+						<NavbarBrand href="/">Equipment maintenance {position}</NavbarBrand>
 						<NavbarToggler onClick={this.toggleNavBar} />
 						<Collapse isOpen={this.state.navBar} navbar>
 							<Nav className="ml-auto" navbar>
@@ -476,10 +496,10 @@ class App extends Component {
 
 					<div className="d-flex flex-wrap flex-row mb-3">
 						<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
-							<EngineInfo boats={this.state.boats}
-										currentBoatIndex={this.state.currentBoatIndex}
-										changeCurrentBoat={this.changeCurrentBoat}
-										toggleModal={this.toggleModalEngineInfo}
+							<EquipmentsInfo equipments={this.state.equipments}
+										currentEquipmentIndex={this.state.currentEquipmentIndex}
+										changeCurrentEquipment={this.changeCurrentEquipment}
+										toggleModal={this.toggleModalEquipmentInfo}
 										extraClassNames={panelClassNames}/>
 							<TaskTable 	tasks={this.state.tasks} 
 										toggleModal={() => this.toggleModalEditTask(true)} 
@@ -501,15 +521,15 @@ class App extends Component {
 						</div>
 					</div>
 					
-					<ModalEngineInfo visible={this.state.modalEngineInfo} 
-						toggle={this.toggleModalEngineInfo} 
-						saveBoatInfo={this.saveBoatInfo} 
-						data={this.state.editedBoat}
+					<ModalEquipmentInfo visible={this.state.modalEquipmentInfo} 
+						toggle={this.toggleModalEquipmentInfo} 
+						saveEquipmentInfo={this.saveEquipmentInfo} 
+						data={this.state.editedEquipment}
 						className='modal-dialog-centered'
 					/>
 					<ModalEditTask visible={this.state.modalEditTask} 
 						toggle={this.toggleModalEditTask} 
-						saveTask={this.createOrSaveTask.bind(this)} 
+						saveTask={this.createOrSaveTask} 
 						deleteTask={this.deleteTask}
 						task={this.state.editedTask}
 						className='modal-dialog-centered'
@@ -529,13 +549,13 @@ class App extends Component {
 						message={this.state.yesNoMsg} 
 						className='modal-dialog-centered'
 					/>
-					<ModalLogin visible={this.state.user === undefined && this.enginemonitorserviceproxy.mode === 'auth'} 
+					<ModalLogin visible={this.state.user === undefined && this.equipmentmonitorserviceproxy.mode === 'auth'} 
 						login={this.login}
 						data={{ email: '', password: ''}} 
 						className='modal-dialog-centered'
 						loginErrors={this.state.loginErrors}
 						toggleModalSignup={this.toggleModalSignup}/>
-					<ModalSignup visible={this.state.modalSignup && this.enginemonitorserviceproxy.mode === 'auth'} 
+					<ModalSignup visible={this.state.modalSignup && this.equipmentmonitorserviceproxy.mode === 'auth'} 
 						toggle={this.toggleModalSignup} 
 						signup={this.signup}
 						data={{ firstname:'', name:'', email: '', password: ''}} 

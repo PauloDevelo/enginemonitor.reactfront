@@ -6,61 +6,64 @@ import { FormattedMessage, FormattedDate } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import engineinfomsg from "./EngineInfo.messages";
+import equipmentinfomsg from "./EquipmentInfo.messages";
 import ClockLabel from './ClockLabel';
 
-export default function EngineInfo({boats, toggleModal, currentBoatIndex, changeCurrentBoat, extraClassNames}){
+export default function EquipmentsInfo({equipments, toggleModal, currentEquipmentIndex, changeCurrentEquipment, extraClassNames}){
 	var tabnavItems = [];
 	var tabPanes = [];
-	if(boats){
-		tabPanes = boats.map((boat, index) => {
+	var currentEquipmentId = undefined;
+	if(equipments){
+		tabPanes = equipments.map((equipment, index) => {
 			return(
-				<TabPane tabId={boat._id} key={index}>
+				<TabPane tabId={equipment._id} key={equipment._id}>
 					<Button color="light" size="sm" className="float-right" onClick={() => toggleModal(false)}><FontAwesomeIcon icon={faEdit} /></Button>					
 					<div>
-						<span>{boat.engineBrand} {boat.engineModel} </span>
-						<span className="font-weight-bold">{boat.engineAge} h</span>		
+						<span>{equipment.brand} {equipment.model} </span>
+						<span className="font-weight-bold">{equipment.age} h</span>		
 					</div>
 					<p className="d-block">
-						<FormattedMessage {...engineinfomsg.installedOn} />
-						<FormattedDate value={boat.engineInstallation} />
+						<FormattedMessage {...equipmentinfomsg.installedOn} />
+						<FormattedDate value={equipment.installation} />
 					</p>
 				</TabPane>
 			)
 		});
 
-		tabnavItems = boats.map((boat, index) => {
+		tabnavItems = equipments.map((equipment, index) => {
 			return(
-				<NavItem key={boat._id}>
-					<NavLink className={classnames({ active: currentBoatIndex === index })} onClick={() => { changeCurrentBoat(index); }}>
-						{boat.name}
+				<NavItem key={equipment._id}>
+					<NavLink className={classnames({ active: currentEquipmentIndex === index })} onClick={() => { changeCurrentEquipment(index); }}>
+						{equipment.name}
 					</NavLink>
 				</NavItem>
 			)
 		});
+
+		currentEquipmentId = equipments[currentEquipmentIndex]._id;
 	}
 
 	return (
 		<div className={extraClassNames}>
 			<span className="small mb-3">
-				<FormattedMessage {...engineinfomsg.today} />
+				<FormattedMessage {...equipmentinfomsg.today} />
 				<ClockLabel />
 				<Button color="light" size="sm" className="float-right mb-2" onClick={() => toggleModal(true)}><FontAwesomeIcon icon={faPlusSquare} /></Button>
 			</span>
 			<Nav tabs>
 				{tabnavItems}
 			</Nav>
-			<TabContent activeTab={currentBoatIndex}>
+			<TabContent activeTab={currentEquipmentId}>
 				{tabPanes}
 			</TabContent>
 		</div>
 	);
 }
 
-EngineInfo.propTypes = {
-	boats: PropTypes.array,
-	currentBoatIndex: PropTypes.number,
-	changeCurrentBoat: PropTypes.func.isRequired,
+EquipmentsInfo.propTypes = {
+	equipments: PropTypes.array,
+	currentEquipmentIndex: PropTypes.number,
+	changeCurrentEquipment: PropTypes.func.isRequired,
 	toggleModal: PropTypes.func.isRequired,
 	extraClassNames: PropTypes.string
 };

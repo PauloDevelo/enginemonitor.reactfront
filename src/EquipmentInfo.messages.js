@@ -17,13 +17,13 @@ const messages: Messages = {
   },
 	modalTitle: {
 		id: "modalTitle",
-    defaultMessage: "Engine Edition",
-		description: "Engine Info Edition Modal"
+    defaultMessage: "Equipment Edition",
+		description: "Equipment Info Edition Modal"
 	},
 	modalCreationTitle: {
 		id: "modalCreationTitle",
-    defaultMessage: "Engine Creation",
-		description: "Engine Info Edition Modal"
+    defaultMessage: "Equipment Creation",
+		description: "Equipment Info Edition Modal"
 	},
 	save: {
 		id: "save",
@@ -60,9 +60,9 @@ const messages: Messages = {
     defaultMessage: "Installation Date",
 		description: "Label"
 	},
-	engineAge: {
-		id: "engineAge",
-    defaultMessage: "Engine Age",
+	age: {
+		id: "age",
+    defaultMessage: "Equipment Age",
 		description: "Label"
 	},
 	serialPort: {

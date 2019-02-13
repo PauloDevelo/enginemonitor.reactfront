@@ -13,7 +13,7 @@ const TaskRow = ({entry, onClick}) => {
     var remarks = entry.remarks.replace(/\n/g, '<br />');
     var shortenRemarks = shorten(remarks);
     var ageStr = entry.age === -1?"":entry.age + 'h';
-    var entryDate = new Date(entry.UTCDate)
+    var entryDate = new Date(entry.date)
 
     return(
         <tr className='small clickable' onClick={() => onClick()}>
@@ -44,7 +44,7 @@ export default function HistoryTaskTable({taskHistory, toggleEntryModal, classNa
                 <thead className="thead-light">
                     <tr>
                         <th><FormattedMessage {...tasktablemsg.ackDate} /></th>
-                        <th><FormattedMessage {...tasktablemsg.engineAge} /></th>
+                        <th><FormattedMessage {...tasktablemsg.age} /></th>
                         <th><FormattedMessage {...tasktablemsg.remarks} /></th>
                     </tr>
                 </thead>

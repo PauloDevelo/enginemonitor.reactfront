@@ -49,12 +49,12 @@ const messages: Messages = {
   },
 	shouldhavebeendonein2: {
     id: "shouldhavebeendonein2",
-    defaultMessage: " engine ago or ",
+    defaultMessage: " equipment ago or ",
 		description: "Sentence"
   },
 	shouldbedonein2: {
     id: "shouldbedonein2",
-    defaultMessage: " engine or ",
+    defaultMessage: " equipment or ",
 		description: "Sentence"
   },
   tobedonemonth: {
@@ -68,7 +68,7 @@ const messages: Messages = {
 		description: "Sentence"
   },
   monthperiod: {
-    id: "monthperiod",
+    id: "monthperiod",  
     defaultMessage: "{month, plural, one {month} other {# months}}",
     description: "Month period"
   },
@@ -82,9 +82,9 @@ const messages: Messages = {
     defaultMessage: "Remarks",
     description: "Colum header"
   },
-  engineAge: {
-		id: "engineAge",
-    defaultMessage: "Engine Age",
+  age: {
+		id: "age",
+    defaultMessage: "Equipment Age",
 		description: "Label"
 	}
 };
