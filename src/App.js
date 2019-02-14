@@ -12,7 +12,7 @@ import ModalEditEntry from './ModalEditEntry';
 import ModalLogin from './ModalLogin';
 import ModalSignup from './ModalSignup';
 import NavBar from './NavBar';
-import EquipmentMonitorService from './EquipmentMonitorServiceProxy';
+import EquipmentMonitorService from './services/EquipmentMonitorServiceProxy';
 import HttpError from './HttpError'
 
 import './transition.css';
@@ -30,9 +30,9 @@ function createDefaultEquipment(state){
 
 function createDefaultEntry(state){
 	return {
-		name: state.tasks[state.currentTaskIndex].name,
+		name: getCurrentTask(state).name,
 		date: new Date(),
-		age: state.equipments[state.currentEquipmentIndex].age,
+		age: getCurrentEquipment(state).age,
 		remarks: '',
 	}
 }
@@ -44,6 +44,14 @@ function createDefaultTask(state){
 		periodInMonth: 12,
 		description: ''
 	}
+}
+
+function getCurrentEquipment(state){
+	return state.equipments[state.currentEquipmentIndex];
+}
+
+function getCurrentTask(state){
+	return state.tasks[state.currentTaskIndex];
 }
 
 class App extends Component {
@@ -115,7 +123,7 @@ class App extends Component {
 			 }; 
 
 			 if(isCreationMode !== undefined){
-				newState.editedEntry= isCreationMode?createDefaultEntry(prevState):entry
+				newState.editedEntry = isCreationMode?createDefaultEntry(prevState):entry
 			 }
 
 			 return newState
@@ -138,7 +146,7 @@ class App extends Component {
 		this.setState( (prevState, props) => {
 			return { 
 				modalEditTask: !prevState.modalEditTask,
-				editedTask: isCreationMode ? createDefaultTask(prevState) : prevState.tasks[prevState.currentTaskIndex]
+				editedTask: isCreationMode ? createDefaultTask(prevState) : getCurrentTask(prevState)
 			}
 		});
 	}
@@ -264,7 +272,7 @@ class App extends Component {
 	}
 
 	changeCurrentTask = async (task) => {
-		if(task !== this.state.tasks[this.state.currentTaskIndex]){
+		if(task !== getCurrentTask(this.state)){
 			var newCurrentTaskIndex = this.state.tasks.findIndex((t, ind, tab) => t._id === task._id);
 			await this.changeCurrentTaskIndex(newCurrentTaskIndex);
 		}
@@ -314,14 +322,20 @@ class App extends Component {
 	
 	refreshTaskList = async() => {
 		if(this.state.currentEquipmentIndex !== -1){
-			let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
+			let currentEquipment = getCurrentEquipment(this.state);
 			try{
 				const { tasks } = await EquipmentMonitorService.refreshTaskList(currentEquipment._id);
 				tasks.forEach(task => task.usagePeriodInHour = task.usagePeriodInHour === -1 ? undefined : task.usagePeriodInHour);
 				
 				// store the new state object in the component's state
 				await this.setStateAsync((prevState, props) => {
-					var newCurrentTaskIndex = prevState.currentTaskIndex !== -1 ? tasks.findIndex(task => task._id === prevState.tasks[prevState.currentTaskIndex]._id) : 0;
+					let newCurrentTaskIndex = -1;
+					if(prevState.currentTaskIndex !== -1){
+						newCurrentTaskIndex = tasks.findIndex(task => task._id === getCurrentTask(prevState)._id);
+					}
+					else if(tasks.length > 0){
+						newCurrentTaskIndex = 0;
+					}
 					return {
 						tasks: tasks,
 						currentTaskIndex: newCurrentTaskIndex === -1 ? -1 : newCurrentTaskIndex
@@ -347,11 +361,11 @@ class App extends Component {
 	createOrSaveEntry = async (entryToSave) => {
 		let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
 		if(!entryToSave._id){
-			const {entry} = await EquipmentMonitorService.createEntry(currentEquipment._id, this.state.tasks[this.state.currentTaskIndex]._id, entryToSave);
+			const {entry} = await EquipmentMonitorService.createEntry(currentEquipment._id, getCurrentTask(this.state)._id, entryToSave);
 			await this.onNewEntry(entry);
 		}
 		else{
-			const {entry} = await EquipmentMonitorService.saveEntry(currentEquipment._id, this.state.tasks[this.state.currentTaskIndex]._id, entryToSave);
+			const {entry} = await EquipmentMonitorService.saveEntry(currentEquipment._id, getCurrentTask(this.state)._id, entryToSave);
 			await this.onNewEntry(entry)
 		}
 	}
@@ -378,7 +392,7 @@ class App extends Component {
 				yes: (async () => {
 					this.toggleModalYesNoConfirmation();
 					try{
-						await EquipmentMonitorService.deleteEntry(currentEquipment._id, this.state.tasks[this.state.currentTaskIndex]._id, entryId);
+						await EquipmentMonitorService.deleteEntry(currentEquipment._id, getCurrentTask(this.state)._id, entryId);
 						this.refreshTaskList();
 						this.setState((prevState, props) => {
 								return({ currentHistoryTask: prevState.currentHistoryTask.slice(0).filter(e => e._id !== entryId) });

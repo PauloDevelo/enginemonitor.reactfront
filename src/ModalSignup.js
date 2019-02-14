@@ -11,7 +11,7 @@ import loginmsg from "./Login.messages";
 import MyForm from "./MyForm";
 import MyInput from "./MyInput";
 
-import EquipmentMonitorService from './EquipmentMonitorServiceProxy';
+import EquipmentMonitorService from './services/EquipmentMonitorServiceProxy';
 import HttpError from './HttpError'
 
 import './transition.css';
