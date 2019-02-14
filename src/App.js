@@ -3,16 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CSSTransition } from 'react-transition-group'
-import {
-	Collapse,
-	Navbar,
-	NavbarToggler,
-	NavbarBrand,
-	Nav,
-	UncontrolledDropdown,
-	DropdownToggle,
-	DropdownMenu,
-	DropdownItem } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
   
 import EquipmentsInfo from './EquipmentsInfo';
 import ModalEquipmentInfo from './ModalEquipmentInfo';
@@ -24,7 +15,7 @@ import ModalYesNoConfirmation from './ModalYesNoConfirmation'
 import ModalEditEntry from './ModalEditEntry';
 import ModalLogin from './ModalLogin';
 import ModalSignup from './ModalSignup';
-import EquipmentMonitorServiceProxy from './EquipmentMonitorServiceProxy';
+import EquipmentMonitorService from './EquipmentMonitorServiceProxy';
 import HttpError from './HttpError'
 
 import './transition.css';
@@ -60,8 +51,6 @@ function createDefaultTask(state){
 
 class App extends Component {
 
-	equipmentmonitorserviceproxy = new EquipmentMonitorServiceProxy();
-
 	constructor(props) {
 		super(props);
 
@@ -69,7 +58,6 @@ class App extends Component {
 			pos: undefined,
 			user: {},
 			loginErrors: undefined,
-			signupErrors: undefined,
 
 			modalEquipmentInfo: false,
 			modalEditTask: false,
@@ -99,21 +87,9 @@ class App extends Component {
 
 	setStateAsync = updater => new Promise(resolve => this.setState(updater, resolve))
 
-	signup = async (newuser) => {
-		try{
-			await this.equipmentmonitorserviceproxy.signup(newuser);
-			this.toggleModalSignup();
-		}
-		catch(errors){
-			if(errors instanceof HttpError){
-				this.setState((prevState, props) => { return { signupErrors: errors.data } });
-			}
-		}
-	}
-
 	login = async (credentials) => {
 		try{
-			const user = await this.equipmentmonitorserviceproxy.authenticate(credentials);
+			const user = await EquipmentMonitorService.authenticate(credentials);
 			await this.setStateAsync((prevState, props) => { return { user: user, loginErrors: undefined } });
 			await this.refreshEquipmentList();
 
@@ -129,7 +105,7 @@ class App extends Component {
 	}
 
 	logout = async () => {
-		this.equipmentmonitorserviceproxy.logout();
+		EquipmentMonitorService.logout();
 		await this.setStateAsync( (prevState, props) => { return { user: undefined, loginErrors: undefined } });
 		await this.refreshEquipmentList();
 		this.refreshTaskList();
@@ -178,7 +154,7 @@ class App extends Component {
 	
 	refreshCurrentUser = async () => {
 		try{
-			const {user} = await this.equipmentmonitorserviceproxy.refreshCurrentUser();
+			const {user} = await EquipmentMonitorService.refreshCurrentUser();
 			this.setState({ user:user });
 		}
 		catch(error){
@@ -210,7 +186,7 @@ class App extends Component {
 	}
 
 	saveEquipmentInfo = async (equipmentInfo) => {
-		const {equipment} = await this.equipmentmonitorserviceproxy.saveEquipment(equipmentInfo);
+		const {equipment} = await EquipmentMonitorService.saveEquipment(equipmentInfo);
 		equipment.installation = new Date(equipment.installation);
 
 		if(equipmentInfo._id){
@@ -229,7 +205,7 @@ class App extends Component {
 
 	refreshEquipmentList = async () => {
 		try{
-			const {equipments} = await this.equipmentmonitorserviceproxy.getEquipments();
+			const {equipments} = await EquipmentMonitorService.getEquipments();
 			equipments.forEach((equipment) => { equipment.installation = new Date(equipment.installation); });
 			
 			await this.setStateAsync((prevState, props) => { 
@@ -265,12 +241,12 @@ class App extends Component {
 		const currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
 		let saveTask;
 		if(!taskToSave._id){
-			const {task} = await this.equipmentmonitorserviceproxy.createTask(currentEquipment._id, taskToSave);
+			const {task} = await EquipmentMonitorService.createTask(currentEquipment._id, taskToSave);
 			saveTask = task;
 			
 		}
 		else{
-			const {task} = await this.equipmentmonitorserviceproxy.saveTask(currentEquipment._id, taskToSave);
+			const {task} = await EquipmentMonitorService.saveTask(currentEquipment._id, taskToSave);
 			saveTask = task;
 		}
 
@@ -289,7 +265,7 @@ class App extends Component {
 				yes: async() => {
 					try{
 						this.toggleModalYesNoConfirmation();
-						await this.equipmentmonitorserviceproxy.deleteTask(currentEquipment._id, prevState.editedTask._id);
+						await EquipmentMonitorService.deleteTask(currentEquipment._id, prevState.editedTask._id);
 						await this.refreshTaskList();
 						await this.changeCurrentTaskIndex(nextTaskIndex);
 						onYes();
@@ -349,7 +325,7 @@ class App extends Component {
 		var newCurrentTaskId = newCurrentTask._id;
 
 		try{
-			const {entries} = await this.equipmentmonitorserviceproxy.refreshHistoryTask(currentEquipment._id, newCurrentTaskId);
+			const {entries} = await EquipmentMonitorService.refreshHistoryTask(currentEquipment._id, newCurrentTaskId);
 			entries.forEach(entry => { entry.date = new Date(entry.date) });
 
 			await this.setStateAsync((prevState, props) => { 
@@ -376,7 +352,7 @@ class App extends Component {
 		if(this.state.currentEquipmentIndex !== -1){
 			let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
 			try{
-				const { tasks } = await this.equipmentmonitorserviceproxy.refreshTaskList(currentEquipment._id);
+				const { tasks } = await EquipmentMonitorService.refreshTaskList(currentEquipment._id);
 				tasks.forEach(task => task.usagePeriodInHour = task.usagePeriodInHour === -1 ? undefined : task.usagePeriodInHour);
 				
 				// store the new state object in the component's state
@@ -408,11 +384,11 @@ class App extends Component {
 	createOrSaveEntry = async (entryToSave) => {
 		let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
 		if(!entryToSave._id){
-			const {entry} = await this.equipmentmonitorserviceproxy.createEntry(currentEquipment._id, this.state.currentTask._id, entryToSave);
+			const {entry} = await EquipmentMonitorService.createEntry(currentEquipment._id, this.state.currentTask._id, entryToSave);
 			await this.onNewEntry(entry);
 		}
 		else{
-			const {entry} = await this.equipmentmonitorserviceproxy.saveEntry(currentEquipment._id, this.state.currentTask._id, entryToSave);
+			const {entry} = await EquipmentMonitorService.saveEntry(currentEquipment._id, this.state.currentTask._id, entryToSave);
 			await this.onNewEntry(entry)
 		}
 	}
@@ -439,7 +415,7 @@ class App extends Component {
 				yes: (async () => {
 					this.toggleModalYesNoConfirmation();
 					try{
-						await this.equipmentmonitorserviceproxy.deleteEntry(currentEquipment._id, this.state.currentTask._id, entryId);
+						await EquipmentMonitorService.deleteEntry(currentEquipment._id, this.state.currentTask._id, entryId);
 						this.refreshTaskList();
 						this.setState((prevState, props) => {
 								return({ currentHistoryTask: prevState.currentHistoryTask.slice(0).filter(e => e._id !== entryId) });
@@ -556,19 +532,16 @@ class App extends Component {
 						message={this.state.yesNoMsg} 
 						className='modal-dialog-centered'
 					/>
-					<ModalLogin visible={this.state.user === undefined && this.equipmentmonitorserviceproxy.mode === 'auth'} 
+					<ModalLogin visible={this.state.user === undefined && EquipmentMonitorService.mode === 'auth'} 
 						login={this.login}
 						data={{ email: '', password: ''}} 
 						className='modal-dialog-centered'
 						loginErrors={this.state.loginErrors}
 						toggleModalSignup={this.toggleModalSignup}/>
-					<ModalSignup visible={this.state.modalSignup && this.equipmentmonitorserviceproxy.mode === 'auth'} 
+					<ModalSignup visible={this.state.modalSignup && EquipmentMonitorService.mode === 'auth'} 
 						toggle={this.toggleModalSignup} 
-						signup={this.signup}
 						data={{ firstname:'', name:'', email: '', password: ''}} 
-						className='modal-dialog-centered'
-						signupErrors={this.state.signupErrors}/>																																																					
-
+						className='modal-dialog-centered'/>																																																					
 				</div>
 			</CSSTransition>
 		);

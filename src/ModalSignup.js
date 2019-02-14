@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert } from 'reactstrap';
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,11 +11,25 @@ import loginmsg from "./Login.messages";
 import MyForm from "./MyForm";
 import MyInput from "./MyInput";
 
+import EquipmentMonitorService from './EquipmentMonitorServiceProxy';
+import HttpError from './HttpError'
+
 import './transition.css';
 
-const ModaSignup = ({signup, visible, className, data, signupErrors, toggle}) => {
-    const handleSubmit = (data) => {
-		signup(data);
+const ModaSignup = ({visible, className, data, toggle}) => {
+    const [signupErrors, setSignupErrors] = useState(undefined);
+
+    const handleSubmit = async(newuser) => {
+        try{
+			await EquipmentMonitorService.signup(newuser);
+			toggle();
+		}
+		catch(errors){
+			if(errors instanceof HttpError){
+                const newSignupErrors = errors.data;
+                setSignupErrors(newSignupErrors);
+			}
+		}
     }
     
     let alerts = [];
@@ -54,10 +68,8 @@ const ModaSignup = ({signup, visible, className, data, signupErrors, toggle}) =>
 ModaSignup.propTypes = {
     toggle: PropTypes.func.isRequired,
 	visible: PropTypes.bool.isRequired,
-	signup: PropTypes.func.isRequired,
 	className: PropTypes.string,
-    data: PropTypes.object,
-    signupErrors: PropTypes.object
+    data: PropTypes.object
 };
 
 export default ModaSignup;

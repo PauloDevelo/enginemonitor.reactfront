@@ -160,4 +160,6 @@ class EquipmentMonitorServiceProxy{
     }
 }
 
-export default EquipmentMonitorServiceProxy;
+const EquipmentMonitorService = new EquipmentMonitorServiceProxy();
+
+export default EquipmentMonitorService;
