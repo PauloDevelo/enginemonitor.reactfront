@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert } from 'reactstrap';
+import React, { useState } from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
@@ -10,25 +10,28 @@ import loginmsg from "./Login.messages";
 
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
+import Alerts from "../Alerts/Alerts"
+
+import HttpError from '../../http/HttpError'
 
 import '../../style/transition.css';
 
-const ModaLogin = ({login, visible, className, data, loginErrors, toggleModalSignup}) => {
-    const handleSubmit = (data) => {
-		login(data);
-    }
-    
-    let alerts = [];
-    if(loginErrors){
-        let keys = Object.keys(loginErrors);
-        alerts = keys.map(key => {
-            return(
-                <Alert className="sm" key={key} color="danger">
-                    <FormattedMessage {...loginmsg[key]}/> {' '} <FormattedMessage {...loginmsg[loginErrors[key]]}/>
-                </Alert>)
-        });
-    }
+const ModaLogin = ({login, visible, className, data, toggleModalSignup}) => {
+	const [loginErrors, setLoginErrors] = useState(undefined);
 
+    const handleSubmit = async(data) => {
+		try{
+			await login(data);
+			setLoginErrors(undefined);
+		}
+		catch(errors){
+			if(errors instanceof HttpError){
+                const newLoginErrors = errors.data;
+                setLoginErrors(newLoginErrors);
+			}
+		}
+	}
+    
 	return (
 		<CSSTransition in={visible} timeout={300} classNames="modal">
 			<Modal isOpen={visible} className={className} fade={false}>
@@ -38,8 +41,8 @@ const ModaLogin = ({login, visible, className, data, loginErrors, toggleModalSig
 						<MyInput name="email" 		label={loginmsg.email} 		type="email" 	required/>
 						<MyInput name="password" 	label={loginmsg.password} 	type="password" required/>
                         <MyInput name="remember" 	label={loginmsg.remember} 	type="checkbox"/>
-                    </MyForm>}
-                    {alerts}
+					</MyForm>}
+					<Alerts errors={loginErrors}/>
 				</ModalBody>
 				<ModalFooter>
 					<Button onClick={toggleModalSignup} color="success"><FormattedMessage {...loginmsg.signup} /></Button>
@@ -55,7 +58,6 @@ ModaLogin.propTypes = {
 	login: PropTypes.func.isRequired,
 	className: PropTypes.string,
     data: PropTypes.object,
-	loginErrors: PropTypes.object,
 	toggleModalSignup: PropTypes.func.isRequired
 };
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
@@ -10,6 +10,7 @@ import loginmsg from "../ModalLogin/Login.messages";
 
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
+import Alerts from "../Alerts/Alerts"
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 import HttpError from '../../http/HttpError'
@@ -37,17 +38,6 @@ const ModaSignup = ({visible, className, data, toggle}) => {
 			}
 		}
     }
-    
-    let alerts = [];
-    if(signupErrors){
-        let keys = Object.keys(signupErrors);
-        alerts = keys.map(key => {
-            return(
-                <Alert className="sm" key={key} color="danger">
-                    <FormattedMessage {...loginmsg[key]}/> {' '} <FormattedMessage {...loginmsg[signupErrors[key]]}/>
-                </Alert>)
-        });
-    }
 
 	return (
 		<CSSTransition in={visible} timeout={300} classNames="modal">
@@ -60,7 +50,7 @@ const ModaSignup = ({visible, className, data, toggle}) => {
 						<MyInput name="email" 		label={loginmsg.email} 		type="email" 	required/>
 						<MyInput name="password" 	label={loginmsg.password} 	type="password" required/>
                     </MyForm>}
-                    {alerts}
+                    <Alerts errors={signupErrors} />
 				</ModalBody>
 				<ModalFooter>
 					<Button type="submit" form="formSignup" color="success"><FormattedMessage {...loginmsg.signup} /></Button>

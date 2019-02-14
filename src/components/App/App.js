@@ -13,7 +13,6 @@ import ModalLogin from '../ModalLogin/ModalLogin';
 import ModalSignup from '../ModalSignup/ModalSignup';
 import NavBar from '../NavBar/NavBar';
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
-import HttpError from '../../http/HttpError'
 
 import '../../style/transition.css';
 import appmsg from "./App.messages";
@@ -61,7 +60,6 @@ class App extends Component {
 
 		this.state = {
 			user: {},
-			loginErrors: undefined,
 
 			modalEquipmentInfo: false,
 			modalEditTask: false,
@@ -91,21 +89,14 @@ class App extends Component {
 	setStateAsync = updater => new Promise(resolve => this.setState(updater, resolve))
 
 	login = async (credentials) => {
-		try{
-			const user = await EquipmentMonitorService.authenticate(credentials);
-			await this.setStateAsync((prevState, props) => { return { user: user, loginErrors: undefined } });
-			await this.refreshEquipmentList();
-		}
-		catch(errors){
-			if(errors instanceof HttpError){
-				this.setState((prevState, props) => { return { loginErrors: errors.data } });
-			}
-		}
+		const user = await EquipmentMonitorService.authenticate(credentials);
+		await this.setStateAsync((prevState, props) => { return { user: user } });
+		await this.refreshEquipmentList();
 	}
 
 	logout = async () => {
 		EquipmentMonitorService.logout();
-		await this.setStateAsync( (prevState, props) => { return { user: undefined, loginErrors: undefined } });
+		await this.setStateAsync( (prevState, props) => { return { user: undefined } });
 		await this.refreshEquipmentList();
 		this.refreshTaskList();
 	}
@@ -492,7 +483,6 @@ class App extends Component {
 						login={this.login}
 						data={{ email: '', password: ''}} 
 						className='modal-dialog-centered'
-						loginErrors={this.state.loginErrors}
 						toggleModalSignup={this.toggleModalSignup}/>
 					<ModalSignup visible={this.state.modalSignup && EquipmentMonitorService.mode === 'auth'} 
 						toggle={this.toggleModalSignup} 
