@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,25 +8,56 @@ import PropTypes from 'prop-types';
 
 import edittaskmsg from "./ModalEditTask.messages";
 
+import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation'
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
+import Alerts from "../Alerts/Alerts"
+import HttpError from '../../http/HttpError'
 
 import '../../style/transition.css';
 
 const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className}) => {
+	const [alerts, setAlerts] = useState(undefined);
+	const [yesNoModalVisibility, setYesNoModalVisibility] = useState(false);
+
+	const toggleModalYesNoConfirmation = () => {
+		setYesNoModalVisibility(!yesNoModalVisibility);
+	}
+
+	const cancel = () => {
+		setAlerts(undefined);
+		toggle();
+	}
+
 	const handleSubmit = async(data) => {
 		data.usagePeriodInHour = data.usagePeriodInHour === undefined || data.usagePeriodInHour <= 0 ? -1 : data.usagePeriodInHour;
 		try{
 			await saveTask(data);
+			setAlerts(undefined);
 			toggle();
 		}
 		catch(error){
-			console.log(error);
+			if(error instanceof HttpError){
+                setAlerts(error.data);
+			}
 		}
 	}
 	
 	const handleDelete = () => {
-		deleteTask(toggle);
+		setYesNoModalVisibility(true);
+	}
+
+	const yesDeleteTask = () => {
+		try{
+			deleteTask();
+			setAlerts(undefined);
+			toggle();
+		}
+		catch(error){
+			if(error instanceof HttpError){
+                setAlerts(error.data);
+			}
+		}
 	}
 
 	let title = undefined;
@@ -39,8 +70,8 @@ const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className})
 
 	return (
 		<CSSTransition in={visible} timeout={300} classNames="modal">
-			<Modal isOpen={visible} toggle={toggle} className={className} fade={false}>
-				<ModalHeader toggle={toggle}><FontAwesomeIcon icon={faEdit} />{' '}{title}</ModalHeader>
+			<Modal isOpen={visible} toggle={cancel} className={className} fade={false}>
+				<ModalHeader toggle={cancel}><FontAwesomeIcon icon={faEdit} />{' '}{title}</ModalHeader>
 				<ModalBody>
 					{visible && <MyForm id="createTaskForm" submit={handleSubmit} initialData={task}>
 						<MyInput name="name" 		label={edittaskmsg.name} 		type="text" 	required/>
@@ -48,12 +79,21 @@ const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className})
 						<MyInput name="periodInMonth" 		label={edittaskmsg.month} 		type="number" 	min={1} required/>
 						<MyInput name="description" label={edittaskmsg.description} type="textarea" required />
 					</MyForm>}
+					<Alerts errors={alerts}/>
 				</ModalBody>
 				<ModalFooter>
 					<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...edittaskmsg.save} /></Button>
-					<Button color="secondary" onClick={toggle}><FormattedMessage {...edittaskmsg.cancel} /></Button>
+					<Button color="secondary" onClick={cancel}><FormattedMessage {...edittaskmsg.cancel} /></Button>
 					{task && task._id && <Button color="danger" onClick={handleDelete}><FormattedMessage {...edittaskmsg.delete} /></Button>}
 				</ModalFooter>
+				<ModalYesNoConfirmation visible={yesNoModalVisibility}
+						toggle={toggleModalYesNoConfirmation}
+						yes={yesDeleteTask}
+						no={toggleModalYesNoConfirmation}
+						title={edittaskmsg.taskDeleteTitle}
+						message={edittaskmsg.taskDeleteMsg} 
+						className='modal-dialog-centered'
+					/>
 			</Modal>
 		</CSSTransition>
 	);

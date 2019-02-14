@@ -57,6 +57,16 @@ const messages: Messages = {
     defaultMessage: "Edit",
 		description: "Button"
   },
+  taskDeleteTitle: {
+    id: "taskDeleteTitle",
+    defaultMessage: "Delete task",
+    description: "Modal title"
+  },
+  taskDeleteMsg: {
+    id: "taskDeleteMsg",
+    defaultMessage: "Are you sure you want to delete this task?",
+    description: "User message"
+  },
 };
 
 const definedMessages: typeof messages = defineMessages(messages);

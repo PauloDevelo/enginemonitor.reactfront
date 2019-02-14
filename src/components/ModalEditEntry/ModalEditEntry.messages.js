@@ -47,6 +47,16 @@ const messages: Messages = {
         defaultMessage: "Remarks",
         description: "Label"
     },
+    entryDeleteTitle: {
+        id: "entryDeleteTitle",
+        defaultMessage: "Delete entry",
+		description: "Modal title"
+    },
+    entryDeleteMsg: {
+        id: "entryDeleteMsg",
+        defaultMessage: "Are you sure you want to delete this entry?",
+		description: "User message"
+    },
 };
 
 const definedMessages: typeof messages = defineMessages(messages);

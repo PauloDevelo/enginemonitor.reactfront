@@ -7,7 +7,6 @@ import TaskTable from '../TaskTable/TaskTable';
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
 import HistoryTaskTable from '../HistoryTaskTable/HistoryTaskTable'
 import CardTaskDetails from '../CardTaskDetails/CardTaskDetails'
-import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation'
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import ModalLogin from '../ModalLogin/ModalLogin';
 import ModalSignup from '../ModalSignup/ModalSignup';
@@ -18,7 +17,6 @@ import { createDefaultEquipment, getCurrentEquipment } from '../../helpers/Equip
 import { createDefaultEntry } from '../../helpers/EntryHelper'
 
 import '../../style/transition.css';
-import appmsg from "./App.messages";
 
 class App extends Component {
 
@@ -31,19 +29,13 @@ class App extends Component {
 			modalEquipmentInfo: false,
 			modalEditTask: false,
 			modalEditEntry: false,
-			modalYesNo: false,
 			modalSignup: false,
 			navBar: true,
-
-			yes: (() => {}),
-			no: (() => {}),
-
-			yesNoTitle: appmsg.defaultTitle,
-			yesNoMsg: appmsg.defaultMsg,
 
 			equipments: [],
 			currentEquipmentIndex: -1,
 			editedEquipment: undefined,
+
 			tasks:[],
 			currentTaskIndex: -1,
 			editedTask: createDefaultTask(),
@@ -69,8 +61,6 @@ class App extends Component {
 	}
 
 	toggleNavBar = () => this.setState((prevState, props) => {return { navBar: !prevState.navBar }});
-
-	toggleModalYesNoConfirmation = () => this.setState((prevState, props) => {return { modalYesNo: !prevState.modalYesNo }});
 
 	toggleModalSignup = () => this.setState((prevState, props) => {return { modalSignup: !prevState.modalSignup }});
 
@@ -174,34 +164,13 @@ class App extends Component {
 		this.changeCurrentTask(savedTask);
 	}
 
-	deleteTask = (onYes, onNo, onError) => {
+	deleteTask = async() => {
 		var nextTaskIndex = (this.state.currentTaskIndex === this.state.tasks.length - 1) ? this.state.currentTaskIndex - 1:this.state.currentTaskIndex
-		
-		this.setState((prevState, props) => {
-			let currentEquipment = prevState.equipments[prevState.currentEquipmentIndex];
+		let currentEquipment = getCurrentEquipment(this.state);
 
-			return {
-				modalYesNo: true,
-				yes: async() => {
-					try{
-						this.toggleModalYesNoConfirmation();
-						await EquipmentMonitorService.deleteTask(currentEquipment._id, prevState.editedTask._id);
-						await this.refreshTaskList();
-						await this.changeCurrentTaskIndex(nextTaskIndex);
-						onYes();
-					}
-					catch(error){
-						if(onError) onError();
-					}
-				},
-				no: () => {
-					this.toggleModalYesNoConfirmation();
-					if(onNo) onNo();
-				},
-				yesNoTitle: appmsg.taskDeleteTitle,
-				yesNoMsg: appmsg.taskDeleteMsg,
-			};
-		});
+		await EquipmentMonitorService.deleteTask(currentEquipment._id, this.state.editedTask._id);
+		await this.refreshTaskList();
+		await this.changeCurrentTaskIndex(nextTaskIndex);
 	}
 	
 	nextTask = async() => {
@@ -298,36 +267,11 @@ class App extends Component {
 		this.refreshTaskList();
 	}
 	
-	deleteEntry = (entryId, onYes, onNo, onError) => {
+	deleteEntry = async(entryId) => {
+		await EquipmentMonitorService.deleteEntry(getCurrentEquipment(this.state)._id, getCurrentTask(this.state)._id, entryId);
+		this.refreshTaskList();
 		this.setState((prevState, props) => {
-			let currentEquipment = getCurrentEquipment(prevState);
-
-			return {
-				modalYesNo: true,
-				yes: (async () => {
-					this.toggleModalYesNoConfirmation();
-					try{
-						await EquipmentMonitorService.deleteEntry(currentEquipment._id, getCurrentTask(this.state)._id, entryId);
-						this.refreshTaskList();
-						this.setState((prevState, props) => {
-								return({ currentHistoryTask: prevState.currentHistoryTask.slice(0).filter(e => e._id !== entryId) });
-							},
-							() => {
-								if(onYes && typeof onYes === 'function') onYes();
-							}
-						);
-					}
-					catch(error){
-						if(onError) onError();
-					}
-				}),
-				no: (() => {
-					this.toggleModalYesNoConfirmation();
-					if(onNo) onNo();
-				}),
-				yesNoTitle: appmsg.entryDeleteTitle,
-				yesNoMsg: appmsg.entryDeleteMsg,
-			};
+			return({ currentHistoryTask: prevState.currentHistoryTask.slice(0).filter(e => e._id !== entryId) });
 		});
 	}
 
@@ -395,19 +339,12 @@ class App extends Component {
 						entry={this.state.editedEntry}
 						className='modal-dialog-centered'
 					/>
-					<ModalYesNoConfirmation visible={this.state.modalYesNo}
-						toggle={this.toggleModalYesNoConfirmation}
-						yes={this.state.yes}
-						no={this.state.no}
-						title={this.state.yesNoTitle}
-						message={this.state.yesNoMsg} 
-						className='modal-dialog-centered'
-					/>
 					<ModalLogin visible={this.state.user === undefined && EquipmentMonitorService.mode === 'auth'} 
 						login={this.login}
 						data={{ email: '', password: ''}} 
 						className='modal-dialog-centered'
 						toggleModalSignup={this.toggleModalSignup}/>
+					
 					<ModalSignup visible={this.state.modalSignup && EquipmentMonitorService.mode === 'auth'} 
 						toggle={this.toggleModalSignup} 
 						className='modal-dialog-centered'/>																																																					

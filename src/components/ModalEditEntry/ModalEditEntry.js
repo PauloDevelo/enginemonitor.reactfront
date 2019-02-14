@@ -8,6 +8,7 @@ import { CSSTransition } from 'react-transition-group'
 
 import editentrymsg from "./ModalEditEntry.messages";
 
+import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation'
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
 import Alerts from "../Alerts/Alerts"
@@ -17,6 +18,11 @@ import '../../style/transition.css';
 
 const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEntry }) => {
 	const [alerts, setAlerts] = useState(undefined);
+	const [yesNoModalVisibility, setYesNoModalVisibility] = useState(false);
+
+	const toggleModalYesNoConfirmation = () => {
+		setYesNoModalVisibility(!yesNoModalVisibility);
+	}
 
 	const cancel = () => {
 		setAlerts(undefined);
@@ -30,7 +36,6 @@ const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEn
 			toggle();
 		}
 		catch(error){
-			console.log(error);
 			if(error instanceof HttpError){
                 setAlerts(error.data);
 			}
@@ -38,9 +43,14 @@ const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEn
 	};
 	
 	const handleDelete = () => {
+		setYesNoModalVisibility(true);
+	}
+
+	const yesDeleteEntry = () => {
 		try{
-			deleteEntry(entry._id, toggle);
+			deleteEntry(entry._id);
 			setAlerts(undefined);
+			toggle();
 		}
 		catch(error){
 			if(error instanceof HttpError){
@@ -78,6 +88,14 @@ const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEn
 					<Button color="secondary" onClick={cancel}><FormattedMessage {...editentrymsg.cancel} /></Button>
 					{entry._id && <Button color="danger" onClick={handleDelete}><FormattedMessage {...editentrymsg.delete} /></Button>}
 				</ModalFooter>
+				<ModalYesNoConfirmation visible={yesNoModalVisibility}
+						toggle={toggleModalYesNoConfirmation}
+						yes={yesDeleteEntry}
+						no={toggleModalYesNoConfirmation}
+						title={editentrymsg.entryDeleteTitle}
+						message={editentrymsg.entryDeleteMsg} 
+						className='modal-dialog-centered'
+					/>
 			</Modal>
 		</CSSTransition>
 	);
