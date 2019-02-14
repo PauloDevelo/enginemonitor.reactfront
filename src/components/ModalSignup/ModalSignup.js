@@ -17,7 +17,8 @@ import HttpError from '../../http/HttpError'
 
 import '../../style/transition.css';
 
-const ModaSignup = ({visible, className, data, toggle}) => {
+const ModaSignup = ({visible, className, toggle}) => {
+	const data = { firstname:'', name:'', email: '', password: ''};
     const [signupErrors, setSignupErrors] = useState(undefined);
 
     const cancel = () => {
@@ -64,8 +65,7 @@ const ModaSignup = ({visible, className, data, toggle}) => {
 ModaSignup.propTypes = {
     toggle: PropTypes.func.isRequired,
 	visible: PropTypes.bool.isRequired,
-	className: PropTypes.string,
-    data: PropTypes.object
+	className: PropTypes.string
 };
 
 export default ModaSignup;

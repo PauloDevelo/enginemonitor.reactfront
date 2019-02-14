@@ -486,7 +486,6 @@ class App extends Component {
 						toggleModalSignup={this.toggleModalSignup}/>
 					<ModalSignup visible={this.state.modalSignup && EquipmentMonitorService.mode === 'auth'} 
 						toggle={this.toggleModalSignup} 
-						data={{ firstname:'', name:'', email: '', password: ''}} 
 						className='modal-dialog-centered'/>																																																					
 				</div>
 			</CSSTransition>
