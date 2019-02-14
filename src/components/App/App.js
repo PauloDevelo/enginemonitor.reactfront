@@ -166,17 +166,18 @@ class App extends Component {
 		equipment.installation = new Date(equipment.installation);
 
 		if(equipmentInfo._id){
-			this.setState((prevState, props) => {
+			await this.setStateAsync((prevState, props) => {
 				prevState.equipments[prevState.currentEquipmentIndex] = equipment;
 				return { equipments: prevState.equipments }; 
 			});
 		}
 		else{
-			this.setState((prevState, props) => {
+			await this.setStateAsync((prevState, props) => {
 				prevState.equipments.push(equipment);
 				return { equipments: prevState.equipments };
 			});
 		}
+		await this.changeCurrentEquipment(this.state.currentEquipmentIndex);
 	}
 
 	refreshEquipmentList = async () => {
