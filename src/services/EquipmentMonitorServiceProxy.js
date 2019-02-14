@@ -28,35 +28,20 @@ class EquipmentMonitorServiceProxy{
     }
 
     signup = async (newUser) => {
-        try{
-            const res = await axios.post(this.baseUrl + "users/", { user: newUser });
-            if(res.errors){
-                console.log(res.errors);
-            }
-
-            return res.data;
-        }
-        catch(error){
-            console.log('Signup failed.');
-            console.log( error );
-            throw new HttpError(error.response ? error.response.data.errors : undefined);
-        }
+        return await this.post(this.baseUrl + "users/", { user: newUser });
     }
 
     authenticate = async (credentials) => {
         try{
-            const res = await axios.post(this.baseUrl + "users/login", { user: credentials });
-            if(res.errors){
-                console.log(res.errors);
-            }
-
-            if(res.data.user){
-                this.config = { headers: { Authorization: 'Token ' + res.data.user.token }};
+            const data = await this.post(this.baseUrl + "users/login", { user: credentials });
+            
+            if(data.user){
+                this.config = { headers: { Authorization: 'Token ' + data.user.token }};
                 if(credentials.remember){
                     sessionStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify(this.config));
                 }
 
-                return res.data.user;
+                return data.user;
             }
             
             throw new HttpError( { loginerror: "loginfailed"} )
@@ -64,7 +49,7 @@ class EquipmentMonitorServiceProxy{
         catch(error){
             console.log('Authentication failed.');
             console.log( error );
-            throw new HttpError(error.response ? error.response.data.errors : undefined);
+            throw error;
         }
     }
 
@@ -129,11 +114,15 @@ class EquipmentMonitorServiceProxy{
     async post(url, data){
         try{
             const response = await axios.post(url, data, this.config);
+            if(response.errors){
+                console.log(response.errors);
+            }
+
 		    return response.data;
         }
         catch(error){
             console.log( error );
-            throw error;
+            throw new HttpError(error.response ? error.response.data.errors : undefined);
         }
     }
     
@@ -144,7 +133,7 @@ class EquipmentMonitorServiceProxy{
         }
         catch(error){
             console.log( error );
-            throw error;
+            throw new HttpError(error.response ? error.response.data.errors : undefined);
         }
     }
 
@@ -155,7 +144,7 @@ class EquipmentMonitorServiceProxy{
         }
         catch(error){
             console.log( error );
-            throw error;
+            throw new HttpError(error.response ? error.response.data.errors : undefined);
         }
     }
 }
