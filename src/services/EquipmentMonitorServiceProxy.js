@@ -1,6 +1,9 @@
 import axios from "axios";
 import axiosRetry from 'axios-retry';
 import HttpError from '../http/HttpError'
+import { updateEquipment } from '../helpers/EquipmentHelper'
+import { updateTask } from '../helpers/TaskHelper'
+import { updateEntry } from '../helpers/EntryHelper'
 
 class EquipmentMonitorServiceProxy{
     config = undefined;
@@ -27,8 +30,10 @@ class EquipmentMonitorServiceProxy{
         catch{}
     }
 
+    /////////////////////User/////////////////////////
     signup = async (newUser) => {
-        return await this.post(this.baseUrl + "users/", { user: newUser });
+        const {user} = await this.post(this.baseUrl + "users/", { user: newUser });
+        return user;
     }
 
     authenticate = async (credentials) => {
@@ -59,56 +64,78 @@ class EquipmentMonitorServiceProxy{
     }
 
     refreshCurrentUser = async() => {
-        return await this.get(this.baseUrl + "users/current");
+        const {user} = await this.get(this.baseUrl + "users/current");
+        return user;
     }
 
+    ////////////////Equipment////////////////////////
     getEquipments = async() => {
-        return await this.get(this.baseUrl + "equipments");
+        const {equipments} = await this.get(this.baseUrl + "equipments");
+        equipments.forEach((equipment) => updateEquipment(equipment));
+        return equipments;
     }
     
-    saveEquipment = async(equipment) => {
-        if(equipment._id){
-            return await this.post(this.baseUrl + "equipments/" + equipment._id, { equipment: equipment });
+    createOrSaveEquipment = async(equipmentToSave) => {
+        if(equipmentToSave._id){
+            const {equipment} = await this.post(this.baseUrl + "equipments/" + equipmentToSave._id, { equipment: equipmentToSave });
+            return updateEquipment(equipment);
         }
         else{
-            return await this.post(this.baseUrl + "equipments", { equipment: equipment });
+            const {equipment} = await this.post(this.baseUrl + "equipments", { equipment: equipmentToSave });
+            return updateEquipment(equipment);
         }
     }
 
     refreshEquipmentInfo = async (idEquipment) =>{
-        return await this.get(this.baseUrl + "equipments/" + idEquipment);
+        const {equipment} = await this.get(this.baseUrl + "equipments/" + idEquipment);
+        return this.updateEquipment(equipment);
     } 
 
-    createTask = async (equipmentId, task) =>{
-        return await this.post(this.baseUrl + "tasks/" + equipmentId, { task: task });
+    /////////////////Task////////////////////////////
+    createOrSaveTask = async (equipmentId, newTask) =>{
+        if(newTask._id === undefined){
+            const {task} = await this.post(this.baseUrl + "tasks/" + equipmentId, { task: newTask });
+            return updateTask(task);
+        }
+        else{
+            const {task} = await this.post(this.baseUrl + "tasks/" + equipmentId + '/' + newTask._id, { task: newTask });
+            return updateTask(task);
+        }
     }
 
-    saveTask = async (equipmentId, task) => {
-        return await this.post(this.baseUrl + "tasks/" + equipmentId + '/' + task._id, { task: task });
-    }
-
-    deleteTask = async(equipmentId, taskid) => {
-        return await this.delete(this.baseUrl + "tasks/" + equipmentId + '/' + taskid);
-    }
-
-    refreshHistoryTask = async(equipmentId, taskid) => {
-        return await this.get(this.baseUrl + "entries/" + equipmentId + '/' + taskid);
+    deleteTask = async(equipmentId, taskId) => {
+        const {task} = await this.delete(this.baseUrl + "tasks/" + equipmentId + '/' + taskId);
+        return updateTask(task);
     }
 
     refreshTaskList = async(equipmentId, complete, fail) => {
-        return await this.get(this.baseUrl + "tasks/" + equipmentId);
-    }
-    
-    createEntry = async (equipmentId, taskid, entry) => {
-        return await this.post(this.baseUrl + "entries/" + equipmentId + '/' + taskid, { entry: entry });
+        const { tasks } = await this.get(this.baseUrl + "tasks/" + equipmentId);
+        tasks.forEach(task => updateTask(task));
+        return tasks;
     }
 
-    saveEntry = async(equipmentId, taskid, entry) => {
-        return await this.post(this.baseUrl + "entries/" + equipmentId + '/' + taskid + '/' + entry._id, { entry: entry });
+    ///////////////////////////Entry////////////////////////
+
+    createOrSaveEntry = async (equipmentId, taskId, newEntry) => {
+        if(newEntry._id === undefined){
+            const {entry} = await this.post(this.baseUrl + "entries/" + equipmentId + '/' + taskId, { entry: newEntry });
+            return updateEntry(entry)
+        }
+        else{
+            const {entry} = await this.post(this.baseUrl + "entries/" + equipmentId + '/' + taskId + '/' + newEntry._id, { entry: newEntry });
+            return updateEntry(entry)
+        }
     }
 
     deleteEntry = async(equipmentId, taskid, entryId) => {
-        return await this.delete(this.baseUrl + "entries/" + equipmentId + '/' + taskid + '/' + entryId);
+        const {entry} = await this.delete(this.baseUrl + "entries/" + equipmentId + '/' + taskid + '/' + entryId);
+        return updateEntry(entry)
+    }
+
+    refreshHistoryTask = async(equipmentId, taskid) => {
+        const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId + '/' + taskid);
+        entries.forEach(entry => updateEntry(entry) );
+        return entries;
     }
 
     async post(url, data){

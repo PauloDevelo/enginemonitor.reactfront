@@ -13,45 +13,12 @@ import ModalLogin from '../ModalLogin/ModalLogin';
 import ModalSignup from '../ModalSignup/ModalSignup';
 import NavBar from '../NavBar/NavBar';
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import { createDefaultTask, getCurrentTask } from '../../helpers/TaskHelper'
+import { createDefaultEquipment, getCurrentEquipment } from '../../helpers/EquipmentHelper'
+import { createDefaultEntry } from '../../helpers/EntryHelper'
 
 import '../../style/transition.css';
 import appmsg from "./App.messages";
-
-function createDefaultEquipment(state){
-	return {
-		name: "",
-		brand: "",
-		model: "",
-		age: "",
-		installation: new Date()
-	}
-}
-
-function createDefaultEntry(state){
-	return {
-		name: getCurrentTask(state).name,
-		date: new Date(),
-		age: getCurrentEquipment(state).age,
-		remarks: '',
-	}
-}
-
-function createDefaultTask(state){
-	return {
-		name: '',
-		usagePeriodInHour: 100,
-		periodInMonth: 12,
-		description: ''
-	}
-}
-
-function getCurrentEquipment(state){
-	return state.equipments[state.currentEquipmentIndex];
-}
-
-function getCurrentTask(state){
-	return state.tasks[state.currentTaskIndex];
-}
 
 class App extends Component {
 
@@ -137,14 +104,14 @@ class App extends Component {
 		this.setState( (prevState, props) => {
 			return { 
 				modalEditTask: !prevState.modalEditTask,
-				editedTask: isCreationMode ? createDefaultTask(prevState) : getCurrentTask(prevState)
+				editedTask: isCreationMode ? createDefaultTask() : getCurrentTask(prevState)
 			}
 		});
 	}
 	
 	refreshCurrentUser = async () => {
 		try{
-			const {user} = await EquipmentMonitorService.refreshCurrentUser();
+			const user = await EquipmentMonitorService.refreshCurrentUser();
 			this.setState({ user:user });
 		}
 		catch(error){
@@ -153,7 +120,7 @@ class App extends Component {
 	}
 
 	changeCurrentEquipment = async (newEquipmentIndex) => {
-		await this.setStateAsync((prevState, props) => { return { currentEquipmentIndex:newEquipmentIndex };});
+		await this.setStateAsync({ currentEquipmentIndex:newEquipmentIndex });
 		await this.refreshTaskList();
 
 		if(this.state.tasks.length > 0){
@@ -161,9 +128,8 @@ class App extends Component {
 		}
 	}
 
-	saveEquipmentInfo = async (equipmentInfo) => {
-		const {equipment} = await EquipmentMonitorService.saveEquipment(equipmentInfo);
-		equipment.installation = new Date(equipment.installation);
+	createOrSaveEquipmentInfo = async (equipmentInfo) => {
+		const equipment = await EquipmentMonitorService.createOrSaveEquipment(equipmentInfo);
 
 		if(equipmentInfo._id){
 			await this.setStateAsync((prevState, props) => {
@@ -177,15 +143,14 @@ class App extends Component {
 				return { equipments: prevState.equipments };
 			});
 		}
+		
 		await this.changeCurrentEquipment(this.state.currentEquipmentIndex);
 	}
 
 	refreshEquipmentList = async () => {
 		try{
-			const {equipments} = await EquipmentMonitorService.getEquipments();
-			equipments.forEach((equipment) => { equipment.installation = new Date(equipment.installation); });
-			
-			await this.setStateAsync((prevState, props) => { return { equipments:equipments } });
+			const equipments = await EquipmentMonitorService.getEquipments();
+			await this.setStateAsync({ equipments:equipments });
 
 			if(this.state.currentEquipmentIndex === -1 && this.state.equipments.length > 0)
 				await this.changeCurrentEquipment(0);
@@ -194,9 +159,7 @@ class App extends Component {
 			}
 		}
 		catch(error){
-			this.setState((prevState, props) => {
-				return { equipments:[], currentEquipmentIndex:-1 }
-			});
+			this.setState({ equipments:[], currentEquipmentIndex:-1 });
 		}
 	}
 	
@@ -206,19 +169,9 @@ class App extends Component {
 		}
 
 		const currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
-		let saveTask;
-		if(!taskToSave._id){
-			const {task} = await EquipmentMonitorService.createTask(currentEquipment._id, taskToSave);
-			saveTask = task;
-			
-		}
-		else{
-			const {task} = await EquipmentMonitorService.saveTask(currentEquipment._id, taskToSave);
-			saveTask = task;
-		}
-
+		const savedTask = await EquipmentMonitorService.createOrSaveTask(currentEquipment._id, taskToSave);
 		await this.refreshTaskList();
-		this.changeCurrentTask(saveTask);
+		this.changeCurrentTask(savedTask);
 	}
 
 	deleteTask = (onYes, onNo, onError) => {
@@ -265,7 +218,7 @@ class App extends Component {
 
 	changeCurrentTask = async (task) => {
 		if(task !== getCurrentTask(this.state)){
-			var newCurrentTaskIndex = this.state.tasks.findIndex((t, ind, tab) => t._id === task._id);
+			var newCurrentTaskIndex = this.state.tasks.findIndex(t => t._id === task._id);
 			await this.changeCurrentTaskIndex(newCurrentTaskIndex);
 		}
 	}
@@ -277,12 +230,7 @@ class App extends Component {
 		}
 
 		if (newTaskIndex === -1){
-			await this.setStateAsync((prevState, props) => { 
-				return {
-					currentHistoryTask: [],
-					currentTaskIndex: -1,
-				}; 
-			});
+			await this.setStateAsync({ currentHistoryTask: [], currentTaskIndex: -1 });
 			return;
 		}
 
@@ -291,23 +239,11 @@ class App extends Component {
 		var newCurrentTaskId = newCurrentTask._id;
 
 		try{
-			const {entries} = await EquipmentMonitorService.refreshHistoryTask(currentEquipment._id, newCurrentTaskId);
-			entries.forEach(entry => { entry.date = new Date(entry.date) });
-
-			await this.setStateAsync((prevState, props) => { 
-				return {
-					currentHistoryTask: entries,
-					currentTaskIndex: newTaskIndex,
-				}; 
-			});
+			const entries = await EquipmentMonitorService.refreshHistoryTask(currentEquipment._id, newCurrentTaskId);
+			await this.setStateAsync({ currentHistoryTask: entries, currentTaskIndex: newTaskIndex });
 		}
 		catch(error){
-			await this.setStateAsync((prevState, props) => { 
-				return {
-					currentHistoryTask: [],
-					currentTaskIndex: newTaskIndex,
-				}; 
-			});
+			await this.setStateAsync({ currentHistoryTask: [], currentTaskIndex: newTaskIndex });
 			throw error;
 		}
 	}
@@ -316,9 +252,8 @@ class App extends Component {
 		if(this.state.currentEquipmentIndex !== -1){
 			let currentEquipment = getCurrentEquipment(this.state);
 			try{
-				const { tasks } = await EquipmentMonitorService.refreshTaskList(currentEquipment._id);
-				tasks.forEach(task => task.usagePeriodInHour = task.usagePeriodInHour === -1 ? undefined : task.usagePeriodInHour);
-				
+				const tasks = await EquipmentMonitorService.refreshTaskList(currentEquipment._id);
+
 				// store the new state object in the component's state
 				await this.setStateAsync((prevState, props) => {
 					let newCurrentTaskIndex = -1;
@@ -328,9 +263,10 @@ class App extends Component {
 					else if(tasks.length > 0){
 						newCurrentTaskIndex = 0;
 					}
+
 					return {
 						tasks: tasks,
-						currentTaskIndex: newCurrentTaskIndex === -1 ? -1 : newCurrentTaskIndex
+						currentTaskIndex: newCurrentTaskIndex
 					}
 				});
 			}
@@ -344,40 +280,27 @@ class App extends Component {
 	}
 
 	emptyTaskList = async () => {
-		await this.setStateAsync((prevState, props) => {
-			return { tasks: [], currentTaskIndex: -1, currentHistoryTask: [] };
-		});
-	}
-				
+		await this.setStateAsync({ tasks: [], currentTaskIndex: -1, currentHistoryTask: [] });
+	}		
 
 	createOrSaveEntry = async (entryToSave) => {
-		let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
-		if(!entryToSave._id){
-			const {entry} = await EquipmentMonitorService.createEntry(currentEquipment._id, getCurrentTask(this.state)._id, entryToSave);
-			await this.onNewEntry(entry);
-		}
-		else{
-			const {entry} = await EquipmentMonitorService.saveEntry(currentEquipment._id, getCurrentTask(this.state)._id, entryToSave);
-			await this.onNewEntry(entry)
-		}
-	}
-
-	onNewEntry = async (newEntry) => {
-		newEntry.date = new Date(newEntry.date);
-		this.refreshTaskList();
-
+		let currentEquipment = getCurrentEquipment(this.state);
+		let savedEntry = await EquipmentMonitorService.createOrSaveEntry(currentEquipment._id, getCurrentTask(this.state)._id, entryToSave);
+		
 		await this.setStateAsync((prevState, props) => {
-			var newCurrentHistoryTask = prevState.currentHistoryTask.filter(entry => entry._id !== newEntry._id);
-			newCurrentHistoryTask.unshift(newEntry);
+			var newCurrentHistoryTask = prevState.currentHistoryTask.filter(entry => entry._id !== savedEntry._id);
+			newCurrentHistoryTask.unshift(savedEntry);
 			newCurrentHistoryTask.sort((entrya, entryb) => { return entrya.date - entryb.date; });
 
-			return({ currentHistoryTask: newCurrentHistoryTask });
+			return { currentHistoryTask: newCurrentHistoryTask };
 		});
+
+		this.refreshTaskList();
 	}
 	
 	deleteEntry = (entryId, onYes, onNo, onError) => {
 		this.setState((prevState, props) => {
-			let currentEquipment = prevState.equipments[prevState.currentEquipmentIndex];
+			let currentEquipment = getCurrentEquipment(prevState);
 
 			return {
 				modalYesNo: true,
@@ -454,7 +377,7 @@ class App extends Component {
 					
 					<ModalEquipmentInfo visible={this.state.modalEquipmentInfo} 
 						toggle={this.toggleModalEquipmentInfo} 
-						saveEquipmentInfo={this.saveEquipmentInfo} 
+						saveEquipmentInfo={this.createOrSaveEquipmentInfo} 
 						data={this.state.editedEquipment}
 						className='modal-dialog-centered'
 					/>

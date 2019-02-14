@@ -1,11 +1,20 @@
 import React from 'react';
-
-import { 
-	FormattedMessage,
-	FormattedDate
-} from 'react-intl';
+import { FormattedMessage, FormattedDate } from 'react-intl';
 
 import tasktablemsg from "../components/TaskTable/TaskTable.messages";
+
+export function createDefaultTask(){
+	return {
+		name: '',
+		usagePeriodInHour: 100,
+		periodInMonth: 12,
+		description: ''
+	}
+}
+
+export function getCurrentTask(state){
+	return state.tasks[state.currentTaskIndex];
+}
 
 export function getContext(level){
 	if(level === 1){
@@ -76,4 +85,9 @@ export function shorten(longStr){
 	}
 	
 	return shortenStr;
+}
+
+export function updateTask(task) {
+    task.usagePeriodInHour = task.usagePeriodInHour === -1 ? undefined : task.usagePeriodInHour
+    return task;
 }
