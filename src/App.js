@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CSSTransition } from 'react-transition-group'
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
   
 import EquipmentsInfo from './EquipmentsInfo';
 import ModalEquipmentInfo from './ModalEquipmentInfo';
@@ -15,6 +11,7 @@ import ModalYesNoConfirmation from './ModalYesNoConfirmation'
 import ModalEditEntry from './ModalEditEntry';
 import ModalLogin from './ModalLogin';
 import ModalSignup from './ModalSignup';
+import NavBar from './NavBar';
 import EquipmentMonitorService from './EquipmentMonitorServiceProxy';
 import HttpError from './HttpError'
 
@@ -92,10 +89,6 @@ class App extends Component {
 			const user = await EquipmentMonitorService.authenticate(credentials);
 			await this.setStateAsync((prevState, props) => { return { user: user, loginErrors: undefined } });
 			await this.refreshEquipmentList();
-
-			if(this.state.equipments.length > 0){
-				this.changeCurrentEquipment(0);
-			}
 		}
 		catch(errors){
 			if(errors instanceof HttpError){
@@ -177,7 +170,7 @@ class App extends Component {
 	}
 	
 	changeCurrentEquipment = async (newEquipmentIndex) => {
-		await this.setStateAsync((prevState, props) => { return ({ currentEquipmentIndex:newEquipmentIndex });});
+		await this.setStateAsync((prevState, props) => { return { currentEquipmentIndex:newEquipmentIndex };});
 		await this.refreshTaskList();
 
 		if(this.state.tasks.length > 0){
@@ -208,23 +201,13 @@ class App extends Component {
 			const {equipments} = await EquipmentMonitorService.getEquipments();
 			equipments.forEach((equipment) => { equipment.installation = new Date(equipment.installation); });
 			
-			await this.setStateAsync((prevState, props) => { 
-					let currentEquipmentIndex = prevState.currentEquipmentIndex; 
-					if (currentEquipmentIndex === -1)
-					{
-						if(equipments.length > 0 ){
-							currentEquipmentIndex = 0;
-						}
-					}
-					else{
-						if(currentEquipmentIndex >= equipments.length){
-							currentEquipmentIndex = -1;
-						}
-					}
-					
-					return { equipments:equipments, currentEquipmentIndex:currentEquipmentIndex } 
-				}
-			);
+			await this.setStateAsync((prevState, props) => { return { equipments:equipments } });
+
+			if(this.state.currentEquipmentIndex === -1 && this.state.equipments.length > 0)
+				await this.changeCurrentEquipment(0);
+			else if (this.state.currentEquipmentIndex >= this.state.equipments.length){
+				await this.changeCurrentEquipment(-1);
+			}
 		}
 		catch(error){
 			this.setState((prevState, props) => {
@@ -450,33 +433,13 @@ class App extends Component {
 	}
     
 	render() {
-		let position = this.state.pos ? '(' + this.state.pos.lng.toFixed(4) + ', ' + this.state.pos.lat.toFixed(4) + ')':'';
-		let textMenu = this.state.user?this.state.user.email:"Login";
 		var panelClassNames = "p-2 m-2 border border-secondary rounded shadow";
 		var prevVisibility = this.state.currentTaskIndex > 0;
 		var nextVisibility = this.state.currentTaskIndex < this.state.tasks.length - 1;
 		return (
 			<CSSTransition in={true} appear={true} timeout={1000} classNames="fade">
 				<div id="root">
-					<Navbar color="dark" dark expand="md">
-						<NavbarBrand href="/">Equipment maintenance {position}</NavbarBrand>
-						<NavbarToggler onClick={this.toggleNavBar} />
-						<Collapse isOpen={this.state.navBar} navbar>
-							<Nav className="ml-auto" navbar>
-								<UncontrolledDropdown nav inNavbar>
-									<DropdownToggle nav caret>
-									{textMenu}
-									</DropdownToggle>
-									<DropdownMenu right>
-										<DropdownItem onClick={this.logout}>
-										<FontAwesomeIcon icon={faSignOutAlt} />{' '}<FormattedMessage {...appmsg.signout} />
-										</DropdownItem>
-									</DropdownMenu>
-								</UncontrolledDropdown>
-							</Nav>
-						</Collapse>
-					</Navbar>
-
+					<NavBar position={this.state.pos} user={this.state.user} logout={this.logout} isOpened={this.state.navBar} toggle={this.toggleNavBar} />
 					<div className="d-flex flex-wrap flex-row mb-3">
 						<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
 							<EquipmentsInfo equipments={this.state.equipments}
