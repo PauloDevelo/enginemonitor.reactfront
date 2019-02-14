@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import equipmentinfomsg from "./EquipmentInfo.messages";
-import ClockLabel from './ClockLabel';
+import ClockLabel from '../ClockLabel/ClockLabel';
 
 export default function EquipmentsInfo({equipments, toggleModal, currentEquipmentIndex, changeCurrentEquipment, extraClassNames}){
 	var tabnavItems = [];

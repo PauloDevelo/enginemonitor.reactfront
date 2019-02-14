@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import appmsg from "./App.messages";
+import appmsg from "../App/App.messages";
 
 const NavBar = ({user, logout, isOpened, toggle}) => {
     const [position, setPosition] = useState(undefined);

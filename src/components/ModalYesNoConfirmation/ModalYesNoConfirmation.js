@@ -4,7 +4,7 @@ import { CSSTransition } from 'react-transition-group'
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import './transition.css';
+import '../../style/transition.css';
 
 import modalmsg from "./ModalYesNoConfirmation.messages";
 

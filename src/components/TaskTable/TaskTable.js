@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import PropTypes from 'prop-types';
 import tasktablemsg from "./TaskTable.messages";
-import { getContext, getTodoText, shorten } from './TaskHelper'; 
+import { getContext, getTodoText, shorten } from '../../helpers/TaskHelper'; 
 
 const getTrContext = (level) => "table-" + getContext(level)
 

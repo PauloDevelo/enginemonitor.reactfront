@@ -8,10 +8,10 @@ import { CSSTransition } from 'react-transition-group'
 
 import editentrymsg from "./ModalEditEntry.messages";
 
-import MyForm from "./MyForm"
-import MyInput from "./MyInput"
+import MyForm from "../Form/MyForm"
+import MyInput from "../Form/MyInput"
 
-import './transition.css';
+import '../../style/transition.css';
 
 const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEntry }) => {
 	const handleSubmit = async (formData) => {

@@ -5,7 +5,7 @@ import { addLocaleData, IntlProvider } from "react-intl";
 
 import './index.css';
 
-import App from './App';
+import App from './components/App/App';
 import * as serviceWorker from './serviceWorker';
 
 import locale_en from 'react-intl/locale-data/en';

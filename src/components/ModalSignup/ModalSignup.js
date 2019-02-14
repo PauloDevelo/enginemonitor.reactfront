@@ -6,15 +6,15 @@ import { CSSTransition } from 'react-transition-group';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import loginmsg from "./Login.messages";
+import loginmsg from "../ModalLogin/Login.messages";
 
-import MyForm from "./MyForm";
-import MyInput from "./MyInput";
+import MyForm from "../Form/MyForm"
+import MyInput from "../Form/MyInput"
 
-import EquipmentMonitorService from './services/EquipmentMonitorServiceProxy';
-import HttpError from './HttpError'
+import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import HttpError from '../../http/HttpError'
 
-import './transition.css';
+import '../../style/transition.css';
 
 const ModaSignup = ({visible, className, data, toggle}) => {
     const [signupErrors, setSignupErrors] = useState(undefined);

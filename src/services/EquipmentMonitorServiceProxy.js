@@ -1,6 +1,6 @@
 import axios from "axios";
 import axiosRetry from 'axios-retry';
-import HttpError from '../HttpError'
+import HttpError from '../http/HttpError'
 
 class EquipmentMonitorServiceProxy{
     config = undefined;

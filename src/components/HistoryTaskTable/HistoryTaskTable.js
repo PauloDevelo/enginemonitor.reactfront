@@ -3,11 +3,11 @@ import { Table } from 'reactstrap';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import PropTypes from 'prop-types';
-import tasktablemsg from "./TaskTable.messages";
-import { shorten } from './TaskHelper'; 
+import tasktablemsg from "../TaskTable/TaskTable.messages";
+import { shorten } from '../../helpers/TaskHelper'; 
 
 import './HistoryTaskTable.css';
-import './transition.css';
+import '../../style/transition.css';
 
 const TaskRow = ({entry, onClick}) => {
     var remarks = entry.remarks.replace(/\n/g, '<br />');

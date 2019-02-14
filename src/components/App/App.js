@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { CSSTransition } from 'react-transition-group'
   
-import EquipmentsInfo from './EquipmentsInfo';
-import ModalEquipmentInfo from './ModalEquipmentInfo';
-import TaskTable from './TaskTable';
-import ModalEditTask from './ModalEditTask';
-import HistoryTaskTable from './HistoryTaskTable'
-import CardTaskDetails from './CardTaskDetails'
-import ModalYesNoConfirmation from './ModalYesNoConfirmation'
-import ModalEditEntry from './ModalEditEntry';
-import ModalLogin from './ModalLogin';
-import ModalSignup from './ModalSignup';
-import NavBar from './NavBar';
-import EquipmentMonitorService from './services/EquipmentMonitorServiceProxy';
-import HttpError from './HttpError'
+import EquipmentsInfo from '../EquipmentInfo/EquipmentsInfo';
+import ModalEquipmentInfo from '../ModalEquipmentInfo/ModalEquipmentInfo';
+import TaskTable from '../TaskTable/TaskTable';
+import ModalEditTask from '../ModalEditTask/ModalEditTask';
+import HistoryTaskTable from '../HistoryTaskTable/HistoryTaskTable'
+import CardTaskDetails from '../CardTaskDetails/CardTaskDetails'
+import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation'
+import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
+import ModalLogin from '../ModalLogin/ModalLogin';
+import ModalSignup from '../ModalSignup/ModalSignup';
+import NavBar from '../NavBar/NavBar';
+import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import HttpError from '../../http/HttpError'
 
-import './transition.css';
+import '../../style/transition.css';
 import appmsg from "./App.messages";
 
 function createDefaultEquipment(state){

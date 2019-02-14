@@ -5,7 +5,7 @@ import {
 	FormattedDate
 } from 'react-intl';
 
-import tasktablemsg from "./TaskTable.messages";
+import tasktablemsg from "../components/TaskTable/TaskTable.messages";
 
 export function getContext(level){
 	if(level === 1){

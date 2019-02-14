@@ -6,12 +6,12 @@ import { CSSTransition } from 'react-transition-group'
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import equipmentinfomsg from "./EquipmentInfo.messages";
+import equipmentinfomsg from "../EquipmentInfo/EquipmentInfo.messages";
 
-import MyForm from "./MyForm"
-import MyInput from "./MyInput"
+import MyForm from "../Form/MyForm"
+import MyInput from "../Form/MyInput"
 
-import './transition.css';
+import '../../style/transition.css';
 
 const ModalEquipmentInfo = ({saveEquipmentInfo, visible, toggle, className, data}) => {
 	const handleSubmit = async(data) => {

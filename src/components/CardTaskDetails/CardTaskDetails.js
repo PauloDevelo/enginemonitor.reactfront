@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import PropTypes from 'prop-types';
 
-import { getContext, getScheduleText } from './TaskHelper'; 
+import { getContext, getScheduleText } from '../../helpers/TaskHelper'; 
 
 import './CardTaskDetails.css';
-import './transition.css';
+import '../../style/transition.css';
 
 function getBadgeText(level){
 	if(level === 1){

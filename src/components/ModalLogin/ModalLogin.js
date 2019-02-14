@@ -8,10 +8,10 @@ import PropTypes from 'prop-types';
 
 import loginmsg from "./Login.messages";
 
-import MyForm from "./MyForm";
-import MyInput from "./MyInput";
+import MyForm from "../Form/MyForm"
+import MyInput from "../Form/MyInput"
 
-import './transition.css';
+import '../../style/transition.css';
 
 const ModaLogin = ({login, visible, className, data, loginErrors, toggleModalSignup}) => {
     const handleSubmit = (data) => {
