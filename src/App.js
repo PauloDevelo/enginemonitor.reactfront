@@ -30,7 +30,7 @@ function createDefaultEquipment(state){
 
 function createDefaultEntry(state){
 	return {
-		name: state.currentTask.name,
+		name: state.tasks[state.currentTaskIndex].name,
 		date: new Date(),
 		age: state.equipments[state.currentEquipmentIndex].age,
 		remarks: '',
@@ -52,7 +52,6 @@ class App extends Component {
 		super(props);
 
 		this.state = {
-			pos: undefined,
 			user: {},
 			loginErrors: undefined,
 
@@ -74,7 +73,6 @@ class App extends Component {
 			editedEquipment: undefined,
 			tasks:[],
 			currentTaskIndex: -1,
-			currentTask: undefined,
 			editedTask: createDefaultTask(),
 			
 			currentHistoryTask: [],
@@ -140,7 +138,7 @@ class App extends Component {
 		this.setState( (prevState, props) => {
 			return { 
 				modalEditTask: !prevState.modalEditTask,
-				editedTask: isCreationMode ? createDefaultTask(prevState) : prevState.currentTask
+				editedTask: isCreationMode ? createDefaultTask(prevState) : prevState.tasks[prevState.currentTaskIndex]
 			}
 		});
 	}
@@ -155,20 +153,6 @@ class App extends Component {
 		}
 	}
 
-	refreshPosition = () => {
-		// Try HTML5 geolocation.
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition((position) => {
-			  var pos = {
-				lat: position.coords.latitude,
-				lng: position.coords.longitude
-			  };
-			  this.setState( (prevState, props) => { return { pos: pos } });
-
-			});
-		}
-	}
-	
 	changeCurrentEquipment = async (newEquipmentIndex) => {
 		await this.setStateAsync((prevState, props) => { return { currentEquipmentIndex:newEquipmentIndex };});
 		await this.refreshTaskList();
@@ -280,7 +264,7 @@ class App extends Component {
 	}
 
 	changeCurrentTask = async (task) => {
-		if(task !== this.state.currentTask){
+		if(task !== this.state.tasks[this.state.currentTaskIndex]){
 			var newCurrentTaskIndex = this.state.tasks.findIndex((t, ind, tab) => t._id === task._id);
 			await this.changeCurrentTaskIndex(newCurrentTaskIndex);
 		}
@@ -297,7 +281,6 @@ class App extends Component {
 				return {
 					currentHistoryTask: [],
 					currentTaskIndex: -1,
-					currentTask: undefined
 				}; 
 			});
 			return;
@@ -315,7 +298,6 @@ class App extends Component {
 				return {
 					currentHistoryTask: entries,
 					currentTaskIndex: newTaskIndex,
-					currentTask: newCurrentTask
 				}; 
 			});
 		}
@@ -324,7 +306,6 @@ class App extends Component {
 				return {
 					currentHistoryTask: [],
 					currentTaskIndex: newTaskIndex,
-					currentTask: newCurrentTask
 				}; 
 			});
 			throw error;
@@ -340,10 +321,9 @@ class App extends Component {
 				
 				// store the new state object in the component's state
 				await this.setStateAsync((prevState, props) => {
-					var newCurrentTaskIndex = prevState.currentTask ? tasks.findIndex(task => task._id === prevState.currentTask._id) : 0;
+					var newCurrentTaskIndex = prevState.currentTaskIndex !== -1 ? tasks.findIndex(task => task._id === prevState.tasks[prevState.currentTaskIndex]._id) : 0;
 					return {
 						tasks: tasks,
-						currentTask: newCurrentTaskIndex === -1 ? undefined : tasks[newCurrentTaskIndex],
 						currentTaskIndex: newCurrentTaskIndex === -1 ? -1 : newCurrentTaskIndex
 					}
 				});
@@ -359,7 +339,7 @@ class App extends Component {
 
 	emptyTaskList = async () => {
 		await this.setStateAsync((prevState, props) => {
-			return { tasks: [], currentTask: undefined, currentTaskIndex: -1, currentHistoryTask: [] };
+			return { tasks: [], currentTaskIndex: -1, currentHistoryTask: [] };
 		});
 	}
 				
@@ -367,11 +347,11 @@ class App extends Component {
 	createOrSaveEntry = async (entryToSave) => {
 		let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
 		if(!entryToSave._id){
-			const {entry} = await EquipmentMonitorService.createEntry(currentEquipment._id, this.state.currentTask._id, entryToSave);
+			const {entry} = await EquipmentMonitorService.createEntry(currentEquipment._id, this.state.tasks[this.state.currentTaskIndex]._id, entryToSave);
 			await this.onNewEntry(entry);
 		}
 		else{
-			const {entry} = await EquipmentMonitorService.saveEntry(currentEquipment._id, this.state.currentTask._id, entryToSave);
+			const {entry} = await EquipmentMonitorService.saveEntry(currentEquipment._id, this.state.tasks[this.state.currentTaskIndex]._id, entryToSave);
 			await this.onNewEntry(entry)
 		}
 	}
@@ -398,7 +378,7 @@ class App extends Component {
 				yes: (async () => {
 					this.toggleModalYesNoConfirmation();
 					try{
-						await EquipmentMonitorService.deleteEntry(currentEquipment._id, this.state.currentTask._id, entryId);
+						await EquipmentMonitorService.deleteEntry(currentEquipment._id, this.state.tasks[this.state.currentTaskIndex]._id, entryId);
 						this.refreshTaskList();
 						this.setState((prevState, props) => {
 								return({ currentHistoryTask: prevState.currentHistoryTask.slice(0).filter(e => e._id !== entryId) });
@@ -423,7 +403,6 @@ class App extends Component {
 	}
 
 	async componentDidMount() {
-		this.refreshPosition();
 		await this.refreshCurrentUser();
 		await this.refreshEquipmentList();
 
@@ -439,7 +418,7 @@ class App extends Component {
 		return (
 			<CSSTransition in={true} appear={true} timeout={1000} classNames="fade">
 				<div id="root">
-					<NavBar position={this.state.pos} user={this.state.user} logout={this.logout} isOpened={this.state.navBar} toggle={this.toggleNavBar} />
+					<NavBar user={this.state.user} logout={this.logout} isOpened={this.state.navBar} toggle={this.toggleNavBar} />
 					<div className="d-flex flex-wrap flex-row mb-3">
 						<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
 							<EquipmentsInfo equipments={this.state.equipments}
@@ -453,7 +432,7 @@ class App extends Component {
 										classNames={panelClassNames}/>
 						</div>
 						<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
-							<CardTaskDetails 	task={this.state.currentTask} 
+							<CardTaskDetails 	task={this.state.tasks[this.state.currentTaskIndex]} 
 												toggleModal={() => this.toggleModalEditTask(false)} 
 												next={this.nextTask} 
 												prev={this.previousTask} 

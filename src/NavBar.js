@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +7,19 @@ import PropTypes from 'prop-types';
 
 import appmsg from "./App.messages";
 
-const NavBar = ({position, user, logout, isOpened, toggle}) => {
+const NavBar = ({user, logout, isOpened, toggle}) => {
+    const [position, setPosition] = useState(undefined);
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((navigatorPosition) => {
+          var pos = {
+            lat: navigatorPosition.coords.latitude,
+            lng: navigatorPosition.coords.longitude
+          };
+          setPosition( pos );
+        });
+    }
+
     const positionStr = position ? '(' + position.lng.toFixed(4) + ', ' + position.lat.toFixed(4) + ')':'';
     let navBrand = 'Equipment maintenance ' + positionStr;
         
@@ -36,7 +48,6 @@ const NavBar = ({position, user, logout, isOpened, toggle}) => {
 }
 
 NavBar.propTypes = {
-    position: PropTypes.object,
     user: PropTypes.object,
     logout: PropTypes.func.isRequired,
     toggle: PropTypes.func.isRequired,
