@@ -19,9 +19,15 @@ import './transition.css';
 const ModaSignup = ({visible, className, data, toggle}) => {
     const [signupErrors, setSignupErrors] = useState(undefined);
 
+    const cancel = () => {
+        setSignupErrors(undefined);
+		toggle();
+    }
+
     const handleSubmit = async(newuser) => {
         try{
-			await EquipmentMonitorService.signup(newuser);
+            await EquipmentMonitorService.signup(newuser);
+            setSignupErrors(undefined);
 			toggle();
 		}
 		catch(errors){
@@ -45,8 +51,8 @@ const ModaSignup = ({visible, className, data, toggle}) => {
 
 	return (
 		<CSSTransition in={visible} timeout={300} classNames="modal">
-			<Modal isOpen={visible} toggle={toggle} className={className} fade={false}>
-				<ModalHeader toggle={toggle}><FontAwesomeIcon icon={faUserPlus} />{' '}<FormattedMessage {...loginmsg.modalSignupTitle} /></ModalHeader>
+			<Modal isOpen={visible} toggle={cancel} className={className} fade={false}>
+				<ModalHeader toggle={cancel}><FontAwesomeIcon icon={faUserPlus} />{' '}<FormattedMessage {...loginmsg.modalSignupTitle} /></ModalHeader>
 				<ModalBody>
 				    {visible && <MyForm submit={handleSubmit} id="formSignup" initialData={data}>
                         <MyInput name="name" 		label={loginmsg.name} 		type="text"     required/>
@@ -58,7 +64,7 @@ const ModaSignup = ({visible, className, data, toggle}) => {
 				</ModalBody>
 				<ModalFooter>
 					<Button type="submit" form="formSignup" color="success"><FormattedMessage {...loginmsg.signup} /></Button>
-                    <Button color="secondary" onClick={toggle}><FormattedMessage {...loginmsg.cancel} /></Button>
+                    <Button color="secondary" onClick={cancel}><FormattedMessage {...loginmsg.cancel} /></Button>
 				</ModalFooter>
 			</Modal>
 		</CSSTransition>
