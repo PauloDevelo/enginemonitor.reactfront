@@ -42,8 +42,6 @@
 	"modalAckTitle": "Task acknowledgement",
 	"yes": "Yes",
 	"no": "No",
-	"defaultTitle": "",
-	"defaultMsg": "",
 	"taskDeleteTitle": "Delete task",
 	"taskDeleteMsg": "Are you sure you want to delete this task?",
 	"entryDeleteTitle": "Delete entry",

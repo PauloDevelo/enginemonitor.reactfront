@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import appmsg from "../App/App.messages";
+import navBarMsg from "./NavBar.messages";
 
 const NavBar = ({user, logout, isOpened, toggle}) => {
     const [position, setPosition] = useState(undefined);
@@ -37,7 +37,7 @@ const NavBar = ({user, logout, isOpened, toggle}) => {
                         </DropdownToggle>
                         <DropdownMenu right>
                             <DropdownItem onClick={logout}>
-                            <FontAwesomeIcon icon={faSignOutAlt} />{' '}<FormattedMessage {...appmsg.signout} />
+                            <FontAwesomeIcon icon={faSignOutAlt} />{' '}<FormattedMessage {...navBarMsg.signout} />
                             </DropdownItem>
                         </DropdownMenu>
                     </UncontrolledDropdown>
