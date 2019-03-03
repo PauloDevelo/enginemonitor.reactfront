@@ -1,7 +1,7 @@
 import  React, {useState, useEffect } from 'react';
 import { Table, Button } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
-import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
+import { faCheckSquare, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import EntryRow from './EntryRow';
+import Loading from '../Loading/Loading'
 
 import { createDefaultEntry } from '../../helpers/EntryHelper'
 
@@ -22,17 +23,29 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
     const [editEntryModalVisibility, setEditEntryModalVisibility] = useState(false);
     const [editedEntry, setEditedEntry] = useState(undefined);
     const [taskHistory, setTaskHistory] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
 
     const toggleEditEntryModal = () => {
         setEditEntryModalVisibility(!editEntryModalVisibility);
     }
 
     const fetchEntries = async() => {
-        let entries = [];
-        if(equipment && task){
-            entries = await EquipmentMonitorService.refreshHistoryTask(equipment._id, task._id);
+        setIsError(false);
+        setIsLoading(true);
+
+        try{
+            let entries = [];
+            if(equipment && task){
+                entries = await EquipmentMonitorService.refreshHistoryTask(equipment._id, task._id);
+            }
+            setTaskHistory(entries);
         }
-        setTaskHistory(entries);
+        catch(error){
+            setIsError(true);
+        }
+
+        setIsLoading(false);
     }
 
     useEffect(() => {
@@ -86,6 +99,7 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
 
     return(
         <div className={classNames}>
+
             <span className="mb-2">
                 <Button color="success" size="sm" className="float-right mb-2" onClick={() => {
                     setEditedEntry(createDefaultEntry(equipment, task));
@@ -94,7 +108,9 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
                     <FontAwesomeIcon icon={faCheckSquare} />
                 </Button>
             </span>
-            <Table responsive size="sm" hover striped>
+            {isError && <div><FontAwesomeIcon icon={faExclamationTriangle} color="red"/><FormattedMessage {...taskTableMsg.errorFetching} /></div>}
+            {isLoading ? !isError && <Loading/> :
+            !isError && <Table responsive size="sm" hover striped>
                 <thead className="thead-light">
                     <tr>
                         <th><FormattedMessage {...taskTableMsg.ackDate} /></th>
@@ -106,6 +122,8 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
                     {history}
                 </TransitionGroup>
             </Table>
+            }
+            
 
             <ModalEditEntry visible={editEntryModalVisibility}
                 saveEntry={createOrSaveEntry} 
