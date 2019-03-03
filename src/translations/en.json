@@ -56,5 +56,6 @@
 	"firstname": "Firstname",
 	"modalSignupTitle": "Signup",
 	"alreadyexisting": "already exist",
-	"isrequired": "is required"
+	"isrequired": "is required",
+	"signup": "Signup"
 }

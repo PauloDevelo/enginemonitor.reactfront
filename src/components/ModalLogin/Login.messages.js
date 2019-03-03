@@ -55,7 +55,7 @@ const messages: Messages = {
     signup: {
 		id: "signup",
         defaultMessage: "Signup",
-		description: "Button cancel"
+		description: "Button signup"
     },
     alreadyexisting: {
         id: "alreadyexisting",
