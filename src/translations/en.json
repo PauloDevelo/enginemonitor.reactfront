@@ -57,5 +57,6 @@
 	"modalSignupTitle": "Signup",
 	"alreadyexisting": "already exist",
 	"isrequired": "is required",
-	"signup": "Signup"
+	"signup": "Signup",
+	"errorFetching": "Something went wrong ..."
 }

@@ -2,6 +2,11 @@ import {defineMessages} from "react-intl";
 import {type Messages} from "./MessageDescriptor"
 
 const messages: Messages = {
+  errorFetching: {
+    id: "errorFetching",
+    defaultMessage: "Something went wrong ...",
+		description: "Error message"
+  },
 	tasklistTitle: {
     id: "tasklistTitle",
     defaultMessage: "Task list",
