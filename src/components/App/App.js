@@ -196,7 +196,7 @@ class App extends Component {
 		if(this.state.currentEquipmentIndex !== -1){
 			let currentEquipment = getCurrentEquipment(this.state);
 			try{
-				const tasks = await EquipmentMonitorService.refreshTaskList(currentEquipment._id);
+				const tasks = await EquipmentMonitorService.fetchTasks(currentEquipment._id);
 
 				// store the new state object in the component's state
 				await this.setStateAsync((prevState, props) => {
