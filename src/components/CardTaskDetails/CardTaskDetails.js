@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Card, CardBody, CardTitle, CardSubtitle, CardFooter, CardText, Badge } from 'reactstrap';
-import { faEdit, faCheckSquare } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import PropTypes from 'prop-types';
@@ -22,7 +22,7 @@ function getBadgeText(level){
 	}
 }
 
-const CardTaskDetails = ({task, next, prev, toggleModal, nextVisibility, prevVisibility, toggleAckModal, classNames}) => {
+const CardTaskDetails = ({task, next, prev, toggleModal, nextVisibility, prevVisibility, classNames}) => {
     if (task === undefined){
         return <Card className={classNames}/>;
     }
@@ -47,36 +47,34 @@ const CardTaskDetails = ({task, next, prev, toggleModal, nextVisibility, prevVis
         nextClassNames += ' invisible';
 
     return(
-                <Card className={classNames}>        
-                    <CardBody className="d-flex p-0">
-                            <div className="p-2" onClick={prev} style={cursorPointerStyle}><div className={prevClassNames}></div></div>
-                                <TransitionGroup className="p-2 flex-grow-1">
-                                    <CSSTransition key={task._id} timeout={250} classNames="card" >
-                                        <div >
-                                            <CardTitle>{task.name} <Badge color={badgeContext} pill>{badgeText}</Badge></CardTitle>
-                                            <CardSubtitle>{title}</CardSubtitle>
-                                            <CardText dangerouslySetInnerHTML={{ __html: descriptionFormatted }}></CardText>
-                                        </div>
-                                    </CSSTransition>
-                                </TransitionGroup>
-                            <div className="p-2" onClick={next} style={cursorPointerStyle}><div className={nextClassNames}></div></div>
-                    </CardBody>
-                    <CardFooter className='pl-5 pr-5'>
-                        <Button color='light' className='float-left' onClick={toggleModal}><FontAwesomeIcon icon={faEdit} /></Button>
-                        <Button color='success' className='float-right' onClick={toggleAckModal}><FontAwesomeIcon icon={faCheckSquare} size="lg"/></Button>
-                    </CardFooter>
-                </Card>
+        <Card className={classNames}>        
+            <CardBody className="d-flex p-0">
+                    <div className="p-2" onClick={prev} style={cursorPointerStyle}><div className={prevClassNames}></div></div>
+                        <TransitionGroup className="p-2 flex-grow-1">
+                            <CSSTransition key={task._id} timeout={250} classNames="card" >
+                                <div >
+                                    <CardTitle>{task.name} <Badge color={badgeContext} pill>{badgeText}</Badge></CardTitle>
+                                    <CardSubtitle>{title}</CardSubtitle>
+                                    <CardText dangerouslySetInnerHTML={{ __html: descriptionFormatted }}></CardText>
+                                </div>
+                            </CSSTransition>
+                        </TransitionGroup>
+                    <div className="p-2" onClick={next} style={cursorPointerStyle}><div className={nextClassNames}></div></div>
+            </CardBody>
+            <CardFooter className='pl-5 pr-5'>
+                <Button color='light' className='float-left' onClick={toggleModal}><FontAwesomeIcon icon={faEdit} /></Button>
+            </CardFooter>
+        </Card>
     );
 }
 
 CardTaskDetails.propTypes = {
-    toggleModal: PropTypes.func.isRequired,
-    next: PropTypes.func.isRequired,
-    nextVisibility: PropTypes.bool.isRequired,
-    prev: PropTypes.func.isRequired,
-    prevVisibility: PropTypes.bool.isRequired,
     task: PropTypes.object,
-    toggleAckModal: PropTypes.func.isRequired,
+    next: PropTypes.func.isRequired,
+    prev: PropTypes.func.isRequired,
+    toggleModal: PropTypes.func.isRequired,
+    nextVisibility: PropTypes.bool.isRequired,
+    prevVisibility: PropTypes.bool.isRequired,
     classNames: PropTypes.string
 };
 

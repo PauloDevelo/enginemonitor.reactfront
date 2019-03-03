@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group'
 
-import editentrymsg from "./ModalEditEntry.messages";
+import editEntryMsg from "./ModalEditEntry.messages";
 
 import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation'
 import MyForm from "../Form/MyForm"
@@ -14,9 +14,7 @@ import MyInput from "../Form/MyInput"
 import Alerts from "../Alerts/Alerts"
 import HttpError from '../../http/HttpError'
 
-import '../../style/transition.css';
-
-const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEntry }) => {
+const ModalEditEntry = ({ entry, visible, className, saveEntry, deleteEntry, toggle }) => {
 	const [alerts, setAlerts] = useState(undefined);
 	const [yesNoModalVisibility, setYesNoModalVisibility] = useState(false);
 
@@ -57,14 +55,15 @@ const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEn
                 setAlerts(error.data);
 			}
 		}
+		toggleModalYesNoConfirmation();
 	}
 
 	let title = undefined;
-	if (entry._id === undefined){
-		title = <FormattedMessage {...editentrymsg.modalAckTitle} />
+	if (entry === undefined || entry._id === undefined){
+		title = <FormattedMessage {...editEntryMsg.modalAckTitle} />
 	}
 	else{
-		title = <FormattedMessage {...editentrymsg.modalEditEntryTitle} />
+		title = <FormattedMessage {...editEntryMsg.modalEditEntryTitle} />
 	}
 
 	return (
@@ -76,24 +75,24 @@ const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEn
 					<MyForm id="createTaskForm" 
 						submit={handleSubmit} 
 						initialData={entry}>
-						<MyInput name="name" 	label={editentrymsg.name} 	    type="text" 	required/>
-						<MyInput name="date" label={editentrymsg.date}       type="date" 	required/>
-						<MyInput name="age" 	label={editentrymsg.age} 	type="number" 	min={0} required/>
-						<MyInput name="remarks" label={editentrymsg.remarks}    type="textarea" required />
+						<MyInput name="name" 	label={editEntryMsg.name} 	    type="text" 	required/>
+						<MyInput name="date" label={editEntryMsg.date}       type="date" 	required/>
+						<MyInput name="age" 	label={editEntryMsg.age} 	type="number" 	min={0} required/>
+						<MyInput name="remarks" label={editEntryMsg.remarks}    type="textarea" required />
 					</MyForm>}
 					<Alerts errors={alerts}/>
 				</ModalBody>
 				<ModalFooter>
-					<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...editentrymsg.save} /></Button>
-					<Button color="secondary" onClick={cancel}><FormattedMessage {...editentrymsg.cancel} /></Button>
-					{entry._id && <Button color="danger" onClick={handleDelete}><FormattedMessage {...editentrymsg.delete} /></Button>}
+					<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...editEntryMsg.save} /></Button>
+					<Button color="secondary" onClick={cancel}><FormattedMessage {...editEntryMsg.cancel} /></Button>
+					{entry && entry._id && <Button color="danger" onClick={handleDelete}><FormattedMessage {...editEntryMsg.delete} /></Button>}
 				</ModalFooter>
 				<ModalYesNoConfirmation visible={yesNoModalVisibility}
 						toggle={toggleModalYesNoConfirmation}
 						yes={yesDeleteEntry}
 						no={toggleModalYesNoConfirmation}
-						title={editentrymsg.entryDeleteTitle}
-						message={editentrymsg.entryDeleteMsg} 
+						title={editEntryMsg.entryDeleteTitle}
+						message={editEntryMsg.entryDeleteMsg} 
 						className='modal-dialog-centered'
 					/>
 			</Modal>
@@ -102,12 +101,12 @@ const ModalEditEntry = ({ entry, visible, toggle, className, saveEntry, deleteEn
 }
 
 ModalEditEntry.propTypes = {
-	entry: PropTypes.object.isRequired,
+	entry: PropTypes.object,
 	visible: PropTypes.bool.isRequired,
-	toggle: PropTypes.func.isRequired,
 	saveEntry: PropTypes.func.isRequired,
 	deleteEntry: PropTypes.func.isRequired,
-	className: PropTypes.string
+	className: PropTypes.string,
+	toggle: PropTypes.func
 };
 
 export default ModalEditEntry;

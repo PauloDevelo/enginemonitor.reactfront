@@ -1,37 +1,83 @@
-import React from 'react';
-import { Table } from 'reactstrap';
-import { FormattedMessage, FormattedDate } from 'react-intl';
+import  React, {useState, useEffect } from 'react';
+import { Table, Button } from 'reactstrap';
+import { FormattedMessage } from 'react-intl';
+import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import PropTypes from 'prop-types';
-import tasktablemsg from "../TaskTable/TaskTable.messages";
-import { shorten } from '../../helpers/TaskHelper'; 
+
+import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
+import EntryRow from './EntryRow';
+
+import { createDefaultEntry } from '../../helpers/EntryHelper'
+
+import taskTableMsg from "../TaskTable/TaskTable.messages";
 
 import './HistoryTaskTable.css';
 import '../../style/transition.css';
 
-const TaskRow = ({entry, onClick}) => {
-    var remarks = entry.remarks.replace(/\n/g, '<br />');
-    var shortenRemarks = shorten(remarks);
-    var ageStr = entry.age === -1?"":entry.age + 'h';
-    var entryDate = new Date(entry.date)
+const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
+    const [editEntryModalVisibility, setEditEntryModalVisibility] = useState(false);
+    const [editedEntry, setEditedEntry] = useState(undefined);
+    const [taskHistory, setTaskHistory] = useState([]);
 
-    return(
-        <tr className='small clickable' onClick={() => onClick()}>
-            <td><FormattedDate value={entryDate} /></td>
-            <td>{ageStr}</td>
-            <td dangerouslySetInnerHTML={{ __html: shortenRemarks }}></td>
-        </tr>
-    );
-}
+    const toggleEditEntryModal = () => {
+        setEditEntryModalVisibility(!editEntryModalVisibility);
+    }
 
-export default function HistoryTaskTable({taskHistory, toggleEntryModal, classNames}){
-    var history = [];
-    if(taskHistory){
-        
+    const fetchEntries = async() => {
+        let entries = [];
+        if(equipment && task){
+            entries = await EquipmentMonitorService.refreshHistoryTask(equipment._id, task._id);
+        }
+        setTaskHistory(entries);
+    }
+
+    useEffect(() => {
+        fetchEntries();
+    }, [task]);
+
+    const createOrSaveEntry = async (entryToSave) => {
+        if(equipment && task){
+            const savedEntry = await EquipmentMonitorService.createOrSaveEntry(equipment._id, task._id, entryToSave);
+            
+            const newCurrentHistoryTask = taskHistory.filter(entry => entry._id !== savedEntry._id);
+            newCurrentHistoryTask.unshift(savedEntry);
+            newCurrentHistoryTask.sort((entrya, entryb) => { return entrya.date - entryb.date; });
+
+            changeCurrentHistory(newCurrentHistoryTask);
+        }
+	}
+	
+	const deleteEntry = async(entryId) => {
+        if(equipment && task){
+            await EquipmentMonitorService.deleteEntry(equipment._id, task._id, entryId);
+            
+            var newCurrentHistoryTask = taskHistory.slice(0).filter(e => e._id !== entryId);
+
+            changeCurrentHistory(newCurrentHistoryTask);
+        }
+    }
+    
+    const changeCurrentHistory = (newCurrentHistoryTask) => {
+        setTaskHistory(newCurrentHistoryTask);
+
+        if(onHistoryChanged){
+            onHistoryChanged(newCurrentHistoryTask);
+        }
+    }
+
+    let history = [];
+    if(taskHistory && taskHistory.length > 0){
         history = taskHistory.map(entry => {
         return(
             <CSSTransition key={entry._id} in={true} timeout={500} classNames="tr">
-                <TaskRow entry={entry} onClick={() => toggleEntryModal(false, entry)}/>
+                <EntryRow entry={entry} onClick={() => {
+                    setEditedEntry(entry);
+                    setEditEntryModalVisibility(true);
+                }}/>
             </CSSTransition>
             )}
         );
@@ -40,24 +86,43 @@ export default function HistoryTaskTable({taskHistory, toggleEntryModal, classNa
 
     return(
         <div className={classNames}>
+            <span className="mb-2">
+                <Button color="success" size="sm" className="float-right mb-2" onClick={() => {
+                    setEditedEntry(createDefaultEntry(equipment, task));
+                    setEditEntryModalVisibility(true);
+                }}>
+                    <FontAwesomeIcon icon={faCheckSquare} />
+                </Button>
+            </span>
             <Table responsive size="sm" hover striped>
                 <thead className="thead-light">
                     <tr>
-                        <th><FormattedMessage {...tasktablemsg.ackDate} /></th>
-                        <th><FormattedMessage {...tasktablemsg.age} /></th>
-                        <th><FormattedMessage {...tasktablemsg.remarks} /></th>
+                        <th><FormattedMessage {...taskTableMsg.ackDate} /></th>
+                        <th><FormattedMessage {...taskTableMsg.age} /></th>
+                        <th><FormattedMessage {...taskTableMsg.remarks} /></th>
                     </tr>
                 </thead>
                 <TransitionGroup component="tbody">
                     {history}
                 </TransitionGroup>
             </Table>
+
+            <ModalEditEntry visible={editEntryModalVisibility}
+                saveEntry={createOrSaveEntry} 
+                deleteEntry={deleteEntry}
+                entry={editedEntry}
+                className='modal-dialog-centered'
+                toggle={toggleEditEntryModal}
+            />
         </div>
     );
 }
 
 HistoryTaskTable.propTypes = {
-    taskHistory: PropTypes.array.isRequired,
-    toggleEntryModal: PropTypes.func.isRequired,
-    classNames: PropTypes.string
+    equipment: PropTypes.object,
+    task: PropTypes.object,
+    classNames: PropTypes.string,
+    onHistoryChanged: PropTypes.func,
 };
+
+export default HistoryTaskTable;

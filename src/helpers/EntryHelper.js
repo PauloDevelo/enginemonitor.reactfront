@@ -1,11 +1,8 @@
-import { getCurrentTask } from './TaskHelper'
-import { getCurrentEquipment } from './EquipmentHelper'
-
-export function createDefaultEntry(state){
+export function createDefaultEntry(equipment, task){
 	return {
-		name: getCurrentTask(state).name,
+		name: task?task.name:"",
 		date: new Date(),
-		age: getCurrentEquipment(state).age,
+		age: equipment?equipment.age:0,
 		remarks: '',
 	}
 }

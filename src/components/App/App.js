@@ -7,14 +7,12 @@ import TaskTable from '../TaskTable/TaskTable';
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
 import HistoryTaskTable from '../HistoryTaskTable/HistoryTaskTable'
 import CardTaskDetails from '../CardTaskDetails/CardTaskDetails'
-import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import ModalLogin from '../ModalLogin/ModalLogin';
 import ModalSignup from '../ModalSignup/ModalSignup';
 import NavBar from '../NavBar/NavBar';
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 import { createDefaultTask, getCurrentTask } from '../../helpers/TaskHelper'
 import { createDefaultEquipment, getCurrentEquipment } from '../../helpers/EquipmentHelper'
-import { createDefaultEntry } from '../../helpers/EntryHelper'
 
 import '../../style/transition.css';
 
@@ -28,7 +26,6 @@ class App extends Component {
 
 			modalEquipmentInfo: false,
 			modalEditTask: false,
-			modalEditEntry: false,
 			modalSignup: false,
 			navBar: true,
 
@@ -39,9 +36,6 @@ class App extends Component {
 			tasks:[],
 			currentTaskIndex: -1,
 			editedTask: createDefaultTask(),
-			
-			currentHistoryTask: [],
-			editedEntry:{ name: '', date: new Date(), age: '', remarks: '' }
 		};
 	}
 
@@ -63,20 +57,6 @@ class App extends Component {
 	toggleNavBar = () => this.setState((prevState, props) => {return { navBar: !prevState.navBar }});
 
 	toggleModalSignup = () => this.setState((prevState, props) => {return { modalSignup: !prevState.modalSignup }});
-
-	toggleModalEditEntry = (isCreationMode, entry) => {
-    	this.setState((prevState, props) => { 
-			var newState = { 
-				modalEditEntry: !prevState.modalEditEntry
-			 }; 
-
-			 if(isCreationMode !== undefined){
-				newState.editedEntry = isCreationMode?createDefaultEntry(prevState):entry
-			 }
-
-			 return newState
-		});
-  	}
 	
 	toggleModalEquipmentInfo = (isCreationMode) => {
 		this.setState((prevState, props) => {
@@ -199,20 +179,15 @@ class App extends Component {
 		}
 
 		if (newTaskIndex === -1){
-			await this.setStateAsync({ currentHistoryTask: [], currentTaskIndex: -1 });
+			await this.setStateAsync({ currentTaskIndex: -1 });
 			return;
 		}
 
-		let currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
-		var newCurrentTask = this.state.tasks[newTaskIndex];
-		var newCurrentTaskId = newCurrentTask._id;
-
 		try{
-			const entries = await EquipmentMonitorService.refreshHistoryTask(currentEquipment._id, newCurrentTaskId);
-			await this.setStateAsync({ currentHistoryTask: entries, currentTaskIndex: newTaskIndex });
+			await this.setStateAsync({ currentTaskIndex: newTaskIndex });
 		}
 		catch(error){
-			await this.setStateAsync({ currentHistoryTask: [], currentTaskIndex: newTaskIndex });
+			await this.setStateAsync({ currentTaskIndex: newTaskIndex });
 			throw error;
 		}
 	}
@@ -249,31 +224,8 @@ class App extends Component {
 	}
 
 	emptyTaskList = async () => {
-		await this.setStateAsync({ tasks: [], currentTaskIndex: -1, currentHistoryTask: [] });
+		await this.setStateAsync({ tasks: [], currentTaskIndex: -1 });
 	}		
-
-	createOrSaveEntry = async (entryToSave) => {
-		let currentEquipment = getCurrentEquipment(this.state);
-		let savedEntry = await EquipmentMonitorService.createOrSaveEntry(currentEquipment._id, getCurrentTask(this.state)._id, entryToSave);
-		
-		await this.setStateAsync((prevState, props) => {
-			var newCurrentHistoryTask = prevState.currentHistoryTask.filter(entry => entry._id !== savedEntry._id);
-			newCurrentHistoryTask.unshift(savedEntry);
-			newCurrentHistoryTask.sort((entrya, entryb) => { return entrya.date - entryb.date; });
-
-			return { currentHistoryTask: newCurrentHistoryTask };
-		});
-
-		this.refreshTaskList();
-	}
-	
-	deleteEntry = async(entryId) => {
-		await EquipmentMonitorService.deleteEntry(getCurrentEquipment(this.state)._id, getCurrentTask(this.state)._id, entryId);
-		this.refreshTaskList();
-		this.setState((prevState, props) => {
-			return({ currentHistoryTask: prevState.currentHistoryTask.slice(0).filter(e => e._id !== entryId) });
-		});
-	}
 
 	async componentDidMount() {
 		await this.refreshCurrentUser();
@@ -311,10 +263,10 @@ class App extends Component {
 												prev={this.previousTask} 
 												prevVisibility={prevVisibility} 
 												nextVisibility={nextVisibility} 
-												toggleAckModal={()=>this.toggleModalEditEntry(true)}
 												classNames={panelClassNames}/>
-							<HistoryTaskTable 	taskHistory={this.state.currentHistoryTask} 
-												toggleEntryModal={this.toggleModalEditEntry}
+							<HistoryTaskTable 	equipment={getCurrentEquipment(this.state)}
+												task={getCurrentTask(this.state)}
+												onHistoryChanged={() => this.refreshTaskList()}
 												classNames={panelClassNames}/>
 						</div>
 					</div>
@@ -332,13 +284,7 @@ class App extends Component {
 						task={this.state.editedTask}
 						className='modal-dialog-centered'
 					/>
-					<ModalEditEntry visible={this.state.modalEditEntry}
-						toggle={this.toggleModalEditEntry} 
-						saveEntry={this.createOrSaveEntry} 
-						deleteEntry={this.deleteEntry}
-						entry={this.state.editedEntry}
-						className='modal-dialog-centered'
-					/>
+					
 					<ModalLogin visible={this.state.user === undefined && EquipmentMonitorService.mode === 'auth'} 
 						login={this.login}
 						data={{ email: '', password: ''}} 

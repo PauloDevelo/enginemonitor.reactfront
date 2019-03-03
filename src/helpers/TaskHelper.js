@@ -13,7 +13,12 @@ export function createDefaultTask(){
 }
 
 export function getCurrentTask(state){
-	return state.tasks[state.currentTaskIndex];
+    if(state.tasks){
+        return state.tasks[state.currentTaskIndex];
+    }
+	else{
+        return undefined;
+    }
 }
 
 export function getContext(level){
