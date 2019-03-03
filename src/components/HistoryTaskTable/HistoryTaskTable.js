@@ -37,7 +37,7 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
         try{
             let entries = [];
             if(equipment && task){
-                entries = await EquipmentMonitorService.refreshHistoryTask(equipment._id, task._id);
+                entries = await EquipmentMonitorService.fetchEntries(equipment._id, task._id);
             }
             setTaskHistory(entries);
         }

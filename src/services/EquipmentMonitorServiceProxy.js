@@ -63,13 +63,13 @@ class EquipmentMonitorServiceProxy{
         this.config = undefined;
     }
 
-    refreshCurrentUser = async() => {
+    fetchCurrentUser = async() => {
         const {user} = await this.get(this.baseUrl + "users/current");
         return user;
     }
 
     ////////////////Equipment////////////////////////
-    getEquipments = async() => {
+    fetchEquipments = async() => {
         const {equipments} = await this.get(this.baseUrl + "equipments");
         equipments.forEach((equipment) => updateEquipment(equipment));
         return equipments;
@@ -86,7 +86,7 @@ class EquipmentMonitorServiceProxy{
         }
     }
 
-    refreshEquipmentInfo = async (idEquipment) =>{
+    fetchEquipmentInfo = async (idEquipment) =>{
         const {equipment} = await this.get(this.baseUrl + "equipments/" + idEquipment);
         return this.updateEquipment(equipment);
     } 
@@ -108,7 +108,7 @@ class EquipmentMonitorServiceProxy{
         return updateTask(task);
     }
 
-    refreshTaskList = async(equipmentId, complete, fail) => {
+    fetchTasks = async(equipmentId, complete, fail) => {
         const { tasks } = await this.get(this.baseUrl + "tasks/" + equipmentId);
         tasks.forEach(task => updateTask(task));
         return tasks;
@@ -132,7 +132,7 @@ class EquipmentMonitorServiceProxy{
         return updateEntry(entry)
     }
 
-    refreshHistoryTask = async(equipmentId, taskid) => {
+    fetchEntries = async(equipmentId, taskid) => {
         const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId + '/' + taskid);
         entries.forEach(entry => updateEntry(entry) );
         return entries;

@@ -81,7 +81,7 @@ class App extends Component {
 	
 	refreshCurrentUser = async () => {
 		try{
-			const user = await EquipmentMonitorService.refreshCurrentUser();
+			const user = await EquipmentMonitorService.fetchCurrentUser();
 			this.setState({ user:user });
 		}
 		catch(error){
@@ -119,7 +119,7 @@ class App extends Component {
 
 	refreshEquipmentList = async () => {
 		try{
-			const equipments = await EquipmentMonitorService.getEquipments();
+			const equipments = await EquipmentMonitorService.fetchEquipments();
 			await this.setStateAsync({ equipments:equipments });
 
 			if(this.state.currentEquipmentIndex === -1 && this.state.equipments.length > 0)
