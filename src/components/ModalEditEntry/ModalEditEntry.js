@@ -8,13 +8,15 @@ import { CSSTransition } from 'react-transition-group'
 
 import editEntryMsg from "./ModalEditEntry.messages";
 
+import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+
 import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation'
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
 import Alerts from "../Alerts/Alerts"
 import HttpError from '../../http/HttpError'
 
-const ModalEditEntry = ({ entry, visible, className, saveEntry, deleteEntry, toggle }) => {
+const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry, deleteEntry, toggle }) => {
 	const [alerts, setAlerts] = useState(undefined);
 	const [yesNoModalVisibility, setYesNoModalVisibility] = useState(false);
 
@@ -29,7 +31,9 @@ const ModalEditEntry = ({ entry, visible, className, saveEntry, deleteEntry, tog
 
 	const handleSubmit = async (formData) => {
 		try{
-			await saveEntry(formData);
+			const savedEntry = await EquipmentMonitorService.createOrSaveEntry(equipment._id, task._id, formData);
+            
+			saveEntry(savedEntry);
 			setAlerts(undefined);
 			toggle();
 		}
@@ -44,8 +48,9 @@ const ModalEditEntry = ({ entry, visible, className, saveEntry, deleteEntry, tog
 		setYesNoModalVisibility(true);
 	}
 
-	const yesDeleteEntry = () => {
+	const yesDeleteEntry = async () => {
 		try{
+			await EquipmentMonitorService.deleteEntry(equipment._id, task._id, entry._id);
 			deleteEntry(entry._id);
 			setAlerts(undefined);
 			toggle();
@@ -101,6 +106,8 @@ const ModalEditEntry = ({ entry, visible, className, saveEntry, deleteEntry, tog
 }
 
 ModalEditEntry.propTypes = {
+	equipment: PropTypes.object,
+	task: PropTypes.object,
 	entry: PropTypes.object,
 	visible: PropTypes.bool.isRequired,
 	saveEntry: PropTypes.func.isRequired,

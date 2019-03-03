@@ -1,4 +1,4 @@
-import  React, {useState, useEffect } from 'react';
+import  React, { useState, useEffect } from 'react';
 import { Table, Button } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { faCheckSquare, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
@@ -52,26 +52,18 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
         fetchEntries();
     }, [task]);
 
-    const createOrSaveEntry = async (entryToSave) => {
-        if(equipment && task){
-            const savedEntry = await EquipmentMonitorService.createOrSaveEntry(equipment._id, task._id, entryToSave);
-            
+    const onSavedEntry = (savedEntry) => {
             const newCurrentHistoryTask = taskHistory.filter(entry => entry._id !== savedEntry._id);
             newCurrentHistoryTask.unshift(savedEntry);
             newCurrentHistoryTask.sort((entrya, entryb) => { return entrya.date - entryb.date; });
 
             changeCurrentHistory(newCurrentHistoryTask);
-        }
 	}
 	
-	const deleteEntry = async(entryId) => {
-        if(equipment && task){
-            await EquipmentMonitorService.deleteEntry(equipment._id, task._id, entryId);
-            
+	const onDeleteEntry = async(entryId) => {  
             var newCurrentHistoryTask = taskHistory.slice(0).filter(e => e._id !== entryId);
 
             changeCurrentHistory(newCurrentHistoryTask);
-        }
     }
     
     const changeCurrentHistory = (newCurrentHistoryTask) => {
@@ -125,12 +117,15 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
             }
             
 
-            <ModalEditEntry visible={editEntryModalVisibility}
-                saveEntry={createOrSaveEntry} 
-                deleteEntry={deleteEntry}
+            <ModalEditEntry 
+                equipment={equipment}
+                task={task}
                 entry={editedEntry}
-                className='modal-dialog-centered'
+                saveEntry={onSavedEntry} 
+                deleteEntry={onDeleteEntry}
+                visible={editEntryModalVisibility}
                 toggle={toggleEditEntryModal}
+                className='modal-dialog-centered'
             />
         </div>
     );
