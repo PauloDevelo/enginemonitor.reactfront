@@ -42,7 +42,7 @@
 	"modalAckTitle": "Acquittement d'une tache",
 	"yes": "Oui",
 	"no": "Non",
-	"taskDeletionTitle": "Suppression d'une tache",
+	"taskDeleteTitle": "Suppression d'une tache",
 	"taskDeleteMsg": "Etes vous sure de vouloir supprimer cette tache et son historique ?",
 	"entryDeleteTitle": "Suppression d'une entrée",
 	"entryDeleteMsg": "Etes vous sure de vouloir supprimer cette entrée ?",
