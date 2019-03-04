@@ -5,49 +5,34 @@ import { faTasks, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import PropTypes from 'prop-types';
-import tasktablemsg from "./TaskTable.messages";
-import { getContext, getTodoText, shorten } from '../../helpers/TaskHelper'; 
 
-const getTrContext = (level) => "table-" + getContext(level)
+import TaskRow from './TaskRow';
 
-const TaskLine = ({task, trStyle, onClick}) => {
-	var shortenDescription = shorten(task.description.replace(/\n/g,'<br />'));
-	var todoText = getTodoText(task)		
-	var classNames = getTrContext(task.level) + " small";
-		
-	return(
-		<tr style={trStyle} className={classNames} onClick={() => onClick() }>
-			<td>{task.name}</td>
-			<td>{todoText}</td>
-			<td><div dangerouslySetInnerHTML={{ __html: shortenDescription }} /></td>
-		</tr>
-	);
-}
+import taskTableMsg from "./TaskTable.messages";
 
 export const TaskTable = ({tasks, changeCurrentTask, toggleModal, classNames}) => {
 	var listLines = [];
-	
 	if(tasks){
 		const trStyle = { cursor: 'pointer' };
-	listLines = tasks.map((task) => {
-		return(
-			<CSSTransition key={task._id} in={true} timeout={500} classNames="tr">
-				<TaskLine task={task} trStyle={trStyle} onClick={() => changeCurrentTask(task) } />
-			</CSSTransition>
-		);
-	});
+		listLines = tasks.map((task) => {
+			return(
+				<CSSTransition key={task._id} in={true} timeout={500} classNames="tr">
+					<TaskRow task={task} trStyle={trStyle} onClick={() => changeCurrentTask(task) } />
+				</CSSTransition>
+			);
+		});
 	}
 
 	return (
 		<div className={classNames}>
-			<span className="mb-2"><FontAwesomeIcon icon={faTasks} />{' '}<b><FormattedMessage {...tasktablemsg.tasklistTitle} /></b>
+			<span className="mb-2"><FontAwesomeIcon icon={faTasks} />{' '}<b><FormattedMessage {...taskTableMsg.tasklistTitle} /></b>
 			<Button color="light" size="sm" className="float-right mb-2" onClick={() => toggleModal() }><FontAwesomeIcon icon={faPlusSquare} /></Button></span>
 			<Table responsive size="sm" hover>
 				<thead className="thead-light">
 					<tr>
-						<th><FormattedMessage {...tasktablemsg.taskname} /></th>
-						<th><FormattedMessage {...tasktablemsg.todo} /></th>
-						<th><FormattedMessage {...tasktablemsg.taskdesc} /></th>
+						<th><FormattedMessage {...taskTableMsg.taskname} /></th>
+						<th><FormattedMessage {...taskTableMsg.todo} /></th>
+						<th><FormattedMessage {...taskTableMsg.taskdesc} /></th>
 					</tr>
 				</thead>
 				<TransitionGroup component="tbody">
