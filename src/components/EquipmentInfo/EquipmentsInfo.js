@@ -1,13 +1,14 @@
 import React from 'react';
-import { Button, Nav, TabPane, TabContent, NavItem, NavLink } from 'reactstrap';
-import { faEdit, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
+import { Button, Nav, TabContent } from 'reactstrap';
+import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FormattedMessage, FormattedDate } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 
 import equipmentinfomsg from "./EquipmentInfo.messages";
 import ClockLabel from '../ClockLabel/ClockLabel';
+import EquipmentInfoTab from './EquipmentInfoTab';
+import EquipmentInfoNavItem from './EquipmentInfoNavItem';
 
 export default function EquipmentsInfo({equipments, toggleModal, currentEquipmentIndex, changeCurrentEquipment, extraClassNames}){
 	var tabnavItems = [];
@@ -18,31 +19,12 @@ export default function EquipmentsInfo({equipments, toggleModal, currentEquipmen
 		currentEquipmentId = equipments[currentEquipmentIndex]._id;
 
 	tabPanes = equipments.map((equipment, index) => {
-		return(
-			<TabPane tabId={equipment._id} key={equipment._id}>
-				<Button color="light" size="sm" className="float-right" onClick={() => toggleModal(false)}><FontAwesomeIcon icon={faEdit} /></Button>					
-				<div>
-					<span>{equipment.brand} {equipment.model} </span>
-					<span className="font-weight-bold">{equipment.age} h</span>		
-				</div>
-				<p className="d-block">
-					<FormattedMessage {...equipmentinfomsg.installedOn} />
-					<FormattedDate value={equipment.installation} />
-				</p>
-			</TabPane>
-		)
+		return <EquipmentInfoTab equipment={equipment} onClick={() => toggleModal(false)}/>;
 	});
 
 	tabnavItems = equipments.map((equipment, index) => {
-		return(
-			<NavItem key={equipment._id}>
-				<NavLink className={classnames({ active: currentEquipmentIndex === index })} onClick={() => { changeCurrentEquipment(index); }}>
-					{equipment.name}
-				</NavLink>
-			</NavItem>
-		)
+		return <EquipmentInfoNavItem equipment={equipment} active={currentEquipmentIndex === index} onClick={() => { changeCurrentEquipment(index); }}/>;
 	});
-
 
 	return (
 		<div className={extraClassNames}>
