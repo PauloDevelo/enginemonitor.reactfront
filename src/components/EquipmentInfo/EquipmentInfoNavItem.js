@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 export default function EquipmentInfoNavItem({equipment, active, onClick}){
     return(
-        <NavItem key={equipment._id}>
+        <NavItem>
             <NavLink className={classnames({ active: active })} onClick={() => { 
                 if(onClick)
                     onClick();

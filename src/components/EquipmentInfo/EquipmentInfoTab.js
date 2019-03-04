@@ -9,7 +9,7 @@ import equipmentInfoMsg from "./EquipmentInfo.messages";
 
 export default function EquipmentInfoTab({equipment, onClick}){
 	return(
-        <TabPane tabId={equipment._id} key={equipment._id}>
+        <TabPane tabId={equipment._id}>
             <Button color="light" size="sm" className="float-right" onClick={() => {
                 if(onClick)
                     onClick();

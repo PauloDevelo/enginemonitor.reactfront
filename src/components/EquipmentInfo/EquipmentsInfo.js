@@ -19,11 +19,11 @@ export default function EquipmentsInfo({equipments, toggleModal, currentEquipmen
 		currentEquipmentId = equipments[currentEquipmentIndex]._id;
 
 	tabPanes = equipments.map((equipment, index) => {
-		return <EquipmentInfoTab equipment={equipment} onClick={() => toggleModal(false)}/>;
+		return <EquipmentInfoTab key={equipment._id} equipment={equipment} onClick={() => toggleModal(false)}/>;
 	});
 
 	tabnavItems = equipments.map((equipment, index) => {
-		return <EquipmentInfoNavItem equipment={equipment} active={currentEquipmentIndex === index} onClick={() => { changeCurrentEquipment(index); }}/>;
+		return <EquipmentInfoNavItem key={equipment._id} equipment={equipment} active={currentEquipmentIndex === index} onClick={() => { changeCurrentEquipment(index); }}/>;
 	});
 
 	return (
