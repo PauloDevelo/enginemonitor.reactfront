@@ -1,20 +1,22 @@
-import  React, { useState, useEffect } from 'react';
+import  React, { useEffect } from 'react';
 import { Table, Button } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { faCheckSquare, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {CSSTransition, TransitionGroup} from 'react-transition-group'
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import PropTypes from 'prop-types';
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
-import { useEquipmentMonitorService } from '../../services/EquipmentMonitorServiceHook'
+
+import { useEquipmentMonitorService } from '../../hooks/EquipmentMonitorServiceHook';
+import { useEditModal } from '../../hooks/EditModalHook';
 
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import EntryRow from './EntryRow';
-import Loading from '../Loading/Loading'
+import Loading from '../Loading/Loading';
 
-import { createDefaultEntry } from '../../helpers/EntryHelper'
+import { createDefaultEntry } from '../../helpers/EntryHelper';
 
 import taskTableMsg from "../TaskTable/TaskTable.messages";
 
@@ -25,8 +27,7 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
     const equipmentId = equipment ? equipment._id : undefined;
     const taskId = task ? task._id : undefined;
 
-    const [editEntryModalVisibility, setEditEntryModalVisibility] = useState(false);
-    const [editedEntry, setEditedEntry] = useState(undefined);
+    const modalHook = useEditModal(undefined);
 
     const initialEntries = [];
     const fetchEntriesHook = useEquipmentMonitorService(initialEntries, EquipmentMonitorService.fetchEntries, [equipmentId, taskId], onHistoryChanged);
@@ -40,10 +41,6 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
 
     const getEntries = () => {
         return fetchEntriesHook.data;
-    }
-
-    const toggleEditEntryModal = () => {
-        setEditEntryModalVisibility(!editEntryModalVisibility);
     }
 
     const onSavedEntry = (savedEntry) => {
@@ -63,8 +60,7 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
     return(
         <CSSTransition key={entry._id} in={true} timeout={500} classNames="tr">
             <EntryRow entry={entry} onClick={() => {
-                setEditedEntry(entry);
-                setEditEntryModalVisibility(true);
+                modalHook.displayData(entry);
             }}/>
         </CSSTransition>
         )}
@@ -76,8 +72,7 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
 
             <span className="mb-2">
                 <Button color="success" size="sm" className="float-right mb-2" onClick={() => {
-                    setEditedEntry(createDefaultEntry(equipment, task));
-                    setEditEntryModalVisibility(true);
+                    modalHook.displayData(createDefaultEntry(equipment, task));
                 }}>
                     <FontAwesomeIcon icon={faCheckSquare} />
                 </Button>
@@ -98,15 +93,14 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
             </Table>
             }
             
-
             <ModalEditEntry 
                 equipment={equipment}
                 task={task}
-                entry={editedEntry}
+                entry={modalHook.data}
                 saveEntry={onSavedEntry} 
                 deleteEntry={onDeleteEntry}
-                visible={editEntryModalVisibility}
-                toggle={toggleEditEntryModal}
+                visible={modalHook.editModalVisibility}
+                toggle={modalHook.toggleModal}
                 className='modal-dialog-centered'
             />
         </div>
