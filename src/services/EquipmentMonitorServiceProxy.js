@@ -132,8 +132,11 @@ class EquipmentMonitorServiceProxy{
         return updateEntry(entry)
     }
 
-    fetchEntries = async(equipmentId, taskid) => {
-        const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId + '/' + taskid);
+    fetchEntries = async(equipmentId, taskId) => {
+        if (equipmentId === false || taskId === false)
+            return [];
+
+        const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId + '/' + taskId);
         entries.forEach(entry => updateEntry(entry) );
         return entries;
     }

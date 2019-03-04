@@ -8,6 +8,8 @@ import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import PropTypes from 'prop-types';
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import { useEquipmentMonitorService } from '../../services/EquipmentMonitorServiceHook'
+
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import EntryRow from './EntryRow';
 import Loading from '../Loading/Loading'
@@ -20,75 +22,55 @@ import './HistoryTaskTable.css';
 import '../../style/transition.css';
 
 const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
+    const equipmentId = equipment ? equipment._id : undefined;
+    const taskId = task ? task._id : undefined;
+
     const [editEntryModalVisibility, setEditEntryModalVisibility] = useState(false);
     const [editedEntry, setEditedEntry] = useState(undefined);
-    const [taskHistory, setTaskHistory] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
+
+    const initialEntries = [];
+    const fetchEntriesHook = useEquipmentMonitorService(initialEntries, EquipmentMonitorService.fetchEntries, [equipmentId, taskId], onHistoryChanged);
+
+    useEffect(() => {
+        const equipmentId = equipment ? equipment._id : undefined;
+        const taskId = task ? task._id : undefined;
+
+        fetchEntriesHook.doFetch([equipmentId, taskId])
+    }, [equipment, task]);
+
+    const getEntries = () => {
+        return fetchEntriesHook.data;
+    }
 
     const toggleEditEntryModal = () => {
         setEditEntryModalVisibility(!editEntryModalVisibility);
     }
 
-    const fetchEntries = async() => {
-        setIsError(false);
-        setIsLoading(true);
-
-        try{
-            let entries = [];
-            if(equipment && task){
-                entries = await EquipmentMonitorService.fetchEntries(equipment._id, task._id);
-            }
-            setTaskHistory(entries);
-        }
-        catch(error){
-            setIsError(true);
-        }
-
-        setIsLoading(false);
-    }
-
-    useEffect(() => {
-        fetchEntries();
-    }, [task]);
-
     const onSavedEntry = (savedEntry) => {
-            const newCurrentHistoryTask = taskHistory.filter(entry => entry._id !== savedEntry._id);
+            const newCurrentHistoryTask = getEntries().filter(entry => entry._id !== savedEntry._id);
             newCurrentHistoryTask.unshift(savedEntry);
-            newCurrentHistoryTask.sort((entrya, entryb) => { return entrya.date - entryb.date; });
+            newCurrentHistoryTask.sort((entryA, entryB) => { return entryA.date - entryB.date; });
 
-            changeCurrentHistory(newCurrentHistoryTask);
+            fetchEntriesHook.changeData(newCurrentHistoryTask);
 	}
 	
 	const onDeleteEntry = async(entryId) => {  
-            var newCurrentHistoryTask = taskHistory.slice(0).filter(e => e._id !== entryId);
-
-            changeCurrentHistory(newCurrentHistoryTask);
+            var newCurrentHistoryTask = getEntries().slice(0).filter(e => e._id !== entryId);
+            fetchEntriesHook.changeData(newCurrentHistoryTask);
     }
+
+    const history = getEntries().map(entry => {
+    return(
+        <CSSTransition key={entry._id} in={true} timeout={500} classNames="tr">
+            <EntryRow entry={entry} onClick={() => {
+                setEditedEntry(entry);
+                setEditEntryModalVisibility(true);
+            }}/>
+        </CSSTransition>
+        )}
+    );
+    history.reverse();
     
-    const changeCurrentHistory = (newCurrentHistoryTask) => {
-        setTaskHistory(newCurrentHistoryTask);
-
-        if(onHistoryChanged){
-            onHistoryChanged(newCurrentHistoryTask);
-        }
-    }
-
-    let history = [];
-    if(taskHistory && taskHistory.length > 0){
-        history = taskHistory.map(entry => {
-        return(
-            <CSSTransition key={entry._id} in={true} timeout={500} classNames="tr">
-                <EntryRow entry={entry} onClick={() => {
-                    setEditedEntry(entry);
-                    setEditEntryModalVisibility(true);
-                }}/>
-            </CSSTransition>
-            )}
-        );
-        history.reverse();
-    }
-
     return(
         <div className={classNames}>
 
@@ -100,9 +82,9 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
                     <FontAwesomeIcon icon={faCheckSquare} />
                 </Button>
             </span>
-            {isError && <div><FontAwesomeIcon icon={faExclamationTriangle} color="red"/><FormattedMessage {...taskTableMsg.errorFetching} /></div>}
-            {isLoading ? !isError && <Loading/> :
-            !isError && <Table responsive size="sm" hover striped>
+            {fetchEntriesHook.isError && <div><FontAwesomeIcon icon={faExclamationTriangle} color="red"/><FormattedMessage {...taskTableMsg.errorFetching} /></div>}
+            {fetchEntriesHook.isLoading ? !fetchEntriesHook.isError && <Loading/> :
+            !fetchEntriesHook.isError && <Table responsive size="sm" hover striped>
                 <thead className="thead-light">
                     <tr>
                         <th><FormattedMessage {...taskTableMsg.ackDate} /></th>
