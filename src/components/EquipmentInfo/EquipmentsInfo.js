@@ -1,52 +1,107 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Button, Nav, TabContent } from 'reactstrap';
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import equipmentinfomsg from "./EquipmentInfo.messages";
+import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+
+import { useEquipmentMonitorService } from '../../hooks/EquipmentMonitorServiceHook';
+import { useEditModal } from '../../hooks/EditModalHook';
+
+import equipmentInfoMsg from "./EquipmentInfo.messages";
 import ClockLabel from '../ClockLabel/ClockLabel';
 import EquipmentInfoTab from './EquipmentInfoTab';
 import EquipmentInfoNavItem from './EquipmentInfoNavItem';
+import ModalEquipmentInfo from '../ModalEquipmentInfo/ModalEquipmentInfo';
+import { createDefaultEquipment } from '../../helpers/EquipmentHelper';
 
-export default function EquipmentsInfo({equipments, toggleModal, currentEquipmentIndex, changeCurrentEquipment, extraClassNames}){
-	var tabnavItems = [];
-	var tabPanes = [];
+export default function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}){
+	const [currentEquipment, setCurrentEquipment] = useState(undefined);
+	const modalHook = useEditModal(undefined);
 	
-	var currentEquipmentId = undefined;
-	if(currentEquipmentIndex !== -1)
-		currentEquipmentId = equipments[currentEquipmentIndex]._id;
+	const isCurrentEquipment = (equipment) => {
+		if (currentEquipment === undefined || equipment === undefined){
+			return false;
+		}
+		else{
+			return currentEquipment._id === equipment._id;
+		}
+	}
 
-	tabPanes = equipments.map((equipment, index) => {
-		return <EquipmentInfoTab key={equipment._id} equipment={equipment} onClick={() => toggleModal(false)}/>;
+	useEffect(() => {
+		changeCurrentEquipment(currentEquipment);
+	}, [currentEquipment]);
+
+	const fetchEquipmentsHook = useEquipmentMonitorService([], EquipmentMonitorService.fetchEquipments, []);
+	
+	const getEquipments = () => {
+		return fetchEquipmentsHook.data;
+	}
+
+	useEffect(() => {
+		if (getEquipments().length > 0){
+			setCurrentEquipment(getEquipments()[0]);
+		}
+		else{
+			setCurrentEquipment(undefined);
+		}
+
+	}, [fetchEquipmentsHook.data]);
+
+	useEffect(() => {
+		fetchEquipmentsHook.doFetch([]);
+	}, [user]);
+
+	const onEquipmentInfoSaved = async (equipmentInfoSaved) => {
+		const newEquipmentList = getEquipments().filter(equipmentInfo => equipmentInfo._id !== equipmentInfoSaved._id);
+		newEquipmentList.unshift(equipmentInfoSaved);
+        
+		fetchEquipmentsHook.changeData(newEquipmentList);
+			
+		setCurrentEquipment(equipmentInfoSaved);
+	}
+	
+	
+	const tabPanes =  getEquipments().map((equipment, index) => {
+		return <EquipmentInfoTab key={equipment._id} equipment={equipment} onClick={() => {
+			modalHook.displayData(currentEquipment);
+		}}/>;
 	});
 
-	tabnavItems = equipments.map((equipment, index) => {
-		return <EquipmentInfoNavItem key={equipment._id} equipment={equipment} active={currentEquipmentIndex === index} onClick={() => { changeCurrentEquipment(index); }}/>;
+	const tabnavItems = getEquipments().map((equipment, index) => {
+		return <EquipmentInfoNavItem key={equipment._id} equipment={equipment} active={isCurrentEquipment(equipment)} onClick={() => setCurrentEquipment(equipment)}/>;
 	});
 
 	return (
 		<div className={extraClassNames}>
 			<span className="small mb-3">
-				<FormattedMessage {...equipmentinfomsg.today} />
+				<FormattedMessage {...equipmentInfoMsg.today} />
 				<ClockLabel />
-				<Button color="light" size="sm" className="float-right mb-2" onClick={() => toggleModal(true)}><FontAwesomeIcon icon={faPlusSquare} /></Button>
+				<Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEquipment())}>
+					<FontAwesomeIcon icon={faPlusSquare} />
+				</Button>
 			</span>
 			<Nav tabs>
 				{tabnavItems}
 			</Nav>
-			<TabContent activeTab={currentEquipmentId}>
+			<TabContent activeTab={currentEquipment?currentEquipment._id:undefined}>
 				{tabPanes}
 			</TabContent>
+
+			<ModalEquipmentInfo visible={modalHook.editModalVisibility} 
+				toggle={modalHook.toggleModal} 
+				onEquipmentInfoSaved={onEquipmentInfoSaved} 
+				data={modalHook.data}
+				className='modal-dialog-centered'
+			/>
 		</div>
 	);
 }
 
 EquipmentsInfo.propTypes = {
-	equipments: PropTypes.array,
-	currentEquipmentIndex: PropTypes.number,
+	user: PropTypes.object,
 	changeCurrentEquipment: PropTypes.func.isRequired,
-	toggleModal: PropTypes.func.isRequired,
 	extraClassNames: PropTypes.string
 };

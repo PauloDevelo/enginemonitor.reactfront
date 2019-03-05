@@ -8,10 +8,6 @@ export function createDefaultEquipment(state){
 	}
 }
 
-export function getCurrentEquipment(state){
-	return state.equipments[state.currentEquipmentIndex];
-}
-
 export function updateEquipment(equipment){
     equipment.installation = new Date(equipment.installation);
     return equipment;

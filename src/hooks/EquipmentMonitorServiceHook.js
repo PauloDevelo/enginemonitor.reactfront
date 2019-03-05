@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+import EquipmentMonitorService from '../services/EquipmentMonitorServiceProxy';
+
 export function useEquipmentMonitorService(initialData, equipmentMonitorFetchMethod, arrayInitialParams, onDataChangedCallBack){
     const [data, setData] = useState(initialData);
     const [params, setParams] = useState(arrayInitialParams);
@@ -18,7 +20,7 @@ export function useEquipmentMonitorService(initialData, equipmentMonitorFetchMet
       setIsLoading(true);
   
       try {
-        const result = await equipmentMonitorFetchMethod.apply(null, params);
+        const result = await equipmentMonitorFetchMethod.apply(EquipmentMonitorService, params);
         changeData(result);
       } catch (error) {
         setIsError(true);

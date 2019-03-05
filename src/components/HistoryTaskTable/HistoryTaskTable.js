@@ -37,7 +37,7 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
         const taskId = task ? task._id : undefined;
 
         fetchEntriesHook.doFetch([equipmentId, taskId])
-    }, [equipment, task]);
+    }, [task]);
 
     const getEntries = () => {
         return fetchEntriesHook.data;

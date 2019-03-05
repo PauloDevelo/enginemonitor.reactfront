@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { CSSTransition } from 'react-transition-group'
   
 import EquipmentsInfo from '../EquipmentInfo/EquipmentsInfo';
-import ModalEquipmentInfo from '../ModalEquipmentInfo/ModalEquipmentInfo';
 import TaskTable from '../TaskTable/TaskTable';
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
 import HistoryTaskTable from '../HistoryTaskTable/HistoryTaskTable'
@@ -12,7 +11,6 @@ import ModalSignup from '../ModalSignup/ModalSignup';
 import NavBar from '../NavBar/NavBar';
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 import { createDefaultTask, getCurrentTask } from '../../helpers/TaskHelper'
-import { createDefaultEquipment, getCurrentEquipment } from '../../helpers/EquipmentHelper'
 
 import '../../style/transition.css';
 
@@ -24,15 +22,11 @@ class App extends Component {
 		this.state = {
 			user: {},
 
-			modalEquipmentInfo: false,
 			modalEditTask: false,
 			modalSignup: false,
 			navBar: true,
 
-			equipments: [],
-			currentEquipmentIndex: -1,
-			editedEquipment: undefined,
-
+			currentEquipment: undefined,
 			tasks:[],
 			currentTaskIndex: -1,
 			editedTask: createDefaultTask(),
@@ -44,31 +38,17 @@ class App extends Component {
 	login = async (credentials) => {
 		const user = await EquipmentMonitorService.authenticate(credentials);
 		await this.setStateAsync((prevState, props) => { return { user: user } });
-		await this.refreshEquipmentList();
 	}
 
 	logout = async () => {
 		EquipmentMonitorService.logout();
 		await this.setStateAsync( (prevState, props) => { return { user: undefined } });
-		await this.refreshEquipmentList();
 		this.refreshTaskList();
 	}
 
 	toggleNavBar = () => this.setState((prevState, props) => {return { navBar: !prevState.navBar }});
 
 	toggleModalSignup = () => this.setState((prevState, props) => {return { modalSignup: !prevState.modalSignup }});
-	
-	toggleModalEquipmentInfo = (isCreationMode) => {
-		this.setState((prevState, props) => {
-			let newState = { modalEquipmentInfo: !prevState.modalEquipmentInfo };
-
-			if(isCreationMode !== undefined){
-				newState.editedEquipment = isCreationMode?createDefaultEquipment(prevState):prevState.equipments[prevState.currentEquipmentIndex];
-			}
-
-			return newState;
-		});
-	}
 	
 	toggleModalEditTask = (isCreationMode) => {
 		this.setState( (prevState, props) => {
@@ -89,8 +69,8 @@ class App extends Component {
 		}
 	}
 
-	changeCurrentEquipment = async (newEquipmentIndex) => {
-		await this.setStateAsync({ currentEquipmentIndex:newEquipmentIndex });
+	changeCurrentEquipment = async (newEquipment) => {
+		await this.setStateAsync({ currentEquipment:newEquipment });
 		await this.refreshTaskList();
 
 		if(this.state.tasks.length > 0){
@@ -98,57 +78,20 @@ class App extends Component {
 		}
 	}
 
-	createOrSaveEquipmentInfo = async (equipmentInfo) => {
-		const equipment = await EquipmentMonitorService.createOrSaveEquipment(equipmentInfo);
-
-		if(equipmentInfo._id){
-			await this.setStateAsync((prevState, props) => {
-				prevState.equipments[prevState.currentEquipmentIndex] = equipment;
-				return { equipments: prevState.equipments }; 
-			});
-		}
-		else{
-			await this.setStateAsync((prevState, props) => {
-				prevState.equipments.push(equipment);
-				return { equipments: prevState.equipments };
-			});
-		}
-		
-		await this.changeCurrentEquipment(this.state.currentEquipmentIndex);
-	}
-
-	refreshEquipmentList = async () => {
-		try{
-			const equipments = await EquipmentMonitorService.fetchEquipments();
-			await this.setStateAsync({ equipments:equipments });
-
-			if(this.state.currentEquipmentIndex === -1 && this.state.equipments.length > 0)
-				await this.changeCurrentEquipment(0);
-			else if (this.state.currentEquipmentIndex >= this.state.equipments.length){
-				await this.changeCurrentEquipment(-1);
-			}
-		}
-		catch(error){
-			this.setState({ equipments:[], currentEquipmentIndex:-1 });
-		}
-	}
-	
 	createOrSaveTask = async (taskToSave) => {
-		if(this.state.currentEquipmentIndex === -1){
+		if(this.state.currentEquipment === undefined){
 			throw Error("noEquipmentSelected");
 		}
 
-		const currentEquipment = this.state.equipments[this.state.currentEquipmentIndex];
-		const savedTask = await EquipmentMonitorService.createOrSaveTask(currentEquipment._id, taskToSave);
+		const savedTask = await EquipmentMonitorService.createOrSaveTask(this.state.currentEquipment._id, taskToSave);
 		await this.refreshTaskList();
 		this.changeCurrentTask(savedTask);
 	}
 
 	deleteTask = async() => {
 		var nextTaskIndex = (this.state.currentTaskIndex === this.state.tasks.length - 1) ? this.state.currentTaskIndex - 1:this.state.currentTaskIndex
-		let currentEquipment = getCurrentEquipment(this.state);
-
-		await EquipmentMonitorService.deleteTask(currentEquipment._id, this.state.editedTask._id);
+		
+		await EquipmentMonitorService.deleteTask(this.state.currentEquipment, this.state.editedTask._id);
 		await this.refreshTaskList();
 		await this.changeCurrentTaskIndex(nextTaskIndex);
 	}
@@ -193,10 +136,9 @@ class App extends Component {
 	}
 	
 	refreshTaskList = async() => {
-		if(this.state.currentEquipmentIndex !== -1){
-			let currentEquipment = getCurrentEquipment(this.state);
+		if(this.state.currentEquipment !== undefined){
 			try{
-				const tasks = await EquipmentMonitorService.fetchTasks(currentEquipment._id);
+				const tasks = await EquipmentMonitorService.fetchTasks(this.state.currentEquipment._id);
 
 				// store the new state object in the component's state
 				await this.setStateAsync((prevState, props) => {
@@ -229,11 +171,6 @@ class App extends Component {
 
 	async componentDidMount() {
 		await this.refreshCurrentUser();
-		await this.refreshEquipmentList();
-
-		if(this.state.equipments.length > 0){
-			this.changeCurrentEquipment(0);
-		}
 	}
     
 	render() {
@@ -246,10 +183,9 @@ class App extends Component {
 					<NavBar user={this.state.user} logout={this.logout} isOpened={this.state.navBar} toggle={this.toggleNavBar} />
 					<div className="d-flex flex-wrap flex-row mb-3">
 						<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
-							<EquipmentsInfo equipments={this.state.equipments}
-										currentEquipmentIndex={this.state.currentEquipmentIndex}
+							<EquipmentsInfo
+										user={this.state.user}
 										changeCurrentEquipment={this.changeCurrentEquipment}
-										toggleModal={this.toggleModalEquipmentInfo}
 										extraClassNames={panelClassNames}/>
 							<TaskTable 	tasks={this.state.tasks} 
 										toggleModal={() => this.toggleModalEditTask(true)} 
@@ -264,19 +200,13 @@ class App extends Component {
 												prevVisibility={prevVisibility} 
 												nextVisibility={nextVisibility} 
 												classNames={panelClassNames}/>
-							<HistoryTaskTable 	equipment={getCurrentEquipment(this.state)}
+							<HistoryTaskTable 	equipment={this.state.currentEquipment}
 												task={getCurrentTask(this.state)}
 												onHistoryChanged={() => this.refreshTaskList()}
 												classNames={panelClassNames}/>
 						</div>
 					</div>
 					
-					<ModalEquipmentInfo visible={this.state.modalEquipmentInfo} 
-						toggle={this.toggleModalEquipmentInfo} 
-						saveEquipmentInfo={this.createOrSaveEquipmentInfo} 
-						data={this.state.editedEquipment}
-						className='modal-dialog-centered'
-					/>
 					<ModalEditTask visible={this.state.modalEditTask} 
 						toggle={this.toggleModalEditTask} 
 						saveTask={this.createOrSaveTask} 

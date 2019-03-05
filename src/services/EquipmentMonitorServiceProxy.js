@@ -133,7 +133,7 @@ class EquipmentMonitorServiceProxy{
     }
 
     fetchEntries = async(equipmentId, taskId) => {
-        if (equipmentId === false || taskId === false)
+        if (equipmentId === undefined || taskId === undefined)
             return [];
 
         const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId + '/' + taskId);
