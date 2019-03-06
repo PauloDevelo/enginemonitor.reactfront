@@ -12,15 +12,6 @@ export function createDefaultTask(){
 	}
 }
 
-export function getCurrentTask(state){
-    if(state.tasks){
-        return state.tasks[state.currentTaskIndex];
-    }
-	else{
-        return undefined;
-    }
-}
-
 export function getContext(level){
 	if(level === 1){
 		return "success";

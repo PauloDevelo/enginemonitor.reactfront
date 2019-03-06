@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 
 import edittaskmsg from "./ModalEditTask.messages";
 
+import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+
 import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation'
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
@@ -16,7 +18,7 @@ import HttpError from '../../http/HttpError'
 
 import '../../style/transition.css';
 
-const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className}) => {
+const ModalEditTask = ({equipment, task, onTaskSaved, toggle, onTaskDeleted, visible, className}) => {
 	const [alerts, setAlerts] = useState(undefined);
 	const [yesNoModalVisibility, setYesNoModalVisibility] = useState(false);
 
@@ -32,7 +34,8 @@ const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className})
 	const handleSubmit = async(data) => {
 		data.usagePeriodInHour = data.usagePeriodInHour === undefined || data.usagePeriodInHour <= 0 ? -1 : data.usagePeriodInHour;
 		try{
-			await saveTask(data);
+			const savedTask = await EquipmentMonitorService.createOrSaveTask(equipment._id, data);
+			onTaskSaved(savedTask);
 			setAlerts(undefined);
 			toggle();
 		}
@@ -40,6 +43,7 @@ const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className})
 			if(error instanceof HttpError){
                 setAlerts(error.data);
 			}
+			console.log(error);
 		}
 	}
 	
@@ -47,9 +51,10 @@ const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className})
 		setYesNoModalVisibility(true);
 	}
 
-	const yesDeleteTask = () => {
+	const yesDeleteTask = async() => {
 		try{
-			deleteTask();
+			const deletedTask = await EquipmentMonitorService.deleteTask(equipment._id, task._id);
+			onTaskDeleted(deletedTask);
 			setAlerts(undefined);
 			toggle();
 		}
@@ -100,10 +105,12 @@ const ModalEditTask = ({task, saveTask, toggle, deleteTask, visible, className})
 }
 
 ModalEditTask.propTypes = {
+	equipment: PropTypes.object,
+	task: PropTypes.object,
 	visible: PropTypes.bool.isRequired,
 	toggle: PropTypes.func.isRequired,
-	saveTask: PropTypes.func.isRequired,
-	deleteTask: PropTypes.func.isRequired,
+	onTaskSaved: PropTypes.func.isRequired,
+	onTaskDeleted: PropTypes.func,
 	className: PropTypes.string
 };
 
