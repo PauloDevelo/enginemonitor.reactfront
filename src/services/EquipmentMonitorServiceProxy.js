@@ -88,8 +88,13 @@ class EquipmentMonitorServiceProxy{
 
     fetchEquipmentInfo = async (idEquipment) =>{
         const {equipment} = await this.get(this.baseUrl + "equipments/" + idEquipment);
-        return this.updateEquipment(equipment);
-    } 
+        return updateEquipment(equipment);
+    }
+
+    deleteEquipment = async (idEquipment) => {
+        const {equipment} = await this.delete(this.baseUrl + "equipments/" + idEquipment);
+        return updateEquipment(equipment);
+    }
 
     /////////////////Task////////////////////////////
     createOrSaveTask = async (equipmentId, newTask) =>{
