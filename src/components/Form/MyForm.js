@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { Form } from 'reactstrap';
 
 import PropTypes from 'prop-types';
@@ -27,104 +27,71 @@ function convertDateFieldsToDate(data, keys){
 	return data;
 }
 
-class MyForm extends React.Component {
-	
-	constructor(props){
-		super(props);
-		
-		this.state = {
-			isValidated: false
-		}
-	}
+export default function MyForm({ initialData , submit, children, className, ...props}) {
+	var dateKeys = convertDateFieldsToString(initialData);
+	const [classNames, setClassNames] = useState(className === undefined ? [] : className);
+	const [isValidated, setIsValidated] = useState(false);
+	const [data, setData] = useState({ data: initialData, dateKeys: dateKeys });
+	const formEl = useRef();
 
-	static getDerivedStateFromProps(nextProps, prevState){
-		if(prevState.didMount === undefined){
-			var initialData = Object.assign({}, nextProps.initialData);
-			var dateKeys = convertDateFieldsToString(initialData);
-
-			return {
-				data: initialData,
-				dateKeys: dateKeys,
-				didMount: false
-			}
+	useEffect(() => {
+		let newClassNames = [];
+		if (className) {
+			newClassNames = Object.assign({}, className);
 		}
-		else{
-			return null;
-		}
-	}
-	
-	validate = () => this.formEl.checkValidity() === true
 
-	submitHandler = (event) => {
+		if (isValidated) {
+			newClassNames.push('.was-validated');
+		}
+		setClassNames(newClassNames);
+	}, [isValidated]);
+
+	const validate = () => formEl.current.checkValidity() === true;
+
+	const submitHandler = (event) => {
 		event.preventDefault();
 
-		if (this.validate()){
-			var data = Object.assign({}, this.state.data);
-			convertDateFieldsToDate(data, this.state.dateKeys);
-			this.props.submit(data);
+		if (validate()){
+			var dataCopy = Object.assign({}, data.data);
+			convertDateFieldsToDate(dataCopy, dateKeys);
+			submit(dataCopy);
 		}
 
-		this.setState({isValidated: true});
+		setIsValidated(true);
 	}
-	
-	setForm = (form) => this.formEl = form;
 
-	handleInputChange = (event) => {
+	const handleInputChange = (event) => {
 		const target = event.target;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 		const name = target.name;
 
-		if(this.state.data[name] === undefined){
+		if(data.data[name] === undefined){
 			console.log('The property ' + name + ' is not defined in the data:');
-			console.log(this.state.data);
+			console.log(data.data);
 		}
 
-		this.setState((prevState, props) => { 
-			prevState.data[name] = value;
-			return prevState;
-		});
+		const newData = Object.assign({}, data);
+		newData.data[name] = value;
+		setData(newData);
 	}
 
-	componentDidMount(){
-		this.setState((prevState, props) => { return { didMount: true }});
-	}
+	const childrenWithProps = React.Children.map(children, child =>{
+		var newProps = { 
+			value: data.data[child.props.name],
+			handleChange: handleInputChange,
+		};
 
-	render() {
-		const props = Object.assign({}, this.props);
-		delete props.submit;
-		delete props.initialData;
+		Object.assign(
+			newProps, 
+			child.props);
+		return React.cloneElement(child, newProps);
+	});
 
-		let classNames = [];
-		if (props.className) {
-			classNames = Object.assign({}, props.className);
-			delete props.className;
-		}
-
-		if (this.state.isValidated) {
-			classNames.push('.was-validated');
-		}
-
-		const { children } = props;
-		const childrenWithProps = React.Children.map(children, child =>{
-				var newProps = { 
-					value: this.state.data[child.props.name],
-					handleChange: this.handleInputChange.bind(this),
-				};
-
-				Object.assign(
-					newProps, 
-					child.props);
-				return React.cloneElement(child, newProps);
-			}
-		);
-		delete props.children;
-
-		return (
-			<Form innerRef={this.setForm} onSubmit={this.submitHandler} {...props} className={classNames.toString()} noValidate>
-				{childrenWithProps}
-			</Form>
-		);
-	}
+	return (
+		<Form innerRef={formEl} onSubmit={submitHandler} {...props} className={classNames.toString()} noValidate>
+			{childrenWithProps}
+		</Form>
+	);
 }
 
 MyForm.propTypes = {
@@ -133,5 +100,3 @@ MyForm.propTypes = {
 	className: PropTypes.string,
 	submit: PropTypes.func.isRequired
 };
-
-export default MyForm;
