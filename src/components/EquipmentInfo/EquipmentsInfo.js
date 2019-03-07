@@ -55,8 +55,15 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 	}, [user]);
 
 	const onEquipmentInfoSaved = async (equipmentInfoSaved) => {
-		const newEquipmentList = getEquipments().filter(equipmentInfo => equipmentInfo._id !== equipmentInfoSaved._id);
-		newEquipmentList.unshift(equipmentInfoSaved);
+		const newEquipmentList = getEquipments().concat([]);
+		const index = newEquipmentList.findIndex(equipmentInfo => equipmentInfo._id === equipmentInfoSaved._id);
+
+		if(index === -1){
+			newEquipmentList.push(equipmentInfoSaved);
+		}
+		else{
+			newEquipmentList[index] = equipmentInfoSaved;
+		}
         
 		fetchEquipmentsHook.changeData(newEquipmentList);
 			
