@@ -9,7 +9,7 @@ export default function MyInput({ label, handleChange, ...props }) {
 
 	const validate = () => setValidity(
 		{
-			isValid: inputElem.current.validity.valid,
+			isValid: inputElem.current.validity !== undefined ? inputElem.current.validity.valid : true,
 			errorMessage: inputElem.current.validationMessage
 		}
 	);
