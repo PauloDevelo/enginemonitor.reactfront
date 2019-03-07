@@ -70,6 +70,21 @@ const messages: Messages = {
     defaultMessage: "Serial Port",
 		description: "Label"
 	},
+	delete: {
+		id: "delete",
+		defaultMessage: "Delete",
+		description: "delete button"
+	},
+	equipmentDeleteTitle: {
+		id: "equipmentDeleteTitle",
+		defaultMessage: "Delete Equipment",
+		description: "Modal title"
+	},
+	equipmentDeleteMsg: {
+		id: "equipmentDeleteMsg",
+		defaultMessage: "Are you sure you want to delete this equipment?",
+		description: "Confirmation question"
+	},
 };
 
 const definedMessages: typeof messages = defineMessages(messages);

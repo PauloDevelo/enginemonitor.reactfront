@@ -58,5 +58,7 @@
 	"alreadyexisting": "already exist",
 	"isrequired": "is required",
 	"signup": "Signup",
-	"errorFetching": "Something went wrong ..."
+	"errorFetching": "Something went wrong ...",
+	"equipmentDeleteTitle": "Delete Equipment",
+	"equipmentDeleteMsg": "Are you sure you want to delete this equipment?"
 }
