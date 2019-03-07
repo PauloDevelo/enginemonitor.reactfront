@@ -51,8 +51,8 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
             fetchEntriesHook.changeData(newCurrentHistoryTask);
 	}
 	
-	const onDeleteEntry = async(entryId) => {  
-            var newCurrentHistoryTask = getEntries().slice(0).filter(e => e._id !== entryId);
+	const onDeleteEntry = async(entry) => {  
+            var newCurrentHistoryTask = getEntries().slice(0).filter(e => e._id !== entry._id);
             fetchEntriesHook.changeData(newCurrentHistoryTask);
     }
 

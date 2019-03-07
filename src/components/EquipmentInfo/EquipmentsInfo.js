@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import { Button, Nav, TabContent } from 'reactstrap';
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -63,6 +63,12 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 		setCurrentEquipment(equipmentInfoSaved);
 	}
 	
+	const onEquipmentDeleted = (deletedEquipment) => {
+		const newEquipmentList = getEquipments().filter(equipmentInfo => equipmentInfo._id !== deletedEquipment._id);
+		fetchEquipmentsHook.changeData(newEquipmentList);
+			
+		setCurrentEquipment(newEquipmentList.length > 0 ? newEquipmentList[0] : undefined);
+	}
 	
 	const tabPanes =  getEquipments().map((equipment, index) => {
 		return <EquipmentInfoTab key={equipment._id} equipment={equipment} onClick={() => {
@@ -75,28 +81,29 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 	});
 
 	return (
-		<div className={extraClassNames}>
-			<span className="small mb-3">
-				<FormattedMessage {...equipmentInfoMsg.today} />
-				<ClockLabel />
-				<Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEquipment())}>
-					<FontAwesomeIcon icon={faPlusSquare} />
-				</Button>
-			</span>
-			<Nav tabs>
-				{tabnavItems}
-			</Nav>
-			<TabContent activeTab={currentEquipment?currentEquipment._id:undefined}>
-				{tabPanes}
-			</TabContent>
-
-			<ModalEquipmentInfo visible={modalHook.editModalVisibility} 
-				toggle={modalHook.toggleModal} 
-				onEquipmentInfoSaved={onEquipmentInfoSaved} 
-				data={modalHook.data}
-				className='modal-dialog-centered'
-			/>
-		</div>
+		<Fragment>
+			<div className={extraClassNames}>
+				<span className="small mb-3">
+					<FormattedMessage {...equipmentInfoMsg.today} />
+					<ClockLabel />
+					<Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEquipment())}>
+						<FontAwesomeIcon icon={faPlusSquare} />
+					</Button>
+				</span>
+				<Nav tabs>
+					{tabnavItems}
+				</Nav>
+				<TabContent activeTab={currentEquipment?currentEquipment._id:undefined}>
+					{tabPanes}
+				</TabContent>
+			</div>
+			<ModalEquipmentInfo equipment={modalHook.data}
+								onEquipmentInfoSaved={onEquipmentInfoSaved} 
+								onEquipmentDeleted={onEquipmentDeleted}
+								visible={modalHook.editModalVisibility} 
+								toggle={modalHook.toggleModal} 
+								className='modal-dialog-centered'/>
+		</Fragment>
 	);
 }
 
