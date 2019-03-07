@@ -33,11 +33,8 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
     const fetchEntriesHook = useEquipmentMonitorService(initialEntries, EquipmentMonitorService.fetchEntries, [equipmentId, taskId], onHistoryChanged);
 
     useEffect(() => {
-        const equipmentId = equipment ? equipment._id : undefined;
-        const taskId = task ? task._id : undefined;
-
-        fetchEntriesHook.doFetch([equipmentId, taskId])
-    }, [task]);
+        fetchEntriesHook.doFetch([equipmentId, taskId]);
+    }, [taskId]);
 
     const getEntries = () => {
         return fetchEntriesHook.data;
