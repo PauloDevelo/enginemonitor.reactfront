@@ -51,7 +51,12 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 	}, [fetchEquipmentsHook.data]);
 
 	useEffect(() => {
-		fetchEquipmentsHook.doFetch([]);
+		if(user !== undefined){
+			fetchEquipmentsHook.doFetch([]);
+		}
+		else{
+			fetchEquipmentsHook.changeData([]);
+		}
 	}, [user]);
 
 	const onEquipmentInfoSaved = async (equipmentInfoSaved) => {
