@@ -9,10 +9,10 @@ export function useEquipmentMonitorService(initialData, equipmentMonitorFetchMet
     const [isError, setIsError] = useState(false);
 
     const changeData = (newData) => {
-        setData(newData);
-        if(onDataChangedCallBack){
-            onDataChangedCallBack(newData);
-        }
+      setData(newData);
+      if(onDataChangedCallBack){
+          onDataChangedCallBack(newData);
+      }
     };
   
     const fetchData = async () => {
@@ -34,7 +34,12 @@ export function useEquipmentMonitorService(initialData, equipmentMonitorFetchMet
     }, params);
   
     const doFetch = (arrayParam) => {
+      if(arrayParam.length === 0){
+        fetchData();
+      }
+      else{
         setParams(arrayParam);
+      }
     };
   
     return { data, isLoading, isError, doFetch, changeData };
