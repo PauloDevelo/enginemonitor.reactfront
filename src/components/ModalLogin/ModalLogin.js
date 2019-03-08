@@ -14,14 +14,17 @@ import Alerts from "../Alerts/Alerts"
 
 import HttpError from '../../http/HttpError'
 
+import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+
 import '../../style/transition.css';
 
-const ModaLogin = ({login, visible, className, data, toggleModalSignup}) => {
+const ModaLogin = ({onLoggedIn, visible, className, data, toggleModalSignup}) => {
 	const [loginErrors, setLoginErrors] = useState(undefined);
 
     const handleSubmit = async(data) => {
 		try{
-			await login(data);
+			const user = await EquipmentMonitorService.authenticate(data);
+			onLoggedIn(user);
 			setLoginErrors(undefined);
 		}
 		catch(errors){
@@ -55,7 +58,7 @@ const ModaLogin = ({login, visible, className, data, toggleModalSignup}) => {
 
 ModaLogin.propTypes = {
 	visible: PropTypes.bool.isRequired,
-	login: PropTypes.func.isRequired,
+	onLoggedIn: PropTypes.func.isRequired,
 	className: PropTypes.string,
     data: PropTypes.object,
 	toggleModalSignup: PropTypes.func.isRequired

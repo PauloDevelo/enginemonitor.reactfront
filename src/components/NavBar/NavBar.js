@@ -5,10 +5,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
+import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+
 import navBarMsg from "./NavBar.messages";
 
-const NavBar = ({user, logout, isOpened, toggle}) => {
+const NavBar = ({user, onLoggedOut, isOpened, toggle}) => {
     const [position, setPosition] = useState(undefined);
+
+    const logout = () => {
+        EquipmentMonitorService.logout();
+        onLoggedOut();
+    }
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((navigatorPosition) => {
@@ -21,9 +28,8 @@ const NavBar = ({user, logout, isOpened, toggle}) => {
     }
 
     const positionStr = position ? '(' + position.lng.toFixed(4) + ', ' + position.lat.toFixed(4) + ')':'';
-    let navBrand = 'Equipment maintenance ' + positionStr;
-        
-    let textMenu = user?user.email:"Login";
+    const navBrand = 'Equipment maintenance ' + positionStr;
+    const textMenu = user?user.email:"Login";
         
 	return (
 		<Navbar color="dark" dark expand="md">
@@ -49,7 +55,7 @@ const NavBar = ({user, logout, isOpened, toggle}) => {
 
 NavBar.propTypes = {
     user: PropTypes.object,
-    logout: PropTypes.func.isRequired,
+    onLoggedOut: PropTypes.func.isRequired,
     toggle: PropTypes.func.isRequired,
 	isOpened: PropTypes.bool.isRequired
 };

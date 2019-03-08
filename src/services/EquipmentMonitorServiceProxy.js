@@ -64,8 +64,13 @@ class EquipmentMonitorServiceProxy{
     }
 
     fetchCurrentUser = async() => {
-        const {user} = await this.get(this.baseUrl + "users/current");
-        return user;
+        if(this.config){
+            const {user} = await this.get(this.baseUrl + "users/current");
+            return user;
+        }
+        else{
+            return undefined;
+        }
     }
 
     ////////////////Equipment////////////////////////
