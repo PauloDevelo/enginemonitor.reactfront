@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
-import { useEquipmentMonitorService } from '../../hooks/EquipmentMonitorServiceHook';
 import { useEditModal } from '../../hooks/EditModalHook';
 
 import equipmentInfoMsg from "./EquipmentInfo.messages";
@@ -34,33 +33,40 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 		changeCurrentEquipment(currentEquipment);
 	}, [currentEquipment]);
 
-	const fetchEquipmentsHook = useEquipmentMonitorService([], EquipmentMonitorService.fetchEquipments, []);
-	
-	const getEquipments = () => {
-		return fetchEquipmentsHook.data;
-	}
+	const [equipments, setEquipments] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
+  
+    const fetchEquipments = async () => {
+      setIsError(false);
+      setIsLoading(true);
+  
+      try {
+        const equipments = await EquipmentMonitorService.fetchEquipments();
+        setEquipments(equipments);
+      } catch (error) {
+        setIsError(true);
+      }
+  
+      setIsLoading(false);
+    };
 
+    useEffect(() => {
+      fetchEquipments();
+    }, [user]);
+  
 	useEffect(() => {
-		if (getEquipments().length > 0){
-			setCurrentEquipment(getEquipments()[0]);
+		if (equipments.length > 0){
+			setCurrentEquipment(equipments[0]);
 		}
 		else{
 			setCurrentEquipment(undefined);
 		}
 
-	}, [fetchEquipmentsHook.data]);
-
-	useEffect(() => {
-		if(user !== undefined){
-			fetchEquipmentsHook.doFetch([]);
-		}
-		else{
-			fetchEquipmentsHook.changeData([]);
-		}
-	}, [user]);
+	}, [equipments]);
 
 	const onEquipmentInfoSaved = async (equipmentInfoSaved) => {
-		const newEquipmentList = getEquipments().concat([]);
+		const newEquipmentList = equipments.concat([]);
 		const index = newEquipmentList.findIndex(equipmentInfo => equipmentInfo._id === equipmentInfoSaved._id);
 
 		if(index === -1){
@@ -70,25 +76,25 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 			newEquipmentList[index] = equipmentInfoSaved;
 		}
         
-		fetchEquipmentsHook.changeData(newEquipmentList);
+		setEquipments(newEquipmentList);
 			
 		setCurrentEquipment(equipmentInfoSaved);
 	}
 	
 	const onEquipmentDeleted = (deletedEquipment) => {
-		const newEquipmentList = getEquipments().filter(equipmentInfo => equipmentInfo._id !== deletedEquipment._id);
-		fetchEquipmentsHook.changeData(newEquipmentList);
+		const newEquipmentList = equipments.filter(equipmentInfo => equipmentInfo._id !== deletedEquipment._id);
+		setEquipments(newEquipmentList);
 			
 		setCurrentEquipment(newEquipmentList.length > 0 ? newEquipmentList[0] : undefined);
 	}
 	
-	const tabPanes =  getEquipments().map((equipment, index) => {
+	const tabPanes =  equipments.map((equipment, index) => {
 		return <EquipmentInfoTab key={equipment._id} equipment={equipment} onClick={() => {
 			modalHook.displayData(currentEquipment);
 		}}/>;
 	});
 
-	const tabnavItems = getEquipments().map((equipment, index) => {
+	const tabnavItems = equipments.map((equipment, index) => {
 		return <EquipmentInfoNavItem key={equipment._id} equipment={equipment} active={isCurrentEquipment(equipment)} onClick={() => setCurrentEquipment(equipment)}/>;
 	});
 

@@ -1,4 +1,4 @@
-import  React, { useEffect } from 'react';
+import  React, { useEffect, useState } from 'react';
 import { Table, Button } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { faCheckSquare, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
-import { useEquipmentMonitorService } from '../../hooks/EquipmentMonitorServiceHook';
 import { useEditModal } from '../../hooks/EditModalHook';
 
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
@@ -29,31 +28,49 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
 
     const modalHook = useEditModal(undefined);
 
-    const initialEntries = [];
-    const fetchEntriesHook = useEquipmentMonitorService(initialEntries, EquipmentMonitorService.fetchEntries, [equipmentId, taskId], onHistoryChanged);
+    const [entries, setEntries] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
 
     useEffect(() => {
-        fetchEntriesHook.doFetch([equipmentId, taskId]);
+      fetchEntries();
     }, [taskId]);
 
-    const getEntries = () => {
-        return fetchEntriesHook.data;
-    }
+    const fetchEntries = async () => {
+      setIsError(false);
+      setIsLoading(true);
+  
+      try {
+        const newEntries = await EquipmentMonitorService.fetchEntries(equipmentId, taskId);
+        setEntries(newEntries);
+      } catch (error) {
+        setIsError(true);
+      }
+  
+      setIsLoading(false);
+    };
+
+    const changeEntries = (newEntries) => {
+      setEntries(newEntries);
+      if(onHistoryChanged){
+        onHistoryChanged(newEntries);
+      }
+    };
 
     const onSavedEntry = (savedEntry) => {
-            const newCurrentHistoryTask = getEntries().filter(entry => entry._id !== savedEntry._id);
+            const newCurrentHistoryTask = entries.filter(entry => entry._id !== savedEntry._id);
             newCurrentHistoryTask.unshift(savedEntry);
             newCurrentHistoryTask.sort((entryA, entryB) => { return entryA.date - entryB.date; });
 
-            fetchEntriesHook.changeData(newCurrentHistoryTask);
+            changeEntries(newCurrentHistoryTask);
 	}
 	
 	const onDeleteEntry = async(entry) => {  
-            var newCurrentHistoryTask = getEntries().slice(0).filter(e => e._id !== entry._id);
-            fetchEntriesHook.changeData(newCurrentHistoryTask);
+            var newCurrentHistoryTask = entries.slice(0).filter(e => e._id !== entry._id);
+            changeEntries(newCurrentHistoryTask);
     }
 
-    const history = getEntries().map(entry => {
+    const history = entries.map(entry => {
     return(
         <CSSTransition key={entry._id} in={true} timeout={500} classNames="tr">
             <EntryRow entry={entry} onClick={() => {
@@ -68,15 +85,15 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
         <div className={classNames}>
 
             <span className="mb-2">
-                <Button color="success" size="sm" className="float-right mb-2" onClick={() => {
+                {task && <Button color="success" size="sm" className="float-right mb-2" onClick={() => {
                     modalHook.displayData(createDefaultEntry(equipment, task));
                 }}>
                     <FontAwesomeIcon icon={faCheckSquare} />
-                </Button>
+                </Button>}
             </span>
-            {fetchEntriesHook.isError && <div><FontAwesomeIcon icon={faExclamationTriangle} color="red"/><FormattedMessage {...taskTableMsg.errorFetching} /></div>}
-            {fetchEntriesHook.isLoading ? !fetchEntriesHook.isError && <Loading/> :
-            !fetchEntriesHook.isError && <Table responsive size="sm" hover striped>
+            {isError && <div><FontAwesomeIcon icon={faExclamationTriangle} color="red"/><FormattedMessage {...taskTableMsg.errorFetching} /></div>}
+            {isLoading ? !isError && <Loading/> :
+            !isError && <Table responsive size="sm" hover striped>
                 <thead className="thead-light">
                     <tr>
                         <th><FormattedMessage {...taskTableMsg.ackDate} /></th>
