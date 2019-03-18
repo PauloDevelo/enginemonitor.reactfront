@@ -85,6 +85,11 @@ const messages: Messages = {
 		defaultMessage: "Are you sure you want to delete this equipment?",
 		description: "Confirmation question"
 	},
+	import: {
+		id: "import",
+		defaultMessage: "Import",
+		description: "Button"
+	}
 };
 
 const definedMessages: typeof messages = defineMessages(messages);

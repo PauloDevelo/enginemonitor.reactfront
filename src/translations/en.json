@@ -60,5 +60,6 @@
 	"signup": "Signup",
 	"errorFetching": "Something went wrong ...",
 	"equipmentDeleteTitle": "Delete Equipment",
-	"equipmentDeleteMsg": "Are you sure you want to delete this equipment?"
+	"equipmentDeleteMsg": "Are you sure you want to delete this equipment?",
+	"import": "Import"
 }

@@ -60,5 +60,6 @@
 	"signup": "S'inscrire",
 	"errorFetching": "Une erreur est survenue ...",
 	"equipmentDeleteTitle": "Suppression d'un équipement",
-	"equipmentDeleteMsg": "Etes vous sure de vouloir supprimer cet équipement ?"
+	"equipmentDeleteMsg": "Etes vous sure de vouloir supprimer cet équipement ?",
+	"import": "Import"
 }
