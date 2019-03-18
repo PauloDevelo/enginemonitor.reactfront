@@ -91,8 +91,8 @@ class EquipmentMonitorServiceProxy{
         }
     }
 
-    fetchEquipmentInfo = async (idEquipment) =>{
-        const {equipment} = await this.get(this.baseUrl + "equipments/" + idEquipment);
+    importEquipmentInfo = async (idEquipment, serverIpAddress) =>{
+        const {equipment} = await this.get(this.baseUrl + "equipments/" + idEquipment + '/import/' + serverIpAddress);
         return updateEquipment(equipment);
     }
 
