@@ -8,14 +8,10 @@ import { updateEntry } from '../helpers/EntryHelper'
 class EquipmentMonitorServiceProxy{
     config = undefined;
 
-    baseUrl = 'http://localhost:8000/api/';
+    baseUrl = process.env.REACT_APP_URL_BASE;
 
     constructor(){
         axiosRetry(axios, { retries: 1, retryDelay: () => 1000 });
-
-        if(process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production' ){
-            this.baseUrl = 'http://104.199.207.9:8000/api/';
-        }
 
         try{
             this.config = JSON.parse(sessionStorage.getItem('EquipmentMonitorServiceProxy.config'));
