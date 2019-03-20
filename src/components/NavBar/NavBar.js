@@ -28,12 +28,12 @@ const NavBar = ({user, onLoggedOut, isOpened, toggle}) => {
     }
 
     const positionStr = position ? '(' + position.lng.toFixed(4) + ', ' + position.lat.toFixed(4) + ')':'';
-    const navBrand = 'Equipment maintenance ' + positionStr;
+    const navBrand = 'Equipment maintenance ' + positionStr + ' ';
     const textMenu = user?user.email:"Login";
         
 	return (
 		<Navbar color="dark" dark expand="md">
-            <NavbarBrand href="/">{navBrand}</NavbarBrand>
+            <NavbarBrand href="/">{navBrand}<b>{process.env.NODE_ENV}</b> mode</NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpened} navbar>
                 <Nav className="ml-auto" navbar>
