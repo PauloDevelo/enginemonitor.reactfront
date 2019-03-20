@@ -102,13 +102,13 @@ export default function App(){
 					</div>																																																					
 				</div>
 			</CSSTransition>
-			<ModalLogin visible={!user && EquipmentMonitorService.mode === 'auth'} 
+			<ModalLogin visible={!user} 
 				onLoggedIn={setUser}
 				data={{ email: '', password: '', remember:false}} 
 				className='modal-dialog-centered'
 				toggleModalSignup={toggleModalSignup}/>
 			
-			<ModalSignup visible={modalSignupVisible && EquipmentMonitorService.mode === 'auth'} 
+			<ModalSignup visible={modalSignupVisible} 
 				toggle={toggleModalSignup} 
 				className='modal-dialog-centered'/>
 		</Fragment>

@@ -8,20 +8,13 @@ import { updateEntry } from '../helpers/EntryHelper'
 class EquipmentMonitorServiceProxy{
     config = undefined;
 
-    mode = 'auth'; //prod or demo
-    baseUrl = "http://localhost:8081/engine-monitor/webapi/";
+    baseUrl = 'http://localhost:8000/api/';
 
     constructor(){
         axiosRetry(axios, { retries: 1, retryDelay: () => 1000 });
 
-        if(this.mode === 'prod'){
-            this.baseUrl = "http://arbutuspi:8080/engine-monitor/webapi/";
-        }
-        else if(this.mode === 'demo'){
-            this.baseUrl = "http://192.168.0.50:8080/engine-monitor/webapi/";
-        }
-        else if(this.mode === 'auth'){
-            this.baseUrl = "http://localhost:8000/api/";
+        if(process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production' ){
+            this.baseUrl = 'http://104.199.207.9:8000/api/';
         }
 
         try{
