@@ -33,7 +33,7 @@ const NavBar = ({user, onLoggedOut, isOpened, toggle}) => {
         
 	return (
 		<Navbar color="dark" dark expand="md">
-            <NavbarBrand href="/">{navBrand}<b>{process.env.NODE_ENV}</b> mode</NavbarBrand>
+            <NavbarBrand href="/">{navBrand}</NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpened} navbar>
                 <Nav className="ml-auto" navbar>
