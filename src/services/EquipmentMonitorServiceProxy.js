@@ -14,7 +14,7 @@ class EquipmentMonitorServiceProxy{
         axiosRetry(axios, { retries: 1, retryDelay: () => 1000 });
 
         try{
-            this.config = JSON.parse(sessionStorage.getItem('EquipmentMonitorServiceProxy.config'));
+            this.config = JSON.parse(localStorage.getItem('EquipmentMonitorServiceProxy.config'));
         }
         catch{}
     }
@@ -32,7 +32,7 @@ class EquipmentMonitorServiceProxy{
             if(data.user){
                 this.config = { headers: { Authorization: 'Token ' + data.user.token }};
                 if(credentials.remember){
-                    sessionStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify(this.config));
+                    localStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify(this.config));
                 }
 
                 return data.user;
@@ -48,7 +48,7 @@ class EquipmentMonitorServiceProxy{
     }
 
     logout = () => {
-        sessionStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify({}));
+        localStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify({}));
         this.config = undefined;
     }
 
