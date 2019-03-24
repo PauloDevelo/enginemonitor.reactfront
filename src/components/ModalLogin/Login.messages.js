@@ -39,7 +39,7 @@ const messages: Messages = {
     },
     name: {
         id: "name",
-        defaultMessage: "Name",
+        defaultMessage: "Last Name",
         description: "Label"
     },
     firstname: {

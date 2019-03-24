@@ -61,5 +61,6 @@
 	"errorFetching": "Une erreur est survenue ...",
 	"equipmentDeleteTitle": "Suppression d'un équipement",
 	"equipmentDeleteMsg": "Etes vous sure de vouloir supprimer cet équipement ?",
-	"import": "Import"
+	"import": "Import",
+	"needVerification": "doit être verifié. Vérifier vos emails."
 }

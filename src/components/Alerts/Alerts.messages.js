@@ -86,6 +86,11 @@ const messages: Messages = {
         id: "loginfailed",
         defaultMessage: "Login failed",
         description: "Login failed"
+    },
+    needVerification: {
+        id: "needVerification",
+        defaultMessage: "needs to be checked. Please check your emails.",
+        description: "Error message"
     }
 };
 
