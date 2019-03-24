@@ -62,5 +62,7 @@
 	"equipmentDeleteTitle": "Delete Equipment",
 	"equipmentDeleteMsg": "Are you sure you want to delete this equipment?",
 	"import": "Import",
-	"needVerification": "needs to be checked. Please check your emails."
+	"needVerification": "needs to be checked. Please check your emails.",
+	"creatingUser": "Creating the user ...",
+	"emailSent": "An email has been sent. Please, confirm your email by clicking on the link."
 }

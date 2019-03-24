@@ -62,5 +62,7 @@
 	"equipmentDeleteTitle": "Suppression d'un équipement",
 	"equipmentDeleteMsg": "Etes vous sure de vouloir supprimer cet équipement ?",
 	"import": "Import",
-	"needVerification": "doit être verifié. Vérifier vos emails."
+	"needVerification": "doit être verifié. Vérifier vos emails.",
+	"creatingUser": "Création de l'utilisateur ...",
+	"emailSent": "Un email a été envoyé. Cliquez sur le lien pour confirmer votre adresse."
 }

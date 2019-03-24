@@ -91,6 +91,16 @@ const messages: Messages = {
         id: "needVerification",
         defaultMessage: "needs to be checked. Please check your emails.",
         description: "Error message"
+    },
+    creatingUser: {
+        id: "creatingUser",
+        defaultMessage: "Creating the user ...",
+        description: "information message"
+    },
+    emailSent: {
+        id: "emailSent",
+        defaultMessage: "An email has been sent for the email verification...",
+        description: "information message"
     }
 };
 
