@@ -19,25 +19,35 @@ import '../../style/transition.css';
 
 const ModaSignup = ({visible, className, toggle}) => {
 	const data = { firstname:'', name:'', email: '', password: ''};
-    const [signupErrors, setSignupErrors] = useState(undefined);
+ 	const [infoMsg, setInfoMsg] = useState(undefined);
+	const [signupErrors, setSignupErrors] = useState(undefined);
+	const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
 
     const cancel = () => {
-        setSignupErrors(undefined);
+		setSignupErrors(undefined);
+		setInfoMsg(undefined);
 		toggle();
     }
 
     const handleSubmit = async(newuser) => {
+		setIsError(false);
+	  	setIsLoading(true);
+	  
         try{
             await EquipmentMonitorService.signup(newuser);
-            setSignupErrors(undefined);
-			toggle();
+			setSignupErrors(undefined);
+			setInfoMsg({ emailSent:undefined })
 		}
 		catch(errors){
+			setIsError(true);
+
 			if(errors instanceof HttpError){
                 const newSignupErrors = errors.data;
                 setSignupErrors(newSignupErrors);
 			}
 		}
+		setIsLoading(false);
     }
 
 	return (
@@ -51,7 +61,9 @@ const ModaSignup = ({visible, className, toggle}) => {
 						<MyInput name="email" 		label={loginmsg.email} 		type="email" 	required/>
 						<MyInput name="password" 	label={loginmsg.password} 	type="password" required/>
                     </MyForm>}
-                    <Alerts errors={signupErrors} />
+					{isError && <Alerts errors={ signupErrors } />}
+					{isLoading && <Alerts errors={{ creatingUser: undefined }} color="success"/>}
+					{infoMsg && <Alerts errors={infoMsg} color="success"/>}
 				</ModalBody>
 				<ModalFooter>
 					<Button type="submit" form="formSignup" color="success"><FormattedMessage {...loginmsg.signup} /></Button>
