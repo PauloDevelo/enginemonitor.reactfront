@@ -32,12 +32,13 @@ const ModaSignup = ({visible, className, toggle}) => {
 
     const handleSubmit = async(newuser) => {
 		setIsError(false);
-	  	setIsLoading(true);
+		setIsLoading(true);
+		setInfoMsg(undefined);
 	  
         try{
             await EquipmentMonitorService.signup(newuser);
 			setSignupErrors(undefined);
-			setInfoMsg({ emailSent:undefined })
+			setInfoMsg("emailSent")
 		}
 		catch(errors){
 			setIsError(true);
@@ -62,7 +63,7 @@ const ModaSignup = ({visible, className, toggle}) => {
 						<MyInput name="password" 	label={loginmsg.password} 	type="password" required/>
                     </MyForm>}
 					{isError && <Alerts errors={ signupErrors } />}
-					{isLoading && <Alerts errors={{ creatingUser: undefined }} color="success"/>}
+					{isLoading && <Alerts errors={"creatingUser"} color="success"/>}
 					{infoMsg && <Alerts errors={infoMsg} color="success"/>}
 				</ModalBody>
 				<ModalFooter>
