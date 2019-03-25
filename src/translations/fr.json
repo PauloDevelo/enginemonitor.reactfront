@@ -64,5 +64,14 @@
 	"import": "Import",
 	"needVerification": "doit être verifié. Vérifier vos emails.",
 	"creatingUser": "Création de l'utilisateur ...",
-	"emailSent": "Un email a été envoyé. Cliquez sur le lien pour confirmer votre adresse."
+	"emailSent": "Un email a été envoyé. Cliquez sur le lien pour confirmer votre adresse.",
+	"resetPassword": "Mot de passe oublié",
+	"newPassword": "Nouveau mot de passe",
+	"retypeNewPassword": "Re-saisir votre nouveau mot de passe",
+	"changePassword": "Confirmer le changement",
+	"modalResetPasswordTitle": "Changement de mot de passe",
+	"confirmPasswordChange": "Un email a été envoyé. Cliquer sur le lien pour confirmer le changement.",
+	"changingPassword": "Changement du mot de passe ...",
+	"message": "Message d'erreur :",
+	"passwordsHaveToBeIdentical": "Les mots de passe sont différents. Veuillez les retapper."
 }

@@ -64,5 +64,14 @@
 	"import": "Import",
 	"needVerification": "needs to be checked. Please check your emails.",
 	"creatingUser": "Creating the user ...",
-	"emailSent": "An email has been sent. Please, confirm your email by clicking on the link."
+	"emailSent": "An email has been sent. Please, confirm your email by clicking on the link.",
+	"resetPassword": "Reset password",
+	"newPassword": "New Password",
+	"retypeNewPassword": "Retype your new Password",
+	"changePassword": "Change Password",
+	"modalResetPasswordTitle": "Change your password",
+	"confirmPasswordChange": "An email has been sent. Please, confirm your password change by clicking the link.",
+	"changingPassword": "Changing password ...",
+	"message": "Error message :",
+	"passwordsHaveToBeIdentical": "The passwords are different. Please re-type the passwords."
 }

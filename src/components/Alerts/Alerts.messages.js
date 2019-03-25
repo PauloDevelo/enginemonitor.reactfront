@@ -101,6 +101,26 @@ const messages: Messages = {
         id: "emailSent",
         defaultMessage: "An email has been sent for the email verification...",
         description: "information message"
+    },
+    confirmPasswordChange: {
+        id: "confirmPasswordChange",
+        defaultMessage: "An email has been sent. Please, confirm your password change by clicking the link.",
+		description: "confirmation message"
+    },
+    changingPassword: {
+        id: "changingPassword",
+        defaultMessage: "Changing password ...",
+        description: "Information message"
+    },
+    message: {
+        id: "message",
+        defaultMessage: "Error message:",
+        description: "label"
+    },
+    passwordsHaveToBeIdentical: {
+        id:"passwordsHaveToBeIdentical",
+        defaultMessage: "The passwords are different. Please re-type the passwords.",
+        description: "message information"
     }
 };
 
