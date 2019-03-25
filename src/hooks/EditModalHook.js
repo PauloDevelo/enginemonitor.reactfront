@@ -13,5 +13,5 @@ export function useEditModal(initialData){
         setEditModalVisibility(true);
     }
   
-    return { data, editModalVisibility, toggleModal, displayData };
+    return { data, editModalVisibility, toggleModal, displayData, setData };
   };
