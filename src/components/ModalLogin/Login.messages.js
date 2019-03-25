@@ -76,6 +76,11 @@ const messages: Messages = {
         id: "loginfailed",
         defaultMessage: "Login failed",
         description: "Login failed"
+    },
+    resetPassword: {
+        id: "resetPassword",
+        defaultMessage: "Reset password",
+        description: "Button title"
     }
 };
 
