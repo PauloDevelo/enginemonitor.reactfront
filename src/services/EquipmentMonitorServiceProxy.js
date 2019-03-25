@@ -16,7 +16,9 @@ class EquipmentMonitorServiceProxy{
         try{
             this.config = JSON.parse(localStorage.getItem('EquipmentMonitorServiceProxy.config'));
         }
-        catch{}
+        catch(error){
+            console.log(error);
+        }
     }
 
     /////////////////////User/////////////////////////
@@ -25,26 +27,23 @@ class EquipmentMonitorServiceProxy{
         return user;
     }
 
-    authenticate = async (credentials) => {
-        try{
-            const data = await this.post(this.baseUrl + "users/login", { user: credentials });
-            
-            if(data.user){
-                this.config = { headers: { Authorization: 'Token ' + data.user.token }};
-                if(credentials.remember){
-                    localStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify(this.config));
-                }
+    resetPassword = async (email, password) => {
+        await this.post(this.baseUrl + "users/resetpassword", { email: email, newPassword: password });
+    }
 
-                return data.user;
+    authenticate = async (credentials) => {
+        const data = await this.post(this.baseUrl + "users/login", { user: credentials });
+        
+        if(data.user){
+            this.config = { headers: { Authorization: 'Token ' + data.user.token }};
+            if(credentials.remember){
+                localStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify(this.config));
             }
-            
-            throw new HttpError( { loginerror: "loginfailed"} )
+
+            return data.user;
         }
-        catch(error){
-            console.log('Authentication failed.');
-            console.log( error );
-            throw error;
-        }
+        
+        throw new HttpError( { loginerror: "loginfailed"} )
     }
 
     logout = () => {
@@ -150,8 +149,7 @@ class EquipmentMonitorServiceProxy{
 		    return response.data;
         }
         catch(error){
-            console.log( error );
-            throw new HttpError(error.response ? error.response.data.errors : undefined);
+            this.processError(error)
         }
     }
     
@@ -161,8 +159,7 @@ class EquipmentMonitorServiceProxy{
 		    return response.data;
         }
         catch(error){
-            console.log( error );
-            throw new HttpError(error.response ? error.response.data.errors : undefined);
+            this.processError(error)
         }
     }
 
@@ -172,8 +169,14 @@ class EquipmentMonitorServiceProxy{
 		    return response.data;
         }
         catch(error){
+            this.processError(error);
+        }
+    }
+
+    processError(error){
+        if(error){
             console.log( error );
-            throw new HttpError(error.response ? error.response.data.errors : undefined);
+            throw new HttpError(error.response ? error.response.data.errors : { message: error.message});
         }
     }
 }
