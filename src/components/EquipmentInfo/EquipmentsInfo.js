@@ -14,6 +14,7 @@ import ClockLabel from '../ClockLabel/ClockLabel';
 import EquipmentInfoTab from './EquipmentInfoTab';
 import EquipmentInfoNavItem from './EquipmentInfoNavItem';
 import ModalEquipmentInfo from '../ModalEquipmentInfo/ModalEquipmentInfo';
+import Loading from '../Loading/Loading';
 import { createDefaultEquipment } from '../../helpers/EquipmentHelper';
 
 export default function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}){
@@ -35,17 +36,15 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 
 	const [equipments, setEquipments] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
   
     const fetchEquipments = async () => {
-      setIsError(false);
       setIsLoading(true);
   
       try {
         const equipments = await EquipmentMonitorService.fetchEquipments();
         setEquipments(equipments);
       } catch (error) {
-        setIsError(true);
+				setEquipments([]);
       }
   
       setIsLoading(false);
@@ -108,12 +107,15 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 						<FontAwesomeIcon icon={faPlusSquare} />
 					</Button>
 				</span>
-				<Nav tabs>
-					{tabnavItems}
-				</Nav>
-				<TabContent activeTab={currentEquipment?currentEquipment._id:undefined}>
-					{tabPanes}
-				</TabContent>
+				{isLoading ? <Loading/> :
+				<Fragment>
+					<Nav tabs>
+						{tabnavItems}
+					</Nav>
+					<TabContent activeTab={currentEquipment?currentEquipment._id:undefined}>
+						{tabPanes}
+					</TabContent>
+				</Fragment>}
 			</div>
 			<ModalEquipmentInfo equipment={modalHook.data}
 								onEquipmentInfoSaved={onEquipmentInfoSaved} 

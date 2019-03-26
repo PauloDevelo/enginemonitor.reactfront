@@ -16,8 +16,13 @@ export default function App(){
 	const [user, setUser] = useState(undefined);
 
 	const refreshCurrentUser = async () => {
-		const currentUser = await EquipmentMonitorService.fetchCurrentUser();
-		setUser(currentUser);
+		try{
+			const currentUser = await EquipmentMonitorService.fetchCurrentUser();
+			setUser(currentUser);
+		}
+		catch(error){
+			setUser(undefined);
+		}
 	}
 
 	useEffect(() => {
