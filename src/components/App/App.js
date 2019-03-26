@@ -31,6 +31,7 @@ export default function App(){
 
 	const [currentEquipment, setCurrentEquipment] = useState(undefined);
 	const [task, setTask] = useState({ list:[], current: undefined });
+	const [areTasksLoading, setAreTasksLoading] = useState(false);
 
 	useEffect(() => {
 		refreshTaskList();
@@ -49,6 +50,7 @@ export default function App(){
 	const refreshTaskList = async() => {
 		if(currentEquipment !== undefined){
 			try{
+				setAreTasksLoading(true);
 				const tasks = await EquipmentMonitorService.fetchTasks(currentEquipment._id);
 				let newCurrentTask = undefined;
 				if(task.current !== undefined){
@@ -61,6 +63,7 @@ export default function App(){
 			catch(error){
 				setTask({ list: [], current: undefined });
 			}
+			setAreTasksLoading(false);
 		}
 		else{
 			setTask({ list: [], current: undefined });
@@ -86,6 +89,7 @@ export default function App(){
 										changeCurrentEquipment={setCurrentEquipment}
 										extraClassNames={panelClassNames}/>
 							<TaskTable 	equipment={currentEquipment}
+										areTasksLoading={areTasksLoading}
 										tasks={task.list} 
 										onTaskSaved={onCurrentTaskChanged}
 										changeCurrentTask={changeCurrentTask}

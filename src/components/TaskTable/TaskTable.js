@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 
+import Loading from '../Loading/Loading';
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
 import TaskRow from './TaskRow';
 
@@ -15,7 +16,7 @@ import { createDefaultTask } from '../../helpers/TaskHelper'
 
 import taskTableMsg from "./TaskTable.messages";
 
-export const TaskTable = ({equipment, tasks, onTaskSaved, changeCurrentTask, classNames}) => {
+export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, changeCurrentTask, classNames}) => {
 	const modalHook = useEditModal(undefined);
 
 	var listLines = [];
@@ -36,6 +37,7 @@ export const TaskTable = ({equipment, tasks, onTaskSaved, changeCurrentTask, cla
 				<span className="mb-2"><FontAwesomeIcon icon={faTasks} />{' '}<b><FormattedMessage {...taskTableMsg.tasklistTitle} /></b>
 					{equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultTask()) }><FontAwesomeIcon icon={faPlusSquare} /></Button>}
 				</span>
+				{areTasksLoading ? <Loading/>:
 				<Table responsive size="sm" hover>
 					<thead className="thead-light">
 						<tr>
@@ -48,6 +50,8 @@ export const TaskTable = ({equipment, tasks, onTaskSaved, changeCurrentTask, cla
 						{listLines}
 					</TransitionGroup>
 				</Table>
+				}
+				
 			</div>
 			<ModalEditTask  equipment={equipment}
 							task={modalHook.data}
@@ -64,7 +68,8 @@ TaskTable.propTypes = {
 	tasks: PropTypes.array.isRequired,
 	onTaskSaved: PropTypes.func.isRequired,
 	changeCurrentTask: PropTypes.func.isRequired,
-	classNames: PropTypes.string
+	classNames: PropTypes.string,
+	areTasksLoading: PropTypes.bool.isRequired
 };
 
 export default TaskTable;
