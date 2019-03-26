@@ -63,7 +63,7 @@ const ModalPasswordReset = ({visible, className, toggle, data}) => {
 				<ModalHeader toggle={cancel}><FontAwesomeIcon icon={faUnlockAlt} />{' '}<FormattedMessage {...changePasswordMsg.modalResetPasswordTitle} /></ModalHeader>
 				<ModalBody>
 				    {visible && <MyForm submit={handleSubmit} id="formChangePassword" initialData={data}>
-                        <MyInput name="email" 			label={changePasswordMsg.email} 			type="email"     	required/>
+                        <MyInput name="email" 			label={changePasswordMsg.email} 			type="email"     	required="true" readonly="true" />
                         <MyInput name="newPassword1" 	label={changePasswordMsg.newPassword} 		type="password" 	required/>
 						<MyInput name="newPassword2" 	label={changePasswordMsg.retypeNewPassword} type="password" 	required/>
                     </MyForm>}
