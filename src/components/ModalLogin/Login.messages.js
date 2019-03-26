@@ -81,6 +81,11 @@ const messages: Messages = {
         id: "resetPassword",
         defaultMessage: "Reset password",
         description: "Button title"
+    },
+    sendVerification: {
+        id: "sendVerification",
+        defaultMessage: "Send Verification",
+        description: "Button title"
     }
 };
 

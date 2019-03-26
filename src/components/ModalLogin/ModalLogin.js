@@ -21,24 +21,34 @@ import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy
 
 import '../../style/transition.css';
 
-const ModaLogin = ({onLoggedIn, visible, className, data, toggleModalSignup}) => {
+const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}) => {
+	const [user, setUser] = useState({ email: '', password: '', remember:false});
 	const [loginErrors, setLoginErrors] = useState(undefined);
 	const [resetPassword, setResetPassword] = useState(false);
+	const [sendVerification, setSendVerification] = useState(false);
 	const resetPasswordModalHook = useEditModal({email: '', newPassword1: '', newPassword2: ''});
 
-    const handleSubmit = async(data) => {
+	const sendVerificationEmail = async()=>{
+		await EquipmentMonitorService.sendVerificationEmail(user);
+	}
+
+    const handleSubmit = async(newUser) => {
+		setUser(newUser);
+
 		try{
-			const user = await EquipmentMonitorService.authenticate(data);
+			const user = await EquipmentMonitorService.authenticate(newUser);
 			onLoggedIn(user);
 			setLoginErrors(undefined);
 			setResetPassword(false);
+			setSendVerification(false);
 		}
 		catch(errors){
 			if(errors instanceof HttpError){
                 const newLoginErrors = errors.data;
 				setLoginErrors(newLoginErrors);
 				setResetPassword(newLoginErrors.password === "invalid");
-				resetPasswordModalHook.setData({email: data.email, newPassword1: '', newPassword2: ''})
+				setSendVerification(newLoginErrors.email === "needVerification");
+				resetPasswordModalHook.setData({email: newUser.email, newPassword1: '', newPassword2: ''})
 			}
 		}
 	}
@@ -49,7 +59,7 @@ const ModaLogin = ({onLoggedIn, visible, className, data, toggleModalSignup}) =>
 				<Modal isOpen={visible} className={className} fade={false}>
 					<ModalHeader><FontAwesomeIcon icon={faSignInAlt} />{' '}<FormattedMessage {...loginmsg.modaltitle} /></ModalHeader>
 					<ModalBody>
-						{visible && <MyForm submit={handleSubmit} id="formLogin" initialData={data}>
+						{visible && <MyForm submit={handleSubmit} id="formLogin" initialData={user}>
 							<MyInput name="email" 		label={loginmsg.email} 		type="email" 	required/>
 							<MyInput name="password" 	label={loginmsg.password} 	type="password" required/>
 							<MyInput name="remember" 	label={loginmsg.remember} 	type="checkbox"/>
@@ -60,8 +70,10 @@ const ModaLogin = ({onLoggedIn, visible, className, data, toggleModalSignup}) =>
 						<Container>
 							<Row>
 								<Col sm="3"><Button onClick={toggleModalSignup} color="warning" className="d-block mx-auto"><FormattedMessage {...loginmsg.signup} /></Button></Col>
-								<Col sm="6
-								">{resetPassword && <Button onClick={resetPasswordModalHook.toggleModal} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.resetPassword} /></Button>}</Col>
+								<Col sm="6">
+									{resetPassword && <Button onClick={resetPasswordModalHook.toggleModal} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.resetPassword} /></Button>}
+									{sendVerification && <Button onClick={sendVerificationEmail} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.sendVerification} /></Button>}
+								</Col>
 								<Col sm="3"><Button type="submit" form="formLogin" color="success" className="d-block mx-auto"><FormattedMessage {...loginmsg.login} /></Button></Col>
 							</Row>
 						</Container>
@@ -77,7 +89,6 @@ ModaLogin.propTypes = {
 	visible: PropTypes.bool.isRequired,
 	onLoggedIn: PropTypes.func.isRequired,
 	className: PropTypes.string,
-    data: PropTypes.object,
 	toggleModalSignup: PropTypes.func.isRequired
 };
 

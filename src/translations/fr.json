@@ -73,5 +73,6 @@
 	"confirmPasswordChange": "Un email a été envoyé. Cliquer sur le lien pour confirmer le changement.",
 	"changingPassword": "Changement du mot de passe ...",
 	"message": "Message d'erreur :",
-	"passwordsHaveToBeIdentical": "Les mots de passe sont différents. Veuillez les retapper."
+	"passwordsHaveToBeIdentical": "Les mots de passe sont différents. Veuillez les retapper.",
+	"sendVerification": "Renvoyer la Vérification"
 }

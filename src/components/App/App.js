@@ -103,8 +103,7 @@ export default function App(){
 				</div>
 			</CSSTransition>
 			<ModalLogin visible={!user} 
-				onLoggedIn={setUser}
-				data={{ email: '', password: '', remember:false}} 
+				onLoggedIn={setUser} 
 				className='modal-dialog-centered'
 				toggleModalSignup={toggleModalSignup}/>
 			

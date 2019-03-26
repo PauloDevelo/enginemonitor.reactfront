@@ -27,6 +27,10 @@ class EquipmentMonitorServiceProxy{
         return user;
     }
 
+    sendVerificationEmail = async(user) => {
+        await this.post(this.baseUrl + "users/verificationemail", { user: user });
+    }
+
     resetPassword = async (email, password) => {
         await this.post(this.baseUrl + "users/resetpassword", { email: email, newPassword: password });
     }
@@ -43,7 +47,7 @@ class EquipmentMonitorServiceProxy{
             return data.user;
         }
         
-        throw new HttpError( { loginerror: "loginfailed"} )
+        throw new HttpError( { loginerror: "loginfailed"} );
     }
 
     logout = () => {
