@@ -23,8 +23,7 @@ class EquipmentMonitorServiceProxy{
 
     /////////////////////User/////////////////////////
     signup = async (newUser) => {
-        const {user} = await this.post(this.baseUrl + "users/", { user: newUser });
-        return user;
+        await this.post(this.baseUrl + "users/", { user: newUser });
     }
 
     sendVerificationEmail = async(user) => {
