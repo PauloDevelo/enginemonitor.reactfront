@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, Row, Col } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, Row, Col, Spinner } from 'reactstrap';
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
@@ -23,16 +23,41 @@ import '../../style/transition.css';
 
 const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}) => {
 	const [user, setUser] = useState({ email: '', password: '', remember:false});
-	const [loginErrors, setLoginErrors] = useState(undefined);
+	
 	const [resetPassword, setResetPassword] = useState(false);
 	const [sendVerification, setSendVerification] = useState(false);
+	
+	const [loginErrors, setLoginErrors] = useState(undefined);
+	const [infoMsg, setInfoMsg] = useState(undefined);
+	const [isLoading, setIsLoading] = useState(false);
+	const [isError, setIsError] = useState(false);
+	
 	const resetPasswordModalHook = useEditModal({email: '', newPassword1: '', newPassword2: ''});
 
 	const sendVerificationEmail = async()=>{
-		await EquipmentMonitorService.sendVerificationEmail(user);
+		setIsLoading(true);
+		setIsError(false);
+		setInfoMsg(undefined);
+
+		try{
+			await EquipmentMonitorService.sendVerificationEmail(user);
+			setLoginErrors(undefined);
+			setInfoMsg("emailSent");
+		}
+		catch(errors){
+			if(errors instanceof HttpError){
+				setIsError(true);
+				setLoginErrors(errors.data);
+			}
+		}
+
+		setIsLoading(false);
 	}
 
-    const handleSubmit = async(newUser) => {
+  const handleSubmit = async(newUser) => {
+		setIsLoading(true);
+		setIsError(false);
+		setInfoMsg(undefined);
 		setUser(newUser);
 
 		try{
@@ -44,13 +69,18 @@ const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}) => {
 		}
 		catch(errors){
 			if(errors instanceof HttpError){
-                const newLoginErrors = errors.data;
+				setIsError(true);
+        const newLoginErrors = errors.data;
 				setLoginErrors(newLoginErrors);
+
 				setResetPassword(newLoginErrors.password === "invalid");
 				setSendVerification(newLoginErrors.email === "needVerification");
+
 				resetPasswordModalHook.setData({email: newUser.email, newPassword1: '', newPassword2: ''})
 			}
 		}
+
+		setIsLoading(false);
 	}
     
 	return (
@@ -64,7 +94,9 @@ const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}) => {
 							<MyInput name="password" 	label={loginmsg.password} 	type="password" required/>
 							<MyInput name="remember" 	label={loginmsg.remember} 	type="checkbox"/>
 						</MyForm>}
-						<Alerts errors={loginErrors}/>
+						{isLoading && <Spinner size="sm" color="secondary" />}
+						{infoMsg && <Alerts errors={infoMsg} color="success"/>}
+						{isError && <Alerts errors={loginErrors}/>}
 					</ModalBody>
 					<ModalFooter>
 						<Container>
