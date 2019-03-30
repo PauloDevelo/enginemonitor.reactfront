@@ -16,3 +16,17 @@ body{
     border-color: #808080;
     border-style: solid;
 }
+
+.card-title {
+    font-size: large;
+    font-weight: 600;
+}
+
+.card-title {
+    font-size: large;
+    font-weight: 600;
+}
+
+.card-subtitle {
+    font-size: large;
+}
