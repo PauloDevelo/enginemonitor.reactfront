@@ -1,5 +1,4 @@
-import {defineMessages} from "react-intl";
-import {type Messages} from "./MessageDescriptor"
+import {defineMessages, Messages} from "react-intl";
 
 const messages: Messages = {
     signout: {

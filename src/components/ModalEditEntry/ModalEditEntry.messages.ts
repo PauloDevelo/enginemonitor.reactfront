@@ -1,5 +1,4 @@
-import {defineMessages} from "react-intl";
-import {type Messages} from "./MessageDescriptor"
+import {defineMessages, Messages} from "react-intl";
 
 const messages: Messages = {
     modalEditEntryTitle: {
@@ -59,6 +58,6 @@ const messages: Messages = {
     },
 };
 
-const definedMessages: typeof messages = defineMessages(messages);
+const definedMessages: Messages = defineMessages(messages);
 
 export default definedMessages;
