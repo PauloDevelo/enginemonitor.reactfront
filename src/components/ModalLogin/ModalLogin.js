@@ -95,7 +95,7 @@ const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}) => {
 							<MyInput name="remember" 	label={loginmsg.remember} 	type="checkbox"/>
 						</MyForm>}
 						{isLoading && <Spinner size="sm" color="secondary" />}
-						{infoMsg && <Alerts errors={infoMsg} color="success"/>}
+						{infoMsg && <Alerts error={infoMsg} color="success"/>}
 						{isError && <Alerts errors={loginErrors}/>}
 					</ModalBody>
 					<ModalFooter>

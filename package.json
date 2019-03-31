@@ -40,6 +40,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@types/react-intl": "^2.3.17"
+    "@types/react-intl": "^2.3.17",
+    "@types/react-transition-group": "^2.0.16",
+    "@types/reactstrap": "^7.1.3"
   }
 }

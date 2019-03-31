@@ -63,8 +63,8 @@ const ModaSignup = ({visible, className, toggle}) => {
 						<MyInput name="password" 	label={loginmsg.password} 	type="password" required/>
                     </MyForm>}
 					{isError && <Alerts errors={ signupErrors } />}
-					{isLoading && <Alerts errors={"creatingUser"} color="success"/>}
-					{infoMsg && <Alerts errors={infoMsg} color="success"/>}
+					{isLoading && <Alerts error={"creatingUser"} color="success"/>}
+					{infoMsg && <Alerts error={infoMsg} color="success"/>}
 				</ModalBody>
 				<ModalFooter>
 					<Button type="submit" form="formSignup" color="success"><FormattedMessage {...loginmsg.signup} /></Button>

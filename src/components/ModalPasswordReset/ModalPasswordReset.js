@@ -42,7 +42,7 @@ const ModalPasswordReset = ({visible, className, toggle, data}) => {
 			}
 			else{
 				setIsError(true);
-				setResetPasswordErrors("passwordsHaveToBeIdentical");
+				setResetPasswordErrors({ password: "passwordsHaveToBeIdentical"});
 			}
             
 		}
@@ -68,8 +68,8 @@ const ModalPasswordReset = ({visible, className, toggle, data}) => {
 						<MyInput name="newPassword2" 	label={changePasswordMsg.retypeNewPassword} type="password" 	required/>
                     </MyForm>}
 					{isError && <Alerts errors={ resetPasswordErrors } />}
-					{isLoading && <Alerts errors={"changingPassword"} color="success"/>}
-					{infoMsg && <Alerts errors={infoMsg} color="success"/>}
+					{isLoading && <Alerts error={"changingPassword"} color="success"/>}
+					{infoMsg && <Alerts error={infoMsg} color="success"/>}
 				</ModalBody>
 				<ModalFooter>
 					<Button type="submit" form="formChangePassword" color="success"><FormattedMessage {...changePasswordMsg.changePassword} /></Button>
