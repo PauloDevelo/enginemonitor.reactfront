@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import './MyForm.css';
 
 /**Function that converts the Date fields of Data into a string useable by the Input of type Date. */
-function convertDateFieldsToString(obj){
-	var dateKeys = [];
+function convertDateFieldsToString(obj:any){
+	var dateKeys:string[] = [];
 	var keys = Object.keys(obj);
 	keys.forEach(key => {
 		if(Object.prototype.toString.call(obj[key]) === "[object Date]"){
@@ -20,35 +20,40 @@ function convertDateFieldsToString(obj){
 }
 
 /**Function that will parse all convert back the data's field of type Date */
-function convertDateFieldsToDate(data, keys){
+function convertDateFieldsToDate(data:any, keys:string[]){
 	keys.forEach(key => {
 		data[key] = new Date(data[key]);
 	});
 	return data;
 }
 
-export default function MyForm({ initialData , submit, children, className, ...props}) {
+type Props = {
+	initialData: any,
+	submit: (data:any) => void, 
+	children: JSX.Element[], 
+	className: string
+};
+
+export default function MyForm({ initialData , submit, children, className, ...props}:Props) {
 	var dateKeys = convertDateFieldsToString(initialData);
-	const [classNames, setClassNames] = useState(className === undefined ? [] : className);
+	const [classNames, setClassNames] = useState(className === undefined ? [] : className.split(' '));
 	const [isValidated, setIsValidated] = useState(false);
 	const [data, setData] = useState({ data: initialData, dateKeys: dateKeys });
-	const formEl = useRef();
+	const formEl = useRef<any>();
 
 	useEffect(() => {
-		let newClassNames = [];
-		if (className) {
-			newClassNames = Object.assign({}, className);
-		}
+		let newClassNames:string[] = classNames.slice().filter(className => className !== '.was-validated');
 
 		if (isValidated) {
 			newClassNames.push('.was-validated');
 		}
+
 		setClassNames(newClassNames);
 	}, [isValidated]);
 
 	const validate = () => formEl.current.checkValidity() === true;
 
-	const submitHandler = (event) => {
+	const submitHandler = (event:React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		if (validate()){
@@ -60,8 +65,8 @@ export default function MyForm({ initialData , submit, children, className, ...p
 		setIsValidated(true);
 	}
 
-	const handleInputChange = (event) => {
-		const target = event.target;
+	const handleInputChange = (event:React.FormEvent<HTMLInputElement>) => {
+		const target:HTMLInputElement = event.target as HTMLInputElement;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 		const name = target.name;
 
