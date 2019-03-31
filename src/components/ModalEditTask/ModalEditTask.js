@@ -46,10 +46,10 @@ const ModalEditTask = ({equipment, task, onTaskSaved, toggle, onTaskDeleted, vis
 					<ModalHeader toggle={modalLogic.cancel}><FontAwesomeIcon icon={faEdit} />{' '}{title}</ModalHeader>
 					<ModalBody>
 						{visible && <MyForm id="createTaskForm" submit={modalLogic.handleSubmit} initialData={task}>
-							<MyInput name="name" 		label={edittaskmsg.name} 		type="text" 	required/>
-							<MyInput name="usagePeriodInHour" label={edittaskmsg.usagePeriodInHour} type="number" 	min={0} />
-							<MyInput name="periodInMonth" 		label={edittaskmsg.month} 		type="number" 	min={1} required/>
-							<MyInput name="description" label={edittaskmsg.description} type="textarea" required />
+							<MyInput name="name" 				label={edittaskmsg.name} 				type="text" 	required/>
+							<MyInput name="usagePeriodInHour" 	label={edittaskmsg.usagePeriodInHour} 	type="number" 	min={0} />
+							<MyInput name="periodInMonth" 		label={edittaskmsg.month} 				type="number" 	min={1} required/>
+							<MyInput name="description" 		label={edittaskmsg.description} 		type="textarea" required />
 						</MyForm>}
 						<Alerts errors={modalLogic.alerts}/>
 					</ModalBody>
