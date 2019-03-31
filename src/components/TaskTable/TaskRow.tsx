@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import PropTypes from 'prop-types';
 import { getContext, getTodoText, shorten } from '../../helpers/TaskHelper'; 
 
-const getTrContext = (level) => "table-" + getContext(level)
+const getTrContext = (level: number) => "table-" + getContext(level);
 
-const TaskRow = ({task, trStyle, onClick}) => {
+type Props = {
+	task: any,
+	trStyle: CSSProperties | undefined,
+	onClick?: () => void
+}
+
+const TaskRow = ({task, trStyle, onClick}: Props) => {
 	var shortenDescription = shorten(task.description.replace(/\n/g,'<br />'));
 	var todoText = getTodoText(task)		
 	var classNames = getTrContext(task.level) + " small";
