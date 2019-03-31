@@ -3,14 +3,26 @@ import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, UncontrolledDropdown
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage } from 'react-intl';
-import PropTypes from 'prop-types';
+import PropTypes, { number } from 'prop-types';
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
 import navBarMsg from "./NavBar.messages";
 
-const NavBar = ({user, onLoggedOut, isOpened, toggle}) => {
-    const [position, setPosition] = useState(undefined);
+type Props = {
+    user: any, 
+    onLoggedOut: ()=>void, 
+    isOpened: boolean, 
+    toggle: ()=>void
+};
+
+type Position = {
+    latitude: number,
+    longitude: number
+}
+
+const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
+    const [position, setPosition] = useState( {latitude: Number.NaN, longitude: Number.NaN });
 
     const logout = () => {
         EquipmentMonitorService.logout();
@@ -19,15 +31,12 @@ const NavBar = ({user, onLoggedOut, isOpened, toggle}) => {
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((navigatorPosition) => {
-          var pos = {
-            lat: navigatorPosition.coords.latitude,
-            lng: navigatorPosition.coords.longitude
-          };
+           const pos:Position = { longitude:navigatorPosition.coords.longitude, latitude: navigatorPosition.coords.latitude };
           setPosition( pos );
         });
     }
 
-    const positionStr = position ? '(' + position.lng.toFixed(4) + ', ' + position.lat.toFixed(4) + ')':'';
+    const positionStr = position.longitude != Number.NaN ? '(' + position.longitude.toFixed(4) + ', ' + position.latitude.toFixed(4) + ')':'';
     const navBrand = 'Equipment maintenance ' + positionStr + ' ';
     const textMenu = user?user.email:"Login";
         
