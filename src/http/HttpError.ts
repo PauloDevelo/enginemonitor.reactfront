@@ -1,6 +1,6 @@
 export default class HttpError extends Error {
   private readonly date:Date;
-  private readonly data:any;
+  public readonly data:any;
 
   constructor(data: any, ...params:any) {
     // Pass remaining arguments (including vendor specific ones) to parent constructor

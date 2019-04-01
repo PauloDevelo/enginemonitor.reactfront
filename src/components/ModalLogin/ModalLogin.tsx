@@ -19,16 +19,25 @@ import HttpError from '../../http/HttpError'
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
+import { AuthInfo, User } from '../../types/Types'
+
 import '../../style/transition.css';
 
-const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}) => {
-	const [user, setUser] = useState({ email: '', password: '', remember:false});
+type Props = {
+	onLoggedIn: (user:User) => void, 
+	visible: boolean, 
+	className: string, 
+	toggleModalSignup: () => void
+}
+
+const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}: Props) => {
+	const [user, setUser] = useState<AuthInfo>({ email: '', password: '', remember:false});
 	
 	const [resetPassword, setResetPassword] = useState(false);
 	const [sendVerification, setSendVerification] = useState(false);
 	
-	const [loginErrors, setLoginErrors] = useState(undefined);
-	const [infoMsg, setInfoMsg] = useState(undefined);
+	const [loginErrors, setLoginErrors] = useState<any>(undefined);
+	const [infoMsg, setInfoMsg] = useState<string | undefined>(undefined);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 	
@@ -54,7 +63,7 @@ const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}) => {
 		setIsLoading(false);
 	}
 
-  const handleSubmit = async(newUser) => {
+  const handleSubmit = async(newUser:AuthInfo) => {
 		setIsLoading(true);
 		setIsError(false);
 		setInfoMsg(undefined);
