@@ -13,8 +13,9 @@ import ModalEditTask from '../ModalEditTask/ModalEditTask';
 
 import './CardTaskDetails.css';
 import '../../style/transition.css';
+import { Equipment, Task } from '../../types/Types';
 
-function getBadgeText(level){
+function getBadgeText(level: number):string{
 	if(level === 1){
 		return 'Done'
 	}
@@ -26,10 +27,20 @@ function getBadgeText(level){
 	}
 }
 
-const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames}) => {
+type Props = {
+    equipment: Equipment, 
+    tasks: Task[], 
+    currentTask: Task, 
+    onTaskChanged: (task: Task) => void, 
+    onTaskDeleted: (task: Task) => void, 
+    changeCurrentTask: (task: Task | undefined) => void, 
+    classNames: string
+}
+
+const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames}: Props) => {
     const modalHook = useEditModal(currentTask);
 
-    const getFirstTask = () =>{
+    const getFirstTask = ():Task | undefined =>{
         if (tasks === undefined || tasks.length === 0){
             return undefined;
         }
@@ -38,11 +49,11 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
         }
     }
 
-    const getTaskIndex = (task) => {
+    const getTaskIndex = (task: Task):number => {
         return task === undefined ? -1 : tasks.findIndex(t => t._id === task._id);
     }
 
-    let taskIndex = getTaskIndex(currentTask);
+    const taskIndex = getTaskIndex(currentTask);
     
     useEffect(() => {
         if(currentTask === undefined){
@@ -54,29 +65,29 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
         return <Card className={classNames}/>;
     }
 
-    const isPrevButtonVisible = () => (taskIndex > 0);
-    const isNextButtonVisible = () => (taskIndex < tasks.length - 1);
+    const isPrevButtonVisible = ():boolean => (taskIndex > 0);
+    const isNextButtonVisible = ():boolean => (taskIndex < tasks.length - 1);
 
-    const nextTask = () => {
+    const nextTask = ():void => {
         if(isNextButtonVisible())
             changeCurrentTask(tasks[taskIndex + 1]);
     };
-	const previousTask = () => {
+	const previousTask = ():void => {
         if(isPrevButtonVisible())
             changeCurrentTask(tasks[taskIndex - 1]);
     }
 
     const cursorPointerStyle = { cursor: 'pointer' };
-    var badgeText = getBadgeText(currentTask.level);
-    var badgeContext = getContext(currentTask.level);
-    var title = getScheduleText(currentTask);
-    var descriptionFormatted = currentTask.description.replace(/\n/g,"<br />");
+    const badgeText = getBadgeText(currentTask.level);
+    const badgeContext = getContext(currentTask.level);
+    const title = getScheduleText(currentTask);
+    const descriptionFormatted = currentTask.description.replace(/\n/g,"<br />");
 
-    var prevClassNames = "card-control-prev-icon";
+    let prevClassNames = "card-control-prev-icon";
     if(!isPrevButtonVisible())
         prevClassNames += ' invisible';
 
-    var nextClassNames = "card-control-next-icon";
+    let nextClassNames = "card-control-next-icon";
     if(!isNextButtonVisible())
         nextClassNames += ' invisible';
 
