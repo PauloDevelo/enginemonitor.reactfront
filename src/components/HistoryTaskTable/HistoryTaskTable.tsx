@@ -21,14 +21,22 @@ import taskTableMsg from "../TaskTable/TaskTable.messages";
 
 import './HistoryTaskTable.css';
 import '../../style/transition.css';
+import { Equipment, Task, Entry } from '../../types/Types';
 
-const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
+type Props = {
+    equipment: Equipment | undefined,
+    task: Task | undefined, 
+    onHistoryChanged: (newEntries: Entry[])=>void,
+    classNames: string
+}
+
+const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}: Props) => {
     const equipmentId = equipment ? equipment._id : undefined;
     const taskId = task ? task._id : undefined;
 
     const modalHook = useEditModal(undefined);
 
-    const [entries, setEntries] = useState([]);
+    const [entries, setEntries] = useState<Entry[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
 
@@ -41,7 +49,11 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
       setIsLoading(true);
   
       try {
-        const newEntries = await EquipmentMonitorService.fetchEntries(equipmentId, taskId);
+        let newEntries:Entry[] = [];
+        if(equipmentId && taskId){
+            newEntries = await EquipmentMonitorService.fetchEntries(equipmentId, taskId);
+        }
+        
         setEntries(newEntries);
       } catch (error) {
         setIsError(true);
@@ -50,22 +62,22 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}) => {
       setIsLoading(false);
     };
 
-    const changeEntries = (newEntries) => {
+    const changeEntries = (newEntries: Entry[]) => {
       setEntries(newEntries);
       if(onHistoryChanged){
         onHistoryChanged(newEntries);
       }
     };
 
-    const onSavedEntry = (savedEntry) => {
+    const onSavedEntry = (savedEntry: Entry) => {
             const newCurrentHistoryTask = entries.filter(entry => entry._id !== savedEntry._id);
             newCurrentHistoryTask.unshift(savedEntry);
-            newCurrentHistoryTask.sort((entryA, entryB) => { return entryA.date - entryB.date; });
+            newCurrentHistoryTask.sort((entryA, entryB) => entryA.date.getTime() - entryB.date.getTime());
 
             changeEntries(newCurrentHistoryTask);
 	}
 	
-	const onDeleteEntry = async(entry) => {  
+	const onDeleteEntry = async(entry: Entry) => {  
             var newCurrentHistoryTask = entries.slice(0).filter(e => e._id !== entry._id);
             changeEntries(newCurrentHistoryTask);
     }
