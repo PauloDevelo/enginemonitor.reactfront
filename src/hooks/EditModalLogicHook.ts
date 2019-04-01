@@ -2,10 +2,11 @@ import { useState } from 'react';
 
 import HttpError from '../http/HttpError'
 
-export function useEditModalLogic(toggleEditModal, 
-    equipmentMonitorServiceSaveFunc, saveParamsArray, onSaveCallBack, onSavedCallBack, 
-    equipmentMonitorServiceDeleteFunc, deleteParamsArray, onDeleteCallBack){
-    const [alerts, setAlerts] = useState(undefined);
+export function useEditModalLogic<T>(toggleEditModal: ()=> void, 
+    equipmentMonitorServiceSaveFunc: any, saveParamsArray: any[], onSaveCallBack: ((data: T) => void) | undefined, onSavedCallBack: (data: T) => void, 
+    equipmentMonitorServiceDeleteFunc: any, deleteParamsArray: any[], onDeleteCallBack: ((data: T) => void) | undefined){
+	
+	const [alerts, setAlerts] = useState<any>(undefined);
 	const [yesNoModalVisibility, setYesNoModalVisibility] = useState(false);
 
 	const toggleModalYesNoConfirmation = () => {
@@ -17,7 +18,7 @@ export function useEditModalLogic(toggleEditModal,
 		toggleEditModal();
 	}
 
-	const handleSubmit = async(data) => {
+	const handleSubmit = async(data: T) => {
         if(onSaveCallBack)
             onSaveCallBack(data);
 
@@ -44,7 +45,9 @@ export function useEditModalLogic(toggleEditModal,
 	const yesDelete = async() => {
 		try{
 			const deletedData = await equipmentMonitorServiceDeleteFunc.apply(null, deleteParamsArray);
-			onDeleteCallBack(deletedData);
+			if(onDeleteCallBack !== undefined){
+				onDeleteCallBack(deletedData);
+			}
             setAlerts(undefined);
             toggleModalYesNoConfirmation();
 			toggleEditModal();

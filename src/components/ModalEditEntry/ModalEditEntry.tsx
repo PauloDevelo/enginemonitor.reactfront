@@ -43,7 +43,7 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 	const taskId = task === undefined ? undefined : task._id;
 	const entryId = entry === undefined ? undefined : entry._id;
 
-	const modalLogic = useEditModalLogic(toggle, EquipmentMonitorService.createOrSaveEntry, [equipmentId, taskId], undefined, saveEntry, 
+	const modalLogic = useEditModalLogic<Entry>(toggle, EquipmentMonitorService.createOrSaveEntry, [equipmentId, taskId], undefined, saveEntry, 
 												 EquipmentMonitorService.deleteEntry, [equipmentId, taskId, entryId], deleteEntry);
 
 	return (
