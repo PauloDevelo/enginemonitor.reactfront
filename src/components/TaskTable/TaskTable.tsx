@@ -15,11 +15,21 @@ import TaskRow from './TaskRow';
 import { createDefaultTask } from '../../helpers/TaskHelper'
 
 import taskTableMsg from "./TaskTable.messages";
+import { Equipment, Task } from '../../types/Types';
 
-export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, changeCurrentTask, classNames}) => {
+type Props = {
+	equipment: Equipment, 
+	tasks: Task[], 
+	areTasksLoading: boolean, 
+	onTaskSaved: (task: Task) => void, 
+	changeCurrentTask: (task: Task) => void, 
+	classNames: string
+}
+
+export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, changeCurrentTask, classNames}: Props) => {
 	const modalHook = useEditModal(undefined);
 
-	var listLines = [];
+	let listLines:JSX.Element[] = [];
 	if(tasks){
 		const trStyle = { cursor: 'pointer' };
 		listLines = tasks.map((task) => {
