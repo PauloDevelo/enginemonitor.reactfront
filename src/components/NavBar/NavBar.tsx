@@ -11,7 +11,7 @@ import navBarMsg from "./NavBar.messages";
 import { User } from "../../types/Types";
 
 type Props = {
-    user: User, 
+    user?: User, 
     onLoggedOut: ()=>void, 
     isOpened: boolean, 
     toggle: ()=>void
