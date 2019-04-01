@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import { Form } from 'reactstrap';
+import classNamesUtils from 'classnames';
 
 import PropTypes from 'prop-types';
 
@@ -29,27 +30,24 @@ function convertDateFieldsToDate(data:any, keys:string[]){
 
 type Props = {
 	initialData: any,
-	submit: (data:any) => void, 
+	submit: (data:any) => (void | Promise<void>), 
 	children: JSX.Element[], 
-	className: string
+	className?: string,
+	id: string
 };
 
 export default function MyForm({ initialData , submit, children, className, ...props}:Props) {
 	initialData = Object.assign({}, initialData);
-	var dateKeys = convertDateFieldsToString(initialData);
-	const [classNames, setClassNames] = useState(className === undefined ? [] : className.split(' '));
+	const dateKeys = convertDateFieldsToString(initialData);
+	const initialClassNames = className === undefined ? [] : className.split(' ');
+
+	const [classNames, setClassNames] = useState<string | undefined>(className);
 	const [isValidated, setIsValidated] = useState(false);
 	const [data, setData] = useState({ data: initialData, dateKeys: dateKeys });
 	const formEl = useRef<any>();
 
 	useEffect(() => {
-		let newClassNames:string[] = classNames.slice().filter(className => className !== '.was-validated');
-
-		if (isValidated) {
-			newClassNames.push('.was-validated');
-		}
-
-		setClassNames(newClassNames);
+		setClassNames(classNamesUtils({'.was-validated': isValidated}, initialClassNames));
 	}, [isValidated]);
 
 	const validate = () => formEl.current.checkValidity() === true;
@@ -87,14 +85,12 @@ export default function MyForm({ initialData , submit, children, className, ...p
 			handleChange: handleInputChange,
 		};
 
-		Object.assign(
-			newProps, 
-			child.props);
+		Object.assign(newProps, child.props);
 		return React.cloneElement(child, newProps);
 	});
 
 	return (
-		<Form innerRef={formEl} onSubmit={submitHandler} {...props} className={classNames.toString()} noValidate>
+		<Form innerRef={formEl} onSubmit={submitHandler} {...props} className={classNames} noValidate>
 			{childrenWithProps}
 		</Form>
 	);

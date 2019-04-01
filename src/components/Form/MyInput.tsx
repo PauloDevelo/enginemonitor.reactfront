@@ -2,23 +2,34 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
+import { InputType } from 'zlib';
 
-export default function MyInput({ label, handleChange, ...props }) {
-	const [validity, setValidity] = useState({ isValid: true, errorMessage: undefined });
-	const inputElem = useRef();
+type Props = {
+	label: FormattedMessage.MessageDescriptor,
+	handleChange?: (event: any) => void,
+	type: any,
+	name: string,
+	min?: number,
+	max?: number,
+	required?: boolean
+}
 
-	const validate = () => setValidity(
-		{
-			isValid: inputElem.current.validity !== undefined ? inputElem.current.validity.valid : true,
-			errorMessage: inputElem.current.validationMessage
+export default function MyInput({ label, handleChange, ...props }: Props) {
+	const [validity, setValidity] = useState({ isValid: true, errorMessage: '' });
+	const inputElemRef = useRef<any>();
+
+	const validate = () => {
+		const inputElem = inputElemRef.current;
+		if(inputElem !== undefined){
+			setValidity( { isValid: inputElem.validity !== undefined ? inputElem.validity.valid : true, errorMessage: inputElem.validationMessage });
 		}
-	);
+	};
 
 	useEffect(() => 
 		validate()
-	, [inputElem]);
+	, [inputElemRef]);
 	
-	const onChangeHandler = (event) => {
+	const onChangeHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
 		validate();
 		if(typeof handleChange === 'function') handleChange(event);
 	};
@@ -26,9 +37,9 @@ export default function MyInput({ label, handleChange, ...props }) {
 	if (props.type === 'checkbox'){
 		return (
 			<FormGroup className={"form-group"} check inline={true}>
-				<Label check inline="true">
+				<Label check inline={true}>
 					<FormattedMessage {...label} />{' '}
-					<Input ref={inputElem} onChange={onChangeHandler} invalid={!validity.isValid} {...props} />
+					<Input ref={inputElemRef} onChange={onChangeHandler} invalid={!validity.isValid} {...props} />
 				</Label>
 			</FormGroup>
 		);
@@ -37,7 +48,7 @@ export default function MyInput({ label, handleChange, ...props }) {
 	return ( 
 		<FormGroup className={"form-group"}>
 			<Label for={props.name}><FormattedMessage {...label} /></Label>
-			<Input 	innerRef={inputElem} 
+			<Input 	innerRef={inputElemRef} 
 					className={"form-control"}
 					onChange={onChangeHandler} 
 					invalid={!validity.isValid}
