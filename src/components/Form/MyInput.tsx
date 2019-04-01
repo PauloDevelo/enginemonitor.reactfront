@@ -11,7 +11,8 @@ type Props = {
 	name: string,
 	min?: number,
 	max?: number,
-	required?: boolean
+	required?: boolean,
+	readonly?: string
 }
 
 export default function MyInput({ label, handleChange, ...props }: Props) {
