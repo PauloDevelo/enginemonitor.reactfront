@@ -12,8 +12,10 @@ import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy
 
 import '../../style/transition.css';
 
+import { User, Equipment, Task } from '../../types/Types';
+
 export default function App(){
-	const [user, setUser] = useState(undefined);
+	const [user, setUser] = useState<User | undefined>(undefined);
 
 	const refreshCurrentUser = async () => {
 		try{
@@ -29,35 +31,36 @@ export default function App(){
 		refreshCurrentUser();
 	}, []);
 
-	const [currentEquipment, setCurrentEquipment] = useState(undefined);
-	const [task, setTask] = useState({ list:[], current: undefined });
+	const [currentEquipment, setCurrentEquipment] = useState<Equipment | undefined>(undefined);
+	const [task, setTask] = useState<{ list: Task[], current: Task | undefined }>({ list:[], current: undefined });
 	const [areTasksLoading, setAreTasksLoading] = useState(false);
 
 	useEffect(() => {
 		refreshTaskList();
 	}, [currentEquipment]);
 
-	const onCurrentTaskChanged = (task)=>{
+	const onCurrentTaskChanged = (task: Task)=>{
 		refreshTaskList();
 	}
 
-	const changeCurrentTask = (newCurrentTask) => {
+	const changeCurrentTask = (newCurrentTask: Task | undefined) => {
 		if (newCurrentTask !== task.current){
 			setTask({ list: task.list, current: newCurrentTask });
 		}
 	}
 	
 	const refreshTaskList = async() => {
-		if(currentEquipment !== undefined){
+		if(currentEquipment !== undefined && currentEquipment._id !== undefined){
 			try{
 				setAreTasksLoading(true);
 				const tasks = await EquipmentMonitorService.fetchTasks(currentEquipment._id);
+
 				let newCurrentTask = undefined;
-				if(task.current !== undefined){
-					newCurrentTask = tasks.find(t => t._id === task.current._id);
+				const currentTaskId = task.current !== undefined ? task.current._id : undefined
+				if(currentTaskId){
+					newCurrentTask = tasks.find(t => t._id === currentTaskId);
 				}
 
-				// store the new state object in the component's state
 				setTask({ list: tasks, current: newCurrentTask });
 			}
 			catch(error){
