@@ -28,13 +28,13 @@ function getBadgeText(level: number):string{
 }
 
 type Props = {
-    equipment: Equipment, 
+    equipment?: Equipment, 
     tasks: Task[], 
-    currentTask: Task, 
+    currentTask?: Task, 
     onTaskChanged: (task: Task) => void, 
     onTaskDeleted: (task: Task) => void, 
     changeCurrentTask: (task: Task | undefined) => void, 
-    classNames: string
+    classNames?: string
 }
 
 const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames}: Props) => {
@@ -49,7 +49,7 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
         }
     }
 
-    const getTaskIndex = (task: Task):number => {
+    const getTaskIndex = (task: Task | undefined):number => {
         return task === undefined ? -1 : tasks.findIndex(t => t._id === task._id);
     }
 
@@ -61,7 +61,7 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
         }
     }, [tasks]);
 
-    if (currentTask === undefined){
+    if (equipment === undefined || currentTask === undefined){
         return <Card className={classNames}/>;
     }
 
