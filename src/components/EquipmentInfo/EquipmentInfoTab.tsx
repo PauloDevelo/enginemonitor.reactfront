@@ -6,8 +6,14 @@ import { FormattedMessage, FormattedDate } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import equipmentInfoMsg from "./EquipmentInfo.messages";
+import { Equipment } from '../../types/Types';
 
-export default function EquipmentInfoTab({equipment, onClick}){
+type Props = {
+    equipment: Equipment,
+    onClick?: () => void
+}
+
+export default function EquipmentInfoTab({equipment, onClick}: Props){
 	return(
         <TabPane tabId={equipment._id}>
             <Button color="light" size="sm" className="float-right" onClick={() => {

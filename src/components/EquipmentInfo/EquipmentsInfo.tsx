@@ -16,12 +16,19 @@ import EquipmentInfoNavItem from './EquipmentInfoNavItem';
 import ModalEquipmentInfo from '../ModalEquipmentInfo/ModalEquipmentInfo';
 import Loading from '../Loading/Loading';
 import { createDefaultEquipment } from '../../helpers/EquipmentHelper';
+import { User, Equipment } from '../../types/Types';
 
-export default function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}){
-	const [currentEquipment, setCurrentEquipment] = useState(undefined);
+type Props = {
+	user: User, 
+	changeCurrentEquipment: (equipment: Equipment | undefined) => void, 
+	extraClassNames: string
+}
+
+export default function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
+	const [currentEquipment, setCurrentEquipment] = useState<Equipment | undefined>(undefined);
 	const modalHook = useEditModal(undefined);
 	
-	const isCurrentEquipment = (equipment) => {
+	const isCurrentEquipment = (equipment: Equipment) => {
 		if (currentEquipment === undefined || equipment === undefined){
 			return false;
 		}
@@ -34,37 +41,36 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 		changeCurrentEquipment(currentEquipment);
 	}, [currentEquipment]);
 
-	const [equipments, setEquipments] = useState([]);
+	const [equipments, setEquipments] = useState<Equipment[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-  
-    const fetchEquipments = async () => {
-      setIsLoading(true);
-  
-      try {
-        const equipments = await EquipmentMonitorService.fetchEquipments();
-        setEquipments(equipments);
-      } catch (error) {
-				setEquipments([]);
-      }
-  
-      setIsLoading(false);
-    };
+
+	const fetchEquipments = async () => {
+		setIsLoading(true);
+
+		try {
+			const equipments = await EquipmentMonitorService.fetchEquipments();
+			setEquipments(equipments);
+		} catch (error) {
+			setEquipments([]);
+		}
+
+		setIsLoading(false);
+	};
+
+	useEffect(() => {
+		fetchEquipments();
+	}, [user]);
 
     useEffect(() => {
-      fetchEquipments();
-    }, [user]);
-  
-	useEffect(() => {
-		if (equipments.length > 0){
-			setCurrentEquipment(equipments[0]);
-		}
-		else{
-			setCurrentEquipment(undefined);
-		}
-
+        if (equipments.length > 0){
+            setCurrentEquipment(equipments[0]);
+        }
+        else{
+            setCurrentEquipment(undefined);
+        }
 	}, [equipments]);
 
-	const onEquipmentInfoSaved = async (equipmentInfoSaved) => {
+	const onEquipmentInfoSaved = async (equipmentInfoSaved: Equipment) => {
 		const newEquipmentList = equipments.concat([]);
 		const index = newEquipmentList.findIndex(equipmentInfo => equipmentInfo._id === equipmentInfoSaved._id);
 
@@ -80,7 +86,7 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 		setCurrentEquipment(equipmentInfoSaved);
 	}
 	
-	const onEquipmentDeleted = (deletedEquipment) => {
+	const onEquipmentDeleted = (deletedEquipment: Equipment) => {
 		const newEquipmentList = equipments.filter(equipmentInfo => equipmentInfo._id !== deletedEquipment._id);
 		setEquipments(newEquipmentList);
 			
@@ -93,7 +99,7 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 		}}/>;
 	});
 
-	const tabnavItems = equipments.map((equipment, index) => {
+	const tabNavItems = equipments.map((equipment) => {
 		return <EquipmentInfoNavItem key={equipment._id} equipment={equipment} active={isCurrentEquipment(equipment)} onClick={() => setCurrentEquipment(equipment)}/>;
 	});
 
@@ -110,7 +116,7 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 				{isLoading ? <Loading/> :
 				<Fragment>
 					<Nav tabs>
-						{tabnavItems}
+						{tabNavItems}
 					</Nav>
 					<TabContent activeTab={currentEquipment?currentEquipment._id:undefined}>
 						{tabPanes}
