@@ -8,9 +8,10 @@ import PropTypes, { number } from 'prop-types';
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
 import navBarMsg from "./NavBar.messages";
+import { User } from "../../types/Types";
 
 type Props = {
-    user: any, 
+    user: User, 
     onLoggedOut: ()=>void, 
     isOpened: boolean, 
     toggle: ()=>void
