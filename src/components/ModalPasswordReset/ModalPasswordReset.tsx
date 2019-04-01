@@ -17,9 +17,22 @@ import HttpError from '../../http/HttpError'
 
 import '../../style/transition.css';
 
-const ModalPasswordReset = ({visible, className, toggle, data}) => {
-	const [infoMsg, setInfoMsg] = useState(undefined);
-	const [resetPasswordErrors, setResetPasswordErrors] = useState(undefined);
+type NewPassword = {
+	email:string, 
+	newPassword1?:string, 
+	newPassword2?:string
+};
+
+type Props = {
+	visible: boolean, 
+	className: string, 
+	toggle: () => void, 
+	data: NewPassword
+};
+
+const ModalPasswordReset = ({visible, className, toggle, data}: Props) => {
+	const [infoMsg, setInfoMsg] = useState<string | undefined>(undefined);
+	const [resetPasswordErrors, setResetPasswordErrors] = useState<any>(undefined);
 	const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
 
@@ -29,13 +42,13 @@ const ModalPasswordReset = ({visible, className, toggle, data}) => {
 		toggle();
     }
 
-    const handleSubmit = async(data) => {
+    const handleSubmit = async(data: NewPassword) => {
 		setIsError(false);
 		setIsLoading(true);
 		setInfoMsg(undefined);
 	  
         try{
-			if(data.newPassword1 === data.newPassword2){
+			if(data.newPassword1 !== undefined && data.newPassword1 === data.newPassword2){
 				await EquipmentMonitorService.resetPassword(data.email, data.newPassword1);
 				setResetPasswordErrors(undefined);
 				setInfoMsg("confirmPasswordChange");
@@ -63,7 +76,7 @@ const ModalPasswordReset = ({visible, className, toggle, data}) => {
 				<ModalHeader toggle={cancel}><FontAwesomeIcon icon={faUnlockAlt} />{' '}<FormattedMessage {...changePasswordMsg.modalResetPasswordTitle} /></ModalHeader>
 				<ModalBody>
 				    {visible && <MyForm submit={handleSubmit} id="formChangePassword" initialData={data}>
-                        <MyInput name="email" 			label={changePasswordMsg.email} 			type="email"     	required="true" readonly="true" />
+                        <MyInput name="email" 			label={changePasswordMsg.email} 			type="email"     	required={true} readonly="true" />
                         <MyInput name="newPassword1" 	label={changePasswordMsg.newPassword} 		type="password" 	required/>
 						<MyInput name="newPassword2" 	label={changePasswordMsg.retypeNewPassword} type="password" 	required/>
                     </MyForm>}
