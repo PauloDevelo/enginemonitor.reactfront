@@ -19,7 +19,7 @@ import { createDefaultEquipment } from '../../helpers/EquipmentHelper';
 import { User, Equipment } from '../../types/Types';
 
 type Props = {
-	user: User, 
+	user?: User, 
 	changeCurrentEquipment: (equipment: Equipment | undefined) => void, 
 	extraClassNames: string
 }
