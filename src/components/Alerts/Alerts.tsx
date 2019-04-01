@@ -22,11 +22,9 @@ const Alerts = ({color, error, errors}:Props) => {
 
     
     if(error){
-        if(isString(errors)){
-            return <Alert className="sm" color={color}>
-                {alertMsg[error] !== undefined && <FormattedMessage {...alertMsg[error]}/>}{alertMsg[error] === undefined && {error}}
-            </Alert>;
-        }
+        return <Alert className="sm" color={color}>
+            {alertMsg[error] !== undefined && <FormattedMessage {...alertMsg[error]}/>}{alertMsg[error] === undefined && {error}}
+        </Alert>;
     }
 
     let alerts:JSX.Element[] = [];
