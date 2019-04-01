@@ -40,7 +40,7 @@ const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}) => {
 		setInfoMsg(undefined);
 
 		try{
-			await EquipmentMonitorService.sendVerificationEmail(user);
+			await EquipmentMonitorService.sendVerificationEmail(user.email);
 			setLoginErrors(undefined);
 			setInfoMsg("emailSent");
 		}
@@ -70,7 +70,7 @@ const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}) => {
 		catch(errors){
 			if(errors instanceof HttpError){
 				setIsError(true);
-        const newLoginErrors = errors.data;
+        		const newLoginErrors = errors.data;
 				setLoginErrors(newLoginErrors);
 
 				setResetPassword(newLoginErrors.password === "invalid");

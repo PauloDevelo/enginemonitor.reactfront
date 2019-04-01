@@ -1,4 +1,5 @@
 export type Equipment = {
+    _id: string | undefined,
     name: string,
     brand: string,
     model: string,
@@ -7,6 +8,7 @@ export type Equipment = {
 }
 
 export type Task = {
+    _id: string | undefined,
     name: string,
     periodInMonth: number,
     description: string,
@@ -17,8 +19,22 @@ export type Task = {
 }
 
 export type Entry = {
+    _id: string | undefined,
     name: string,
     date: Date,
     age: number,
     remarks: string,
+}
+
+export type User = {
+    email: string,
+    password: string,
+    name: string,
+    firstname: string
+}
+
+export type AuthInfo = {
+    email: string,
+    password: string,
+    remember: boolean
 }

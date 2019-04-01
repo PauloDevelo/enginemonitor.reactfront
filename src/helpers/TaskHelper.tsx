@@ -6,6 +6,7 @@ import { Task } from '../types/Types';
 
 export function createDefaultTask(): Task{
 	return {
+        _id: undefined,
 		name: '',
 		usagePeriodInHour: 100,
 		periodInMonth: 12,

@@ -2,6 +2,7 @@ import { Equipment } from "../types/Types";
 
 export function createDefaultEquipment(): Equipment{
 	return {
+		_id: undefined,
 		name: "",
 		brand: "",
 		model: "",
