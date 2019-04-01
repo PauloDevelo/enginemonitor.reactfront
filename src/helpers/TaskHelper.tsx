@@ -93,5 +93,6 @@ export function shorten(longStr: string): string{
 
 export function updateTask(task: Task): Task {
     task.usagePeriodInHour = task.usagePeriodInHour === -1 ? undefined : task.usagePeriodInHour
+    task.nextDueDate = new Date(task.nextDueDate);
     return task;
 }
