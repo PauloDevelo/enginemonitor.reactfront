@@ -1,11 +1,12 @@
 import React, { CSSProperties } from 'react';
 import PropTypes from 'prop-types';
 import { getContext, getTodoText, shorten } from '../../helpers/TaskHelper'; 
+import { Task } from '../../types/Types';
 
 const getTrContext = (level: number) => "table-" + getContext(level);
 
 type Props = {
-	task: any,
+	task: Task,
 	trStyle: CSSProperties | undefined,
 	onClick?: () => void
 }
