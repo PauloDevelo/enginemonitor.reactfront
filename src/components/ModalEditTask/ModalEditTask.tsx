@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
 
-import edittaskmsg from "./ModalEditTask.messages";
+import editTaskMsg from "./ModalEditTask.messages";
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
@@ -19,9 +19,20 @@ import Alerts from "../Alerts/Alerts"
 
 
 import '../../style/transition.css';
+import { Equipment, Task } from '../../types/Types';
 
-const ModalEditTask = ({equipment, task, onTaskSaved, toggle, onTaskDeleted, visible, className}) => {
-	const onSaveTask = (task) => {
+type Props = {
+	equipment: Equipment, 
+	task: Task, 
+	onTaskSaved: (task: Task) => void, 
+	toggle: () => void, 
+	onTaskDeleted?: (task: Task)=> void, 
+	visible: boolean, 
+	className?: string 
+}
+
+const ModalEditTask = ({equipment, task, onTaskSaved, toggle, onTaskDeleted, visible, className}: Props) => {
+	const onSaveTask = (task: Task): void => {
 		task.usagePeriodInHour = task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0 ? -1 : task.usagePeriodInHour;
 	}
 
@@ -33,10 +44,10 @@ const ModalEditTask = ({equipment, task, onTaskSaved, toggle, onTaskDeleted, vis
 
 	let title = undefined;
 	if (task === undefined || task._id === undefined){
-		title = <FormattedMessage {...edittaskmsg.modalCreationTaskTitle} />
+		title = <FormattedMessage {...editTaskMsg.modalCreationTaskTitle} />
 	}
 	else{
-		title = <FormattedMessage {...edittaskmsg.modalEditTaskTitle} />
+		title = <FormattedMessage {...editTaskMsg.modalEditTaskTitle} />
 	}
 
 	return (
@@ -46,27 +57,26 @@ const ModalEditTask = ({equipment, task, onTaskSaved, toggle, onTaskDeleted, vis
 					<ModalHeader toggle={modalLogic.cancel}><FontAwesomeIcon icon={faEdit} />{' '}{title}</ModalHeader>
 					<ModalBody>
 						{visible && <MyForm id="createTaskForm" submit={modalLogic.handleSubmit} initialData={task}>
-							<MyInput name="name" 				label={edittaskmsg.name} 				type="text" 	required/>
-							<MyInput name="usagePeriodInHour" 	label={edittaskmsg.usagePeriodInHour} 	type="number" 	min={0} />
-							<MyInput name="periodInMonth" 		label={edittaskmsg.month} 				type="number" 	min={1} required/>
-							<MyInput name="description" 		label={edittaskmsg.description} 		type="textarea" required />
+							<MyInput name="name" 				label={editTaskMsg.name} 				type="text" 	required/>
+							<MyInput name="usagePeriodInHour" 	label={editTaskMsg.usagePeriodInHour} 	type="number" 	min={0} />
+							<MyInput name="periodInMonth" 		label={editTaskMsg.month} 				type="number" 	min={1} required/>
+							<MyInput name="description" 		label={editTaskMsg.description} 		type="textarea" required />
 						</MyForm>}
 						<Alerts errors={modalLogic.alerts}/>
 					</ModalBody>
 					<ModalFooter>
-						<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...edittaskmsg.save} /></Button>
-						<Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...edittaskmsg.cancel} /></Button>
-						{task && task._id && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...edittaskmsg.delete} /></Button>}
+						<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...editTaskMsg.save} /></Button>
+						<Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...editTaskMsg.cancel} /></Button>
+						{task && task._id && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editTaskMsg.delete} /></Button>}
 					</ModalFooter>
-					
 				</Modal>
 			</CSSTransition>
 			<ModalYesNoConfirmation visible={modalLogic.yesNoModalVisibility}
 									toggle={modalLogic.toggleModalYesNoConfirmation}
 									yes={modalLogic.yesDelete}
 									no={modalLogic.toggleModalYesNoConfirmation}
-									title={edittaskmsg.taskDeleteTitle}
-									message={edittaskmsg.taskDeleteMsg} 
+									title={editTaskMsg.taskDeleteTitle}
+									message={editTaskMsg.taskDeleteMsg} 
 									className='modal-dialog-centered'/>
 		</Fragment>
 	);
