@@ -54,6 +54,14 @@ export default function App(){
 			try{
 				setAreTasksLoading(true);
 				const tasks = await EquipmentMonitorService.fetchTasks(currentEquipment._id);
+				tasks.sort((taskA, taskB) => {
+					if(taskB.level === taskA.level){
+						return taskA.nextDueDate.getTime() - taskB.nextDueDate.getTime();
+					}
+					else{
+						return taskB.level - taskA.level;
+					}
+				});
 
 				let newCurrentTask = undefined;
 				const currentTaskId = task.current !== undefined ? task.current._id : undefined
