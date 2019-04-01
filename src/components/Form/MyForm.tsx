@@ -35,6 +35,7 @@ type Props = {
 };
 
 export default function MyForm({ initialData , submit, children, className, ...props}:Props) {
+	initialData = Object.assign({}, initialData);
 	var dateKeys = convertDateFieldsToString(initialData);
 	const [classNames, setClassNames] = useState(className === undefined ? [] : className.split(' '));
 	const [isValidated, setIsValidated] = useState(false);
