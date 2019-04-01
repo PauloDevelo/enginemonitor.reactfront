@@ -12,7 +12,7 @@ function isString (value: any) {
 type Props = {
     color?: string,
     error?:string,
-    errors: any,  
+    errors?: any,  
 };
 
 const Alerts = ({color, error, errors}:Props) => {
