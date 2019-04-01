@@ -34,7 +34,7 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}: Props
     const equipmentId = equipment ? equipment._id : undefined;
     const taskId = task ? task._id : undefined;
 
-    const modalHook = useEditModal(undefined);
+    const modalHook = useEditModal<Entry | undefined>(undefined);
 
     const [entries, setEntries] = useState<Entry[]>([]);
     const [isLoading, setIsLoading] = useState(false);

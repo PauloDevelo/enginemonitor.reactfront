@@ -26,7 +26,7 @@ type Props = {
 
 export default function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 	const [currentEquipment, setCurrentEquipment] = useState<Equipment | undefined>(undefined);
-	const modalHook = useEditModal(undefined);
+	const modalHook = useEditModal<Equipment | undefined>(undefined);
 	
 	const isCurrentEquipment = (equipment: Equipment) => {
 		if (currentEquipment === undefined || equipment === undefined){
@@ -123,12 +123,12 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 					</TabContent>
 				</Fragment>}
 			</div>
-			<ModalEquipmentInfo equipment={modalHook.data}
+			{modalHook.data !== undefined && <ModalEquipmentInfo equipment={modalHook.data}
 								onEquipmentInfoSaved={onEquipmentInfoSaved} 
 								onEquipmentDeleted={onEquipmentDeleted}
 								visible={modalHook.editModalVisibility} 
 								toggle={modalHook.toggleModal} 
-								className='modal-dialog-centered'/>
+								className='modal-dialog-centered'/>}
 		</Fragment>
 	);
 }

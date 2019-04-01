@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function useEditModal(initialData){
+export function useEditModal<T>(initialData: T){
     const [data, setData] = useState(initialData);
     const [editModalVisibility, setEditModalVisibility] = useState(false);
     
@@ -8,7 +8,7 @@ export function useEditModal(initialData){
         setEditModalVisibility(!editModalVisibility);
     }
 
-    const displayData = (data)=>{
+    const displayData = (data: T)=>{
         setData(data);
         setEditModalVisibility(true);
     }

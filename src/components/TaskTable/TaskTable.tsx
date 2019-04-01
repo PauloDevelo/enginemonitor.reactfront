@@ -27,7 +27,7 @@ type Props = {
 }
 
 export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, changeCurrentTask, classNames}: Props) => {
-	const modalHook = useEditModal(undefined);
+	const modalHook = useEditModal<Task | undefined>(undefined);
 
 	let listLines:JSX.Element[] = [];
 	if(tasks){
@@ -63,7 +63,7 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 				}
 				
 			</div>
-			{equipment !== undefined && <ModalEditTask  equipment={equipment}
+			{equipment !== undefined && modalHook.data !== undefined && <ModalEditTask  equipment={equipment}
 							task={modalHook.data}
 							onTaskSaved={onTaskSaved} 
 							visible={modalHook.editModalVisibility} 
