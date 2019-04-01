@@ -119,7 +119,7 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}: Props
             </Table>
             }
             
-            <ModalEditEntry 
+            {equipment && task && modalHook.data && <ModalEditEntry 
                 equipment={equipment}
                 task={task}
                 entry={modalHook.data}
@@ -128,7 +128,7 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}: Props
                 visible={modalHook.editModalVisibility}
                 toggle={modalHook.toggleModal}
                 className='modal-dialog-centered'
-            />
+            />}
         </div>
     );
 }

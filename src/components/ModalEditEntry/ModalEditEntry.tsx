@@ -16,8 +16,29 @@ import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirma
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
 import Alerts from "../Alerts/Alerts"
+import { Equipment, Task, Entry } from '../../types/Types';
 
-const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry, deleteEntry, toggle }) => {
+type Props = {
+	equipment: Equipment, 
+	task: Task, 
+	entry: Entry, 
+	visible: boolean, 
+	className?: string, 
+	saveEntry: (entry: Entry) => void, 
+	deleteEntry?: (entry: Entry) => void, 
+	toggle: ()=>void
+}
+
+const ModalTitle = ({entry}:{entry: Entry}) => {
+	if (entry._id === undefined){
+		return <FormattedMessage {...editEntryMsg.modalAckTitle} />;
+	}
+	else{
+		return <FormattedMessage {...editEntryMsg.modalEditEntryTitle} />;
+	}
+}
+
+const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry, deleteEntry, toggle }: Props) => {
 	const equipmentId = equipment === undefined ? undefined : equipment._id;
 	const taskId = task === undefined ? undefined : task._id;
 	const entryId = entry === undefined ? undefined : entry._id;
@@ -25,19 +46,11 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 	const modalLogic = useEditModalLogic(toggle, EquipmentMonitorService.createOrSaveEntry, [equipmentId, taskId], undefined, saveEntry, 
 												 EquipmentMonitorService.deleteEntry, [equipmentId, taskId, entryId], deleteEntry);
 
-	let title = undefined;
-	if (entry === undefined || entry._id === undefined){
-		title = <FormattedMessage {...editEntryMsg.modalAckTitle} />
-	}
-	else{
-		title = <FormattedMessage {...editEntryMsg.modalEditEntryTitle} />
-	}
-
 	return (
 		<Fragment>
 			<CSSTransition in={visible} timeout={300} classNames="modal">
 				<Modal isOpen={visible} toggle={modalLogic.cancel} className={className} fade={false}>
-					<ModalHeader toggle={modalLogic.cancel}><FontAwesomeIcon icon={faCheckSquare} size="lg"/>{' '}{title}</ModalHeader>
+					<ModalHeader toggle={modalLogic.cancel}><FontAwesomeIcon icon={faCheckSquare} size="lg"/>{' '}<ModalTitle entry={entry}/>></ModalHeader>
 					<ModalBody>
 						{visible && 
 						<MyForm id="createTaskForm" 
@@ -55,7 +68,6 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 						<Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...editEntryMsg.cancel} /></Button>
 						{entry && entry._id && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editEntryMsg.delete} /></Button>}
 					</ModalFooter>
-					
 				</Modal>
 			</CSSTransition>
 			<ModalYesNoConfirmation visible={modalLogic.yesNoModalVisibility}
@@ -70,14 +82,14 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 }
 
 ModalEditEntry.propTypes = {
-	equipment: PropTypes.object,
-	task: PropTypes.object,
-	entry: PropTypes.object,
+	equipment: PropTypes.object.isRequired,
+	task: PropTypes.object.isRequired,
+	entry: PropTypes.object.isRequired,
 	visible: PropTypes.bool.isRequired,
 	saveEntry: PropTypes.func.isRequired,
-	deleteEntry: PropTypes.func.isRequired,
+	deleteEntry: PropTypes.func,
 	className: PropTypes.string,
-	toggle: PropTypes.func
+	toggle: PropTypes.func.isRequired
 };
 
 export default ModalEditEntry;
