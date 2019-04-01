@@ -36,9 +36,10 @@ export default function MyInput({ label, handleChange, ...props }: Props) {
 	};
 	
 	if (props.type === 'checkbox'){
+		const inlineValue = "true";
 		return (
 			<FormGroup className={"form-group"} check inline={true}>
-				<Label check inline={true}>
+				<Label check inline={inlineValue as never}>
 					<FormattedMessage {...label} />{' '}
 					<Input ref={inputElemRef} onChange={onChangeHandler} invalid={!validity.isValid} {...props} />
 				</Label>
