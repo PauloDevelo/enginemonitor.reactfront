@@ -63,7 +63,9 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 
     useEffect(() => {
         if (equipments.length > 0){
-            setCurrentEquipment(equipments[0]);
+			if(currentEquipment === undefined || equipments.indexOf(currentEquipment) === -1){
+				setCurrentEquipment(equipments[0]);
+			}
         }
         else{
             setCurrentEquipment(undefined);
