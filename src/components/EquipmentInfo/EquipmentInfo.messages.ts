@@ -40,7 +40,7 @@ const messages: Messages = {
 		description: "Button cancel"
 	},
 	name: {
-		id: "name",
+		id: "equipmentname",
     defaultMessage: "Name",
 		description: "Label"
 	},

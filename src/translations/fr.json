@@ -15,6 +15,7 @@
 	"serialPort": "Port Série",
 	"tasklistTitle": "Liste des taches",
 	"createbutton": "Créer",
+	"equipmentname": "Nom",
 	"taskname": "Nom",
 	"todo": "A faire",
 	"taskdesc": "Description",
