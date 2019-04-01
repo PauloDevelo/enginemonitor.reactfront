@@ -18,7 +18,7 @@ import taskTableMsg from "./TaskTable.messages";
 import { Equipment, Task } from '../../types/Types';
 
 type Props = {
-	equipment: Equipment, 
+	equipment?: Equipment, 
 	tasks: Task[], 
 	areTasksLoading: boolean, 
 	onTaskSaved: (task: Task) => void, 
@@ -63,12 +63,12 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 				}
 				
 			</div>
-			<ModalEditTask  equipment={equipment}
+			{equipment !== undefined && <ModalEditTask  equipment={equipment}
 							task={modalHook.data}
 							onTaskSaved={onTaskSaved} 
 							visible={modalHook.editModalVisibility} 
 							toggle={modalHook.toggleModal}
-							className='modal-dialog-centered'/>
+							className='modal-dialog-centered'/>}
 		</Fragment>
 	);
 }
