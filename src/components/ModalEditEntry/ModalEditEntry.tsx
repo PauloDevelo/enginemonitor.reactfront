@@ -50,7 +50,7 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 		<Fragment>
 			<CSSTransition in={visible} timeout={300} classNames="modal">
 				<Modal isOpen={visible} toggle={modalLogic.cancel} className={className} fade={false}>
-					<ModalHeader toggle={modalLogic.cancel}><FontAwesomeIcon icon={faCheckSquare} size="lg"/>{' '}<ModalTitle entry={entry}/>></ModalHeader>
+					<ModalHeader toggle={modalLogic.cancel}><FontAwesomeIcon icon={faCheckSquare} size="lg"/>{' '}<ModalTitle entry={entry}/></ModalHeader>
 					<ModalBody>
 						{visible && 
 						<MyForm id="createTaskForm" 
