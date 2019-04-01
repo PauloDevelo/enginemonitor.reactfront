@@ -8,7 +8,17 @@ import '../../style/transition.css';
 
 import modalmsg from "./ModalYesNoConfirmation.messages";
 
-const ModalYesNoConfimation = ({yes, no, visible, className, title, message, toggle}) => {
+type Props = {
+    yes: ()=>void, 
+    no?: ()=>void, 
+    visible: boolean, 
+    className: string, 
+    title: FormattedMessage.MessageDescriptor, 
+    message: FormattedMessage.MessageDescriptor, 
+    toggle: () => void
+}
+
+const ModalYesNoConfimation = ({yes, no, visible, className, title, message, toggle}: Props) => {
     return(
         <CSSTransition in={visible} timeout={300} classNames="modal">
             <Modal isOpen={visible} toggle={toggle} className={className} fade={false}>
