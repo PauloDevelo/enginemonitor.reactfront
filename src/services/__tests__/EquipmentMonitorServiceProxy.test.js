@@ -77,7 +77,7 @@ describe('Test EquipmentMonitorServiceProxy', () => {
         });
 
         describe('authenticate', () => {
-            it("should call logout", () => {
+            it("should call logout", async() => {
                 // Arrange
                 const EquipmentMonitorServiceProxyInstance = new EquipmentMonitorServiceProxy();
 
@@ -86,8 +86,21 @@ describe('Test EquipmentMonitorServiceProxy', () => {
 
                 const authInfo = { email: "test@jest", password: "passwordTest" };
 
+                const user = {
+                    email: 'test@jest',
+                    firstname: 'jest',
+                    name: 'react',
+                    token: 'jwt'
+                };
+
+                mockAxios.post.mockImplementationOnce(() =>
+                    Promise.resolve({
+                        data: { user: user }
+                    })
+                );
+
                 // Act
-                EquipmentMonitorServiceProxyInstance.authenticate(authInfo);
+                await EquipmentMonitorServiceProxyInstance.authenticate(authInfo);
 
                 // Assert
                 expect(mockLogout).toHaveBeenCalledTimes(1);
