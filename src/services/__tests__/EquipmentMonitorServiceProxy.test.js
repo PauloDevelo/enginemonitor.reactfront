@@ -1,5 +1,3 @@
-import '../__mocks__/localStorage';
-
 import mockAxios from "axios";
 import {EquipmentMonitorServiceProxy} from '../EquipmentMonitorServiceProxy';
 
