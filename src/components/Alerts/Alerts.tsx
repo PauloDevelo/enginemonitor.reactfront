@@ -19,11 +19,17 @@ const Alerts = ({color, error, errors}:Props) => {
     if(color === undefined){
         color = "danger";
     }
-
     
     if(error){
+        let value:any;
+        if(alertMsg[error] !== undefined){
+            value = <FormattedMessage {...alertMsg[error]}/>;
+        }
+        else{
+            value = error;
+        }
         return <Alert className="sm" color={color}>
-            {alertMsg[error] !== undefined && <FormattedMessage {...alertMsg[error]}/>}{alertMsg[error] === undefined && {error}}
+            {value}
         </Alert>;
     }
 
@@ -41,7 +47,7 @@ const Alerts = ({color, error, errors}:Props) => {
             return(
                 <Alert className="sm" key={key} color={color}>
                     {alertMsg[key] !== undefined && <FormattedMessage {...alertMsg[key]}/>}{alertMsg[key] === undefined && {key}}
-                    {errors[key] !== undefined && <span>{' '} {alertMsg[errors[key]] !== undefined && <FormattedMessage {...alertMsg[errors[key]]}/>} {alertMsg[errors[key]] === undefined && errors[key]}</span>}
+                    {errors[key] !== undefined && <span>{' '}{alertMsg[errors[key]] !== undefined && <FormattedMessage {...alertMsg[errors[key]]}/>}{alertMsg[errors[key]] === undefined && errors[key]}</span>}
                 </Alert>)
         });
     }

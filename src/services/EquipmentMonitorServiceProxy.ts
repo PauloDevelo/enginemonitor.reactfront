@@ -12,7 +12,7 @@ type Config = {
     }
 };
 
-class EquipmentMonitorServiceProxy{
+export class EquipmentMonitorServiceProxy{
     private config:Config | undefined;
 
     baseUrl = process.env.REACT_APP_URL_BASE;
