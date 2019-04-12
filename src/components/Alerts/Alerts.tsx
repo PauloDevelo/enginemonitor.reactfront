@@ -44,11 +44,21 @@ const Alerts = ({color, error, errors}:Props) => {
         });
 
         alerts = validKeys.map(key => {
+            let fieldElement: any = key;
+            if(alertMsg[key] !== undefined){
+                fieldElement = <FormattedMessage {...alertMsg[key]}/>
+            }
+
+            let valueElement: any = errors[key];
+            if(alertMsg[errors[key]] !== undefined){
+                valueElement = <FormattedMessage {...alertMsg[errors[key]]}/>;
+            }
+
             return(
                 <Alert className="sm" key={key} color={color}>
-                    {alertMsg[key] !== undefined && <FormattedMessage {...alertMsg[key]}/>}{alertMsg[key] === undefined && {key}}
-                    {errors[key] !== undefined && <span>{' '}{alertMsg[errors[key]] !== undefined && <FormattedMessage {...alertMsg[errors[key]]}/>}{alertMsg[errors[key]] === undefined && errors[key]}</span>}
-                </Alert>)
+                    { fieldElement }<span>{' '}{valueElement}</span>
+                </Alert>
+            );
         });
     }
 

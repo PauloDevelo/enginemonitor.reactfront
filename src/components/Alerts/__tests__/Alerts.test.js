@@ -36,4 +36,12 @@ describe('Component Alert', () =>{
         expect(wrapper.find('div').hasClass('alert')).toEqual(true);
         expect(wrapper.find('div').hasClass('alert-danger')).toEqual(true);
     });
+
+    it.only('should render with an unexpected composed message and a danger color', () => {
+        const wrapper = mount(<Alerts errors={ {unexpectedField: 'unexpectedMesg'} } />);
+
+        expect(wrapper.text()).toEqual('unexpectedField unexpectedMesg');
+        expect(wrapper.find('div').hasClass('alert')).toEqual(true);
+        expect(wrapper.find('div').hasClass('alert-danger')).toEqual(true);
+    });
 });
