@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { shallow, mount } from 'enzyme';
+import React from 'react';
+import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
 
 import CardTaskDetails from '../CardTaskDetails'
@@ -41,7 +41,62 @@ describe("CardTaskDetails", () => {
     const onTaskDeletedMock = jest.fn();
     const changeCurrentTaskMock = jest.fn();
 
-    it("Should render the task details", () => {
+    beforeEach(() => {
+        onTaskChangedMock.mockClear();
+        onTaskDeletedMock.mockClear();
+        changeCurrentTaskMock.mockClear();
+    });
+
+    it("Should render correctly even if the equipment is undefined", () => {
+        // Arrange
+        const wrapper = mount(<CardTaskDetails 
+            equipment={undefined} 
+            tasks={[]} 
+            currentTask={undefined}
+            onTaskChanged={onTaskChangedMock}
+            onTaskDeleted={onTaskDeletedMock}
+            changeCurrentTask={changeCurrentTaskMock} 
+        />);
+
+        // Assert
+        expect(wrapper).toMatchSnapshot();
+        expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
+    });
+
+    it("Should render correctly even if the task array is empty", () => {
+        // Arrange
+        const wrapper = mount(<CardTaskDetails 
+            equipment={equipment} 
+            tasks={[]} 
+            currentTask={undefined}
+            onTaskChanged={onTaskChangedMock}
+            onTaskDeleted={onTaskDeletedMock}
+            changeCurrentTask={changeCurrentTaskMock} 
+        />);
+
+        // Assert
+        expect(wrapper).toMatchSnapshot();
+        expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
+    });
+
+    it("Should render correctly even if the current task is undefined", () => {
+        // Arrange
+        const wrapper = mount(<CardTaskDetails 
+            equipment={equipment} 
+            tasks={tasks} 
+            currentTask={undefined}
+            onTaskChanged={onTaskChangedMock}
+            onTaskDeleted={onTaskDeletedMock}
+            changeCurrentTask={changeCurrentTaskMock} 
+        />);
+
+        // Assert
+        expect(wrapper).toMatchSnapshot();
+        expect(changeCurrentTaskMock).toHaveBeenCalledTimes(1);
+        expect(changeCurrentTaskMock.mock.calls[0][0]).toBe(task1);
+    });
+
+    it("Should render the task 1 details", () => {
         const wrapper = mount(<CardTaskDetails 
             equipment={equipment} 
             tasks={tasks} 
@@ -56,6 +111,10 @@ describe("CardTaskDetails", () => {
         expect(wrapper.find('.card-control-prev-icon').hasClass('invisible')).toEqual(true);
         expect(wrapper.find('.card-text').text()).toEqual(task1.description);
         expect(wrapper.find('.card-control-next-icon').hasClass('invisible')).toEqual(false);
+
+        expect(onTaskChangedMock).toHaveBeenCalledTimes(0);
+        expect(onTaskDeletedMock).toHaveBeenCalledTimes(0);
+        expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
     });
 
     it("should stay the same with task1", () => {
@@ -70,7 +129,7 @@ describe("CardTaskDetails", () => {
         expect(tree).toMatchSnapshot();
     });
 
-    it("Should render the task details", () => {
+    it("Should render the task 2 details", () => {
         const wrapper = mount(<CardTaskDetails 
             equipment={equipment} 
             tasks={tasks} 
@@ -85,6 +144,10 @@ describe("CardTaskDetails", () => {
         expect(wrapper.find('.card-control-prev-icon').hasClass('invisible')).toEqual(false);
         expect(wrapper.find('.card-text').text()).toEqual(task2.description);
         expect(wrapper.find('.card-control-next-icon').hasClass('invisible')).toEqual(true);
+
+        expect(onTaskChangedMock).toHaveBeenCalledTimes(0);
+        expect(onTaskDeletedMock).toHaveBeenCalledTimes(0);
+        expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
     });
 
     it("should stay the same with task2", () => {
@@ -99,4 +162,85 @@ describe("CardTaskDetails", () => {
         expect(tree).toMatchSnapshot();
     });
 
+    it("Should call changeCurrentTask after clicking on the next button", () => {
+        // Arrange
+        const wrapper = mount(<CardTaskDetails 
+            equipment={equipment} 
+            tasks={tasks} 
+            currentTask={task1}
+            onTaskChanged={onTaskChangedMock}
+            onTaskDeleted={onTaskDeletedMock}
+            changeCurrentTask={changeCurrentTaskMock} 
+        />);
+
+        // Act
+        wrapper.find('.button-next-task').simulate('click');
+
+        // Assert
+        expect(changeCurrentTaskMock).toHaveBeenCalledTimes(1);
+        expect(changeCurrentTaskMock.mock.calls[0][0]).toBe(task2);
+        expect(onTaskChangedMock).toHaveBeenCalledTimes(0);
+        expect(onTaskDeletedMock).toHaveBeenCalledTimes(0);
+    });
+
+    it("Should not call changeCurrentTask after clicking on the next button because task2 is the last task", () => {
+        // Arrange
+        const wrapper = mount(<CardTaskDetails 
+            equipment={equipment} 
+            tasks={tasks} 
+            currentTask={task2}
+            onTaskChanged={onTaskChangedMock}
+            onTaskDeleted={onTaskDeletedMock}
+            changeCurrentTask={changeCurrentTaskMock} 
+        />);
+
+        // Act
+        wrapper.find('.button-next-task').simulate('click');
+
+        // Assert
+        expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
+        expect(onTaskChangedMock).toHaveBeenCalledTimes(0);
+        expect(onTaskDeletedMock).toHaveBeenCalledTimes(0);
+    });
+
+    it("Should not call changeCurrentTask after clicking on the prev button because task1 is the first task", () => {
+        // Arrange
+        const wrapper = mount(<CardTaskDetails 
+            equipment={equipment} 
+            tasks={tasks} 
+            currentTask={task1}
+            onTaskChanged={onTaskChangedMock}
+            onTaskDeleted={onTaskDeletedMock}
+            changeCurrentTask={changeCurrentTaskMock} 
+        />);
+
+        // Act
+        wrapper.find('.button-previous-task').simulate('click');
+
+        // Assert
+        expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
+        expect(onTaskChangedMock).toHaveBeenCalledTimes(0);
+        expect(onTaskDeletedMock).toHaveBeenCalledTimes(0);
+    });
+
+    it("Should call changeCurrentTask after clicking on the prev button", () => {
+        // Arrange
+        const wrapper = mount(<CardTaskDetails 
+            equipment={equipment} 
+            tasks={tasks} 
+            currentTask={task2}
+            onTaskChanged={onTaskChangedMock}
+            onTaskDeleted={onTaskDeletedMock}
+            changeCurrentTask={changeCurrentTaskMock} 
+        />);
+
+        // Act
+        wrapper.find('.button-previous-task').simulate('click');
+
+        // Assert
+        expect(changeCurrentTaskMock).toHaveBeenCalledTimes(1);
+        expect(changeCurrentTaskMock.mock.calls[0][0]).toBe(task1);
+        expect(onTaskChangedMock).toHaveBeenCalledTimes(0);
+        expect(onTaskDeletedMock).toHaveBeenCalledTimes(0);
+    });
 });

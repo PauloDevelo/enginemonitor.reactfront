@@ -57,7 +57,10 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
     
     useEffect(() => {
         if(currentTask === undefined){
-            changeCurrentTask(getFirstTask());
+            const firstTask = getFirstTask();
+            if(firstTask !== undefined){
+                changeCurrentTask(firstTask);
+            }
         }
     }, [tasks]);
 
@@ -95,7 +98,7 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
         <Fragment>
             <Card className={classNames}>        
                 <CardBody className="d-flex p-0">
-                        <div className="p-2" onClick={previousTask} style={cursorPointerStyle}><div className={prevClassNames}></div></div>
+                        <div className="p-2 button-previous-task" onClick={previousTask} style={cursorPointerStyle}><div className={prevClassNames}></div></div>
                         <TransitionGroup className="p-2 flex-grow-1">
                             <CSSTransition key={currentTask._id} timeout={250} classNames="card" >
                                 <div >
@@ -105,7 +108,7 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
                                 </div>
                             </CSSTransition>
                         </TransitionGroup>
-                        <div className="p-2" onClick={nextTask} style={cursorPointerStyle}><div className={nextClassNames}></div></div>
+                        <div className="p-2 button-next-task" onClick={nextTask} style={cursorPointerStyle}><div className={nextClassNames}></div></div>
                 </CardBody>
                 <CardFooter className='pl-5 pr-5'>
                     <Button color='light' className='float-left' onClick={modalHook.toggleModal}><FontAwesomeIcon icon={faEdit} /></Button>

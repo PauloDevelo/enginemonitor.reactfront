@@ -1,5 +1,122 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CardTaskDetails Should render correctly even if the current task is undefined 1`] = `
+<CardTaskDetails
+  changeCurrentTask={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          Object {
+            "_id": "task1",
+            "description": "task1 description",
+            "level": 1,
+            "name": "taskname1",
+            "nextDueDate": 2011-02-22T16:00:00.000Z,
+            "periodInMonth": 12,
+            "usageInHourLeft": 20,
+            "usagePeriodInHour": 200,
+          },
+        ],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  equipment={
+    Object {
+      "_id": "1234",
+      "age": 2563,
+      "brand": "nanni",
+      "installation": 2011-02-22T16:00:00.000Z,
+      "model": "N3.30",
+      "name": "engine",
+    }
+  }
+  onTaskChanged={[MockFunction]}
+  onTaskDeleted={[MockFunction]}
+  tasks={
+    Array [
+      Object {
+        "_id": "task1",
+        "description": "task1 description",
+        "level": 1,
+        "name": "taskname1",
+        "nextDueDate": 2011-02-22T16:00:00.000Z,
+        "periodInMonth": 12,
+        "usageInHourLeft": 20,
+        "usagePeriodInHour": 200,
+      },
+      Object {
+        "_id": "task2",
+        "description": "task2 description",
+        "level": 3,
+        "name": "taskname2",
+        "nextDueDate": 2018-02-22T16:00:00.000Z,
+        "periodInMonth": 24,
+        "usageInHourLeft": 20,
+        "usagePeriodInHour": 400,
+      },
+    ]
+  }
+>
+  <Card
+    tag="div"
+  >
+    <div
+      className="card"
+    />
+  </Card>
+</CardTaskDetails>
+`;
+
+exports[`CardTaskDetails Should render correctly even if the equipment is undefined 1`] = `
+<CardTaskDetails
+  changeCurrentTask={[MockFunction]}
+  onTaskChanged={[MockFunction]}
+  onTaskDeleted={[MockFunction]}
+  tasks={Array []}
+>
+  <Card
+    tag="div"
+  >
+    <div
+      className="card"
+    />
+  </Card>
+</CardTaskDetails>
+`;
+
+exports[`CardTaskDetails Should render correctly even if the task array is empty 1`] = `
+<CardTaskDetails
+  changeCurrentTask={[MockFunction]}
+  equipment={
+    Object {
+      "_id": "1234",
+      "age": 2563,
+      "brand": "nanni",
+      "installation": 2011-02-22T16:00:00.000Z,
+      "model": "N3.30",
+      "name": "engine",
+    }
+  }
+  onTaskChanged={[MockFunction]}
+  onTaskDeleted={[MockFunction]}
+  tasks={Array []}
+>
+  <Card
+    tag="div"
+  >
+    <div
+      className="card"
+    />
+  </Card>
+</CardTaskDetails>
+`;
+
 exports[`CardTaskDetails should stay the same with task1 1`] = `
 <div
   className="card"
@@ -8,7 +125,7 @@ exports[`CardTaskDetails should stay the same with task1 1`] = `
     className="d-flex p-0 card-body"
   >
     <div
-      className="p-2"
+      className="p-2 button-previous-task"
       onClick={[Function]}
       style={
         Object {
@@ -68,7 +185,7 @@ exports[`CardTaskDetails should stay the same with task1 1`] = `
       </div>
     </div>
     <div
-      className="p-2"
+      className="p-2 button-next-task"
       onClick={[Function]}
       style={
         Object {
@@ -120,7 +237,7 @@ exports[`CardTaskDetails should stay the same with task2 1`] = `
     className="d-flex p-0 card-body"
   >
     <div
-      className="p-2"
+      className="p-2 button-previous-task"
       onClick={[Function]}
       style={
         Object {
@@ -180,7 +297,7 @@ exports[`CardTaskDetails should stay the same with task2 1`] = `
       </div>
     </div>
     <div
-      className="p-2"
+      className="p-2 button-next-task"
       onClick={[Function]}
       style={
         Object {
