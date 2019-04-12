@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
 
-import CardTaskDetails from '../CardTaskDetails'
+import CardTaskDetails from '../CardTaskDetails';
 
 describe("CardTaskDetails", () => {
     const equipment = {
