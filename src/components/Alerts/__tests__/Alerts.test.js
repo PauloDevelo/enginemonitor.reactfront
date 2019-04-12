@@ -37,7 +37,7 @@ describe('Component Alert', () =>{
         expect(wrapper.find('div').hasClass('alert-danger')).toEqual(true);
     });
 
-    it.only('should render with an unexpected composed message and a danger color', () => {
+    it('should render with an unexpected composed message and a danger color', () => {
         const wrapper = mount(<Alerts errors={ {unexpectedField: 'unexpectedMesg'} } />);
 
         expect(wrapper.text()).toEqual('unexpectedField unexpectedMesg');
