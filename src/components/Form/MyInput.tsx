@@ -26,9 +26,9 @@ export default function MyInput({ label, handleChange, ...props }: Props) {
 		}
 	};
 
-	useEffect(() => 
-		validate()
-	, [inputElemRef]);
+	useEffect(() => {
+		setValidity({ isValid: true, errorMessage: '' });
+	}, [inputElemRef]);
 	
 	const onChangeHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
 		validate();

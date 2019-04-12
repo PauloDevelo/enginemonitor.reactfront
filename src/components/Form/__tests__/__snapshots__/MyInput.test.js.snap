@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyInput Should render as expected 1`] = `
+<MyInput
+  label={
+    Object {
+      "defaultMessage": "Default message",
+      "description": "Label",
+      "id": "defaultId",
+    }
+  }
+  name="name"
+  required={true}
+  type="text"
+>
+  <FormGroup
+    className="form-group"
+    tag="div"
+  >
+    <div
+      className="form-group form-group"
+    >
+      <Label
+        for="name"
+        tag="label"
+        widths={
+          Array [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+          ]
+        }
+      >
+        <label
+          className=""
+          htmlFor="name"
+        >
+          <FormattedMessage
+            defaultMessage="Default message"
+            description="Label"
+            id="defaultId"
+            values={Object {}}
+          >
+            <span>
+              Default message
+            </span>
+          </FormattedMessage>
+        </label>
+      </Label>
+      <Input
+        className="form-control"
+        innerRef={
+          Object {
+            "current": <input
+              class="form-control form-control"
+              name="name"
+              required=""
+              type="text"
+            />,
+          }
+        }
+        invalid={false}
+        name="name"
+        onChange={[Function]}
+        required={true}
+        type="text"
+      >
+        <input
+          className="form-control form-control"
+          name="name"
+          onChange={[Function]}
+          required={true}
+          type="text"
+        />
+      </Input>
+    </div>
+  </FormGroup>
+</MyInput>
+`;
