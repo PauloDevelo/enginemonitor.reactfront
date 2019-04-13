@@ -11,6 +11,7 @@ import NavBar from '../NavBar/NavBar';
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
 import '../../style/transition.css';
+import './App.css'
 
 import { User, Equipment, Task } from '../../types/Types';
 
@@ -91,9 +92,9 @@ export default function App(){
 	return (
 		<Fragment>
 			<CSSTransition in={true} appear={true} timeout={1000} classNames="fade">
-				<div id="root">
+				<Fragment>
 					<NavBar user={user} onLoggedOut={() => setUser(undefined)} isOpened={navBarVisible} toggle={toggleNavBar} />
-					<div className="d-flex flex-wrap flex-row mb-3">
+					<div id="appBody" className="d-flex flex-wrap flex-row mb-3">
 						<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
 							<EquipmentsInfo
 										user={user}
@@ -119,8 +120,8 @@ export default function App(){
 												onHistoryChanged={refreshTaskList}
 												classNames={panelClassNames}/>
 						</div>
-					</div>																																																					
-				</div>
+					</div>		
+				</Fragment>																																																			
 			</CSSTransition>
 			<ModalLogin visible={!user} 
 				onLoggedIn={setUser} 
