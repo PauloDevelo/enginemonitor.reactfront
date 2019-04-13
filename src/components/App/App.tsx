@@ -94,31 +94,31 @@ export default function App(){
 			<CSSTransition in={true} appear={true} timeout={1000} classNames="fade">
 				<Fragment>
 					<NavBar user={user} onLoggedOut={() => setUser(undefined)} isOpened={navBarVisible} toggle={toggleNavBar} />
-					<div id="appBody" className="d-flex flex-wrap flex-row mb-3">
-						<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
+					<div className="appBody mb-2">
+						<div className="wrapperColumn">
 							<EquipmentsInfo
 										user={user}
 										changeCurrentEquipment={setCurrentEquipment}
-										extraClassNames={panelClassNames}/>
+										extraClassNames={panelClassNames + ' columnHeader'}/>
 							<TaskTable 	equipment={currentEquipment}
 										areTasksLoading={areTasksLoading}
 										tasks={task.list} 
 										onTaskSaved={onCurrentTaskChanged}
 										changeCurrentTask={changeCurrentTask}
-										classNames={panelClassNames}/>
+										classNames={panelClassNames + ' columnBody'}/>
 						</div>
-						<div className="d-flex flex-column flex-fill" style={{width: '300px'}}>
+						<div className="wrapperColumn">
 							<CardTaskDetails 	equipment={currentEquipment}
 												tasks={task.list}
 												currentTask={task.current}
 												onTaskChanged={onCurrentTaskChanged}
 												onTaskDeleted={onCurrentTaskChanged}
 												changeCurrentTask={changeCurrentTask}
-												classNames={panelClassNames}/>
+												classNames={panelClassNames + ' columnHeader'}/>
 							<HistoryTaskTable 	equipment={currentEquipment}
 												task={task.current}
 												onHistoryChanged={refreshTaskList}
-												classNames={panelClassNames}/>
+												classNames={panelClassNames + ' columnBody'}/>
 						</div>
 					</div>		
 				</Fragment>																																																			
