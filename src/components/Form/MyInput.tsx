@@ -2,11 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import { InputType } from 'zlib';
 
 type Props = {
 	label: FormattedMessage.MessageDescriptor,
 	handleChange?: (event: any) => void,
+	validationTrigger?: number,
 	type: any,
 	name: string,
 	min?: number,
@@ -15,7 +15,7 @@ type Props = {
 	readonly?: string
 }
 
-export default function MyInput({ label, handleChange, ...props }: Props) {
+export default function MyInput({ label, handleChange, validationTrigger, ...props }: Props) {
 	const [validity, setValidity] = useState({ isValid: true, errorMessage: '' });
 	const inputElemRef = useRef<any>();
 
@@ -25,6 +25,12 @@ export default function MyInput({ label, handleChange, ...props }: Props) {
 			setValidity( { isValid: inputElem.validity !== undefined ? inputElem.validity.valid : true, errorMessage: inputElem.validationMessage });
 		}
 	};
+
+	useEffect(() => {
+		if(validationTrigger !== undefined && validationTrigger != 0){
+			validate();
+		}
+	}, [validationTrigger]);
 
 	useEffect(() => {
 		setValidity({ isValid: true, errorMessage: '' });
@@ -61,6 +67,7 @@ export default function MyInput({ label, handleChange, ...props }: Props) {
 }
 
 MyInput.propTypes = {
+	validationTrigger: PropTypes.number,
 	name: PropTypes.string.isRequired,
 	min: PropTypes.number,
 	max: PropTypes.number,

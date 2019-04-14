@@ -39,18 +39,15 @@ type Props = {
 export default function MyForm({ initialData , submit, children, className, ...props}:Props) {
 	initialData = Object.assign({}, initialData);
 	const dateKeys = convertDateFieldsToString(initialData);
-	const initialClassNames = className === undefined ? [] : className.split(' ');
 
-	const [classNames, setClassNames] = useState<string | undefined>(className);
-	const [isValidated, setIsValidated] = useState(false);
+	const [validationTrigger, triggerValidation] = useState(0);
 	const [data, setData] = useState({ data: initialData, dateKeys: dateKeys });
 	const formEl = useRef<any>();
 
-	useEffect(() => {
-		setClassNames(classNamesUtils({'.was-validated': isValidated}, initialClassNames));
-	}, [isValidated]);
-
-	const validate = () => formEl.current.checkValidity() === true;
+	const validate = () => {
+		triggerValidation(validationTrigger + 1);
+		return formEl.current.checkValidity() === true;
+	};
 
 	const submitHandler = (event:React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -60,8 +57,6 @@ export default function MyForm({ initialData , submit, children, className, ...p
 			convertDateFieldsToDate(dataCopy, dateKeys);
 			submit(dataCopy);
 		}
-
-		setIsValidated(true);
 	}
 
 	const handleInputChange = (event:React.FormEvent<HTMLInputElement>) => {
@@ -83,6 +78,7 @@ export default function MyForm({ initialData , submit, children, className, ...p
 		var newProps = { 
 			value: data.data[child.props.name],
 			handleChange: handleInputChange,
+			validationTrigger: validationTrigger
 		};
 
 		Object.assign(newProps, child.props);
@@ -90,7 +86,7 @@ export default function MyForm({ initialData , submit, children, className, ...p
 	});
 
 	return (
-		<Form innerRef={formEl} onSubmit={submitHandler} {...props} className={classNames} noValidate>
+		<Form innerRef={formEl} onSubmit={submitHandler} {...props} className={className} noValidate>
 			{childrenWithProps}
 		</Form>
 	);
