@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { CSSTransition } from 'react-transition-group'
   
 import EquipmentsInfo from '../EquipmentInfo/EquipmentsInfo';
-import NewTaskTable from '../TaskTable/NewTaskTable';
+import TaskTable from '../TaskTable/TaskTable';
 import HistoryTaskTable from '../HistoryTaskTable/HistoryTaskTable'
 import CardTaskDetails from '../CardTaskDetails/CardTaskDetails'
 import ModalLogin from '../ModalLogin/ModalLogin';
@@ -100,7 +100,7 @@ export default function App(){
 										user={user}
 										changeCurrentEquipment={setCurrentEquipment}
 										extraClassNames={panelClassNames + ' columnHeader'}/>
-							<NewTaskTable 	equipment={currentEquipment}
+							<TaskTable 	equipment={currentEquipment}
 										areTasksLoading={areTasksLoading}
 										tasks={task.list} 
 										onTaskSaved={onCurrentTaskChanged}
