@@ -38,14 +38,14 @@ const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
         });
     }
 
-    const positionStr = position.longitude != Number.NaN ? '(' + position.longitude.toFixed(4) + ', ' + position.latitude.toFixed(4) + ')':'';
-    const navBrand = 'Equipment maintenance ' + positionStr + ' ';
     const textMenu = user?user.email:"Login";
-        
+
+    const spanStyle = { fontSize: "60%" };
+
 	return (
 		<Navbar color="dark" dark expand="md">
             <NavbarBrand href="/">
-                {navBrand}{' '}<FormattedMessage {...navBarMsg.today} /> <ClockLabel />
+                {'Equipment maintenance '}<span style={spanStyle}><FormattedMessage {...navBarMsg.today} /> <ClockLabel /></span>
             </NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpened} navbar>
