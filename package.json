@@ -11,11 +11,13 @@
     "axios-retry": "^3.1.2",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
+    "node-sass": "^4.11.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-intl": "^2.8.0",
     "react-scripts": "^2.1.8",
+    "react-table-factory": "^0.1.26",
     "react-transition-group": "^2.7.1",
     "reactstrap": "^7.1.0",
     "ssh-deploy-release": "^2.3.4"
@@ -24,11 +26,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-
     "deploy": "node scripts/deployRelease.js",
     "rollback": "node scripts/rollBackRelease.js",
-
     "prebuild": "react-scripts test --no-watch",
     "predeploy": "npm run build"
   },

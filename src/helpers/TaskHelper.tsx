@@ -17,6 +17,18 @@ export function createDefaultTask(): Task{
 	}
 }
 
+export function getBadgeText(level: number):string{
+	if(level === 1){
+		return 'Done'
+	}
+	else if(level === 2){
+		return 'Soon'
+	}
+	else{
+		return 'Todo'
+	}
+}
+
 export function getContext(level: number): string{
 	if(level === 1){
 		return "success";
@@ -32,7 +44,22 @@ export function getContext(level: number): string{
     }
 }
 
-export function getTodoText(task: Task): JSX.Element{
+export function getColor(level: number): string{
+	if(level === 1){
+		return "#C3E5CA";
+	}
+	else if(level === 2){
+		return "#FFEEBA";
+	}
+	else if(level === 3){
+		return "#F5C6CC";
+    }
+    else{
+        return "white";
+    }
+}
+
+export function getTodoTextFromTask(task: Task): JSX.Element{
     var dueDate = new Date(task.nextDueDate);
     var todoText = undefined;
     if(task.usageInHourLeft === undefined || task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0){
@@ -53,6 +80,44 @@ export function getTodoText(task: Task): JSX.Element{
     }
     
     return todoText;
+}
+
+export type TaskTodo = {
+    dueDate: Date,
+    onlyDate: boolean,
+    level: number,
+    usageInHourLeft: number | undefined
+}
+
+export function getTodoText(todo: TaskTodo): JSX.Element{
+    let todoText = undefined;
+    if(todo.onlyDate){
+        if(todo.level === 3){
+            todoText = <span><FormattedMessage {...tasktablemsg.shouldhavebeendone} /><b><FormattedDate value={todo.dueDate} /></b></span>;
+        }
+        else{
+            todoText = <span><FormattedMessage {...tasktablemsg.shouldbedone} /><b><FormattedDate value={todo.dueDate} /></b></span>;
+        }
+    }
+    else{
+        if(todo.level === 3){
+            todoText = <span><FormattedMessage {...tasktablemsg.shouldhavebeendonein1} /><b>{todo.usageInHourLeft}h</b><FormattedMessage {...tasktablemsg.shouldhavebeendonein2} /><b><FormattedDate value={todo.dueDate} /></b></span>;
+        }
+        else{
+            todoText = <span><FormattedMessage {...tasktablemsg.shouldbedonein1} /><b>{todo.usageInHourLeft}h</b><FormattedMessage {...tasktablemsg.shouldbedonein2} /><b><FormattedDate value={todo.dueDate} /></b></span>;
+        }
+    }
+    
+    return todoText;
+}
+
+export function getTodoValue(task: Task): TaskTodo{
+    return {
+        dueDate: new Date(task.nextDueDate),
+        onlyDate: task.usageInHourLeft === undefined || task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0,
+        level: task.level,
+        usageInHourLeft: task.usageInHourLeft
+    }
 }
 
 export function getScheduleText(task: Task){

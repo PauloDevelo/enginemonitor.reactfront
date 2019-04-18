@@ -1,17 +1,18 @@
 .appBody{
 	height: 100%;
+	width: 100%;
+
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	width: 100%;
 }
 
 .wrapperColumn{
     height: 100%;
-    width: 400px;
+    width: 455px;
 
-	display: flex;  /* use the flex model*/
-	flex-direction: column;  /* learn more: http://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/ */
+	display: flex;
+	flex-direction: column;
 
 	flex-grow: 1 !important;
     flex-shrink: 1 !important;

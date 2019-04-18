@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 
-import { getContext, getScheduleText } from '../../helpers/TaskHelper'; 
+import { getContext, getScheduleText, getBadgeText } from '../../helpers/TaskHelper'; 
 
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
 
@@ -15,17 +15,7 @@ import './CardTaskDetails.css';
 import '../../style/transition.css';
 import { Equipment, Task } from '../../types/Types';
 
-function getBadgeText(level: number):string{
-	if(level === 1){
-		return 'Done'
-	}
-	else if(level === 2){
-		return 'Soon'
-	}
-	else{
-		return 'Todo'
-	}
-}
+
 
 type Props = {
     equipment?: Equipment, 
