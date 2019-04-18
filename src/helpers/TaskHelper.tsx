@@ -25,7 +25,7 @@ export function getBadgeText(level: number):string{
 		return 'Soon'
 	}
 	else{
-		return 'Todo'
+		return 'ToDo'
 	}
 }
 
