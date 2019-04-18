@@ -20,14 +20,10 @@ export default function EquipmentInfoTab({equipment, onClick}: Props){
                 if(onClick)
                     onClick();
             }}><FontAwesomeIcon icon={faEdit} /></Button>					
-            <div>
-                <span>{equipment.brand} {equipment.model} </span>
-                <span className="font-weight-bold">{equipment.age} h</span>		
-            </div>
-            <p className="d-block">
-                <FormattedMessage {...equipmentInfoMsg.installedOn} />
-                <FormattedDate value={equipment.installation} />
-            </p>
+            <span>{equipment.brand} {equipment.model} </span>
+            <span className="font-weight-bold">{equipment.age} h </span>
+            <FormattedMessage {...equipmentInfoMsg.installedOn} />
+            <FormattedDate value={equipment.installation} />
         </TabPane>
 	);
 }

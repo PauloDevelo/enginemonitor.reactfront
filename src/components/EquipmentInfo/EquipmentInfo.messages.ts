@@ -3,7 +3,7 @@ import {defineMessages, Messages} from "react-intl";
 const messages: Messages = {
   installedOn: {
     id: "installedOn",
-    defaultMessage: "Installed on ",
+    defaultMessage: "installed on ",
   },
 	edit: {
     id: "edit",
