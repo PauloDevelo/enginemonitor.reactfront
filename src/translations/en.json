@@ -75,5 +75,6 @@
 	"changingPassword": "Changing password ...",
 	"message": "Error message :",
 	"passwordsHaveToBeIdentical": "The passwords are different. Please re-type the passwords.",
-	"sendVerification": "Resend Check Email"
+	"sendVerification": "Resend Check Email",
+	"status": "Status"
 }

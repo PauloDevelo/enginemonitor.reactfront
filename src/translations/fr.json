@@ -75,5 +75,6 @@
 	"changingPassword": "Changement du mot de passe ...",
 	"message": "Message d'erreur :",
 	"passwordsHaveToBeIdentical": "Les mots de passe sont différents. Veuillez les retapper.",
-	"sendVerification": "Renvoyer la Vérification"
+	"sendVerification": "Renvoyer la Vérification",
+	"status": "Statut"
 }

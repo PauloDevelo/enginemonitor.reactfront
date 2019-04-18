@@ -90,7 +90,12 @@ const messages: Messages = {
 		id: "age",
     defaultMessage: "Equipment Age",
 		description: "Label"
-	}
+  },
+  status: {
+    id: "status",
+    defaultMessage: "Status",
+		description: "Label"
+  }
 };
 
 const definedMessages: typeof messages = defineMessages(messages);
