@@ -37,3 +37,7 @@ html, body {
 a.active.nav-link {
     font-weight: bold;
 }
+
+.nav-link {
+	cursor: pointer;
+}
