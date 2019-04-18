@@ -90,8 +90,7 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 				return innerTaskCell(content.data, <span>{content.data.name}</span>);
 			},
 			style: {width: '25%'},
-			sortable: true,
-			removeAdaptiveColname: true
+			sortable: true
 		},
 		{
 			name: 'initialIndex',
@@ -103,9 +102,8 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 			cell: (content: any) => {
 				return innerTaskCell(content.data, <Badge color={getContext(content.data.level)} pill className={'mx-auto my-auto'}>{getBadgeText(content.data.level)} </Badge>, 'd-flex');
 			},
-			style: { 'min-width': '75px' },
-			sortable: true,
-			removeAdaptiveColname: true
+			style: { minWidth: '75px' },
+			sortable: true
 		},
 		{
 			name: 'todo',
@@ -118,8 +116,7 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 				return innerTaskCell(content.data, getTodoText(content.data.todo));
 			},
 			style: {width: '25%'},
-			sortable: false,
-			removeAdaptiveColname: true
+			sortable: false
 		},
 		{
 			name: 'description',
@@ -132,8 +129,7 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 				return innerTaskCell(content.data, <span>{content.data.shortenDescription}</span>);
 			},
 			style: {width: '50%'},
-			sortable: false,
-			removeAdaptiveColname: false
+			sortable: false
 		}
 	];
 
@@ -145,12 +141,12 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 				</span>
 				{areTasksLoading ? <Loading/> :
 				<Table
-          data={tasksData}
-          className="default-theme"
-          defaultSortParameter="todo"
-          defaultSortDirection="asc"
-          columns={columns}
-        />}
+					data={tasksData}
+					className="default-theme"
+					defaultSortParameter="status"
+					defaultSortDirection="asc"
+					columns={columns}
+				/>}
 
 			</div>
 			{equipment !== undefined && modalHook.data !== undefined && <ModalEditTask  equipment={equipment}
