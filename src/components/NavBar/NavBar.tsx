@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import ClockLabel from '../ClockLabel/ClockLabel'
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -43,7 +44,9 @@ const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
         
 	return (
 		<Navbar color="dark" dark expand="md">
-            <NavbarBrand href="/">{navBrand}</NavbarBrand>
+            <NavbarBrand href="/">
+                {navBrand}{' '}<FormattedMessage {...navBarMsg.today} /> <ClockLabel />
+            </NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpened} navbar>
                 <Nav className="ml-auto" navbar>

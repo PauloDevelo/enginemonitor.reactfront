@@ -5,10 +5,6 @@ const messages: Messages = {
     id: "installedOn",
     defaultMessage: "Installed on ",
   },
-	today: {
-    id: "today",
-    defaultMessage: "Today, ",
-  },
 	edit: {
     id: "edit",
     defaultMessage: "Edit",
