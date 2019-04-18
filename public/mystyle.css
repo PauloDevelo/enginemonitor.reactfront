@@ -41,3 +41,8 @@ a.active.nav-link {
 .nav-link {
 	cursor: pointer;
 }
+
+.clickable{
+    cursor: pointer;
+}
+

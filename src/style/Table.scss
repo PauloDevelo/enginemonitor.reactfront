@@ -12,11 +12,7 @@
 
 @media all and (max-width: 940px) {
     @import '~react-table-factory/styles/withAdaptive';
-
-    table {
-        @extend .adaptive-table;
-    }
-
+    
     .scrollable-table {
         @extend .adaptive-scrollable-table;
     }
@@ -85,4 +81,15 @@ table.default-theme {
 
 .scrollable-table > .scrollable-table-wrapper, .scrollable-table > .scrollable-table-content > .scrollable-table-wrapper {
     padding: 0px 2px;
+}
+
+.innerTd{
+    height: 100%;
+    padding: 4px 4px 4px 4px;
+}
+
+.innerTdHead{
+    color: #495057;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
 }

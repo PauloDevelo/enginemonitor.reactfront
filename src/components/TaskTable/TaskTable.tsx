@@ -21,8 +21,8 @@ import taskTableMsg from "./TaskTable.messages";
 import PropTypes from 'prop-types';
 import { Equipment, Task } from '../../types/Types';
 
-import './TaskTable.css'
-import './Table.scss';
+import '../../style/Table.scss'
+import './TaskTable.css';
 
 type Props = {
 	equipment?: Equipment, 
@@ -34,20 +34,19 @@ type Props = {
 }
 
 type DisplayableTask = {
-		task: Task,
+	task: Task,
     name: string,
     todo: TaskTodo,
     shortenDescription: string,
-		level: number,
-		initialIndex: number
+	level: number,
+	initialIndex: number
 }
 
 const Table = composeDecorators(
   withHeaderControl,
   
-  withInMemorySortingContext({
-    defaultDirection: 'desc'
-  }),
+  withInMemorySortingContext(),
+
   withFixedHeader // should be last
 )()
 
@@ -58,12 +57,12 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 	if(tasks){
 		tasksData = tasks.map((task, index) => {
 			return {
-								task: task,
+				task: task,
                 name: task.name,
                 todo: getTodoValue(task),
                 shortenDescription: shorten(task.description),
-								level: task.level,
-								initialIndex: index
+				level: task.level,
+				initialIndex: index
             };
 		});
 	}
