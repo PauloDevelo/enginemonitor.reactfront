@@ -144,7 +144,7 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 					data={tasksData}
 					className="default-theme"
 					defaultSortParameter="status"
-					defaultSortDirection="asc"
+					defaultSortDirection="desc"
 					columns={columns}
 				/>}
 
