@@ -19,6 +19,7 @@
     "react-scripts": "^2.1.8",
     "react-table-factory": "^0.1.26",
     "react-transition-group": "^2.7.1",
+    "react-uid": "^2.2.0",
     "reactstrap": "^7.1.0",
     "ssh-deploy-release": "^2.3.4"
   },

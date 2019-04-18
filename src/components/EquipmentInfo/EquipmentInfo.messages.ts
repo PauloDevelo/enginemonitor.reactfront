@@ -61,8 +61,13 @@ const messages: Messages = {
 	},
 	age: {
 		id: "age",
-    defaultMessage: "Equipment Age",
+    defaultMessage: "Equipment Age in hour",
 		description: "Label"
+	},
+	ageToolTip: {
+		id: "ageToolTip",
+    defaultMessage: "Amount of time in hour the equipment was used.",
+		description: "Tooltip"
 	},
 	serialPort: {
 		id: "serialPort",

@@ -51,7 +51,7 @@ const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted
 							<MyInput name="brand" 			label={equipmentInfoMsg.brand} 			type="text" 	required/>
 							<MyInput name="model" 			label={equipmentInfoMsg.model} 			type="text" 	required/>
 							<MyInput name="installation" 	label={equipmentInfoMsg.installDateLabel} 	type="date" 	required/>
-							<MyInput name="age" 			label={equipmentInfoMsg.age} 			type="number" 	required min={0} />
+							<MyInput name="age" 			label={equipmentInfoMsg.age} tooltip={equipmentInfoMsg.ageToolTip} 			type="number" 	required min={0} />
 						</MyForm>}
 						<Alerts errors={modalLogic.alerts}/>
 					</ModalBody>

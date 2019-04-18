@@ -1,6 +1,79 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MyInput Should render as expected 1`] = `
+exports[`MyInput of type checkox should render as expected 1`] = `
+<MyInput
+  label={
+    Object {
+      "defaultMessage": "Default message",
+      "description": "Label",
+      "id": "defaultId",
+    }
+  }
+  name="name"
+  required={true}
+  type="checkbox"
+>
+  <FormGroup
+    check={true}
+    className="form-group"
+    inline={true}
+    tag="div"
+  >
+    <div
+      className="form-group form-check form-check-inline"
+    >
+      <Label
+        check={true}
+        inline="true"
+        tag="label"
+        widths={
+          Array [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+          ]
+        }
+      >
+        <label
+          className="form-check-label"
+          inline="true"
+        >
+          <FormattedMessage
+            defaultMessage="Default message"
+            description="Label"
+            id="defaultId"
+            values={Object {}}
+          >
+            <span>
+              Default message
+            </span>
+          </FormattedMessage>
+           
+          <Input
+            invalid={false}
+            name="name"
+            onChange={[Function]}
+            required={true}
+            type="checkbox"
+          >
+            <input
+              className="form-check-input"
+              name="name"
+              onChange={[Function]}
+              required={true}
+              type="checkbox"
+            />
+          </Input>
+        </label>
+      </Label>
+    </div>
+  </FormGroup>
+</MyInput>
+`;
+
+exports[`MyInput of type text should render as expected 1`] = `
 <MyInput
   label={
     Object {
