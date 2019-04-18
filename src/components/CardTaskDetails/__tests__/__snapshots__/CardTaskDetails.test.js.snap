@@ -261,7 +261,7 @@ exports[`CardTaskDetails should stay the same with task2 1`] = `
           <span
             className="badge badge-danger badge-pill"
           >
-            Todo
+            ToDo
           </span>
         </div>
         <div

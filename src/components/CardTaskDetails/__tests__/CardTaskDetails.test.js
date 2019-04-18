@@ -139,8 +139,8 @@ describe("CardTaskDetails", () => {
             changeCurrentTask={changeCurrentTaskMock} 
         />);
 
-        expect(wrapper.find('.card-title').text()).toEqual(task2.name + ' Todo');
-        expect(wrapper.find('.badge-danger').text()).toEqual("Todo");
+        expect(wrapper.find('.card-title').text()).toEqual(task2.name + ' ToDo');
+        expect(wrapper.find('.badge-danger').text()).toEqual("ToDo");
         expect(wrapper.find('.card-control-prev-icon').hasClass('invisible')).toEqual(false);
         expect(wrapper.find('.card-text').text()).toEqual(task2.description);
         expect(wrapper.find('.card-control-next-icon').hasClass('invisible')).toEqual(true);
