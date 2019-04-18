@@ -12,7 +12,7 @@ const messages: Messages = {
 		description: "Panel title"
   },
 	name: {
-    id: "name",
+    id: "taskname",
     defaultMessage: "Name",
 		description: "Label"
   },
