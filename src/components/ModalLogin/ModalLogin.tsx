@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, Row, Col, Spinner } from 'reactstrap';
 import { faSignInAlt, faSignOutAlt, faUnlockAlt, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,66 +30,76 @@ type Props = {
 	toggleModalSignup: () => void
 }
 
+enum LoginState {
+    Started = 1,
+	IsLoggingIn,
+	NotVerified,
+	WrongPassword,
+    InError,
+    LoggedIn,
+}
+
+type StateType = {
+	state: LoginState,
+	infoMsg?: string,
+	errors?: any
+}
+
 const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}: Props) => {
-	const [user, setUser] = useState<AuthInfo>({ email: '', password: '', remember:false});
-	
-	const [resetPassword, setResetPassword] = useState(false);
-	const [sendVerification, setSendVerification] = useState(false);
-	
-	const [loginErrors, setLoginErrors] = useState<any>(undefined);
-	const [infoMsg, setInfoMsg] = useState<string | undefined>(undefined);
-	const [isLoading, setIsLoading] = useState(false);
-	const [isError, setIsError] = useState(false);
+	const [user, setUser] = useState<AuthInfo>({ email: '', password: '', remember:false});	
+	const [state, setState] = useState<StateType>({state: LoginState.Started});
 	
 	const resetPasswordModalHook = useEditModal({email: '', newPassword1: '', newPassword2: ''});
 
-	const sendVerificationEmail = async()=>{
-		setIsLoading(true);
-		setIsError(false);
-		setInfoMsg(undefined);
+	useEffect(() => {
+		setState({state: LoginState.Started});
+	}, [resetPasswordModalHook.editModalVisibility])
 
+	const sendVerificationEmail = async()=>{
+		setState({state: LoginState.IsLoggingIn});
 		try{
 			await EquipmentMonitorService.sendVerificationEmail(user.email);
-			setLoginErrors(undefined);
-			setInfoMsg("emailSent");
+			setState({state: LoginState.Started, infoMsg: "emailSent"});
 		}
 		catch(errors){
 			if(errors instanceof HttpError){
-				setIsError(true);
-				setLoginErrors(errors.data);
+				setState({state: LoginState.InError, errors: errors.data});
+			}
+			else{
+				setState({state: LoginState.InError, errors: errors.message});
 			}
 		}
-
-		setIsLoading(false);
 	}
 
   const handleSubmit = async(newUser:AuthInfo) => {
-		setIsLoading(true);
-		setIsError(false);
-		setInfoMsg(undefined);
+		setState({state: LoginState.IsLoggingIn});
 		setUser(newUser);
 
 		try{
 			const user = await EquipmentMonitorService.authenticate(newUser);
+			setState({state: LoginState.LoggedIn});
 			onLoggedIn(user);
-			setLoginErrors(undefined);
-			setResetPassword(false);
-			setSendVerification(false);
 		}
 		catch(errors){
 			if(errors instanceof HttpError){
-				setIsError(true);
-        		const newLoginErrors = errors.data;
-				setLoginErrors(newLoginErrors);
+				const newLoginErrors = errors.data;
 
-				setResetPassword(newLoginErrors.password === "invalid");
-				setSendVerification(newLoginErrors.email === "needVerification");
+				if (newLoginErrors.password === "invalid"){
+					setState({state: LoginState.WrongPassword, errors: newLoginErrors });
+				}
+				else if(newLoginErrors.email === "needVerification"){
+					setState({state: LoginState.NotVerified, errors: newLoginErrors });
+				}
+				else{
+					setState({state: LoginState.InError, errors: newLoginErrors });
+				}
 
-				resetPasswordModalHook.setData({email: newUser.email, newPassword1: '', newPassword2: ''})
+				resetPasswordModalHook.setData({email: newUser.email, newPassword1: '', newPassword2: '' });
+			}
+			else{
+				setState({state: LoginState.InError, errors: errors.message });
 			}
 		}
-
-		setIsLoading(false);
 	}
     
 	return (
@@ -103,14 +113,14 @@ const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}: Props) =
 							<MyInput name="password" 	label={loginmsg.password} 	type="password" required/>
 							<MyInput name="remember" 	label={loginmsg.remember} 	type="checkbox"/>
 						</MyForm>}
-						{isLoading && <Spinner size="sm" color="secondary" />}
-						{infoMsg && <Alerts error={infoMsg} color="success"/>}
-						{isError && <Alerts errors={loginErrors}/>}
+						{state.state === LoginState.IsLoggingIn && <Spinner size="sm" color="secondary" />}
+						{state.infoMsg && <Alerts error={state.infoMsg} color="success"/>}
+						{state.errors && <Alerts errors={state.errors}/>}
 					</ModalBody>
 					<ModalFooter>
 						<Button onClick={toggleModalSignup} color="warning" className="d-block mx-auto"><FormattedMessage {...loginmsg.signup} /></Button>
-						{resetPassword && <Button onClick={resetPasswordModalHook.toggleModal} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.resetPassword} /></Button>}
-						{sendVerification && <Button onClick={sendVerificationEmail} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.sendVerification} /></Button>}
+						{state.state === LoginState.WrongPassword && <Button onClick={resetPasswordModalHook.toggleModal} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.resetPassword} /></Button>}
+						{state.state === LoginState.NotVerified && <Button onClick={sendVerificationEmail} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.sendVerification} /></Button>}
 						<Button type="submit" form="formLogin" color="success" className="d-block mx-auto"><FormattedMessage {...loginmsg.login} /></Button>
 					</ModalFooter>
 				</Modal>
