@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, { useState, useEffect } from "react";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Spinner } from 'reactstrap';
 import { faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
@@ -30,45 +30,59 @@ type Props = {
 	data: NewPassword
 };
 
+enum ResetPasswordState {
+    Started = 1,
+    IsChanging,
+    InError,
+    Succeed,
+}
+
+type StateType = {
+	state: ResetPasswordState,
+	infoMsg?: string,
+	resetPasswordErrors?: any
+}
+
 const ModalPasswordReset = ({visible, className, toggle, data}: Props) => {
-	const [infoMsg, setInfoMsg] = useState<string | undefined>(undefined);
-	const [resetPasswordErrors, setResetPasswordErrors] = useState<any>(undefined);
-	const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
+	const [state, setState] = useState<StateType>({state: ResetPasswordState.Started});
+
+	useEffect(() => {
+		setState({state: ResetPasswordState.Started});
+	}, [visible]);
 
     const cancel = () => {
-		setResetPasswordErrors(undefined);
-		setInfoMsg(undefined);
 		toggle();
-    }
+	}
 
     const handleSubmit = async(data: NewPassword) => {
-		setIsError(false);
-		setIsLoading(true);
-		setInfoMsg(undefined);
-	  
-        try{
-			if(data.newPassword1 !== undefined && data.newPassword1 === data.newPassword2){
-				await EquipmentMonitorService.resetPassword(data.email, data.newPassword1);
-				setResetPasswordErrors(undefined);
-				setInfoMsg("confirmPasswordChange");
-			}
-			else{
-				setIsError(true);
-				setResetPasswordErrors({ password: "passwordsHaveToBeIdentical"});
-			}
-            
+		if(state.state === ResetPasswordState.Succeed){
+			toggle();
 		}
-		catch(errors){
-			setIsError(true);
+		else{
+			setState({state: ResetPasswordState.IsChanging});
 
-			if(errors instanceof HttpError){
-                const newResetPasswordErrors = errors.data;
-                setResetPasswordErrors(newResetPasswordErrors);
+			try{
+				if(data.newPassword1 !== undefined && data.newPassword1 === data.newPassword2){
+					await EquipmentMonitorService.resetPassword(data.email, data.newPassword1);
+					setState({state: ResetPasswordState.Succeed, infoMsg: "confirmPasswordChange"});
+				}
+				else{
+					setState({state: ResetPasswordState.InError, resetPasswordErrors: { password: "passwordsHaveToBeIdentical"}});
+				}
+			}
+			catch(errors){
+				if(errors instanceof HttpError){
+					const newResetPasswordErrors = errors.data;
+					setState({state: ResetPasswordState.InError, resetPasswordErrors: newResetPasswordErrors});
+				}
+				else{
+					setState({state: ResetPasswordState.InError});
+				}
 			}
 		}
-		setIsLoading(false);
-    }
+	}
+	
+	let submitButtonLabel = state.state === ResetPasswordState.Succeed ? changePasswordMsg.close : changePasswordMsg.changePassword;
 
 	return (
 		<CSSTransition in={visible} timeout={300} classNames="modal">
@@ -80,13 +94,13 @@ const ModalPasswordReset = ({visible, className, toggle, data}: Props) => {
                         <MyInput name="newPassword1" 	label={changePasswordMsg.newPassword} 		type="password" 	required/>
 						<MyInput name="newPassword2" 	label={changePasswordMsg.retypeNewPassword} type="password" 	required/>
                     </MyForm>}
-					{isError && <Alerts errors={ resetPasswordErrors } />}
-					{isLoading && <Alerts error={"changingPassword"} color="success"/>}
-					{infoMsg && <Alerts error={infoMsg} color="success"/>}
+					{state.state === ResetPasswordState.InError && <Alerts errors={ state.resetPasswordErrors } />}
+					{state.state === ResetPasswordState.IsChanging && <Alerts error={"changingPassword"} color="success"><Spinner size="sm" color="secondary" /></Alerts>}
+					{state.state === ResetPasswordState.Succeed && <Alerts error={state.infoMsg} color="success"/>}
 				</ModalBody>
 				<ModalFooter>
-					<Button type="submit" form="formChangePassword" color="success"><FormattedMessage {...changePasswordMsg.changePassword} /></Button>
-                    <Button color="secondary" onClick={cancel}><FormattedMessage {...changePasswordMsg.cancel} /></Button>
+					<Button type="submit" form="formChangePassword" color="success"><FormattedMessage {...submitButtonLabel} /></Button>
+                    {state.state !== ResetPasswordState.Succeed && <Button color="secondary" onClick={cancel}><FormattedMessage {...changePasswordMsg.cancel} /></Button>}
 				</ModalFooter>
 			</Modal>
 		</CSSTransition>
