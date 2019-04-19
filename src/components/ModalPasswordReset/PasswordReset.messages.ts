@@ -31,6 +31,11 @@ const messages: Messages = {
         defaultMessage: "Cancel",
 		description: "Button cancel"
     },
+    close: {
+        id: "close",
+        defaultMessage: "Close",
+		description: "Button Close"
+    }
 };
 
 const definedMessages: Messages = defineMessages(messages);
