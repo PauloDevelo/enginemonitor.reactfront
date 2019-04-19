@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import ClockLabel from '../ClockLabel/ClockLabel'
+import ClockLabel from '../ClockLabel/ClockLabel';
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -10,6 +10,8 @@ import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy
 
 import navBarMsg from "./NavBar.messages";
 import { User } from "../../types/Types";
+
+import './NavBar.css';
 
 type Props = {
     user?: User, 
@@ -21,7 +23,7 @@ type Props = {
 type Position = {
     latitude: number,
     longitude: number
-}
+};
 
 const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
     const [position, setPosition] = useState( {latitude: Number.NaN, longitude: Number.NaN });
@@ -39,13 +41,10 @@ const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
     }
 
     const textMenu = user?user.email:"Login";
-
-    const spanStyle = { fontSize: "60%" };
-
 	return (
 		<Navbar color="dark" dark expand="md">
             <NavbarBrand href="/">
-                {'Equipment maintenance '}<span style={spanStyle}><FormattedMessage {...navBarMsg.today} /> <ClockLabel /></span>
+                <div className={'mr-2'}>{'Equipment maintenance'}</div><div className={'clock'}><FormattedMessage {...navBarMsg.today}/><ClockLabel /></div>
             </NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpened} navbar>

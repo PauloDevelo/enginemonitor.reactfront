@@ -1,0 +1,20 @@
+.clock{ 
+    font-size: 60%;
+}
+
+.navbar{
+    justify-content: flex-end;
+}
+
+.navbar-brand{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: flex-start;
+}
+
+.navbar .navbar-toggler{
+    position: absolute;
+    top: 10px;
+}
