@@ -12,7 +12,7 @@ import { faTasks, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
-import Loading from '../Loading/Loading'
+import Loading from '../Loading/Loading';
 
 import { getContext, getTodoText, shorten, getTodoValue, TaskTodo, createDefaultTask, getBadgeText } from '../../helpers/TaskHelper'; 
 import { useEditModal } from '../../hooks/EditModalHook';
@@ -21,7 +21,7 @@ import taskTableMsg from "./TaskTable.messages";
 import PropTypes from 'prop-types';
 import { Equipment, Task } from '../../types/Types';
 
-import '../../style/Table.scss'
+import '../../style/Table.scss';
 import './TaskTable.css';
 
 type Props = {
@@ -31,7 +31,7 @@ type Props = {
 	onTaskSaved: (task: Task) => void, 
 	changeCurrentTask: (task: Task) => void, 
 	classNames: string
-}
+};
 
 type DisplayableTask = {
 	task: Task,
@@ -40,15 +40,13 @@ type DisplayableTask = {
     shortenDescription: string,
 	level: number,
 	initialIndex: number
-}
+};
 
 const Table = composeDecorators(
   withHeaderControl,
-  
   withInMemorySortingContext(),
-
   withFixedHeader // should be last
-)()
+)();
 
 export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, changeCurrentTask, classNames}: Props) => {
 	const modalHook = useEditModal<Task | undefined>(undefined);
@@ -58,12 +56,12 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 		tasksData = tasks.map((task, index) => {
 			return {
 				task: task,
-                name: task.name,
-                todo: getTodoValue(task),
-                shortenDescription: shorten(task.description),
+        name: task.name,
+        todo: getTodoValue(task),
+        shortenDescription: shorten(task.description),
 				level: task.level,
 				initialIndex: index
-            };
+      };
 		});
 	}
 
@@ -88,7 +86,6 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 			cell: (content: any) => {
 				return innerTaskCell(content.data, <span>{content.data.name}</span>);
 			},
-			style: {width: '25%'},
 			sortable: true
 		},
 		{
@@ -101,7 +98,6 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 			cell: (content: any) => {
 				return innerTaskCell(content.data, <Badge color={getContext(content.data.level)} pill className={'mx-auto my-auto'}>{getBadgeText(content.data.level)} </Badge>, 'd-flex');
 			},
-			style: { minWidth: '75px' },
 			sortable: true
 		},
 		{
@@ -114,7 +110,6 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 			cell: (content: any) => {
 				return innerTaskCell(content.data, getTodoText(content.data.todo));
 			},
-			style: {width: '25%'},
 			sortable: false
 		},
 		{
@@ -127,7 +122,6 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 			cell: (content: any) => {
 				return innerTaskCell(content.data, <span>{content.data.shortenDescription}</span>);
 			},
-			style: {width: '50%'},
 			sortable: false
 		}
 	];

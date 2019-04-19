@@ -118,7 +118,7 @@ export default function App(){
 							<HistoryTaskTable 	equipment={currentEquipment}
 												task={task.current}
 												onHistoryChanged={refreshTaskList}
-												classNames={panelClassNames + ' columnBody'}/>
+												classNames={panelClassNames + ' columnBody lastBlock'}/>
 						</div>
 					</div>		
 				</Fragment>																																																			

@@ -8,8 +8,8 @@
 }
 
 .wrapperColumn{
-    height: 100%;
-    width: 455px;
+	height: 100%;
+	width: 360px;
 
 	display: flex;
 	flex-direction: column;
@@ -21,7 +21,10 @@
 
 .columnBody{
     flex: 1;
-    overflow: auto;
+	overflow: auto;
+	height: 360px; 
+}
 
-    min-height: 300px
+.lastBlock{
+	min-height: 320px;
 }
