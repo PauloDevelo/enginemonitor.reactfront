@@ -12,10 +12,11 @@ function isString (value: any) {
 type Props = {
     color?: string,
     error?:string,
-    errors?: any,  
+    errors?: any,
+    children?: JSX.Element[] | JSX.Element
 };
 
-const Alerts = ({color, error, errors}:Props) => {
+const Alerts = ({color, error, errors, children}:Props) => {
     if(color === undefined){
         color = "danger";
     }
@@ -30,6 +31,7 @@ const Alerts = ({color, error, errors}:Props) => {
         }
         return <Alert className="sm" color={color}>
             {value}
+            {children}
         </Alert>;
     }
 
@@ -57,6 +59,7 @@ const Alerts = ({color, error, errors}:Props) => {
             return(
                 <Alert className="sm" key={key} color={color}>
                     { fieldElement }<span>{' '}{valueElement}</span>
+                    {children}
                 </Alert>
             );
         });
@@ -72,7 +75,8 @@ Alerts.propTypes = {
         PropTypes.string,
         PropTypes.object
       ]),
-    color: PropTypes.string
+    color: PropTypes.string,
+    children: PropTypes.node,
 };
 
 export default Alerts;
