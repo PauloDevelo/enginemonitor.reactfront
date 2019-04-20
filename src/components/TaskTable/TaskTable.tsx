@@ -129,7 +129,7 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 	return (
 		<Fragment>
 			<div className={classNames + ' tasktable'}>
-				<span className=""><FontAwesomeIcon icon={faTasks} />{' '}<b><FormattedMessage {...taskTableMsg.tasklistTitle} /></b>
+				<span><FontAwesomeIcon icon={faTasks} />{' '}<b><FormattedMessage {...taskTableMsg.tasklistTitle} /></b>
 					{equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultTask()) }><FontAwesomeIcon icon={faPlusSquare} /></Button>}
 				</span>
 				{areTasksLoading ? <Loading/> :
