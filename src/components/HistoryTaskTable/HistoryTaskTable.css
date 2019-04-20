@@ -1,3 +1,4 @@
-.clickable {
-  cursor: pointer;
+.historytasktable{
+  display: flex;
+  flex-direction: column;
 }

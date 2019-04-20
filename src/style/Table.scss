@@ -65,10 +65,11 @@
 }
 
 .scrollable-table {
-    height: calc(100% - 39px);
+    height: calc(100% - 47px);
 }
 
 table.default-theme {
+    width: 100%;
     --bg-color: #fff;
     --header-ft-size: 16px;
     --cell-ft-size: 14px;
