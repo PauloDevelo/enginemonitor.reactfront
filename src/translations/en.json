@@ -78,5 +78,6 @@
 	"passwordsHaveToBeIdentical": "The passwords are different. Please re-type the passwords.",
 	"sendVerification": "Resend Check Email",
 	"status": "Status",
-	"close": "Close"
+	"close": "Close",
+	"taskHistoryTitle": "Task history"
 }

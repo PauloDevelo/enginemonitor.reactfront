@@ -157,8 +157,8 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}: Props
     
     return(
         <div className={classNames + ' historytasktable'}>
-
             <span className="mb-2">
+                <b><FormattedMessage {...messages.taskHistoryTitle} /></b>
                 {task && <Button color="success" size="sm" className="float-right mb-2" onClick={() => {
                     modalHook.displayData(createDefaultEntry(equipment, task));
                 }}>

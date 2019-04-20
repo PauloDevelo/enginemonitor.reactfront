@@ -20,7 +20,12 @@ const messages: Messages = {
         id: "errorFetching",
         defaultMessage: "Something went wrong ...",
         description: "Error message"
-    }
+    },
+    taskHistoryTitle: {
+        id: "taskHistoryTitle",
+        defaultMessage: "Task history",
+        description: "Title"
+    },
 };
 
 const definedMessages: typeof messages = defineMessages(messages);
