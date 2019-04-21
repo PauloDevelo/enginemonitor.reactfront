@@ -79,5 +79,11 @@
 	"sendVerification": "Renvoyer la Vérification",
 	"status": "Statut",
 	"close": "Fermer",
-	"taskHistoryTitle": "Historique"
+	"taskHistoryTitle": "Historique",
+	"ageAcquisitionType": "Comment voulez-vous mesurez l'usage de cet équipement ?",
+	"timeType": "Avec la date courante",
+	"manualEntryType": "En la saisissant manuellement",
+	"trackerType": "Avec un tracker d'usage",
+	"ageUrl": "URL pour récupérer l'age de l'équipment",
+	"ageUrlToolTip": "Url permettant de mettre à jour le temps d'utilisation de l'équipement."
 }

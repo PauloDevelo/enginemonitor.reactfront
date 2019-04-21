@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { faEdit, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CSSTransition } from 'react-transition-group'
-import { FormattedMessage } from 'react-intl';
+import { CSSTransition } from 'react-transition-group';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
@@ -12,13 +12,14 @@ import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
 
 import equipmentInfoMsg from "../EquipmentInfo/EquipmentInfo.messages";
 
-import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation'
-import MyForm from "../Form/MyForm"
-import MyInput from "../Form/MyInput"
-import Alerts from "../Alerts/Alerts"
+import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation';
+import MyForm from "../Form/MyForm";
+import MyInput from "../Form/MyInput";
+import TranslatedOption from "../Form/TranslatedOption";
+import Alerts from "../Alerts/Alerts";
 
 import '../../style/transition.css';
-import { Equipment } from '../../types/Types';
+import { Equipment, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
 	equipment: Equipment,
@@ -30,12 +31,22 @@ type Props = {
 }
 
 const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted, visible, toggle, className}: Props) => {
+	const [ageAcquisitionType, setAgeAcquisitionType] = useState(equipment.ageAcquisitionType.toString());
 	const equipmentId = equipment === undefined ? undefined : equipment._id;
 	const modalLogic = useEditModalLogic(toggle, EquipmentMonitorService.createOrSaveEquipment, [], undefined, onEquipmentInfoSaved, 
 										EquipmentMonitorService.deleteEquipment, [equipmentId], onEquipmentDeleted);
 
 	const isCreation = equipment === undefined || equipment._id === undefined;
 
+	const AgeAcquisitionElements = () => {
+		return(
+			<Fragment>
+				{ageAcquisitionType === AgeAcquisitionType.manualEntry.toString() &&  <MyInput name="age" 	label={equipmentInfoMsg.age}    tooltip={equipmentInfoMsg.ageToolTip} 	type="number" 	required min={0} />}
+				{ageAcquisitionType === AgeAcquisitionType.tracker.toString() && <MyInput name="ageUrl" 	label={equipmentInfoMsg.ageUrl} tooltip={equipmentInfoMsg.ageUrlToolTip} 	type="text" 	required min={0} />}
+			</Fragment>
+		);
+	};
+	
 	return (
 		<Fragment>
 			<CSSTransition in={visible} timeout={300} classNames="modal">
@@ -47,11 +58,16 @@ const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted
 					</ModalHeader>
 					<ModalBody>
 						{visible && <MyForm submit={modalLogic.handleSubmit} id="formEquipmentInfo" initialData={equipment}>
-							<MyInput name="name" 			label={equipmentInfoMsg.name} 			type="text" 	required/>
-							<MyInput name="brand" 			label={equipmentInfoMsg.brand} 			type="text" 	required/>
-							<MyInput name="model" 			label={equipmentInfoMsg.model} 			type="text" 	required/>
-							<MyInput name="installation" 	label={equipmentInfoMsg.installDateLabel} 	type="date" 	required/>
-							<MyInput name="age" 			label={equipmentInfoMsg.age} tooltip={equipmentInfoMsg.ageToolTip} 			type="number" 	required min={0} />
+							<MyInput name="name" 				label={equipmentInfoMsg.name} 				type="text" 	required/>
+							<MyInput name="brand" 				label={equipmentInfoMsg.brand} 				type="text" 	required/>
+							<MyInput name="model" 				label={equipmentInfoMsg.model} 				type="text" 	required/>
+							<MyInput name="installation" 		label={equipmentInfoMsg.installDateLabel} 	type="date" 	required/>
+							<MyInput name="ageAcquisitionType" 	label={equipmentInfoMsg.ageAcquisitionType} type="select" 	required	onChanged={setAgeAcquisitionType} tooltip={equipmentInfoMsg.ageAcquisitionTypeTooltip}>
+								<TranslatedOption value={AgeAcquisitionType.time.toString()}  		message={equipmentInfoMsg.time}/>
+								<TranslatedOption value={AgeAcquisitionType.manualEntry.toString()} message={equipmentInfoMsg.manualEntry}/>
+								<TranslatedOption value={AgeAcquisitionType.tracker.toString()} 	message={equipmentInfoMsg.tracker}/>
+							</MyInput>
+							<AgeAcquisitionElements/>
 						</MyForm>}
 						<Alerts errors={modalLogic.alerts}/>
 					</ModalBody>

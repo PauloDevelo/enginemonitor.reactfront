@@ -1,10 +1,18 @@
+export enum AgeAcquisitionType{
+    time = 0,
+    manualEntry=1,
+    tracker=2
+}
+
 export type Equipment = {
     _id: string | undefined,
     name: string,
     brand: string,
     model: string,
     age: number,
-    installation: Date
+    installation: Date,
+    ageAcquisitionType: AgeAcquisitionType,
+    ageUrl: string
 }
 
 export type Task = {

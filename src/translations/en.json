@@ -79,5 +79,11 @@
 	"sendVerification": "Resend Check Email",
 	"status": "Status",
 	"close": "Close",
-	"taskHistoryTitle": "Task history"
+	"taskHistoryTitle": "Task history",
+	"ageAcquisitionType": "How do you want to measure the equipment usage time ?",
+	"timeType": "With the current time",
+	"manualEntryType": "With a manual input",
+	"trackerType": "With a usage time tracker",
+	"ageUrl": "Equipment Age URL",
+	"ageUrlToolTip": "Url allowing to get the equipment usage time in hour."
 }

@@ -1,4 +1,4 @@
-import { Equipment } from "../types/Types";
+import { Equipment, AgeAcquisitionType } from "../types/Types";
 
 export function createDefaultEquipment(): Equipment{
 	return {
@@ -7,7 +7,9 @@ export function createDefaultEquipment(): Equipment{
 		brand: "",
 		model: "",
 		age: 0,
-		installation: new Date()
+		installation: new Date(),
+		ageAcquisitionType: AgeAcquisitionType.manualEntry,
+		ageUrl: ""
 	}
 }
 

@@ -10,16 +10,18 @@ type Props = {
 	label: FormattedMessage.MessageDescriptor,
 	tooltip?: FormattedMessage.MessageDescriptor,
 	handleChange?: (event: any) => void,
+	onChanged?: (newValue: any) => void,
 	validationTrigger?: number,
 	type: any,
 	name: string,
 	min?: number,
 	max?: number,
 	required?: boolean,
-	readonly?: string
+	readonly?: string,
+	children?: JSX.Element[] | JSX.Element
 };
 
-export default function MyInput({ label, tooltip, handleChange, validationTrigger, ...props }: Props) {
+export default function MyInput({ label, tooltip, handleChange, onChanged, validationTrigger, children, ...props }: Props) {
 	const [validity, setValidity] = useState({ isValid: true, errorMessage: '' });
 	const inputElemRef = useRef<any>();
 
@@ -43,6 +45,10 @@ export default function MyInput({ label, tooltip, handleChange, validationTrigge
 	const onChangeHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
 		validate();
 		if(typeof handleChange === 'function') handleChange(event);
+
+		const target:HTMLInputElement = event.target as HTMLInputElement;
+		const value = target.type === 'checkbox' ? target.checked : target.value;
+		if(typeof onChanged === 'function') onChanged(value);
 	};
 
 	let tooltipElement:JSX.Element | undefined = undefined;
@@ -56,7 +62,7 @@ export default function MyInput({ label, tooltip, handleChange, validationTrigge
 			<FormGroup className={"form-group"} check inline={true}>
 				<Label check inline={inlineValue as never}>
 					<FormattedMessage {...label}/>{tooltipElement}{' '}
-					<Input ref={inputElemRef} onChange={onChangeHandler} invalid={!validity.isValid} {...props} />
+					<Input ref={inputElemRef} onChange={onChangeHandler} invalid={!validity.isValid} {...props}/>
 				</Label>
 			</FormGroup>
 		);
@@ -69,13 +75,16 @@ export default function MyInput({ label, tooltip, handleChange, validationTrigge
 					className={"form-control"}
 					onChange={onChangeHandler} 
 					invalid={!validity.isValid}
-					{...props}/>
+					{...props}>
+				{children}
+			</Input>
 			{!validity.isValid && <FormFeedback>{validity.errorMessage}</FormFeedback>}
 		</FormGroup>
 	)
 }
 
 MyInput.propTypes = {
+	onChanged: PropTypes.func,
 	validationTrigger: PropTypes.number,
 	name: PropTypes.string.isRequired,
 	tooltip: PropTypes.object,
@@ -85,5 +94,6 @@ MyInput.propTypes = {
 	type: PropTypes.string.isRequired,
 	required: PropTypes.bool,
 	value: PropTypes.any,
-	placeholder: PropTypes.string
+	placeholder: PropTypes.string,
+	children: PropTypes.node,
 };
