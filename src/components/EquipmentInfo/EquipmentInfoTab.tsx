@@ -6,7 +6,7 @@ import { FormattedMessage, FormattedDate } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import equipmentInfoMsg from "./EquipmentInfo.messages";
-import { Equipment } from '../../types/Types';
+import { Equipment, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
     equipment: Equipment,
@@ -21,7 +21,7 @@ export default function EquipmentInfoTab({equipment, onClick}: Props){
                     onClick();
             }}><FontAwesomeIcon icon={faEdit} /></Button>					
             <span>{equipment.brand} {equipment.model} </span>
-            <span className="font-weight-bold">{equipment.age} h </span>
+            {equipment.ageAcquisitionType !== AgeAcquisitionType.time && <span className="font-weight-bold">{equipment.age} h </span>}
             <FormattedMessage {...equipmentInfoMsg.installedOn} />
             <FormattedDate value={equipment.installation} />
         </TabPane>

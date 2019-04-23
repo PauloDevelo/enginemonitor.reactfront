@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { faEdit, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,16 +36,11 @@ const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted
 	const modalLogic = useEditModalLogic(toggle, EquipmentMonitorService.createOrSaveEquipment, [], undefined, onEquipmentInfoSaved, 
 										EquipmentMonitorService.deleteEquipment, [equipmentId], onEquipmentDeleted);
 
-	const isCreation = equipment === undefined || equipment._id === undefined;
+	useEffect(() => {
+		setAgeAcquisitionType(equipment.ageAcquisitionType.toString());
+	}, [equipment._id]);
 
-	const AgeAcquisitionElements = () => {
-		return(
-			<Fragment>
-				{ageAcquisitionType === AgeAcquisitionType.manualEntry.toString() &&  <MyInput name="age" 	label={equipmentInfoMsg.age}    tooltip={equipmentInfoMsg.ageToolTip} 	type="number" 	required min={0} />}
-				{ageAcquisitionType === AgeAcquisitionType.tracker.toString() && <MyInput name="ageUrl" 	label={equipmentInfoMsg.ageUrl} tooltip={equipmentInfoMsg.ageUrlToolTip} 	type="text" 	required min={0} />}
-			</Fragment>
-		);
-	};
+	const isCreation = equipment === undefined || equipment._id === undefined;
 	
 	return (
 		<Fragment>
@@ -67,7 +62,8 @@ const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted
 								<TranslatedOption value={AgeAcquisitionType.manualEntry.toString()} message={equipmentInfoMsg.manualEntry}/>
 								<TranslatedOption value={AgeAcquisitionType.tracker.toString()} 	message={equipmentInfoMsg.tracker}/>
 							</MyInput>
-							<AgeAcquisitionElements/>
+							{ageAcquisitionType === AgeAcquisitionType.manualEntry.toString() &&  <MyInput name="age" 	label={equipmentInfoMsg.age}    tooltip={equipmentInfoMsg.ageToolTip} 	type="number" 	required min={0} />}
+							{ageAcquisitionType === AgeAcquisitionType.tracker.toString() && <MyInput name="ageUrl" 	label={equipmentInfoMsg.ageUrl} tooltip={equipmentInfoMsg.ageUrlToolTip} 	type="text" 	required min={0} />}
 						</MyForm>}
 						<Alerts errors={modalLogic.alerts}/>
 					</ModalBody>

@@ -130,7 +130,7 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 		<Fragment>
 			<div className={classNames + ' tasktable'}>
 				<span><FontAwesomeIcon icon={faTasks} />{' '}<b><FormattedMessage {...taskTableMsg.tasklistTitle} /></b>
-					{equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultTask()) }><FontAwesomeIcon icon={faPlusSquare} /></Button>}
+					{equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultTask(equipment)) }><FontAwesomeIcon icon={faPlusSquare} /></Button>}
 				</span>
 				{areTasksLoading ? <Loading/> :
 				<Table

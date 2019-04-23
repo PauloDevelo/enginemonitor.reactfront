@@ -31,7 +31,7 @@ function convertDateFieldsToDate(data:any, keys:string[]){
 type Props = {
 	initialData: any,
 	submit: (data:any) => (void | Promise<void>), 
-	children: JSX.Element[], 
+	children: (JSX.Element | boolean)[], 
 	className?: string,
 	id: string
 };
@@ -74,7 +74,10 @@ export default function MyForm({ initialData , submit, children, className, ...p
 		setData(newData);
 	}
 
-	const childrenWithProps = React.Children.map(children, child =>{
+	function isJSXElement(child: JSX.Element | boolean): child is JSX.Element { return typeof child !== "boolean" };
+	const elementChildren = children.filter(child => isJSXElement(child)) as JSX.Element[];
+
+	const childrenWithProps = React.Children.map(elementChildren, child =>{
 		var newProps = { 
 			value: data.data[child.props.name],
 			handleChange: handleInputChange,

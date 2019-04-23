@@ -2,13 +2,13 @@ import React from 'react';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 
 import tasktablemsg from "../components/TaskTable/TaskTable.messages";
-import { Task } from '../types/Types';
+import { Task, Equipment, AgeAcquisitionType } from '../types/Types';
 
-export function createDefaultTask(): Task{
+export function createDefaultTask(equipment: Equipment): Task{
 	return {
         _id: undefined,
 		name: '',
-		usagePeriodInHour: 100,
+		usagePeriodInHour: equipment.ageAcquisitionType !== AgeAcquisitionType.time ? 100 : -1,
 		periodInMonth: 12,
         description: '',
         nextDueDate: new Date(),

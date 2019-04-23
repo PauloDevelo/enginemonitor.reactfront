@@ -19,7 +19,7 @@ import Alerts from "../Alerts/Alerts"
 
 
 import '../../style/transition.css';
-import { Equipment, Task } from '../../types/Types';
+import { Equipment, Task, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
 	equipment: Equipment, 
@@ -58,7 +58,7 @@ const ModalEditTask = ({equipment, task, onTaskSaved, toggle, onTaskDeleted, vis
 					<ModalBody>
 						{visible && <MyForm id="createTaskForm" submit={modalLogic.handleSubmit} initialData={task}>
 							<MyInput name="name" 				label={editTaskMsg.name} 				type="text" 	required/>
-							<MyInput name="usagePeriodInHour" 	label={editTaskMsg.usagePeriodInHour} 	type="number" 	min={0} />
+							{equipment.ageAcquisitionType !== AgeAcquisitionType.time && <MyInput name="usagePeriodInHour" 	label={editTaskMsg.usagePeriodInHour} 	type="number" 	min={0} />}
 							<MyInput name="periodInMonth" 		label={editTaskMsg.month} 				type="number" 	min={1} required/>
 							<MyInput name="description" 		label={editTaskMsg.description} 		type="textarea" required />
 						</MyForm>}

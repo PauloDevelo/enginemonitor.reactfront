@@ -16,7 +16,7 @@ import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirma
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
 import Alerts from "../Alerts/Alerts"
-import { Equipment, Task, Entry } from '../../types/Types';
+import { Equipment, Task, Entry, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
 	equipment: Equipment, 
@@ -58,7 +58,7 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 							initialData={entry}>
 							<MyInput name="name" 	label={editEntryMsg.name} 	    type="text" 	required/>
 							<MyInput name="date" label={editEntryMsg.date}       type="date" 	required/>
-							<MyInput name="age" 	label={editEntryMsg.age} 	type="number" 	min={0} required/>
+							{equipment.ageAcquisitionType !== AgeAcquisitionType.time && <MyInput name="age" 	label={editEntryMsg.age} 	type="number" 	min={0} required/>}
 							<MyInput name="remarks" label={editEntryMsg.remarks}    type="textarea" required />
 						</MyForm>}
 						<Alerts errors={modalLogic.alerts}/>
