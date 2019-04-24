@@ -63,8 +63,12 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 
     useEffect(() => {
         if (equipments.length > 0){
-			if(currentEquipment === undefined || equipments.indexOf(currentEquipment) === -1){
+			if(currentEquipment === undefined || equipments.findIndex((equipment: Equipment) => currentEquipment._id === equipment._id) === -1){
 				setCurrentEquipment(equipments[0]);
+			}
+			else{
+				var newCurrentEquipmentIndex = equipments.findIndex((equipment: Equipment) => currentEquipment._id === equipment._id);
+				setCurrentEquipment(equipments[newCurrentEquipmentIndex]);
 			}
         }
         else{
@@ -84,8 +88,6 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 		}
         
 		setEquipments(newEquipmentList);
-			
-		setCurrentEquipment(equipmentInfoSaved);
 	}
 	
 	const onEquipmentDeleted = (deletedEquipment: Equipment) => {
