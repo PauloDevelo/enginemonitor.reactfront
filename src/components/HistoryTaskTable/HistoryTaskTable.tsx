@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import PropTypes from 'prop-types';
 
+import * as moment from 'moment';
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
 import { useEditModal } from '../../hooks/EditModalHook';
@@ -26,7 +27,7 @@ import messages from "./HistoryTaskTable.messages";
 
 import './HistoryTaskTable.css';
 
-import { Equipment, Task, Entry } from '../../types/Types';
+import { Equipment, Task, Entry, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
     equipment: Equipment | undefined,
@@ -130,8 +131,22 @@ const HistoryTaskTable = ({equipment, task, onHistoryChanged, classNames}: Props
 			),
 			cell: (content: any) => {
                 const entry:Entry = content.data;
-                const ageStr = entry.age === -1?"":entry.age + 'h';
-				return innerEntryCell(entry, <Fragment>{ageStr}</Fragment>);
+                const equ = equipment as Equipment;
+
+                if (equ.ageAcquisitionType !== AgeAcquisitionType.time){
+                    return innerEntryCell(entry, <Fragment>{entry.age === -1?"":entry.age + 'h'}</Fragment>);
+                }
+                else{
+                    const diff = moment.duration(entry.date.getTime() - equ.installation.getTime());
+                    const year = diff.years();
+                    const month = diff.months();
+                    const day = diff.days();
+                    return innerEntryCell(entry, <Fragment>
+                        {diff.years() > 0 && <FormattedMessage {... messages.yearperiod} values={{year}}/>}{' '}
+                        {diff.months() > 0 && <FormattedMessage {... messages.monthperiod} values={{month}}/>}{' '}
+                        {diff.days() > 0 && <FormattedMessage {... messages.dayperiod} values={{day}}/>}
+                    </Fragment>);
+                }
             },
             style: {width:"25%"},
 			sortable: true
