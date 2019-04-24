@@ -73,7 +73,7 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
     const cursorPointerStyle = { cursor: 'pointer' };
     const badgeText = getBadgeText(currentTask.level);
     const badgeContext = getContext(currentTask.level);
-    const title = getScheduleText(currentTask);
+    const title = getScheduleText(equipment, currentTask);
     const descriptionFormatted = currentTask.description.replace(/\n/g,"<br />");
 
     let prevClassNames = "card-control-prev-icon";

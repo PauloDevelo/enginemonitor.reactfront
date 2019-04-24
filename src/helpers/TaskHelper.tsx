@@ -59,29 +59,6 @@ export function getColor(level: number): string{
     }
 }
 
-export function getTodoTextFromTask(task: Task): JSX.Element{
-    var dueDate = new Date(task.nextDueDate);
-    var todoText = undefined;
-    if(task.usageInHourLeft === undefined || task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0){
-        if(task.level === 3){
-            todoText = <span><FormattedMessage {...tasktablemsg.shouldhavebeendone} /><b><FormattedDate value={dueDate} /></b></span>;
-        }
-        else{
-            todoText = <span><FormattedMessage {...tasktablemsg.shouldbedone} /><b><FormattedDate value={dueDate} /></b></span>;
-        }
-    }
-    else{
-        if(task.level === 3){
-            todoText = <span><FormattedMessage {...tasktablemsg.shouldhavebeendonein1} /><b>{task.usageInHourLeft}h</b><FormattedMessage {...tasktablemsg.shouldhavebeendonein2} /><b><FormattedDate value={dueDate} /></b></span>;
-        }
-        else{
-            todoText = <span><FormattedMessage {...tasktablemsg.shouldbedonein1} /><b>{task.usageInHourLeft}h</b><FormattedMessage {...tasktablemsg.shouldbedonein2} /><b><FormattedDate value={dueDate} /></b></span>;
-        }
-    }
-    
-    return todoText;
-}
-
 export type TaskTodo = {
     dueDate: Date,
     onlyDate: boolean,
@@ -111,21 +88,21 @@ export function getTodoText(todo: TaskTodo): JSX.Element{
     return todoText;
 }
 
-export function getTodoValue(task: Task): TaskTodo{
+export function getTodoValue(equipment: Equipment, task: Task): TaskTodo{
     return {
         dueDate: new Date(task.nextDueDate),
-        onlyDate: task.usageInHourLeft === undefined || task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0,
+        onlyDate: equipment.ageAcquisitionType === AgeAcquisitionType.time || task.usageInHourLeft === undefined || task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0,
         level: task.level,
         usageInHourLeft: task.usageInHourLeft
     }
 }
 
-export function getScheduleText(task: Task){
+export function getScheduleText(equipment: Equipment, task: Task){
     var title = undefined;
     var month = task.periodInMonth;
     var pluralisedMonthPeriod = <FormattedMessage {... tasktablemsg.monthperiod} values={{month}}/>
 
-    if(task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0){
+    if(equipment.ageAcquisitionType === AgeAcquisitionType.time || task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0){
         title = <span>
                     <FormattedMessage {...tasktablemsg.tobedonemonth} />
                     <b>

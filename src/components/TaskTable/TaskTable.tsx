@@ -52,12 +52,12 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 	const modalHook = useEditModal<Task | undefined>(undefined);
 	
 	let tasksData:DisplayableTask[] = [];
-	if(tasks){
+	if(tasks && equipment){
 		tasksData = tasks.map((task, index) => {
 			return {
 				task: task,
         name: task.name,
-        todo: getTodoValue(task),
+        todo: getTodoValue(equipment, task),
         shortenDescription: shorten(task.description),
 				level: task.level,
 				initialIndex: index
