@@ -3,7 +3,9 @@ import { Alert } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import PropTypes, { any } from 'prop-types';
 
-import alertMsg from "./Alerts.messages";
+import {defineMessages, Messages} from "react-intl";
+import jsonMessages from "./Alerts.messages.json";
+const alertMsg: Messages = defineMessages(jsonMessages);
 
 function isString (value: any) {
     return typeof value === 'string' || value instanceof String;

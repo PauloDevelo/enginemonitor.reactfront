@@ -1,4 +1,4 @@
-import React, {Fragment, useRef, useEffect, forwardRef} from 'react';
+import React, {Fragment} from 'react';
 import { Button, Badge } from 'reactstrap';
 import { 
   composeDecorators,
@@ -7,7 +7,7 @@ import {
   withHeaderControl,
 } from 'react-table-factory';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, Messages, defineMessages } from 'react-intl';
 import { faTasks, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -16,7 +16,9 @@ import Loading from '../Loading/Loading';
 
 import { getContext, getTodoText, shorten, getTodoValue, TaskTodo, createDefaultTask, getBadgeText } from '../../helpers/TaskHelper'; 
 import { useEditModal } from '../../hooks/EditModalHook';
-import taskTableMsg from "./TaskTable.messages";
+
+import jsonMessages from "./TaskTable.messages.json";
+const taskTableMsg: Messages = defineMessages(jsonMessages);
 
 import PropTypes from 'prop-types';
 import { Equipment, Task } from '../../types/Types';

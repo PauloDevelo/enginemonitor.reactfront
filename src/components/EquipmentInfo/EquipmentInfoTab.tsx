@@ -2,10 +2,12 @@ import React from 'react';
 import { Button, TabPane } from 'reactstrap';
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FormattedMessage, FormattedDate } from 'react-intl';
+import { FormattedMessage, FormattedDate, defineMessages, Messages } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import equipmentInfoMsg from "./EquipmentInfo.messages";
+import jsonMessages from "./EquipmentInfo.messages.json";
+const equipmentInfoMsg: Messages = defineMessages(jsonMessages);
+
 import { Equipment, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {

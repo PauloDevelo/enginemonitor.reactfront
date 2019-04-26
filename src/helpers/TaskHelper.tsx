@@ -1,7 +1,9 @@
 import React from 'react';
-import { FormattedMessage, FormattedDate } from 'react-intl';
+import { FormattedMessage, FormattedDate, Messages, defineMessages } from 'react-intl';
 
-import tasktablemsg from "../components/TaskTable/TaskTable.messages";
+import jsonMessages from "../components/TaskTable/TaskTable.messages.json";
+const tasktablemsg: Messages = defineMessages(jsonMessages);
+
 import { Task, Equipment, AgeAcquisitionType } from '../types/Types';
 
 export function createDefaultTask(equipment: Equipment): Task{

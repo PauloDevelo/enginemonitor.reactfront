@@ -1,0 +1,11 @@
+{
+    "signout": {
+        "id": "signout",
+        "defaultMessage": "Signout",
+		"description": "Menu"
+    },
+    "today": {
+        "id": "today",
+        "defaultMessage": "Today, "
+    }
+}

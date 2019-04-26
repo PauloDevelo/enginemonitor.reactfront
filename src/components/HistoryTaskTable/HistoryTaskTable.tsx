@@ -6,7 +6,7 @@ import {
     withFixedHeader,
     withHeaderControl,
   } from 'react-table-factory';
-import { FormattedMessage, FormattedDate } from 'react-intl';
+import { defineMessages, Messages, FormattedMessage, FormattedDate } from 'react-intl';
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
 
@@ -23,7 +23,8 @@ import { useEditModal } from '../../hooks/EditModalHook';
 import { shorten } from '../../helpers/TaskHelper';
 import { createDefaultEntry } from '../../helpers/EntryHelper';
 
-import messages from "./HistoryTaskTable.messages";
+import jsonMessages from "./HistoryTaskTable.messages.json";
+const messages: Messages = defineMessages(jsonMessages);
 
 import './HistoryTaskTable.css';
 

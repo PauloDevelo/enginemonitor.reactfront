@@ -2,15 +2,12 @@ import React, {Fragment, useState, useEffect} from 'react';
 import { Button, Nav, TabContent } from 'reactstrap';
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 
-import equipmentInfoMsg from "./EquipmentInfo.messages";
-import ClockLabel from '../ClockLabel/ClockLabel';
 import EquipmentInfoTab from './EquipmentInfoTab';
 import EquipmentInfoNavItem from './EquipmentInfoNavItem';
 import ModalEquipmentInfo from '../ModalEquipmentInfo/ModalEquipmentInfo';

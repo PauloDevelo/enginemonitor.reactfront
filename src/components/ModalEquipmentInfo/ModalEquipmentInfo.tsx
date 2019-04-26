@@ -3,14 +3,15 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { faEdit, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, defineMessages, Messages } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
 import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
 
-import equipmentInfoMsg from "../EquipmentInfo/EquipmentInfo.messages";
+import jsonMessages from "../EquipmentInfo/EquipmentInfo.messages.json";
+const equipmentInfoMsg: Messages = defineMessages(jsonMessages);
 
 import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation';
 import MyForm from "../Form/MyForm";

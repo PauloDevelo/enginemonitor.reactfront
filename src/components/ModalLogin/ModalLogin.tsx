@@ -3,12 +3,13 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, Row, Col
 import { faSignInAlt, faSignOutAlt, faUnlockAlt, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, Messages, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 
-import loginmsg from "./Login.messages";
+import jsonMessages from "./Login.messages.json";
+const loginmsg: Messages = defineMessages(jsonMessages);
 
 import ModalPasswordReset from '../ModalPasswordReset/ModalPasswordReset'
 import MyForm from "../Form/MyForm"

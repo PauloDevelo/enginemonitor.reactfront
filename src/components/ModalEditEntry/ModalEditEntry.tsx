@@ -2,13 +2,14 @@ import React, { Fragment } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, Messages, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group'
 
 import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
 
-import editEntryMsg from "./ModalEditEntry.messages";
+import jsonMessages from "./ModalEditEntry.messages.json";
+const editEntryMsg: Messages = defineMessages(jsonMessages);
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 

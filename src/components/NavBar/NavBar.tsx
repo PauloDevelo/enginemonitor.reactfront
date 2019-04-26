@@ -3,12 +3,14 @@ import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, UncontrolledDropdown
 import ClockLabel from '../ClockLabel/ClockLabel';
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FormattedMessage } from 'react-intl';
-import PropTypes, { number } from 'prop-types';
+import { FormattedMessage, Messages, defineMessages } from 'react-intl';
+import PropTypes from 'prop-types';
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
-import navBarMsg from "./NavBar.messages";
+import jsonMessages from "./NavBar.messages.json";
+const navBarMsg: Messages = defineMessages(jsonMessages);
+
 import { User } from "../../types/Types";
 
 import './NavBar.css';

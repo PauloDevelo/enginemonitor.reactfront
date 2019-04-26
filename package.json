@@ -25,13 +25,17 @@
   },
   "scripts": {
     "sort": "sort-json src/translations/en.json src/translations/fr.json -- ignore-case --spaces=4",
+    "checkTranslation": "node scripts/checkAllMessages.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "test--no-watch": "react-scripts test --no-watch",
     "test": "react-scripts test",
     "deploy": "node scripts/deployRelease.js",
     "rollback": "node scripts/rollBackRelease.js",
 
-    "prebuild": "npm run sort && react-scripts test --no-watch",
+    "precheckTranslation": "npm run sort",
+    "pretest--no-watch": "npm run checkTranslation",
+    "prebuild": "npm run test--no-watch",
     "predeploy": "npm run build"
   },
   "eslintConfig": {

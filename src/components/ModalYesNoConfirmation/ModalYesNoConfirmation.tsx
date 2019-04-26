@@ -1,12 +1,13 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { CSSTransition } from 'react-transition-group'
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, Messages, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import '../../style/transition.css';
 
-import modalmsg from "./ModalYesNoConfirmation.messages";
+import jsonMessages from "./ModalYesNoConfirmation.messages.json";
+const modalmsg: Messages = defineMessages(jsonMessages);
 
 type Props = {
     yes: ()=>void, 

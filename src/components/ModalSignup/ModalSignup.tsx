@@ -3,10 +3,11 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, Messages, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import loginMsg from "../ModalLogin/Login.messages";
+import jsonMessages from "../ModalLogin/Login.messages.json";
+const loginMsg: Messages = defineMessages(jsonMessages);
 
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
