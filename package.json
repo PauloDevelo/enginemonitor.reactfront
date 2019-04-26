@@ -24,12 +24,14 @@
     "ssh-deploy-release": "^2.3.4"
   },
   "scripts": {
+    "sort": "sort-json src/translations/en.json src/translations/fr.json -- ignore-case --spaces=4",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "deploy": "node scripts/deployRelease.js",
     "rollback": "node scripts/rollBackRelease.js",
-    "prebuild": "react-scripts test --no-watch",
+
+    "prebuild": "npm run sort && react-scripts test --no-watch",
     "predeploy": "npm run build"
   },
   "eslintConfig": {
