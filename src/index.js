@@ -21,10 +21,11 @@ const messages = {
     'en': messages_en
 };
 
-const language = navigator.language.split(/[-_]/)[0];  // language without region code
+const language = navigator.language
+const shortLanguage = navigator.language.split(/[-_]/)[0];  // language without region code
 
 
-ReactDOM.render(<IntlProvider locale={language} messages={messages[language]}>
+ReactDOM.render(<IntlProvider locale={language} messages={messages[shortLanguage]}>
 					<App />
 				</IntlProvider>, 
 				document.getElementById('root'));
