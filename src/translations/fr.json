@@ -53,7 +53,6 @@
   "model": "Modèle",
   "month": "Période en mois",
   "monthperiod": "{month, plural, one {# mois} other {# mois}}",
-  "monthunit": " mois",
   "name": "Nom",
   "needVerification": "doit être verifié. Vérifier vos emails.",
   "newPassword": "Nouveau mot de passe",
