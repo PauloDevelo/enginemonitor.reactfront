@@ -13,10 +13,12 @@ const editEntryMsg: Messages = defineMessages(jsonMessages);
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
-import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation'
-import MyForm from "../Form/MyForm"
-import MyInput from "../Form/MyInput"
-import Alerts from "../Alerts/Alerts"
+import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation';
+import MyForm from "../Form/MyForm";
+import MyInput from "../Form/MyInput";
+import Alerts from "../Alerts/Alerts";
+import ActionButton from "../ActionButton/ActionButton";
+
 import { Equipment, Task, Entry, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
@@ -65,7 +67,7 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 						<Alerts errors={modalLogic.alerts}/>
 					</ModalBody>
 					<ModalFooter>
-						<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...editEntryMsg.save} /></Button>
+						<ActionButton type="submit" form="createTaskForm" color="success" isActing={modalLogic.isSaving} message={editEntryMsg.save}/>
 						<Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...editEntryMsg.cancel} /></Button>
 						{entry && entry._id && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editEntryMsg.delete} /></Button>}
 					</ModalFooter>
@@ -74,6 +76,7 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 			<ModalYesNoConfirmation visible={modalLogic.yesNoModalVisibility}
 									toggle={modalLogic.toggleModalYesNoConfirmation}
 									yes={modalLogic.yesDelete}
+									isActing={modalLogic.isDeleting}
 									no={modalLogic.toggleModalYesNoConfirmation}
 									title={editEntryMsg.entryDeleteTitle}
 									message={editEntryMsg.entryDeleteMsg} 

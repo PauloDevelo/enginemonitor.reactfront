@@ -17,7 +17,7 @@ import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirma
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
 import Alerts from "../Alerts/Alerts"
-
+import ActionButton from '../ActionButton/ActionButton';
 
 import '../../style/transition.css';
 import { Equipment, Task, AgeAcquisitionType } from '../../types/Types';
@@ -66,7 +66,7 @@ const ModalEditTask = ({equipment, task, onTaskSaved, toggle, onTaskDeleted, vis
 						<Alerts errors={modalLogic.alerts}/>
 					</ModalBody>
 					<ModalFooter>
-						<Button type="submit" form="createTaskForm" color="success"><FormattedMessage {...editTaskMsg.save} /></Button>
+						<ActionButton type="submit" isActing={modalLogic.isSaving} form="createTaskForm" color="success" message={editTaskMsg.save}/>
 						<Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...editTaskMsg.cancel} /></Button>
 						{task && task._id && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editTaskMsg.delete} /></Button>}
 					</ModalFooter>
@@ -75,6 +75,7 @@ const ModalEditTask = ({equipment, task, onTaskSaved, toggle, onTaskDeleted, vis
 			<ModalYesNoConfirmation visible={modalLogic.yesNoModalVisibility}
 									toggle={modalLogic.toggleModalYesNoConfirmation}
 									yes={modalLogic.yesDelete}
+									isActing={modalLogic.isDeleting}
 									no={modalLogic.toggleModalYesNoConfirmation}
 									title={editTaskMsg.taskDeleteTitle}
 									message={editTaskMsg.taskDeleteMsg} 

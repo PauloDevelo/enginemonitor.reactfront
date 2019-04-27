@@ -18,6 +18,7 @@ import MyForm from "../Form/MyForm";
 import MyInput from "../Form/MyInput";
 import TranslatedOption from "../Form/TranslatedOption";
 import Alerts from "../Alerts/Alerts";
+import ActionButton from '../ActionButton/ActionButton';
 
 import '../../style/transition.css';
 import { Equipment, AgeAcquisitionType } from '../../types/Types';
@@ -42,6 +43,7 @@ const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted
 	}, [equipment._id]);
 
 	const isCreation = equipment === undefined || equipment._id === undefined;
+	const message = isCreation ? equipmentInfoMsg.create : equipmentInfoMsg.save;
 	
 	return (
 		<Fragment>
@@ -69,10 +71,7 @@ const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted
 						<Alerts errors={modalLogic.alerts}/>
 					</ModalBody>
 					<ModalFooter>
-						<Button type="submit" form="formEquipmentInfo" color="success">
-							{!isCreation && <FormattedMessage {...equipmentInfoMsg.save} />}
-							{isCreation && <FormattedMessage {...equipmentInfoMsg.create} />}
-						</Button>
+						<ActionButton type="submit" isActing={modalLogic.isSaving} form="formEquipmentInfo" color="success" message={message} />
 						<Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...equipmentInfoMsg.cancel} /></Button>
 						{equipment && equipment._id && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...equipmentInfoMsg.delete} /></Button>}
 					</ModalFooter>
@@ -81,6 +80,7 @@ const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted
 			<ModalYesNoConfirmation visible={modalLogic.yesNoModalVisibility}
 									toggle={modalLogic.toggleModalYesNoConfirmation}
 									yes={modalLogic.yesDelete}
+									isActing={modalLogic.isDeleting}
 									no={modalLogic.toggleModalYesNoConfirmation}
 									title={equipmentInfoMsg.equipmentDeleteTitle}
 									message={equipmentInfoMsg.equipmentDeleteMsg} 

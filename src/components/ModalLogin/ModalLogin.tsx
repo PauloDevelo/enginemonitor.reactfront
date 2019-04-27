@@ -15,6 +15,7 @@ import ModalPasswordReset from '../ModalPasswordReset/ModalPasswordReset'
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
 import Alerts from "../Alerts/Alerts"
+import ActionButton from "../ActionButton/ActionButton"
 
 import HttpError from '../../http/HttpError'
 
@@ -102,7 +103,7 @@ const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}: Props) =
 			}
 		}
 	}
-    
+
 	return (
 		<Fragment>
 			<CSSTransition in={visible} timeout={300} classNames="modal">
@@ -122,7 +123,7 @@ const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}: Props) =
 						<Button onClick={toggleModalSignup} color="warning" className="d-block mx-auto"><FormattedMessage {...loginmsg.signup} /></Button>
 						{state.state === LoginState.WrongPassword && <Button onClick={resetPasswordModalHook.toggleModal} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.resetPassword} /></Button>}
 						{state.state === LoginState.NotVerified && <Button onClick={sendVerificationEmail} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.sendVerification} /></Button>}
-						<Button type="submit" form="formLogin" color="success" className="d-block mx-auto"><FormattedMessage {...loginmsg.login} /></Button>
+						<ActionButton type="submit" form="formLogin" color="success" className="d-block mx-auto" message={loginmsg.login} isActing={state.state === LoginState.IsLoggingIn} />
 					</ModalFooter>
 				</Modal>
 			</CSSTransition>

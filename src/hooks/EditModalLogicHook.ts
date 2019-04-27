@@ -6,6 +6,8 @@ export function useEditModalLogic<T>(toggleEditModal: ()=> void,
     equipmentMonitorServiceSaveFunc: any, saveParamsArray: any[], onSaveCallBack: ((data: T) => void) | undefined, onSavedCallBack: (data: T) => void, 
     equipmentMonitorServiceDeleteFunc: any, deleteParamsArray: any[], onDeleteCallBack: ((data: T) => void) | undefined){
 	
+	const [isSaving, setIsSaving] = useState(false);
+	const [isDeleting, setIsDeleting] = useState(false);
 	const [alerts, setAlerts] = useState<any>(undefined);
 	const [yesNoModalVisibility, setYesNoModalVisibility] = useState(false);
 
@@ -19,6 +21,7 @@ export function useEditModalLogic<T>(toggleEditModal: ()=> void,
 	}
 
 	const handleSubmit = async(data: T) => {
+		setIsSaving(true);
         if(onSaveCallBack)
             onSaveCallBack(data);
 
@@ -36,6 +39,7 @@ export function useEditModalLogic<T>(toggleEditModal: ()=> void,
                 console.log(error);
             }
 		}
+		setIsSaving(false);
 	}
 	
 	const handleDelete = () => {
@@ -43,6 +47,7 @@ export function useEditModalLogic<T>(toggleEditModal: ()=> void,
 	}
 
 	const yesDelete = async() => {
+		setIsDeleting(true);
 		try{
 			const deletedData = await equipmentMonitorServiceDeleteFunc.apply(null, deleteParamsArray);
 			if(onDeleteCallBack !== undefined){
@@ -60,7 +65,8 @@ export function useEditModalLogic<T>(toggleEditModal: ()=> void,
                 console.log(error);
             }
 		}
+		setIsDeleting(false);
     }
     
-    return {alerts, cancel, handleSubmit, handleDelete, yesDelete, yesNoModalVisibility, toggleModalYesNoConfirmation};
+    return {alerts, cancel, handleSubmit, handleDelete, yesDelete, yesNoModalVisibility, toggleModalYesNoConfirmation, isSaving, isDeleting};
   };

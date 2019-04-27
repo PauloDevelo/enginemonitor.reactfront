@@ -7,10 +7,12 @@ import PropTypes from 'prop-types';
 import '../../style/transition.css';
 
 import jsonMessages from "./ModalYesNoConfirmation.messages.json";
+import ActionButton from '../ActionButton/ActionButton';
 const modalmsg: Messages = defineMessages(jsonMessages);
 
 type Props = {
     yes: ()=>void, 
+    isActing: boolean,
     no?: ()=>void, 
     visible: boolean, 
     className: string, 
@@ -19,7 +21,7 @@ type Props = {
     toggle: () => void
 }
 
-const ModalYesNoConfimation = ({yes, no, visible, className, title, message, toggle}: Props) => {
+const ModalYesNoConfimation = ({yes, isActing, no, visible, className, title, message, toggle}: Props) => {
     return(
         <CSSTransition in={visible} timeout={300} classNames="modal">
             <Modal isOpen={visible} toggle={toggle} className={className} fade={false}>
@@ -28,7 +30,7 @@ const ModalYesNoConfimation = ({yes, no, visible, className, title, message, tog
                     {message && <FormattedMessage {...message} />}
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="success" onClick={yes}><FormattedMessage {...modalmsg.yes} /></Button>
+                    <ActionButton isActing={isActing} color="success" action={yes} message={modalmsg.yes}/>
                     <Button color="secondary" onClick={no}><FormattedMessage {...modalmsg.no} /></Button>
                 </ModalFooter>
             </Modal>

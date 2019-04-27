@@ -12,6 +12,7 @@ const loginMsg: Messages = defineMessages(jsonMessages);
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
 import Alerts from "../Alerts/Alerts"
+import ActionButton from "../ActionButton/ActionButton";
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 import HttpError from '../../http/HttpError'
@@ -75,7 +76,7 @@ const ModalSignup = ({visible, className, toggle}: Props) => {
 					{infoMsg && <Alerts error={infoMsg} color="success"/>}
 				</ModalBody>
 				<ModalFooter>
-					<Button type="submit" form="formSignup" color="success"><FormattedMessage {...loginMsg.signup} /></Button>
+					<ActionButton type="submit" form="formSignup" color="success" message={loginMsg.signup} isActing={isLoading} />
                     <Button color="secondary" onClick={cancel}><FormattedMessage {...loginMsg.cancel} /></Button>
 				</ModalFooter>
 			</Modal>

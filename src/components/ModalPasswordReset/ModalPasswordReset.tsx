@@ -12,6 +12,7 @@ const changePasswordMsg: Messages = defineMessages(jsonMessages);
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
 import Alerts from "../Alerts/Alerts"
+import ActionButton from "../ActionButton/ActionButton";
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 import HttpError from '../../http/HttpError'
@@ -100,7 +101,7 @@ const ModalPasswordReset = ({visible, className, toggle, data}: Props) => {
 					{state.state === ResetPasswordState.Succeed && <Alerts error={state.infoMsg} color="success"/>}
 				</ModalBody>
 				<ModalFooter>
-					<Button type="submit" form="formChangePassword" color="success"><FormattedMessage {...submitButtonLabel} /></Button>
+					<ActionButton type="submit" form="formChangePassword" color="success" message={submitButtonLabel} isActing={state.state === ResetPasswordState.IsChanging} />
                     {state.state !== ResetPasswordState.Succeed && <Button color="secondary" onClick={cancel}><FormattedMessage {...changePasswordMsg.cancel} /></Button>}
 				</ModalFooter>
 			</Modal>
