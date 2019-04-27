@@ -24,7 +24,7 @@
     "ssh-deploy-release": "^2.3.4"
   },
   "scripts": {
-    "sort": "sort-json src/translations/en.json src/translations/fr.json -- ignore-case --spaces=4",
+    "sort": "sortjson src/**/*.json -s",
     "checkTranslation": "node scripts/checkAllMessages.js",
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -1,12 +1,12 @@
 {
-    "yes": {
-        "id": "yes",
-        "defaultMessage": "Yes",
-		"description": "Button"
-    },
-    "no": {
-        "id": "no",
-        "defaultMessage": "No",
-		"description": "Button"
-    }
+  "no": {
+    "defaultMessage": "No",
+    "description": "Button",
+    "id": "no"
+  },
+  "yes": {
+    "defaultMessage": "Yes",
+    "description": "Button",
+    "id": "yes"
+  }
 }

@@ -1,11 +1,11 @@
 {
-    "signout": {
-        "id": "signout",
-        "defaultMessage": "Signout",
-		"description": "Menu"
-    },
-    "today": {
-        "id": "today",
-        "defaultMessage": "Today, "
-    }
+  "signout": {
+    "defaultMessage": "Signout",
+    "description": "Menu",
+    "id": "signout"
+  },
+  "today": {
+    "defaultMessage": "Today, ",
+    "id": "today"
+  }
 }

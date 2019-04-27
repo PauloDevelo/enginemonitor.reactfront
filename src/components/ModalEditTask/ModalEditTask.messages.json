@@ -1,67 +1,67 @@
 {
-	"modalEditTaskTitle": {
-    "id": "modalEditTaskTitle",
-    "defaultMessage": "Task edition",
-		"description": "Panel title"
+  "ack": {
+    "defaultMessage": "Acknowledge",
+    "description": "Button",
+    "id": "ack"
   },
-  "modalCreationTaskTitle": {
-    "id": "modalCreateTaskTitle",
-    "defaultMessage": "Task creation",
-		"description": "Panel title"
-  },
-	"name": {
-    "id": "taskname",
-    "defaultMessage": "Name",
-		"description": "Label"
-  },
-	"usagePeriodInHour": {
-    "id": "usagePeriodInHour",
-    "defaultMessage": "Period in usage hour",
-		"description": "Label"
-  },
-	"month": {
-    "id": "month",
-    "defaultMessage": "Period in month",
-		"description": "Label"
-  },
-	"description": {
-    "id": "taskdesc",
-    "defaultMessage": "Description",
-		"description": "Label"
-  },
-	"save": {
-    "id": "save",
-    "defaultMessage": "Save",
-		"description": "Button"
-  },
-	"cancel": {
-    "id": "cancel",
+  "cancel": {
     "defaultMessage": "Cancel",
-		"description": "Button"
+    "description": "Button",
+    "id": "cancel"
   },
   "delete": {
-    "id": "delete",
     "defaultMessage": "Delete",
-		"description": "Button"
+    "description": "Button",
+    "id": "delete"
   },
-  "ack":{
-    "id": "ack",
-    "defaultMessage": "Acknowledge",
-		"description": "Button"
+  "description": {
+    "defaultMessage": "Description",
+    "description": "Label",
+    "id": "taskdesc"
   },
-  "edit":{
-    "id": "edit",
+  "edit": {
     "defaultMessage": "Edit",
-		"description": "Button"
+    "description": "Button",
+    "id": "edit"
   },
-  "taskDeleteTitle": {
-    "id": "taskDeleteTitle",
-    "defaultMessage": "Delete task",
-    "description": "Modal title"
+  "modalCreationTaskTitle": {
+    "defaultMessage": "Task creation",
+    "description": "Panel title",
+    "id": "modalCreateTaskTitle"
+  },
+  "modalEditTaskTitle": {
+    "defaultMessage": "Task edition",
+    "description": "Panel title",
+    "id": "modalEditTaskTitle"
+  },
+  "month": {
+    "defaultMessage": "Period in month",
+    "description": "Label",
+    "id": "month"
+  },
+  "name": {
+    "defaultMessage": "Name",
+    "description": "Label",
+    "id": "taskname"
+  },
+  "save": {
+    "defaultMessage": "Save",
+    "description": "Button",
+    "id": "save"
   },
   "taskDeleteMsg": {
-    "id": "taskDeleteMsg",
     "defaultMessage": "Are you sure you want to delete this task?",
-    "description": "User message"
+    "description": "User message",
+    "id": "taskDeleteMsg"
+  },
+  "taskDeleteTitle": {
+    "defaultMessage": "Delete task",
+    "description": "Modal title",
+    "id": "taskDeleteTitle"
+  },
+  "usagePeriodInHour": {
+    "defaultMessage": "Period in usage hour",
+    "description": "Label",
+    "id": "usagePeriodInHour"
   }
 }

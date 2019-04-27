@@ -1,97 +1,97 @@
 {
-    "errorFetching": {
-      "id": "errorFetching",
-      "defaultMessage": "Something went wrong ...",
-          "description": "Error message"
-    },
-      "tasklistTitle": {
-      "id": "tasklistTitle",
-      "defaultMessage": "Task list",
-          "description": "Panel title"
-    },
-      "createbutton": {
-      "id": "createbutton",
-      "defaultMessage": "Create",
-          "description": "Create button"
-    },
-      "taskname": {
-      "id": "taskname",
-      "defaultMessage": "Task name",
-          "description": "Task name header"
-    },
-      "todo": {
-      "id": "todo",
-      "defaultMessage": "To do",
-          "description": "To do header"
-    },
-      "taskdesc": {
-      "id": "taskdesc",
-      "defaultMessage": "Description",
-          "description": "Description header"
-    },
-      "shouldhavebeendone": {
-      "id": "shouldhavebeendone",
-      "defaultMessage": "Should have been done the ",
-          "description": "Sentence"
-    },
-      "shouldbedone": {
-      "id": "shouldbedone",
-      "defaultMessage": "Should be done the ",
-          "description": "Sentence"
-    },
-      "shouldhavebeendonein1": {
-      "id": "shouldhavebeendonein",
-      "defaultMessage": "Should have been done ",
-          "description": "Sentence"
-    },
-      "shouldbedonein1": {
-      "id": "shouldbedonein1",
-      "defaultMessage": "Should be done in ",
-          "description": "Sentence"
-    },
-      "shouldhavebeendonein2": {
-      "id": "shouldhavebeendonein2",
-      "defaultMessage": " equipment ago or ",
-          "description": "Sentence"
-    },
-      "shouldbedonein2": {
-      "id": "shouldbedonein2",
-      "defaultMessage": " equipment or ",
-          "description": "Sentence"
-    },
-    "tobedonemonth": {
-      "id": "tobedonemonth",
-      "defaultMessage": "To do every ",
-          "description": "Sentence"
-    },
-    "orevery": {
-      "id": "orevery",
-      "defaultMessage": " or every ",
-          "description": "Sentence"
-    },
-    "monthperiod": {
-      "id": "monthperiod",  
-      "defaultMessage": "{month, plural, one {month} other {# months}}",
-      "description": "Month period"
-    },
-    "ackDate": {
-      "id": "ackDate",
-      "defaultMessage": "Realisation date",
-      "description": "Colum header"
-    },
-    "remarks": {
-      "id": "remarks",
-      "defaultMessage": "Remarks",
-      "description": "Colum header"
-    },
-    "age": {
-          "id": "age",
-      "defaultMessage": "Equipment Age",
-          "description": "Label"
-    },
-    "status": {
-      "id": "status",
-      "defaultMessage": "Status",
-          "description": "Label"
-    }
+  "ackDate": {
+    "defaultMessage": "Realisation date",
+    "description": "Colum header",
+    "id": "ackDate"
+  },
+  "age": {
+    "defaultMessage": "Equipment Age",
+    "description": "Label",
+    "id": "age"
+  },
+  "createbutton": {
+    "defaultMessage": "Create",
+    "description": "Create button",
+    "id": "createbutton"
+  },
+  "errorFetching": {
+    "defaultMessage": "Something went wrong ...",
+    "description": "Error message",
+    "id": "errorFetching"
+  },
+  "monthperiod": {
+    "defaultMessage": "{month, plural, one {month} other {# months}}",
+    "description": "Month period",
+    "id": "monthperiod"
+  },
+  "orevery": {
+    "defaultMessage": " or every ",
+    "description": "Sentence",
+    "id": "orevery"
+  },
+  "remarks": {
+    "defaultMessage": "Remarks",
+    "description": "Colum header",
+    "id": "remarks"
+  },
+  "shouldbedone": {
+    "defaultMessage": "Should be done the ",
+    "description": "Sentence",
+    "id": "shouldbedone"
+  },
+  "shouldbedonein1": {
+    "defaultMessage": "Should be done in ",
+    "description": "Sentence",
+    "id": "shouldbedonein1"
+  },
+  "shouldbedonein2": {
+    "defaultMessage": " equipment or ",
+    "description": "Sentence",
+    "id": "shouldbedonein2"
+  },
+  "shouldhavebeendone": {
+    "defaultMessage": "Should have been done the ",
+    "description": "Sentence",
+    "id": "shouldhavebeendone"
+  },
+  "shouldhavebeendonein1": {
+    "defaultMessage": "Should have been done ",
+    "description": "Sentence",
+    "id": "shouldhavebeendonein"
+  },
+  "shouldhavebeendonein2": {
+    "defaultMessage": " equipment ago or ",
+    "description": "Sentence",
+    "id": "shouldhavebeendonein2"
+  },
+  "status": {
+    "defaultMessage": "Status",
+    "description": "Label",
+    "id": "status"
+  },
+  "taskdesc": {
+    "defaultMessage": "Description",
+    "description": "Description header",
+    "id": "taskdesc"
+  },
+  "tasklistTitle": {
+    "defaultMessage": "Task list",
+    "description": "Panel title",
+    "id": "tasklistTitle"
+  },
+  "taskname": {
+    "defaultMessage": "Task name",
+    "description": "Task name header",
+    "id": "taskname"
+  },
+  "tobedonemonth": {
+    "defaultMessage": "To do every ",
+    "description": "Sentence",
+    "id": "tobedonemonth"
+  },
+  "todo": {
+    "defaultMessage": "To do",
+    "description": "To do header",
+    "id": "todo"
   }
+}
