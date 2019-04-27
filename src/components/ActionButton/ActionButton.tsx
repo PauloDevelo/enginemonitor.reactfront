@@ -1,6 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Button, Spinner } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
+
+import PropTypes from 'prop-types';
 
 type Props = {
     color: string,
@@ -18,9 +20,19 @@ const ActionButton = ({color, isActing, message, action, className, type, ...pro
     }
 
     return <Button type={type} color={color} onClick={action} className={className} disabled={isActing} {...props}>
-        <FormattedMessage {...message} />{' '}
-        {isActing && <Spinner size="sm" color="secondary" />}
+        <FormattedMessage {...message} />
+        {isActing && <Fragment>{' '}<Spinner size="sm" color="secondary" /></Fragment>}
     </Button>;
+};
+
+ActionButton.propTypes = {
+    color: PropTypes.string.isRequired,
+    isActing: PropTypes.bool.isRequired,
+    message: PropTypes.object.isRequired,
+    action: PropTypes.func,
+    className: PropTypes.string,
+    type: PropTypes.string,
+    form: PropTypes.string
 };
 
 export default ActionButton;
