@@ -32,7 +32,7 @@ type Props = {
 	areTasksLoading: boolean, 
 	onTaskSaved: (task: Task) => void, 
 	changeCurrentTask: (task: Task) => void, 
-	classNames: string
+	classNames?: string
 };
 
 type DisplayableTask = {
@@ -51,6 +51,7 @@ const Table = composeDecorators(
 )();
 
 export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, changeCurrentTask, classNames}: Props) => {
+	classNames = classNames === undefined ? 'tasktable' : classNames + ' tasktable';
 	const modalHook = useEditModal<Task | undefined>(undefined);
 	
 	let tasksData:DisplayableTask[] = [];
@@ -70,6 +71,7 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 	const innerTaskCell = (task:DisplayableTask, content: JSX.Element, classNames?: string) => {
 		classNames = classNames === undefined ? '' : classNames;
 		classNames += ' table-' + getContext(task.level);
+
 		return (
 			<div onClick={() => changeCurrentTask(task.task)} className={classNames + ' innerTd clickable'} >
 				{content}
@@ -130,7 +132,7 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 
 	return (
 		<Fragment>
-			<div className={classNames + ' tasktable'}>
+			<div className={classNames}>
 				<span><FontAwesomeIcon icon={faTasks} />{' '}<b><FormattedMessage {...taskTableMsg.tasklistTitle} /></b>
 					{equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultTask(equipment)) }><FontAwesomeIcon icon={faPlusSquare} /></Button>}
 				</span>

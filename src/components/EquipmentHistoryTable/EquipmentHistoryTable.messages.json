@@ -1,0 +1,47 @@
+{
+  "ackDate": {
+    "defaultMessage": "Realisation date",
+    "description": "Colum header",
+    "id": "ackDate"
+  },
+  "age": {
+    "defaultMessage": "Equipment Age",
+    "description": "Colum header",
+    "id": "ageColumHeader"
+  },
+  "dayperiod": {
+    "defaultMessage": "{day, plural, one {day} other {# days}}",
+    "description": "Day period",
+    "id": "dayperiod"
+  },
+  "errorFetching": {
+    "defaultMessage": "Something went wrong ...",
+    "description": "Error message",
+    "id": "errorFetching"
+  },
+  "monthperiod": {
+    "defaultMessage": "{month, plural, one {month} other {# months}}",
+    "description": "Month period",
+    "id": "monthperiod"
+  },
+  "remarks": {
+    "defaultMessage": "Remarks",
+    "description": "Colum header",
+    "id": "remarks"
+  },
+  "equipmentHistoryTitle": {
+    "defaultMessage": "Equipment history",
+    "description": "Title",
+    "id": "equipmentHistoryTitle"
+  },
+  "yearperiod": {
+    "defaultMessage": "{year, plural, one {year} other {# years}}",
+    "description": "Year period",
+    "id": "yearperiod"
+  },
+  "name": {
+    "defaultMessage": "Name",
+    "description": "Label",
+    "id": "entryname"
+  }
+}

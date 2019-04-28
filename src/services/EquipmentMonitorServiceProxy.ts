@@ -125,7 +125,9 @@ export class EquipmentMonitorServiceProxy{
 
     ///////////////////////////Entry////////////////////////
 
-    createOrSaveEntry = async (equipmentId: string, taskId: string, newEntry: Entry) => {
+    createOrSaveEntry = async (equipmentId: string, taskId: string | undefined, newEntry: Entry) => {
+        taskId = taskId === undefined ? '-' : taskId;
+
         if(newEntry._id === undefined){
             const {entry} = await this.post(this.baseUrl + "entries/" + equipmentId + '/' + taskId, { entry: newEntry });
             return updateEntry(entry)
@@ -137,6 +139,8 @@ export class EquipmentMonitorServiceProxy{
     }
 
     deleteEntry = async(equipmentId: string, taskId: string, entryId: string): Promise<Entry> => {
+        taskId = taskId === undefined ? '-' : taskId;
+
         const {entry} = await this.delete(this.baseUrl + "entries/" + equipmentId + '/' + taskId + '/' + entryId);
         return updateEntry(entry)
     }
@@ -146,6 +150,14 @@ export class EquipmentMonitorServiceProxy{
             return [];
 
         const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId + '/' + taskId);
+        return (entries as Entry[]).map(updateEntry);
+    }
+
+    fetchAllEntries = async(equipmentId: string) => {
+        if (equipmentId === undefined)
+            return [];
+
+        const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId);
         return (entries as Entry[]).map(updateEntry);
     }
 

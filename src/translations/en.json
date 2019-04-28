@@ -90,5 +90,6 @@
   "usagePeriodInHour": "Period in usage hour",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
   "yes": "Yes",
-  "entryname": "Name"
+  "entryname": "Name",
+  "equipmentHistoryTitle": "Equipment history"
 }

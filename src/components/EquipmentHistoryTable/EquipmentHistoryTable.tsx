@@ -10,7 +10,7 @@ import { defineMessages, Messages, FormattedMessage, FormattedDate } from 'react
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
 
-import { faCheckSquare, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { faPlusSquare, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import PropTypes from 'prop-types';
@@ -23,19 +23,18 @@ import { useEditModal } from '../../hooks/EditModalHook';
 import { shorten } from '../../helpers/TaskHelper';
 import { createDefaultEntry } from '../../helpers/EntryHelper';
 
-import jsonMessages from "./HistoryTaskTable.messages.json";
+import jsonMessages from "./EquipmentHistoryTable.messages.json";
 const messages: Messages = defineMessages(jsonMessages);
 
-import './HistoryTaskTable.css';
+import './EquipmentHistoryTable.css';
 
 import { Equipment, Task, Entry, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
     equipment: Equipment | undefined,
-    task: Task | undefined, 
-    taskHistoryRefreshId: number,
-    onHistoryChanged: (newEntries: Entry[])=>void,
-    classNames: string
+    onTaskChanged: (taskId: string)=>void,
+    equipmentHistoryRefreshId: number,
+    classNames?: string
 }
 
 const Table = composeDecorators(
@@ -50,10 +49,10 @@ enum FetchState{
     Error
 }
 
-const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChanged, classNames}: Props) => {
+const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefreshId, classNames}: Props) => {
+    classNames = classNames ? classNames + ' historytasktable' : 'historytasktable';
     const equipmentId = equipment ? equipment._id : undefined;
-    const taskId = task ? task._id : undefined;
-
+    
     const modalHook = useEditModal<Entry | undefined>(undefined);
 
     const [entries, setEntries] = useState<Entry[]>([]);
@@ -61,15 +60,15 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
 
     useEffect(() => {
       fetchEntries();
-    }, [taskId, taskHistoryRefreshId]);
+    }, [equipmentId, equipmentHistoryRefreshId]);
 
     const fetchEntries = async () => {
         setFetchingState(FetchState.Fetching);
 
         try {
             let newEntries:Entry[] = [];
-            if(equipmentId && taskId){
-                newEntries = await EquipmentMonitorService.fetchEntries(equipmentId, taskId);
+            if(equipmentId){
+                newEntries = await EquipmentMonitorService.fetchAllEntries(equipmentId);
             }
             
             setEntries(newEntries);
@@ -80,28 +79,30 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
         }
     };
 
-    const changeEntries = (newEntries: Entry[]) => {
-      setEntries(newEntries);
-      if(onHistoryChanged){
-        onHistoryChanged(newEntries);
-      }
-    };
-
     const onSavedEntry = (savedEntry: Entry) => {
-        const newCurrentHistoryTask = entries.filter(entry => entry._id !== savedEntry._id);
-        newCurrentHistoryTask.unshift(savedEntry);
-        newCurrentHistoryTask.sort((entryA, entryB) => entryA.date.getTime() - entryB.date.getTime());
+        const newCurrentHistory = entries.filter(entry => entry._id !== savedEntry._id);
+        newCurrentHistory.unshift(savedEntry);
+        newCurrentHistory.sort((entryA, entryB) => entryA.date.getTime() - entryB.date.getTime());
 
-        changeEntries(newCurrentHistoryTask);
+        setEntries(newCurrentHistory);
+
+        if(onTaskChanged && savedEntry.taskId){
+            onTaskChanged(savedEntry.taskId);
+        }
 	}
 	
 	const onDeleteEntry = async(entry: Entry) => {  
         var newCurrentHistoryTask = entries.slice(0).filter(e => e._id !== entry._id);
-        changeEntries(newCurrentHistoryTask);
+        setEntries(newCurrentHistoryTask);
+
+        if(onTaskChanged && entry.taskId){
+            onTaskChanged(entry.taskId);
+        }
     }
 
     const innerEntryCell = (entry:Entry, content: JSX.Element, classNames?: string) => {
-		classNames = classNames === undefined ? '' : classNames;
+        classNames = classNames === undefined ? '' : classNames;
+		classNames += ' table-' + (entry.taskId === undefined ? "warning" : "white" );
 		return (
 			<div onClick={() => modalHook.displayData(entry)} className={classNames + ' innerTd clickable'} >
 				{content}
@@ -121,7 +122,21 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
                 const entryDate = new Date(content.data.date);
 				return innerEntryCell(content.data, <FormattedDate value={entryDate} />);
             },
-            style: {width:"25%"},
+            style: {width:"20%"},
+			sortable: true
+        },
+        {
+			name: 'name',
+			header: () => (
+				<div className={'innerTdHead'}>
+					<FormattedMessage {...messages.name} />
+				</div>
+			),
+			cell: (content: any) => {
+                const entryName = content.data.name;
+				return innerEntryCell(content.data, <Fragment>{entryName}</Fragment>);
+            },
+            style: {width:"20%"},
 			sortable: true
 		},
 		{
@@ -150,7 +165,7 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
                     </Fragment>);
                 }
             },
-            style: {width:"25%"},
+            style: {width:"15%"},
 			sortable: true
 		},
 		{
@@ -167,19 +182,17 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
 
 				return innerEntryCell(entry, <div dangerouslySetInnerHTML={{ __html: shortenRemarks }}/>);
             },
-            style: {width:"50%"},
+            style: {width:"45%"},
 			sortable: false
 		}
 	];
     
     return(
-        <div className={classNames + ' historytasktable'}>
+        <div className={classNames}>
             <span className="mb-2">
-                <b><FormattedMessage {...messages.taskHistoryTitle} /></b>
-                {task && <Button color="success" size="sm" className="float-right mb-2" onClick={() => {
-                    modalHook.displayData(createDefaultEntry(equipment, task));
-                }}>
-                    <FontAwesomeIcon icon={faCheckSquare} />
+                <b><FormattedMessage {...messages.equipmentHistoryTitle} /></b>
+                {equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEntry(equipment))}>
+                    <FontAwesomeIcon icon={faPlusSquare} />
                 </Button>}
             </span>
             {fetchingState === FetchState.Error && <div><FontAwesomeIcon icon={faExclamationTriangle} color="red"/><FormattedMessage {...messages.errorFetching} /></div>}
@@ -194,9 +207,8 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
             />
             }
             
-            {equipment && task && modalHook.data && <ModalEditEntry 
+            {equipment && modalHook.data && <ModalEditEntry 
                 equipment={equipment}
-                task={task}
                 entry={modalHook.data}
                 saveEntry={onSavedEntry} 
                 deleteEntry={onDeleteEntry}
@@ -208,11 +220,10 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
     );
 }
 
-HistoryTaskTable.propTypes = {
+EquipmentHistoryTable.propTypes = {
     equipment: PropTypes.object,
-    task: PropTypes.object,
     classNames: PropTypes.string,
-    onHistoryChanged: PropTypes.func,
+    onEntryDeleted: PropTypes.func,
 };
 
-export default HistoryTaskTable;
+export default EquipmentHistoryTable;

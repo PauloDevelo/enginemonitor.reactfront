@@ -19,12 +19,22 @@
     flex-basis: auto !important;
 }
 
+.tab-content>.active{
+	height: 100%;
+}
+
 .columnBody{
     flex: 1;
 	overflow: auto;
-	height: 360px; 
+	display: flex;
+    flex-direction: column;
 }
 
 .lastBlock{
 	min-height: 320px;
+}
+
+.flexTabContent{
+	display: flex;
+	flex: 1;
 }

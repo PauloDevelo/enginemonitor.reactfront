@@ -23,7 +23,7 @@ import { Equipment, Task, Entry, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
 	equipment: Equipment, 
-	task: Task, 
+	task?: Task, 
 	entry: Entry, 
 	visible: boolean, 
 	className?: string, 
@@ -87,7 +87,7 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 
 ModalEditEntry.propTypes = {
 	equipment: PropTypes.object.isRequired,
-	task: PropTypes.object.isRequired,
+	task: PropTypes.object,
 	entry: PropTypes.object.isRequired,
 	visible: PropTypes.bool.isRequired,
 	saveEntry: PropTypes.func.isRequired,

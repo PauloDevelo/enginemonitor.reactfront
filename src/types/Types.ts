@@ -32,6 +32,7 @@ export type Entry = {
     date: Date,
     age: number,
     remarks: string,
+    taskId: string | undefined
 }
 
 export type User = {

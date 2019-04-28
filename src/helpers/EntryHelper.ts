@@ -12,6 +12,7 @@ export function createDefaultEntry(equipment?:Equipment, task?: Task): Entry{
 		date: new Date(),
 		age: defaultAge,
 		remarks: '',
+		taskId: task?task._id:undefined
 	}
 }
 

@@ -1,6 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { CSSTransition } from 'react-transition-group'
-  
+import {Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
+import { FormattedMessage, FormattedDate, defineMessages, Messages } from 'react-intl';
+
 import EquipmentsInfo from '../EquipmentInfo/EquipmentsInfo';
 import TaskTable from '../TaskTable/TaskTable';
 import HistoryTaskTable from '../HistoryTaskTable/HistoryTaskTable'
@@ -8,14 +10,22 @@ import CardTaskDetails from '../CardTaskDetails/CardTaskDetails'
 import ModalLogin from '../ModalLogin/ModalLogin';
 import ModalSignup from '../ModalSignup/ModalSignup';
 import NavBar from '../NavBar/NavBar';
+import EquipmentHistoryTable from '../EquipmentHistoryTable/EquipmentHistoryTable'
+
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+
+import jsonMessages from "./App.messages.json";
+const appMsg: Messages = defineMessages(jsonMessages);
+
+import classnames from 'classnames';
 
 import '../../style/transition.css';
 import './App.css'
 
-import { User, Equipment, Task } from '../../types/Types';
+import { User, Equipment, Task, Entry } from '../../types/Types';
 
 export default function App(){
+	const [activeTab, setActiveTab] = useState<"taskTable" | "equipmentHistory">("taskTable");
 	const [user, setUser] = useState<User | undefined>(undefined);
 
 	const refreshCurrentUser = async () => {
@@ -35,10 +45,17 @@ export default function App(){
 	const [currentEquipment, setCurrentEquipment] = useState<Equipment | undefined>(undefined);
 	const [task, setTask] = useState<{ list: Task[], current: Task | undefined }>({ list:[], current: undefined });
 	const [areTasksLoading, setAreTasksLoading] = useState(false);
+	const [taskHistoryRefreshId, setTaskHistoryRefreshId] = useState(0);
+	const [equipmentHistoryRefreshId, setEquipmentHistoryRefreshId] = useState(0);
 
 	useEffect(() => {
 		refreshTaskList();
 	}, [currentEquipment]);
+
+	const onTaskDeleted = (task: Task)=>{
+		refreshTaskList();
+		setEquipmentHistoryRefreshId(equipmentHistoryRefreshId + 1);
+	}
 
 	const onCurrentTaskChanged = (task: Task)=>{
 		refreshTaskList();
@@ -48,6 +65,20 @@ export default function App(){
 		if (newCurrentTask !== task.current){
 			setTask({ list: task.list, current: newCurrentTask });
 		}
+	}
+
+	const onTaskChanged = (taskId: string) => {
+		refreshTaskList();
+
+		const currentTaskId = task.current ? task.current._id : undefined;
+		if(taskId === currentTaskId){
+			setTaskHistoryRefreshId(taskHistoryRefreshId + 1);
+		}
+	}
+
+	const onTaskHistoryChanged = () => {
+		refreshTaskList();
+		setEquipmentHistoryRefreshId(equipmentHistoryRefreshId + 1);
 	}
 	
 	const refreshTaskList = async() => {
@@ -89,6 +120,7 @@ export default function App(){
 	const toggleModalSignup = () => setModalSignupVisible(!modalSignupVisible);
 
 	var panelClassNames = "p-2 m-2 border border-secondary rounded shadow";
+
 	return (
 		<Fragment>
 			<CSSTransition in={true} appear={true} timeout={1000} classNames="fade">
@@ -100,24 +132,49 @@ export default function App(){
 										user={user}
 										changeCurrentEquipment={setCurrentEquipment}
 										extraClassNames={panelClassNames + ' columnHeader'}/>
-							<TaskTable 	equipment={currentEquipment}
-										areTasksLoading={areTasksLoading}
-										tasks={task.list} 
-										onTaskSaved={onCurrentTaskChanged}
-										changeCurrentTask={changeCurrentTask}
-										classNames={panelClassNames + ' columnBody'}/>
+							<div className={panelClassNames + ' columnBody'}>
+								<Nav tabs>
+									<NavItem>
+										<NavLink className={classnames({ active: activeTab === 'taskTable' })} 
+											onClick={() => { setActiveTab('taskTable'); }} >
+											<FormattedMessage {...appMsg.taskTable}/>
+										</NavLink>
+									</NavItem>
+									<NavItem>
+										<NavLink className={classnames({ active: activeTab === 'equipmentHistory' })} 
+											onClick={() => { setActiveTab('equipmentHistory'); }} >
+											<FormattedMessage {...appMsg.equipementHistory}/>
+										</NavLink>
+									</NavItem>
+								</Nav>
+								<TabContent activeTab={activeTab} className={"flexTabContent"}>
+									<TabPane tabId="taskTable" style={{"flex": 1}}>
+										<TaskTable 	equipment={currentEquipment}
+											areTasksLoading={areTasksLoading}
+											tasks={task.list} 
+											onTaskSaved={onCurrentTaskChanged}
+											changeCurrentTask={changeCurrentTask} />
+									</TabPane>
+									<TabPane tabId="equipmentHistory" style={{"flex": 1}}>
+										<EquipmentHistoryTable equipment={currentEquipment}
+												equipmentHistoryRefreshId={equipmentHistoryRefreshId}												
+												onTaskChanged={onTaskChanged} />
+									</TabPane>
+								</TabContent>
+							</div>
 						</div>
 						<div className="wrapperColumn">
 							<CardTaskDetails 	equipment={currentEquipment}
 												tasks={task.list}
 												currentTask={task.current}
 												onTaskChanged={onCurrentTaskChanged}
-												onTaskDeleted={onCurrentTaskChanged}
+												onTaskDeleted={onTaskDeleted}
 												changeCurrentTask={changeCurrentTask}
 												classNames={panelClassNames + ' columnHeader'}/>
 							<HistoryTaskTable 	equipment={currentEquipment}
 												task={task.current}
-												onHistoryChanged={refreshTaskList}
+												onHistoryChanged={onTaskHistoryChanged}
+												taskHistoryRefreshId={taskHistoryRefreshId}
 												classNames={panelClassNames + ' columnBody lastBlock'}/>
 						</div>
 					</div>		
