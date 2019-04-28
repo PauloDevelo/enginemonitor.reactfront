@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { CSSTransition } from 'react-transition-group'
 import {Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
-import { FormattedMessage, FormattedDate, defineMessages, Messages } from 'react-intl';
+import { FormattedMessage, defineMessages, Messages } from 'react-intl';
 
 import EquipmentsInfo from '../EquipmentInfo/EquipmentsInfo';
 import TaskTable from '../TaskTable/TaskTable';
@@ -22,7 +22,7 @@ import classnames from 'classnames';
 import '../../style/transition.css';
 import './App.css'
 
-import { User, Equipment, Task, Entry } from '../../types/Types';
+import { User, Equipment, Task } from '../../types/Types';
 
 export default function App(){
 	const [activeTab, setActiveTab] = useState<"taskTable" | "equipmentHistory">("taskTable");
