@@ -89,5 +89,6 @@
   "trackerType": "With a usage time tracker",
   "usagePeriodInHour": "Period in usage hour",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
-  "yes": "Yes"
+  "yes": "Yes",
+  "entryname": "Name"
 }

@@ -42,7 +42,7 @@
   "name": {
     "defaultMessage": "Name",
     "description": "Label",
-    "id": "name"
+    "id": "entryname"
   },
   "remarks": {
     "defaultMessage": "Remarks",
