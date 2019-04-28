@@ -1,12 +1,12 @@
 {
-    "equipementHistory": {
-      "defaultMessage": "History",
-      "description": "Tab title",
-      "id": "equipementHistory"
-    },
-    "taskTable": {
-        "defaultMessage": "Maintenance tasks",
-        "description": "Tab title",
-        "id": "taskTable"
-    }
+  "equipementHistory": {
+    "defaultMessage": "History",
+    "description": "Tab title",
+    "id": "equipementHistory"
+  },
+  "taskTable": {
+    "defaultMessage": "Maintenance tasks",
+    "description": "Tab title",
+    "id": "taskTable"
+  }
 }

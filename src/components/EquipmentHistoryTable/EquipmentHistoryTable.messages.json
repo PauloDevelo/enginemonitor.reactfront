@@ -14,6 +14,11 @@
     "description": "Day period",
     "id": "dayperiod"
   },
+  "equipmentHistoryTitle": {
+    "defaultMessage": "Equipment history",
+    "description": "Title",
+    "id": "equipmentHistoryTitle"
+  },
   "errorFetching": {
     "defaultMessage": "Something went wrong ...",
     "description": "Error message",
@@ -24,24 +29,19 @@
     "description": "Month period",
     "id": "monthperiod"
   },
+  "name": {
+    "defaultMessage": "Name",
+    "description": "Label",
+    "id": "entryname"
+  },
   "remarks": {
     "defaultMessage": "Remarks",
     "description": "Colum header",
     "id": "remarks"
   },
-  "equipmentHistoryTitle": {
-    "defaultMessage": "Equipment history",
-    "description": "Title",
-    "id": "equipmentHistoryTitle"
-  },
   "yearperiod": {
     "defaultMessage": "{year, plural, one {year} other {# years}}",
     "description": "Year period",
     "id": "yearperiod"
-  },
-  "name": {
-    "defaultMessage": "Name",
-    "description": "Label",
-    "id": "entryname"
   }
 }

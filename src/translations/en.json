@@ -26,8 +26,10 @@
   "emailSent": "An email has been sent. Please, confirm your email by clicking on the link.",
   "entryDeleteMsg": "Are you sure you want to delete this entry?",
   "entryDeleteTitle": "Delete entry",
+  "entryname": "Name",
   "equipmentDeleteMsg": "Are you sure you want to delete this equipment?",
   "equipmentDeleteTitle": "Delete Equipment",
+  "equipmentHistoryTitle": "Equipment history",
   "equipmentname": "Name",
   "errorFetching": "Something went wrong ...",
   "firstname": "Firstname",
@@ -89,7 +91,5 @@
   "trackerType": "With a usage time tracker",
   "usagePeriodInHour": "Period in usage hour",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
-  "yes": "Yes",
-  "entryname": "Name",
-  "equipmentHistoryTitle": "Equipment history"
+  "yes": "Yes"
 }
