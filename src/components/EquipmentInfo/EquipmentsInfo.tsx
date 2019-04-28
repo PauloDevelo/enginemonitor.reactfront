@@ -2,7 +2,6 @@ import React, {Fragment, useState, useEffect} from 'react';
 import { Button, Nav, TabContent } from 'reactstrap';
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import PropTypes from 'prop-types';
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
@@ -12,7 +11,10 @@ import EquipmentInfoTab from './EquipmentInfoTab';
 import EquipmentInfoNavItem from './EquipmentInfoNavItem';
 import ModalEquipmentInfo from '../ModalEquipmentInfo/ModalEquipmentInfo';
 import Loading from '../Loading/Loading';
+
 import { createDefaultEquipment } from '../../helpers/EquipmentHelper';
+
+import PropTypes from 'prop-types';
 import { User, Equipment } from '../../types/Types';
 
 type Props = {
