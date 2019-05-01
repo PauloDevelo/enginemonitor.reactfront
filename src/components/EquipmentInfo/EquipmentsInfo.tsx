@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useEffect} from 'react';
+import React, {Fragment, useState, useEffect, useCallback} from 'react';
 import { Button, Nav, TabContent } from 'reactstrap';
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,7 +23,7 @@ type Props = {
 	extraClassNames: string
 }
 
-export default function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
+function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 	const [currentEquipment, setCurrentEquipment] = useState<Equipment | undefined>(undefined);
 	const modalHook = useEditModal<Equipment | undefined>(undefined);
 	
@@ -75,7 +75,7 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
         }
 	}, [equipments]);
 
-	const onEquipmentInfoSaved = async (equipmentInfoSaved: Equipment) => {
+	const onEquipmentInfoSaved = useCallback(async (equipmentInfoSaved: Equipment) => {
 		const newEquipmentList = equipments.concat([]);
 		const index = newEquipmentList.findIndex(equipmentInfo => equipmentInfo._id === equipmentInfoSaved._id);
 
@@ -87,23 +87,21 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 		}
         
 		setEquipments(newEquipmentList);
-	}
+	}, [equipments]);
 	
-	const onEquipmentDeleted = (deletedEquipment: Equipment) => {
+	const onEquipmentDeleted = useCallback((deletedEquipment: Equipment) => {
 		const newEquipmentList = equipments.filter(equipmentInfo => equipmentInfo._id !== deletedEquipment._id);
 		setEquipments(newEquipmentList);
 			
 		setCurrentEquipment(newEquipmentList.length > 0 ? newEquipmentList[0] : undefined);
-	}
+	}, [equipments]);
 	
 	const tabPanes =  equipments.map((equipment, index) => {
-		return <EquipmentInfoTab key={equipment._id} equipment={equipment} onClick={() => {
-			modalHook.displayData(currentEquipment);
-		}}/>;
+		return <EquipmentInfoTab key={equipment._id} equipment={equipment} displayEquipment={modalHook.displayData}/>;
 	});
 
 	const tabNavItems = equipments.map((equipment) => {
-		return <EquipmentInfoNavItem key={equipment._id} equipment={equipment} active={isCurrentEquipment(equipment)} onClick={() => setCurrentEquipment(equipment)}/>;
+		return <EquipmentInfoNavItem key={equipment._id} equipment={equipment} active={isCurrentEquipment(equipment)} setCurrentEquipment={setCurrentEquipment}/>;
 	});
 
 	return (
@@ -133,6 +131,8 @@ export default function EquipmentsInfo({user, changeCurrentEquipment, extraClass
 		</Fragment>
 	);
 }
+
+export default React.memo(EquipmentsInfo);
 
 EquipmentsInfo.propTypes = {
 	user: PropTypes.object,
