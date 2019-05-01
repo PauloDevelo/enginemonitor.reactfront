@@ -148,9 +148,9 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
 			),
 			cell: (content: any) => {
                 const entry:Entry = content.data;
-                const equ = equipment as Equipment;
+                const equ = equipment;
 
-                if (equ.ageAcquisitionType !== AgeAcquisitionType.time){
+                if (equ === undefined || equ.ageAcquisitionType !== AgeAcquisitionType.time){
                     return innerEntryCell(entry, <Fragment>{entry.age === -1?"":entry.age + 'h'}</Fragment>);
                 }
                 else{
