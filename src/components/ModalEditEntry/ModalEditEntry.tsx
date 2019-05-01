@@ -56,7 +56,7 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 					<ModalHeader toggle={modalLogic.cancel}><FontAwesomeIcon icon={faCheckSquare} size="lg"/>{' '}<ModalTitle entry={entry}/></ModalHeader>
 					<ModalBody>
 						{visible && 
-						<MyForm id="createTaskForm" 
+						<MyForm id="editEntryForm" 
 							submit={modalLogic.handleSubmit} 
 							initialData={entry}>
 							<MyInput name="name" 	label={editEntryMsg.name} 	    type="text" 	required/>
@@ -67,7 +67,7 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 						<Alerts errors={modalLogic.alerts}/>
 					</ModalBody>
 					<ModalFooter>
-						<ActionButton type="submit" form="createTaskForm" color="success" isActing={modalLogic.isSaving} message={editEntryMsg.save}/>
+						<ActionButton type="submit" form="editEntryForm" color="success" isActing={modalLogic.isSaving} message={editEntryMsg.save}/>
 						<Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...editEntryMsg.cancel} /></Button>
 						{entry && entry._id && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editEntryMsg.delete} /></Button>}
 					</ModalFooter>
