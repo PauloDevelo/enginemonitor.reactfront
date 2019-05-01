@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group'
 import {Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
 import { FormattedMessage, defineMessages, Messages } from 'react-intl';
@@ -116,8 +116,9 @@ export default function App(){
 	const [modalSignupVisible, setModalSignupVisible] = useState(false);
 	const [navBarVisible, setNavBarVisible] = useState(true);
 
-	const toggleNavBar = () => setNavBarVisible(!navBarVisible);
-	const toggleModalSignup = () => setModalSignupVisible(!modalSignupVisible);
+	const toggleNavBar = useCallback(() => setNavBarVisible(!navBarVisible), [navBarVisible]);
+	const toggleModalSignup = useCallback(() => setModalSignupVisible(!modalSignupVisible), [modalSignupVisible]);
+	const logOut = useCallback(() => setUser(undefined), []);
 
 	var panelClassNames = "p-2 m-2 border border-secondary rounded shadow";
 
@@ -125,7 +126,7 @@ export default function App(){
 		<Fragment>
 			<CSSTransition in={true} appear={true} timeout={1000} classNames="fade">
 				<Fragment>
-					<NavBar user={user} onLoggedOut={() => setUser(undefined)} isOpened={navBarVisible} toggle={toggleNavBar} />
+					<NavBar user={user} onLoggedOut={logOut} isOpened={navBarVisible} toggle={toggleNavBar} />
 					<div className="appBody mb-2">
 						<div className="wrapperColumn">
 							<EquipmentsInfo

@@ -74,4 +74,4 @@ NavBar.propTypes = {
 	isOpened: PropTypes.bool.isRequired
 };
 
-export default NavBar;
+export default React.memo(NavBar);
