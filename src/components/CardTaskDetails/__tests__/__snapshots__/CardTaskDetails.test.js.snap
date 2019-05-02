@@ -63,13 +63,9 @@ exports[`CardTaskDetails Should render correctly even if the current task is und
     ]
   }
 >
-  <Card
-    tag="div"
-  >
-    <div
-      className="card"
-    />
-  </Card>
+  <div
+    className="card"
+  />
 </CardTaskDetails>
 `;
 
@@ -80,13 +76,9 @@ exports[`CardTaskDetails Should render correctly even if the equipment is undefi
   onTaskDeleted={[MockFunction]}
   tasks={Array []}
 >
-  <Card
-    tag="div"
-  >
-    <div
-      className="card"
-    />
-  </Card>
+  <div
+    className="card"
+  />
 </CardTaskDetails>
 `;
 
@@ -107,13 +99,9 @@ exports[`CardTaskDetails Should render correctly even if the task array is empty
   onTaskDeleted={[MockFunction]}
   tasks={Array []}
 >
-  <Card
-    tag="div"
-  >
-    <div
-      className="card"
-    />
-  </Card>
+  <div
+    className="card"
+  />
 </CardTaskDetails>
 `;
 
