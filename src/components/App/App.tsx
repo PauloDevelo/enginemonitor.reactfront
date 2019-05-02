@@ -52,20 +52,20 @@ export default function App(){
 		refreshTaskList();
 	}, [currentEquipment]);
 
-	const onTaskDeleted = (task: Task)=>{
+	const onTaskDeleted = useCallback((task: Task)=>{
 		refreshTaskList();
 		setEquipmentHistoryRefreshId(equipmentHistoryRefreshId + 1);
-	}
+	}, [equipmentHistoryRefreshId, task, currentEquipment]);
 
-	const onCurrentTaskChanged = (task: Task)=>{
+	const onCurrentTaskChanged = useCallback((task: Task)=>{
 		refreshTaskList();
-	}
+	}, [task, currentEquipment]);
 
-	const changeCurrentTask = (newCurrentTask: Task | undefined) => {
+	const changeCurrentTask = useCallback((newCurrentTask: Task | undefined) => {
 		if (newCurrentTask !== task.current){
 			setTask({ list: task.list, current: newCurrentTask });
 		}
-	}
+	}, [task]);
 
 	const onTaskChanged = (taskId: string) => {
 		refreshTaskList();

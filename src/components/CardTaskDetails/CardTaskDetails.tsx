@@ -15,8 +15,6 @@ import './CardTaskDetails.css';
 import '../../style/transition.css';
 import { Equipment, Task } from '../../types/Types';
 
-
-
 type Props = {
     equipment?: Equipment, 
     tasks: Task[], 
@@ -126,4 +124,4 @@ CardTaskDetails.propTypes = {
     classNames: PropTypes.string
 };
 
-export default CardTaskDetails;
+export default React.memo(CardTaskDetails);
