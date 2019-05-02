@@ -6,7 +6,6 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import PropTypes from 'prop-types';
 
 import { useEditModal } from '../../hooks/EditModalHook';
-import { useTraceUpdate } from '../../hooks/Debug';
 
 import { getContext, getScheduleText, getBadgeText } from '../../helpers/TaskHelper'; 
 
@@ -27,8 +26,6 @@ type Props = {
 }
 
 const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames}: Props) => {
-    useTraceUpdate({equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames});
-
     const modalHook = useEditModal(currentTask);
 
     const getFirstTask = ():Task | undefined =>{
