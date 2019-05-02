@@ -27,6 +27,7 @@
   "entryDeleteMsg": "Etes vous sure de vouloir supprimer cette entrée ?",
   "entryDeleteTitle": "Suppression d'une entrée",
   "entryname": "Nom",
+  "equipementHistory": "Historique",
   "equipmentDeleteMsg": "Etes vous sure de vouloir supprimer cet équipement ?",
   "equipmentDeleteTitle": "Suppression d'un équipement",
   "equipmentHistoryTitle": "Historique de l'équipement",
@@ -81,6 +82,7 @@
   "taskDeleteMsg": "Etes vous sure de vouloir supprimer cette tache et son historique ?",
   "taskDeleteTitle": "Suppression d'une tache",
   "taskHistoryTitle": "Historique",
+  "taskTable": "Taches de maintenance",
   "taskdesc": "Description",
   "tasklistTitle": "Liste des taches",
   "taskname": "Nom",
@@ -91,7 +93,5 @@
   "trackerType": "Avec un tracker d'usage",
   "usagePeriodInHour": "Période en heure à l'usage",
   "yearperiod": "{year, plural, one {# année} other {# {années}}",
-  "yes": "Oui",
-  "taskTable": "Taches de maintenance",
-  "equipementHistory": "Historique"
+  "yes": "Oui"
 }
