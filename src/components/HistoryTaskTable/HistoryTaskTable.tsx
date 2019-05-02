@@ -215,4 +215,4 @@ HistoryTaskTable.propTypes = {
     onHistoryChanged: PropTypes.func,
 };
 
-export default HistoryTaskTable;
+export default React.memo(HistoryTaskTable);
