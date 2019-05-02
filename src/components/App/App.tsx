@@ -72,7 +72,7 @@ export default function App(){
 	});
 	useEffect(() => {
 		onCurrentTaskChanged.current = () => refreshTaskList();
-	}, [taskList, currentTask, currentEquipment]);
+	}, [currentTask, currentEquipment]);
 
 
 	const changeCurrentTask = useCallback((newCurrentTask: Task | undefined) => {
@@ -87,6 +87,10 @@ export default function App(){
 			setTaskHistoryRefreshId(taskHistoryRefreshId + 1);
 		}
 	}
+	const onTaskChangedRef = useRef(onTaskChanged);
+	useEffect(() => {
+		onTaskChangedRef.current = onTaskChanged;
+	}, [taskHistoryRefreshId, currentTask, currentEquipment]);
 
 	const onTaskHistoryChanged = () => {
 		refreshTaskList();
@@ -166,7 +170,7 @@ export default function App(){
 									<TabPane tabId="equipmentHistory" style={{"flex": 1}}>
 										<EquipmentHistoryTable equipment={currentEquipment}
 												equipmentHistoryRefreshId={equipmentHistoryRefreshId}												
-												onTaskChanged={onTaskChanged} />
+												onTaskChanged={onTaskChangedRef} />
 									</TabPane>
 								</TabContent>
 							</div>

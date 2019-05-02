@@ -32,7 +32,7 @@ import { Equipment, Task, Entry, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
     equipment: Equipment | undefined,
-    onTaskChanged: (taskId: string)=>void,
+    onTaskChanged: React.MutableRefObject<(taskId: string) => void>,
     equipmentHistoryRefreshId: number,
     classNames?: string
 }
@@ -87,7 +87,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
         setEntries(newCurrentHistory);
 
         if(onTaskChanged && savedEntry.taskId){
-            onTaskChanged(savedEntry.taskId);
+            onTaskChanged.current(savedEntry.taskId);
         }
 	}
 	
@@ -96,7 +96,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
         setEntries(newCurrentHistoryTask);
 
         if(onTaskChanged && entry.taskId){
-            onTaskChanged(entry.taskId);
+            onTaskChanged.current(entry.taskId);
         }
     }
 
@@ -223,7 +223,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
 EquipmentHistoryTable.propTypes = {
     equipment: PropTypes.object,
     classNames: PropTypes.string,
-    onEntryDeleted: PropTypes.func,
+    onEntryDeleted: PropTypes.object,
 };
 
-export default EquipmentHistoryTable;
+export default React.memo(EquipmentHistoryTable);
