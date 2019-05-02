@@ -16,6 +16,7 @@ import Loading from '../Loading/Loading';
 
 import { getContext, getTodoText, shorten, getTodoValue, TaskTodo, createDefaultTask, getBadgeText } from '../../helpers/TaskHelper'; 
 import { useEditModal } from '../../hooks/EditModalHook';
+import { useTraceUpdate } from '../../hooks/Debug';
 
 import jsonMessages from "./TaskTable.messages.json";
 const taskTableMsg: Messages = defineMessages(jsonMessages);
@@ -30,7 +31,7 @@ type Props = {
 	equipment?: Equipment, 
 	tasks: Task[], 
 	areTasksLoading: boolean, 
-	onTaskSaved: (task: Task) => void, 
+	onTaskSaved: React.MutableRefObject<(task: Task) => void>, 
 	changeCurrentTask: (task: Task) => void, 
 	classNames?: string
 };
@@ -51,6 +52,8 @@ const Table = composeDecorators(
 )();
 
 export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, changeCurrentTask, classNames}: Props) => {
+	useTraceUpdate({equipment, tasks, areTasksLoading, onTaskSaved, changeCurrentTask, classNames});
+
 	classNames = classNames === undefined ? 'tasktable' : classNames + ' tasktable';
 	const modalHook = useEditModal<Task | undefined>(undefined);
 	
@@ -148,7 +151,7 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 			</div>
 			{equipment !== undefined && modalHook.data !== undefined && <ModalEditTask  equipment={equipment}
 							task={modalHook.data}
-							onTaskSaved={onTaskSaved} 
+							onTaskSaved={onTaskSaved.current} 
 							visible={modalHook.editModalVisibility} 
 							toggle={modalHook.toggleModal}
 							className='modal-dialog-centered'/>}
@@ -159,10 +162,10 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 TaskTable.propTypes = {
 	equipment: PropTypes.object,
 	tasks: PropTypes.array.isRequired,
-	onTaskSaved: PropTypes.func.isRequired,
+	onTaskSaved: PropTypes.object.isRequired,
 	changeCurrentTask: PropTypes.func.isRequired,
 	classNames: PropTypes.string,
 	areTasksLoading: PropTypes.bool.isRequired
 };
 
-export default TaskTable;
+export default React.memo(TaskTable);
