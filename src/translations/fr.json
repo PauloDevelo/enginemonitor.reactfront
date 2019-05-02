@@ -91,5 +91,7 @@
   "trackerType": "Avec un tracker d'usage",
   "usagePeriodInHour": "Période en heure à l'usage",
   "yearperiod": "{year, plural, one {# année} other {# {années}}",
-  "yes": "Oui"
+  "yes": "Oui",
+  "taskTable": "Taches de maintenance",
+  "equipementHistory": "Historique"
 }
