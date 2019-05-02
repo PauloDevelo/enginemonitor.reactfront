@@ -16,7 +16,6 @@ import Loading from '../Loading/Loading';
 
 import { getContext, getTodoText, shorten, getTodoValue, TaskTodo, createDefaultTask, getBadgeText } from '../../helpers/TaskHelper'; 
 import { useEditModal } from '../../hooks/EditModalHook';
-import { useTraceUpdate } from '../../hooks/Debug';
 
 import jsonMessages from "./TaskTable.messages.json";
 const taskTableMsg: Messages = defineMessages(jsonMessages);
@@ -52,8 +51,6 @@ const Table = composeDecorators(
 )();
 
 export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, changeCurrentTask, classNames}: Props) => {
-	useTraceUpdate({equipment, tasks, areTasksLoading, onTaskSaved, changeCurrentTask, classNames});
-
 	classNames = classNames === undefined ? 'tasktable' : classNames + ' tasktable';
 	const modalHook = useEditModal<Task | undefined>(undefined);
 	
