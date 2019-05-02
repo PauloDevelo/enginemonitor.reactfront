@@ -1,8 +1,5 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useCallback} from 'react';
 import { Form } from 'reactstrap';
-import classNamesUtils from 'classnames';
-
-import PropTypes from 'prop-types';
 
 import './MyForm.css';
 
@@ -28,6 +25,8 @@ function convertDateFieldsToDate(data:any, keys:string[]){
 	return data;
 }
 
+function isJSXElement(child: JSX.Element | boolean): child is JSX.Element { return typeof child !== "boolean" };
+
 type Props = {
 	initialData: any,
 	submit: (data:any) => (void | Promise<void>), 
@@ -36,12 +35,12 @@ type Props = {
 	id: string
 };
 
-export default function MyForm({ initialData , submit, children, className, ...props}:Props) {
-	initialData = Object.assign({}, initialData);
-	const dateKeys = convertDateFieldsToString(initialData);
+const MyForm = React.memo(function MyForm({ initialData , submit, children, className, ...props}:Props) {
+	const copyInitialData = Object.assign({}, initialData);
+	const dateKeys = convertDateFieldsToString(copyInitialData);
 
 	const [validationTrigger, triggerValidation] = useState(0);
-	const [data, setData] = useState({ data: initialData, dateKeys: dateKeys });
+	const [data, setData] = useState({ data: copyInitialData, dateKeys: dateKeys });
 	const formEl = useRef<any>();
 
 	const validate = () => {
@@ -59,11 +58,7 @@ export default function MyForm({ initialData , submit, children, className, ...p
 		}
 	}
 
-	const handleInputChange = (event:React.FormEvent<HTMLInputElement>) => {
-		const target:HTMLInputElement = event.target as HTMLInputElement;
-		const value = target.type === 'checkbox' ? target.checked : target.value;
-		const name = target.name;
-
+	const handleInputChange = useCallback((name: string , value: string | boolean) => {
 		if(data.data[name] === undefined){
 			console.log('The property ' + name + ' is not defined in the data:');
 			console.log(data.data);
@@ -72,13 +67,12 @@ export default function MyForm({ initialData , submit, children, className, ...p
 		const newData = Object.assign({}, data);
 		newData.data[name] = value;
 		setData(newData);
-	}
+	}, []);
 
-	function isJSXElement(child: JSX.Element | boolean): child is JSX.Element { return typeof child !== "boolean" };
 	const elementChildren = children.filter(child => isJSXElement(child)) as JSX.Element[];
 
 	const childrenWithProps = React.Children.map(elementChildren, child =>{
-		var newProps = { 
+			var newProps = { 
 			value: data.data[child.props.name],
 			handleChange: handleInputChange,
 			validationTrigger: validationTrigger
@@ -93,11 +87,6 @@ export default function MyForm({ initialData , submit, children, className, ...p
 			{childrenWithProps}
 		</Form>
 	);
-}
+});
 
-MyForm.propTypes = {
-	initialData: PropTypes.object.isRequired,
-	children: PropTypes.node,
-	className: PropTypes.string,
-	submit: PropTypes.func.isRequired
-};
+export default MyForm;

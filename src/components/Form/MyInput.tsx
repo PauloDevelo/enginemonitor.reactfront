@@ -1,15 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, memo, useMemo, useCallback } from 'react';
 import { FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import ToolTip from '../ToolTip/ToolTip';
 
 import { FormattedMessage } from 'react-intl';
 
-import PropTypes from 'prop-types';
-
 type Props = {
 	label: FormattedMessage.MessageDescriptor,
 	tooltip?: FormattedMessage.MessageDescriptor,
-	handleChange?: (event: any) => void,
+	handleChange?: (name: string, value: string | boolean) => void,
 	onChanged?: (newValue: any) => void,
 	validationTrigger?: number,
 	type: any,
@@ -21,14 +19,18 @@ type Props = {
 	children?: JSX.Element[] | JSX.Element
 };
 
-export default function MyInput({ label, tooltip, handleChange, onChanged, validationTrigger, children, ...props }: Props) {
+const MyInput = React.memo(function MyInput({ label, tooltip, handleChange, onChanged, validationTrigger, children, ...props }:Props){
 	const [validity, setValidity] = useState({ isValid: true, errorMessage: '' });
 	const inputElemRef = useRef<any>();
+	const tooltipElement = useMemo(() => { return tooltip ? ToolTip({tooltip}) : undefined }, [tooltip]);
 
 	const validate = () => {
 		const inputElem = inputElemRef.current;
 		if(inputElem !== undefined){
-			setValidity( { isValid: inputElem.validity !== undefined ? inputElem.validity.valid : true, errorMessage: inputElem.validationMessage });
+			setValidity( { 
+				isValid: inputElem.validity !== undefined ? inputElem.validity.valid : true, 
+				errorMessage: inputElem.validationMessage 
+			});
 		}
 	};
 
@@ -42,25 +44,26 @@ export default function MyInput({ label, tooltip, handleChange, onChanged, valid
 		setValidity({ isValid: true, errorMessage: '' });
 	}, [inputElemRef]);
 	
-	const onChangeHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
+	const onChangeHandler = useCallback((event:React.ChangeEvent<HTMLInputElement>):void => {
 		validate();
-		if(typeof handleChange === 'function') handleChange(event);
 
 		const target:HTMLInputElement = event.target as HTMLInputElement;
-		const value = target.type === 'checkbox' ? target.checked : target.value;
-		if(typeof onChanged === 'function') onChanged(value);
-	};
+		const newValue = target.type === 'checkbox' ? target.checked : target.value;
 
-	let tooltipElement:JSX.Element | undefined = undefined;
-	if (tooltip){
-		tooltipElement = ToolTip({tooltip});
-	}
+		if(typeof handleChange === 'function'){
+			handleChange(props.name, newValue);
+		}
+
+		if(typeof onChanged === 'function'){
+			onChanged(newValue);
+		}
+	}, [handleChange, onChanged, props.name]);
 	
 	if (props.type === 'checkbox'){
-		const inlineValue = "true";
+		const inlineValue = "true" as never;
 		return (
 			<FormGroup className={"form-group"} check inline={true}>
-				<Label check inline={inlineValue as never}>
+				<Label check inline={inlineValue}>
 					<FormattedMessage {...label}/>{tooltipElement}{' '}
 					<Input ref={inputElemRef} onChange={onChangeHandler} invalid={!validity.isValid} {...props}/>
 				</Label>
@@ -81,19 +84,6 @@ export default function MyInput({ label, tooltip, handleChange, onChanged, valid
 			{!validity.isValid && <FormFeedback>{validity.errorMessage}</FormFeedback>}
 		</FormGroup>
 	)
-}
+});
 
-MyInput.propTypes = {
-	onChanged: PropTypes.func,
-	validationTrigger: PropTypes.number,
-	name: PropTypes.string.isRequired,
-	tooltip: PropTypes.object,
-	min: PropTypes.number,
-	max: PropTypes.number,
-	label: PropTypes.object.isRequired,
-	type: PropTypes.string.isRequired,
-	required: PropTypes.bool,
-	value: PropTypes.any,
-	placeholder: PropTypes.string,
-	children: PropTypes.node,
-};
+export default MyInput;
