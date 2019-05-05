@@ -82,7 +82,7 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
                         <div className="p-2 button-next-task" onClick={nextTask} style={cursorPointerStyle}><div className={nextClassNames}></div></div>
                 </CardBody>
                 <CardFooter className='pl-5 pr-5'>
-                    <Button color='light' className='float-left' onClick={modalHook.toggleModal}><FontAwesomeIcon icon={faEdit} /></Button>
+                    <Button color='light' className='float-left' onClick={modalHook.toggleModal} aria-label="Edit"><FontAwesomeIcon icon={faEdit} /></Button>
                 </CardFooter>
             </Card>
 

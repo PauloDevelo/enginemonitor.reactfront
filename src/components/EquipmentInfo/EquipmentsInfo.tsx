@@ -108,7 +108,7 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 		<Fragment>
 			<div className={extraClassNames}>
 				<span className="small mb-3">
-					<Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEquipment())}>
+					<Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEquipment())} aria-label="Add">
 						<FontAwesomeIcon icon={faPlusSquare} />
 					</Button>
 				</span>

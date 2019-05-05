@@ -23,7 +23,7 @@ function EquipmentInfoTab({equipment, displayEquipment}: Props){
 
 	return(
         <TabPane tabId={equipment._id}>
-            <Button color="light" size="sm" className="float-right" onClick={displayEquipmentCallBack}><FontAwesomeIcon icon={faEdit} /></Button>					
+            <Button color="light" size="sm" className="float-right" onClick={displayEquipmentCallBack} aria-label="Edit"><FontAwesomeIcon icon={faEdit} /></Button>					
             <span>{equipment.brand} {equipment.model} </span>
             {equipment.ageAcquisitionType !== AgeAcquisitionType.time && <span className="font-weight-bold">{equipment.age} h </span>}
             <FormattedMessage {...equipmentInfoMsg.installedOn} />

@@ -191,7 +191,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
         <div className={classNames}>
             <span className="mb-2">
                 <b><FormattedMessage {...messages.equipmentHistoryTitle} /></b>
-                {equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEntry(equipment))}>
+                {equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEntry(equipment))} aria-label="Add">
                     <FontAwesomeIcon icon={faPlusSquare} />
                 </Button>}
             </span>
