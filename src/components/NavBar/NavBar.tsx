@@ -28,18 +28,9 @@ type Position = {
 };
 
 const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
-    const [position, setPosition] = useState( {latitude: Number.NaN, longitude: Number.NaN });
-
     const logout = () => {
         EquipmentMonitorService.logout();
         onLoggedOut();
-    }
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((navigatorPosition) => {
-           const pos:Position = { longitude:navigatorPosition.coords.longitude, latitude: navigatorPosition.coords.latitude };
-          setPosition( pos );
-        });
     }
 
     const textMenu = user?user.email:"Login";
