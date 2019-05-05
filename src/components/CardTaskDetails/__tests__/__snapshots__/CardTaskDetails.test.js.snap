@@ -2,30 +2,7 @@
 
 exports[`CardTaskDetails Should render correctly even if the current task is undefined 1`] = `
 <CardTaskDetails
-  changeCurrentTask={
-    [MockFunction] {
-      "calls": Array [
-        Array [
-          Object {
-            "_id": "task1",
-            "description": "task1 description",
-            "level": 1,
-            "name": "taskname1",
-            "nextDueDate": 2011-02-22T16:00:00.000Z,
-            "periodInMonth": 12,
-            "usageInHourLeft": 20,
-            "usagePeriodInHour": 200,
-          },
-        ],
-      ],
-      "results": Array [
-        Object {
-          "isThrow": false,
-          "value": undefined,
-        },
-      ],
-    }
-  }
+  changeCurrentTask={[MockFunction]}
   equipment={
     Object {
       "_id": "1234",

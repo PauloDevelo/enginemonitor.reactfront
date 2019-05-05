@@ -1,9 +1,6 @@
-
 import React from 'react';
 import { NavItem, NavLink } from 'reactstrap';
 import { FormattedMessage,  } from 'react-intl';
-
-import { useTraceUpdate } from '../../hooks/Debug';
 
 type Props = {
     classNames: string,
@@ -12,8 +9,6 @@ type Props = {
 };
 
 const MyNavItem = ({classNames, activeFunc, label}:Props) => {
-    useTraceUpdate({classNames, activeFunc, label});
-
     return <NavItem>
                 <NavLink className={classNames} 
                     onClick={activeFunc}>

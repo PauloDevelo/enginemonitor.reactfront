@@ -28,29 +28,12 @@ type Props = {
 const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames}: Props) => {
     const modalHook = useEditModal(currentTask);
 
-    const getFirstTask = ():Task | undefined =>{
-        if (tasks === undefined || tasks.length === 0){
-            return undefined;
-        }
-        else{
-            return tasks[0];
-        }
-    }
-
     const getTaskIndex = (task: Task | undefined):number => {
         return task === undefined ? -1 : tasks.findIndex(t => t._id === task._id);
     }
 
     const taskIndex = getTaskIndex(currentTask);
     
-    useEffect(() => {
-        if(currentTask === undefined){
-            const firstTask = getFirstTask();
-            if(firstTask !== undefined){
-                changeCurrentTask(firstTask);
-            }
-        }
-    }, [tasks]);
 
     if (equipment === undefined || currentTask === undefined){
         return <Card className={classNames}/>;

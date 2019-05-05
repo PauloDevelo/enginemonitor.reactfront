@@ -28,7 +28,7 @@ const messages: Messages = defineMessages(jsonMessages);
 
 import './EquipmentHistoryTable.css';
 
-import { Equipment, Task, Entry, AgeAcquisitionType } from '../../types/Types';
+import { Equipment, Entry, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
     equipment: Equipment | undefined,

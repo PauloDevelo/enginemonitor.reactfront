@@ -92,8 +92,7 @@ describe("CardTaskDetails", () => {
 
         // Assert
         expect(wrapper).toMatchSnapshot();
-        expect(changeCurrentTaskMock).toHaveBeenCalledTimes(1);
-        expect(changeCurrentTaskMock.mock.calls[0][0]).toBe(task1);
+        expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
     });
 
     it("Should render the task 1 details", () => {
