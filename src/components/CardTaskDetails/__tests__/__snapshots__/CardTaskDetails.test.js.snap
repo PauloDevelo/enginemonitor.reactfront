@@ -167,7 +167,7 @@ exports[`CardTaskDetails should stay the same with task1 1`] = `
     className="pl-5 pr-5 card-footer"
   >
     <button
-      aria-label={null}
+      aria-label="Edit"
       className="float-left btn btn-light"
       onClick={[Function]}
       type="button"
@@ -279,7 +279,7 @@ exports[`CardTaskDetails should stay the same with task2 1`] = `
     className="pl-5 pr-5 card-footer"
   >
     <button
-      aria-label={null}
+      aria-label="Edit"
       className="float-left btn btn-light"
       onClick={[Function]}
       type="button"
