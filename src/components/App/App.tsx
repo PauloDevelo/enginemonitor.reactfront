@@ -111,7 +111,8 @@ export default function App(){
 			if(currentTaskId){
 				newCurrentTask = taskList.find(t => t._id === currentTaskId);
 			}
-			else{
+
+			if(newCurrentTask === undefined){
 				newCurrentTask = taskList[0];
 			}
 
