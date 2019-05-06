@@ -51,6 +51,7 @@ export class EquipmentMonitorServiceProxy{
             this.config = { headers: { Authorization: 'Token ' + data.user.token }};
             if(authInfo.remember){
                 localStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify(this.config));
+                localStorage.setItem('currentUser', JSON.stringify(data.user));
             }
 
             return data.user as User;
@@ -61,10 +62,16 @@ export class EquipmentMonitorServiceProxy{
 
     logout = (): void => {
         localStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify({}));
+        localStorage.setItem('currentUser', JSON.stringify({}));
         this.config = undefined;
     }
 
     fetchCurrentUser = async():Promise<User | undefined> => {
+        const user = localStorage.getItem('currentUser');
+        if(user != null){
+            return JSON.parse(user);
+        }
+
         if(this.config){
             const {user} = await this.get(this.baseUrl + "users/current");
             return user;
