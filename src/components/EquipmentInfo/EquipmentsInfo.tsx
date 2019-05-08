@@ -1,4 +1,5 @@
 import React, {Fragment, useState, useEffect, useCallback} from 'react';
+import {useUID} from 'react-uid';
 import { Button, Nav, TabContent } from 'reactstrap';
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -104,11 +105,13 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 		return <EquipmentInfoNavItem key={equipment._id} equipment={equipment} active={isCurrentEquipment(equipment)} setCurrentEquipment={setCurrentEquipment}/>;
 	});
 
+	const uuid = useUID();
+
 	return (
 		<Fragment>
 			<div className={extraClassNames}>
 				<span className="small mb-3">
-					<Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEquipment())} aria-label="Add">
+					<Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEquipment(uuid))} aria-label="Add">
 						<FontAwesomeIcon icon={faPlusSquare} />
 					</Button>
 				</span>

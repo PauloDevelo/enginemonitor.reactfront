@@ -3,7 +3,6 @@ import Entity from './Entity';
 import User from './User';
 import Entry from './Entry';
 import { EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType } from './Types';
-import {useUID} from 'react-uid';
 
 export default class Equipment extends Entity<EquipmentModel> { 
 
@@ -44,7 +43,7 @@ export default class Equipment extends Entity<EquipmentModel> {
         this.orphanEntries = this.orphanEntries.filter(orphanEntry => orphanEntry.getModel()._id !== entry._id);
     }
 
-    createDefaultOrphanEntry(): EntryModel{
+    createDefaultOrphanEntry(uuid: string): EntryModel{
         let defaultAge = -1;
         if(this.getModel().ageAcquisitionType !== AgeAcquisitionType.time){
             defaultAge = this.getModel().age;
@@ -52,7 +51,7 @@ export default class Equipment extends Entity<EquipmentModel> {
     
         return {
             _id: undefined,
-            _uiId: useUID(),
+            _uiId: uuid,
             name: "",
             date: new Date(),
             age: defaultAge,
@@ -61,10 +60,10 @@ export default class Equipment extends Entity<EquipmentModel> {
         }
     }
 
-    createDefaultTask(): TaskModel{
+    createDefaultTask(uuid: string): TaskModel{
         return {
             _id: undefined,
-            _uiId: useUID(),
+            _uiId: uuid,
             name: '',
             usagePeriodInHour: this.getModel().ageAcquisitionType !== AgeAcquisitionType.time ? 100 : -1,
             periodInMonth: 12,

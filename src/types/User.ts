@@ -1,6 +1,5 @@
 import Entity from './Entity';
 import Equipment from './Equipment';
-import {useUID} from 'react-uid';
 
 import { EquipmentModel, UserModel, AgeAcquisitionType } from './Types';
 
@@ -32,10 +31,10 @@ export default class User extends Entity<UserModel> {
         });
     }
 
-    createDefaultEquipment(): EquipmentModel{
+    createDefaultEquipment(uuid: string): EquipmentModel{
         return {
             _id: undefined,
-            _uiId: useUID(),
+            _uiId: uuid,
             name: "",
             brand: "",
             model: "",

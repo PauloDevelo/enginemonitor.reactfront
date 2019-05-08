@@ -14,6 +14,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
 import Loading from '../Loading/Loading';
 
+import { useUID } from 'react-uid';
+
 import { getContext, getTodoText, shorten, getTodoValue, TaskTodo, createDefaultTask, getBadgeText } from '../../helpers/TaskHelper'; 
 import { useEditModal } from '../../hooks/EditModalHook';
 
@@ -130,11 +132,13 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 		}
 	];
 
+	const uuid = useUID();
+
 	return (
 		<Fragment>
 			<div className={classNames}>
 				<span><FontAwesomeIcon icon={faTasks} />{' '}<b><FormattedMessage {...taskTableMsg.tasklistTitle} /></b>
-					{equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultTask(equipment)) } aria-label="Add"><FontAwesomeIcon icon={faPlusSquare} /></Button>}
+					{equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultTask(equipment, uuid)) } aria-label="Add"><FontAwesomeIcon icon={faPlusSquare} /></Button>}
 				</span>
 				{areTasksLoading ? <Loading/> :
 				<Table

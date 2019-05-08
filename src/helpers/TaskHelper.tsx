@@ -5,12 +5,11 @@ import jsonMessages from "../components/TaskTable/TaskTable.messages.json";
 const tasktablemsg: Messages = defineMessages(jsonMessages);
 
 import { TaskModel, EquipmentModel, AgeAcquisitionType } from '../types/Types';
-import { useUID } from 'react-uid';
 
-export function createDefaultTask(equipment: EquipmentModel): TaskModel{
+export function createDefaultTask(equipment: EquipmentModel, uuid: string): TaskModel{
 	return {
         _id: undefined,
-        _uiId: useUID(),
+        _uiId: uuid,
 		name: '',
 		usagePeriodInHour: equipment.ageAcquisitionType !== AgeAcquisitionType.time ? 100 : -1,
 		periodInMonth: 12,

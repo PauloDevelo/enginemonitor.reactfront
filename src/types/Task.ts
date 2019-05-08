@@ -2,7 +2,6 @@ import Equipment from './Equipment'
 import Entry from './Entry'
 import { TaskModel, EntryModel, AgeAcquisitionType } from './Types';
 import Entity from './Entity';
-import {useUID} from 'react-uid';
 
 export type TaskTodo = {
     dueDate: Date,
@@ -44,7 +43,7 @@ export default class Task extends Entity<TaskModel> {
         });
     }
 
-    createDefaultEntry(): EntryModel{
+    createDefaultEntry(uuid: string): EntryModel{
         let defaultAge = -1;
         
         if(this.parent.getModel().ageAcquisitionType !== AgeAcquisitionType.time){
@@ -52,7 +51,7 @@ export default class Task extends Entity<TaskModel> {
         }
     
         return {
-            _uiId: useUID(),
+            _uiId: uuid,
             _id: undefined,
             name: this.getModel().name,
             date: new Date(),

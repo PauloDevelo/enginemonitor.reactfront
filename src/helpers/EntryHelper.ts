@@ -1,15 +1,15 @@
 import {EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType} from '../types/Types'
-import {useUID} from 'react-uid';
 
-export function createDefaultEntry(equipment?:EquipmentModel, task?: TaskModel): EntryModel{
+
+export function createDefaultEntry(equipment:EquipmentModel, task: TaskModel | undefined, uuid: string): EntryModel{
 	let defaultAge = -1;
-	if(equipment && equipment.ageAcquisitionType !== AgeAcquisitionType.time){
+	if(equipment.ageAcquisitionType !== AgeAcquisitionType.time){
 		defaultAge = equipment.age;
 	}
 
 	return {
 		_id: undefined,
-		_uiId: useUID(),
+		_uiId: uuid,
 		name: task?task.name:"",
 		date: new Date(),
 		age: defaultAge,

@@ -1,10 +1,9 @@
 import { EquipmentModel, AgeAcquisitionType } from "../types/Types";
-import {useUID} from 'react-uid';
 
-export function createDefaultEquipment(): EquipmentModel{
+export function createDefaultEquipment(uuid: string): EquipmentModel{
 	return {
 		_id: undefined,
-		_uiId: useUID(),
+		_uiId: uuid,
 		name: "",
 		brand: "",
 		model: "",

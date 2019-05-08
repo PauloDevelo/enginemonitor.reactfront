@@ -10,6 +10,8 @@ import { defineMessages, Messages, FormattedMessage, FormattedDate } from 'react
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
 
+import { useUID } from 'react-uid';
+
 import { faPlusSquare, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -185,13 +187,15 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
             style: {width:"45%"},
 			sortable: false
 		}
-	];
+    ];
+    
+    const uuid = useUID();
     
     return(
         <div className={classNames}>
             <span className="mb-2">
                 <b><FormattedMessage {...messages.equipmentHistoryTitle} /></b>
-                {equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEntry(equipment))} aria-label="Add">
+                {equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEntry(equipment, undefined, uuid))} aria-label="Add">
                     <FontAwesomeIcon icon={faPlusSquare} />
                 </Button>}
             </span>
