@@ -1,8 +1,10 @@
-import { Equipment, AgeAcquisitionType } from "../types/Types";
+import { EquipmentModel, AgeAcquisitionType } from "../types/Types";
+import {useUID} from 'react-uid';
 
-export function createDefaultEquipment(): Equipment{
+export function createDefaultEquipment(): EquipmentModel{
 	return {
 		_id: undefined,
+		_uiId: useUID(),
 		name: "",
 		brand: "",
 		model: "",
@@ -13,7 +15,7 @@ export function createDefaultEquipment(): Equipment{
 	}
 }
 
-export function updateEquipment(equipment: Equipment): Equipment{
+export function updateEquipment(equipment: EquipmentModel): EquipmentModel{
     equipment.installation = new Date(equipment.installation);
     return equipment;
 }

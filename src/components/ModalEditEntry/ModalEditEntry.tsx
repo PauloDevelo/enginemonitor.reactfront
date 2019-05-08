@@ -19,20 +19,20 @@ import MyInput from "../Form/MyInput";
 import Alerts from "../Alerts/Alerts";
 import ActionButton from "../ActionButton/ActionButton";
 
-import { Equipment, Task, Entry, AgeAcquisitionType } from '../../types/Types';
+import { EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
-	equipment: Equipment, 
-	task?: Task, 
-	entry: Entry, 
+	equipment: EquipmentModel, 
+	task?: TaskModel, 
+	entry: EntryModel, 
 	visible: boolean, 
 	className?: string, 
-	saveEntry: (entry: Entry) => void, 
-	deleteEntry?: (entry: Entry) => void, 
+	saveEntry: (entry: EntryModel) => void, 
+	deleteEntry?: (entry: EntryModel) => void, 
 	toggle: ()=>void
 }
 
-const ModalTitle = ({entry}:{entry: Entry}) => {
+const ModalTitle = ({entry}:{entry: EntryModel}) => {
 	if (entry._id === undefined){
 		return <FormattedMessage {...editEntryMsg.modalAckTitle} />;
 	}
@@ -46,7 +46,7 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 	const taskId = task === undefined ? undefined : task._id;
 	const entryId = entry === undefined ? undefined : entry._id;
 
-	const modalLogic = useEditModalLogic<Entry>(toggle, EquipmentMonitorService.createOrSaveEntry, [equipmentId, taskId], undefined, saveEntry, 
+	const modalLogic = useEditModalLogic<EntryModel>(toggle, EquipmentMonitorService.createOrSaveEntry, [equipmentId, taskId], undefined, saveEntry, 
 												 EquipmentMonitorService.deleteEntry, [equipmentId, taskId, entryId], deleteEntry);
 
 	return (

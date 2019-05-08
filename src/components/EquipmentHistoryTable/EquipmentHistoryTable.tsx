@@ -28,10 +28,10 @@ const messages: Messages = defineMessages(jsonMessages);
 
 import './EquipmentHistoryTable.css';
 
-import { Equipment, Entry, AgeAcquisitionType } from '../../types/Types';
+import { EquipmentModel, EntryModel, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
-    equipment: Equipment | undefined,
+    equipment: EquipmentModel | undefined,
     onTaskChanged: React.MutableRefObject<(taskId: string) => void>,
     equipmentHistoryRefreshId: number,
     classNames?: string
@@ -53,9 +53,9 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
     classNames = classNames ? classNames + ' historytasktable' : 'historytasktable';
     const equipmentId = equipment ? equipment._id : undefined;
     
-    const modalHook = useEditModal<Entry | undefined>(undefined);
+    const modalHook = useEditModal<EntryModel | undefined>(undefined);
 
-    const [entries, setEntries] = useState<Entry[]>([]);
+    const [entries, setEntries] = useState<EntryModel[]>([]);
     const [fetchingState, setFetchingState] = useState(FetchState.StandBy);
 
     useEffect(() => {
@@ -66,7 +66,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
         setFetchingState(FetchState.Fetching);
 
         try {
-            let newEntries:Entry[] = [];
+            let newEntries:EntryModel[] = [];
             if(equipmentId){
                 newEntries = await EquipmentMonitorService.fetchAllEntries(equipmentId);
             }
@@ -79,7 +79,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
         }
     };
 
-    const onSavedEntry = (savedEntry: Entry) => {
+    const onSavedEntry = (savedEntry: EntryModel) => {
         const newCurrentHistory = entries.filter(entry => entry._id !== savedEntry._id);
         newCurrentHistory.unshift(savedEntry);
         newCurrentHistory.sort((entryA, entryB) => entryA.date.getTime() - entryB.date.getTime());
@@ -91,7 +91,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
         }
 	}
 	
-	const onDeleteEntry = async(entry: Entry) => {  
+	const onDeleteEntry = async(entry: EntryModel) => {  
         var newCurrentHistoryTask = entries.slice(0).filter(e => e._id !== entry._id);
         setEntries(newCurrentHistoryTask);
 
@@ -100,7 +100,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
         }
     }
 
-    const innerEntryCell = (entry:Entry, content: JSX.Element, classNames?: string) => {
+    const innerEntryCell = (entry:EntryModel, content: JSX.Element, classNames?: string) => {
         classNames = classNames === undefined ? '' : classNames;
 		classNames += ' table-' + (entry.taskId === undefined ? "warning" : "white" );
 		return (
@@ -147,7 +147,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
 				</div>
 			),
 			cell: (content: any) => {
-                const entry:Entry = content.data;
+                const entry:EntryModel = content.data;
                 const equ = equipment;
 
                 if (equ === undefined || equ.ageAcquisitionType !== AgeAcquisitionType.time){
@@ -176,7 +176,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
 				</div>
 			),
 			cell: (content: any) => {
-                const entry:Entry = content.data;
+                const entry:EntryModel = content.data;
                 var remarks = entry.remarks.replace(/\n/g, '<br />');
                 var shortenRemarks = shorten(remarks);
 

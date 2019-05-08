@@ -4,11 +4,13 @@ import { FormattedMessage, FormattedDate, Messages, defineMessages } from 'react
 import jsonMessages from "../components/TaskTable/TaskTable.messages.json";
 const tasktablemsg: Messages = defineMessages(jsonMessages);
 
-import { Task, Equipment, AgeAcquisitionType } from '../types/Types';
+import { TaskModel, EquipmentModel, AgeAcquisitionType } from '../types/Types';
+import { useUID } from 'react-uid';
 
-export function createDefaultTask(equipment: Equipment): Task{
+export function createDefaultTask(equipment: EquipmentModel): TaskModel{
 	return {
         _id: undefined,
+        _uiId: useUID(),
 		name: '',
 		usagePeriodInHour: equipment.ageAcquisitionType !== AgeAcquisitionType.time ? 100 : -1,
 		periodInMonth: 12,
@@ -90,7 +92,7 @@ export function getTodoText(todo: TaskTodo): JSX.Element{
     return todoText;
 }
 
-export function getTodoValue(equipment: Equipment, task: Task): TaskTodo{
+export function getTodoValue(equipment: EquipmentModel, task: TaskModel): TaskTodo{
     return {
         dueDate: new Date(task.nextDueDate),
         onlyDate: equipment.ageAcquisitionType === AgeAcquisitionType.time || task.usageInHourLeft === undefined || task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0,
@@ -99,7 +101,7 @@ export function getTodoValue(equipment: Equipment, task: Task): TaskTodo{
     }
 }
 
-export function getScheduleText(equipment: Equipment, task: Task){
+export function getScheduleText(equipment: EquipmentModel, task: TaskModel){
     var title = undefined;
     var month = task.periodInMonth;
     var pluralisedMonthPeriod = <FormattedMessage {... tasktablemsg.monthperiod} values={{month}}/>
@@ -135,7 +137,7 @@ export function shorten(longStr: string): string{
 	return shortenStr;
 }
 
-export function updateTask(task: Task): Task {
+export function updateTask(task: TaskModel): TaskModel {
     task.usagePeriodInHour = task.usagePeriodInHour === -1 ? undefined : task.usagePeriodInHour
     task.nextDueDate = new Date(task.nextDueDate);
     return task;

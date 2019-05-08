@@ -28,13 +28,13 @@ const messages: Messages = defineMessages(jsonMessages);
 
 import './HistoryTaskTable.css';
 
-import { Equipment, Task, Entry, AgeAcquisitionType } from '../../types/Types';
+import { EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
-    equipment: Equipment | undefined,
-    task: Task | undefined, 
+    equipment: EquipmentModel | undefined,
+    task: TaskModel | undefined, 
     taskHistoryRefreshId: number,
-    onHistoryChanged: (newEntries: Entry[])=>void,
+    onHistoryChanged: (newEntries: EntryModel[])=>void,
     classNames: string
 }
 
@@ -54,9 +54,9 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
     const equipmentId = equipment ? equipment._id : undefined;
     const taskId = task ? task._id : undefined;
 
-    const modalHook = useEditModal<Entry | undefined>(undefined);
+    const modalHook = useEditModal<EntryModel | undefined>(undefined);
 
-    const [entries, setEntries] = useState<Entry[]>([]);
+    const [entries, setEntries] = useState<EntryModel[]>([]);
     const [fetchingState, setFetchingState] = useState(FetchState.StandBy);
 
     useEffect(() => {
@@ -67,7 +67,7 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
         setFetchingState(FetchState.Fetching);
 
         try {
-            let newEntries:Entry[] = [];
+            let newEntries:EntryModel[] = [];
             if(equipmentId && taskId){
                 newEntries = await EquipmentMonitorService.fetchEntries(equipmentId, taskId);
             }
@@ -80,14 +80,14 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
         }
     };
 
-    const changeEntries = (newEntries: Entry[]) => {
+    const changeEntries = (newEntries: EntryModel[]) => {
       setEntries(newEntries);
       if(onHistoryChanged){
         onHistoryChanged(newEntries);
       }
     };
 
-    const onSavedEntry = (savedEntry: Entry) => {
+    const onSavedEntry = (savedEntry: EntryModel) => {
         const newCurrentHistoryTask = entries.filter(entry => entry._id !== savedEntry._id);
         newCurrentHistoryTask.unshift(savedEntry);
         newCurrentHistoryTask.sort((entryA, entryB) => entryA.date.getTime() - entryB.date.getTime());
@@ -95,12 +95,12 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
         changeEntries(newCurrentHistoryTask);
 	}
 	
-	const onDeleteEntry = async(entry: Entry) => {  
+	const onDeleteEntry = async(entry: EntryModel) => {  
         var newCurrentHistoryTask = entries.slice(0).filter(e => e._id !== entry._id);
         changeEntries(newCurrentHistoryTask);
     }
 
-    const innerEntryCell = (entry:Entry, content: JSX.Element, classNames?: string) => {
+    const innerEntryCell = (entry:EntryModel, content: JSX.Element, classNames?: string) => {
 		classNames = classNames === undefined ? '' : classNames;
 		return (
 			<div onClick={() => modalHook.displayData(entry)} className={classNames + ' innerTd clickable'} >
@@ -132,8 +132,8 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
 				</div>
 			),
 			cell: (content: any) => {
-                const entry:Entry = content.data;
-                const equ = equipment as Equipment;
+                const entry:EntryModel = content.data;
+                const equ = equipment as EquipmentModel;
 
                 if (equ.ageAcquisitionType !== AgeAcquisitionType.time){
                     return innerEntryCell(entry, <Fragment>{entry.age === -1?"":entry.age + 'h'}</Fragment>);
@@ -161,7 +161,7 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
 				</div>
 			),
 			cell: (content: any) => {
-                const entry:Entry = content.data;
+                const entry:EntryModel = content.data;
                 var remarks = entry.remarks.replace(/\n/g, '<br />');
                 var shortenRemarks = shorten(remarks);
 

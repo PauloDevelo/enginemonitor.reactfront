@@ -20,20 +20,20 @@ import Alerts from "../Alerts/Alerts"
 import ActionButton from '../ActionButton/ActionButton';
 
 import '../../style/transition.css';
-import { Equipment, Task, AgeAcquisitionType } from '../../types/Types';
+import { EquipmentModel, TaskModel, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
-	equipment: Equipment, 
-	task: Task, 
-	onTaskSaved: (task: Task) => void, 
+	equipment: EquipmentModel, 
+	task: TaskModel, 
+	onTaskSaved: (task: TaskModel) => void, 
 	toggle: () => void, 
-	onTaskDeleted?: (task: Task)=> void, 
+	onTaskDeleted?: (task: TaskModel)=> void, 
 	visible: boolean, 
 	className?: string 
 }
 
 const ModalEditTask = ({equipment, task, onTaskSaved, toggle, onTaskDeleted, visible, className}: Props) => {
-	const onSaveTask = (task: Task): void => {
+	const onSaveTask = (task: TaskModel): void => {
 		task.usagePeriodInHour = task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0 ? -1 : task.usagePeriodInHour;
 	}
 

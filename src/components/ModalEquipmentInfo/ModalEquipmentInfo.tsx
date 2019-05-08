@@ -21,12 +21,12 @@ import Alerts from "../Alerts/Alerts";
 import ActionButton from '../ActionButton/ActionButton';
 
 import '../../style/transition.css';
-import { Equipment, AgeAcquisitionType } from '../../types/Types';
+import { EquipmentModel, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
-	equipment: Equipment,
-	onEquipmentInfoSaved: (equipment: Equipment) => void,
-	onEquipmentDeleted: (equipment: Equipment) => void,
+	equipment: EquipmentModel,
+	onEquipmentInfoSaved: (equipment: EquipmentModel) => void,
+	onEquipmentDeleted: (equipment: EquipmentModel) => void,
 	visible: boolean,
 	toggle: () => void,
 	className: string

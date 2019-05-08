@@ -2,12 +2,12 @@ import React, { useCallback } from 'react';
 import { NavItem, NavLink } from 'reactstrap';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Equipment } from '../../types/Types';
+import { EquipmentModel } from '../../types/Types';
 
 type Props = {
-    equipment: Equipment,
+    equipment: EquipmentModel,
     active: boolean, 
-    setCurrentEquipment?: (equipment: Equipment) => void
+    setCurrentEquipment?: (equipment: EquipmentModel) => void
 };
 
 function EquipmentInfoNavItem({equipment, active, setCurrentEquipment}: Props){

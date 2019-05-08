@@ -6,7 +6,7 @@ import EquipmentHistoryTable from '../EquipmentHistoryTable/EquipmentHistoryTabl
 import MyNavItem from './MyNavItem';
 import { defineMessages, Messages } from 'react-intl';
 
-import { Equipment, Task } from '../../types/Types';
+import { EquipmentModel, TaskModel } from '../../types/Types';
 
 import classnames from 'classnames';
 
@@ -15,12 +15,12 @@ const taskTabPanesMsg: Messages = defineMessages(jsonMessages);
 
 type Props = {
     classNames: string,
-    currentEquipment: Equipment | undefined,
-    taskList: Task[],
+    currentEquipment: EquipmentModel | undefined,
+    taskList: TaskModel[],
     areTasksLoading: boolean,
-    changeCurrentTask: (task: Task) => void,
+    changeCurrentTask: (task: TaskModel) => void,
     equipmentHistoryRefreshId: number,
-    onTaskChangedRef: React.MutableRefObject<(task: Task) => void>
+    onTaskChangedRef: React.MutableRefObject<(task: TaskModel) => void>
 };
 
 const TaskTabPanes = ({ classNames, currentEquipment, taskList, areTasksLoading, changeCurrentTask, equipmentHistoryRefreshId, onTaskChangedRef }: Props) => {

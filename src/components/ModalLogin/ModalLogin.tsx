@@ -21,12 +21,12 @@ import HttpError from '../../http/HttpError'
 
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
-import { AuthInfo, User } from '../../types/Types'
+import { AuthInfo, UserModel } from '../../types/Types'
 
 import '../../style/transition.css';
 
 type Props = {
-	onLoggedIn: (user:User) => void, 
+	onLoggedIn: (user:UserModel) => void, 
 	visible: boolean, 
 	className: string, 
 	toggleModalSignup: () => void

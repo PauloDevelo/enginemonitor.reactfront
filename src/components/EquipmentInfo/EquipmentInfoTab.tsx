@@ -8,11 +8,11 @@ import PropTypes from 'prop-types';
 import jsonMessages from "./EquipmentInfo.messages.json";
 const equipmentInfoMsg: Messages = defineMessages(jsonMessages);
 
-import { Equipment, AgeAcquisitionType } from '../../types/Types';
+import { EquipmentModel, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
-    equipment: Equipment,
-    displayEquipment?: (equipment: Equipment) => void
+    equipment: EquipmentModel,
+    displayEquipment?: (equipment: EquipmentModel) => void
 }
 
 function EquipmentInfoTab({equipment, displayEquipment}: Props){

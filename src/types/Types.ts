@@ -4,9 +4,13 @@ export enum AgeAcquisitionType{
     tracker=2
 }
 
-export type Equipment = {
+export interface EntityModel{
     _id: string | undefined,
-    name: string,
+    _uiId:string,
+    name: string
+}
+
+export interface EquipmentModel extends EntityModel {
     brand: string,
     model: string,
     age: number,
@@ -15,9 +19,7 @@ export type Equipment = {
     ageUrl: string
 }
 
-export type Task = {
-    _id: string | undefined,
-    name: string,
+export interface TaskModel extends EntityModel {
     periodInMonth: number,
     description: string,
     nextDueDate: Date,
@@ -26,19 +28,16 @@ export type Task = {
     level: number
 }
 
-export type Entry = {
-    _id: string | undefined,
-    name: string,
+export interface EntryModel extends EntityModel {
     date: Date,
     age: number,
     remarks: string,
     taskId: string | undefined
 }
 
-export type User = {
+export interface UserModel extends EntityModel {
     email: string,
     password: string,
-    name: string,
     firstname: string
 }
 

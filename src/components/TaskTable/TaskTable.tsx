@@ -21,22 +21,22 @@ import jsonMessages from "./TaskTable.messages.json";
 const taskTableMsg: Messages = defineMessages(jsonMessages);
 
 import PropTypes from 'prop-types';
-import { Equipment, Task } from '../../types/Types';
+import { EquipmentModel, TaskModel } from '../../types/Types';
 
 import '../../style/Table.scss';
 import './TaskTable.css';
 
 type Props = {
-	equipment?: Equipment, 
-	tasks: Task[], 
+	equipment?: EquipmentModel, 
+	tasks: TaskModel[], 
 	areTasksLoading: boolean, 
-	onTaskSaved: React.MutableRefObject<(task: Task) => void>, 
-	changeCurrentTask: (task: Task) => void, 
+	onTaskSaved: React.MutableRefObject<(task: TaskModel) => void>, 
+	changeCurrentTask: (task: TaskModel) => void, 
 	classNames?: string
 };
 
 type DisplayableTask = {
-	task: Task,
+	task: TaskModel,
     name: string,
     todo: TaskTodo,
     shortenDescription: string,
@@ -52,7 +52,7 @@ const Table = composeDecorators(
 
 export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, changeCurrentTask, classNames}: Props) => {
 	classNames = classNames === undefined ? 'tasktable' : classNames + ' tasktable';
-	const modalHook = useEditModal<Task | undefined>(undefined);
+	const modalHook = useEditModal<TaskModel | undefined>(undefined);
 	
 	let tasksData:DisplayableTask[] = [];
 	if(tasks && equipment){

@@ -11,12 +11,12 @@ import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy
 import jsonMessages from "./NavBar.messages.json";
 const navBarMsg: Messages = defineMessages(jsonMessages);
 
-import { User } from "../../types/Types";
+import { UserModel } from "../../types/Types";
 
 import './NavBar.css';
 
 type Props = {
-    user?: User, 
+    user?: UserModel, 
     onLoggedOut: ()=>void, 
     isOpened: boolean, 
     toggle: ()=>void

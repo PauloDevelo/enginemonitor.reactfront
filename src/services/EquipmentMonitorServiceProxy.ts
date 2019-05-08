@@ -4,7 +4,7 @@ import HttpError from '../http/HttpError'
 import { updateEquipment } from '../helpers/EquipmentHelper'
 import { updateTask } from '../helpers/TaskHelper'
 import { updateEntry } from '../helpers/EntryHelper'
-import {User, Equipment, Task, Entry, AuthInfo} from '../types/Types'
+import {UserModel, EquipmentModel, TaskModel, EntryModel, AuthInfo} from '../types/Types'
 
 type Config = {
     headers: {
@@ -30,7 +30,7 @@ export class EquipmentMonitorServiceProxy{
     }
 
     /////////////////////User/////////////////////////
-    signup = async (newUser: User): Promise<void> => {
+    signup = async (newUser: UserModel): Promise<void> => {
         await this.post(this.baseUrl + "users/", { user: newUser });
     }
 
@@ -42,7 +42,7 @@ export class EquipmentMonitorServiceProxy{
         await this.post(this.baseUrl + "users/resetpassword", { email: email, newPassword: password });
     }
 
-    authenticate = async (authInfo: AuthInfo):Promise<User> => {
+    authenticate = async (authInfo: AuthInfo):Promise<UserModel> => {
         this.logout();
 
         const data = await this.post(this.baseUrl + "users/login", { user: authInfo });
@@ -54,19 +54,19 @@ export class EquipmentMonitorServiceProxy{
                 localStorage.setItem('currentUser', JSON.stringify(data.user));
             }
 
-            return data.user as User;
+            return data.user as UserModel;
         }
         
         throw new HttpError( { loginerror: "loginfailed"} );
     }
 
     logout = (): void => {
-        localStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify({}));
-        localStorage.setItem('currentUser', JSON.stringify({}));
+        localStorage.removeItem('EquipmentMonitorServiceProxy.config');
+        localStorage.removeItem('currentUser');
         this.config = undefined;
     }
 
-    fetchCurrentUser = async():Promise<User | undefined> => {
+    fetchCurrentUser = async():Promise<UserModel | undefined> => {
         const user = localStorage.getItem('currentUser');
         if(user != null){
             return JSON.parse(user);
@@ -82,12 +82,12 @@ export class EquipmentMonitorServiceProxy{
     }
 
     ////////////////Equipment////////////////////////
-    fetchEquipments = async(): Promise<Equipment[]> => {
+    fetchEquipments = async(): Promise<EquipmentModel[]> => {
         const {equipments} = await this.get(this.baseUrl + "equipments");
-        return (equipments as Equipment[]).map(updateEquipment);
+        return (equipments as EquipmentModel[]).map(updateEquipment);
     }
     
-    createOrSaveEquipment = async(equipmentToSave: Equipment):Promise<Equipment> => {
+    createOrSaveEquipment = async(equipmentToSave: EquipmentModel):Promise<EquipmentModel> => {
         if(equipmentToSave._id){
             const { equipment } = await this.post(this.baseUrl + "equipments/" + equipmentToSave._id, { equipment: equipmentToSave });
             return updateEquipment(equipment);
@@ -109,7 +109,7 @@ export class EquipmentMonitorServiceProxy{
     }
 
     /////////////////Task////////////////////////////
-    createOrSaveTask = async (equipmentId: string, newTask: Task) =>{
+    createOrSaveTask = async (equipmentId: string, newTask: TaskModel) =>{
         if(newTask._id === undefined){
             const {task} = await this.post(this.baseUrl + "tasks/" + equipmentId, { task: newTask });
             return updateTask(task);
@@ -125,14 +125,14 @@ export class EquipmentMonitorServiceProxy{
         return updateTask(task);
     }
 
-    fetchTasks = async(equipmentId: string): Promise<Task[]> => {
+    fetchTasks = async(equipmentId: string): Promise<TaskModel[]> => {
         const { tasks } = await this.get(this.baseUrl + "tasks/" + equipmentId);
-        return (tasks as Task[]).map(updateTask);
+        return (tasks as TaskModel[]).map(updateTask);
     }
 
     ///////////////////////////Entry////////////////////////
 
-    createOrSaveEntry = async (equipmentId: string, taskId: string | undefined, newEntry: Entry) => {
+    createOrSaveEntry = async (equipmentId: string, taskId: string | undefined, newEntry: EntryModel) => {
         taskId = taskId === undefined ? '-' : taskId;
 
         if(newEntry._id === undefined){
@@ -145,7 +145,7 @@ export class EquipmentMonitorServiceProxy{
         }
     }
 
-    deleteEntry = async(equipmentId: string, taskId: string, entryId: string): Promise<Entry> => {
+    deleteEntry = async(equipmentId: string, taskId: string, entryId: string): Promise<EntryModel> => {
         taskId = taskId === undefined ? '-' : taskId;
 
         const {entry} = await this.delete(this.baseUrl + "entries/" + equipmentId + '/' + taskId + '/' + entryId);
@@ -157,7 +157,7 @@ export class EquipmentMonitorServiceProxy{
             return [];
 
         const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId + '/' + taskId);
-        return (entries as Entry[]).map(updateEntry);
+        return (entries as EntryModel[]).map(updateEntry);
     }
 
     fetchAllEntries = async(equipmentId: string) => {
@@ -165,7 +165,7 @@ export class EquipmentMonitorServiceProxy{
             return [];
 
         const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId);
-        return (entries as Entry[]).map(updateEntry);
+        return (entries as EntryModel[]).map(updateEntry);
     }
 
     async post(url: string, data: any){

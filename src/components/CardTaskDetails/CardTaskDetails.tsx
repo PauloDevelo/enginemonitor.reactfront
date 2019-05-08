@@ -13,22 +13,22 @@ import ModalEditTask from '../ModalEditTask/ModalEditTask';
 
 import './CardTaskDetails.css';
 import '../../style/transition.css';
-import { Equipment, Task } from '../../types/Types';
+import { EquipmentModel, TaskModel } from '../../types/Types';
 
 type Props = {
-    equipment?: Equipment, 
-    tasks: Task[], 
-    currentTask?: Task, 
-    onTaskChanged: React.MutableRefObject<(task: Task) => void>, 
-    onTaskDeleted: (task: Task) => void, 
-    changeCurrentTask: (task: Task | undefined) => void, 
+    equipment?: EquipmentModel, 
+    tasks: TaskModel[], 
+    currentTask?: TaskModel, 
+    onTaskChanged: React.MutableRefObject<(task: TaskModel) => void>, 
+    onTaskDeleted: (task: TaskModel) => void, 
+    changeCurrentTask: (task: TaskModel | undefined) => void, 
     classNames?: string
 }
 
 const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames}: Props) => {
     const modalHook = useEditModal(currentTask);
 
-    const getTaskIndex = (task: Task | undefined):number => {
+    const getTaskIndex = (task: TaskModel | undefined):number => {
         return task === undefined ? -1 : tasks.findIndex(t => t._id === task._id);
     }
 

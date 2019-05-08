@@ -14,10 +14,10 @@ import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy
 import '../../style/transition.css';
 import './App.css'
 
-import { User, Equipment, Task } from '../../types/Types';
+import { UserModel, EquipmentModel, TaskModel } from '../../types/Types';
 
 export default function App(){
-	const [user, setUser] = useState<User | undefined>(undefined);
+	const [user, setUser] = useState<UserModel | undefined>(undefined);
 
 	const refreshCurrentUser = async () => {
 		try{
@@ -33,9 +33,9 @@ export default function App(){
 		refreshCurrentUser();
 	}, []);
 
-	const [currentEquipment, setCurrentEquipment] = useState<Equipment | undefined>(undefined);
-	const [taskList, setTaskList] = useState<Task[]>([]);
-	const [currentTask, setCurrentTask] = useState<Task | undefined>(undefined);
+	const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
+	const [taskList, setTaskList] = useState<TaskModel[]>([]);
+	const [currentTask, setCurrentTask] = useState<TaskModel | undefined>(undefined);
 	const [areTasksLoading, setAreTasksLoading] = useState(false);
 	const [taskHistoryRefreshId, setTaskHistoryRefreshId] = useState(0);
 	const [equipmentHistoryRefreshId, setEquipmentHistoryRefreshId] = useState(0);
@@ -48,12 +48,12 @@ export default function App(){
 		setCurrentTaskIfRequired();
 	}, [taskList]);
 
-	const onTaskDeleted = useCallback((task: Task)=>{
+	const onTaskDeleted = useCallback((task: TaskModel)=>{
 		refreshTaskList();
 		setEquipmentHistoryRefreshId(equipmentHistoryRefreshId + 1);
 	}, [equipmentHistoryRefreshId, taskList, currentTask, currentEquipment]);
 
-	const onTaskChanged = (task: Task)=>{
+	const onTaskChanged = (task: TaskModel)=>{
 		refreshTaskList();
 
 		const currentTaskId = currentTask ? currentTask._id : undefined;
@@ -66,7 +66,7 @@ export default function App(){
 		onTaskChangedRef.current = onTaskChanged;
 	}, [currentEquipment, currentTask, taskHistoryRefreshId]);
 
-	const changeCurrentTask = useCallback((newCurrentTask: Task | undefined) => {
+	const changeCurrentTask = useCallback((newCurrentTask: TaskModel | undefined) => {
 		setCurrentTask(newCurrentTask);
 	}, []);
 

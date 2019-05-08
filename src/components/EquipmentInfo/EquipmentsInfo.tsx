@@ -15,19 +15,19 @@ import Loading from '../Loading/Loading';
 import { createDefaultEquipment } from '../../helpers/EquipmentHelper';
 
 import PropTypes from 'prop-types';
-import { User, Equipment } from '../../types/Types';
+import { UserModel, EquipmentModel } from '../../types/Types';
 
 type Props = {
-	user?: User, 
-	changeCurrentEquipment: (equipment: Equipment | undefined) => void, 
+	user?: UserModel, 
+	changeCurrentEquipment: (equipment: EquipmentModel | undefined) => void, 
 	extraClassNames: string
 }
 
 function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
-	const [currentEquipment, setCurrentEquipment] = useState<Equipment | undefined>(undefined);
-	const modalHook = useEditModal<Equipment | undefined>(undefined);
+	const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
+	const modalHook = useEditModal<EquipmentModel | undefined>(undefined);
 	
-	const isCurrentEquipment = (equipment: Equipment) => {
+	const isCurrentEquipment = (equipment: EquipmentModel) => {
 		if (currentEquipment === undefined || equipment === undefined){
 			return false;
 		}
@@ -40,7 +40,7 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 		changeCurrentEquipment(currentEquipment);
 	}, [currentEquipment]);
 
-	const [equipments, setEquipments] = useState<Equipment[]>([]);
+	const [equipments, setEquipments] = useState<EquipmentModel[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
 	const fetchEquipments = async () => {
@@ -62,11 +62,11 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 
     useEffect(() => {
         if (equipments.length > 0){
-			if(currentEquipment === undefined || equipments.findIndex((equipment: Equipment) => currentEquipment._id === equipment._id) === -1){
+			if(currentEquipment === undefined || equipments.findIndex((equipment: EquipmentModel) => currentEquipment._id === equipment._id) === -1){
 				setCurrentEquipment(equipments[0]);
 			}
 			else{
-				var newCurrentEquipmentIndex = equipments.findIndex((equipment: Equipment) => currentEquipment._id === equipment._id);
+				var newCurrentEquipmentIndex = equipments.findIndex((equipment: EquipmentModel) => currentEquipment._id === equipment._id);
 				setCurrentEquipment(equipments[newCurrentEquipmentIndex]);
 			}
         }
@@ -75,7 +75,7 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
         }
 	}, [equipments]);
 
-	const onEquipmentInfoSaved = useCallback(async (equipmentInfoSaved: Equipment) => {
+	const onEquipmentInfoSaved = useCallback(async (equipmentInfoSaved: EquipmentModel) => {
 		const newEquipmentList = equipments.concat([]);
 		const index = newEquipmentList.findIndex(equipmentInfo => equipmentInfo._id === equipmentInfoSaved._id);
 
@@ -89,7 +89,7 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 		setEquipments(newEquipmentList);
 	}, [equipments]);
 	
-	const onEquipmentDeleted = useCallback((deletedEquipment: Equipment) => {
+	const onEquipmentDeleted = useCallback((deletedEquipment: EquipmentModel) => {
 		const newEquipmentList = equipments.filter(equipmentInfo => equipmentInfo._id !== deletedEquipment._id);
 		setEquipments(newEquipmentList);
 			
