@@ -1,6 +1,9 @@
 import axios from "axios";
 import axiosRetry from 'axios-retry';
+import localforage from 'localforage';
+
 import HttpError from '../http/HttpError'
+
 import { updateEquipment } from '../helpers/EquipmentHelper'
 import { updateTask } from '../helpers/TaskHelper'
 import { updateEntry } from '../helpers/EntryHelper'
@@ -19,14 +22,6 @@ export class EquipmentMonitorServiceProxy{
 
     constructor(){
         axiosRetry(axios, { retries: 1, retryDelay: () => 1000 });
-
-        const config = localStorage.getItem('EquipmentMonitorServiceProxy.config');
-        if(config != null){
-            this.config = JSON.parse(config);
-        }
-        else{
-            this.config = undefined;
-        }
     }
 
     /////////////////////User/////////////////////////
@@ -50,8 +45,8 @@ export class EquipmentMonitorServiceProxy{
         if(data.user){
             this.config = { headers: { Authorization: 'Token ' + data.user.token }};
             if(authInfo.remember){
-                localStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify(this.config));
-                localStorage.setItem('currentUser', JSON.stringify(data.user));
+                localforage.setItem('EquipmentMonitorServiceProxy.config', this.config);
+                localforage.setItem<UserModel>('currentUser', data.user);
             }
 
             return data.user as UserModel;
@@ -60,31 +55,49 @@ export class EquipmentMonitorServiceProxy{
         throw new HttpError( { loginerror: "loginfailed"} );
     }
 
-    logout = (): void => {
-        localStorage.removeItem('EquipmentMonitorServiceProxy.config');
-        localStorage.removeItem('currentUser');
+    logout = async (): Promise<void> => {
+        localforage.clear();
         this.config = undefined;
     }
 
     fetchCurrentUser = async():Promise<UserModel | undefined> => {
-        const user = localStorage.getItem('currentUser');
-        if(user != null){
-            return JSON.parse(user);
-        }
+        this.config = await localforage.getItem<Config>('EquipmentMonitorServiceProxy.config');
 
         if(this.config){
-            const {user} = await this.get(this.baseUrl + "users/current");
-            return user;
+            if(navigator.onLine){
+                const {user} = await this.get(this.baseUrl + "users/current");
+                localforage.setItem<UserModel>('currentUser', user);
+                return user;
+            }
+            else{
+                const user = await localforage.getItem<UserModel>('currentUser');
+                if (user){
+                    return user;
+                }
+            }
         }
-        else{
-            return undefined;
-        }
+        
+        return undefined;
     }
 
     ////////////////Equipment////////////////////////
     fetchEquipments = async(): Promise<EquipmentModel[]> => {
-        const {equipments} = await this.get(this.baseUrl + "equipments");
-        return (equipments as EquipmentModel[]).map(updateEquipment);
+        if(navigator.onLine){
+            const {equipments} = await this.get(this.baseUrl + "equipments");
+            const equipmentModels = (equipments as EquipmentModel[]).map(updateEquipment);
+            localforage.setItem<EquipmentModel[]>("fetchEquipments", equipmentModels);
+
+            return equipmentModels;
+        }
+        else{
+            const equipmentModels = localforage.getItem<EquipmentModel[]>("fetchEquipments");
+            if(equipmentModels){
+                return equipmentModels;
+            }
+            else{
+                return [];
+            }
+        }
     }
     
     createOrSaveEquipment = async(equipmentToSave: EquipmentModel):Promise<EquipmentModel> => {
@@ -126,8 +139,22 @@ export class EquipmentMonitorServiceProxy{
     }
 
     fetchTasks = async(equipmentId: string): Promise<TaskModel[]> => {
-        const { tasks } = await this.get(this.baseUrl + "tasks/" + equipmentId);
-        return (tasks as TaskModel[]).map(updateTask);
+        if(navigator.onLine){
+            const { tasks } = await this.get(this.baseUrl + "tasks/" + equipmentId);
+            const taskModels = (tasks as TaskModel[]).map(updateTask);
+            localforage.setItem<TaskModel[]>("tasks/" + equipmentId, taskModels);
+
+            return taskModels;
+        }
+        else{
+            const taskModels = await localforage.getItem<TaskModel[]>("tasks/" + equipmentId);
+            if(taskModels){
+                return taskModels;
+            }
+            else{
+                return [];
+            }
+        }
     }
 
     ///////////////////////////Entry////////////////////////
@@ -156,16 +183,47 @@ export class EquipmentMonitorServiceProxy{
         if (equipmentId === undefined || taskId === undefined)
             return [];
 
-        const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId + '/' + taskId);
-        return (entries as EntryModel[]).map(updateEntry);
+        if(navigator.onLine){
+            const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId + '/' + taskId);
+            const entryModels = (entries as EntryModel[]).map(updateEntry);
+
+            localforage.setItem<EntryModel[]>("entries/" + equipmentId + '/' + taskId, entryModels);
+
+            return entryModels;
+        }
+        else{
+            const entryModels = await localforage.getItem<EntryModel[]>("entries/" + equipmentId + '/' + taskId);
+            if(entryModels){
+                return entryModels;
+            }
+            else{
+                return [];
+            }
+        }
+        
     }
 
     fetchAllEntries = async(equipmentId: string) => {
         if (equipmentId === undefined)
             return [];
 
-        const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId);
-        return (entries as EntryModel[]).map(updateEntry);
+        if(navigator.onLine){
+            const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId);
+            const entryModels =  (entries as EntryModel[]).map(updateEntry);
+
+            localforage.setItem<EntryModel[]>("entries/" + equipmentId, entryModels);
+
+            return entryModels;
+        }
+        else{
+            const entryModels = await localforage.getItem<EntryModel[]>("entries/" + equipmentId);
+            if(entryModels){
+                return entryModels;
+            }
+            else{
+                return [];
+            }
+        }
     }
 
     async post(url: string, data: any){
