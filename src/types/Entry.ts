@@ -24,6 +24,5 @@ export default class Entry extends Entity<EntryModel> {
         }
 
         this.entity = entry;
-        localStorage.setItem(this.entity._uiId, JSON.stringify(this.entity));
     }
  }

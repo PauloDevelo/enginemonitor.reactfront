@@ -1,11 +1,12 @@
 import mockAxios from "axios";
 import {EquipmentMonitorServiceProxy} from '../EquipmentMonitorServiceProxy';
+import localforage from 'localforage';
 
 jest.mock('axios');
 
 describe('Test EquipmentMonitorServiceProxy', () => {
     beforeEach(() => {
-        localStorage.clear();
+        localforage.clear();
         mockAxios.get.mockReset();
         mockAxios.post.mockReset();
     });
@@ -21,7 +22,7 @@ describe('Test EquipmentMonitorServiceProxy', () => {
             it("when the user is authenticated in localStorage, it should return the user by calling the server", async () => {
                 // setup
                 const config = { headers: { Authorization: 'Token jwttoken' }};
-                localStorage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify(config));
+                await localforage.setItem('EquipmentMonitorServiceProxy.config', JSON.stringify(config));
 
                 const EquipmentMonitorServiceProxyInstance = new EquipmentMonitorServiceProxy();
 
@@ -134,7 +135,7 @@ describe('Test EquipmentMonitorServiceProxy', () => {
 
                 expect(authUser).toBe(user);
 
-                expect(localStorage.getItem("EquipmentMonitorServiceProxy.config")).toBe(JSON.stringify({ headers: { Authorization: 'Token ' + user.token }}));
+                expect(await localforage.getItem("EquipmentMonitorServiceProxy.config")).toEqual({ headers: { Authorization: 'Token ' + user.token }});
             });
 
             it("should not update the local storage because of the remember flag at false", async() => {
@@ -165,7 +166,7 @@ describe('Test EquipmentMonitorServiceProxy', () => {
 
                 expect(authUser).toBe(user);
 
-                expect(localStorage.getItem("EquipmentMonitorServiceProxy.config")).toBe('{}');
+                expect(await localforage.getItem("EquipmentMonitorServiceProxy.config")).toBeNull();
             });
         });
     });
