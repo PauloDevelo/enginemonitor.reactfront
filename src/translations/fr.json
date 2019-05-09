@@ -60,6 +60,8 @@
   "needVerification": "doit être verifié. Vérifier vos emails.",
   "newPassword": "Nouveau mot de passe",
   "no": "Non",
+  "notonline": "Hors ligne",
+  "online": "En ligne",
   "orevery": " ou tous les ",
   "password": "Mot de passe",
   "passwordsHaveToBeIdentical": "Les mots de passe sont différents. Veuillez les retapper.",
@@ -93,7 +95,5 @@
   "trackerType": "Avec un tracker d'usage",
   "usagePeriodInHour": "Période en heure à l'usage",
   "yearperiod": "{year, plural, one {# année} other {# {années}}",
-  "yes": "Oui",
-  "online": "En ligne",
-  "notonline": "Hors ligne"
+  "yes": "Oui"
 }

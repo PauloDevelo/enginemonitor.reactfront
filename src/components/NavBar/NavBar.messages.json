@@ -1,4 +1,12 @@
 {
+  "notonline": {
+    "defaultMessage": "Disconnected",
+    "id": "notonline"
+  },
+  "online": {
+    "defaultMessage": "Online",
+    "id": "online"
+  },
   "signout": {
     "defaultMessage": "Signout",
     "description": "Menu",
@@ -7,13 +15,5 @@
   "today": {
     "defaultMessage": "Today, ",
     "id": "today"
-  },
-  "online":{
-    "defaultMessage": "Online",
-    "id": "online"
-  },
-  "notonline":{
-    "defaultMessage": "Disconnected",
-    "id": "notonline"
   }
 }

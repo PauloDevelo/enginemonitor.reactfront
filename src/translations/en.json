@@ -60,6 +60,8 @@
   "needVerification": "needs to be checked. Please check your emails.",
   "newPassword": "New Password",
   "no": "No",
+  "notonline": "Offline",
+  "online": "Online",
   "orevery": " or every ",
   "password": "Password",
   "passwordsHaveToBeIdentical": "The passwords are different. Please re-type the passwords.",
@@ -93,7 +95,5 @@
   "trackerType": "With a usage time tracker",
   "usagePeriodInHour": "Period in usage hour",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
-  "yes": "Yes",
-  "online": "Online",
-  "notonline": "Offline"
+  "yes": "Yes"
 }
