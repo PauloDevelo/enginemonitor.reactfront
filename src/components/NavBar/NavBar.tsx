@@ -44,7 +44,6 @@ const ConnectionStateIcon = ({isOnline}:ConnectionState) => {
     }
 }
 
-
 const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
 
