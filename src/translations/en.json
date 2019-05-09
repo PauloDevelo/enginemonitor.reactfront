@@ -95,5 +95,5 @@
   "yearperiod": "{year, plural, one {# year} other {# years}}",
   "yes": "Yes",
   "online": "Online",
-  "notonline": "Disconnected"
+  "notonline": "Offline"
 }
