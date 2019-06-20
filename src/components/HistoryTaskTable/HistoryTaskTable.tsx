@@ -16,7 +16,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
 import * as moment from 'moment';
-import {useUID} from 'react-uid';
 import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
 
 import { useEditModal } from '../../hooks/EditModalHook';
@@ -173,14 +172,12 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
 		}
     ];
     
-    const uuid = useUID();
-    
     return(
         <div className={classNames + ' historytasktable'}>
             <span className="mb-2">
                 <b><FormattedMessage {...messages.taskHistoryTitle} /></b>
                 {equipment && task && <Button aria-label="Add" color="success" size="sm" className="float-right mb-2" onClick={() => {
-                    modalHook.displayData(createDefaultEntry(equipment, task, uuid));
+                    modalHook.displayData(createDefaultEntry(equipment, task));
                 }}>
                     <FontAwesomeIcon icon={faCheckSquare} />
                 </Button>}

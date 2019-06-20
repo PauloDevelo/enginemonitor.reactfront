@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
 import { FormattedMessage, Messages, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
-import {useUID} from 'react-uid';
+import uuidv1  from 'uuid/v1';
 
 import jsonMessages from "../ModalLogin/Login.messages.json";
 const loginMsg: Messages = defineMessages(jsonMessages);
@@ -28,7 +28,7 @@ type Props = {
 }
 
 const ModalSignup = ({visible, className, toggle}: Props) => {
-	const uid = useUID(); 
+	const uid = uuidv1(); 
 	const data:UserModel = { _id:'', _uiId:uid, firstname:'', name:'', email: '', password: ''};
  	const [infoMsg, setInfoMsg] = useState<string | undefined>(undefined);
 	const [signupErrors, setSignupErrors] = useState<any>(undefined);

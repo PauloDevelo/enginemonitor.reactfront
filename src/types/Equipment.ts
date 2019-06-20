@@ -3,6 +3,7 @@ import Entity from './Entity';
 import User from './User';
 import Entry from './Entry';
 import { EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType } from './Types';
+import uuidv1 from 'uuid/v1';
 
 export default class Equipment extends Entity<EquipmentModel> { 
 
@@ -43,7 +44,9 @@ export default class Equipment extends Entity<EquipmentModel> {
         this.orphanEntries = this.orphanEntries.filter(orphanEntry => orphanEntry.getModel()._id !== entry._id);
     }
 
-    createDefaultOrphanEntry(uuid: string): EntryModel{
+    createDefaultOrphanEntry(): EntryModel{
+        const uuid = uuidv1();
+
         let defaultAge = -1;
         if(this.getModel().ageAcquisitionType !== AgeAcquisitionType.time){
             defaultAge = this.getModel().age;
@@ -60,7 +63,9 @@ export default class Equipment extends Entity<EquipmentModel> {
         }
     }
 
-    createDefaultTask(uuid: string): TaskModel{
+    createDefaultTask(): TaskModel{
+        const uuid = uuidv1();
+
         return {
             _id: undefined,
             _uiId: uuid,

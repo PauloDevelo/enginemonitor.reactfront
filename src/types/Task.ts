@@ -3,6 +3,8 @@ import Entry from './Entry'
 import { TaskModel, EntryModel, AgeAcquisitionType } from './Types';
 import Entity from './Entity';
 
+import uuidv1 from 'uuid/v1';
+
 export type TaskTodo = {
     dueDate: Date,
     onlyDate: boolean,
@@ -43,7 +45,9 @@ export default class Task extends Entity<TaskModel> {
         });
     }
 
-    createDefaultEntry(uuid: string): EntryModel{
+    createDefaultEntry(): EntryModel{
+        const uuid = uuidv1();
+
         let defaultAge = -1;
         
         if(this.parent.getModel().ageAcquisitionType !== AgeAcquisitionType.time){

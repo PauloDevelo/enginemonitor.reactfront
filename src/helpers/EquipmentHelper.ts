@@ -1,6 +1,9 @@
 import { EquipmentModel, AgeAcquisitionType } from "../types/Types";
+import uuidv1 from 'uuid/v1';
 
-export function createDefaultEquipment(uuid: string): EquipmentModel{
+export function createDefaultEquipment(): EquipmentModel{
+	const uuid = uuidv1();
+
 	return {
 		_id: undefined,
 		_uiId: uuid,

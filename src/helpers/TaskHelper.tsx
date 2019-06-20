@@ -6,7 +6,11 @@ const tasktablemsg: Messages = defineMessages(jsonMessages);
 
 import { TaskModel, EquipmentModel, AgeAcquisitionType } from '../types/Types';
 
-export function createDefaultTask(equipment: EquipmentModel, uuid: string): TaskModel{
+import uuidv1 from 'uuid/v1';
+
+export function createDefaultTask(equipment: EquipmentModel): TaskModel{
+    const uuid = uuidv1();
+
 	return {
         _id: undefined,
         _uiId: uuid,
