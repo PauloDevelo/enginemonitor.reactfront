@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
 import { FormattedMessage, Messages, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
-import {useUID} from 'react-uid';
+import uuidv1  from 'uuid/v1';
 
 import jsonMessages from "../ModalLogin/Login.messages.json";
 const loginMsg: Messages = defineMessages(jsonMessages);
@@ -15,7 +15,7 @@ import MyInput from "../Form/MyInput"
 import Alerts from "../Alerts/Alerts"
 import ActionButton from "../ActionButton/ActionButton";
 
-import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import {userProxy} from '../../services/EquipmentMonitorServiceProxy';
 import HttpError from '../../http/HttpError'
 
 import '../../style/transition.css';
@@ -28,8 +28,8 @@ type Props = {
 }
 
 const ModalSignup = ({visible, className, toggle}: Props) => {
-	const uid = useUID(); 
-	const data:UserModel = { _id:'', _uiId:uid, firstname:'', name:'', email: '', password: ''};
+	const uid = uuidv1(); 
+	const data:UserModel = { _uiId:uid, firstname:'', name:'', email: '', password: ''};
  	const [infoMsg, setInfoMsg] = useState<string | undefined>(undefined);
 	const [signupErrors, setSignupErrors] = useState<any>(undefined);
 	const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +47,7 @@ const ModalSignup = ({visible, className, toggle}: Props) => {
 		setInfoMsg(undefined);
 	  
         try{
-            await EquipmentMonitorService.signup(newUser);
+            await userProxy.signup(newUser);
 			setSignupErrors(undefined);
 			setInfoMsg("emailSent")
 		}

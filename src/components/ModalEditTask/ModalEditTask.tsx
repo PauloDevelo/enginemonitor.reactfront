@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,7 +11,7 @@ import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
 import jsonMessages from "./ModalEditTask.messages.json";
 const editTaskMsg: Messages = defineMessages(jsonMessages);
 
-import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import {taskProxy} from '../../services/EquipmentMonitorServiceProxy';
 
 import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation'
 import MyForm from "../Form/MyForm"
@@ -36,15 +36,20 @@ const ModalEditTask = ({equipment, task, onTaskSaved, toggle, onTaskDeleted, vis
 	const onSaveTask = (task: TaskModel): void => {
 		task.usagePeriodInHour = task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0 ? -1 : task.usagePeriodInHour;
 	}
+	const modalLogic = useEditModalLogic(toggle, taskProxy.createOrSaveTask, [equipment._uiId], onSaveTask, onTaskSaved, 
+										taskProxy.deleteTask, [equipment._uiId, task._uiId], onTaskDeleted);
+	const [isCreation, setIsCeation] = useState(false);
 
-	const equipmentId = equipment === undefined ? undefined : equipment._id;
-	const taskId = task === undefined ? undefined : task._id;
+	async function updateIsCreation(){
+		setIsCeation(!(await taskProxy.existTask(equipment._uiId, task._uiId)));
+	}
 
-	const modalLogic = useEditModalLogic(toggle, EquipmentMonitorService.createOrSaveTask, [equipmentId], onSaveTask, onTaskSaved, 
-												 EquipmentMonitorService.deleteTask, [equipmentId, taskId], onTaskDeleted);
+	useEffect(() => {
+		updateIsCreation();
+	}, [task]);
 
 	let title = undefined;
-	if (task === undefined || task._id === undefined){
+	if (isCreation){
 		title = <FormattedMessage {...editTaskMsg.modalCreationTaskTitle} />
 	}
 	else{
@@ -68,7 +73,7 @@ const ModalEditTask = ({equipment, task, onTaskSaved, toggle, onTaskDeleted, vis
 					<ModalFooter>
 						<ActionButton type="submit" isActing={modalLogic.isSaving} form="createTaskForm" color="success" message={editTaskMsg.save}/>
 						<Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...editTaskMsg.cancel} /></Button>
-						{task && task._id && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editTaskMsg.delete} /></Button>}
+						{!isCreation && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editTaskMsg.delete} /></Button>}
 					</ModalFooter>
 				</Modal>
 			</CSSTransition>

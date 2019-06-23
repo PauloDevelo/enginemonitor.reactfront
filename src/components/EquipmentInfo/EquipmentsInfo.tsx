@@ -1,10 +1,9 @@
 import React, {Fragment, useState, useEffect, useCallback} from 'react';
-import {useUID} from 'react-uid';
 import { Button, Nav, TabContent } from 'reactstrap';
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import {equipmentProxy} from '../../services/EquipmentMonitorServiceProxy';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 
@@ -33,7 +32,7 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 			return false;
 		}
 		else{
-			return currentEquipment._id === equipment._id;
+			return currentEquipment._uiId === equipment._uiId;
 		}
 	}
 
@@ -48,7 +47,7 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 		setIsLoading(true);
 
 		try {
-			const equipments = await EquipmentMonitorService.fetchEquipments();
+			const equipments = await equipmentProxy.fetchEquipments();
 			setEquipments(equipments);
 		} catch (error) {
 			setEquipments([]);
@@ -63,11 +62,11 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 
     useEffect(() => {
         if (equipments.length > 0){
-			if(currentEquipment === undefined || equipments.findIndex((equipment: EquipmentModel) => currentEquipment._id === equipment._id) === -1){
+			if(currentEquipment === undefined || equipments.findIndex((equipment: EquipmentModel) => currentEquipment._uiId === equipment._uiId) === -1){
 				setCurrentEquipment(equipments[0]);
 			}
 			else{
-				var newCurrentEquipmentIndex = equipments.findIndex((equipment: EquipmentModel) => currentEquipment._id === equipment._id);
+				var newCurrentEquipmentIndex = equipments.findIndex((equipment: EquipmentModel) => currentEquipment._uiId === equipment._uiId);
 				setCurrentEquipment(equipments[newCurrentEquipmentIndex]);
 			}
         }
@@ -78,7 +77,7 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 
 	const onEquipmentInfoSaved = useCallback(async (equipmentInfoSaved: EquipmentModel) => {
 		const newEquipmentList = equipments.concat([]);
-		const index = newEquipmentList.findIndex(equipmentInfo => equipmentInfo._id === equipmentInfoSaved._id);
+		const index = newEquipmentList.findIndex(equipmentInfo => equipmentInfo._uiId === equipmentInfoSaved._uiId);
 
 		if(index === -1){
 			newEquipmentList.push(equipmentInfoSaved);
@@ -91,27 +90,25 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 	}, [equipments]);
 	
 	const onEquipmentDeleted = useCallback((deletedEquipment: EquipmentModel) => {
-		const newEquipmentList = equipments.filter(equipmentInfo => equipmentInfo._id !== deletedEquipment._id);
+		const newEquipmentList = equipments.filter(equipmentInfo => equipmentInfo._uiId !== deletedEquipment._uiId);
 		setEquipments(newEquipmentList);
 			
 		setCurrentEquipment(newEquipmentList.length > 0 ? newEquipmentList[0] : undefined);
 	}, [equipments]);
 	
 	const tabPanes =  equipments.map((equipment, index) => {
-		return <EquipmentInfoTab key={equipment._id} equipment={equipment} displayEquipment={modalHook.displayData}/>;
+		return <EquipmentInfoTab key={equipment._uiId} equipment={equipment} displayEquipment={modalHook.displayData}/>;
 	});
 
 	const tabNavItems = equipments.map((equipment) => {
-		return <EquipmentInfoNavItem key={equipment._id} equipment={equipment} active={isCurrentEquipment(equipment)} setCurrentEquipment={setCurrentEquipment}/>;
+		return <EquipmentInfoNavItem key={equipment._uiId} equipment={equipment} active={isCurrentEquipment(equipment)} setCurrentEquipment={setCurrentEquipment}/>;
 	});
-
-	const uuid = useUID();
 
 	return (
 		<Fragment>
 			<div className={extraClassNames}>
 				<span className="small mb-3">
-					<Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEquipment(uuid))} aria-label="Add">
+					<Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEquipment())} aria-label="Add">
 						<FontAwesomeIcon icon={faPlusSquare} />
 					</Button>
 				</span>
@@ -120,7 +117,7 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 					<Nav tabs>
 						{tabNavItems}
 					</Nav>
-					<TabContent activeTab={currentEquipment?currentEquipment._id:undefined}>
+					<TabContent activeTab={currentEquipment?currentEquipment._uiId:undefined}>
 						{tabPanes}
 					</TabContent>
 				</Fragment>}

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,7 +11,7 @@ import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
 import jsonMessages from "./ModalEditEntry.messages.json";
 const editEntryMsg: Messages = defineMessages(jsonMessages);
 
-import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import {entryProxy} from '../../services/EquipmentMonitorServiceProxy';
 
 import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation';
 import MyForm from "../Form/MyForm";
@@ -32,8 +32,8 @@ type Props = {
 	toggle: ()=>void
 }
 
-const ModalTitle = ({entry}:{entry: EntryModel}) => {
-	if (entry._id === undefined){
+const ModalTitle = ({isNewEntry}:{isNewEntry: boolean}) => {
+	if (isNewEntry){
 		return <FormattedMessage {...editEntryMsg.modalAckTitle} />;
 	}
 	else{
@@ -42,18 +42,30 @@ const ModalTitle = ({entry}:{entry: EntryModel}) => {
 }
 
 const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry, deleteEntry, toggle }: Props) => {
-	const equipmentId = equipment === undefined ? undefined : equipment._id;
-	const taskId = task === undefined ? undefined : task._id;
-	const entryId = entry === undefined ? undefined : entry._id;
+	const equipmentId = equipment === undefined ? undefined : equipment._uiId;
+	const taskId = task === undefined ? undefined : task._uiId;
+	const entryId = entry === undefined ? undefined : entry._uiId;
 
-	const modalLogic = useEditModalLogic<EntryModel>(toggle, EquipmentMonitorService.createOrSaveEntry, [equipmentId, taskId], undefined, saveEntry, 
-												 EquipmentMonitorService.deleteEntry, [equipmentId, taskId, entryId], deleteEntry);
+	const modalLogic = useEditModalLogic<EntryModel>(toggle, entryProxy.createOrSaveEntry, [equipmentId, taskId], undefined, saveEntry, 
+													entryProxy.deleteEntry, [equipmentId, taskId, entryId], deleteEntry);
+
+	const [isNewEntry, setIsNewEntry] = useState(false);
+
+	async function updateExistEntry(equId: string |undefined, entId: string | undefined){
+		setIsNewEntry(!(await entryProxy.existEntry(equId, entId)));
+	}
+
+	useEffect(() => {
+		updateExistEntry(equipmentId, entryId);
+	}, [equipment, entry]);
 
 	return (
 		<Fragment>
 			<CSSTransition in={visible} timeout={300} classNames="modal">
 				<Modal isOpen={visible} toggle={modalLogic.cancel} className={className} fade={false}>
-					<ModalHeader toggle={modalLogic.cancel}><FontAwesomeIcon icon={faCheckSquare} size="lg"/>{' '}<ModalTitle entry={entry}/></ModalHeader>
+					<ModalHeader toggle={modalLogic.cancel}>
+						<FontAwesomeIcon icon={faCheckSquare} size="lg"/>{' '}<ModalTitle isNewEntry={isNewEntry}/>
+					</ModalHeader>
 					<ModalBody>
 						{visible && 
 						<MyForm id="editEntryForm" 
@@ -69,7 +81,7 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 					<ModalFooter>
 						<ActionButton type="submit" form="editEntryForm" color="success" isActing={modalLogic.isSaving} message={editEntryMsg.save}/>
 						<Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...editEntryMsg.cancel} /></Button>
-						{entry && entry._id && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editEntryMsg.delete} /></Button>}
+						{entry && !isNewEntry && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editEntryMsg.delete} /></Button>}
 					</ModalFooter>
 				</Modal>
 			</CSSTransition>

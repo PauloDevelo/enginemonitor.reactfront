@@ -37,7 +37,7 @@ const TaskTabPanes = ({ classNames, currentEquipment, taskList, areTasksLoading,
     const activeTaskTable = useCallback(() => { setActiveTab('taskTable') }, []);
     
     const onTaskChangedByTaskId = (taskId: string) => {
-        const task = taskList.find(task => task._id === taskId);
+        const task = taskList.find(task => task._uiId === taskId);
         if (task){
             onTaskChangedRef.current(task);
         }

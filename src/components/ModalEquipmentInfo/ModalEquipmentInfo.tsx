@@ -6,7 +6,7 @@ import { CSSTransition } from 'react-transition-group';
 import { FormattedMessage, defineMessages, Messages } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import {equipmentProxy} from '../../services/EquipmentMonitorServiceProxy';
 
 import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
 
@@ -34,15 +34,19 @@ type Props = {
 
 const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted, visible, toggle, className}: Props) => {
 	const [ageAcquisitionType, setAgeAcquisitionType] = useState(equipment.ageAcquisitionType.toString());
-	const equipmentId = equipment === undefined ? undefined : equipment._id;
-	const modalLogic = useEditModalLogic(toggle, EquipmentMonitorService.createOrSaveEquipment, [], undefined, onEquipmentInfoSaved, 
-										EquipmentMonitorService.deleteEquipment, [equipmentId], onEquipmentDeleted);
+	const modalLogic = useEditModalLogic(toggle, equipmentProxy.createOrSaveEquipment, [], undefined, onEquipmentInfoSaved, 
+										equipmentProxy.deleteEquipment, [equipment._uiId], onEquipmentDeleted);
+	const [isCreation, setIsCeation] = useState(false);
+
+	async function updateIsCreation(){
+		setIsCeation(!(await equipmentProxy.existEquipment(equipment._uiId)));
+	}
 
 	useEffect(() => {
 		setAgeAcquisitionType(equipment.ageAcquisitionType.toString());
-	}, [equipment._id]);
+		updateIsCreation();
+	}, [equipment]);
 
-	const isCreation = equipment === undefined || equipment._id === undefined;
 	const message = isCreation ? equipmentInfoMsg.create : equipmentInfoMsg.save;
 	
 	return (
@@ -73,7 +77,7 @@ const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted
 					<ModalFooter>
 						<ActionButton type="submit" isActing={modalLogic.isSaving} form="formEquipmentInfo" color="success" message={message} />
 						<Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...equipmentInfoMsg.cancel} /></Button>
-						{equipment && equipment._id && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...equipmentInfoMsg.delete} /></Button>}
+						{!isCreation && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...equipmentInfoMsg.delete} /></Button>}
 					</ModalFooter>
 				</Modal>
 			</CSSTransition>

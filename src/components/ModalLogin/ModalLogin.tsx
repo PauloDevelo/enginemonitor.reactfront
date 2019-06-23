@@ -19,7 +19,7 @@ import ActionButton from "../ActionButton/ActionButton"
 
 import HttpError from '../../http/HttpError'
 
-import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import {userProxy} from '../../services/EquipmentMonitorServiceProxy';
 
 import { AuthInfo, UserModel } from '../../types/Types'
 
@@ -60,7 +60,7 @@ const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}: Props) =
 	const sendVerificationEmail = async()=>{
 		setState({state: LoginState.IsLoggingIn});
 		try{
-			await EquipmentMonitorService.sendVerificationEmail(user.email);
+			await userProxy.sendVerificationEmail(user.email);
 			setState({state: LoginState.Started, infoMsg: "emailSent"});
 		}
 		catch(errors){
@@ -78,7 +78,7 @@ const ModaLogin = ({onLoggedIn, visible, className, toggleModalSignup}: Props) =
 		setUser(newUser);
 
 		try{
-			const user = await EquipmentMonitorService.authenticate(newUser);
+			const user = await userProxy.authenticate(newUser);
 			setState({state: LoginState.LoggedIn});
 			onLoggedIn(user);
 		}

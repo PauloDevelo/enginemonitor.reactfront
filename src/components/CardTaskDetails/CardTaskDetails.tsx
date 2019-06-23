@@ -29,7 +29,7 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
     const modalHook = useEditModal(currentTask);
 
     const getTaskIndex = (task: TaskModel | undefined):number => {
-        return task === undefined ? -1 : tasks.findIndex(t => t._id === task._id);
+        return task === undefined ? -1 : tasks.findIndex(t => t._uiId === task._uiId);
     }
 
     const taskIndex = getTaskIndex(currentTask);
@@ -71,7 +71,7 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
                 <CardBody className="d-flex p-0">
                         <div className="p-2 button-previous-task" onClick={previousTask} style={cursorPointerStyle}><div className={prevClassNames}></div></div>
                         <TransitionGroup className="p-2 flex-grow-1">
-                            <CSSTransition key={currentTask._id} timeout={250} classNames="card" >
+                            <CSSTransition key={currentTask._uiId} timeout={250} classNames="card" >
                                 <div >
                                     <CardTitle>{currentTask.name} <Badge color={badgeContext} pill>{badgeText}</Badge></CardTitle>
                                     <CardSubtitle>{title}</CardSubtitle>

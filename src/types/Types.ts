@@ -5,7 +5,6 @@ export enum AgeAcquisitionType{
 }
 
 export interface EntityModel{
-    _id: string | undefined,
     _uiId:string,
     name: string
 }
@@ -32,7 +31,8 @@ export interface EntryModel extends EntityModel {
     date: Date,
     age: number,
     remarks: string,
-    taskId: string | undefined
+    equipmentUiId: string,
+    taskUiId: string | undefined
 }
 
 export interface UserModel extends EntityModel {

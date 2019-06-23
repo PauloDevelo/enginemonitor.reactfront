@@ -1,13 +1,16 @@
 import axios from "axios";
 import axiosRetry from 'axios-retry';
-import localforage from 'localforage';
+
+import isOnline from './SyncService';
+
+import storageService, { Action, ActionType } from '../services/StorageService';
 
 import HttpError from '../http/HttpError'
 
 import { updateEquipment } from '../helpers/EquipmentHelper'
 import { updateTask } from '../helpers/TaskHelper'
 import { updateEntry } from '../helpers/EntryHelper'
-import {UserModel, EquipmentModel, TaskModel, EntryModel, AuthInfo} from '../types/Types'
+import {UserModel, EquipmentModel, TaskModel, EntryModel, AuthInfo, EntityModel} from '../types/Types'
 
 type Config = {
     headers: {
@@ -15,7 +18,45 @@ type Config = {
     }
 };
 
-export class EquipmentMonitorServiceProxy{
+export interface IUserProxy{
+    signup(newUser: UserModel): Promise<void>;
+    sendVerificationEmail(email: string): Promise<void>;
+    resetPassword(email: string, password: string): Promise<void>;
+    authenticate (authInfo: AuthInfo):Promise<UserModel>;
+    logout(): Promise<void>;
+    fetchCurrentUser():Promise<UserModel | undefined>;
+}
+
+export interface IEquipmentProxy{
+    fetchEquipments(): Promise<EquipmentModel[]>;
+    createOrSaveEquipment(equipmentToSave: EquipmentModel):Promise<EquipmentModel>;
+    deleteEquipment(idEquipment: string): Promise<EquipmentModel>;
+
+    existEquipment(equipmentId: string | undefined):Promise<boolean>;
+}
+
+export interface ITaskProxy{
+    createOrSaveTask(equipmentId: string, newTask: TaskModel):Promise<TaskModel>;
+    deleteTask(equipmentId: string, taskId: string): Promise<TaskModel>;
+    fetchTasks(equipmentId: string): Promise<TaskModel[]>;
+
+    existTask(equipmentId: string | undefined, taskId: string | undefined):Promise<boolean>;
+}
+
+export interface IEntryProxy{
+    createOrSaveEntry(equipmentId: string, taskId: string | undefined, newEntry: EntryModel): Promise<EntryModel>;
+    deleteEntry(equipmentId: string, taskId: string, entryId: string): Promise<EntryModel>;
+    fetchEntries(equipmentId: string, taskId: string):Promise<EntryModel[]>;
+    fetchAllEntries(equipmentId: string):Promise<EntryModel[]>;
+
+    existEntry(equipmentId: string | undefined, entryId: string | undefined):Promise<boolean>;
+}
+
+export interface IActionProxy{
+    performAction(action: Action):Promise<void>;
+}
+
+class EquipmentMonitorServiceProxy implements IUserProxy, IEquipmentProxy, ITaskProxy, IEntryProxy, IActionProxy{
     private config:Config | undefined;
 
     baseUrl = process.env.REACT_APP_URL_BASE;
@@ -43,37 +84,37 @@ export class EquipmentMonitorServiceProxy{
         const data = await this.post(this.baseUrl + "users/login", { user: authInfo });
         
         if(data.user){
+            const user = data.user as UserModel;
             this.config = { headers: { Authorization: 'Token ' + data.user.token }};
+
             if(authInfo.remember){
-                localforage.setItem('EquipmentMonitorServiceProxy.config', this.config);
-                localforage.setItem<UserModel>('currentUser', data.user);
+                storageService.setGlobalItem('EquipmentMonitorServiceProxy.config', this.config);
+                storageService.setGlobalItem('currentUser', user);
             }
 
-            return data.user as UserModel;
+            storageService.openUserStorage(user);
+
+            return user;
         }
         
         throw new HttpError( { loginerror: "loginfailed"} );
     }
 
     logout = async (): Promise<void> => {
-        localforage.clear();
+        storageService.removeGlobalItem('EquipmentMonitorServiceProxy.config');
+        storageService.removeGlobalItem('currentUser');
         this.config = undefined;
+        storageService.closeUserStorage();
     }
 
     fetchCurrentUser = async():Promise<UserModel | undefined> => {
-        this.config = await localforage.getItem<Config>('EquipmentMonitorServiceProxy.config');
+        this.config = await storageService.getGlobalItem<Config>('EquipmentMonitorServiceProxy.config');
 
         if(this.config){
-            if(navigator.onLine){
-                const {user} = await this.get(this.baseUrl + "users/current");
-                localforage.setItem<UserModel>('currentUser', user);
+            const user = await storageService.getGlobalItem<UserModel>('currentUser');
+            if (user){
+                storageService.openUserStorage(user);
                 return user;
-            }
-            else{
-                const user = await localforage.getItem<UserModel>('currentUser');
-                if (user){
-                    return user;
-                }
             }
         }
         
@@ -82,177 +123,195 @@ export class EquipmentMonitorServiceProxy{
 
     ////////////////Equipment////////////////////////
     fetchEquipments = async(): Promise<EquipmentModel[]> => {
-        if(navigator.onLine){
-            const {equipments} = await this.get(this.baseUrl + "equipments");
-            const equipmentModels = (equipments as EquipmentModel[]).map(updateEquipment);
-            localforage.setItem<EquipmentModel[]>("fetchEquipments", equipmentModels);
-
-            return equipmentModels;
-        }
-        else{
-            const equipmentModels = localforage.getItem<EquipmentModel[]>("fetchEquipments");
-            if(equipmentModels){
-                return equipmentModels;
-            }
-            else{
-                return [];
-            }
-        }
+        return await this.getArrayOnlineFirst<EquipmentModel>(this.baseUrl + "equipments", "equipments", updateEquipment);
     }
     
     createOrSaveEquipment = async(equipmentToSave: EquipmentModel):Promise<EquipmentModel> => {
-        if(equipmentToSave._id){
-            const { equipment } = await this.post(this.baseUrl + "equipments/" + equipmentToSave._id, { equipment: equipmentToSave });
-            return updateEquipment(equipment);
-        }
-        else{
-            const { equipment } = await this.post(this.baseUrl + "equipments", { equipment: equipmentToSave });
-            return updateEquipment(equipment);
-        }
+        equipmentToSave = await this.postAndUpdate<EquipmentModel>(this.baseUrl + "equipments/" + equipmentToSave._uiId, "equipment", equipmentToSave, updateEquipment);           
+
+        storageService.updateArray(this.baseUrl + "equipments", equipmentToSave);
+
+        return equipmentToSave;
     }
 
-    importEquipmentInfo = async (idEquipment: string, serverIpAddress: string) =>{
-        const {equipment} = await this.get(this.baseUrl + "equipments/" + idEquipment + '/import/' + serverIpAddress);
-        return updateEquipment(equipment);
+    deleteEquipment = async (idEquipment: string): Promise<EquipmentModel> => {
+        await this.deleteAndUpdate<EquipmentModel>(this.baseUrl + "equipments/" + idEquipment, "equipments");
+
+        return storageService.removeItemInArray<EquipmentModel>(this.baseUrl + "equipments", idEquipment);
     }
 
-    deleteEquipment = async (idEquipment: string) => {
-        const {equipment} = await this.delete(this.baseUrl + "equipments/" + idEquipment);
-        return updateEquipment(equipment);
+    existEquipment = async (equipmentId: string | undefined):Promise<boolean> => {
+        if (equipmentId === undefined){
+            return false;
+        }
+
+        const allEquipments = await this.fetchEquipments();
+
+        return allEquipments.findIndex(equipment => equipment._uiId === equipmentId) !== -1;
     }
 
     /////////////////Task////////////////////////////
-    createOrSaveTask = async (equipmentId: string, newTask: TaskModel) =>{
-        if(newTask._id === undefined){
-            const {task} = await this.post(this.baseUrl + "tasks/" + equipmentId, { task: newTask });
-            return updateTask(task);
-        }
-        else{
-            const {task} = await this.post(this.baseUrl + "tasks/" + equipmentId + '/' + newTask._id, { task: newTask });
-            return updateTask(task);
-        }
+    createOrSaveTask = async (equipmentId: string, newTask: TaskModel):Promise<TaskModel> =>{
+        newTask = await this.postAndUpdate<TaskModel>(this.baseUrl + "tasks/" + equipmentId + '/' + newTask._uiId, "task", newTask, updateTask);
+
+        await storageService.updateArray(this.baseUrl + "tasks/" + equipmentId, newTask);
+
+        return newTask;
     }
 
-    deleteTask = async(equipmentId: string, taskId: string) => {
-        const {task} = await this.delete(this.baseUrl + "tasks/" + equipmentId + '/' + taskId);
-        return updateTask(task);
+    deleteTask = async(equipmentId: string, taskId: string): Promise<TaskModel> => {
+        await this.deleteAndUpdate<TaskModel>(this.baseUrl + "tasks/" + equipmentId + '/' + taskId, "task");
+
+        return storageService.removeItemInArray<TaskModel>(this.baseUrl + "tasks/" + equipmentId, taskId);
     }
 
     fetchTasks = async(equipmentId: string): Promise<TaskModel[]> => {
-        if(navigator.onLine){
-            const { tasks } = await this.get(this.baseUrl + "tasks/" + equipmentId);
-            const taskModels = (tasks as TaskModel[]).map(updateTask);
-            localforage.setItem<TaskModel[]>("tasks/" + equipmentId, taskModels);
+        return await this.getArrayOnlineFirst(this.baseUrl + "tasks/" + equipmentId, "tasks", updateTask);
+    }
 
-            return taskModels;
+    existTask = async (equipmentId: string | undefined, taskId: string | undefined):Promise<boolean> => {
+        if (equipmentId === undefined || taskId === undefined){
+            return false;
         }
-        else{
-            const taskModels = await localforage.getItem<TaskModel[]>("tasks/" + equipmentId);
-            if(taskModels){
-                return taskModels;
-            }
-            else{
-                return [];
-            }
-        }
+
+        const allTasks = await this.fetchTasks(equipmentId);
+
+        return allTasks.findIndex(task => task._uiId === taskId) !== -1;
     }
 
     ///////////////////////////Entry////////////////////////
 
-    createOrSaveEntry = async (equipmentId: string, taskId: string | undefined, newEntry: EntryModel) => {
+    createOrSaveEntry = async (equipmentId: string, taskId: string | undefined, newEntry: EntryModel): Promise<EntryModel> => {
         taskId = taskId === undefined ? '-' : taskId;
 
-        if(newEntry._id === undefined){
-            const {entry} = await this.post(this.baseUrl + "entries/" + equipmentId + '/' + taskId, { entry: newEntry });
-            return updateEntry(entry)
-        }
-        else{
-            const {entry} = await this.post(this.baseUrl + "entries/" + equipmentId + '/' + taskId + '/' + newEntry._id, { entry: newEntry });
-            return updateEntry(entry)
-        }
+        newEntry = await this.postAndUpdate(this.baseUrl + "entries/" + equipmentId + '/' + taskId + '/' + newEntry._uiId, "entry", newEntry, updateEntry);
+
+        await storageService.updateArray(this.baseUrl + "entries/" + equipmentId, newEntry);
+
+        return newEntry;
     }
 
     deleteEntry = async(equipmentId: string, taskId: string, entryId: string): Promise<EntryModel> => {
         taskId = taskId === undefined ? '-' : taskId;
 
-        const {entry} = await this.delete(this.baseUrl + "entries/" + equipmentId + '/' + taskId + '/' + entryId);
-        return updateEntry(entry)
+        await this.deleteAndUpdate(this.baseUrl + "entries/" + equipmentId + '/' + taskId + '/' + entryId, "entry");
+
+        return storageService.removeItemInArray<EntryModel>(this.baseUrl + "entries/" + equipmentId, entryId);
     }
 
-    fetchEntries = async(equipmentId: string, taskId: string) => {
+    fetchEntries = async(equipmentId: string, taskId: string):Promise<EntryModel[]> => {
         if (equipmentId === undefined || taskId === undefined)
             return [];
 
-        if(navigator.onLine){
-            const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId + '/' + taskId);
-            const entryModels = (entries as EntryModel[]).map(updateEntry);
+        const allEntries = await this.fetchAllEntries(equipmentId);
 
-            localforage.setItem<EntryModel[]>("entries/" + equipmentId + '/' + taskId, entryModels);
-
-            return entryModels;
-        }
-        else{
-            const entryModels = await localforage.getItem<EntryModel[]>("entries/" + equipmentId + '/' + taskId);
-            if(entryModels){
-                return entryModels;
-            }
-            else{
-                return [];
-            }
-        }
-        
+        return allEntries.filter(entry => entry.taskUiId === taskId);
     }
 
-    fetchAllEntries = async(equipmentId: string) => {
+    fetchAllEntries = async(equipmentId: string):Promise<EntryModel[]> => {
         if (equipmentId === undefined)
             return [];
 
-        if(navigator.onLine){
-            const {entries} = await this.get(this.baseUrl + "entries/" + equipmentId);
-            const entryModels =  (entries as EntryModel[]).map(updateEntry);
-
-            localforage.setItem<EntryModel[]>("entries/" + equipmentId, entryModels);
-
-            return entryModels;
-        }
-        else{
-            const entryModels = await localforage.getItem<EntryModel[]>("entries/" + equipmentId);
-            if(entryModels){
-                return entryModels;
-            }
-            else{
-                return [];
-            }
-        }
+        return await this.getArrayOnlineFirst<EntryModel>(this.baseUrl + "entries/" + equipmentId, "entries", updateEntry);
     }
 
-    async post(url: string, data: any){
+    existEntry = async (equipmentId: string | undefined, entryId: string | undefined):Promise<boolean> => {
+        if (equipmentId === undefined || entryId === undefined){
+            return false;
+        }
+
+        const allEntries = await this.fetchAllEntries(equipmentId);
+
+        return allEntries.findIndex(entry => entry._uiId === entryId) !== -1;
+    }
+
+    //////////////////////////Http actions////////////////////////////
+    post = async (url: string, data: any) => {
         try{
             const response = await axios.post(url, data, this.config);
 		    return response.data;
         }
         catch(error){
-            this.processError(error)
+            this.processError(error);
         }
     }
     
-    async delete(url: string){
+    deleteReq = async (url: string) => {
         try{
             const response = await axios.delete(url, this.config);
 		    return response.data;
         }
         catch(error){
-            this.processError(error)
+            this.processError(error);
         }
     }
 
-    async get(url: string){
+    get = async (url: string) => {
         try{
             const response = await axios.get(url, this.config);
 		    return response.data;
         }
         catch(error){
             this.processError(error);
+        }
+    }
+
+    async postAndUpdate<T>(url: string, keyName:string, dataToPost:T, update:(date:T)=>T):Promise<T> {
+        const data:any = {[keyName]: dataToPost};
+
+        if(await isOnline()){
+            const savedData = (await this.post(url, data))[keyName];
+
+            return update(savedData);
+        }
+        else{
+            const action: Action = { key: url, type: ActionType.Post, data: data };
+            storageService.addAction(action);
+
+            return dataToPost;
+        }
+    }
+
+    async deleteAndUpdate<T>(url: string, keyName: string):Promise<T|undefined>{
+        if(await isOnline()){
+            return (await this.deleteReq(url))[keyName];
+        }
+        else{
+            const action: Action = { key: url, type: ActionType.Delete };
+            storageService.addAction(action);
+
+            return undefined
+        }
+    }
+
+    async getArrayOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T): Promise<T[]> {
+        if(await isOnline()){
+            const array = (await this.get(url))[keyName] as T[];
+            const initArray = array.map(init);
+
+            storageService.setItem<T[]>(url, initArray);
+
+            return initArray;
+        }
+        else {
+            const array = await storageService.getItem<T[]>(url);
+            if(array){
+                return array;
+            }
+        }
+
+        return [];
+    }
+
+    performAction = async (action: Action):Promise<void> => {
+        if(action.type === ActionType.Post){
+            await this.post(action.key, action.data);
+        }
+        else if(action.type === ActionType.Delete){
+            await this.deleteReq(action.key);
+        }
+        else{
+            throw new Error("The action type " + action.type + "is not recognized.");
         }
     }
 
@@ -279,4 +338,10 @@ export class EquipmentMonitorServiceProxy{
 
 const EquipmentMonitorService = new EquipmentMonitorServiceProxy();
 
-export default EquipmentMonitorService;
+const actionProxy:IActionProxy = EquipmentMonitorService;
+export const userProxy:IUserProxy = EquipmentMonitorService;
+export const equipmentProxy:IEquipmentProxy = EquipmentMonitorService;
+export const taskProxy:ITaskProxy = EquipmentMonitorService;
+export const entryProxy:IEntryProxy = EquipmentMonitorService;
+
+export default actionProxy;

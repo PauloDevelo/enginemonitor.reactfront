@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage, Messages, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import {userProxy} from '../../services/EquipmentMonitorServiceProxy';
 
 import jsonMessages from "./NavBar.messages.json";
 const navBarMsg: Messages = defineMessages(jsonMessages);
@@ -53,7 +53,7 @@ const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
     }, []);
 
     const logout = useCallback(() => {
-        EquipmentMonitorService.logout();
+        userProxy.logout();
         onLoggedOut();
     }, [onLoggedOut]);
 

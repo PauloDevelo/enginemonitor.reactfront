@@ -10,15 +10,13 @@ import { defineMessages, Messages, FormattedMessage, FormattedDate } from 'react
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
 
-import { useUID } from 'react-uid';
-
 import { faPlusSquare, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import PropTypes from 'prop-types';
 
 import * as moment from 'moment';
-import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import {entryProxy} from '../../services/EquipmentMonitorServiceProxy';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 
@@ -53,7 +51,7 @@ enum FetchState{
 
 const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefreshId, classNames}: Props) => {
     classNames = classNames ? classNames + ' historytasktable' : 'historytasktable';
-    const equipmentId = equipment ? equipment._id : undefined;
+    const equipmentId = equipment ? equipment._uiId : undefined;
     
     const modalHook = useEditModal<EntryModel | undefined>(undefined);
 
@@ -70,7 +68,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
         try {
             let newEntries:EntryModel[] = [];
             if(equipmentId){
-                newEntries = await EquipmentMonitorService.fetchAllEntries(equipmentId);
+                newEntries = await entryProxy.fetchAllEntries(equipmentId);
             }
             
             setEntries(newEntries);
@@ -82,29 +80,29 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
     };
 
     const onSavedEntry = (savedEntry: EntryModel) => {
-        const newCurrentHistory = entries.filter(entry => entry._id !== savedEntry._id);
+        const newCurrentHistory = entries.filter(entry => entry._uiId !== savedEntry._uiId);
         newCurrentHistory.unshift(savedEntry);
         newCurrentHistory.sort((entryA, entryB) => entryA.date.getTime() - entryB.date.getTime());
 
         setEntries(newCurrentHistory);
 
-        if(onTaskChanged && savedEntry.taskId){
-            onTaskChanged.current(savedEntry.taskId);
+        if(onTaskChanged && savedEntry.taskUiId){
+            onTaskChanged.current(savedEntry.taskUiId);
         }
 	}
 	
 	const onDeleteEntry = async(entry: EntryModel) => {  
-        var newCurrentHistoryTask = entries.slice(0).filter(e => e._id !== entry._id);
+        var newCurrentHistoryTask = entries.slice(0).filter(e => e._uiId !== entry._uiId);
         setEntries(newCurrentHistoryTask);
 
-        if(onTaskChanged && entry.taskId){
-            onTaskChanged.current(entry.taskId);
+        if(onTaskChanged && entry.taskUiId){
+            onTaskChanged.current(entry.taskUiId);
         }
     }
 
     const innerEntryCell = (entry:EntryModel, content: JSX.Element, classNames?: string) => {
         classNames = classNames === undefined ? '' : classNames;
-		classNames += ' table-' + (entry.taskId === undefined ? "warning" : "white" );
+		classNames += ' table-' + (entry.taskUiId === undefined ? "warning" : "white" );
 		return (
 			<div onClick={() => modalHook.displayData(entry)} className={classNames + ' innerTd clickable'} >
 				{content}
@@ -189,13 +187,11 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
 		}
     ];
     
-    const uuid = useUID();
-    
     return(
         <div className={classNames}>
             <span className="mb-2">
                 <b><FormattedMessage {...messages.equipmentHistoryTitle} /></b>
-                {equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEntry(equipment, undefined, uuid))} aria-label="Add">
+                {equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEntry(equipment, undefined))} aria-label="Add">
                     <FontAwesomeIcon icon={faPlusSquare} />
                 </Button>}
             </span>

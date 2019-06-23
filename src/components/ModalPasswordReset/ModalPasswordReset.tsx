@@ -14,7 +14,7 @@ import MyInput from "../Form/MyInput"
 import Alerts from "../Alerts/Alerts"
 import ActionButton from "../ActionButton/ActionButton";
 
-import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import {userProxy} from '../../services/EquipmentMonitorServiceProxy';
 import HttpError from '../../http/HttpError'
 
 import '../../style/transition.css';
@@ -65,7 +65,7 @@ const ModalPasswordReset = ({visible, className, toggle, data}: Props) => {
 
 			try{
 				if(data.newPassword1 !== undefined && data.newPassword1 === data.newPassword2){
-					await EquipmentMonitorService.resetPassword(data.email, data.newPassword1);
+					await userProxy.resetPassword(data.email, data.newPassword1);
 					setState({state: ResetPasswordState.Succeed, infoMsg: "confirmPasswordChange"});
 				}
 				else{

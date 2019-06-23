@@ -9,7 +9,7 @@ import ModalLogin from '../ModalLogin/ModalLogin';
 import ModalSignup from '../ModalSignup/ModalSignup';
 import NavBar from '../NavBar/NavBar';
 
-import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import {userProxy, taskProxy} from '../../services/EquipmentMonitorServiceProxy';
 
 import '../../style/transition.css';
 import './App.css'
@@ -21,7 +21,7 @@ export default function App(){
 
 	const refreshCurrentUser = async () => {
 		try{
-			const currentUser = await EquipmentMonitorService.fetchCurrentUser();
+			const currentUser = await userProxy.fetchCurrentUser();
 			setUser(currentUser);
 		}
 		catch(error){
@@ -56,8 +56,8 @@ export default function App(){
 	const onTaskChanged = (task: TaskModel)=>{
 		refreshTaskList();
 
-		const currentTaskId = currentTask ? currentTask._id : undefined;
-		if(task._id === currentTaskId){
+		const currentTaskId = currentTask ? currentTask._uiId : undefined;
+		if(task._uiId === currentTaskId){
 			setTaskHistoryRefreshId(taskHistoryRefreshId + 1);
 		}
 	};
@@ -76,10 +76,10 @@ export default function App(){
 	}
 	
 	const refreshTaskList = async() => {
-		if(currentEquipment !== undefined && currentEquipment._id !== undefined){
+		if(currentEquipment !== undefined && currentEquipment._uiId !== undefined){
 			try{
 				setAreTasksLoading(true);
-				const tasks = await EquipmentMonitorService.fetchTasks(currentEquipment._id);
+				const tasks = await taskProxy.fetchTasks(currentEquipment._uiId);
 				tasks.sort((taskA, taskB) => {
 					if(taskB.level === taskA.level){
 						return taskA.nextDueDate.getTime() - taskB.nextDueDate.getTime();
@@ -107,9 +107,9 @@ export default function App(){
 		}
 		else{
 			let newCurrentTask = undefined;
-			const currentTaskId = currentTask !== undefined ? currentTask._id : undefined
+			const currentTaskId = currentTask !== undefined ? currentTask._uiId : undefined
 			if(currentTaskId){
-				newCurrentTask = taskList.find(t => t._id === currentTaskId);
+				newCurrentTask = taskList.find(t => t._uiId === currentTaskId);
 			}
 
 			if(newCurrentTask === undefined){

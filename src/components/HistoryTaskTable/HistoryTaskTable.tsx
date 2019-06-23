@@ -16,8 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
 import * as moment from 'moment';
-import {useUID} from 'react-uid';
-import EquipmentMonitorService from '../../services/EquipmentMonitorServiceProxy';
+import {entryProxy} from '../../services/EquipmentMonitorServiceProxy';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 
@@ -52,25 +51,22 @@ enum FetchState{
 }
 
 const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChanged, classNames}: Props) => {
-    const equipmentId = equipment ? equipment._id : undefined;
-    const taskId = task ? task._id : undefined;
-
     const modalHook = useEditModal<EntryModel | undefined>(undefined);
 
     const [entries, setEntries] = useState<EntryModel[]>([]);
     const [fetchingState, setFetchingState] = useState(FetchState.StandBy);
 
     useEffect(() => {
-      fetchEntries();
-    }, [taskId, taskHistoryRefreshId]);
+        fetchEntries();
+    }, [task, taskHistoryRefreshId]);
 
     const fetchEntries = async () => {
         setFetchingState(FetchState.Fetching);
 
         try {
             let newEntries:EntryModel[] = [];
-            if(equipmentId && taskId){
-                newEntries = await EquipmentMonitorService.fetchEntries(equipmentId, taskId);
+            if(equipment && task){
+                newEntries = await entryProxy.fetchEntries(equipment._uiId, task._uiId);
             }
             
             setEntries(newEntries);
@@ -89,7 +85,7 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
     };
 
     const onSavedEntry = (savedEntry: EntryModel) => {
-        const newCurrentHistoryTask = entries.filter(entry => entry._id !== savedEntry._id);
+        const newCurrentHistoryTask = entries.filter(entry => entry._uiId !== savedEntry._uiId);
         newCurrentHistoryTask.unshift(savedEntry);
         newCurrentHistoryTask.sort((entryA, entryB) => entryA.date.getTime() - entryB.date.getTime());
 
@@ -97,7 +93,7 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
 	}
 	
 	const onDeleteEntry = async(entry: EntryModel) => {  
-        var newCurrentHistoryTask = entries.slice(0).filter(e => e._id !== entry._id);
+        var newCurrentHistoryTask = entries.slice(0).filter(e => e._uiId !== entry._uiId);
         changeEntries(newCurrentHistoryTask);
     }
 
@@ -173,14 +169,12 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
 		}
     ];
     
-    const uuid = useUID();
-    
     return(
         <div className={classNames + ' historytasktable'}>
             <span className="mb-2">
                 <b><FormattedMessage {...messages.taskHistoryTitle} /></b>
                 {equipment && task && <Button aria-label="Add" color="success" size="sm" className="float-right mb-2" onClick={() => {
-                    modalHook.displayData(createDefaultEntry(equipment, task, uuid));
+                    modalHook.displayData(createDefaultEntry(equipment, task));
                 }}>
                     <FontAwesomeIcon icon={faCheckSquare} />
                 </Button>}
