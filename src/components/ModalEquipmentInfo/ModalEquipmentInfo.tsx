@@ -6,7 +6,7 @@ import { CSSTransition } from 'react-transition-group';
 import { FormattedMessage, defineMessages, Messages } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import {equipmentProxy} from '../../services/EquipmentMonitorServiceProxy';
+import equipmentProxy from '../../services/EquipmentProxy';
 
 import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
 

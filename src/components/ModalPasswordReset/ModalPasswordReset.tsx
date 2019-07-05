@@ -14,7 +14,7 @@ import MyInput from "../Form/MyInput"
 import Alerts from "../Alerts/Alerts"
 import ActionButton from "../ActionButton/ActionButton";
 
-import {userProxy} from '../../services/EquipmentMonitorServiceProxy';
+import userProxy from '../../services/UserProxy';
 import HttpError from '../../http/HttpError'
 
 import '../../style/transition.css';

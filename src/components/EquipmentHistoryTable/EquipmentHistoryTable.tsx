@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
 import * as moment from 'moment';
-import {entryProxy} from '../../services/EquipmentMonitorServiceProxy';
+import entryProxy from '../../services/EntryProxy';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 

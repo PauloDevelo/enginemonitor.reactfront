@@ -9,7 +9,8 @@ import ModalLogin from '../ModalLogin/ModalLogin';
 import ModalSignup from '../ModalSignup/ModalSignup';
 import NavBar from '../NavBar/NavBar';
 
-import {userProxy, taskProxy} from '../../services/EquipmentMonitorServiceProxy';
+import userProxy from '../../services/UserProxy';
+import taskProxy from '../../services/TaskProxy';
 
 import '../../style/transition.css';
 import './App.css'

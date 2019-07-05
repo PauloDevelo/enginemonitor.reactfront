@@ -10,16 +10,7 @@ localforage.config({
     description : 'Contains all the information contained in Maintenance monitor'
 });
 
-export enum ActionType{
-    Post,
-    Delete
-}
 
-export interface Action{
-    type: ActionType,
-    key:string,
-    data?:any
-};
 
 export interface IStorageService{
     setGlobalItem<T>(key: string, value: T): Promise<T>;
@@ -31,11 +22,6 @@ export interface IStorageService{
 
     setItem<T>(key: string, value: T): Promise<T>;
     getItem<T>(key: string): Promise<T>;
-
-    addAction(action: Action): Promise<void>;
-    shiftAction(): Promise<Action>;
-    putBackAction(action: Action): Promise<void>;
-    countAction(): Promise<number>;
 
     updateArray<T extends EntityModel>(key: string, item:T):Promise<void>;
     removeItemInArray<T extends EntityModel>(key: string, itemId: string): Promise<T>;
@@ -82,48 +68,6 @@ class StorageService implements IStorageService{
 
     closeUserStorage(): void{
         this.userStorage = undefined;
-    }
-
-    async addAction(action: Action): Promise<void>{
-        let history:Action[] = await this.getUserStorage().getItem<Action[]>("history");
-        history = history === null ? [] : history;
-
-        history.push(action);
-
-        await this.getUserStorage().setItem<Action[]>("history", history);
-    }
-
-    async shiftAction(): Promise<Action>{
-        let action: Action | undefined;
-        let history:Action[] = await this.getUserStorage().getItem<Action[]>("history");
-        history = history === null ? [] : history;
-
-        action = history.shift()
-
-        if(!action)
-        {
-            throw new Error("There isn't pending action anymore");
-        }
-
-        await this.getUserStorage().setItem<Action[]>("history", history);
-
-        return action;
-    }
-
-    async putBackAction(action: Action): Promise<void> {
-        let newHistory: Action[] = [];
-        newHistory.push(action);
-
-        let  history:Action[] = await this.getUserStorage().getItem<Action[]>("history");
-        history = history === null ? [] : history;
-
-        newHistory = newHistory.concat(history);
-
-        await this.getUserStorage().setItem<Action[]>("history", newHistory);
-    }
-
-    async countAction(): Promise<number>{
-        return (await this.getUserStorage().getItem<Action[]>("history")).length;
     }
 
     async updateArray<T extends EntityModel>(key: string, item:T):Promise<void>{

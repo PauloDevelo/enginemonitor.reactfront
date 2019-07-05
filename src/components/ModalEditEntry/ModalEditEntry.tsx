@@ -11,7 +11,7 @@ import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
 import jsonMessages from "./ModalEditEntry.messages.json";
 const editEntryMsg: Messages = defineMessages(jsonMessages);
 
-import {entryProxy} from '../../services/EquipmentMonitorServiceProxy';
+import entryProxy from '../../services/EntryProxy';
 
 import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation';
 import MyForm from "../Form/MyForm";

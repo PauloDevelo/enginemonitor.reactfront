@@ -19,7 +19,7 @@ import ActionButton from "../ActionButton/ActionButton"
 
 import HttpError from '../../http/HttpError'
 
-import {userProxy} from '../../services/EquipmentMonitorServiceProxy';
+import userProxy from '../../services/UserProxy';
 
 import { AuthInfo, UserModel } from '../../types/Types'
 

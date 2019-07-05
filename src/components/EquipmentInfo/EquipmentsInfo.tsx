@@ -3,7 +3,7 @@ import { Button, Nav, TabContent } from 'reactstrap';
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {equipmentProxy} from '../../services/EquipmentMonitorServiceProxy';
+import equipmentProxy from '../../services/EquipmentProxy';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 

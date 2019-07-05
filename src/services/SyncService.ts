@@ -1,11 +1,10 @@
-import storageService, { Action, ActionType } from './StorageService';
-import actionProxy from './EquipmentMonitorServiceProxy'
+import actionManager, { Action, ActionType } from './ActionManager';
 
 window.addEventListener('offline', (e) => setIsOnline(false));
 window.addEventListener('online', (e) => setIsOnline(true));
 
 async function isOnline(): Promise<boolean>{
-    return window.navigator.onLine && (await storageService.countAction()) === 0;
+    return window.navigator.onLine && (await actionManager.countAction()) === 0;
 };
 
 async function setIsOnline(isOnline: boolean){
@@ -17,14 +16,14 @@ async function setIsOnline(isOnline: boolean){
 async function syncStorage() {
     try{
         while(1){
-            const action = await storageService.shiftAction();
+            const action = await actionManager.shiftAction();
 
             try{
-                actionProxy.performAction(action);
+                actionManager.performAction(action);
             }
             catch(error){
                 console.log(error);
-                storageService.putBackAction(action);
+                actionManager.putBackAction(action);
                 throw error;
             }
         }

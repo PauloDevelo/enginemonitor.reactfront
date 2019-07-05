@@ -11,7 +11,7 @@ import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
 import jsonMessages from "./ModalEditTask.messages.json";
 const editTaskMsg: Messages = defineMessages(jsonMessages);
 
-import {taskProxy} from '../../services/EquipmentMonitorServiceProxy';
+import taskProxy from '../../services/TaskProxy';
 
 import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation'
 import MyForm from "../Form/MyForm"
