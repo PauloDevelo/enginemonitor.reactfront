@@ -6,7 +6,7 @@ import CardTaskDetails from '../CardTaskDetails';
 
 describe("CardTaskDetails", () => {
     const equipment = {
-        _id: '1234',
+        _uiId: '1234',
         name: 'engine',
         brand: 'nanni',
         model: 'N3.30',
@@ -15,7 +15,7 @@ describe("CardTaskDetails", () => {
     }
 
     const task1 = {
-        _id: 'task1',
+        _uiId: 'task1',
         name: 'taskname1',
         periodInMonth: 12,
         description: 'task1 description',
@@ -26,7 +26,7 @@ describe("CardTaskDetails", () => {
     }
 
     const task2 = {
-        _id: 'task2',
+        _uiId: 'task2',
         name: 'taskname2',
         periodInMonth: 24,
         description: 'task2 description',
