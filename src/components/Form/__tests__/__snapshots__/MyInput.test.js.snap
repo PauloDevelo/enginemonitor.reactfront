@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MyInput of type checkox should render as expected 1`] = `
-<MyInput
+<Memo(MyInput)
   label={
     Object {
       "defaultMessage": "Default message",
@@ -13,61 +13,68 @@ exports[`MyInput of type checkox should render as expected 1`] = `
   required={true}
   type="checkbox"
 >
-  <div
-    className="form-group form-check form-check-inline"
+  <FormGroup
+    check={true}
+    className="form-group"
+    inline={true}
+    tag="div"
   >
-    <Label
-      check={true}
-      inline="true"
-      tag="label"
-      widths={
-        Array [
-          "xs",
-          "sm",
-          "md",
-          "lg",
-          "xl",
-        ]
-      }
+    <div
+      className="form-group form-check form-check-inline"
     >
-      <label
-        className="form-check-label"
+      <Label
+        check={true}
         inline="true"
+        tag="label"
+        widths={
+          Array [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+          ]
+        }
       >
-        <FormattedMessage
-          defaultMessage="Default message"
-          description="Label"
-          id="defaultId"
-          values={Object {}}
+        <label
+          className="form-check-label"
+          inline="true"
         >
-          <span>
-            Default message
-          </span>
-        </FormattedMessage>
-         
-        <Input
-          invalid={false}
-          name="name"
-          onChange={[Function]}
-          required={true}
-          type="checkbox"
-        >
-          <input
-            className="form-check-input"
+          <FormattedMessage
+            defaultMessage="Default message"
+            description="Label"
+            id="defaultId"
+            values={Object {}}
+          >
+            <span>
+              Default message
+            </span>
+          </FormattedMessage>
+           
+          <Input
+            invalid={false}
             name="name"
             onChange={[Function]}
             required={true}
             type="checkbox"
-          />
-        </Input>
-      </label>
-    </Label>
-  </div>
-</MyInput>
+          >
+            <input
+              className="form-check-input"
+              name="name"
+              onChange={[Function]}
+              required={true}
+              type="checkbox"
+            />
+          </Input>
+        </label>
+      </Label>
+    </div>
+  </FormGroup>
+</Memo(MyInput)>
 `;
 
 exports[`MyInput of type text should render as expected 1`] = `
-<MyInput
+<Memo(MyInput)
   label={
     Object {
       "defaultMessage": "Default message",
@@ -79,64 +86,69 @@ exports[`MyInput of type text should render as expected 1`] = `
   required={true}
   type="text"
 >
-  <div
-    className="form-group form-group"
+  <FormGroup
+    className="form-group"
+    tag="div"
   >
-    <Label
-      for="name"
-      tag="label"
-      widths={
-        Array [
-          "xs",
-          "sm",
-          "md",
-          "lg",
-          "xl",
-        ]
-      }
+    <div
+      className="form-group form-group"
     >
-      <label
-        className=""
-        htmlFor="name"
-      >
-        <FormattedMessage
-          defaultMessage="Default message"
-          description="Label"
-          id="defaultId"
-          values={Object {}}
-        >
-          <span>
-            Default message
-          </span>
-        </FormattedMessage>
-      </label>
-    </Label>
-    <Input
-      className="form-control"
-      innerRef={
-        Object {
-          "current": <input
-            class="form-control form-control"
-            name="name"
-            required=""
-            type="text"
-          />,
+      <Label
+        for="name"
+        tag="label"
+        widths={
+          Array [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+          ]
         }
-      }
-      invalid={false}
-      name="name"
-      onChange={[Function]}
-      required={true}
-      type="text"
-    >
-      <input
-        className="form-control form-control"
+      >
+        <label
+          className=""
+          htmlFor="name"
+        >
+          <FormattedMessage
+            defaultMessage="Default message"
+            description="Label"
+            id="defaultId"
+            values={Object {}}
+          >
+            <span>
+              Default message
+            </span>
+          </FormattedMessage>
+        </label>
+      </Label>
+      <Input
+        className="form-control"
+        innerRef={
+          Object {
+            "current": <input
+              class="form-control form-control"
+              name="name"
+              required=""
+              type="text"
+            />,
+          }
+        }
+        invalid={false}
         name="name"
         onChange={[Function]}
         required={true}
         type="text"
-      />
-    </Input>
-  </div>
-</MyInput>
+      >
+        <input
+          className="form-control form-control"
+          name="name"
+          onChange={[Function]}
+          required={true}
+          type="text"
+        />
+      </Input>
+    </div>
+  </FormGroup>
+</Memo(MyInput)>
 `;
