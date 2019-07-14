@@ -33,7 +33,7 @@ describe('Test EquipmentProxy', () => {
 
     afterEach(async() => {
         await actionManager.clearActions();
-        storageService.setItem(process.env.REACT_APP_URL_BASE + "equipments/", undefined);
+        storageService.setItem(urlFetchEquipment, undefined);
         storageService.closeUserStorage();
     });
 
