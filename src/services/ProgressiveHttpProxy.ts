@@ -79,14 +79,8 @@ class ProgressiveHttpProxy implements ISyncHttpProxy{
 
             return initArray;
         }
-        else {
-            const array = await storageService.getItem<T[]>(url);
-            if(array){
-                return array;
-            }
-        }
-
-        return [];
+        
+        return await storageService.getArray<T>(url);
     }
 }
 

@@ -22,6 +22,7 @@ export interface IStorageService{
 
     setItem<T>(key: string, value: T): Promise<T>;
     getItem<T>(key: string): Promise<T>;
+    getArray<T>(key: string): Promise<T[]>;
 
     updateArray<T extends EntityModel>(key: string, item:T):Promise<void>;
     removeItemInArray<T extends EntityModel>(key: string, itemId: string): Promise<T>;
@@ -105,6 +106,15 @@ class StorageService implements IStorageService{
 
     async getItem<T>(key: string): Promise<T>{
         return this.getUserStorage().getItem<T>(key);
+    }
+
+    async getArray<T>(key: string):Promise<T[]>{
+        const array = await this.getUserStorage().getItem<T[]>(key);
+        if(array){
+            return array;
+        }
+
+        return [];
     }
 
     private getUserStorage(): LocalForage{
