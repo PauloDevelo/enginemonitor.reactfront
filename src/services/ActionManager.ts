@@ -18,12 +18,12 @@ export interface IActionManager{
     putBackAction(action: Action): Promise<void>;
     countAction(): Promise<number>;
     performAction (action: Action):Promise<void>;
+    clearActions(): Promise<void>;
 }
 
 class ActionManager implements IActionManager{
     async addAction(action: Action): Promise<void>{
-        let history:Action[] = await storageService.getItem<Action[]>("history");
-        history = history === null ? [] : history;
+        let history:Action[] = await this.getHistoryFromStorage();
 
         history.push(action);
 
@@ -32,8 +32,7 @@ class ActionManager implements IActionManager{
 
     async shiftAction(): Promise<Action>{
         let action: Action | undefined;
-        let history:Action[] = await storageService.getItem<Action[]>("history");
-        history = history === null ? [] : history;
+        let history:Action[] = await this.getHistoryFromStorage();
 
         action = history.shift()
 
@@ -51,8 +50,7 @@ class ActionManager implements IActionManager{
         let newHistory: Action[] = [];
         newHistory.push(action);
 
-        let  history:Action[] = await storageService.getItem<Action[]>("history");
-        history = history === null ? [] : history;
+        let  history:Action[] = await this.getHistoryFromStorage();
 
         newHistory = newHistory.concat(history);
 
@@ -76,6 +74,16 @@ class ActionManager implements IActionManager{
         }
     }
 
+    async clearActions(): Promise<void>{
+        await storageService.setItem<Action[]>("history", []);
+    }
+
+    private async getHistoryFromStorage():Promise<Action[]>{
+        let  history:Action[] = await storageService.getItem<Action[]>("history");
+        history = history ? history : [];
+
+        return history;
+    }
 }
 
 const actionManager:IActionManager = new ActionManager();

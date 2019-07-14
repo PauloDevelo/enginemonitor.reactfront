@@ -71,8 +71,13 @@ class StorageService implements IStorageService{
     }
 
     async updateArray<T extends EntityModel>(key: string, item:T):Promise<void>{
-        const items = (await this.getUserStorage().getItem<T[]>(key))
-                        .filter(i => i._uiId !== item._uiId);
+        let items = (await this.getUserStorage().getItem<T[]>(key));
+        if (items){
+            items = items.filter(i => i._uiId !== item._uiId);
+        }
+        else{
+            items = [];
+        }
 
         items.push(item);
 

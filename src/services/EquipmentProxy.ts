@@ -24,15 +24,15 @@ class EquipmentProxy implements IEquipmentProxy{
     createOrSaveEquipment = async(equipmentToSave: EquipmentModel):Promise<EquipmentModel> => {
         equipmentToSave = await progressiveHttpProxy.postAndUpdate<EquipmentModel>(this.baseUrl + "equipments/" + equipmentToSave._uiId, "equipment", equipmentToSave, updateEquipment);           
 
-        storageService.updateArray(this.baseUrl + "equipments", equipmentToSave);
+        await storageService.updateArray(this.baseUrl + "equipments", equipmentToSave);
 
         return equipmentToSave;
     }
 
     deleteEquipment = async (idEquipment: string): Promise<EquipmentModel> => {
-        await progressiveHttpProxy.deleteAndUpdate<EquipmentModel>(this.baseUrl + "equipments/" + idEquipment, "equipments", updateEquipment);
-
-        return storageService.removeItemInArray<EquipmentModel>(this.baseUrl + "equipments", idEquipment);
+        await progressiveHttpProxy.deleteAndUpdate<EquipmentModel>(this.baseUrl + "equipments/" + idEquipment, "equipment", updateEquipment);
+        
+        return updateEquipment(await storageService.removeItemInArray<EquipmentModel>(this.baseUrl + "equipments", idEquipment));
     }
 
     existEquipment = async (equipmentId: string | undefined):Promise<boolean> => {

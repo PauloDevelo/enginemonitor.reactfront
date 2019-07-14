@@ -1,4 +1,4 @@
-import isOnline from './SyncService';
+import syncService from './SyncService';
 import httpProxy from './HttpProxy';
 
 import actionManager, { Action, ActionType } from './ActionManager';
@@ -44,21 +44,21 @@ class ProgressiveHttpProxy implements ISyncHttpProxy{
     async postAndUpdate<T>(url: string, keyName:string, dataToPost:T, update:(data:T)=>T):Promise<T> {
         const data:any = {[keyName]: dataToPost};
 
-        if(await isOnline()){
+        if(await syncService.isOnline()){
             const savedData = (await httpProxy.post(url, data))[keyName];
 
             return update(savedData);
         }
         else{
             const action: Action = { key: url, type: ActionType.Post, data: data };
-            actionManager.addAction(action);
+            await actionManager.addAction(action);
 
             return dataToPost;
         }
     }
 
     async deleteAndUpdate<T>(url: string, keyName: string, update:(data:T)=>T):Promise<T|undefined>{
-        if(await isOnline()){
+        if(await syncService.isOnline()){
             const deletedEntity = (await httpProxy.deleteReq(url))[keyName];
             return update(deletedEntity);
         }
@@ -71,7 +71,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy{
     }
 
     async getArrayOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T): Promise<T[]> {
-        if(await isOnline()){
+        if(await syncService.isOnline()){
             const array = (await httpProxy.get(url))[keyName] as T[];
             const initArray = array.map(init);
 

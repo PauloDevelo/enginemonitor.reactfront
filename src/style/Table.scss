@@ -14,7 +14,7 @@
     @import '~react-table-factory/styles/withAdaptive';
     
     .scrollable-table {
-        @extend .adaptive-scrollable-table;
+        @extend .adaptive-scrollable-table !optional;
     }
 
     .scrollable-table {
