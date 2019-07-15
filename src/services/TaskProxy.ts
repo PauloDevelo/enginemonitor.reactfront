@@ -9,7 +9,7 @@ import { TaskModel} from '../types/Types'
 export interface ITaskProxy{
     createOrSaveTask(equipmentId: string, newTask: TaskModel):Promise<TaskModel>;
     deleteTask(equipmentId: string, taskId: string): Promise<TaskModel>;
-    fetchTasks(equipmentId: string, forceToLookUpInStorage: boolean): Promise<TaskModel[]>;
+    fetchTasks(equipmentId: string): Promise<TaskModel[]>;
 
     existTask(equipmentId: string | undefined, taskId: string | undefined):Promise<boolean>;
 }

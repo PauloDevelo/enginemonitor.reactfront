@@ -6,7 +6,7 @@ import { updateEquipment } from '../helpers/EquipmentHelper'
 import { EquipmentModel} from '../types/Types'
 
 export interface IEquipmentProxy{
-    fetchEquipments(forceToLookUpInStorage: boolean): Promise<EquipmentModel[]>;
+    fetchEquipments(): Promise<EquipmentModel[]>;
     createOrSaveEquipment(equipmentToSave: EquipmentModel):Promise<EquipmentModel>;
     deleteEquipment(idEquipment: string): Promise<EquipmentModel>;
 
