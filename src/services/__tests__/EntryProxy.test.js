@@ -133,11 +133,21 @@ describe('Test EntryProxy', () => {
         });
     });
 
-    describe('existEntry', () => {
-        it("When the entry is in the storage, it should return true", async () => {
-            // Arrange
-            syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(true);
+    const existEntryParams = [
+        {isOnline:true, equipmentId:parentEquipmentId, entryId: entryToSave._uiId, expectedIsExist: true},
+        {isOnline:true, equipmentId:parentEquipmentId, entryId: "inexistingId", expectedIsExist: false},
+        {isOnline:true, equipmentId:parentEquipmentId, entryId: undefined, expectedIsExist: false},
+        {isOnline:true, equipmentId:undefined, entryId: entryToSave._uiId, expectedIsExist: false},
+        {isOnline:false, equipmentId:parentEquipmentId, entryId: entryToSave._uiId, expectedIsExist: true},
+        {isOnline:false, equipmentId:parentEquipmentId, entryId: "inexistingId", expectedIsExist: false},
+        {isOnline:false, equipmentId:parentEquipmentId, entryId: undefined, expectedIsExist: false},
+        {isOnline:false, equipmentId:undefined, entryId: entryToSave._uiId, expectedIsExist: false},
+    ];
+    describe.each(existEntryParams)("existEntry", async(arg)=>{
+        it("when " + JSON.stringify(arg), async() =>{
+             // Arrange
+             syncService.isOnline.mockImplementation(() => {
+                return Promise.resolve(arg.isOnline);
             });
 
             httpProxy.post.mockImplementation((url, data) => {
@@ -147,41 +157,10 @@ describe('Test EntryProxy', () => {
             await entryProxy.createOrSaveEntry(parentEquipmentId, parentTaskId, entryToSave);
 
             // Act
-            const isEntryExist = await entryProxy.existEntry(parentEquipmentId, entryToSave._uiId);
+            const isEntryExist = await entryProxy.existEntry(arg.equipmentId, arg.entryId);
 
             // Assert
-            expect(isEntryExist).toBe(true);
-        });
-
-        it("When the entry is not in the storage, it should return false", async () => {
-            // Arrange
-            syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(true);
-            });
-
-            httpProxy.post.mockImplementation((url, data) => {
-                return Promise.resolve(data);
-            });
-            
-            // Act
-            const isEntryExist = await entryProxy.existEntry(parentEquipmentId, entryToSave._uiId);
-
-            // Assert
-            expect(isEntryExist).toBe(false);
-        });
-
-        it("When the entry does not have _uiId valid, it should return false", async() => {
-            // Arrange
-
-
-            // Act
-            const isEntryExist = await entryProxy.existEntry(parentEquipmentId, undefined);
-
-            // Assert
-            expect(isEntryExist).toBe(false);
+            expect(isEntryExist).toBe(arg.expectedIsExist);
         });
     });
 });
-
-
-
