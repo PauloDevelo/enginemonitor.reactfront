@@ -52,7 +52,9 @@ describe('Test EntryProxy', () => {
 
     const createOrSaveEntryParams = [ 
         {isOnline: false, taskId: parentTaskId, expectedPostCounter: 0, expectedNumberOfEntries: 1, expectedNumberOfAction: 1},
-        {isOnline: true, taskId: parentTaskId, expectedPostCounter: 1, expectedNumberOfEntries: 1, expectedNumberOfAction: 0}
+        {isOnline: true, taskId: parentTaskId, expectedPostCounter: 1, expectedNumberOfEntries: 1, expectedNumberOfAction: 0},
+        {isOnline: false, taskId: undefined, expectedPostCounter: 0, expectedNumberOfEntries: 1, expectedNumberOfAction: 1},
+        {isOnline: true, taskId: undefined, expectedPostCounter: 1, expectedNumberOfEntries: 1, expectedNumberOfAction: 0}
     ];
 
     describe.each(createOrSaveEntryParams)('createOrSaveEntry', async(arg) => {
