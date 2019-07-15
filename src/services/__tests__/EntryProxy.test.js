@@ -5,6 +5,7 @@ import entryProxy from '../EntryProxy';
 import actionManager from '../ActionManager';
 
 import { updateEntry } from '../../helpers/EntryHelper';
+import { async } from 'q';
 
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');
@@ -58,7 +59,7 @@ describe('Test EntryProxy', () => {
     ];
 
     describe.each(createOrSaveEntryParams)('createOrSaveEntry', async(arg) => {
-        it("test when " + JSON.stringify(arg), async() => {
+        it("when " + JSON.stringify(arg), async() => {
             // Arrange
             if(arg.expectedNumberOfEntries >= 1){
                 expect.assertions(5);
@@ -96,61 +97,39 @@ describe('Test EntryProxy', () => {
         });
     });
 
-    describe('deleteEntry', () => {
-        it("When offline, the deletion should not send a http delete query but add an action in the action manager, and remove the entry in the storage. ", async () => {
+    const deleteEntryParams = [
+        {isOnline: false, expectedDeleteCounter: 0, taskId: parentTaskId, expectedNumberOfEntriesInStorage:0, expectedNumberOfActions:2},
+        {isOnline: true, expectedDeleteCounter: 1, taskId: parentTaskId, expectedNumberOfEntriesInStorage:0, expectedNumberOfActions:0},
+        {isOnline: false, expectedDeleteCounter: 0, taskId: undefined, expectedNumberOfEntriesInStorage:0, expectedNumberOfActions:2},
+        {isOnline: true, expectedDeleteCounter: 1, taskId: undefined, expectedNumberOfEntriesInStorage:0, expectedNumberOfActions:0}
+    ];
+    describe.each(deleteEntryParams)('deleteEntries', async(arg) =>{
+        it("when " + JSON.stringify(arg), async() => {
             // Arrange
             syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(false);
+                return Promise.resolve(arg.isOnline);
             });
 
-            let postCounter = 0;
+            let deleteCounter = 0;
             httpProxy.deleteReq.mockImplementation((url) => {
-                postCounter++;
-                return Promise.resolve({ task: { name: "a task name" } });
+                deleteCounter++;
+                return Promise.resolve({ entry: { name: "an entry name" } });
             });
 
             httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
-            await entryProxy.createOrSaveEntry(parentEquipmentId, parentTaskId, entryToSave);
+            await entryProxy.createOrSaveEntry(parentEquipmentId, arg.taskId, entryToSave);
 
             // Act
-            const entryDeleted = await entryProxy.deleteEntry(parentEquipmentId, parentTaskId, entryToSave._uiId);
+            const entryDeleted = await entryProxy.deleteEntry(parentEquipmentId, arg.taskId, entryToSave._uiId);
 
             // Assert
-            expect(postCounter).toBe(0);
+            expect(deleteCounter).toBe(arg.expectedDeleteCounter);
             expect(entryDeleted).toEqual(entryToSave);
 
             const entries = await storageService.getItem(urlFetchEntry);
-            expect(entries.length).toBe(0);
+            expect(entries.length).toBe(arg.expectedNumberOfEntriesInStorage);
 
-            expect(await actionManager.countAction()).toBe(2);
-        });
-
-        it("When online, the deletion should send a http delete query, remove the entry in the storage and add none action in the action manager. ", async () => {
-            // Arrange
-            syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(true);
-            });
-
-            let deleteReqCounter = 0;
-            httpProxy.deleteReq.mockImplementation((url) => {
-                deleteReqCounter++;
-                return Promise.resolve({ entry: { name: '....'} });
-            });
-
-            httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
-            await entryProxy.createOrSaveEntry(parentEquipmentId, parentTaskId, entryToSave);
-
-            // Act
-            const entryDeleted = await entryProxy.deleteEntry(parentEquipmentId, parentTaskId, entryToSave._uiId);
-
-            // Assert
-            expect(deleteReqCounter).toBe(1);
-            expect(entryDeleted).toEqual(entryToSave);
-
-            const entries = await storageService.getItem(urlFetchEntry);
-            expect(entries.length).toBe(0);
-
-            expect(await actionManager.countAction()).toBe(0);
+            expect(await actionManager.countAction()).toBe(arg.expectedNumberOfActions);
         });
     });
 
