@@ -37,11 +37,16 @@ describe('Test EquipmentProxy', () => {
         storageService.closeUserStorage();
     });
 
-    describe('createOrSaveEquipment', () => {
-        it("When offline, we should save the post query into history and save the new equipment into the storage", async () => {
-            // Arrange
-            syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(false);
+    const createOrSaveEquipmentParams = [
+        {isOnline: false, expectedPostCounter: 0, expectedNbEquipment:1, expectedNbAction:1},
+        {isOnline: true, expectedPostCounter: 1, expectedNbEquipment:1, expectedNbAction:0}
+    ];
+
+    describe.each(createOrSaveEquipmentParams)("createOrSaveEquipment", (arg) => {
+        it("when " + JSON.stringify(arg), async() => {
+             // Arrange
+             syncService.isOnline.mockImplementation(() => {
+                return Promise.resolve(arg.isOnline);
             });
 
             let postCounter = 0;
@@ -54,52 +59,30 @@ describe('Test EquipmentProxy', () => {
             const equipmentSaved = await equipmentProxy.createOrSaveEquipment(equipmentToSave);
 
             // Assert
-            expect(postCounter).toBe(0);
+            expect(postCounter).toBe(arg.expectedPostCounter);
             expect(equipmentSaved).toEqual(equipmentToSave);
 
             const equipments = await storageService.getItem(urlFetchEquipment);
-            expect(equipments.length).toBe(1);
+            expect(equipments.length).toBe(arg.expectedNbEquipment);
 
-            const storedEquipment = updateEquipment(equipments[0]);
-            expect(storedEquipment).toEqual(equipmentToSave);
+            if(arg.expectedNbEquipment > 0){
+                const storedEquipment = updateEquipment(equipments[0]);
+                expect(storedEquipment).toEqual(equipmentToSave);
+            }
 
-            expect(await actionManager.countAction()).toBe(1);
-        });
-
-        it("When online, we should send a post query and save the new equipment into the storage", async () => {
-            // Arrange
-            syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(true);
-            });
-
-            let postCounter = 0;
-            httpProxy.post.mockImplementation((url, data) => {
-                postCounter++;
-                return Promise.resolve(data);
-            });
-
-            // Act
-            const equipmentSaved = await equipmentProxy.createOrSaveEquipment(equipmentToSave);
-
-            // Assert
-            expect(postCounter).toBe(1);
-            expect(equipmentSaved).toEqual(equipmentToSave);
-
-            const equipments = await storageService.getItem(urlFetchEquipment);
-            expect(equipments.length).toBe(1);
-
-            const storedEquipment = updateEquipment(equipments[0]);
-            expect(storedEquipment).toEqual(equipmentToSave);
-
-            expect(await actionManager.countAction()).toBe(0);
+            expect(await actionManager.countAction()).toBe(arg.expectedNbAction);
         });
     });
 
-    describe('deleteEquipment', () => {
-        it("When offline, the deletion should not send a http delete query but add an action in the action manager, and remove the equipment in the storage. ", async () => {
+    const deleteEquipmentParams = [
+        {isOnline: false, expectedDeleteCounter: 0, expectedNbEquipment: 0, expectedNbAction: 2},
+        {isOnline: true, expectedDeleteCounter: 1, expectedNbEquipment: 0, expectedNbAction: 0}
+    ];
+    describe.each(deleteEquipmentParams)('deleteEquipment', (arg) => {
+        it("when " + JSON.stringify(arg), async() => {
             // Arrange
             syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(false);
+                return Promise.resolve(arg.isOnline);
             });
 
             let postCounter = 0;
@@ -115,49 +98,35 @@ describe('Test EquipmentProxy', () => {
             const equipmentDeleted = await equipmentProxy.deleteEquipment(equipmentToSave._uiId);
 
             // Assert
-            expect(postCounter).toBe(0);
+            expect(postCounter).toBe(arg.expectedDeleteCounter);
             expect(equipmentDeleted).toEqual(equipmentToSave);
 
             const equipments = await storageService.getItem(urlFetchEquipment);
-            expect(equipments.length).toBe(0);
+            expect(equipments.length).toBe(arg.expectedNbEquipment);
 
-            expect(await actionManager.countAction()).toBe(2);
-        });
-
-        it("When online, the deletion should send a http delete query, remove the equipment in the storage and add none action in the action manager. ", async () => {
-            // Arrange
-            syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(true);
-            });
-
-            let deleteReqCounter = 0;
-            httpProxy.deleteReq.mockImplementation((url) => {
-                deleteReqCounter++;
-                return Promise.resolve({ equipment: { brand: '....'} });
-            });
-
-            httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
-            await equipmentProxy.createOrSaveEquipment(equipmentToSave);
-
-            // Act
-            const equipmentDeleted = await equipmentProxy.deleteEquipment(equipmentToSave._uiId);
-
-            // Assert
-            expect(deleteReqCounter).toBe(1);
-            expect(equipmentDeleted).toEqual(equipmentToSave);
-
-            const equipments = await storageService.getItem(urlFetchEquipment);
-            expect(equipments.length).toBe(0);
-
-            expect(await actionManager.countAction()).toBe(0);
+            expect(await actionManager.countAction()).toBe(arg.expectedNbAction);
         });
     });
 
-    describe('existEquipment', () => {
-        it("When the equipment is in the storage, it should return true", async () => {
+    const existEquipmentParams = [
+        { isOnline: true, equipmentId: equipmentToSave._uiId, expectedResult: true },
+        { isOnline: true, equipmentId: "an_id", expectedResult: false },
+        { isOnline: true, equipmentId: undefined, expectedResult: false },
+        { isOnline: false, equipmentId: equipmentToSave._uiId, expectedResult: true },
+        { isOnline: false, equipmentId: "an_id", expectedResult: false },
+        { isOnline: false, equipmentId: undefined, expectedResult: false }
+    ];
+    describe.each(existEquipmentParams)("existEquipment", (arg) => {
+        it("when " + JSON.stringify(arg), async()=>{
             // Arrange
             syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(true);
+                return Promise.resolve(arg.isOnline);
+            });
+
+            let getCounter = 0;
+            httpProxy.get.mockImplementation((url) => {
+                getCounter++;
+                return Promise.resolve({ name: "engine"});
             });
 
             httpProxy.post.mockImplementation((url, data) => {
@@ -167,41 +136,11 @@ describe('Test EquipmentProxy', () => {
             await equipmentProxy.createOrSaveEquipment(equipmentToSave);
 
             // Act
-            const isEquipmentExist = await equipmentProxy.existEquipment(equipmentToSave._uiId);
+            const isEquipmentExist = await equipmentProxy.existEquipment(arg.equipmentId);
 
             // Assert
-            expect(isEquipmentExist).toBe(true);
-        });
-
-        it("When the equipment is in the storage, it should return true", async () => {
-            // Arrange
-            syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(true);
-            });
-
-            httpProxy.post.mockImplementation((url, data) => {
-                return Promise.resolve(data);
-            });
-            
-            // Act
-            const isEquipmentExist = await equipmentProxy.existEquipment(equipmentToSave._uiId);
-
-            // Assert
-            expect(isEquipmentExist).toBe(false);
-        });
-
-        it("When the equipment does not have _uiId valid, it should return false", async() => {
-            // Arrange
-
-
-            // Act
-            const isEquipmentExist = await equipmentProxy.existEquipment(undefined);
-
-            // Assert
-            expect(isEquipmentExist).toBe(false);
+            expect(isEquipmentExist).toBe(arg.expectedResult);
+            expect(getCounter).toBe(0);
         });
     });
 });
-
-
-
