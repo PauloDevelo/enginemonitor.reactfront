@@ -39,11 +39,15 @@ describe('Test TaskProxy', () => {
         storageService.closeUserStorage();
     });
 
-    describe('createOrSaveTask', () => {
-        it("When offline, we should save the post query into history and save the new task into the storage", async () => {
+    const createOrSaveTaskParams = [
+        { isOnline: false, expectedPostCounter:0, equipmentId: parentEquipmentId, expectedNbTask: 1, expectedNbAction: 1 },
+        { isOnline: true, expectedPostCounter:1, equipmentId: parentEquipmentId, expectedNbTask: 1, expectedNbAction: 0 }
+    ];
+    describe.each(createOrSaveTaskParams)("createOrSaveTask", (arg) => {
+        it("When " + JSON.stringify(arg), async() => {
             // Arrange
             syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(false);
+                return Promise.resolve(arg.isOnline);
             });
 
             let postCounter = 0;
@@ -56,110 +60,65 @@ describe('Test TaskProxy', () => {
             const taskSaved = await taskProxy.createOrSaveTask(parentEquipmentId, taskToSave);
 
             // Assert
-            expect(postCounter).toBe(0);
+            expect(postCounter).toBe(arg.expectedPostCounter);
             expect(taskSaved).toEqual(taskToSave);
 
             const tasks = await storageService.getItem(urlFetchTask);
-            expect(tasks.length).toBe(1);
+            expect(tasks.length).toBe(arg.expectedNbTask);
 
-            const storedTask = updateTask(tasks[0]);
-            expect(storedTask).toEqual(taskToSave);
+            if (arg.expectedNbTask > 0){
+                const storedTask = updateTask(tasks[0]);
+                expect(storedTask).toEqual(taskToSave);
+            }
 
-            expect(await actionManager.countAction()).toBe(1);
-        });
-
-        it("When online, we should send a post query and save the new equipment into the storage", async () => {
-            // Arrange
-            syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(true);
-            });
-
-            let postCounter = 0;
-            httpProxy.post.mockImplementation((url, data) => {
-                postCounter++;
-                return Promise.resolve(data);
-            });
-
-            // Act
-            const taskSaved = await taskProxy.createOrSaveTask(parentEquipmentId, taskToSave);
-
-            // Assert
-            expect(postCounter).toBe(1);
-            expect(taskSaved).toEqual(taskToSave);
-
-            const tasks = await storageService.getItem(urlFetchTask);
-            expect(tasks.length).toBe(1);
-
-            const storedTask = updateTask(tasks[0]);
-            expect(storedTask).toEqual(taskToSave);
-
-            expect(await actionManager.countAction()).toBe(0);
+            expect(await actionManager.countAction()).toBe(arg.expectedNbAction);
         });
     });
 
-    describe('deleteTask', () => {
-        it("When offline, the deletion should not send a http delete query but add an action in the action manager, and remove the task in the storage. ", async () => {
+    const deleteTaskParams = [
+        { isOnline: false, expectedDeleteCounter:0, equipmentId: parentEquipmentId, expectedNbTask: 0, expectedNbAction: 2 },
+        { isOnline: true, expectedDeleteCounter:1, equipmentId: parentEquipmentId, expectedNbTask: 0, expectedNbAction: 0 }
+    ];
+    describe.each(deleteTaskParams)("deleteTask", (arg) => {
+        it("When " + JSON.stringify(arg), async() => {
             // Arrange
             syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(false);
+                return Promise.resolve(arg.isOnline);
             });
 
-            let postCounter = 0;
+            let deleteCounter = 0;
             httpProxy.deleteReq.mockImplementation((url) => {
-                postCounter++;
+                deleteCounter++;
                 return Promise.resolve({ task: { name: "a task name" } });
             });
 
             httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
-            await taskProxy.createOrSaveTask(parentEquipmentId, taskToSave);
+            await taskProxy.createOrSaveTask(arg.equipmentId, taskToSave);
 
             // Act
-            const taskDeleted = await taskProxy.deleteTask(parentEquipmentId, taskToSave._uiId);
+            const taskDeleted = await taskProxy.deleteTask(arg.equipmentId, taskToSave._uiId);
 
             // Assert
-            expect(postCounter).toBe(0);
+            expect(deleteCounter).toBe(arg.expectedDeleteCounter);
             expect(taskDeleted).toEqual(taskToSave);
 
             const tasks = await storageService.getItem(urlFetchTask);
-            expect(tasks.length).toBe(0);
+            expect(tasks.length).toBe(arg.expectedNbTask);
 
-            expect(await actionManager.countAction()).toBe(2);
-        });
-
-        it("When online, the deletion should send a http delete query, remove the task in the storage and add none action in the action manager. ", async () => {
-            // Arrange
-            syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(true);
-            });
-
-            let deleteReqCounter = 0;
-            httpProxy.deleteReq.mockImplementation((url) => {
-                deleteReqCounter++;
-                return Promise.resolve({ task: { name: '....'} });
-            });
-
-            httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
-            await taskProxy.createOrSaveTask(parentEquipmentId, taskToSave);
-
-            // Act
-            const taskDeleted = await taskProxy.deleteTask(parentEquipmentId, taskToSave._uiId);
-
-            // Assert
-            expect(deleteReqCounter).toBe(1);
-            expect(taskDeleted).toEqual(taskToSave);
-
-            const tasks = await storageService.getItem(urlFetchTask);
-            expect(tasks.length).toBe(0);
-
-            expect(await actionManager.countAction()).toBe(0);
+            expect(await actionManager.countAction()).toBe(arg.expectedNbAction);
         });
     });
 
-    describe('existEquipment', () => {
-        it("When the task is in the storage, it should return true", async () => {
-            // Arrange
-            syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(true);
+    const existEquipmentParams = [
+        { isOnline: false, equipmentId: parentEquipmentId, taskId: taskToSave._uiId, expectedResult: true },
+        { isOnline: true, equipmentId: parentEquipmentId, taskId: "task_id", expectedResult: false },
+        { isOnline: true, equipmentId: parentEquipmentId, taskId: undefined, expectedResult: false }
+    ];
+    describe.each(existEquipmentParams)("existEquipment", (arg) => {
+        it("When " + JSON.stringify(arg), async() => {
+             // Arrange
+             syncService.isOnline.mockImplementation(() => {
+                return Promise.resolve(arg.isOnline);
             });
 
             httpProxy.post.mockImplementation((url, data) => {
@@ -169,41 +128,10 @@ describe('Test TaskProxy', () => {
             await taskProxy.createOrSaveTask(parentEquipmentId, taskToSave);
 
             // Act
-            const isTaskExist = await taskProxy.existTask(parentEquipmentId, taskToSave._uiId);
+            const isTaskExist = await taskProxy.existTask(arg.equipmentId, arg.taskId);
 
             // Assert
-            expect(isTaskExist).toBe(true);
-        });
-
-        it("When the task is in the storage, it should return true", async () => {
-            // Arrange
-            syncService.isOnline.mockImplementation(() => {
-                return Promise.resolve(true);
-            });
-
-            httpProxy.post.mockImplementation((url, data) => {
-                return Promise.resolve(data);
-            });
-            
-            // Act
-            const isTaskExist = await taskProxy.existTask(parentEquipmentId, taskToSave._uiId);
-
-            // Assert
-            expect(isTaskExist).toBe(false);
-        });
-
-        it("When the task does not have _uiId valid, it should return false", async() => {
-            // Arrange
-
-
-            // Act
-            const isTaskExist = await taskProxy.existTask(parentEquipmentId, undefined);
-
-            // Assert
-            expect(isTaskExist).toBe(false);
+            expect(isTaskExist).toBe(arg.expectedResult);
         });
     });
 });
-
-
-
