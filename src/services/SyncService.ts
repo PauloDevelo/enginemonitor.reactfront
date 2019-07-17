@@ -17,22 +17,24 @@ class SyncService implements ISyncService{
     }
 
     syncStorage = async(): Promise<void> => {
-        try{
-            while(1){
-                const action = await actionManager.shiftAction();
-
-                try{
-                    actionManager.performAction(action);
-                }
-                catch(error){
-                    console.log(error);
-                    actionManager.putBackAction(action);
-                    throw error;
-                }
+        while(1){
+            let action: Action;
+            try{
+                action = await actionManager.getNextActionToPerform();
             }
-        }
-        catch(error){
-            //No action anymore or an error happened.
+            catch(error){
+                return;
+                // No action anymore
+            }
+
+            try{
+                actionManager.performAction(action);
+            }
+            catch(error){
+                console.log(error);
+                actionManager.putBackAction(action);
+                throw error;
+            }
         }
     }
 }

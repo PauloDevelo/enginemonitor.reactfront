@@ -5,7 +5,6 @@ import entryProxy from '../EntryProxy';
 import actionManager from '../ActionManager';
 
 import { updateEntry } from '../../helpers/EntryHelper';
-import { async } from 'q';
 
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');

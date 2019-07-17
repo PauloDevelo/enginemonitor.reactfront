@@ -14,7 +14,7 @@ export interface Action{
 
 export interface IActionManager{
     addAction(action: Action): Promise<void>;
-    shiftAction(): Promise<Action>;
+    getNextActionToPerform(): Promise<Action>;
     putBackAction(action: Action): Promise<void>;
     countAction(): Promise<number>;
     performAction (action: Action):Promise<void>;
@@ -30,11 +30,11 @@ class ActionManager implements IActionManager{
         await storageService.setItem<Action[]>("history", history);
     }
 
-    async shiftAction(): Promise<Action>{
+    async getNextActionToPerform(): Promise<Action>{
         let action: Action | undefined;
         let history:Action[] = await this.getHistoryFromStorage();
 
-        action = history.shift()
+        action = history.shift();
 
         if(!action)
         {
@@ -70,7 +70,7 @@ class ActionManager implements IActionManager{
             await httpProxy.deleteReq(action.key);
         }
         else{
-            throw new Error("The action type " + action.type + "is not recognized.");
+            throw new Error("The action type " + action.type + " is not recognized.");
         }
     }
 
