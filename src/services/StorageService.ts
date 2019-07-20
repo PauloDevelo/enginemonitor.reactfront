@@ -10,8 +10,6 @@ localforage.config({
     description : 'Contains all the information contained in Maintenance monitor'
 });
 
-
-
 export interface IStorageService{
     setGlobalItem<T>(key: string, value: T): Promise<T>;
     removeGlobalItem(key: string): Promise<void>;
@@ -101,6 +99,11 @@ class StorageService implements IStorageService{
     }
 
     async setItem<T>(key: string, value: T): Promise<T>{
+        if (value === undefined || value === null){
+            await this.getUserStorage().removeItem(key);
+            return value;
+        }
+        
         return this.getUserStorage().setItem<T>(key, value);
     }
 
