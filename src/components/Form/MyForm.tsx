@@ -2,6 +2,7 @@ import React, {useState, useRef, useCallback} from 'react';
 import { Form } from 'reactstrap';
 
 import './MyForm.css';
+import { isNumber } from 'util';
 
 /**Function that converts the Date fields of Data into a string useable by the Input of type Date. */
 function convertDateFieldsToString(obj:any){
@@ -58,14 +59,21 @@ const MyForm = React.memo(function MyForm({ initialData , submit, children, clas
 		}
 	}
 
-	const handleInputChange = useCallback((name: string , value: string | boolean) => {
+	const handleInputChange = useCallback((name: string , value: string | boolean | number) => {
 		if(data.data[name] === undefined){
 			console.log('The property ' + name + ' is not defined in the data:');
 			console.log(data.data);
 		}
 
 		const newData = Object.assign({}, data);
-		newData.data[name] = value;
+
+		if(newData.data[name] !== undefined && typeof newData.data[name] === 'number' && typeof value === 'string'){
+			newData.data[name] = parseInt(value as string, 10);
+		}
+		else{
+			newData.data[name] = value
+		}
+		
 		setData(newData);
 	}, []);
 

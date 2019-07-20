@@ -2,7 +2,7 @@ import progressiveHttpProxy from './ProgressiveHttpProxy';
 
 import storageService from './StorageService';
 
-import { updateTask } from '../helpers/TaskHelper'
+import { updateTask, updateRealtimeFields } from '../helpers/TaskHelper'
 import { TaskModel} from '../types/Types'
 
 
@@ -38,7 +38,12 @@ class TaskProxy implements ITaskProxy{
             return await storageService.getArray(this.baseUrl + equipmentId);
         }
 
-        return await progressiveHttpProxy.getArrayOnlineFirst(this.baseUrl + equipmentId, "tasks", updateTask);
+        const tasks:TaskModel[] = await progressiveHttpProxy.getArrayOnlineFirst(this.baseUrl + equipmentId, "tasks", updateTask);
+        await Promise.all(tasks.map(async (task) => {
+            await updateRealtimeFields(equipmentId, task);
+        }));
+
+        return tasks;
     }
 
     existTask = async (equipmentId: string | undefined, taskId: string | undefined):Promise<boolean> => {

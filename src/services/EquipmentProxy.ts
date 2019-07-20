@@ -10,6 +10,8 @@ export interface IEquipmentProxy{
     createOrSaveEquipment(equipmentToSave: EquipmentModel):Promise<EquipmentModel>;
     deleteEquipment(idEquipment: string): Promise<EquipmentModel>;
 
+    getStoredEquipment():Promise<EquipmentModel[]>;
+
     existEquipment(equipmentId: string | undefined):Promise<boolean>;
 }
 
@@ -34,6 +36,10 @@ class EquipmentProxy implements IEquipmentProxy{
     deleteEquipment = async (idEquipment: string): Promise<EquipmentModel> => {
         await progressiveHttpProxy.deleteAndUpdate<EquipmentModel>(this.baseUrl + idEquipment, "equipment", updateEquipment);
         return updateEquipment(await storageService.removeItemInArray<EquipmentModel>(this.baseUrl, idEquipment));
+    }
+
+    getStoredEquipment = async():Promise<EquipmentModel[]> => {
+        return this.fetchEquipments(true);
     }
 
     existEquipment = async (equipmentId: string | undefined):Promise<boolean> => {

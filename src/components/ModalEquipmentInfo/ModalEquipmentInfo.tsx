@@ -33,7 +33,7 @@ type Props = {
 }
 
 const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted, visible, toggle, className}: Props) => {
-	const [ageAcquisitionType, setAgeAcquisitionType] = useState(equipment.ageAcquisitionType.toString());
+	const [ageAcquisitionType, setAgeAcquisitionType] = useState(equipment.ageAcquisitionType);
 	const modalLogic = useEditModalLogic(toggle, equipmentProxy.createOrSaveEquipment, [], undefined, onEquipmentInfoSaved, 
 										equipmentProxy.deleteEquipment, [equipment._uiId], onEquipmentDeleted);
 	const [isCreation, setIsCeation] = useState(false);
@@ -43,7 +43,7 @@ const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted
 	}
 
 	useEffect(() => {
-		setAgeAcquisitionType(equipment.ageAcquisitionType.toString());
+		setAgeAcquisitionType(equipment.ageAcquisitionType);
 		updateIsCreation();
 	}, [equipment]);
 
@@ -65,12 +65,12 @@ const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted
 							<MyInput name="model" 				label={equipmentInfoMsg.model} 				type="text" 	required/>
 							<MyInput name="installation" 		label={equipmentInfoMsg.installDateLabel} 	type="date" 	required/>
 							<MyInput name="ageAcquisitionType" 	label={equipmentInfoMsg.ageAcquisitionType} type="select" 	required	onChanged={setAgeAcquisitionType} tooltip={equipmentInfoMsg.ageAcquisitionTypeTooltip}>
-								<TranslatedOption value={AgeAcquisitionType.time.toString()}  		message={equipmentInfoMsg.time}/>
-								<TranslatedOption value={AgeAcquisitionType.manualEntry.toString()} message={equipmentInfoMsg.manualEntry}/>
-								<TranslatedOption value={AgeAcquisitionType.tracker.toString()} 	message={equipmentInfoMsg.tracker}/>
+								<TranslatedOption value={AgeAcquisitionType.time}  		message={equipmentInfoMsg.time}/>
+								<TranslatedOption value={AgeAcquisitionType.manualEntry} message={equipmentInfoMsg.manualEntry}/>
+								<TranslatedOption value={AgeAcquisitionType.tracker} 	message={equipmentInfoMsg.tracker}/>
 							</MyInput>
-							{ageAcquisitionType === AgeAcquisitionType.manualEntry.toString() &&  <MyInput name="age" 	label={equipmentInfoMsg.age}    tooltip={equipmentInfoMsg.ageToolTip} 	type="number" 	required min={0} />}
-							{ageAcquisitionType === AgeAcquisitionType.tracker.toString() && <MyInput name="ageUrl" 	label={equipmentInfoMsg.ageUrl} tooltip={equipmentInfoMsg.ageUrlToolTip} 	type="text" 	required min={0} />}
+							{ageAcquisitionType === AgeAcquisitionType.manualEntry &&  <MyInput name="age" 	label={equipmentInfoMsg.age}    tooltip={equipmentInfoMsg.ageToolTip} 	type="number" 	required min={0} />}
+							{ageAcquisitionType === AgeAcquisitionType.tracker && <MyInput name="ageUrl" 	label={equipmentInfoMsg.ageUrl} tooltip={equipmentInfoMsg.ageUrlToolTip} 	type="text" 	required min={0} />}
 						</MyForm>}
 						<Alerts errors={modalLogic.alerts}/>
 					</ModalBody>

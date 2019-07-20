@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
 type Props = {
-    value: string,
+    value: number,
     message: FormattedMessage.MessageDescriptor,
     intl: IntlShape
 }

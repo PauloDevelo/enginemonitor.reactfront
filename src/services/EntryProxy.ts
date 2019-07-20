@@ -11,6 +11,8 @@ export interface IEntryProxy{
     fetchEntries(equipmentId: string, taskId: string):Promise<EntryModel[]>;
     fetchAllEntries(equipmentId: string):Promise<EntryModel[]>;
 
+    getStoredEntries(equipmentId: string, taskId: string):Promise<EntryModel[]>;
+
     existEntry(equipmentId: string, entryId: string | undefined):Promise<boolean>;
 }
 
@@ -55,6 +57,10 @@ class EntryProxy implements IEntryProxy{
         }
 
         return await progressiveHttpProxy.getArrayOnlineFirst<EntryModel>(this.baseUrl + equipmentId, "entries", updateEntry);
+    }
+
+    getStoredEntries = async(equipmentId: string, taskId: string):Promise<EntryModel[]> => {
+        return this.fetchEntries(equipmentId, taskId, true);
     }
 
     existEntry = async (equipmentId: string, entryId: string | undefined):Promise<boolean> => {
