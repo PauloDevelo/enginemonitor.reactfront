@@ -11,7 +11,7 @@ describe("CardTaskDetails", () => {
         brand: 'nanni',
         model: 'N3.30',
         age: 2563,
-        installation: new Date(2011, 1, 23)
+        installation: new Date('2011-02-22T16:00:00.000Z')
     }
 
     const task1 = {
@@ -19,7 +19,7 @@ describe("CardTaskDetails", () => {
         name: 'taskname1',
         periodInMonth: 12,
         description: 'task1 description',
-        nextDueDate: new Date(2011, 1, 23),
+        nextDueDate: new Date('2011-02-22T16:00:00.000Z'),
         usagePeriodInHour: 200,
         usageInHourLeft: 20,
         level: 1
@@ -30,7 +30,7 @@ describe("CardTaskDetails", () => {
         name: 'taskname2',
         periodInMonth: 24,
         description: 'task2 description',
-        nextDueDate: new Date(2018, 1, 23),
+        nextDueDate: new Date('2018-02-22T16:00:00.000Z'),
         usagePeriodInHour: 400,
         usageInHourLeft: 20,
         level: 3
