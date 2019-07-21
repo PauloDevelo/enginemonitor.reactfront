@@ -1,6 +1,6 @@
 import httpProxy from '../HttpProxy';
 import storageService from '../StorageService';
-import actionManager from '../ActionManager';
+import actionManager, { NoActionPendingError } from '../ActionManager';
 
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');
@@ -92,7 +92,7 @@ describe('Test ActionManager', () => {
                 expect(true).toBe(false);
             }
             catch(ex){
-                expect(ex).toBeInstanceOf(Error);
+                expect(ex).toBeInstanceOf(NoActionPendingError);
                 expect(ex.message).toEqual("There isn't pending action anymore");
             }
         });

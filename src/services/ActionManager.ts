@@ -21,6 +21,8 @@ export interface IActionManager{
     clearActions(): Promise<void>;
 }
 
+export class NoActionPendingError extends Error{};
+
 class ActionManager implements IActionManager{
     async addAction(action: Action): Promise<void>{
         let history:Action[] = await this.getHistoryFromStorage();
@@ -38,7 +40,7 @@ class ActionManager implements IActionManager{
 
         if(!action)
         {
-            throw new Error("There isn't pending action anymore");
+            throw new NoActionPendingError("There isn't pending action anymore");
         }
 
         await storageService.setItem<Action[]>("history", history);

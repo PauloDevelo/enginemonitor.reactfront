@@ -1,4 +1,4 @@
-import actionManager, { Action, ActionType } from './ActionManager';
+import actionManager, { Action, ActionType, NoActionPendingError } from './ActionManager';
 
 export interface ISyncService{
     isOnline(): Promise<boolean>;
@@ -23,8 +23,10 @@ class SyncService implements ISyncService{
                 action = await actionManager.getNextActionToPerform();
             }
             catch(error){
-                return;
-                // No action anymore
+                if(error instanceof NoActionPendingError){
+                    return;
+                }
+                throw error;
             }
 
             try{
