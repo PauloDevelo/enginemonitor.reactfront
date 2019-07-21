@@ -22,6 +22,10 @@ const Alerts = ({color, error, errors, children}:Props) => {
     if(color === undefined){
         color = "danger";
     }
+
+    if(isString(errors)){
+        error = errors;
+    }
     
     if(error){
         let value:any;
