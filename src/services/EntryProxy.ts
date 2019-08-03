@@ -11,9 +11,12 @@ export interface IEntryProxy{
     fetchEntries(equipmentId: string, taskId: string):Promise<EntryModel[]>;
     fetchAllEntries(equipmentId: string):Promise<EntryModel[]>;
 
-    getStoredEntries(equipmentId: string, taskId: string):Promise<EntryModel[]>;
+    getStoredEntries(equipmentId: string, taskId: string | undefined):Promise<EntryModel[]>;
 
     existEntry(equipmentId: string, entryId: string | undefined):Promise<boolean>;
+
+    onTaskDeleted(equipmentId: string, taskId: string): Promise<void>;
+    onEquipmentDeleted(equipmentId: string): Promise<void>;
 }
 
 class EntryProxy implements IEntryProxy{
@@ -59,8 +62,13 @@ class EntryProxy implements IEntryProxy{
         return await progressiveHttpProxy.getArrayOnlineFirst<EntryModel>(this.baseUrl + equipmentId, "entries", updateEntry);
     }
 
-    getStoredEntries = async(equipmentId: string, taskId: string):Promise<EntryModel[]> => {
-        return this.fetchEntries(equipmentId, taskId, true);
+    getStoredEntries = async(equipmentId: string, taskId: string | undefined = undefined):Promise<EntryModel[]> => {
+        if(taskId != undefined){
+            return this.fetchEntries(equipmentId, taskId, true);
+        }
+        else{
+            return this.fetchAllEntries(equipmentId, true);
+        }
     }
 
     existEntry = async (equipmentId: string, entryId: string | undefined):Promise<boolean> => {
@@ -71,6 +79,22 @@ class EntryProxy implements IEntryProxy{
         const allEntries = await this.fetchAllEntries(equipmentId, true);
 
         return allEntries.findIndex(entry => entry._uiId === entryId) !== -1;
+    }
+
+    onTaskDeleted = async (equipmentId: string, taskId: string): Promise<void> => {
+        const entries = await this.getStoredEntries(equipmentId, taskId);
+
+        await Promise.all(entries.map(async (entry) => {
+            await storageService.removeItemInArray<EntryModel>(this.baseUrl + equipmentId, entry._uiId);
+        }));
+    }
+
+    onEquipmentDeleted = async (equipmentId: string): Promise<void> => {
+        const entries = await this.getStoredEntries(equipmentId);
+
+        await Promise.all(entries.map(async (entry) => {
+            await storageService.removeItemInArray<EntryModel>(this.baseUrl + equipmentId, entry._uiId);
+        }));
     }
 }
 

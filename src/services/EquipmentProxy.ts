@@ -2,6 +2,9 @@ import progressiveHttpProxy from './ProgressiveHttpProxy';
 
 import storageService from './StorageService';
 
+import taskProxy from './TaskProxy';
+import entryProxy from './EntryProxy';
+
 import { updateEquipment } from '../helpers/EquipmentHelper'
 import { EquipmentModel} from '../types/Types'
 
@@ -35,6 +38,10 @@ class EquipmentProxy implements IEquipmentProxy{
 
     deleteEquipment = async (idEquipment: string): Promise<EquipmentModel> => {
         await progressiveHttpProxy.deleteAndUpdate<EquipmentModel>(this.baseUrl + idEquipment, "equipment", updateEquipment);
+
+        await entryProxy.onEquipmentDeleted(idEquipment);
+        await taskProxy.onEquipmentDeleted(idEquipment);
+
         return updateEquipment(await storageService.removeItemInArray<EquipmentModel>(this.baseUrl, idEquipment));
     }
 

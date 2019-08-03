@@ -1,9 +1,11 @@
 import progressiveHttpProxy from './ProgressiveHttpProxy';
 
+import entryProxy from './EntryProxy';
+
 import storageService from './StorageService';
 
 import { updateTask, updateRealtimeFields } from '../helpers/TaskHelper'
-import { TaskModel} from '../types/Types'
+import { TaskModel, EntryModel} from '../types/Types'
 
 
 export interface ITaskProxy{
@@ -12,6 +14,8 @@ export interface ITaskProxy{
     fetchTasks(equipmentId: string): Promise<TaskModel[]>;
 
     existTask(equipmentId: string | undefined, taskId: string | undefined):Promise<boolean>;
+
+    onEquipmentDeleted(equipmentId: string): Promise<void>;
 }
 
 class TaskProxy implements ITaskProxy{
@@ -30,6 +34,8 @@ class TaskProxy implements ITaskProxy{
         await progressiveHttpProxy.deleteAndUpdate<TaskModel>(this.baseUrl + equipmentId + '/' + taskId, "task", updateTask);
 
         const removedTask = await storageService.removeItemInArray<TaskModel>(this.baseUrl + equipmentId, taskId);
+        await entryProxy.onTaskDeleted(equipmentId, taskId);
+
         return updateTask(removedTask);
     }
 
@@ -55,6 +61,14 @@ class TaskProxy implements ITaskProxy{
         const allTasks = await this.fetchTasks(equipmentId, true);
 
         return allTasks.findIndex(task => task._uiId === taskId) !== -1;
+    }
+
+    onEquipmentDeleted = async (equipmentId: string): Promise<void> => {
+        var tasks = await this.fetchTasks(equipmentId, true);
+
+        await Promise.all(tasks.map(async (task) => {
+            await storageService.removeItemInArray<TaskModel>(this.baseUrl + equipmentId, task._uiId);
+        }));
     }
 }
 
