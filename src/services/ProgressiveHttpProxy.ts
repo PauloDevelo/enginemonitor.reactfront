@@ -25,7 +25,7 @@ export interface ISyncHttpProxy{
      * @param keyName The field name that contain the data to return.
      * @param update The function that will update the data before returning it to the callee
      */
-    deleteAndUpdate<T>(url: string, keyName: string, update:(data:T)=>T):Promise<T|undefined>;
+    deleteAndUpdate<T>(url: string, keyName: string, update:(data:T)=>T):Promise<void>;
 
     /**
      * This function returns an array of T element and update the array in the user storage if online.
@@ -55,16 +55,14 @@ class ProgressiveHttpProxy implements ISyncHttpProxy{
         }
     }
 
-    async deleteAndUpdate<T>(url: string, keyName: string, update:(data:T)=>T):Promise<T|undefined>{
+    async deleteAndUpdate<T>(url: string, keyName: string, update:(data:T)=>T):Promise<void>{
         if(await syncService.isOnline()){
             const deletedEntity = (await httpProxy.deleteReq(url))[keyName];
-            return update(deletedEntity);
+            update(deletedEntity);
         }
         else{
             const action: Action = { key: url, type: ActionType.Delete };
             actionManager.addAction(action);
-
-            return undefined;
         }
     }
 
