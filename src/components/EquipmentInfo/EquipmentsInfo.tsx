@@ -87,6 +87,10 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 		}
         
 		setEquipments(newEquipmentList);
+
+		if(index === -1){
+			setCurrentEquipment(equipmentInfoSaved);
+		}
 	}, [equipments]);
 	
 	const onEquipmentDeleted = useCallback((deletedEquipment: EquipmentModel) => {
