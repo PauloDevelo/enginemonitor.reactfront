@@ -36,11 +36,16 @@ const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted
 	const [ageAcquisitionType, setAgeAcquisitionType] = useState(equipment.ageAcquisitionType);
 	const modalLogic = useEditModalLogic(toggle, equipmentProxy.createOrSaveEquipment, [], undefined, onEquipmentInfoSaved, 
 										equipmentProxy.deleteEquipment, [equipment._uiId], onEquipmentDeleted);
-	const [isCreation, setIsCeation] = useState(false);
+	const [isCreation, setIsCreation] = useState(false);
 
 	async function updateIsCreation(){
-		setIsCeation(!(await equipmentProxy.existEquipment(equipment._uiId)));
+		setIsCreation(!(await equipmentProxy.existEquipment(equipment._uiId)));
 	}
+
+	const onAgeAcquisitionTypeChanged = (ageAcquisitionType: string) => {
+		const newAgeAcquisitionType = parseInt(ageAcquisitionType);
+		setAgeAcquisitionType(newAgeAcquisitionType);
+	};
 
 	useEffect(() => {
 		setAgeAcquisitionType(equipment.ageAcquisitionType);
@@ -64,7 +69,7 @@ const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted
 							<MyInput name="brand" 				label={equipmentInfoMsg.brand} 				type="text" 	required/>
 							<MyInput name="model" 				label={equipmentInfoMsg.model} 				type="text" 	required/>
 							<MyInput name="installation" 		label={equipmentInfoMsg.installDateLabel} 	type="date" 	required/>
-							<MyInput name="ageAcquisitionType" 	label={equipmentInfoMsg.ageAcquisitionType} type="select" 	required	onChanged={setAgeAcquisitionType} tooltip={equipmentInfoMsg.ageAcquisitionTypeTooltip}>
+							<MyInput name="ageAcquisitionType" 	label={equipmentInfoMsg.ageAcquisitionType} type="select" 	required	onChanged={onAgeAcquisitionTypeChanged} tooltip={equipmentInfoMsg.ageAcquisitionTypeTooltip}>
 								<TranslatedOption value={AgeAcquisitionType.time}  		message={equipmentInfoMsg.time}/>
 								<TranslatedOption value={AgeAcquisitionType.manualEntry} message={equipmentInfoMsg.manualEntry}/>
 								<TranslatedOption value={AgeAcquisitionType.tracker} 	message={equipmentInfoMsg.tracker}/>
