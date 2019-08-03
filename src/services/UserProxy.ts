@@ -51,7 +51,7 @@ class UserProxy implements IUserProxy{
                 storageService.setGlobalItem('currentUser', user);
             }
 
-            storageService.openUserStorage(user);
+            await storageService.openUserStorage(user);
 
             return user;
         }
@@ -73,7 +73,7 @@ class UserProxy implements IUserProxy{
         if(config){
             const user = await storageService.getGlobalItem<UserModel>('currentUser');
             if (user){
-                storageService.openUserStorage(user);
+                await storageService.openUserStorage(user);
                 return user;
             }
         }

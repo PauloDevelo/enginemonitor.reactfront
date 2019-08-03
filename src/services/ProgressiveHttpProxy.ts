@@ -2,8 +2,7 @@ import syncService from './SyncService';
 import httpProxy from './HttpProxy';
 
 import actionManager, { Action, ActionType } from './ActionManager';
-import storageService from './StorageService'
-import { updateEntry } from '../helpers/EntryHelper';
+import storageService from './StorageService';
 
 /**
  * This interface is an enhanced http proxy that manages offline mode.
@@ -39,7 +38,6 @@ export interface ISyncHttpProxy{
 }
 
 class ProgressiveHttpProxy implements ISyncHttpProxy{
-    constructor(){}
 
     async postAndUpdate<T>(url: string, keyName:string, dataToPost:T, update:(data:T)=>T):Promise<T> {
         const data:any = {[keyName]: dataToPost};

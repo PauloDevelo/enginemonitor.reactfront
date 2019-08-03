@@ -1,5 +1,5 @@
 import httpProxy from './HttpProxy';
-import storageService  from './StorageService';
+import storageService from './StorageService';
 
 export enum ActionType{
     Post,
@@ -60,8 +60,11 @@ class ActionManager implements IActionManager{
     }
 
     async countAction(): Promise<number>{
-        const history = (await storageService.getItem<Action[]>("history"));
-        return history ? history.length : 0;
+        if(storageService.isUserStorageOpened() == false){
+            return 0;
+        }
+        
+        return (await storageService.getArray<Action>("history")).length;
     }
 
     performAction = async (action: Action):Promise<void> => {
