@@ -61,6 +61,9 @@ export default function App(){
 		if(task._uiId === currentTaskId){
 			setTaskHistoryRefreshId(taskHistoryRefreshId + 1);
 		}
+		else{
+			changeCurrentTask(task);
+		}
 	};
 	const onTaskChangedRef = useRef(onTaskChanged);
 	useEffect(() => {
