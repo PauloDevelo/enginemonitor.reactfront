@@ -10,13 +10,21 @@ localforage.config({
     description : 'Contains all the information contained in Maintenance monitor'
 });
 
+export interface IUserStorageListener{
+    onUserStorageOpened(): Promise<void>;
+    onUserStorageClosed(): Promise<void>;
+}
+
 export interface IStorageService{
     setGlobalItem<T>(key: string, value: T): Promise<T>;
     removeGlobalItem(key: string): Promise<void>;
     getGlobalItem<T>(key: string): Promise<T>;
 
-    openUserStorage(user: UserModel): void;
-    closeUserStorage(): void;
+    isUserStorageOpened(): boolean;
+    openUserStorage(user: UserModel): Promise<void>;
+    closeUserStorage(): Promise<void>;
+    registerUserStorageListener(listener: IUserStorageListener): void;
+    unregisterUserStorageListener(listener: IUserStorageListener): void;
 
     setItem<T>(key: string, value: T): Promise<T>;
     getItem<T>(key: string): Promise<T>;
@@ -27,6 +35,7 @@ export interface IStorageService{
 };
 
 class StorageService implements IStorageService{
+    private userStorageListeners:IUserStorageListener[] = [];
     private userStorage: LocalForage | undefined;
 
     async setGlobalItem<T>(key: string, value: T): Promise<T> {
@@ -59,14 +68,28 @@ class StorageService implements IStorageService{
         }
     }
 
-    openUserStorage(user: UserModel): void{
+    registerUserStorageListener(listener: IUserStorageListener): void{
+        this.userStorageListeners.push(listener);
+    }
+
+    unregisterUserStorageListener(listenerToRemove: IUserStorageListener): void{
+        this.userStorageListeners = this.userStorageListeners.filter(listener => listener !== listenerToRemove);
+    }
+
+    isUserStorageOpened(): boolean{
+        return this.userStorage !== undefined;
+    }
+
+    async openUserStorage(user: UserModel): Promise<void>{
         this.userStorage = localforage.createInstance({
             name: user.email
         });
+        return this.triggerOnUserStorageOpened();
     }
 
-    closeUserStorage(): void{
+    async closeUserStorage(): Promise<void>{
         this.userStorage = undefined;
+        return this.triggerOnUserStorageClosed();
     }
 
     async updateArray<T extends EntityModel>(key: string, item:T):Promise<void>{
@@ -126,6 +149,18 @@ class StorageService implements IStorageService{
         }
 
         throw new Error("The storage is undefined yet. You must connect first.");
+    }
+
+    private async triggerOnUserStorageOpened():Promise<void>{
+        await Promise.all(this.userStorageListeners.map(async (listener) => {
+            await listener.onUserStorageOpened();
+        }));
+    }
+
+    private async triggerOnUserStorageClosed():Promise<void>{
+        await Promise.all(this.userStorageListeners.map(async (listener) => {
+            await listener.onUserStorageClosed();
+        }));
     }
 }
 

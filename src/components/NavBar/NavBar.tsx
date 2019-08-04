@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+
 import ClockLabel from '../ClockLabel/ClockLabel';
+
 import { faSignOutAlt, faPlug, faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage, Messages, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import userProxy from '../../services/UserProxy';
+import syncService from '../../services/SyncService';
 
 import jsonMessages from "./NavBar.messages.json";
 const navBarMsg: Messages = defineMessages(jsonMessages);
@@ -45,11 +48,15 @@ const ConnectionStateIcon = ({isOnline}:ConnectionState) => {
 }
 
 const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
-    const [isOnline, setIsOnline] = useState(navigator.onLine);
-
+    const [isOnline, onIsOnlineChanged] = useState(false);
+    
     useEffect(() => {
-        window.addEventListener('offline', (e) => setIsOnline(false));
-        window.addEventListener('online', (e) => setIsOnline(true));
+        syncService.registerIsOnlineListener(onIsOnlineChanged);
+        syncService.isOnline().then(onIsOnlineChanged);
+
+        return () => {
+            syncService.unregisterIsOnlineListener(onIsOnlineChanged);
+          }
     }, []);
 
     const logout = useCallback(() => {

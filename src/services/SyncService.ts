@@ -1,10 +1,31 @@
-import actionManager, { Action, ActionType, NoActionPendingError } from './ActionManager';
+import actionManager, { Action, NoActionPendingError } from './ActionManager';
+import storageService, { IUserStorageListener } from './StorageService';
 
-export interface ISyncService{
+export interface ISyncService {
+    registerIsOnlineListener(listener: (isOnline: boolean) => void):void;
+    unregisterIsOnlineListener(listenerToRemove: (isOnline: boolean) => void):void;
     isOnline(): Promise<boolean>;
 }
 
-class SyncService implements ISyncService{
+class SyncService implements ISyncService, IUserStorageListener{
+    constructor(){
+        storageService.registerUserStorageListener(this);
+    }
+
+    private listeners: ((isOnline: boolean) => void)[] = [];
+
+    registerIsOnlineListener(listener: (isOnline: boolean) => void):void{
+        this.listeners.push(listener);
+    }
+
+    unregisterIsOnlineListener(listenerToRemove: (isOnline: boolean) => void):void{
+        this.listeners = this.listeners.filter(listener => listener !== listenerToRemove);
+    }
+
+    private async triggerIsOnlineChanged(): Promise<void>{
+        const isOnline = await this.isOnline();
+        this.listeners.map(listener => listener(isOnline));
+    }
 
     isOnline = async(): Promise<boolean> => {
         return window.navigator.onLine && (await actionManager.countAction()) === 0;
@@ -14,9 +35,11 @@ class SyncService implements ISyncService{
         if(isOnline){
             await this.syncStorage();
         }
+        
+        await this.triggerIsOnlineChanged();
     }
 
-    syncStorage = async(): Promise<void> => {
+    private syncStorage = async(): Promise<void> => {
         while(1){
             let action: Action;
             try{
@@ -26,24 +49,32 @@ class SyncService implements ISyncService{
                 if(error instanceof NoActionPendingError){
                     return;
                 }
-                throw error;
+
+                console.log(error);
+                return;
             }
 
             try{
-                actionManager.performAction(action);
+                await actionManager.performAction(action);
             }
             catch(error){
                 console.log(error);
-                actionManager.putBackAction(action);
-                throw error;
+                await actionManager.putBackAction(action);
+                return;
             }
         }
     }
+
+    async onUserStorageOpened(): Promise<void> {
+        return this.setIsOnline(window.navigator.onLine);
+    }
+
+    async onUserStorageClosed(): Promise<void> {}
 }
 
 const syncService = new SyncService();
 
-window.addEventListener('offline', (e) => syncService.setIsOnline(false));
-window.addEventListener('online', (e) => syncService.setIsOnline(true));
+window.addEventListener('offline', async (e) => await syncService.setIsOnline(false));
+window.addEventListener('online', async (e) => await syncService.setIsOnline(true));
 
 export default syncService as ISyncService;
