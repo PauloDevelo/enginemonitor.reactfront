@@ -13,7 +13,6 @@ import moment from 'moment';
 
 export function createDefaultTask(equipment: EquipmentModel): TaskModel{
     const uuid = uuidv1();
-
 	return {
         _uiId: uuid,
 		name: '',
