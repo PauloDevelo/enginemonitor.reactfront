@@ -130,21 +130,24 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
 			),
 			cell: (content: any) => {
                 const entry:EntryModel = content.data;
-                const equ = equipment as EquipmentModel;
-
-                if (equ.ageAcquisitionType !== AgeAcquisitionType.time){
-                    return innerEntryCell(entry, <Fragment>{entry.age === -1?"":entry.age + 'h'}</Fragment>);
+                if (equipment == null){
+                    return <div></div>;
                 }
                 else{
-                    const diff = moment.duration(entry.date.getTime() - equ.installation.getTime());
-                    const year = diff.years();
-                    const month = diff.months();
-                    const day = diff.days();
-                    return innerEntryCell(entry, <Fragment>
-                        {diff.years() > 0 && <FormattedMessage {... messages.yearperiod} values={{year}}/>}{' '}
-                        {diff.months() > 0 && <FormattedMessage {... messages.monthperiod} values={{month}}/>}{' '}
-                        {diff.days() > 0 && <FormattedMessage {... messages.dayperiod} values={{day}}/>}
-                    </Fragment>);
+                    if (equipment.ageAcquisitionType !== AgeAcquisitionType.time){
+                        return innerEntryCell(entry, <Fragment>{entry.age === -1?"":entry.age + 'h'}</Fragment>);
+                    }
+                    else{
+                        const diff = moment.duration(entry.date.getTime() - equipment.installation.getTime());
+                        const year = diff.years();
+                        const month = diff.months();
+                        const day = diff.days();
+                        return innerEntryCell(entry, <Fragment>
+                            {diff.years() > 0 && <FormattedMessage {... messages.yearperiod} values={{year}}/>}{' '}
+                            {diff.months() > 0 && <FormattedMessage {... messages.monthperiod} values={{month}}/>}{' '}
+                            {diff.days() > 0 && <FormattedMessage {... messages.dayperiod} values={{day}}/>}
+                        </Fragment>);
+                    }
                 }
             },
             style: {width:"25%"},
