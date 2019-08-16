@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 import ClockLabel from '../ClockLabel/ClockLabel';
+import DropDownConnectionStateItem from './DropDownConnectionStateItem';
 
-import { faSignOutAlt, faPlug, faBan } from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt, } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage, Messages, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import userProxy from '../../services/UserProxy';
-import syncService from '../../services/SyncService';
 
 import jsonMessages from "./NavBar.messages.json";
 const navBarMsg: Messages = defineMessages(jsonMessages);
@@ -25,40 +25,7 @@ type Props = {
     toggle: ()=>void
 };
 
-type ConnectionState = {
-    isOnline: boolean
-};
-
-const ConnectionStateMessage = ({isOnline}:ConnectionState) => {
-    if (isOnline){
-        return <FormattedMessage {...navBarMsg.online} />
-    }
-    else{
-        return <FormattedMessage {...navBarMsg.notonline} />
-    }
-}
-
-const ConnectionStateIcon = ({isOnline}:ConnectionState) => {
-    if (isOnline){
-        return <FontAwesomeIcon icon={faPlug} />
-    }
-    else{
-        return <FontAwesomeIcon icon={faBan} />
-    }
-}
-
 const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
-    const [isOnline, onIsOnlineChanged] = useState(false);
-    
-    useEffect(() => {
-        syncService.registerIsOnlineListener(onIsOnlineChanged);
-        syncService.isOnline().then(onIsOnlineChanged);
-
-        return () => {
-            syncService.unregisterIsOnlineListener(onIsOnlineChanged);
-          }
-    }, []);
-
     const logout = useCallback(() => {
         userProxy.logout();
         onLoggedOut();
@@ -78,9 +45,7 @@ const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
                         {textMenu}
                         </DropdownToggle>
                         <DropdownMenu right>
-                            <DropdownItem disabled>
-                                <ConnectionStateIcon isOnline={isOnline}/>{' '}<ConnectionStateMessage isOnline={isOnline}/>
-                            </DropdownItem>
+                            <DropDownConnectionStateItem />
                             <DropdownItem divider />
                             <DropdownItem onClick={logout}>
                             <FontAwesomeIcon icon={faSignOutAlt} />{' '}<FormattedMessage {...navBarMsg.signout} />

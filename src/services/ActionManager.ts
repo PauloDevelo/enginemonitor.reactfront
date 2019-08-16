@@ -1,5 +1,6 @@
 import httpProxy from './HttpProxy';
-import storageService from './StorageService';
+import storageService, { IUserStorageListener } from './StorageService';
+
 
 export enum ActionType{
     Post,
@@ -19,17 +20,49 @@ export interface IActionManager{
     countAction(): Promise<number>;
     performAction (action: Action):Promise<void>;
     clearActions(): Promise<void>;
+
+    registerOnActionManagerChanged(listener: (actionCounter: number) => void):void;
+    unregisterOnActionManagerChanged(listenerToRemove: (actionCounter: number) => void):void;
 }
 
 export class NoActionPendingError extends Error{};
 
-class ActionManager implements IActionManager{
+class ActionManager implements IActionManager, IUserStorageListener{
+
+    private listeners: ((actionCounter: number) => void)[] = [];
+
+    constructor(){
+        storageService.registerUserStorageListener(this);
+    }
+
+    registerOnActionManagerChanged(listener: (actionCounter: number) => void):void{
+        this.listeners.push(listener);
+    }
+
+    unregisterOnActionManagerChanged(listenerToRemove: (actionCounter: number) => void):void{
+        this.listeners = this.listeners.filter(listener => listener !== listenerToRemove);
+    }
+
+    async onUserStorageOpened():Promise<void>{
+        const nbAction = await this.countAction();
+        this.triggerOnActionManagerChanged(nbAction);
+    }
+
+    async onUserStorageClosed():Promise<void>{
+        this.triggerOnActionManagerChanged(0);
+    }
+
+    private async triggerOnActionManagerChanged(actionCounter: number): Promise<void>{
+        this.listeners.map(listener => listener(actionCounter));
+    }
+
     async addAction(action: Action): Promise<void>{
         let history:Action[] = await this.getHistoryFromStorage();
 
         history.push(action);
 
-        await storageService.setItem<Action[]>("history", history);
+        var actions = await storageService.setItem<Action[]>("history", history);
+        this.triggerOnActionManagerChanged(actions.length);
     }
 
     async getNextActionToPerform(): Promise<Action>{
@@ -43,7 +76,8 @@ class ActionManager implements IActionManager{
             throw new NoActionPendingError("There isn't pending action anymore");
         }
 
-        await storageService.setItem<Action[]>("history", history);
+        var actions = await storageService.setItem<Action[]>("history", history);
+        this.triggerOnActionManagerChanged(actions.length);
 
         return action;
     }
@@ -56,7 +90,8 @@ class ActionManager implements IActionManager{
 
         newHistory = newHistory.concat(history);
 
-        await storageService.setItem<Action[]>("history", newHistory);
+        var actions = await storageService.setItem<Action[]>("history", newHistory);
+        this.triggerOnActionManagerChanged(actions.length);
     }
 
     async countAction(): Promise<number>{
@@ -80,7 +115,8 @@ class ActionManager implements IActionManager{
     }
 
     async clearActions(): Promise<void>{
-        await storageService.setItem<Action[]>("history", []);
+        var actions = await storageService.setItem<Action[]>("history", []);
+        this.triggerOnActionManagerChanged(actions.length);
     }
 
     private async getHistoryFromStorage():Promise<Action[]>{

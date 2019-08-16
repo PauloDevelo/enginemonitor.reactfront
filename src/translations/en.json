@@ -57,6 +57,7 @@
   "month": "Period in month",
   "monthperiod": "{month, plural, one {# month} other {# months}}",
   "name": "Last Name",
+  "nbAction": "{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}",
   "needVerification": "needs to be checked. Please check your emails.",
   "newPassword": "New Password",
   "no": "No",
