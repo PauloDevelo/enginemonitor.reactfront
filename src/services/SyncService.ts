@@ -5,6 +5,8 @@ export interface ISyncService {
     registerIsOnlineListener(listener: (isOnline: boolean) => void):void;
     unregisterIsOnlineListener(listenerToRemove: (isOnline: boolean) => void):void;
     isOnlineAndSynced(): Promise<boolean>;
+    isOnline(): boolean;
+    isSynced():Promise<boolean>;
 }
 
 class SyncService implements ISyncService, IUserStorageListener{
@@ -28,8 +30,16 @@ class SyncService implements ISyncService, IUserStorageListener{
     }
 
     isOnlineAndSynced = async(): Promise<boolean> => {
-        return window.navigator.onLine && (await actionManager.countAction()) === 0;
+        return this.isOnline() && await this.isSynced();
     };
+
+    isOnline = (): boolean => {
+        return window.navigator.onLine;
+    };
+
+    isSynced = async ():Promise<boolean> => {
+        return (await actionManager.countAction()) === 0;
+    }
 
     setIsOnline = async(isOnline: boolean): Promise<void> => {
         if(isOnline){
