@@ -4,7 +4,7 @@ import storageService, { IUserStorageListener } from './StorageService';
 export interface ISyncService {
     registerIsOnlineListener(listener: (isOnline: boolean) => void):void;
     unregisterIsOnlineListener(listenerToRemove: (isOnline: boolean) => void):void;
-    isOnline(): Promise<boolean>;
+    isOnlineAndSynced(): Promise<boolean>;
 }
 
 class SyncService implements ISyncService, IUserStorageListener{
@@ -23,11 +23,11 @@ class SyncService implements ISyncService, IUserStorageListener{
     }
 
     private async triggerIsOnlineChanged(): Promise<void>{
-        const isOnline = await this.isOnline();
+        const isOnline = await this.isOnlineAndSynced();
         this.listeners.map(listener => listener(isOnline));
     }
 
-    isOnline = async(): Promise<boolean> => {
+    isOnlineAndSynced = async(): Promise<boolean> => {
         return window.navigator.onLine && (await actionManager.countAction()) === 0;
     };
 

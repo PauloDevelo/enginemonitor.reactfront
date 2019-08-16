@@ -46,7 +46,7 @@ describe('Test TaskProxy', () => {
     describe.each(createOrSaveTaskParams)("createOrSaveTask", (arg) => {
         it("When " + JSON.stringify(arg), async() => {
             // Arrange
-            syncService.isOnline.mockImplementation(() => {
+            syncService.isOnlineAndSynced.mockImplementation(() => {
                 return Promise.resolve(arg.isOnline);
             });
 
@@ -82,7 +82,7 @@ describe('Test TaskProxy', () => {
     describe.each(deleteTaskParams)("deleteTask", (arg) => {
         it("When " + JSON.stringify(arg), async() => {
             // Arrange
-            syncService.isOnline.mockImplementation(() => {
+            syncService.isOnlineAndSynced.mockImplementation(() => {
                 return Promise.resolve(arg.isOnline);
             });
 
@@ -117,7 +117,7 @@ describe('Test TaskProxy', () => {
     describe.each(existEquipmentParams)("existEquipment", (arg) => {
         it("When " + JSON.stringify(arg), async() => {
              // Arrange
-             syncService.isOnline.mockImplementation(() => {
+             syncService.isOnlineAndSynced.mockImplementation(() => {
                 return Promise.resolve(arg.isOnline);
             });
 

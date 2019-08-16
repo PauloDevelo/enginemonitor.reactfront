@@ -67,7 +67,7 @@ describe('Test EntryProxy', () => {
                 expect.assertions(4);
             }
             
-            syncService.isOnline.mockImplementation(() => {
+            syncService.isOnlineAndSynced.mockImplementation(() => {
                 return Promise.resolve(arg.isOnline);
             });
 
@@ -105,7 +105,7 @@ describe('Test EntryProxy', () => {
     describe.each(deleteEntryParams)('deleteEntries', async(arg) =>{
         it("when " + JSON.stringify(arg), async() => {
             // Arrange
-            syncService.isOnline.mockImplementation(() => {
+            syncService.isOnlineAndSynced.mockImplementation(() => {
                 return Promise.resolve(arg.isOnline);
             });
 
@@ -145,7 +145,7 @@ describe('Test EntryProxy', () => {
     describe.each(existEntryParams)("existEntry", async(arg)=>{
         it("when " + JSON.stringify(arg), async() =>{
              // Arrange
-             syncService.isOnline.mockImplementation(() => {
+             syncService.isOnlineAndSynced.mockImplementation(() => {
                 return Promise.resolve(arg.isOnline);
             });
 

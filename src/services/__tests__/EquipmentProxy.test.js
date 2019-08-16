@@ -45,7 +45,7 @@ describe('Test EquipmentProxy', () => {
     describe.each(createOrSaveEquipmentParams)("createOrSaveEquipment", (arg) => {
         it("when " + JSON.stringify(arg), async() => {
              // Arrange
-             syncService.isOnline.mockImplementation(() => {
+             syncService.isOnlineAndSynced.mockImplementation(() => {
                 return Promise.resolve(arg.isOnline);
             });
 
@@ -81,7 +81,7 @@ describe('Test EquipmentProxy', () => {
     describe.each(deleteEquipmentParams)('deleteEquipment', (arg) => {
         it("when " + JSON.stringify(arg), async() => {
             // Arrange
-            syncService.isOnline.mockImplementation(() => {
+            syncService.isOnlineAndSynced.mockImplementation(() => {
                 return Promise.resolve(arg.isOnline);
             });
 
@@ -119,7 +119,7 @@ describe('Test EquipmentProxy', () => {
     describe.each(existEquipmentParams)("existEquipment", (arg) => {
         it("when " + JSON.stringify(arg), async()=>{
             // Arrange
-            syncService.isOnline.mockImplementation(() => {
+            syncService.isOnlineAndSynced.mockImplementation(() => {
                 return Promise.resolve(arg.isOnline);
             });
 
