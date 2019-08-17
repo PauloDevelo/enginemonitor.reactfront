@@ -1,5 +1,6 @@
 import actionManager, { Action, NoActionPendingError } from './ActionManager';
 import storageService, { IUserStorageListener } from './StorageService';
+import { async } from 'q';
 
 export interface ISyncService {
     registerIsOnlineListener(listener: (isOnline: boolean) => void):void;
@@ -7,6 +8,8 @@ export interface ISyncService {
     isOnlineAndSynced(): Promise<boolean>;
     isOnline(): boolean;
     isSynced():Promise<boolean>;
+
+    synchronize(): Promise<void>;
 }
 
 class SyncService implements ISyncService, IUserStorageListener{
@@ -25,7 +28,7 @@ class SyncService implements ISyncService, IUserStorageListener{
     }
 
     private async triggerIsOnlineChanged(): Promise<void>{
-        const isOnline = await this.isOnlineAndSynced();
+        const isOnline = await this.isOnline();
         this.listeners.map(listener => listener(isOnline));
     }
 
@@ -47,6 +50,10 @@ class SyncService implements ISyncService, IUserStorageListener{
         }
         
         await this.triggerIsOnlineChanged();
+    }
+
+    synchronize = async(): Promise<void> => {
+        this.syncStorage();
     }
 
     private syncStorage = async(): Promise<void> => {

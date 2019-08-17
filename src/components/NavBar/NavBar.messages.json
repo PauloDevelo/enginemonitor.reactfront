@@ -17,6 +17,10 @@
     "description": "Menu",
     "id": "signout"
   },
+  "syncAction": {
+    "defaultMessage": "Synchronize",
+    "id": "syncAction"
+  },
   "today": {
     "defaultMessage": "Today, ",
     "id": "today"

@@ -82,6 +82,7 @@
   "signout": "Déconnection",
   "signup": "S'inscrire",
   "status": "Statut",
+  "syncAction": "Synchroniser",
   "taskDeleteMsg": "Etes vous sure de vouloir supprimer cette tache et son historique ?",
   "taskDeleteTitle": "Suppression d'une tache",
   "taskHistoryTitle": "Historique",

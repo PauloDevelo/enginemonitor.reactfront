@@ -82,6 +82,7 @@
   "signout": "Signout",
   "signup": "Sign up",
   "status": "Status",
+  "syncAction": "Synchronize",
   "taskDeleteMsg": "Are you sure you want to delete this task?",
   "taskDeleteTitle": "Delete task",
   "taskHistoryTitle": "Task history",
