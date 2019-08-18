@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState, useCallback, useRef } from 'react';
+
 import { CSSTransition } from 'react-transition-group'
 
 import TaskTabPanes from '../TaskTabPanes/TaskTabPanes';
@@ -8,6 +9,7 @@ import CardTaskDetails from '../CardTaskDetails/CardTaskDetails'
 import ModalLogin from '../ModalLogin/ModalLogin';
 import ModalSignup from '../ModalSignup/ModalSignup';
 import NavBar from '../NavBar/NavBar';
+import SyncAlert from '../SyncAlert/SyncAlert';
 
 import userProxy from '../../services/UserProxy';
 import taskProxy from '../../services/TaskProxy';
@@ -166,7 +168,8 @@ export default function App(){
 												taskHistoryRefreshId={taskHistoryRefreshId}
 												classNames={panelClassNames + ' columnBody lastBlock'}/>
 						</div>
-					</div>		
+					</div>
+					<SyncAlert className="bottomright"/>
 				</Fragment>																																																			
 			</CSSTransition>
 			<ModalLogin visible={!user} 

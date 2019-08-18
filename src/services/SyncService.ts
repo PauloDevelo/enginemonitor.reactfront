@@ -1,15 +1,24 @@
 import actionManager, { Action, NoActionPendingError } from './ActionManager';
 import storageService, { IUserStorageListener } from './StorageService';
-import { async } from 'q';
 
 export interface ISyncService {
-    registerIsOnlineListener(listener: (isOnline: boolean) => void):void;
-    unregisterIsOnlineListener(listenerToRemove: (isOnline: boolean) => void):void;
     isOnlineAndSynced(): Promise<boolean>;
     isOnline(): boolean;
     isSynced():Promise<boolean>;
 
     synchronize(): Promise<void>;
+
+    registerIsOnlineListener(listener: (isOnline: boolean) => void):void;
+    unregisterIsOnlineListener(listenerToRemove: (isOnline: boolean) => void):void;
+
+    registerSyncListener(listener: (context: SyncContext) => void):void;
+    unregisterSyncListener(listener: (context: SyncContext) => void):void;
+}
+
+export type SyncContext = {
+    isSyncing: boolean;
+    totalActionToSync: number;
+    remainingActionToSync: number;
 }
 
 class SyncService implements ISyncService, IUserStorageListener{
@@ -18,6 +27,15 @@ class SyncService implements ISyncService, IUserStorageListener{
     }
 
     private listeners: ((isOnline: boolean) => void)[] = [];
+    private syncListeners: ((context: SyncContext) => void)[] = [];
+
+    registerSyncListener(listener: (context: SyncContext) => void):void{
+        this.syncListeners.push(listener);
+    }
+
+    unregisterSyncListener(listenerToRemove: (context: SyncContext) => void):void{
+        this.syncListeners = this.syncListeners.filter(listener => listener !== listenerToRemove);
+    }
 
     registerIsOnlineListener(listener: (isOnline: boolean) => void):void{
         this.listeners.push(listener);
@@ -30,6 +48,10 @@ class SyncService implements ISyncService, IUserStorageListener{
     private async triggerIsOnlineChanged(): Promise<void>{
         const isOnline = await this.isOnline();
         this.listeners.map(listener => listener(isOnline));
+    }
+
+    private async triggerSyncContextChanged(context: SyncContext): Promise<void>{
+        this.syncListeners.map(listener => listener(Object.assign({}, context)));
     }
 
     isOnlineAndSynced = async(): Promise<boolean> => {
@@ -57,6 +79,14 @@ class SyncService implements ISyncService, IUserStorageListener{
     }
 
     private syncStorage = async(): Promise<void> => {
+        const nbActionToSync = await actionManager.countAction();
+        const context: SyncContext = {
+            isSyncing: true,
+            totalActionToSync: nbActionToSync,
+            remainingActionToSync: nbActionToSync,
+        }
+        this.triggerSyncContextChanged(context);
+
         while(1){
             let action: Action;
             try{
@@ -64,22 +94,35 @@ class SyncService implements ISyncService, IUserStorageListener{
             }
             catch(error){
                 if(error instanceof NoActionPendingError){
+                    this.triggerEndSync(context);
                     return;
                 }
 
                 console.log(error);
+                this.triggerEndSync(context);
                 return;
             }
 
             try{
                 await actionManager.performAction(action);
+                context.remainingActionToSync--;
+                this.triggerSyncContextChanged(context);
             }
             catch(error){
-                console.log(error);
                 await actionManager.putBackAction(action);
+
+                console.log(error);
+                this.triggerEndSync(context);
                 return;
             }
         }
+
+        
+    }
+
+    private triggerEndSync(context: SyncContext){
+        context.isSyncing = false;
+        this.triggerSyncContextChanged(context);
     }
 
     async onUserStorageOpened(): Promise<void> {
