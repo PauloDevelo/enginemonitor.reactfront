@@ -1,0 +1,7 @@
+{
+  "syncInProgress": {
+    "defaultMessage": "Synchronisation in progress",
+    "description": "information message",
+    "id": "syncInProgress"
+  }
+}
