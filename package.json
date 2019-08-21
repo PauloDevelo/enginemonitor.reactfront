@@ -1,7 +1,7 @@
 {
   "homepage": ".",
   "name": "enginemonitor.reactfront",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
@@ -40,7 +40,6 @@
     "deploy": "node scripts/deployRelease.js",
     "rollback": "node scripts/rollBackRelease.js",
     "generate-build-version": "node scripts/generateBuildVersion.js",
-
     "precheckTranslation": "npm run sort",
     "pretest--no-watch": "npm run checkTranslation",
     "prejust-build": "npm-run-all generate-build-version",
