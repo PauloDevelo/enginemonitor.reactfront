@@ -10,6 +10,7 @@ import ModalLogin from '../ModalLogin/ModalLogin';
 import ModalSignup from '../ModalSignup/ModalSignup';
 import NavBar from '../NavBar/NavBar';
 import SyncAlert from '../SyncAlert/SyncAlert';
+import CacheBuster from '../CacheBuster/CacheBuster'
 
 import userProxy from '../../services/UserProxy';
 import taskProxy from '../../services/TaskProxy';
@@ -136,50 +137,62 @@ export default function App(){
 	const panelClassNames = "p-2 m-2 border border-secondary rounded shadow";
 
 	return (
-		<Fragment>
-			<CSSTransition in={true} appear={true} timeout={1000} classNames="fade">
-				<Fragment>
-					<NavBar user={user} onLoggedOut={logOut} isOpened={navBarVisible} toggle={toggleNavBar} />
-					<div className="appBody mb-2">
-						<div className="wrapperColumn">
-							<EquipmentsInfo
-										user={user}
-										changeCurrentEquipment={setCurrentEquipment}
-										extraClassNames={panelClassNames + ' columnHeader'}/>
-							<TaskTabPanes classNames={panelClassNames + ' columnBody'}
-    										currentEquipment={currentEquipment}
-    										taskList= {taskList}
-											areTasksLoading={areTasksLoading}
-											changeCurrentTask={changeCurrentTask}
-											equipmentHistoryRefreshId={equipmentHistoryRefreshId}
-											onTaskChangedRef={onTaskChangedRef} />
-						</div>
-						<div className="wrapperColumn">
-							<CardTaskDetails 	equipment={currentEquipment}
-												tasks={taskList}
-												currentTask={currentTask}
-												onTaskChanged={onTaskChangedRef}
-												onTaskDeleted={onTaskDeleted}
-												changeCurrentTask={changeCurrentTask}
-												classNames={panelClassNames + ' columnHeader'}/>
-							<HistoryTaskTable 	equipment={currentEquipment}
-												task={currentTask}
-												onHistoryChanged={onTaskHistoryChanged}
-												taskHistoryRefreshId={taskHistoryRefreshId}
-												classNames={panelClassNames + ' columnBody lastBlock'}/>
-						</div>
-					</div>
-					<SyncAlert className="bottomright"/>
-				</Fragment>																																																			
-			</CSSTransition>
-			<ModalLogin visible={!user} 
-				onLoggedIn={setUser} 
-				className='modal-dialog-centered'
-				toggleModalSignup={toggleModalSignup}/>
-			
-			<ModalSignup visible={modalSignupVisible} 
-				toggle={toggleModalSignup} 
-				className='modal-dialog-centered'/>
-		</Fragment>
+		<CacheBuster>
+			{({ loading, isLatestVersion, refreshCacheAndReload }:any) => {
+				if (loading) return null;
+				if (!loading && !isLatestVersion) {
+					// You can decide how and when you want to force reload
+					refreshCacheAndReload();
+				}
+
+				return (
+					<Fragment>
+						<CSSTransition in={true} appear={true} timeout={1000} classNames="fade">
+							<Fragment>
+								<NavBar user={user} onLoggedOut={logOut} isOpened={navBarVisible} toggle={toggleNavBar} />
+								<div className="appBody mb-2">
+									<div className="wrapperColumn">
+										<EquipmentsInfo
+													user={user}
+													changeCurrentEquipment={setCurrentEquipment}
+													extraClassNames={panelClassNames + ' columnHeader'}/>
+										<TaskTabPanes classNames={panelClassNames + ' columnBody'}
+														currentEquipment={currentEquipment}
+														taskList= {taskList}
+														areTasksLoading={areTasksLoading}
+														changeCurrentTask={changeCurrentTask}
+														equipmentHistoryRefreshId={equipmentHistoryRefreshId}
+														onTaskChangedRef={onTaskChangedRef} />
+									</div>
+									<div className="wrapperColumn">
+										<CardTaskDetails 	equipment={currentEquipment}
+															tasks={taskList}
+															currentTask={currentTask}
+															onTaskChanged={onTaskChangedRef}
+															onTaskDeleted={onTaskDeleted}
+															changeCurrentTask={changeCurrentTask}
+															classNames={panelClassNames + ' columnHeader'}/>
+										<HistoryTaskTable 	equipment={currentEquipment}
+															task={currentTask}
+															onHistoryChanged={onTaskHistoryChanged}
+															taskHistoryRefreshId={taskHistoryRefreshId}
+															classNames={panelClassNames + ' columnBody lastBlock'}/>
+									</div>
+								</div>
+								<SyncAlert className="bottomright"/>
+							</Fragment>																																																			
+						</CSSTransition>
+						<ModalLogin visible={!user} 
+							onLoggedIn={setUser} 
+							className='modal-dialog-centered'
+							toggleModalSignup={toggleModalSignup}/>
+						
+						<ModalSignup visible={modalSignupVisible} 
+							toggle={toggleModalSignup} 
+							className='modal-dialog-centered'/>
+					</Fragment>
+				);
+			}}
+		</CacheBuster>
 	);
 }
