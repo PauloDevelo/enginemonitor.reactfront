@@ -25,16 +25,18 @@ class CacheBuster extends React.Component {
     this.state = {
       loading: true,
       isLatestVersion: false,
-      refreshCacheAndReload: () => {
+      refreshCacheAndReload: async() => {
         console.log('Clearing cache and hard reloading...')
         if (caches) {
           // Service worker cache should be cleared with caches.delete()
-          caches.keys().then(function(names) {
-            for (let name of names) caches.delete(name);
-          });
+          var names = await caches.keys()
+          for (let name of names) {
+            console.log("delete " + name);
+            await caches.delete(name);
+          }
         }
 
-        // delete browser cache and hard reload
+        console.log("hard reload");
         window.location.reload(true);
       }
     };
@@ -55,6 +57,10 @@ class CacheBuster extends React.Component {
           console.log(`You already have the latest version - ${latestVersion}. No cache refresh needed.`);
           this.setState({ loading: false, isLatestVersion: true });
         }
+      })
+      .catch((error)=>{
+        console.error(error);
+        this.setState({ loading: false, isLatestVersion: true });
       });
   }
   render() {
