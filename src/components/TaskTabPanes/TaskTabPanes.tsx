@@ -52,20 +52,14 @@ const TaskTabPanes = ({ classNames, currentEquipment, taskList, areTasksLoading,
             <MyNavItem classNames={taskTableClassNames} activeFunc={activeTaskTable} label={taskTabPanesMsg.taskTable} />
             <MyNavItem classNames={equipmentHistoryClassNames} activeFunc={activeEquipmentHistory} label={taskTabPanesMsg.equipementHistory} />
         </Nav>
-        <TabContent activeTab={activeTab} className={"flexTabContent"}>
-            <TabPane tabId="taskTable" style={{"flex": 1}}>
-                {activeTab === "taskTable" && <TaskTable 	equipment={currentEquipment}
-                    areTasksLoading={areTasksLoading}
-                    tasks={taskList} 
-                    onTaskSaved={onTaskChangedRef}
-                    changeCurrentTask={changeCurrentTask} />}
-            </TabPane>
-            <TabPane tabId="equipmentHistory" style={{"flex": 1}}>
-                {activeTab === "equipmentHistory" && <EquipmentHistoryTable equipment={currentEquipment}
-                        equipmentHistoryRefreshId={equipmentHistoryRefreshId}												
-                        onTaskChanged={onTaskChangedByTaskIdRef} />}
-            </TabPane>
-        </TabContent>
+        {activeTab === "taskTable" && <TaskTable 	equipment={currentEquipment}
+            areTasksLoading={areTasksLoading}
+            tasks={taskList} 
+            onTaskSaved={onTaskChangedRef}
+            changeCurrentTask={changeCurrentTask} />}
+        {activeTab === "equipmentHistory" && <EquipmentHistoryTable equipment={currentEquipment}
+                equipmentHistoryRefreshId={equipmentHistoryRefreshId}												
+                onTaskChanged={onTaskChangedByTaskIdRef} />}
     </div>
 } 
 
