@@ -5,7 +5,9 @@ export interface ISyncService {
     isOnlineAndSynced(): Promise<boolean>;
     isOnline(): boolean;
     isSynced():Promise<boolean>;
+    isOfflineModeActivated():boolean;
 
+    setOfflineMode(offlineMode: boolean):void;
     synchronize(): Promise<void>;
 
     registerIsOnlineListener(listener: (isOnline: boolean) => void):void;
@@ -22,7 +24,12 @@ export type SyncContext = {
 }
 
 class SyncService implements ISyncService, IUserStorageListener{
+    private offlineModeActivated:boolean = false;
+
     constructor(){
+        window.addEventListener('offline', async (e) => await syncService.setIsOnline(false && this.isOfflineModeActivated() === false ));
+        window.addEventListener('online', async (e) => await syncService.setIsOnline(true && this.isOfflineModeActivated() === false ));
+
         storageService.registerUserStorageListener(this);
     }
 
@@ -59,11 +66,20 @@ class SyncService implements ISyncService, IUserStorageListener{
     };
 
     isOnline = (): boolean => {
-        return window.navigator.onLine;
+        return window.navigator.onLine && this.isOfflineModeActivated() === false;
     };
 
     isSynced = async ():Promise<boolean> => {
         return (await actionManager.countAction()) === 0;
+    }
+
+    isOfflineModeActivated = ():boolean => {
+        return this.offlineModeActivated;
+    }
+
+    setOfflineMode(offlineMode: boolean): void {
+        this.offlineModeActivated = offlineMode;
+        this.setIsOnline(this.isOfflineModeActivated() && window.navigator.onLine);
     }
 
     setIsOnline = async(isOnline: boolean): Promise<void> => {
@@ -126,15 +142,12 @@ class SyncService implements ISyncService, IUserStorageListener{
     }
 
     async onUserStorageOpened(): Promise<void> {
-        return this.setIsOnline(window.navigator.onLine);
+        return this.setIsOnline(this.isOfflineModeActivated() === false && window.navigator.onLine);
     }
 
     async onUserStorageClosed(): Promise<void> {}
 }
 
 const syncService = new SyncService();
-
-window.addEventListener('offline', async (e) => await syncService.setIsOnline(false));
-window.addEventListener('online', async (e) => await syncService.setIsOnline(true));
 
 export default syncService as ISyncService;
