@@ -1,4 +1,6 @@
 {
+  "about": "About",
+  "aboutTitle": "Equipment Maintenance",
   "ack": "Acknowledge",
   "ackDate": "Realisation date",
   "age": "Equipment Age in hour",
@@ -62,6 +64,7 @@
   "newPassword": "New Password",
   "no": "No",
   "notonline": "Offline",
+  "ok": "OK",
   "online": "Online",
   "orevery": " or every ",
   "password": "Password",

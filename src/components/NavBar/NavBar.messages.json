@@ -1,4 +1,8 @@
 {
+  "about": {
+    "defaultMessage": "About",
+    "id": "about"
+  },
   "nbAction": {
     "defaultMessage": "{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}",
     "description": "Nb action pending",

@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, Fragment } from "react";
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import Switch from "react-switch";
 
 import ClockLabel from '../ClockLabel/ClockLabel';
 import DropDownConnectionStateItem from './DropDownConnectionStateItem';
+import ModalAbout from '../ModalAbout/ModalAbout';
 
 import { faSignOutAlt, } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,6 +29,7 @@ type Props = {
 };
 
 const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
+    const [aboutVisible, setAboutVisibility] = useState(false);
     const [offline, setOffline] = useState(syncService.isOfflineModeActivated());
 
     const logout = useCallback(() => {
@@ -40,33 +42,45 @@ const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
         syncService.setOfflineMode(offline);
     }
 
+    const toggleAbout = () => {
+        setAboutVisibility(!aboutVisible);
+    }
+
+
     const textMenu = user?user.email:"Login";
 	return (
-		<Navbar color="dark" dark expand="md">
-            <NavbarBrand href="/">
-                <div className={'mr-2'}>{'Equipment maintenance'}</div><div className={'clock'}><FormattedMessage {...navBarMsg.today}/><ClockLabel /></div>
-            </NavbarBrand>
-            <NavbarToggler onClick={toggle} />
-            <Collapse isOpen={isOpened} navbar>
-                <Nav className="ml-auto" navbar>
-                    <UncontrolledDropdown nav inNavbar>
-                        <DropdownToggle nav caret>
-                        {textMenu}
-                        </DropdownToggle>
-                        <DropdownMenu right>
-                            <DropdownItem header>
-                            <Switch onChange={offlineSwitch} checked={offline} className="react-switch" onColor="#28a745" height={20} width={40}/>&nbsp;Offline mode
-                            </DropdownItem>
-                            <DropDownConnectionStateItem />
-                            <DropdownItem divider />
-                            <DropdownItem onClick={logout}>
-                                <FontAwesomeIcon icon={faSignOutAlt} />{' '}<FormattedMessage {...navBarMsg.signout} />
-                            </DropdownItem>
-                        </DropdownMenu>
-                    </UncontrolledDropdown>
-                </Nav>
-            </Collapse>
-        </Navbar>
+        <Fragment>
+            <Navbar color="dark" dark expand="md">
+                <NavbarBrand href="/">
+                    <div className={'mr-2'}>{'Equipment maintenance'}</div><div className={'clock'}><FormattedMessage {...navBarMsg.today}/><ClockLabel /></div>
+                </NavbarBrand>
+                <NavbarToggler onClick={toggle} />
+                <Collapse isOpen={isOpened} navbar>
+                    <Nav className="ml-auto" navbar>
+                        <UncontrolledDropdown nav inNavbar>
+                            <DropdownToggle nav caret>
+                            {textMenu}
+                            </DropdownToggle>
+                            <DropdownMenu right>
+                                <DropdownItem header>
+                                    <Switch onChange={offlineSwitch} checked={offline} className="react-switch" onColor="#28a745" height={20} width={40}/>&nbsp;Offline mode
+                                </DropdownItem>
+                                <DropDownConnectionStateItem />
+                                <DropdownItem divider />
+                                <DropdownItem onClick={logout}>
+                                    <FontAwesomeIcon icon={faSignOutAlt} />{' '}<FormattedMessage {...navBarMsg.signout} />
+                                </DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem onClick={toggleAbout}>
+                                    <FormattedMessage {...navBarMsg.about} />
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
+                    </Nav>
+                </Collapse>
+            </Navbar>
+            {aboutVisible && <ModalAbout visible={aboutVisible} toggle={toggleAbout} className='modal-dialog-centered'/>}
+        </Fragment>
 	);
 }
 
