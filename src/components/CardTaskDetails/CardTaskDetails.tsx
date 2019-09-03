@@ -86,13 +86,13 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
                 </CardFooter>
             </Card>
 
-            <ModalEditTask  equipment={equipment}
+            {modalHook.editModalVisibility && <ModalEditTask  equipment={equipment}
                             task={currentTask}
                             onTaskSaved={onTaskChanged.current} 
                             onTaskDeleted={onTaskDeleted}
                             visible={modalHook.editModalVisibility} 
                             toggle={modalHook.toggleModal} 
-                            className='modal-dialog-centered'/>
+                            className='modal-dialog-centered'/>}
         </Fragment>
     );
 }

@@ -182,14 +182,14 @@ export default function App(){
 								<SyncAlert className="bottomright"/>
 							</Fragment>																																																			
 						</CSSTransition>
-						<ModalLogin visible={!user} 
+						{!user && <ModalLogin visible={!user} 
 							onLoggedIn={setUser} 
 							className='modal-dialog-centered'
-							toggleModalSignup={toggleModalSignup}/>
+							toggleModalSignup={toggleModalSignup}/>}
 						
-						<ModalSignup visible={modalSignupVisible} 
+						{modalSignupVisible && <ModalSignup visible={modalSignupVisible} 
 							toggle={toggleModalSignup} 
-							className='modal-dialog-centered'/>
+							className='modal-dialog-centered'/>}
 					</Fragment>
 				);
 			}}
