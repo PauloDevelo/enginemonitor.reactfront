@@ -46,3 +46,8 @@ export type AuthInfo = {
     password: string,
     remember: boolean
 }
+
+export interface ImageModel extends EntityModel {
+    url: string,
+    parentUiId: string
+}
