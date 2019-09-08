@@ -6,7 +6,7 @@ import storageService from './StorageService';
 import { ImageModel, EntityModel } from '../types/Types'
 
 export interface IImageProxy{
-    fetchImages(parent: EntityModel): Promise<ImageModel[]>;
+    fetchImages(parentUiId: string): Promise<ImageModel[]>;
     createImage(imgFormObj: FormData):Promise<ImageModel>;
     updateImage(imageToSave: ImageModel):Promise<ImageModel>;
     deleteImage(image: ImageModel): Promise<ImageModel>;
@@ -16,12 +16,12 @@ class ImageProxy implements IImageProxy{
     private baseUrl:string = process.env.REACT_APP_URL_BASE + "images/";
 
     ////////////////Equipment////////////////////////
-    fetchImages = async(parent: EntityModel, forceToLookUpInStorage: boolean = false): Promise<ImageModel[]> => {
+    fetchImages = async(parentUiId: string, forceToLookUpInStorage: boolean = false): Promise<ImageModel[]> => {
         if (forceToLookUpInStorage){
-            return await storageService.getArray<ImageModel>(this.baseUrl + parent._uiId);
+            return await storageService.getArray<ImageModel>(this.baseUrl + parentUiId);
         }
         
-        return await progressiveHttpProxy.getArrayOnlineFirst<ImageModel>(this.baseUrl + parent._uiId, "images", (image) => image);
+        return await progressiveHttpProxy.getArrayOnlineFirst<ImageModel>(this.baseUrl + parentUiId, "images", (image) => image);
     }
     
     createImage = async(imgFormObj: FormData):Promise<ImageModel> => {

@@ -49,5 +49,6 @@ export type AuthInfo = {
 
 export interface ImageModel extends EntityModel {
     url: string,
+    thumbnailUrl: string,
     parentUiId: string
 }

@@ -1,5 +1,8 @@
 import React, { useCallback } from 'react';
 import { Button, TabPane } from 'reactstrap';
+
+import Gallery from '../Gallery/Gallery';
+
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage, FormattedDate, defineMessages, Messages } from 'react-intl';
@@ -28,13 +31,12 @@ function EquipmentInfoTab({equipment, displayEquipment}: Props){
             {equipment.ageAcquisitionType !== AgeAcquisitionType.time && <span className="font-weight-bold">{equipment.age} h </span>}
             <FormattedMessage {...equipmentInfoMsg.installedOn} />
             <FormattedDate value={equipment.installation} />
+            <Gallery parentUiId={equipment._uiId} />
         </TabPane>
 	);
 }
 
 export default React.memo(EquipmentInfoTab);
-
-
 
 EquipmentInfoTab.propTypes = {
     equipment: PropTypes.object.isRequired,

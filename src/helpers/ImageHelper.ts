@@ -2,6 +2,7 @@ import uuidv1 from 'uuid/v1';
 
 import imageProxy from '../services/ImageProxy';
 import Resizer from 'react-image-file-resizer';
+import { ImageModel } from '../types/Types';
 
 const compressionQuality = 95;
 
@@ -36,16 +37,18 @@ const resizeImageIntoBlob = (imageFile: File, maxWidth: number, maxHeight: numbe
 }
 
 
-export const resizeAndSaveImage = async (file: File, parentUiId: string):Promise<void> => {
-    const resizedBlob = await resizeImageIntoBlob(file, 100, 100);
+export const resizeAndSaveImage = async (file: File, parentUiId: string):Promise<ImageModel> => {
+    const resizedBlob = await resizeImageIntoBlob(file, 1024, 1024);
+    const thumbnailBlob = await resizeImageIntoBlob(file, 100, 100);
 
     const imgFormObj = new FormData();
         imgFormObj.append("name", file.name);
         imgFormObj.append("imageData", resizedBlob, file.name + ".jpeg");
+        imgFormObj.append("thumbnail", thumbnailBlob, "thumbnail_" + file.name + ".jpeg");
         imgFormObj.append("parentUiId", parentUiId);
         imgFormObj.append("_uiId", uuidv1());
 
-    await imageProxy.createImage(imgFormObj);
+    return await imageProxy.createImage(imgFormObj);
 }
 
 const dataURItoBlob = (dataURI: string):Blob => {
