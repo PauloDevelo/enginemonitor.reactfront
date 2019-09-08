@@ -77,6 +77,9 @@ function Gallery({parentUiId}: Props){
                 mainSrc={images[index].url}
                 nextSrc={images[(index + 1) % images.length].url}
                 prevSrc={images[(index + images.length - 1) % images.length].url}
+                mainSrcThumbnail= {images[index].thumbnailUrl}
+                nextSrcThumbnail= {images[(index + 1) % images.length].thumbnailUrl}
+                prevSrcThumbnail= {images[(index + images.length - 1) % images.length].thumbnailUrl}
                 onCloseRequest={() => setOpen(false)}
                 onMovePrevRequest={() => setIndex((index + images.length - 1) % images.length)}
                 onMoveNextRequest={() => setIndex((index + 1) % images.length) }
