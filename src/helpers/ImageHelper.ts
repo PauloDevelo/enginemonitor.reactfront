@@ -6,21 +6,6 @@ import { ImageModel } from '../types/Types';
 
 const compressionQuality = 95;
 
-const resizeImageIntoURI = (imageFile: File, maxWidth: number, maxHeight: number):Promise<string> => {
-    return new Promise(function(resolve, reject) {
-        Resizer.imageFileResizer(
-            imageFile,
-            maxWidth,
-            maxHeight,
-            'JPEG', // is the compressFormat of the  new image
-            compressionQuality,
-            0, // is the rotation of the  new image
-            (uri: any) => { resolve(uri); },  // is the callBack function of the new image URI
-            'base64'  // is the output type of the new image
-        );
-    });
-}
-
 const resizeImageIntoBlob = (imageFile: File, maxWidth: number, maxHeight: number):Promise<string> => {
     return new Promise(function(resolve, reject) {
         Resizer.imageFileResizer(
@@ -36,6 +21,62 @@ const resizeImageIntoBlob = (imageFile: File, maxWidth: number, maxHeight: numbe
     });
 }
 
+const resizeBase64ImageIntoBlob = (base64Str: string, maxWidth = 400, maxHeight = 350):Promise<Blob> => {
+    return new Promise((resolve) => {
+      let img = new Image()
+      img.src = base64Str
+      img.onload = () => {
+        let canvas = document.createElement('canvas')
+        const MAX_WIDTH = maxWidth
+        const MAX_HEIGHT = maxHeight
+        let width = img.width
+        let height = img.height
+  
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width
+            width = MAX_WIDTH
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height
+            height = MAX_HEIGHT
+          }
+        }
+        canvas.width = width
+        canvas.height = height
+        let ctx = canvas.getContext('2d');
+        if(ctx !== null){
+            ctx.drawImage(img, 0, 0, width, height)
+            canvas.toBlob(blob => {
+                if (blob !== null){
+                    resolve(blob);
+                }
+                else{
+                    throw new Error("The blob cannot be created");
+                }
+            });
+        }
+        else{
+            throw new Error("Cannot get the canva's context");
+        }
+      }
+    });
+  }
+
+  export const resizeAndSaveBase64Image = async (imageBase64: string, parentUiId: string):Promise<ImageModel> => {
+    const resizedBlob = await resizeBase64ImageIntoBlob(imageBase64, 1024, 1024);
+    const thumbnailBlob = await resizeBase64ImageIntoBlob(imageBase64, 100, 100);
+
+    const imgFormObj = new FormData();
+        imgFormObj.append("name", parentUiId + ".jpeg");
+        imgFormObj.append("imageData", resizedBlob, parentUiId + ".jpeg");
+        imgFormObj.append("thumbnail", thumbnailBlob, "thumbnail_" + parentUiId + ".jpeg");
+        imgFormObj.append("parentUiId", parentUiId);
+        imgFormObj.append("_uiId", uuidv1());
+
+    return await imageProxy.createImage(imgFormObj);
+}
 
 export const resizeAndSaveImage = async (file: File, parentUiId: string):Promise<ImageModel> => {
     const resizedBlob = await resizeImageIntoBlob(file, 1024, 1024);
@@ -49,26 +90,6 @@ export const resizeAndSaveImage = async (file: File, parentUiId: string):Promise
         imgFormObj.append("_uiId", uuidv1());
 
     return await imageProxy.createImage(imgFormObj);
-}
-
-const dataURItoBlob = (dataURI: string):Blob => {
-    // convert base64/URLEncoded data component to raw binary data held in a string
-    var byteString;
-    if (dataURI.split(',')[0].indexOf('base64') >= 0)
-        byteString = atob(dataURI.split(',')[1]);
-    else
-        byteString = unescape(dataURI.split(',')[1]);
-
-    // separate out the mime component
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
-    // write the bytes of the string to a typed array
-    var ia = new Uint8Array(byteString.length);
-    for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-    }
-
-    return new Blob([ia], {type:mimeString});
 }
 
 export default resizeAndSaveImage;

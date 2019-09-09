@@ -1,8 +1,10 @@
-import React, { ChangeEvent, useState, useEffect, Fragment } from 'react';
-import { Label } from 'reactstrap';
+import React, { useState, useEffect, Fragment } from 'react';
+import { Label, Button } from 'reactstrap';
 
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
+
+import Html5Camera from "./Html5Camera";
 
 import Image from './Image';
 
@@ -10,7 +12,10 @@ import { ImageModel } from '../../types/Types';
 import FileChooserButton from './FileChooserButton';
 
 import imageProxy from '../../services/ImageProxy';
-import resizeAndSaveImage from '../../helpers/ImageHelper';
+import {resizeAndSaveImage, resizeAndSaveBase64Image} from '../../helpers/ImageHelper';
+
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type Props = {
     parentUiId: string
@@ -19,6 +24,7 @@ type Props = {
 function Gallery({parentUiId}: Props){
     const [images, setImages] = useState<ImageModel[]>([]);
     const [isOpen, setOpen] = useState(false);
+    const [isCameraOn, setCamera] = useState(false);
     const [index, setIndex] = useState(-1);
 
     useEffect(() => {
@@ -32,9 +38,13 @@ function Gallery({parentUiId}: Props){
         });
     }, [parentUiId]);
 
-    const uploadImage = async(e: ChangeEvent<HTMLInputElement>, method: string) => {
-        if(method === "multer" && e.target.files !== null && e.target.files.length > 0){
-            const newImage = await resizeAndSaveImage(e.target.files[0], parentUiId);
+    const onCapture = (imageBase64: string) => {
+        uploadBase64Image(imageBase64, "multer");
+    };
+
+    const uploadBase64Image = async(imageBase64: string, method: string) => {
+        if(method === "multer"){
+            const newImage = await resizeAndSaveBase64Image(imageBase64, parentUiId);
             const newImages = images.concat(newImage);
 
             setImages(newImages);
@@ -43,7 +53,7 @@ function Gallery({parentUiId}: Props){
 
     const onSelectFile = async(file: File) => {
         uploadImageFile(file, "multer")
-    }
+    };
 
     const uploadImageFile = async(file: File, method: string) => {
         if(method === "multer"){
@@ -68,7 +78,8 @@ function Gallery({parentUiId}: Props){
             <div>
                 <Label className="font-weight-bold">Gallery image</Label>
                 <div className="p-1 border border-secondary rounded shadow">
-                    <FileChooserButton onFileSelect={onSelectFile}/>
+                    <FileChooserButton onFileSelect={onSelectFile} className="float-right"/>
+                    <Button onClick={() => setCamera(true)} className="float-right"><FontAwesomeIcon icon={faCamera} size="lg"/></Button>
                     {thumbnails}
                 </div>
             </div>
@@ -85,6 +96,8 @@ function Gallery({parentUiId}: Props){
                 onMoveNextRequest={() => setIndex((index + 1) % images.length) }
                 />
             )}
+
+            {isCameraOn && <Html5Camera close={() => setCamera(false)} onTakePhoto={onCapture}/>}
         </Fragment>
 	);
 }

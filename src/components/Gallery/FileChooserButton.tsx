@@ -5,6 +5,7 @@ import { faImage, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type Props = {
+    className?: string;
     onFileSelect: (file: File) => any;
 }
 
@@ -16,7 +17,7 @@ const createFileSelector = (onChange: (e: Event)=>void):HTMLInputElement => {
     return fileSelector;
 }
 
-function FileChooserButton({onFileSelect}: Props){
+function FileChooserButton({onFileSelect, className}: Props){
     const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
     useEffect(() => {
         if(selectedFile !== undefined){
@@ -41,7 +42,7 @@ function FileChooserButton({onFileSelect}: Props){
     }
 
     return (
-    <Button color="light" size="lg" className="float-right" onClick={handleFileSelect} aria-label="Edit">
+    <Button color="light" size="lg" className={className} onClick={handleFileSelect} aria-label="Edit">
         <span className="fa-layers fa-fw">
             <FontAwesomeIcon icon={faImage} size="lg"/>
             <FontAwesomeIcon icon={faPlus} size="xs" transform="down-13 left-16"/>
