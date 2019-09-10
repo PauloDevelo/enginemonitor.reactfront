@@ -10,6 +10,7 @@ import { useEditModal } from '../../hooks/EditModalHook';
 import { getContext, getScheduleText, getBadgeText } from '../../helpers/TaskHelper'; 
 
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
+import Gallery from '../Gallery/Gallery';
 
 import './CardTaskDetails.css';
 import '../../style/transition.css';
@@ -76,6 +77,7 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
                                     <CardTitle>{currentTask.name} <Badge color={badgeContext} pill>{badgeText}</Badge></CardTitle>
                                     <CardSubtitle>{title}</CardSubtitle>
                                     <CardText dangerouslySetInnerHTML={{ __html: descriptionFormatted }}></CardText>
+                                    <Gallery parentUiId={currentTask._uiId} />
                                 </div>
                             </CSSTransition>
                         </TransitionGroup>
