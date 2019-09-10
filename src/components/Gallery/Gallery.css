@@ -1,11 +1,17 @@
 .action-button {
-    background-color: black;
-    color: gray;
+    background-color: transparent;
+    color: white;
     border: 0;
+    opacity: 0.5;
 }
 
 .action-button:hover {
-    background-color: black;
+    background-color: transparent;
     color: white;
     border: 0;
+    opacity: 1;
+}
+
+.gallery{
+    min-height: 58px;
 }

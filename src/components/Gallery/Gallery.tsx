@@ -14,7 +14,7 @@ import FileChooserButton from './FileChooserButton';
 import imageProxy from '../../services/ImageProxy';
 import {resizeAndSaveImage, resizeAndSaveBase64Image} from '../../helpers/ImageHelper';
 
-import { faCamera,faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faCamera, faTrashAlt, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import "./Gallery.css";
@@ -97,9 +97,14 @@ function Gallery({parentUiId}: Props){
         <Fragment>
             <div>
                 <Label className="font-weight-bold">Gallery image</Label>
-                <div className="p-1 border border-secondary rounded shadow">
+                <div className="p-1 border border-secondary rounded shadow gallery">
                     <FileChooserButton onFileSelect={onSelectFile} className="float-right"/>
-                    <Button onClick={() => setCamera(true)} className="float-right"><FontAwesomeIcon icon={faCamera} size="lg"/></Button>
+                    <Button color="light" size="lg" onClick={() => setCamera(true)} className="float-right">
+                        <span className="fa-layers fa-fw">
+                            <FontAwesomeIcon icon={faCamera} size="lg"/>
+                            <FontAwesomeIcon icon={faPlus} size="xs" transform="down-13 left-16"/>
+                        </span>
+                    </Button>
                     {thumbnails}
                 </div>
             </div>
