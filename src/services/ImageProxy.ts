@@ -26,16 +26,18 @@ class ImageProxy implements IImageProxy{
     
     createImage = async(imgFormObj: FormData):Promise<ImageModel> => {
         const {image} = await httpProxy.post(this.baseUrl + imgFormObj.get('parentUiId'), imgFormObj);
+        await storageService.updateArray(this.baseUrl + image.parentUiId, image);
         return image;
     }
 
     updateImage = async(imageToSave: ImageModel):Promise<ImageModel> => {
-        const {image} = await httpProxy.post(this.baseUrl + imageToSave.parentUiId + "/" + imageToSave._uiId, imageToSave);
-        return image;
+        const updatedImage = await progressiveHttpProxy.postAndUpdate(this.baseUrl + imageToSave.parentUiId + "/" + imageToSave._uiId, "image", imageToSave, (image) => image);
+        await storageService.updateArray(this.baseUrl + updatedImage.parentUiId, updatedImage);
+        return updatedImage;
     };
 
     deleteImage = async (image: ImageModel): Promise<ImageModel> => {
-        await progressiveHttpProxy.deleteAndUpdate<ImageModel>(this.baseUrl + image.parentUiId, "image", (image) => image);
+        await progressiveHttpProxy.deleteAndUpdate<ImageModel>(this.baseUrl + image.parentUiId + "/" + image._uiId, "image", (image) => image);
         return await storageService.removeItemInArray<ImageModel>(this.baseUrl + image.parentUiId, image._uiId);
     }
 }
