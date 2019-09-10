@@ -17,6 +17,8 @@ import {resizeAndSaveImage, resizeAndSaveBase64Image} from '../../helpers/ImageH
 import { faCamera,faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import "./Gallery.css";
+
 type Props = {
     parentUiId: string
 }
@@ -88,7 +90,7 @@ function Gallery({parentUiId}: Props){
     }, [images, index]);
 
     const additionalActions  =  [
-        <Button onClick={deleteCurrentImage} ><FontAwesomeIcon icon={faTrashAlt} size="lg"/></Button>,
+        <Button onClick={deleteCurrentImage} className={"action-button"}><FontAwesomeIcon icon={faTrashAlt} size="lg"/></Button>,
     ];
 
 	return(

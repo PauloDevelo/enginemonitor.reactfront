@@ -1,0 +1,11 @@
+.action-button {
+    background-color: black;
+    color: gray;
+    border: 0;
+}
+
+.action-button:hover {
+    background-color: black;
+    color: white;
+    border: 0;
+}
