@@ -18,6 +18,7 @@ import MyForm from "../Form/MyForm";
 import MyInput from "../Form/MyInput";
 import Alerts from "../Alerts/Alerts";
 import ActionButton from "../ActionButton/ActionButton";
+import Gallery from '../Gallery/Gallery';
 
 import { EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType } from '../../types/Types';
 
@@ -78,6 +79,7 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 							{equipment.ageAcquisitionType !== AgeAcquisitionType.time && <MyInput name="age" 	label={editEntryMsg.age} 	type="number" 	min={0} required/>}
 							<MyInput name="remarks" label={editEntryMsg.remarks}    type="textarea" required />
 						</MyForm>}
+						<Gallery parentUiId={entry._uiId}/>
 						<Alerts errors={modalLogic.alerts}/>
 					</ModalBody>
 					<ModalFooter>
