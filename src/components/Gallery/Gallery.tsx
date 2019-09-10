@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, useCallback,Fragment } from 'react';
 import { Label, Button } from 'reactstrap';
 
 import Lightbox from 'react-image-lightbox';
@@ -14,7 +14,7 @@ import FileChooserButton from './FileChooserButton';
 import imageProxy from '../../services/ImageProxy';
 import {resizeAndSaveImage, resizeAndSaveBase64Image} from '../../helpers/ImageHelper';
 
-import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { faCamera,faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type Props = {
@@ -73,6 +73,24 @@ function Gallery({parentUiId}: Props){
         return <Image key={image._uiId} image={image} index={index} onClickImage={onClickThumbnail} />;
     });
 
+    const deleteCurrentImage = useCallback(() => {
+        console.log("delete image");
+        imageProxy.deleteImage(images[index]).then(deletedImage => {
+            const newImages = images.filter(image => image._uiId !== deletedImage._uiId);
+            if(newImages.length === 0){
+                setOpen(false);
+            }
+            else{
+                setIndex(0);
+            }
+            setImages(newImages);
+        });
+    }, [images, index]);
+
+    const additionalActions  =  [
+        <Button onClick={deleteCurrentImage} ><FontAwesomeIcon icon={faTrashAlt} size="lg"/></Button>,
+    ];
+
 	return(
         <Fragment>
             <div>
@@ -94,6 +112,7 @@ function Gallery({parentUiId}: Props){
                 onCloseRequest={() => setOpen(false)}
                 onMovePrevRequest={() => setIndex((index + images.length - 1) % images.length)}
                 onMoveNextRequest={() => setIndex((index + 1) % images.length) }
+                toolbarButtons={additionalActions}
                 />
             )}
 
