@@ -16,7 +16,7 @@ import ModalEditImage from '../ModalImage/ModalEditImage';
 import imageProxy from '../../services/ImageProxy';
 import {resizeAndSaveImage, resizeAndSaveBase64Image} from '../../helpers/ImageHelper';
 
-import { faCamera, faTrashAlt, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCamera, faTrashAlt, faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import "./Gallery.css";
@@ -117,6 +117,10 @@ function Gallery({parentUiId}: Props){
         });
     }, [images, isOpen, index]);
 
+    const editCurrentImage = useCallback(() => {
+        showModalEditImage(images[index]);
+    }, [index, images]);
+
     const deleteImage = (deletedImageUiId: string) => {
         const newImages = images.filter(image => image._uiId !== deletedImageUiId);
             if(newImages.length === 0){
@@ -134,6 +138,7 @@ function Gallery({parentUiId}: Props){
 
     const additionalActions  =  [
         <Button onClick={deleteCurrentImage} className={"action-button"}><FontAwesomeIcon icon={faTrashAlt} size="lg"/></Button>,
+        <Button onClick={editCurrentImage} className={"action-button"}><FontAwesomeIcon icon={faEdit} size="lg"/></Button>,
     ];
 
 	return(
