@@ -101,5 +101,10 @@
   "trackerType": "With a usage time tracker",
   "usagePeriodInHour": "Period in usage hour",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
-  "yes": "Yes"
+  "yes": "Yes",
+  "modalImageEditTitle": "Image edition",
+  "imageTitle": "Title",
+  "imageDescription": "Description",
+  "imageDeleteTitle": "Delete image",
+  "imageDeleteMessage": "Are you sure you want to delete this image?"
 }
