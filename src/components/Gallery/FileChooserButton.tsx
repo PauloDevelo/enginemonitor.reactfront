@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React from 'react';
 import {Button} from 'reactstrap';
 
 import { faImage, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -18,19 +18,12 @@ const createFileSelector = (onChange: (e: Event)=>void):HTMLInputElement => {
 }
 
 function FileChooserButton({onFileSelect, className}: Props){
-    const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
-    useEffect(() => {
-        if(selectedFile !== undefined){
-            onFileSelect(selectedFile);
-        }
-    }, [selectedFile])
-
     const onChange = (e: Event) => {
         const changeEvent = e as unknown as React.ChangeEvent<HTMLInputElement>;
         const files = changeEvent.target.files ? changeEvent.target.files : new FileList() ;
         
         if(files.length > 0){
-            setSelectedFile(files[0]);
+            onFileSelect(files[0]);
         }
     }
 
