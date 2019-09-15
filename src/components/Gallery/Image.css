@@ -1,0 +1,12 @@
+.thumbnail {
+    margin: 1px;
+    border-radius: inherit;
+    transition:all 0.3s ease;
+}
+
+.grow:hover
+{
+        -webkit-transform: scale(1.05);
+        -ms-transform: scale(1.05);
+        transform: scale(1.05);
+}
