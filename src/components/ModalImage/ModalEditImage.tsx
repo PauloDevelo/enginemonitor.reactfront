@@ -34,7 +34,7 @@ type Props = {
 const ModalEditImage = ({image, visible, onImageSaved, toggle, onImageDeleted, className}: Props) => {
 	
 	const modalLogic = useEditModalLogic(toggle, imageProxy.updateImage, [], (image) => {}, onImageSaved, 
-                                            imageProxy.deleteImage, [], onImageDeleted);
+                                            imageProxy.deleteImage, [image], onImageDeleted);
 
 	return (
 		<Fragment>
