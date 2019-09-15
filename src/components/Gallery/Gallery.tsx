@@ -27,7 +27,6 @@ type Props = {
 
 function Gallery({parentUiId}: Props){
     const [editImage, setEditImage] = useState<ImageModel | undefined>(undefined);
-    const [modalEditImageVisibility, setModalEditImageVisibility] = useState(false);
     const [images, setImages] = useState<ImageModel[]>([]);
     const [isOpen, setOpen] = useState(false);
     const [isCameraOn, setCamera] = useState(false);
@@ -53,9 +52,15 @@ function Gallery({parentUiId}: Props){
     };
 
     const uploadBase64Image = async(imageBase64: string, method: string) => {
+        let newImage:ImageModel | undefined = undefined;
+
         if(method === "multer"){
-            const newImage = await resizeAndSaveBase64Image(imageBase64, parentUiId);
+            newImage = await resizeAndSaveBase64Image(imageBase64, parentUiId);
             addImage(newImage);
+        }
+
+        if (newImage !== undefined){
+            showModalEditImage(newImage);
         }
     };
 
@@ -64,22 +69,25 @@ function Gallery({parentUiId}: Props){
     };
 
     const uploadImageFile = async(file: File, method: string) => {
+        let newImage:ImageModel | undefined = undefined;
+
         if(method === "multer"){
-            const newImage = await resizeAndSaveImage(file, parentUiId);
+            newImage = await resizeAndSaveImage(file, parentUiId);
             addImage(newImage);
+        }
+
+        if (newImage !== undefined){
+            showModalEditImage(newImage);
         }
     };
 
     const addImage = (newImage:ImageModel) => {
         const newImages = images.concat(newImage);
         setImages(newImages);
-
-        showModalEditImage(newImage);
     }
 
     const showModalEditImage = (image: ImageModel) => {
         setEditImage(image);
-        setModalEditImageVisibility(true);
     }
 
     const onClickThumbnail = (image:ImageModel, index: number) => {
@@ -106,8 +114,8 @@ function Gallery({parentUiId}: Props){
         }
     }
 
-    const toggleModalEditImage = () => {
-        setModalEditImageVisibility(!modalEditImageVisibility);
+    const closeModalEditImage = () => {
+        setEditImage(undefined);
     }
 
     const deleteCurrentImage = useCallback(() => {
@@ -176,7 +184,7 @@ function Gallery({parentUiId}: Props){
 
             {isCameraOn && <Html5Camera close={() => setCamera(false)} onTakePhoto={onCapture}/>}
 
-            <ModalEditImage visible={modalEditImageVisibility} image={editImage} onImageDeleted={onEditImageDeleted} onImageSaved={onEditImageUpdated} toggle={toggleModalEditImage}/>
+            <ModalEditImage visible={editImage !== undefined} image={editImage} onImageDeleted={onEditImageDeleted} onImageSaved={onEditImageUpdated} toggle={closeModalEditImage}/>
         </Fragment>
 	);
 }
