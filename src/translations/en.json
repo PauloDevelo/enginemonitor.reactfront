@@ -36,6 +36,10 @@
   "equipmentname": "Name",
   "errorFetching": "Something went wrong ...",
   "firstname": "Firstname",
+  "imageDeleteMessage": "Are you sure you want to delete this image?",
+  "imageDeleteTitle": "Delete image",
+  "imageDescription": "Description",
+  "imageTitle": "Title",
   "import": "Import",
   "installDateLabel": "Installation Date",
   "installedOn": "installed on ",
@@ -51,6 +55,7 @@
   "modalCreationTitle": "Equipment Creation",
   "modalEditEntryTitle": "Entry edition",
   "modalEditTaskTitle": "Task edition",
+  "modalImageEditTitle": "Image edition",
   "modalLogintitle": "Login with an existing account",
   "modalResetPasswordTitle": "Change your password",
   "modalSignupTitle": "Signup",
@@ -101,10 +106,5 @@
   "trackerType": "With a usage time tracker",
   "usagePeriodInHour": "Period in usage hour",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
-  "yes": "Yes",
-  "modalImageEditTitle": "Image edition",
-  "imageTitle": "Title",
-  "imageDescription": "Description",
-  "imageDeleteTitle": "Delete image",
-  "imageDeleteMessage": "Are you sure you want to delete this image?"
+  "yes": "Yes"
 }

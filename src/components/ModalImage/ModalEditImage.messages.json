@@ -1,43 +1,42 @@
 {
-    "modalImageEditTitle": {
-      "defaultMessage": "Image edition",
-      "description": "modal title",
-      "id": "modalImageEditTitle"
-    },
-    "save": {
-        "defaultMessage": "Save",
-        "description": "Button",
-        "id": "save"
-    },
-    "delete": {
-        "defaultMessage": "Delete",
-        "description": "Button",
-        "id": "delete"
-    },
-    "cancel": {
-        "defaultMessage": "Cancel",
-        "description": "Button",
-        "id": "cancel"
-    },
-    "title": {
-        "defaultMessage": "Title",
-        "description": "Label",
-        "id": "imageTitle"
-    },
-    "description": {
-        "defaultMessage": "Description",
-        "description": "Label",
-        "id": "imageDescription"
-    },
-    "imageDeleteTitle": {
-        "defaultMessage": "Delete image",
-        "description": "modal title",
-        "id": "imageDeleteTitle"
-    },
-    "imageDeleteMessage": {
-        "defaultMessage": "Are you sure you want to delete this image?",
-        "description": "confirmation message",
-        "id": "imageDeleteMessage"
-    }
+  "cancel": {
+    "defaultMessage": "Cancel",
+    "description": "Button",
+    "id": "cancel"
+  },
+  "delete": {
+    "defaultMessage": "Delete",
+    "description": "Button",
+    "id": "delete"
+  },
+  "description": {
+    "defaultMessage": "Description",
+    "description": "Label",
+    "id": "imageDescription"
+  },
+  "imageDeleteMessage": {
+    "defaultMessage": "Are you sure you want to delete this image?",
+    "description": "confirmation message",
+    "id": "imageDeleteMessage"
+  },
+  "imageDeleteTitle": {
+    "defaultMessage": "Delete image",
+    "description": "modal title",
+    "id": "imageDeleteTitle"
+  },
+  "modalImageEditTitle": {
+    "defaultMessage": "Image edition",
+    "description": "modal title",
+    "id": "modalImageEditTitle"
+  },
+  "save": {
+    "defaultMessage": "Save",
+    "description": "Button",
+    "id": "save"
+  },
+  "title": {
+    "defaultMessage": "Title",
+    "description": "Label",
+    "id": "imageTitle"
+  }
 }
-  

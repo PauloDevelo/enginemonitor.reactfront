@@ -36,6 +36,10 @@
   "equipmentname": "Nom",
   "errorFetching": "Une erreur est survenue ...",
   "firstname": "Prénom",
+  "imageDeleteMessage": "Etes vous sure de vouloir supprimer cette image ?",
+  "imageDeleteTitle": "Suppression d'une image",
+  "imageDescription": "Description",
+  "imageTitle": "Titre",
   "import": "Import",
   "installDateLabel": "Date d'installation",
   "installedOn": "installé le ",
@@ -51,6 +55,7 @@
   "modalCreationTitle": "Création d'un équipement",
   "modalEditEntryTitle": "Edition d'une entrée",
   "modalEditTaskTitle": "Edition d'une tache",
+  "modalImageEditTitle": "Edition d'une image",
   "modalLogintitle": "Login avec un compte existant",
   "modalResetPasswordTitle": "Changement de mot de passe",
   "modalSignupTitle": "Signup",
@@ -101,10 +106,5 @@
   "trackerType": "Avec un tracker d'usage",
   "usagePeriodInHour": "Période en heure à l'usage",
   "yearperiod": "{year, plural, one {# année} other {# années}}",
-  "yes": "Oui",
-  "modalImageEditTitle": "Edition d'une image",
-  "imageTitle": "Titre",
-  "imageDescription": "Description",
-  "imageDeleteTitle": "Suppression d'une image",
-  "imageDeleteMessage": "Etes vous sure de vouloir supprimer cette image ?"
+  "yes": "Oui"
 }
