@@ -2,7 +2,6 @@ import React, { Fragment, useState, useEffect, ReactElement } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import {Alert} from 'reactstrap';
-import { useTraceUpdate } from '../../hooks/Debug';
 import HttpError from '../../http/HttpError';
 
 import {defineMessages, Messages} from "react-intl";
@@ -17,7 +16,6 @@ type Props = {
 }
 
 const ErrorAlert = ({hasError, error, onDismiss, className}:Props) => {
-    useTraceUpdate("ErrorAlert", {hasError, error, onDismiss, className});
     const [isVisible, setVisible] = useState(hasError);
 
     useEffect(() => {
