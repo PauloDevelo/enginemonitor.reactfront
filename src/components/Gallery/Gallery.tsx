@@ -13,6 +13,7 @@ import FileChooserButton from './FileChooserButton';
 
 import ModalEditImage from '../ModalImage/ModalEditImage';
 
+import errorService from '../../services/ErrorService';
 import imageProxy from '../../services/ImageProxy';
 import {resizeAndSaveImage, resizeAndSaveBase64Image} from '../../helpers/ImageHelper';
 
@@ -39,7 +40,7 @@ function Gallery({parentUiId}: Props){
         })
         .catch((error) => {
             console.error("Error when fetching the image for " + parentUiId);
-            console.error(error);
+            errorService.addError(error);
         });
     }, [parentUiId]);
 
@@ -52,15 +53,20 @@ function Gallery({parentUiId}: Props){
     };
 
     const uploadBase64Image = async(imageBase64: string, method: string) => {
-        let newImage:ImageModel | undefined = undefined;
+        try{
+            let newImage:ImageModel | undefined = undefined;
 
-        if(method === "multer"){
-            newImage = await resizeAndSaveBase64Image(imageBase64, parentUiId);
-            addImage(newImage);
+            if(method === "multer"){
+                newImage = await resizeAndSaveBase64Image(imageBase64, parentUiId);
+                addImage(newImage);
+            }
+    
+            if (newImage !== undefined){
+                showModalEditImage(newImage);
+            }
         }
-
-        if (newImage !== undefined){
-            showModalEditImage(newImage);
+        catch(error){
+            errorService.addError(error);
         }
     };
 
@@ -69,15 +75,20 @@ function Gallery({parentUiId}: Props){
     };
 
     const uploadImageFile = async(file: File, method: string) => {
-        let newImage:ImageModel | undefined = undefined;
+        try{
+            let newImage:ImageModel | undefined = undefined;
 
-        if(method === "multer"){
-            newImage = await resizeAndSaveImage(file, parentUiId);
-            addImage(newImage);
+            if(method === "multer"){
+                newImage = await resizeAndSaveImage(file, parentUiId);
+                addImage(newImage);
+            }
+
+            if (newImage !== undefined){
+                showModalEditImage(newImage);
+            }
         }
-
-        if (newImage !== undefined){
-            showModalEditImage(newImage);
+        catch(error){
+            errorService.addError(error);
         }
     };
 
@@ -119,9 +130,10 @@ function Gallery({parentUiId}: Props){
     }
 
     const deleteCurrentImage = useCallback(() => {
-        console.log("delete image");
         imageProxy.deleteImage(images[index]).then(deletedImage => {
             deleteImage(deletedImage._uiId);
+        }).catch(reason => {
+            errorService.addError(reason);
         });
     }, [images, isOpen, index]);
 
