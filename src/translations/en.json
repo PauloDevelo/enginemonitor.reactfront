@@ -106,5 +106,6 @@
   "trackerType": "With a usage time tracker",
   "usagePeriodInHour": "Period in usage hour",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
-  "yes": "Yes"
+  "yes": "Yes",
+  "userExceedStorageLimit": "User exceeded the storage limit. Remove some images before adding new images."
 }
