@@ -10,10 +10,12 @@ import ModalLogin from '../ModalLogin/ModalLogin';
 import ModalSignup from '../ModalSignup/ModalSignup';
 import NavBar from '../NavBar/NavBar';
 import SyncAlert from '../SyncAlert/SyncAlert';
-import CacheBuster from '../CacheBuster/CacheBuster'
+import ErrorAlert from '../ErrorAlert/ErrorAlert';
+import CacheBuster from '../CacheBuster/CacheBuster';
 
 import userProxy from '../../services/UserProxy';
 import taskProxy from '../../services/TaskProxy';
+import errorService from '../../services/ErrorService'
 
 import '../../style/transition.css';
 import './App.css'
@@ -22,6 +24,7 @@ import { UserModel, EquipmentModel, TaskModel } from '../../types/Types';
 
 export default function App(){
 	const [user, setUser] = useState<UserModel | undefined>(undefined);
+	const [error, setError] = useState<Error | undefined>(undefined);
 
 	const refreshCurrentUser = async () => {
 		try{
@@ -35,7 +38,27 @@ export default function App(){
 
 	useEffect(() => {
 		refreshCurrentUser();
+		errorService.registerOnListErrorChanged(onListErrorChanged);
+
+		return function() {
+			errorService.unregisterOnListErrorChanged(onListErrorChanged);
+		};
 	}, []);
+
+	const onListErrorChanged = (errors: Error[]) => {
+		if(errors.length > 0){
+			setError(errors[errors.length - 1]);
+		}
+		else{
+			setError(undefined);
+		}
+	}
+
+	const dismissError = useCallback(() => {
+		if(error !== undefined){
+			errorService.removeError(error);
+		}
+	}, [error]);
 
 	const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
 	const [taskList, setTaskList] = useState<TaskModel[]>([]);
@@ -77,10 +100,10 @@ export default function App(){
 		setCurrentTask(newCurrentTask);
 	}, []);
 
-	const onTaskHistoryChanged = () => {
+	const onTaskHistoryChanged = useCallback(() => {
 		refreshTaskList();
 		setEquipmentHistoryRefreshId(equipmentHistoryRefreshId + 1);
-	}
+	}, [equipmentHistoryRefreshId, currentEquipment]);
 	
 	const refreshTaskList = async() => {
 		if(currentEquipment !== undefined && currentEquipment._uiId !== undefined){
@@ -180,6 +203,7 @@ export default function App(){
 									</div>
 								</div>
 								<SyncAlert className="bottomright"/>
+								<ErrorAlert hasError={error !== undefined} error={error} onDismiss={dismissError} className="bottomright"/>
 							</Fragment>																																																			
 						</CSSTransition>
 						{!user && <ModalLogin visible={!user} 
