@@ -15,15 +15,15 @@ import Loading from '../Loading/Loading';
 import { createDefaultEquipment } from '../../helpers/EquipmentHelper';
 
 import PropTypes from 'prop-types';
-import { UserModel, EquipmentModel } from '../../types/Types';
+import { EquipmentModel } from '../../types/Types';
 
 type Props = {
-	user?: UserModel, 
+	userId?: string | undefined, 
 	changeCurrentEquipment: (equipment: EquipmentModel | undefined) => void, 
 	extraClassNames: string
 }
 
-function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
+function EquipmentsInfo({userId, changeCurrentEquipment, extraClassNames}: Props){
 	const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
 	const modalHook = useEditModal<EquipmentModel | undefined>(undefined);
 	
@@ -58,7 +58,7 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 
 	useEffect(() => {
 		fetchEquipments();
-	}, [user]);
+	}, [userId]);
 
     useEffect(() => {
         if (equipments.length > 0){
@@ -139,7 +139,7 @@ function EquipmentsInfo({user, changeCurrentEquipment, extraClassNames}: Props){
 export default React.memo(EquipmentsInfo);
 
 EquipmentsInfo.propTypes = {
-	user: PropTypes.object,
+	userId: PropTypes.string,
 	changeCurrentEquipment: PropTypes.func.isRequired,
 	extraClassNames: PropTypes.string
 };

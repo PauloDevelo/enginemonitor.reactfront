@@ -176,7 +176,7 @@ export default function App(){
 								<div className="appBody mb-2">
 									<div className="wrapperColumn">
 										<EquipmentsInfo
-													user={user}
+													userId={user?user._uiId:undefined}
 													changeCurrentEquipment={setCurrentEquipment}
 													extraClassNames={panelClassNames + ' columnHeader'}/>
 										<TaskTabPanes classNames={panelClassNames + ' columnBody'}
