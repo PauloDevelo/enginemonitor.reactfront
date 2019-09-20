@@ -29,7 +29,8 @@ type Props = {
 
 const ModalSignup = ({visible, className, toggle}: Props) => {
 	const uid = uuidv1(); 
-	const data:UserModel = { _uiId:uid, firstname:'', name:'', email: '', password: ''};
+	const data:UserModel = { _uiId:uid, firstname:'', name:'', email: '', password: '', imageFolderSizeInByte: 0,
+    imageFolderSizeLimitInByte: 0};
  	const [infoMsg, setInfoMsg] = useState<string | undefined>(undefined);
 	const [signupErrors, setSignupErrors] = useState<any>(undefined);
 	const [isLoading, setIsLoading] = useState(false);
