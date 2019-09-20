@@ -1,10 +1,11 @@
 import React, { useCallback, useState, Fragment } from "react";
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Progress } from 'reactstrap';
 import Switch from "react-switch";
 
 import ClockLabel from '../ClockLabel/ClockLabel';
 import DropDownConnectionStateItem from './DropDownConnectionStateItem';
 import ModalAbout from '../ModalAbout/ModalAbout';
+import ImageFolderGauge from './ImageFolderGauge';
 
 import { faSignOutAlt, } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -66,6 +67,9 @@ const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
                                     <Switch onChange={offlineSwitch} checked={offline} className="react-switch" onColor="#28a745" height={20} width={40}/>&nbsp;Offline mode
                                 </DropdownItem>
                                 <DropDownConnectionStateItem />
+                                <DropdownItem header>
+                                    <ImageFolderGauge storageSizeInMB={user?user.imageFolderSizeInByte/1048576:0} storageSizeLimitInMB={user?user.imageFolderSizeLimitInByte/1048576:0}/>
+                                </DropdownItem>
                                 <DropdownItem divider />
                                 <DropdownItem onClick={logout}>
                                     <FontAwesomeIcon icon={faSignOutAlt} />{' '}<FormattedMessage {...navBarMsg.signout} />
