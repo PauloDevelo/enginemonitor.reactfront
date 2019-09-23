@@ -1,6 +1,7 @@
 import progressiveHttpProxy from './ProgressiveHttpProxy';
 
 import entryProxy from './EntryProxy';
+import imageProxy from './ImageProxy';
 
 import storageService from './StorageService';
 
@@ -35,6 +36,7 @@ class TaskProxy implements ITaskProxy{
 
         const removedTask = await storageService.removeItemInArray<TaskModel>(this.baseUrl + equipmentId, taskId);
         await entryProxy.onTaskDeleted(equipmentId, taskId);
+        await imageProxy.onEntityDeleted(taskId);
 
         return updateTask(removedTask);
     }
@@ -66,9 +68,12 @@ class TaskProxy implements ITaskProxy{
     onEquipmentDeleted = async (equipmentId: string): Promise<void> => {
         var tasks = await this.fetchTasks(equipmentId, true);
 
-        await Promise.all(tasks.map(async (task) => {
+        await tasks.reduce(async (previousPromise, task) => {
+            await previousPromise;
             await storageService.removeItemInArray<TaskModel>(this.baseUrl + equipmentId, task._uiId);
-        }));
+            await entryProxy.onTaskDeleted(equipmentId, task._uiId);
+            await imageProxy.onEntityDeleted(task._uiId);
+        }, Promise.resolve());
     }
 }
 

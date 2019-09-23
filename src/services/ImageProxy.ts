@@ -10,6 +10,8 @@ export interface IImageProxy{
     createImage(imgFormObj: FormData):Promise<ImageModel>;
     updateImage(imageToSave: ImageModel):Promise<ImageModel>;
     deleteImage(image: ImageModel): Promise<ImageModel>;
+
+    onEntityDeleted(parentUiId: string):Promise<void>;
 }
 
 class ImageProxy implements IImageProxy{
@@ -39,6 +41,15 @@ class ImageProxy implements IImageProxy{
     deleteImage = async (image: ImageModel): Promise<ImageModel> => {
         await progressiveHttpProxy.deleteAndUpdate<ImageModel>(this.baseUrl + image.parentUiId + "/" + image._uiId, "image", (image) => image);
         return await storageService.removeItemInArray<ImageModel>(this.baseUrl + image.parentUiId, image._uiId);
+    }
+
+    onEntityDeleted = async(parentUiId: string):Promise<void> => {
+        var images = await this.fetchImages(parentUiId, true);
+
+        await images.reduce(async (previousPromise, image) => {
+            await previousPromise;
+            await storageService.removeItemInArray<ImageModel>(this.baseUrl + image.parentUiId, image._uiId);
+        }, Promise.resolve());
     }
 }
 

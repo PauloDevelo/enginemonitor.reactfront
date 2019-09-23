@@ -7,6 +7,7 @@ import entryProxy from './EntryProxy';
 
 import { updateEquipment } from '../helpers/EquipmentHelper'
 import { EquipmentModel} from '../types/Types'
+import imageProxy from './ImageProxy';
 
 export interface IEquipmentProxy{
     fetchEquipments(): Promise<EquipmentModel[]>;
@@ -41,6 +42,7 @@ class EquipmentProxy implements IEquipmentProxy{
 
         await entryProxy.onEquipmentDeleted(idEquipment);
         await taskProxy.onEquipmentDeleted(idEquipment);
+        await imageProxy.onEntityDeleted(idEquipment);
 
         return updateEquipment(await storageService.removeItemInArray<EquipmentModel>(this.baseUrl, idEquipment));
     }

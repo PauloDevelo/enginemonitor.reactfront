@@ -132,8 +132,6 @@ class SyncService implements ISyncService, IUserStorageListener{
                 return;
             }
         }
-
-        
     }
 
     private triggerEndSync(context: SyncContext){

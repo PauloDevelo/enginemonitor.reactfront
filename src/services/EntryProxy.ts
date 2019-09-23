@@ -4,6 +4,7 @@ import storageService from './StorageService';
 
 import { updateEntry } from '../helpers/EntryHelper'
 import { EntryModel} from '../types/Types'
+import imageProxy from './ImageProxy';
 
 export interface IEntryProxy{
     createOrSaveEntry(equipmentId: string, taskId: string | undefined, newEntry: EntryModel): Promise<EntryModel>;
@@ -38,8 +39,10 @@ class EntryProxy implements IEntryProxy{
 
         await progressiveHttpProxy.deleteAndUpdate(this.baseUrl + equipmentId + '/' + taskId + '/' + entryId, "entry", updateEntry);
 
-        const deletedEntry = await storageService.removeItemInArray<EntryModel>(this.baseUrl + equipmentId, entryId);
-        return updateEntry(deletedEntry);
+        const deletedEntry = updateEntry(await storageService.removeItemInArray<EntryModel>(this.baseUrl + equipmentId, entryId));
+        imageProxy.onEntityDeleted(deletedEntry._uiId);
+
+        return deletedEntry;
     }
 
     fetchEntries = async(equipmentId: string, taskId: string, forceToLookUpInStorage: boolean = false):Promise<EntryModel[]> => {
@@ -84,17 +87,22 @@ class EntryProxy implements IEntryProxy{
     onTaskDeleted = async (equipmentId: string, taskId: string): Promise<void> => {
         const entries = await this.getStoredEntries(equipmentId, taskId);
 
-        await Promise.all(entries.map(async (entry) => {
+        await entries.reduce(async (previousPromise, entry) => {
+            await previousPromise;
             await storageService.removeItemInArray<EntryModel>(this.baseUrl + equipmentId, entry._uiId);
-        }));
+            await imageProxy.onEntityDeleted(entry._uiId);
+        }, Promise.resolve());
     }
 
     onEquipmentDeleted = async (equipmentId: string): Promise<void> => {
         const entries = await this.getStoredEntries(equipmentId);
 
-        await Promise.all(entries.map(async (entry) => {
+    
+        await entries.reduce(async (previousPromise, entry) => {
+            await previousPromise;
             await storageService.removeItemInArray<EntryModel>(this.baseUrl + equipmentId, entry._uiId);
-        }));
+            await imageProxy.onEntityDeleted(entry._uiId);
+        }, Promise.resolve());
     }
 }
 
