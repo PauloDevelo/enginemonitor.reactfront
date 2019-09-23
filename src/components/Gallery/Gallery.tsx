@@ -161,6 +161,9 @@ function Gallery({parentUiId}: Props){
         <Button onClick={editCurrentImage} className={"action-button"}><FontAwesomeIcon icon={faEdit} size="lg"/></Button>,
     ];
 
+    
+    const galleryStyles = {overlay: {zIndex: 1100}};
+
 	return(
         <Fragment>
             <div>
@@ -191,6 +194,7 @@ function Gallery({parentUiId}: Props){
                 toolbarButtons={additionalActions}
                 imageCaption={images[index].description}
                 imageTitle={images[index].title}
+                reactModalStyle={galleryStyles}
                 />
             )}
 
