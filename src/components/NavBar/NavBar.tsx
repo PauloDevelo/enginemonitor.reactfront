@@ -67,6 +67,7 @@ const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
                                     <Switch onChange={offlineSwitch} checked={offline} className="react-switch" onColor="#28a745" height={20} width={40}/>&nbsp;Offline mode
                                 </DropdownItem>
                                 <DropDownConnectionStateItem />
+                                <DropdownItem divider />
                                 <DropdownItem header>
                                     <ImageFolderGauge storageSizeInMB={user?user.imageFolderSizeInByte/1048576:0} storageSizeLimitInMB={user?user.imageFolderSizeLimitInByte/1048576:0}/>
                                 </DropdownItem>
