@@ -54,5 +54,6 @@ export interface ImageModel extends EntityModel {
     thumbnailUrl: string,
     parentUiId: string,
     title: string,
-    description:string
+    description:string,
+    sizeInByte:number
 }

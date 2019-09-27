@@ -172,7 +172,7 @@ export default function App(){
 					<Fragment>
 						<CSSTransition in={true} appear={true} timeout={1000} classNames="fade">
 							<Fragment>
-								<NavBar user={user} onLoggedOut={logOut} isOpened={navBarVisible} toggle={toggleNavBar} />
+								<NavBar onLoggedOut={logOut} isOpened={navBarVisible} toggle={toggleNavBar} />
 								<div className="appBody mb-2">
 									<div className="wrapperColumn">
 										<EquipmentsInfo

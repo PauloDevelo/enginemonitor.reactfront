@@ -1,4 +1,4 @@
-import React, { useCallback, useState, Fragment } from "react";
+import React, { useCallback, useState, Fragment, useEffect } from "react";
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Progress } from 'reactstrap';
 import Switch from "react-switch";
 
@@ -19,6 +19,7 @@ import jsonMessages from "./NavBar.messages.json";
 const navBarMsg: Messages = defineMessages(jsonMessages);
 
 import { UserModel } from "../../types/Types";
+import userContext from "../../services/UserContext";
 
 import './NavBar.css';
 
@@ -29,9 +30,28 @@ type Props = {
     toggle: ()=>void
 };
 
-const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
+const NavBar = ({onLoggedOut, isOpened, toggle}:Props) => {
+    const [user, setUser] = useState<UserModel | undefined>(undefined);
+    const [userImageFolderSize, setUserImageFolderSize] = useState(0);
     const [aboutVisible, setAboutVisibility] = useState(false);
     const [offline, setOffline] = useState(syncService.isOfflineModeActivated());
+
+    const onUserChanged = (newUser: UserModel | undefined) => {
+        setUser(newUser);
+    }
+
+    const onUserImageFolderSizeChanged = (newUserImageFolderSize: number) => {
+        setUserImageFolderSize(newUserImageFolderSize);
+    }
+
+    useEffect(() => {
+        userContext.registerOnUserChanged(onUserChanged);
+        userContext.registerOnUserStorageSizeChanged(onUserImageFolderSizeChanged);
+        return () => {
+            userContext.unregisterOnUserChanged(onUserChanged);
+            userContext.unregisterOnUserStorageSizeChanged(onUserImageFolderSizeChanged);
+        }
+    }, []);
 
     const logout = useCallback(() => {
         userProxy.logout();
@@ -47,8 +67,10 @@ const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
         setAboutVisibility(!aboutVisible);
     }
 
+    const getTextMenu = useCallback(() => {
+        return user?user.email:"Login";
+    }, [user]);
 
-    const textMenu = user?user.email:"Login";
 	return (
         <Fragment>
             <Navbar color="dark" dark expand="md">
@@ -60,7 +82,7 @@ const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
                     <Nav className="ml-auto" navbar>
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>
-                            {textMenu}
+                            {getTextMenu()}
                             </DropdownToggle>
                             <DropdownMenu right>
                                 <DropdownItem header>
@@ -69,7 +91,7 @@ const NavBar = ({user, onLoggedOut, isOpened, toggle}:Props) => {
                                 <DropDownConnectionStateItem />
                                 <DropdownItem divider />
                                 <DropdownItem header>
-                                    <ImageFolderGauge storageSizeInMB={user?user.imageFolderSizeInByte/1048576:0} storageSizeLimitInMB={user?user.imageFolderSizeLimitInByte/1048576:0}/>
+                                    <ImageFolderGauge storageSizeInMB={userImageFolderSize/1048576} storageSizeLimitInMB={user?user.imageFolderSizeLimitInByte/1048576:0}/>
                                 </DropdownItem>
                                 <DropdownItem divider />
                                 <DropdownItem onClick={logout}>

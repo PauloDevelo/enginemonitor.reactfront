@@ -5,6 +5,8 @@ import storageService from './StorageService';
 
 import { ImageModel, EntityModel } from '../types/Types'
 
+import userContext from './UserContext';
+
 export interface IImageProxy{
     fetchImages(parentUiId: string): Promise<ImageModel[]>;
     createImage(imgFormObj: FormData):Promise<ImageModel>;
@@ -29,6 +31,7 @@ class ImageProxy implements IImageProxy{
     createImage = async(imgFormObj: FormData):Promise<ImageModel> => {
         const {image} = await httpProxy.post(this.baseUrl + imgFormObj.get('parentUiId'), imgFormObj);
         await storageService.updateArray(this.baseUrl + image.parentUiId, image);
+        userContext.onImageAdded(image.sizeInByte);
         return image;
     }
 
@@ -40,7 +43,10 @@ class ImageProxy implements IImageProxy{
 
     deleteImage = async (image: ImageModel): Promise<ImageModel> => {
         await progressiveHttpProxy.deleteAndUpdate<ImageModel>(this.baseUrl + image.parentUiId + "/" + image._uiId, "image", (image) => image);
-        return await storageService.removeItemInArray<ImageModel>(this.baseUrl + image.parentUiId, image._uiId);
+        const deletedImage = await storageService.removeItemInArray<ImageModel>(this.baseUrl + image.parentUiId, image._uiId);
+        userContext.onImageRemoved(deletedImage.sizeInByte);
+
+        return deletedImage;
     }
 
     onEntityDeleted = async(parentUiId: string):Promise<void> => {
@@ -48,7 +54,8 @@ class ImageProxy implements IImageProxy{
 
         await images.reduce(async (previousPromise, image) => {
             await previousPromise;
-            await storageService.removeItemInArray<ImageModel>(this.baseUrl + image.parentUiId, image._uiId);
+            const deletedImage = await storageService.removeItemInArray<ImageModel>(this.baseUrl + image.parentUiId, image._uiId);
+            userContext.onImageRemoved(deletedImage.sizeInByte);
         }, Promise.resolve());
     }
 }

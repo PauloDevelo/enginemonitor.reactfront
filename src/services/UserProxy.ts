@@ -4,6 +4,7 @@ import HttpError from '../http/HttpError'
 import storageService from './StorageService';
 
 import {UserModel, AuthInfo} from '../types/Types'
+import userContext from './UserContext';
 
 type Config = {
     headers: {
@@ -52,6 +53,7 @@ class UserProxy implements IUserProxy{
             }
 
             await storageService.openUserStorage(user);
+            userContext.onUserChanged(user);
 
             return user;
         }
@@ -64,6 +66,7 @@ class UserProxy implements IUserProxy{
         storageService.removeGlobalItem('currentUser');
         httpProxy.setConfig(undefined);
         storageService.closeUserStorage();
+        userContext.onUserChanged(undefined);
     }
 
     fetchCurrentUser = async():Promise<UserModel | undefined> => {
@@ -74,10 +77,12 @@ class UserProxy implements IUserProxy{
             const user = await storageService.getGlobalItem<UserModel>('currentUser');
             if (user){
                 await storageService.openUserStorage(user);
+                userContext.onUserChanged(user);
                 return user;
             }
         }
         
+        userContext.onUserChanged(undefined);
         return undefined;
     }
 }
