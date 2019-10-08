@@ -12,6 +12,7 @@ const Html5Camera = ({onTakePhoto, close}: Props) => {
 
     const onCameraError = (error: any) => {
         console.error('onCameraError', error);
+        close();
     }
  
     const onCameraStart = (stream: MediaStream) => {
@@ -34,7 +35,7 @@ const Html5Camera = ({onTakePhoto, close}: Props) => {
                 idealFacingMode = {FACING_MODES.ENVIRONMENT}
                 idealResolution = {{width: 1024, height: 1024}}
                 imageType = {IMAGE_TYPES.JPG}
-                imageCompression = {0.97}
+                imageCompression = {0.92}
                 isMaxResolution = {false}
                 isImageMirror = {false}
                 isSilentMode = {false}
