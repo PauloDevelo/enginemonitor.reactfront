@@ -203,7 +203,7 @@ export default function App(){
 									</div>
 								</div>
 								<SyncAlert className="bottomright"/>
-								<ErrorAlert hasError={error !== undefined} error={error} onDismiss={dismissError} className="bottomright"/>
+								<ErrorAlert error={error} onDismiss={dismissError} className="bottomright"/>
 							</Fragment>																																																			
 						</CSSTransition>
 						{!user && <ModalLogin visible={!user} 

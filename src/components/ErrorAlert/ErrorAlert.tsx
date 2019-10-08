@@ -9,18 +9,17 @@ import jsonMessages from "./ErrorAlert.messages.json";
 const alertMsg: Messages = defineMessages(jsonMessages);
 
 type Props = {
-    hasError: boolean;
     error: Error | undefined;
-    className: string;
+    className?: string;
     onDismiss: () => void;
 }
 
-const ErrorAlert = ({hasError, error, onDismiss, className}:Props) => {
-    const [isVisible, setVisible] = useState(hasError);
+const ErrorAlert = ({error, onDismiss, className}:Props) => {
+    const [isVisible, setVisible] = useState(error !== undefined);
 
     useEffect(() => {
-        setVisible(hasError)
-    }, [hasError]);
+        setVisible(error !== undefined)
+    }, [error]);
 
     let message:string = "";
     if(error !== undefined){
@@ -33,18 +32,18 @@ const ErrorAlert = ({hasError, error, onDismiss, className}:Props) => {
         }
     }
 
-    let msgElmt: string | ReactElement;
+    let msgElement: string | ReactElement;
     if(alertMsg[message] !== undefined){
-        msgElmt = <FormattedMessage {...alertMsg[message]}/>;
+        msgElement = <FormattedMessage {...alertMsg[message]}/>;
     }
     else{
-        msgElmt = message;
+        msgElement = message;
     }
 
     return (
         <Fragment>
             <Alert color="danger" className={className} isOpen={isVisible} toggle={onDismiss}>
-                <div className="text-center">{msgElmt}</div>
+                <div className="text-center">{msgElement}</div>
             </Alert>
         </Fragment>
     )

@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component ErrorAlert when it gets an Error should render with a message and the default color 1`] = `
+<Memo(ErrorAlert)
+  error={[Error: test message]}
+  onDismiss={[Function]}
+>
+  <Alert
+    closeAriaLabel="Close"
+    color="danger"
+    fade={true}
+    isOpen={true}
+    tag="div"
+    toggle={[Function]}
+    transition={
+      Object {
+        "appear": true,
+        "baseClass": "fade",
+        "baseClassActive": "show",
+        "enter": true,
+        "exit": true,
+        "in": true,
+        "mountOnEnter": false,
+        "onEnter": [Function],
+        "onEntered": [Function],
+        "onEntering": [Function],
+        "onExit": [Function],
+        "onExited": [Function],
+        "onExiting": [Function],
+        "tag": "div",
+        "timeout": 150,
+        "unmountOnExit": true,
+      }
+    }
+  >
+    <Fade
+      appear={true}
+      baseClass="fade"
+      baseClassActive="show"
+      className="alert alert-danger alert-dismissible"
+      enter={true}
+      exit={true}
+      in={true}
+      mountOnEnter={false}
+      onEnter={[Function]}
+      onEntered={[Function]}
+      onEntering={[Function]}
+      onExit={[Function]}
+      onExited={[Function]}
+      onExiting={[Function]}
+      role="alert"
+      tag="div"
+      timeout={150}
+      unmountOnExit={true}
+    >
+      <Transition
+        appear={true}
+        enter={true}
+        exit={true}
+        in={true}
+        mountOnEnter={false}
+        onEnter={[Function]}
+        onEntered={[Function]}
+        onEntering={[Function]}
+        onExit={[Function]}
+        onExited={[Function]}
+        onExiting={[Function]}
+        timeout={150}
+        unmountOnExit={true}
+      >
+        <div
+          className="alert alert-danger alert-dismissible fade"
+          role="alert"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              aria-hidden="true"
+            >
+              ×
+            </span>
+          </button>
+          <div
+            className="text-center"
+          >
+            test message
+          </div>
+        </div>
+      </Transition>
+    </Fade>
+  </Alert>
+</Memo(ErrorAlert)>
+`;
+
+exports[`Component ErrorAlert when it gets an HttpError should render with a message and the default color 1`] = `
+<Memo(ErrorAlert)
+  error={[Error]}
+  onDismiss={[Function]}
+>
+  <Alert
+    closeAriaLabel="Close"
+    color="danger"
+    fade={true}
+    isOpen={true}
+    tag="div"
+    toggle={[Function]}
+    transition={
+      Object {
+        "appear": true,
+        "baseClass": "fade",
+        "baseClassActive": "show",
+        "enter": true,
+        "exit": true,
+        "in": true,
+        "mountOnEnter": false,
+        "onEnter": [Function],
+        "onEntered": [Function],
+        "onEntering": [Function],
+        "onExit": [Function],
+        "onExited": [Function],
+        "onExiting": [Function],
+        "tag": "div",
+        "timeout": 150,
+        "unmountOnExit": true,
+      }
+    }
+  >
+    <Fade
+      appear={true}
+      baseClass="fade"
+      baseClassActive="show"
+      className="alert alert-danger alert-dismissible"
+      enter={true}
+      exit={true}
+      in={true}
+      mountOnEnter={false}
+      onEnter={[Function]}
+      onEntered={[Function]}
+      onEntering={[Function]}
+      onExit={[Function]}
+      onExited={[Function]}
+      onExiting={[Function]}
+      role="alert"
+      tag="div"
+      timeout={150}
+      unmountOnExit={true}
+    >
+      <Transition
+        appear={true}
+        enter={true}
+        exit={true}
+        in={true}
+        mountOnEnter={false}
+        onEnter={[Function]}
+        onEntered={[Function]}
+        onEntering={[Function]}
+        onExit={[Function]}
+        onExited={[Function]}
+        onExiting={[Function]}
+        timeout={150}
+        unmountOnExit={true}
+      >
+        <div
+          className="alert alert-danger alert-dismissible fade"
+          role="alert"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              aria-hidden="true"
+            >
+              ×
+            </span>
+          </button>
+          <div
+            className="text-center"
+          >
+            test message
+          </div>
+        </div>
+      </Transition>
+    </Fade>
+  </Alert>
+</Memo(ErrorAlert)>
+`;
