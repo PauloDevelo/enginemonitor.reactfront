@@ -42,6 +42,7 @@
     "build": "react-scripts build",
     "test--no-watch": "react-scripts test --no-watch",
     "test": "react-scripts test",
+    "coverage": "react-scripts test --coverage",
     "deploy": "node scripts/deployRelease.js",
     "rollback": "node scripts/rollBackRelease.js",
     "generate-build-version": "node scripts/generateBuildVersion.js",
