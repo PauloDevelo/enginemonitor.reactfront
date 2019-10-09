@@ -31,8 +31,9 @@ type Props = {
 };
 
 const NavBar = ({onLoggedOut, isOpened, toggle}:Props) => {
-    const [user, setUser] = useState<UserModel | undefined>(undefined);
-    const [userImageFolderSize, setUserImageFolderSize] = useState(0);
+    const currentUser = userContext.getCurrentUser();
+    const [user, setUser] = useState<UserModel | undefined>(currentUser);
+    const [userImageFolderSize, setUserImageFolderSize] = useState(currentUser !== undefined ? currentUser.imageFolderSizeInByte : 0);
     const [aboutVisible, setAboutVisibility] = useState(false);
     const [offline, setOffline] = useState(syncService.isOfflineModeActivated());
 
