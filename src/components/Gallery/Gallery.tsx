@@ -1,23 +1,21 @@
 import React, { useState, useEffect, useCallback,Fragment } from 'react';
-import { Label, Button } from 'reactstrap';
+import { Button } from 'reactstrap';
 
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 
 import Html5Camera from "./Html5Camera";
 
-import Image from './Image';
-
 import { ImageModel } from '../../types/Types';
-import FileChooserButton from './FileChooserButton';
+import GalleryComponent from './GalleryComponent';
 
 import ModalEditImage from '../ModalImage/ModalEditImage';
 
 import errorService from '../../services/ErrorService';
 import imageProxy from '../../services/ImageProxy';
-import {resizeAndSaveImage, resizeAndSaveBase64Image} from '../../helpers/ImageHelper';
+import {resizeAndSaveImage} from '../../helpers/ImageHelper';
 
-import { faCamera, faTrashAlt, faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import "./Gallery.css";
@@ -44,35 +42,19 @@ function Gallery({parentUiId}: Props){
         });
     }, [parentUiId]);
 
-    const turnOnCamera = () => {
+    const turnOnCamera = useCallback(() => {
         setCamera(true);
-    }
+    }, []);
 
-    const onCapture = (imageBase64: string) => {
-        uploadBase64Image(imageBase64, "multer");
-    };
+    const turnOffCamera = useCallback(() => {
+        setCamera(false);
+    }, []);
 
-    const uploadBase64Image = async(imageBase64: string, method: string) => {
-        try{
-            let newImage:ImageModel | undefined = undefined;
-
-            if(method === "multer"){
-                newImage = await resizeAndSaveBase64Image(imageBase64, parentUiId);
-                addImage(newImage);
-            }
     
-            if (newImage !== undefined){
-                showModalEditImage(newImage);
-            }
-        }
-        catch(error){
-            errorService.addError(error);
-        }
-    };
 
-    const onSelectFile = async(file: File) => {
-        uploadImageFile(file, "multer")
-    };
+    const onSelectFile = useCallback((file: File) => {
+        uploadImageFile(file, "multer");
+    }, [images]);
 
     const uploadImageFile = async(file: File, method: string) => {
         try{
@@ -82,29 +64,23 @@ function Gallery({parentUiId}: Props){
                 newImage = await resizeAndSaveImage(file, parentUiId);
                 addImage(newImage);
             }
-
-            if (newImage !== undefined){
-                showModalEditImage(newImage);
-            }
         }
         catch(error){
             errorService.addError(error);
         }
     };
 
-    const addImage = (newImage:ImageModel) => {
+    const addImage = useCallback((newImage:ImageModel) => {
         const newImages = images.concat(newImage);
         setImages(newImages);
-    }
 
-    const showModalEditImage = (image: ImageModel) => {
-        setEditImage(image);
-    }
+        setEditImage(newImage);
+    }, [images]);
 
-    const onClickThumbnail = (image:ImageModel, index: number) => {
+    const onClickThumbnail = useCallback((index: number) => {
         setIndex(index);
         setOpen(true);
-    }
+    }, []);
 
     const onEditImageDeleted = useCallback(() => {
         if(editImage !== undefined){
@@ -138,7 +114,7 @@ function Gallery({parentUiId}: Props){
     }, [images, isOpen, index]);
 
     const editCurrentImage = useCallback(() => {
-        showModalEditImage(images[index]);
+        setEditImage(images[index]);
     }, [index, images]);
 
     const deleteImage = (deletedImageUiId: string) => {
@@ -152,55 +128,37 @@ function Gallery({parentUiId}: Props){
             setImages(newImages);
     }
 
-    const thumbnails = images.map((image, index) => {
-        return <Image key={image._uiId} image={image} index={index} onClickImage={onClickThumbnail} />;
-    });
-
     const additionalActions  =  [
         <Button onClick={deleteCurrentImage} className={"action-button"}><FontAwesomeIcon icon={faTrashAlt} size="lg"/></Button>,
         <Button onClick={editCurrentImage} className={"action-button"}><FontAwesomeIcon icon={faEdit} size="lg"/></Button>,
     ];
 
-    
-    const galleryStyles = {overlay: {zIndex: 1100}};
+    const galleryStyles = {overlay: {zIndex: 999}};
 
 	return(
         <Fragment>
-            <div>
-                <Label className="font-weight-bold">Gallery image</Label>
-                <div className="p-1 border border-secondary rounded shadow gallery">
-                    <FileChooserButton onFileSelect={onSelectFile} className="float-right"/>
-                    <Button color="light" size="lg" onClick={turnOnCamera} className="float-right">
-                        <span className="fa-layers fa-fw">
-                            <FontAwesomeIcon icon={faCamera} size="lg"/>
-                            <FontAwesomeIcon icon={faPlus} size="xs" transform="down-13 left-16"/>
-                        </span>
-                    </Button>
-                    {thumbnails}
-                </div>
-            </div>
+            <GalleryComponent images={images} onClickThumbnail={onClickThumbnail} onSelectFile={onSelectFile} turnOnCamera={turnOnCamera} />
             {isOpen && (
                 <Lightbox
-                
-                mainSrc={images[index].url}
-                nextSrc={images[(index + 1) % images.length].url}
-                prevSrc={images[(index + images.length - 1) % images.length].url}
-                mainSrcThumbnail= {images[index].thumbnailUrl}
-                nextSrcThumbnail= {images[(index + 1) % images.length].thumbnailUrl}
-                prevSrcThumbnail= {images[(index + images.length - 1) % images.length].thumbnailUrl}
-                onCloseRequest={() => setOpen(false)}
-                onMovePrevRequest={() => setIndex((index + images.length - 1) % images.length)}
-                onMoveNextRequest={() => setIndex((index + 1) % images.length)}
-                toolbarButtons={additionalActions}
-                imageCaption={images[index].description}
-                imageTitle={images[index].title}
-                reactModalStyle={galleryStyles}
+                    mainSrc={images[index].url}
+                    nextSrc={images[(index + 1) % images.length].url}
+                    prevSrc={images[(index + images.length - 1) % images.length].url}
+                    mainSrcThumbnail= {images[index].thumbnailUrl}
+                    nextSrcThumbnail= {images[(index + 1) % images.length].thumbnailUrl}
+                    prevSrcThumbnail= {images[(index + images.length - 1) % images.length].thumbnailUrl}
+                    onCloseRequest={() => setOpen(false)}
+                    onMovePrevRequest={() => setIndex((index + images.length - 1) % images.length)}
+                    onMoveNextRequest={() => setIndex((index + 1) % images.length)}
+                    toolbarButtons={additionalActions}
+                    imageCaption={images[index].description}
+                    imageTitle={images[index].title}
+                    reactModalStyle={galleryStyles}
                 />
             )}
 
-            {isCameraOn && <Html5Camera close={() => setCamera(false)} onTakePhoto={onCapture}/>}
+            {isCameraOn && <Html5Camera imageParentUiId={parentUiId} close={turnOffCamera} addImage={addImage}/>}
 
-            <ModalEditImage visible={editImage !== undefined} image={editImage} onImageDeleted={onEditImageDeleted} onImageSaved={onEditImageUpdated} toggle={closeModalEditImage}/>
+            {editImage !== undefined && <ModalEditImage visible={editImage !== undefined} image={editImage} onImageDeleted={onEditImageDeleted} onImageSaved={onEditImageUpdated} toggle={closeModalEditImage}/>}
         </Fragment>
 	);
 }

@@ -6,13 +6,12 @@ import './Image.css';
 
 type Props = {
     image: ImageModel;
-    index: number;
-    onClickImage: undefined | ((image: ImageModel, index: number) => void);
+    onClickImage: undefined | (() => void);
 }
-function Image({image, index, onClickImage}: Props){
+function Image({image, onClickImage}: Props){
     const displayImage = () => {
         if (onClickImage !== undefined){
-            onClickImage(image, index);
+            onClickImage();
         }
     }
 

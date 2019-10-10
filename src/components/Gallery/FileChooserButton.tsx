@@ -43,4 +43,4 @@ function FileChooserButton({onFileSelect, className}: Props){
     </Button>);
 }
 
-export default FileChooserButton;
+export default React.memo(FileChooserButton);
