@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component NbActionPending should render a specific message when there is no action to sync 1`] = `
+<NbActionPending>
+  <FormattedMessage
+    defaultMessage="{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}"
+    description="Nb action pending"
+    id="nbAction"
+    values={
+      Object {
+        "nbAction": 0,
+      }
+    }
+  >
+    <span>
+      synced
+    </span>
+  </FormattedMessage>
+</NbActionPending>
+`;
+
+exports[`Component NbActionPending should render a specific message when there is one action to sync 1`] = `
+<NbActionPending>
+  <FormattedMessage
+    defaultMessage="{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}"
+    description="Nb action pending"
+    id="nbAction"
+    values={
+      Object {
+        "nbAction": 1,
+      }
+    }
+  >
+    <span>
+      1 action to sync
+    </span>
+  </FormattedMessage>
+</NbActionPending>
+`;
+
+exports[`Component NbActionPending should render a specific message when there is several action to sync 1`] = `
+<NbActionPending>
+  <FormattedMessage
+    defaultMessage="{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}"
+    description="Nb action pending"
+    id="nbAction"
+    values={
+      Object {
+        "nbAction": 3,
+      }
+    }
+  >
+    <span>
+      3 actions to sync
+    </span>
+  </FormattedMessage>
+</NbActionPending>
+`;
