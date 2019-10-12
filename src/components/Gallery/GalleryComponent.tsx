@@ -1,7 +1,7 @@
 import React from 'react';
 import { Label, Button } from 'reactstrap';
 
-import Image from './Image';
+import Thumbnail from './Thumbnail';
 
 import { ImageModel } from '../../types/Types';
 import FileChooserButton from './FileChooserButton';
@@ -20,7 +20,7 @@ type Props = {
 
 function GalleryComponent({ images, onClickThumbnail, onSelectFile, turnOnCamera }: Props){
     const thumbnails = images.map((image, index) => {
-        return <Image key={image._uiId} image={image} onClickImage={() => onClickThumbnail(index)} />;
+        return <Thumbnail key={image._uiId} image={image} onClickImage={() => onClickThumbnail(index)} />;
     });
 
 	return(

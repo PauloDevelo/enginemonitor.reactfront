@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 
-import Image from '../Image'
+import Thumbnail from '../Thumbnail'
 
 
 
@@ -36,7 +36,7 @@ describe('Component Image', () =>{
         const onClick = jest.fn();
 
         // Act
-        const wrapper = mount(<Image image={image} onClickImage={onClick} />);
+        const wrapper = mount(<Thumbnail image={image} onClickImage={onClick} />);
         
         // Assert
         expect(wrapper.find('img').hasClass('thumbnail')).toEqual(true);
@@ -57,7 +57,7 @@ describe('Component Image', () =>{
             sizeInByte:"1234"};
 
         const onClick = jest.fn();
-        const wrapper = mount(<Image image={image} onClickImage={onClick} />);
+        const wrapper = mount(<Thumbnail image={image} onClickImage={onClick} />);
 
         // Act
         wrapper.find('img').simulate('click');
