@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component Image should render an image using the thumbnail url 1`] = `
+<Memo(Image)
+  image={
+    Object {
+      "description": "a desc",
+      "parentUiId": "parentUiId",
+      "sizeInByte": "1234",
+      "thumbnailUrl": "http://localhost:3000/thumbnail.jpeg",
+      "title": "a title",
+      "url": "http://localhost:3000/image.jpeg",
+    }
+  }
+  onClickImage={[MockFunction]}
+>
+  <Media
+    alt="a title - a desc"
+    className="thumbnail grow"
+    object={true}
+    onClick={[Function]}
+    src="http://localhost:3000/thumbnail.jpeg"
+  >
+    <img
+      alt="a title - a desc"
+      className="thumbnail grow media-object"
+      onClick={[Function]}
+      src="http://localhost:3000/thumbnail.jpeg"
+    />
+  </Media>
+</Memo(Image)>
+`;
