@@ -51,4 +51,14 @@ describe('Component ActionButton', () =>{
 
         expect(wrapper).toMatchSnapshot();
     });
+
+    it('should render a button clickable', () => {
+        const message = { id:"message", defaultMessage: "defaultMessage", description: "description"};
+        const action = jest.fn();
+        const wrapper = mount(<ActionButton message={message} color={"danger"} isActing={false} action= {action}/>);
+
+        wrapper.find('button').simulate('click');
+
+        expect(action.mock.calls.length).toEqual(1);
+    });
 });
