@@ -1,5 +1,22 @@
 import storageService from '../StorageService';
 
+const mockConsoleMethod = (realConsoleMethod) => {
+    const ignoredMessages = [
+        "undefined used as a key, but it is not a string."
+    ];
+
+    return (message, ...args) => {
+        const containsIgnoredMessage = ignoredMessages.some((ignoredMessage) => message.includes(ignoredMessage));
+
+        if (!containsIgnoredMessage) {
+        realConsoleMethod(message, ...args);
+        }
+    };
+};
+  
+// Suppress console errors and warnings to avoid polluting output in tests.
+console.warn = jest.fn(mockConsoleMethod(console.warn));
+
 describe('Test StorageService', () => {
     const key = "a_key";
 

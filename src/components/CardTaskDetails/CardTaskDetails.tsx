@@ -99,14 +99,4 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
     );
 }
 
-CardTaskDetails.propTypes = {
-    equipment: PropTypes.object,
-    tasks: PropTypes.array,
-    currentTask: PropTypes.object,
-    onTaskChanged: PropTypes.object.isRequired,
-    onTaskDeleted: PropTypes.func.isRequired,
-    changeCurrentTask: PropTypes.func.isRequired,
-    classNames: PropTypes.string
-};
-
 export default React.memo(CardTaskDetails);

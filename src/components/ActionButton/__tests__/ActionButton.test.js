@@ -3,6 +3,24 @@ import {  mount } from 'enzyme';
 
 import ActionButton from '../ActionButton'
 
+const mockConsoleMethod = (realConsoleMethod) => {
+    const ignoredMessages = [
+        "[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback."
+    ];
+
+    return (message, ...args) => {
+        const containsIgnoredMessage = ignoredMessages.some((ignoredMessage) => message.includes(ignoredMessage));
+
+        if (!containsIgnoredMessage) {
+            realConsoleMethod(message, ...args);
+        }
+    };
+};
+  
+// Suppress console errors and warnings to avoid polluting output in tests.
+console.warn = jest.fn(mockConsoleMethod(console.warn));
+console.error = jest.fn(mockConsoleMethod(console.error));
+
 describe('Component ActionButton', () =>{
     it('should render as a simple button', () => {
         const message = { id:"message", defaultMessage: "defaultMessage", description: "description"};

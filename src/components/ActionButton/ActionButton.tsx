@@ -25,14 +25,4 @@ const ActionButton = ({color, isActing, message, action, className, type, ...pro
     </Button>;
 };
 
-ActionButton.propTypes = {
-    color: PropTypes.string.isRequired,
-    isActing: PropTypes.bool.isRequired,
-    message: PropTypes.object.isRequired,
-    action: PropTypes.func,
-    className: PropTypes.string,
-    type: PropTypes.string,
-    form: PropTypes.string
-};
-
 export default ActionButton;
