@@ -13,7 +13,6 @@ import ModalEditImage from '../ModalImage/ModalEditImage';
 
 import errorService from '../../services/ErrorService';
 import imageProxy from '../../services/ImageProxy';
-import {resizeAndSaveImage} from '../../helpers/ImageHelper';
 
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -49,26 +48,6 @@ function Gallery({parentUiId}: Props){
     const turnOffCamera = useCallback(() => {
         setCamera(false);
     }, []);
-
-    
-
-    const onSelectFile = useCallback((file: File) => {
-        uploadImageFile(file, "multer");
-    }, [images]);
-
-    const uploadImageFile = async(file: File, method: string) => {
-        try{
-            let newImage:ImageModel | undefined = undefined;
-
-            if(method === "multer"){
-                newImage = await resizeAndSaveImage(file, parentUiId);
-                addImage(newImage);
-            }
-        }
-        catch(error){
-            errorService.addError(error);
-        }
-    };
 
     const addImage = useCallback((newImage:ImageModel) => {
         const newImages = images.concat(newImage);
@@ -137,7 +116,7 @@ function Gallery({parentUiId}: Props){
 
 	return(
         <Fragment>
-            <GalleryComponent images={images} onClickThumbnail={onClickThumbnail} onSelectFile={onSelectFile} turnOnCamera={turnOnCamera} />
+            <GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} turnOnCamera={turnOnCamera} />
             {isOpen && (
                 <Lightbox
                     mainSrc={images[index].url}

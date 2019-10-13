@@ -4,9 +4,16 @@ import {Button} from 'reactstrap';
 import { faImage, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { ImageModel } from '../../types/Types';
+
+import {resizeAndSaveImage} from '../../helpers/ImageHelper';
+
+import errorService from '../../services/ErrorService';
+
 type Props = {
-    className?: string;
-    onFileSelect: (file: File) => any;
+    parentUiId: string,
+    className?: string,
+    addImage: (image: ImageModel) => void
 }
 
 const createFileSelector = (onChange: (e: Event)=>void):HTMLInputElement => {
@@ -17,13 +24,31 @@ const createFileSelector = (onChange: (e: Event)=>void):HTMLInputElement => {
     return fileSelector;
 }
 
-function FileChooserButton({onFileSelect, className}: Props){
+function AddImageFileButton({parentUiId, addImage, className}: Props){
+    const onFileSelected = (file: File) => {
+        uploadImageFile(file, "multer");
+    };
+
+    const uploadImageFile = async(file: File, method: string) => {
+        try{
+            let newImage:ImageModel | undefined = undefined;
+
+            if(method === "multer"){
+                newImage = await resizeAndSaveImage(file, parentUiId);
+                addImage(newImage);
+            }
+        }
+        catch(error){
+            errorService.addError(error);
+        }
+    };
+
     const onChange = (e: Event) => {
         const changeEvent = e as unknown as React.ChangeEvent<HTMLInputElement>;
         const files = changeEvent.target.files ? changeEvent.target.files : new FileList() ;
         
         if(files.length > 0){
-            onFileSelect(files[0]);
+            onFileSelected(files[0]);
         }
     }
 
@@ -43,4 +68,4 @@ function FileChooserButton({onFileSelect, className}: Props){
     </Button>);
 }
 
-export default React.memo(FileChooserButton);
+export default React.memo(AddImageFileButton);
