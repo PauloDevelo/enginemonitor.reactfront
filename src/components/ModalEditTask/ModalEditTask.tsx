@@ -8,9 +8,6 @@ import PropTypes from 'prop-types';
 
 import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
 
-import jsonMessages from "./ModalEditTask.messages.json";
-const editTaskMsg: Messages = defineMessages(jsonMessages);
-
 import taskProxy from '../../services/TaskProxy';
 
 import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation'
@@ -21,6 +18,9 @@ import ActionButton from '../ActionButton/ActionButton';
 
 import '../../style/transition.css';
 import { EquipmentModel, TaskModel, AgeAcquisitionType } from '../../types/Types';
+
+import jsonMessages from "./ModalEditTask.messages.json";
+const editTaskMsg: Messages = defineMessages(jsonMessages);
 
 type Props = {
 	equipment: EquipmentModel, 

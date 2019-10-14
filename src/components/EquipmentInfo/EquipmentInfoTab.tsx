@@ -8,10 +8,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage, FormattedDate, defineMessages, Messages } from 'react-intl';
 import PropTypes from 'prop-types';
 
+import { EquipmentModel, AgeAcquisitionType } from '../../types/Types';
+
 import jsonMessages from "./EquipmentInfo.messages.json";
 const equipmentInfoMsg: Messages = defineMessages(jsonMessages);
-
-import { EquipmentModel, AgeAcquisitionType } from '../../types/Types';
 
 type Props = {
     equipment: EquipmentModel,

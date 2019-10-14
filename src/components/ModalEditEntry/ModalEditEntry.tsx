@@ -8,9 +8,6 @@ import { CSSTransition } from 'react-transition-group'
 
 import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
 
-import jsonMessages from "./ModalEditEntry.messages.json";
-const editEntryMsg: Messages = defineMessages(jsonMessages);
-
 import entryProxy from '../../services/EntryProxy';
 
 import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation';
@@ -21,6 +18,9 @@ import ActionButton from "../ActionButton/ActionButton";
 import Gallery from '../Gallery/Gallery';
 
 import { EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType } from '../../types/Types';
+
+import jsonMessages from "./ModalEditEntry.messages.json";
+const editEntryMsg: Messages = defineMessages(jsonMessages);
 
 type Props = {
 	equipment: EquipmentModel, 

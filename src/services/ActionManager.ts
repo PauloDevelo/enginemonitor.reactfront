@@ -1,7 +1,6 @@
 import httpProxy from './HttpProxy';
 import storageService, { IUserStorageListener } from './StorageService';
 
-
 export enum ActionType{
     Post,
     Delete
@@ -95,7 +94,7 @@ class ActionManager implements IActionManager, IUserStorageListener{
     }
 
     async countAction(): Promise<number>{
-        if(storageService.isUserStorageOpened() == false){
+        if(storageService.isUserStorageOpened() === false){
             return 0;
         }
         

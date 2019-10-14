@@ -6,9 +6,6 @@ import { CSSTransition } from 'react-transition-group';
 import { FormattedMessage, Messages, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import jsonMessages from "./PasswordReset.messages.json";
-const changePasswordMsg: Messages = defineMessages(jsonMessages);
-
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
 import Alerts from "../Alerts/Alerts"
@@ -18,6 +15,9 @@ import userProxy from '../../services/UserProxy';
 import HttpError from '../../http/HttpError'
 
 import '../../style/transition.css';
+
+import jsonMessages from "./PasswordReset.messages.json";
+const changePasswordMsg: Messages = defineMessages(jsonMessages);
 
 type NewPassword = {
 	email:string, 

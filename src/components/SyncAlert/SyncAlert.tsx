@@ -1,13 +1,13 @@
-import React, { Fragment, useEffect, useState, useCallback, useRef, useContext } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import {UncontrolledAlert, Progress} from 'reactstrap';
 
 import { FormattedMessage, Messages, defineMessages } from 'react-intl';
 
+import syncService, {SyncContext} from '../../services/SyncService';
+
 import jsonMessages from "./SyncAlert.messages.json";
 const syncAlertMsg: Messages = defineMessages(jsonMessages);
-
-import syncService, {SyncContext} from '../../services/SyncService';
 
 type Type = {
     className: string

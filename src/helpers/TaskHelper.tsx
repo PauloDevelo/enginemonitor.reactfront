@@ -1,15 +1,15 @@
 import React from 'react';
 import { FormattedMessage, FormattedDate, Messages, defineMessages } from 'react-intl';
 
-import jsonMessages from "../components/TaskTable/TaskTable.messages.json";
-const tasktablemsg: Messages = defineMessages(jsonMessages);
-
 import { TaskModel, EquipmentModel, AgeAcquisitionType, EntryModel } from '../types/Types';
 import entryProxy from '../services/EntryProxy';
 import equipmentProxy from '../services/EquipmentProxy';
 
 import uuidv1 from 'uuid/v1';
 import moment from 'moment';
+
+import jsonMessages from "../components/TaskTable/TaskTable.messages.json";
+const tasktablemsg: Messages = defineMessages(jsonMessages);
 
 export function createDefaultTask(equipment: EquipmentModel): TaskModel{
     const uuid = uuidv1();

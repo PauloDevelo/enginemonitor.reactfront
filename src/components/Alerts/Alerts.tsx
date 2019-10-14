@@ -1,7 +1,7 @@
 import React, {Fragment} from "react";
 import { Alert } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
-import PropTypes, { any } from 'prop-types';
+import PropTypes from 'prop-types';
 
 import {defineMessages, Messages} from "react-intl";
 import jsonMessages from "./Alerts.messages.json";

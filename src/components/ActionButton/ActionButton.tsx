@@ -2,8 +2,6 @@ import React, { Fragment } from "react";
 import { Button, Spinner } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 
-import PropTypes from 'prop-types';
-
 type Props = {
     color: string,
     isActing: boolean,

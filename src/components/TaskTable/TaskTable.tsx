@@ -17,14 +17,14 @@ import Loading from '../Loading/Loading';
 import { getContext, getTodoText, shorten, getTodoValue, TaskTodo, createDefaultTask, getBadgeText } from '../../helpers/TaskHelper'; 
 import { useEditModal } from '../../hooks/EditModalHook';
 
-import jsonMessages from "./TaskTable.messages.json";
-const taskTableMsg: Messages = defineMessages(jsonMessages);
-
 import PropTypes from 'prop-types';
 import { EquipmentModel, TaskModel } from '../../types/Types';
 
 import '../../style/Table.scss';
 import './TaskTable.css';
+
+import jsonMessages from "./TaskTable.messages.json";
+const taskTableMsg: Messages = defineMessages(jsonMessages);
 
 type Props = {
 	equipment?: EquipmentModel, 

@@ -6,7 +6,7 @@ import imageProxy from './ImageProxy';
 import storageService from './StorageService';
 
 import { updateTask, updateRealtimeFields } from '../helpers/TaskHelper'
-import { TaskModel, EntryModel} from '../types/Types'
+import { TaskModel} from '../types/Types'
 
 
 export interface ITaskProxy{

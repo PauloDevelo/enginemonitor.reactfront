@@ -2,7 +2,6 @@ import React, {useState, useRef, useCallback} from 'react';
 import { Form } from 'reactstrap';
 
 import './MyForm.css';
-import { isNumber } from 'util';
 
 /**Function that converts the Date fields of Data into a string useable by the Input of type Date. */
 function convertDateFieldsToString(obj:any){

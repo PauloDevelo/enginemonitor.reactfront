@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import appVersion from '../../global';
 
 // version from response - first param, local version second param

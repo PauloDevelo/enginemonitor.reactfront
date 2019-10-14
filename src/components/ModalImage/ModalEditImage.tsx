@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -7,9 +7,6 @@ import { FormattedMessage, Messages, defineMessages } from 'react-intl';
 import { CSSTransition } from 'react-transition-group'
 
 import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
-
-import jsonMessages from "./ModalEditImage.messages.json";
-const editImageMsg: Messages = defineMessages(jsonMessages);
 
 import imageProxy from '../../services/ImageProxy';
 
@@ -21,6 +18,9 @@ import ActionButton from '../ActionButton/ActionButton';
 
 import '../../style/transition.css';
 import { ImageModel } from '../../types/Types';
+
+import jsonMessages from "./ModalEditImage.messages.json";
+const editImageMsg: Messages = defineMessages(jsonMessages);
 
 type Props = {
     image: ImageModel | undefined, 
@@ -42,7 +42,7 @@ const ModalEditImage = ({image, visible, onImageSaved, toggle, onImageDeleted, c
 				<Modal isOpen={visible} toggle={modalLogic.cancel} className={className} fade={false}>
 					<ModalHeader toggle={modalLogic.cancel}><FontAwesomeIcon icon={faEdit} />{' '}<FormattedMessage {...editImageMsg.modalImageEditTitle} /></ModalHeader>
 					<ModalBody>
-						{image !== undefined && <img src={image.url} style={{width:"100%"}}/>}
+						{image !== undefined && <img src={image.url} style={{width:"100%"}} alt={image.title + " - " + image.description}/>}
 						{visible && 
                         <MyForm id="imageEditForm" submit={modalLogic.handleSubmit} initialData={image}>
 							<MyInput name="title" 				label={editImageMsg.title} 				type="text"/>

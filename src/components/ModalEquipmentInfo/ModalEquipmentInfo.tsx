@@ -10,9 +10,6 @@ import equipmentProxy from '../../services/EquipmentProxy';
 
 import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
 
-import jsonMessages from "../EquipmentInfo/EquipmentInfo.messages.json";
-const equipmentInfoMsg: Messages = defineMessages(jsonMessages);
-
 import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation';
 import MyForm from "../Form/MyForm";
 import MyInput from "../Form/MyInput";
@@ -22,6 +19,9 @@ import ActionButton from '../ActionButton/ActionButton';
 
 import '../../style/transition.css';
 import { EquipmentModel, AgeAcquisitionType } from '../../types/Types';
+
+import jsonMessages from "../EquipmentInfo/EquipmentInfo.messages.json";
+const equipmentInfoMsg: Messages = defineMessages(jsonMessages);
 
 type Props = {
 	equipment: EquipmentModel,

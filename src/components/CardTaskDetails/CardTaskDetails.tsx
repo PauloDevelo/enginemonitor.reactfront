@@ -1,9 +1,8 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment} from 'react';
 import { Button, Card, CardBody, CardTitle, CardSubtitle, CardFooter, CardText, Badge } from 'reactstrap';
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import PropTypes from 'prop-types';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 

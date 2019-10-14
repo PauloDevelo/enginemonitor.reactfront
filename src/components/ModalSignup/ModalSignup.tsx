@@ -7,9 +7,6 @@ import { FormattedMessage, Messages, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 import uuidv1  from 'uuid/v1';
 
-import jsonMessages from "../ModalLogin/Login.messages.json";
-const loginMsg: Messages = defineMessages(jsonMessages);
-
 import MyForm from "../Form/MyForm"
 import MyInput from "../Form/MyInput"
 import Alerts from "../Alerts/Alerts"
@@ -20,6 +17,9 @@ import HttpError from '../../http/HttpError'
 
 import '../../style/transition.css';
 import { UserModel } from "../../types/Types";
+
+import jsonMessages from "../ModalLogin/Login.messages.json";
+const loginMsg: Messages = defineMessages(jsonMessages);
 
 type Props = {
 	visible: boolean, 

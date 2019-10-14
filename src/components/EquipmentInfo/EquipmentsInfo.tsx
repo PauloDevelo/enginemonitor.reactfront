@@ -38,7 +38,7 @@ function EquipmentsInfo({userId, changeCurrentEquipment, extraClassNames}: Props
 
 	useEffect(() => {
 		changeCurrentEquipment(currentEquipment);
-	}, [currentEquipment]);
+	}, [currentEquipment, changeCurrentEquipment]);
 
 	const [equipments, setEquipments] = useState<EquipmentModel[]>([]);
     const [isLoading, setIsLoading] = useState(false);

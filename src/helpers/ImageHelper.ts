@@ -67,24 +67,6 @@ const resizeBase64ImageIntoBlob = (base64Str: string, maxWidth = 400, maxHeight 
     });
   }
 
-    const convertBitDepth = (ctx: CanvasRenderingContext2D, sx: number, sy: number, sw: number, sh: number, bitDepth: number) => {
-        const imageData = ctx.getImageData(sx, sy, sw, sh);
-        const data = imageData.data
-
-        // 24-bit: rrr ggg bb
-        for(var i = 0; i < data.length; i += 4) {
-            data[i]     = nearest(data[i],     bitDepth); // set value to nearest of 8 possibilities
-            data[i + 1] = nearest(data[i + 1], bitDepth);
-            data[i + 2] = nearest(data[i + 2], bitDepth);
-        }
-
-        ctx.putImageData(imageData, sx, sy); // put image data to canvas
-    }
-    const nearest = (x: number, a: number): number => { // will round down to nearest of a possibilities
-        // in the range 0 <= x <= 255
-        return Math.floor(x / (255 / a)) * (255 / a);
-    }
-
   export const resizeAndSaveBase64Image = async (imageBase64: string, parentUiId: string):Promise<ImageModel> => {
     const resizedBlob = await resizeBase64ImageIntoBlob(imageBase64, 1024, 1024);
     const thumbnailBlob = await resizeBase64ImageIntoBlob(imageBase64, 100, 100);

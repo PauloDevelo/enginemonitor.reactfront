@@ -23,12 +23,12 @@ import { useEditModal } from '../../hooks/EditModalHook';
 import { shorten } from '../../helpers/TaskHelper';
 import { createDefaultEntry } from '../../helpers/EntryHelper';
 
-import jsonMessages from "./EquipmentHistoryTable.messages.json";
-const messages: Messages = defineMessages(jsonMessages);
-
 import './EquipmentHistoryTable.css';
 
 import { EquipmentModel, EntryModel, AgeAcquisitionType } from '../../types/Types';
+
+import jsonMessages from "./EquipmentHistoryTable.messages.json";
+const messages: Messages = defineMessages(jsonMessages);
 
 type Props = {
     equipment: EquipmentModel | undefined,

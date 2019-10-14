@@ -66,7 +66,7 @@ class EntryProxy implements IEntryProxy{
     }
 
     getStoredEntries = async(equipmentId: string, taskId: string | undefined = undefined):Promise<EntryModel[]> => {
-        if(taskId != undefined){
+        if(taskId !== undefined){
             return this.fetchEntries(equipmentId, taskId, true);
         }
         else{

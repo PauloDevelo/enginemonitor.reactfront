@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, memo, useMemo, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import ToolTip from '../ToolTip/ToolTip';
 
@@ -35,7 +35,7 @@ const MyInput = React.memo(function MyInput({ label, tooltip, handleChange, onCh
 	};
 
 	useEffect(() => {
-		if(validationTrigger !== undefined && validationTrigger != 0){
+		if(validationTrigger !== undefined && validationTrigger !== 0){
 			validate();
 		}
 	}, [validationTrigger]);

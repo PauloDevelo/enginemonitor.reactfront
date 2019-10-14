@@ -1,5 +1,5 @@
 import React, { useCallback, useState, Fragment, useEffect } from "react";
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Progress } from 'reactstrap';
+import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import Switch from "react-switch";
 
 import ClockLabel from '../ClockLabel/ClockLabel';
@@ -15,13 +15,13 @@ import PropTypes from 'prop-types';
 import userProxy from '../../services/UserProxy';
 import syncService from '../../services/SyncService';
 
-import jsonMessages from "./NavBar.messages.json";
-const navBarMsg: Messages = defineMessages(jsonMessages);
-
 import { UserModel } from "../../types/Types";
 import userContext from "../../services/UserContext";
 
 import './NavBar.css';
+
+import jsonMessages from "./NavBar.messages.json";
+const navBarMsg: Messages = defineMessages(jsonMessages);
 
 type Props = {
     user?: UserModel, 

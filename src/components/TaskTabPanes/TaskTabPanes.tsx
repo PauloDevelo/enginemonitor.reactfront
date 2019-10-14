@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback, useRef} from 'react';
-import { Nav, TabContent, TabPane } from 'reactstrap';
+import { Nav } from 'reactstrap';
 
 import TaskTable from '../TaskTable/TaskTable';
 import EquipmentHistoryTable from '../EquipmentHistoryTable/EquipmentHistoryTable';

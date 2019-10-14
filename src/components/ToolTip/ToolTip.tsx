@@ -6,11 +6,11 @@ import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {UID} from 'react-uid';
 
+import PropTypes from 'prop-types';
+
 type ToolTipProps = {
 	tooltip: FormattedMessage.MessageDescriptor
 };
-
-import PropTypes from 'prop-types';
 
 export default function ToolTip({tooltip}: ToolTipProps) {
 	return (

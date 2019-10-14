@@ -3,7 +3,7 @@ import httpProxy from './HttpProxy';
 
 import storageService from './StorageService';
 
-import { ImageModel, EntityModel } from '../types/Types'
+import { ImageModel } from '../types/Types'
 
 import userContext from './UserContext';
 

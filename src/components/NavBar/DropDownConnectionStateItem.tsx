@@ -24,7 +24,7 @@ const ConnectionStateIcon = ({isOnline, isSynced}:ConnectionState) => {
     }
 }
 
-const DropDownConnectionStateItem = ({}) => {
+const DropDownConnectionStateItem = () => {
     const [isOnline, onIsOnlineChanged] = useState(false);
     const [isSync, onIsSynced] = useState(false);
 

@@ -8,7 +8,7 @@ import jsonMessages from "./NavBar.messages.json";
 const navBarMsg: Messages = defineMessages(jsonMessages);
 
 
-const NbActionPending = ({}) => {
+const NbActionPending = () => {
     const [nbAction, setActionCounter] = useState(0);
 
     useEffect(() => {
