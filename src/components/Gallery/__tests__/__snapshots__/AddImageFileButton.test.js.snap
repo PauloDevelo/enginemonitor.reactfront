@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component Thumbnail should render an button 1`] = `
+<Memo(AddImageFileButton)
+  addImage={[MockFunction]}
+  parentUiId="parent_01"
+>
+  <Button
+    aria-label="Edit"
+    color="light"
+    onClick={[Function]}
+    size="lg"
+    tag="button"
+  >
+    <button
+      aria-label="Edit"
+      className="btn btn-light btn-lg"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="fa-layers fa-fw"
+      >
+        <FontAwesomeIcon
+          border={false}
+          className=""
+          fixedWidth={false}
+          flip={null}
+          icon={
+            Object {
+              "icon": Array [
+                512,
+                512,
+                Array [],
+                "f03e",
+                "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+              ],
+              "iconName": "image",
+              "prefix": "fas",
+            }
+          }
+          inverse={false}
+          listItem={false}
+          mask={null}
+          pull={null}
+          pulse={false}
+          rotation={null}
+          size="lg"
+          spin={false}
+          swapOpacity={false}
+          symbol={false}
+          title=""
+          transform={null}
+        >
+          <svg
+            aria-hidden="true"
+            className="svg-inline--fa fa-image fa-w-16 fa-lg "
+            data-icon="image"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            style={Object {}}
+            viewBox="0 0 512 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+              fill="currentColor"
+              style={Object {}}
+            />
+          </svg>
+        </FontAwesomeIcon>
+        <FontAwesomeIcon
+          border={false}
+          className=""
+          fixedWidth={false}
+          flip={null}
+          icon={
+            Object {
+              "icon": Array [
+                448,
+                512,
+                Array [],
+                "f067",
+                "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
+              ],
+              "iconName": "plus",
+              "prefix": "fas",
+            }
+          }
+          inverse={false}
+          listItem={false}
+          mask={null}
+          pull={null}
+          pulse={false}
+          rotation={null}
+          size="xs"
+          spin={false}
+          swapOpacity={false}
+          symbol={false}
+          title=""
+          transform="down-13 left-16"
+        >
+          <svg
+            aria-hidden="true"
+            className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+            data-icon="plus"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            style={
+              Object {
+                "transformOrigin": "-0.5625em 1.3125em",
+              }
+            }
+            viewBox="0 0 448 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g
+              style={Object {}}
+              transform="translate(224 256)"
+            >
+              <g
+                style={Object {}}
+                transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+              >
+                <path
+                  d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                  fill="currentColor"
+                  style={Object {}}
+                  transform="translate(-224 -256)"
+                />
+              </g>
+            </g>
+          </svg>
+        </FontAwesomeIcon>
+      </span>
+    </button>
+  </Button>
+</Memo(AddImageFileButton)>
+`;
