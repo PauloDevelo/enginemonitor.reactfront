@@ -112,7 +112,7 @@ function Gallery({parentUiId}: Props){
         <Button onClick={editCurrentImage} className={"action-button"}><FontAwesomeIcon icon={faEdit} size="lg"/></Button>,
     ];
 
-    const galleryStyles = {overlay: {zIndex: 999}};
+    const galleryStyles = {overlay: {zIndex: 1050}};
 
 	return(
         <Fragment>
