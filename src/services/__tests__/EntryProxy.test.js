@@ -57,7 +57,7 @@ describe('Test EntryProxy', () => {
         {isOnline: true, taskId: undefined, expectedPostCounter: 1, expectedNumberOfEntries: 1, expectedNumberOfAction: 0}
     ];
 
-    describe.each(createOrSaveEntryParams)('createOrSaveEntry', async(arg) => {
+    describe.each(createOrSaveEntryParams)('createOrSaveEntry', (arg) => {
         it("when " + JSON.stringify(arg), async() => {
             // Arrange
             if(arg.expectedNumberOfEntries >= 1){
@@ -102,7 +102,7 @@ describe('Test EntryProxy', () => {
         {isOnline: false, expectedDeleteCounter: 0, taskId: undefined, expectedNumberOfEntriesInStorage:0, expectedNumberOfActions:2},
         {isOnline: true, expectedDeleteCounter: 1, taskId: undefined, expectedNumberOfEntriesInStorage:0, expectedNumberOfActions:0}
     ];
-    describe.each(deleteEntryParams)('deleteEntries', async(arg) =>{
+    describe.each(deleteEntryParams)('deleteEntries', (arg) =>{
         it("when " + JSON.stringify(arg), async() => {
             // Arrange
             syncService.isOnlineAndSynced.mockImplementation(() => {
@@ -142,7 +142,7 @@ describe('Test EntryProxy', () => {
         {isOnline:false, equipmentId:parentEquipmentId, entryId: undefined, expectedIsExist: false},
         {isOnline:false, equipmentId:undefined, entryId: entryToSave._uiId, expectedIsExist: false},
     ];
-    describe.each(existEntryParams)("existEntry", async(arg)=>{
+    describe.each(existEntryParams)("existEntry", (arg)=>{
         it("when " + JSON.stringify(arg), async() =>{
              // Arrange
              syncService.isOnlineAndSynced.mockImplementation(() => {
