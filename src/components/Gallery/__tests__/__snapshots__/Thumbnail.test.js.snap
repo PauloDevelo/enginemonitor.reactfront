@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Component Image should render an image using the thumbnail url 1`] = `
+exports[`Component Thumbnail should render an image using the thumbnail url 1`] = `
 <Memo(Thumbnail)
   image={
     Object {

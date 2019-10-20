@@ -1,10 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-
 import Thumbnail from '../Thumbnail'
-
-
 
 const mockConsoleMethod = (realConsoleMethod) => {
     const ignoredMessages = [
@@ -23,7 +20,7 @@ const mockConsoleMethod = (realConsoleMethod) => {
 console.warn = jest.fn(mockConsoleMethod(console.warn));
 console.error = jest.fn(mockConsoleMethod(console.error));
 
-describe('Component Image', () =>{
+describe('Component Thumbnail', () =>{
     it('should render an image using the thumbnail url', () => {
         // Arrange
         const image = {url: "http://localhost:3000/image.jpeg",
