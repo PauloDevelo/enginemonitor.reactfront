@@ -97,15 +97,12 @@ describe('Test StorageService', () => {
     // });
 
     describe("getItem", () => {
-        it("When we try to get an item from an undefined|null key, it should throw an exception", async() => {
-            try{
-                // Act
-                await storageService.getItem(undefined);
-                expect(true).toBe(false);
-            }
-            catch(error){
-                expect(true).toBe(true);
-            }
+        it("When we try to get an item from an undefined|null key, it should retunr undefined", async() => {
+            // Act
+            const item = await storageService.getItem(undefined);
+
+            // Assert
+            expect(item).toBeUndefined();
         });
 
         it("When we get an unknwon item, it should return undefined", async() => {

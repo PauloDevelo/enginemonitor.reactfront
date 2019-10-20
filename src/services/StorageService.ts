@@ -131,7 +131,7 @@ class StorageService implements IStorageService{
     }
 
     async getItem<T>(key: string): Promise<T>{
-        return this.getUserStorage().getItem<T>(key);
+        return await this.getUserStorage().getItem<T>(key);
     }
 
     async getArray<T>(key: string):Promise<T[]>{
