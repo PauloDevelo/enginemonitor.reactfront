@@ -1,4 +1,4 @@
-import ignoredMessages from '../MockConsole';
+import ignoredMessages from '../../testHelpers/MockConsole';
 import storageService from '../StorageService';
 
 ignoredMessages.push("undefined used as a key, but it is not a string.");

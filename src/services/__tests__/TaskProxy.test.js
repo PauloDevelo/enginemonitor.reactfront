@@ -1,3 +1,4 @@
+import ignoredMessages from '../../testHelpers/MockConsole';
 import httpProxy from '../HttpProxy';
 import syncService from '../SyncService';
 import storageService from '../StorageService';
@@ -6,23 +7,7 @@ import actionManager from '../ActionManager';
 
 import { updateTask } from '../../helpers/TaskHelper';
 
-const mockConsoleMethod = (realConsoleMethod) => {
-    const ignoredMessages = [
-        "The function TaskProxy.existTask expects a non null and non undefined task id."
-    ];
-
-    return (message, ...args) => {
-        const containsIgnoredMessage = ignoredMessages.some((ignoredMessage) => message.includes(ignoredMessage));
-
-        if (!containsIgnoredMessage) {
-            realConsoleMethod(message, ...args);
-        }
-    };
-};
-  
-// Suppress console errors and warnings to avoid polluting output in tests.
-console.warn = jest.fn(mockConsoleMethod(console.warn));
-console.error = jest.fn(mockConsoleMethod(console.error));
+ignoredMessages.push("The function TaskProxy.existTask expects a non null and non undefined task id.");
 
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');
