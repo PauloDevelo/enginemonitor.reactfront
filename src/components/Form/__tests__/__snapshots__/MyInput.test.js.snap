@@ -46,9 +46,7 @@ exports[`MyInput of type checkox should render as expected 1`] = `
             id="defaultId"
             values={Object {}}
           >
-            <span>
-              Default message
-            </span>
+            Default message
           </FormattedMessage>
            
           <Input
@@ -116,9 +114,7 @@ exports[`MyInput of type text should render as expected 1`] = `
             id="defaultId"
             values={Object {}}
           >
-            <span>
-              Default message
-            </span>
+            Default message
           </FormattedMessage>
         </label>
       </Label>

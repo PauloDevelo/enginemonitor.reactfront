@@ -12,9 +12,7 @@ exports[`Component NbActionPending should render a specific message when there i
       }
     }
   >
-    <span>
-      synced
-    </span>
+    synced
   </FormattedMessage>
 </NbActionPending>
 `;
@@ -31,9 +29,7 @@ exports[`Component NbActionPending should render a specific message when there i
       }
     }
   >
-    <span>
-      1 action to sync
-    </span>
+    1 action to sync
   </FormattedMessage>
 </NbActionPending>
 `;
@@ -50,9 +46,7 @@ exports[`Component NbActionPending should render a specific message when there i
       }
     }
   >
-    <span>
-      3 actions to sync
-    </span>
+    3 actions to sync
   </FormattedMessage>
 </NbActionPending>
 `;

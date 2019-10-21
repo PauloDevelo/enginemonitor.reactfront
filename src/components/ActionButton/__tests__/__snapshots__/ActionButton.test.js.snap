@@ -31,9 +31,7 @@ exports[`Component ActionButton should render as a simple button disable with th
         id="message"
         values={Object {}}
       >
-        <span>
-          defaultMessage
-        </span>
+        defaultMessage
       </FormattedMessage>
        
       <Spinner
@@ -89,9 +87,7 @@ exports[`Component ActionButton should render as a simple button enable with the
         id="message"
         values={Object {}}
       >
-        <span>
-          defaultMessage
-        </span>
+        defaultMessage
       </FormattedMessage>
     </button>
   </Button>

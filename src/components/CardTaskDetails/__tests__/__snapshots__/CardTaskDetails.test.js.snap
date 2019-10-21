@@ -133,21 +133,15 @@ exports[`CardTaskDetails should stay the same with task1 1`] = `
           className="card-subtitle"
         >
           <span>
-            <span>
-              To do every 
-            </span>
+            To do every 
             <b>
               200
                h
                
             </b>
-            <span>
-               or every 
-            </span>
+             or every 
             <b>
-              <span>
-                12 months
-              </span>
+              12 months
             </b>
           </span>
         </div>
@@ -376,21 +370,15 @@ exports[`CardTaskDetails should stay the same with task2 1`] = `
           className="card-subtitle"
         >
           <span>
-            <span>
-              To do every 
-            </span>
+            To do every 
             <b>
               400
                h
                
             </b>
-            <span>
-               or every 
-            </span>
+             or every 
             <b>
-              <span>
-                24 months
-              </span>
+              24 months
             </b>
           </span>
         </div>
