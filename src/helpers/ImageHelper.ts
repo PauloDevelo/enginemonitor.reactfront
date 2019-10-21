@@ -82,9 +82,7 @@ const resizeBase64ImageIntoBlob = (base64Str: string, maxWidth = 400, maxHeight 
 }
 
 export const resizeAndSaveImage = async (file: File, parentUiId: string):Promise<ImageModel> => {
-    const tags = await readExifTags(file);
-    const orientationInDegrees = convertExifOrientationIntoDegree(tags["Orientation"]);
-    
+    const orientationInDegrees = await getOrientationInDegrees(file);
     const resizedBlob = await resizeImageIntoBlob(file, 1024, 1024, orientationInDegrees);
     const thumbnailBlob = await resizeImageIntoBlob(file, 100, 100, orientationInDegrees);
 
@@ -96,6 +94,18 @@ export const resizeAndSaveImage = async (file: File, parentUiId: string):Promise
         imgFormObj.append("_uiId", uuidv1());
 
     return await imageProxy.createImage(imgFormObj);
+}
+
+const getOrientationInDegrees = async (file: File): Promise<number> => {
+    try{
+        const tags = await readExifTags(file);
+        return convertExifOrientationIntoDegree(tags["Orientation"]);
+    }
+    catch(error){
+        console.error("Impossible to get the image orientation in the Exif data.");
+        console.error(error);
+        return 0;
+    }
 }
 
 const readExifTags= async (file: File):Promise<any> => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {Button} from 'reactstrap';
 
 import { faImage, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -19,17 +19,14 @@ type Props = {
 const createFileSelector = (onChange: (e: Event)=>void):HTMLInputElement => {
     const fileSelector = document.createElement('input');
     fileSelector.setAttribute('type', 'file');
+    fileSelector.setAttribute('accept', 'image/png, image/jpeg');
     fileSelector.addEventListener('change', onChange);
 
     return fileSelector;
 }
 
 function AddImageFileButton({parentUiId, addImage, className}: Props){
-    const onFileSelected = (file: File) => {
-        uploadImageFile(file, "multer");
-    };
-
-    const uploadImageFile = async(file: File, method: string) => {
+    const uploadImageFile = useCallback(async(file: File, method: string) => {
         try{
             let newImage:ImageModel | undefined = undefined;
 
@@ -41,16 +38,16 @@ function AddImageFileButton({parentUiId, addImage, className}: Props){
         catch(error){
             errorService.addError(error);
         }
-    };
+    }, [addImage, parentUiId]);
 
-    const onChange = (e: Event) => {
+    const onChange = useCallback((e: Event) => {
         const changeEvent = e as unknown as React.ChangeEvent<HTMLInputElement>;
         const files = changeEvent.target.files ? changeEvent.target.files : new FileList() ;
         
         if(files.length > 0){
-            onFileSelected(files[0]);
+            uploadImageFile(files[0], "multer");
         }
-    }
+    }, [uploadImageFile]);
 
     const fileSelector = createFileSelector(onChange);
 
