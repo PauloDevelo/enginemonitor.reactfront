@@ -84,16 +84,17 @@ class StorageService implements IStorageService{
         this.userStorage = localforage.createInstance({
             name: user.email
         });
-        return this.triggerOnUserStorageOpened();
+        return await this.triggerOnUserStorageOpened();
     }
 
     async closeUserStorage(): Promise<void>{
         this.userStorage = undefined;
-        return this.triggerOnUserStorageClosed();
+        return await this.triggerOnUserStorageClosed();
     }
 
     async updateArray<T extends EntityModel>(key: string, item:T):Promise<void>{
-        let items = (await this.getUserStorage().getItem<T[]>(key));
+        let items = await this.getUserStorage().getItem<T[]>(key);
+        
         if (items){
             items = items.filter(i => i._uiId !== item._uiId);
         }
@@ -107,7 +108,7 @@ class StorageService implements IStorageService{
     }
 
     async removeItemInArray<T extends EntityModel>(key: string, itemId: string): Promise<T>{
-        const items = (await this.getUserStorage().getItem<T[]>(key));
+        const items = await this.getUserStorage().getItem<T[]>(key);
 
         const newItems = items.filter(i => i._uiId !== itemId);
         const removedItem = items.find(i => i._uiId === itemId);
@@ -123,11 +124,11 @@ class StorageService implements IStorageService{
 
     async setItem<T>(key: string, value: T): Promise<T>{
         if (value === undefined || value === null){
-            await this.getUserStorage().removeItem(key);
+            await this.getUserStorage().removeItem(key);    
             return value;
         }
         
-        return this.getUserStorage().setItem<T>(key, value);
+        return await this.getUserStorage().setItem<T>(key, value);
     }
 
     async getItem<T>(key: string): Promise<T>{
