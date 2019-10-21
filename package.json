@@ -20,7 +20,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-html5-camera-photo": "^1.4.3",
+    "react-html5-camera-photo": "^1.5.2",
     "react-image-file-resizer": "^0.2.0",
     "react-image-lightbox": "^5.1.0",
     "react-intl": "^2.9.0",
