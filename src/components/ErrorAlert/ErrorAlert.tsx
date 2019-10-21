@@ -4,9 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import {Alert} from 'reactstrap';
 import HttpError from '../../http/HttpError';
 
-import {defineMessages, Messages} from "react-intl";
+import {defineMessages} from "react-intl";
 import jsonMessages from "./ErrorAlert.messages.json";
-const alertMsg: Messages = defineMessages(jsonMessages);
+const alertMsg = defineMessages(jsonMessages);
 
 type Props = {
     error: Error | undefined;
@@ -33,8 +33,11 @@ const ErrorAlert = ({error, onDismiss, className}:Props) => {
     }
 
     let msgElement: string | ReactElement;
-    if(alertMsg[message] !== undefined){
-        msgElement = <FormattedMessage {...alertMsg[message]}/>;
+
+    const messageDescIndex = Object.keys(alertMsg).indexOf(message);
+    if(messageDescIndex !== -1){
+        const messageDesc = Object.values(alertMsg)[messageDescIndex];
+        msgElement = <FormattedMessage {...messageDesc}/>;
     }
     else{
         msgElement = message;

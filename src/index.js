@@ -1,20 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { addLocaleData, IntlProvider } from "react-intl";
+import { IntlProvider } from "react-intl";
 
 import './index.css';
 
 import App from './components/App/App';
 import * as serviceWorker from './serviceWorker';
 
-import locale_en from 'react-intl/locale-data/en';
-import locale_fr from 'react-intl/locale-data/fr';
-
 import messages_fr from "./translations/fr.json";
 import messages_en from "./translations/en.json";
-
-addLocaleData([...locale_en, ...locale_fr]);
 
 const messages = {
     'fr': messages_fr,

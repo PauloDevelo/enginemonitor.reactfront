@@ -1,14 +1,14 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { CSSTransition } from 'react-transition-group'
-import { FormattedMessage, Messages, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages, MessageDescriptor } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import '../../style/transition.css';
 
 import jsonMessages from "./ModalYesNoConfirmation.messages.json";
 import ActionButton from '../ActionButton/ActionButton';
-const modalmsg: Messages = defineMessages(jsonMessages);
+const modalmsg = defineMessages(jsonMessages);
 
 type Props = {
     yes: ()=>void, 
@@ -16,8 +16,8 @@ type Props = {
     no?: ()=>void, 
     visible: boolean, 
     className: string, 
-    title: FormattedMessage.MessageDescriptor, 
-    message: FormattedMessage.MessageDescriptor, 
+    title: MessageDescriptor, 
+    message: MessageDescriptor, 
     toggle: () => void
 }
 

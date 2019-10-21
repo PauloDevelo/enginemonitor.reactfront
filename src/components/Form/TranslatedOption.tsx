@@ -1,9 +1,9 @@
 import React from 'react';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import { MessageDescriptor, injectIntl, IntlShape } from 'react-intl';
 
 type Props = {
     value: number,
-    message: FormattedMessage.MessageDescriptor,
+    message: MessageDescriptor,
     intl: IntlShape
 }
 
@@ -11,7 +11,7 @@ const TranslatedOption = ({value, message, intl}:Props) => {
     const {formatMessage} = intl;
 
     return (
-        <option value={value}> {formatMessage(message, '', '', '', '')}</option>
+        <option value={value}> {formatMessage(message)}</option>
     );
 };
 

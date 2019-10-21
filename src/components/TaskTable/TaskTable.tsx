@@ -7,7 +7,7 @@ import {
   withHeaderControl,
 } from 'react-table-factory';
 
-import { FormattedMessage, Messages, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 import { faTasks, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -24,7 +24,7 @@ import '../../style/Table.scss';
 import './TaskTable.css';
 
 import jsonMessages from "./TaskTable.messages.json";
-const taskTableMsg: Messages = defineMessages(jsonMessages);
+const taskTableMsg = defineMessages(jsonMessages);
 
 type Props = {
 	equipment?: EquipmentModel, 

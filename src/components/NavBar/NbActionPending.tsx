@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-import { FormattedMessage, Messages, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 
 import actionManager from '../../services/ActionManager';
 
 import jsonMessages from "./NavBar.messages.json";
-const navBarMsg: Messages = defineMessages(jsonMessages);
+const navBarMsg = defineMessages(jsonMessages);
 
 
 const NbActionPending = () => {

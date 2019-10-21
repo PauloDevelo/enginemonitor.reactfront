@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { UncontrolledTooltip } from 'reactstrap';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, MessageDescriptor } from 'react-intl';
 
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,7 +9,7 @@ import {UID} from 'react-uid';
 import PropTypes from 'prop-types';
 
 type ToolTipProps = {
-	tooltip: FormattedMessage.MessageDescriptor
+	tooltip: MessageDescriptor
 };
 
 export default function ToolTip({tooltip}: ToolTipProps) {

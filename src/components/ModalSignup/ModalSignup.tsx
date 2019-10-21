@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
-import { FormattedMessage, Messages, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 import uuidv1  from 'uuid/v1';
 
@@ -19,7 +19,7 @@ import '../../style/transition.css';
 import { UserModel } from "../../types/Types";
 
 import jsonMessages from "../ModalLogin/Login.messages.json";
-const loginMsg: Messages = defineMessages(jsonMessages);
+const loginMsg = defineMessages(jsonMessages);
 
 type Props = {
 	visible: boolean, 

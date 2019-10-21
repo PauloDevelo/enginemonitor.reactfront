@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { faEdit, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
-import { FormattedMessage, defineMessages, Messages } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import equipmentProxy from '../../services/EquipmentProxy';
@@ -21,7 +21,7 @@ import '../../style/transition.css';
 import { EquipmentModel, AgeAcquisitionType } from '../../types/Types';
 
 import jsonMessages from "../EquipmentInfo/EquipmentInfo.messages.json";
-const equipmentInfoMsg: Messages = defineMessages(jsonMessages);
+const equipmentInfoMsg = defineMessages(jsonMessages);
 
 type Props = {
 	equipment: EquipmentModel,

@@ -1,9 +1,9 @@
 import React from "react";
 
-import { FormattedMessage, Messages, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 
 import jsonMessages from "./NavBar.messages.json";
-const navBarMsg: Messages = defineMessages(jsonMessages);
+const navBarMsg = defineMessages(jsonMessages);
 
 type ConnectionState = {
     isOnline: boolean,

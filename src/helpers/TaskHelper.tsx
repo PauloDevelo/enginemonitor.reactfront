@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage, FormattedDate, Messages, defineMessages } from 'react-intl';
+import { FormattedMessage, FormattedDate, defineMessages } from 'react-intl';
 
 import { TaskModel, EquipmentModel, AgeAcquisitionType, EntryModel } from '../types/Types';
 import entryProxy from '../services/EntryProxy';
@@ -9,7 +9,7 @@ import uuidv1 from 'uuid/v1';
 import moment from 'moment';
 
 import jsonMessages from "../components/TaskTable/TaskTable.messages.json";
-const tasktablemsg: Messages = defineMessages(jsonMessages);
+const tasktablemsg = defineMessages(jsonMessages);
 
 export function createDefaultTask(equipment: EquipmentModel): TaskModel{
     const uuid = uuidv1();

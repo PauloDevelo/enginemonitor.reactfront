@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FormattedMessage, Messages, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 import { CSSTransition } from 'react-transition-group'
 
 import { useEditModalLogic } from '../../hooks/EditModalLogicHook';
@@ -20,7 +20,7 @@ import '../../style/transition.css';
 import { ImageModel } from '../../types/Types';
 
 import jsonMessages from "./ModalEditImage.messages.json";
-const editImageMsg: Messages = defineMessages(jsonMessages);
+const editImageMsg = defineMessages(jsonMessages);
 
 type Props = {
     image: ImageModel | undefined, 
@@ -63,7 +63,7 @@ const ModalEditImage = ({image, visible, onImageSaved, toggle, onImageDeleted, c
 									isActing={modalLogic.isDeleting}
 									no={modalLogic.toggleModalYesNoConfirmation}
 									title={editImageMsg.imageDeleteTitle}
-									message={editImageMsg.imageDeleteMsg} 
+									message={editImageMsg.imageDeleteMessage} 
 									className='modal-dialog-centered'/>
 		</Fragment>
 	);

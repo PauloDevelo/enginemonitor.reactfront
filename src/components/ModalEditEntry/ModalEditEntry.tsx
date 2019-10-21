@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FormattedMessage, Messages, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group'
 
@@ -20,7 +20,7 @@ import Gallery from '../Gallery/Gallery';
 import { EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType } from '../../types/Types';
 
 import jsonMessages from "./ModalEditEntry.messages.json";
-const editEntryMsg: Messages = defineMessages(jsonMessages);
+const editEntryMsg = defineMessages(jsonMessages);
 
 type Props = {
 	equipment: EquipmentModel, 

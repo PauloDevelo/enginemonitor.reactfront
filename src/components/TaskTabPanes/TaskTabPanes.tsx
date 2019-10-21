@@ -4,14 +4,14 @@ import { Nav } from 'reactstrap';
 import TaskTable from '../TaskTable/TaskTable';
 import EquipmentHistoryTable from '../EquipmentHistoryTable/EquipmentHistoryTable';
 import MyNavItem from './MyNavItem';
-import { defineMessages, Messages } from 'react-intl';
+import { defineMessages } from 'react-intl';
 
 import { EquipmentModel, TaskModel } from '../../types/Types';
 
 import classnames from 'classnames';
 
 import jsonMessages from "./TaskTabPanes.messages.json";
-const taskTabPanesMsg: Messages = defineMessages(jsonMessages);
+const taskTabPanesMsg = defineMessages(jsonMessages);
 
 type Props = {
     classNames: string,

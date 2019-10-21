@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Spinner } from 'rea
 import { faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
-import { FormattedMessage, Messages, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import MyForm from "../Form/MyForm"
@@ -17,7 +17,7 @@ import HttpError from '../../http/HttpError'
 import '../../style/transition.css';
 
 import jsonMessages from "./PasswordReset.messages.json";
-const changePasswordMsg: Messages = defineMessages(jsonMessages);
+const changePasswordMsg = defineMessages(jsonMessages);
 
 type NewPassword = {
 	email:string, 

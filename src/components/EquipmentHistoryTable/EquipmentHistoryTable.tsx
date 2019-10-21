@@ -6,7 +6,7 @@ import {
     withFixedHeader,
     withHeaderControl,
   } from 'react-table-factory';
-import { defineMessages, Messages, FormattedMessage, FormattedDate } from 'react-intl';
+import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
 
@@ -28,7 +28,7 @@ import './EquipmentHistoryTable.css';
 import { EquipmentModel, EntryModel, AgeAcquisitionType } from '../../types/Types';
 
 import jsonMessages from "./EquipmentHistoryTable.messages.json";
-const messages: Messages = defineMessages(jsonMessages);
+const messages = defineMessages(jsonMessages);
 
 type Props = {
     equipment: EquipmentModel | undefined,

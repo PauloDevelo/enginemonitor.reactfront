@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Spinner } from 'rea
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
-import { FormattedMessage, Messages, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { useEditModal } from '../../hooks/EditModalHook';
@@ -23,7 +23,7 @@ import { AuthInfo, UserModel } from '../../types/Types'
 import '../../style/transition.css';
 
 import jsonMessages from "./Login.messages.json";
-const loginmsg: Messages = defineMessages(jsonMessages);
+const loginmsg = defineMessages(jsonMessages);
 
 type Props = {
 	onLoggedIn: (user:UserModel) => void, 

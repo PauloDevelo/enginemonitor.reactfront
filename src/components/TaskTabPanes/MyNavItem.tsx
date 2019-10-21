@@ -1,11 +1,11 @@
 import React from 'react';
 import { NavItem, NavLink } from 'reactstrap';
-import { FormattedMessage,  } from 'react-intl';
+import { FormattedMessage, MessageDescriptor } from 'react-intl';
 
 type Props = {
     classNames: string,
     activeFunc: () => void, 
-    label: FormattedMessage.MessageDescriptor
+    label: MessageDescriptor
 };
 
 const MyNavItem = ({classNames, activeFunc, label}:Props) => {

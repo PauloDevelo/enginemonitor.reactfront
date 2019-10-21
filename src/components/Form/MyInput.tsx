@@ -2,11 +2,11 @@ import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import ToolTip from '../ToolTip/ToolTip';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, MessageDescriptor } from 'react-intl';
 
 type Props = {
-	label: FormattedMessage.MessageDescriptor,
-	tooltip?: FormattedMessage.MessageDescriptor,
+	label: MessageDescriptor,
+	tooltip?: MessageDescriptor,
 	handleChange?: (name: string, value: string | boolean) => void,
 	onChanged?: (newValue: any) => void,
 	validationTrigger?: number,

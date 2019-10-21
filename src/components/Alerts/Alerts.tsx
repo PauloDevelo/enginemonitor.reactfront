@@ -1,11 +1,10 @@
 import React, {Fragment} from "react";
 import { Alert } from 'reactstrap';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import {defineMessages, Messages} from "react-intl";
 import jsonMessages from "./Alerts.messages.json";
-const alertMsg: Messages = defineMessages(jsonMessages);
+const alertMsg = defineMessages(jsonMessages);
 
 function isString (value: any) {
     return typeof value === 'string' || value instanceof String;
@@ -29,8 +28,10 @@ const Alerts = ({color, error, errors, children}:Props) => {
     
     if(error){
         let value:any;
-        if(alertMsg[error] !== undefined){
-            value = <FormattedMessage {...alertMsg[error]}/>;
+        const messageDescIndex = Object.keys(alertMsg).indexOf(error);
+        if(messageDescIndex !== -1){
+            const messageDesc = Object.values(alertMsg)[messageDescIndex];
+            value = <FormattedMessage {...messageDesc}/>;
         }
         else{
             value = error;
@@ -53,13 +54,17 @@ const Alerts = ({color, error, errors, children}:Props) => {
 
         alerts = validKeys.map(key => {
             let fieldElement: any = key;
-            if(alertMsg[key] !== undefined){
-                fieldElement = <FormattedMessage {...alertMsg[key]}/>
+            let messageDescIndex = Object.keys(alertMsg).indexOf(key);
+            if(messageDescIndex !== -1){
+                const messageDesc = Object.values(alertMsg)[messageDescIndex];
+                fieldElement = <FormattedMessage {...messageDesc}/>
             }
 
             let valueElement: any = errors[key];
-            if(alertMsg[errors[key]] !== undefined){
-                valueElement = <FormattedMessage {...alertMsg[errors[key]]}/>;
+            messageDescIndex = Object.keys(alertMsg).indexOf(valueElement);
+            if(messageDescIndex !== -1){
+                const messageDesc = Object.values(alertMsg)[messageDescIndex];
+                valueElement = <FormattedMessage {...messageDesc}/>;
             }
 
             return(

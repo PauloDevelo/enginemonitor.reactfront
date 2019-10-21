@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 import { Button, Spinner } from 'reactstrap';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, MessageDescriptor } from 'react-intl';
 
 type Props = {
     color: string,
     isActing: boolean,
-    message: FormattedMessage.MessageDescriptor,
+    message: MessageDescriptor,
     action?: () => void,
     className?: string,
     type?: "submit" | "button" | "reset",

@@ -9,7 +9,7 @@ import ImageFolderGauge from './ImageFolderGauge';
 
 import { faSignOutAlt, } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FormattedMessage, Messages, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import userProxy from '../../services/UserProxy';
@@ -21,7 +21,7 @@ import userContext from "../../services/UserContext";
 import './NavBar.css';
 
 import jsonMessages from "./NavBar.messages.json";
-const navBarMsg: Messages = defineMessages(jsonMessages);
+const navBarMsg = defineMessages(jsonMessages);
 
 type Props = {
     user?: UserModel, 

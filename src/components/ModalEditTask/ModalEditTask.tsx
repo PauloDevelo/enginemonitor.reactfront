@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FormattedMessage, Messages, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 import { CSSTransition } from 'react-transition-group'
 import PropTypes from 'prop-types';
 
@@ -20,7 +20,7 @@ import '../../style/transition.css';
 import { EquipmentModel, TaskModel, AgeAcquisitionType } from '../../types/Types';
 
 import jsonMessages from "./ModalEditTask.messages.json";
-const editTaskMsg: Messages = defineMessages(jsonMessages);
+const editTaskMsg = defineMessages(jsonMessages);
 
 type Props = {
 	equipment: EquipmentModel, 

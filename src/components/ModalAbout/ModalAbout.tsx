@@ -1,14 +1,14 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Media } from 'reactstrap';
 
-import { FormattedMessage, Messages, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 
 import appVersion from '../../global';
 
 import jsonMessages from "./ModalAbout.messages.json";
-const aboutMsg: Messages = defineMessages(jsonMessages);
+const aboutMsg = defineMessages(jsonMessages);
 
 type Props = {
 	visible: boolean, 
