@@ -32,7 +32,7 @@ const messages = defineMessages(jsonMessages);
 
 type Props = {
     equipment: EquipmentModel | undefined,
-    onTaskChanged: React.MutableRefObject<(taskId: string) => void>,
+    onTaskChanged: (taskId: string) => void,
     equipmentHistoryRefreshId: number,
     classNames?: string
 }
@@ -87,7 +87,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
         setEntries(newCurrentHistory);
 
         if(onTaskChanged && savedEntry.taskUiId){
-            onTaskChanged.current(savedEntry.taskUiId);
+            onTaskChanged(savedEntry.taskUiId);
         }
 	}
 	
@@ -96,7 +96,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
         setEntries(newCurrentHistoryTask);
 
         if(onTaskChanged && entry.taskUiId){
-            onTaskChanged.current(entry.taskUiId);
+            onTaskChanged(entry.taskUiId);
         }
     }
 

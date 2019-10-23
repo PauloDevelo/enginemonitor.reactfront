@@ -38,10 +38,6 @@ const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted
 										equipmentProxy.deleteEquipment, [equipment._uiId], onEquipmentDeleted);
 	const [isCreation, setIsCreation] = useState(false);
 
-	async function updateIsCreation(){
-		setIsCreation(!(await equipmentProxy.existEquipment(equipment._uiId)));
-	}
-
 	const onAgeAcquisitionTypeChanged = (ageAcquisitionType: string) => {
 		const newAgeAcquisitionType = parseInt(ageAcquisitionType);
 		setAgeAcquisitionType(newAgeAcquisitionType);
@@ -49,7 +45,9 @@ const ModalEquipmentInfo = ({equipment, onEquipmentInfoSaved, onEquipmentDeleted
 
 	useEffect(() => {
 		setAgeAcquisitionType(equipment.ageAcquisitionType);
-		updateIsCreation();
+		equipmentProxy.existEquipment(equipment._uiId).then(equipmentExist => {
+			setIsCreation(equipmentExist === false);
+		})
 	}, [equipment]);
 
 	const message = isCreation ? equipmentInfoMsg.create : equipmentInfoMsg.save;

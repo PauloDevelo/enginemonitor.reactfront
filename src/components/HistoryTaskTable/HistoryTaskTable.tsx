@@ -57,25 +57,23 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
     const [fetchingState, setFetchingState] = useState(FetchState.StandBy);
 
     useEffect(() => {
-        fetchEntries();
-    }, [task, taskHistoryRefreshId]);
-
-    const fetchEntries = async () => {
         setFetchingState(FetchState.Fetching);
 
-        try {
-            let newEntries:EntryModel[] = [];
-            if(equipment && task){
-                newEntries = await entryProxy.fetchEntries(equipment._uiId, task._uiId);
-            }
-            
-            setEntries(newEntries);
-            setFetchingState(FetchState.StandBy);
-        } 
-        catch (error) {
-            setFetchingState(FetchState.Error);
+        if(equipment && task){
+            entryProxy.fetchEntries(equipment._uiId, task._uiId)
+            .then((newEntries) => {
+                setEntries(newEntries);
+                setFetchingState(FetchState.StandBy); 
+            })
+            .catch((reason) => {
+                setFetchingState(FetchState.Error);
+            });
         }
-    };
+        else{
+            setEntries([]);
+            setFetchingState(FetchState.StandBy); 
+        }
+    }, [task, taskHistoryRefreshId]);
 
     const changeEntries = (newEntries: EntryModel[]) => {
       setEntries(newEntries);

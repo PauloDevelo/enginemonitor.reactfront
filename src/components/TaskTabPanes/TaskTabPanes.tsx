@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { Nav } from 'reactstrap';
 
 import TaskTable from '../TaskTable/TaskTable';
@@ -36,15 +36,11 @@ const TaskTabPanes = ({ classNames, currentEquipment, taskList, areTasksLoading,
     const activeEquipmentHistory = useCallback(() => { setActiveTab('equipmentHistory') }, []);
     const activeTaskTable = useCallback(() => { setActiveTab('taskTable') }, []);
     
-    const onTaskChangedByTaskId = (taskId: string) => {
+    const onTaskChangedByTaskId = useCallback((taskId: string) => {
         const task = taskList.find(task => task._uiId === taskId);
         if (task){
             onTaskChangedRef.current(task);
         }
-    }
-    const onTaskChangedByTaskIdRef = useRef(onTaskChangedByTaskId);
-    useEffect(() => {
-        onTaskChangedByTaskIdRef.current = onTaskChangedByTaskId;
     }, [taskList, onTaskChangedRef]);
 
     return <div className={classNames}>
@@ -59,7 +55,7 @@ const TaskTabPanes = ({ classNames, currentEquipment, taskList, areTasksLoading,
             changeCurrentTask={changeCurrentTask} />}
         {activeTab === "equipmentHistory" && <EquipmentHistoryTable equipment={currentEquipment}
                 equipmentHistoryRefreshId={equipmentHistoryRefreshId}												
-                onTaskChanged={onTaskChangedByTaskIdRef} />}
+                onTaskChanged={onTaskChangedByTaskId} />}
     </div>
 } 
 

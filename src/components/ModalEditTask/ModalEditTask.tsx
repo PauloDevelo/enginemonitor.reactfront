@@ -38,15 +38,13 @@ const ModalEditTask = ({equipment, task, onTaskSaved, toggle, onTaskDeleted, vis
 	}
 	const modalLogic = useEditModalLogic(toggle, taskProxy.createOrSaveTask, [equipment._uiId], onSaveTask, onTaskSaved, 
 										taskProxy.deleteTask, [equipment._uiId, task._uiId], onTaskDeleted);
-	const [isCreation, setIsCeation] = useState(false);
-
-	async function updateIsCreation(){
-		setIsCeation(!(await taskProxy.existTask(equipment._uiId, task._uiId)));
-	}
+	const [isCreation, setIsCreation] = useState(false);
 
 	useEffect(() => {
-		updateIsCreation();
-	}, [task]);
+		taskProxy.existTask(equipment._uiId, task._uiId).then(taskExist => {
+			setIsCreation(taskExist === false);
+		});
+	}, [task, equipment]);
 
 	let title = undefined;
 	if (isCreation){
