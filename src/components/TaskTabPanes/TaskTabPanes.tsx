@@ -20,10 +20,10 @@ type Props = {
     areTasksLoading: boolean,
     changeCurrentTask: (task: TaskModel) => void,
     equipmentHistoryRefreshId: number,
-    onTaskChangedRef: React.MutableRefObject<(task: TaskModel) => void>
+    onTaskChanged: (task: TaskModel) => void
 };
 
-const TaskTabPanes = ({ classNames, currentEquipment, taskList, areTasksLoading, changeCurrentTask, equipmentHistoryRefreshId, onTaskChangedRef }: Props) => {
+const TaskTabPanes = ({ classNames, currentEquipment, taskList, areTasksLoading, changeCurrentTask, equipmentHistoryRefreshId, onTaskChanged }: Props) => {
     const [activeTab, setActiveTab] = useState<"taskTable" | "equipmentHistory">("taskTable");
 	const [equipmentHistoryClassNames, setEquipmentHistoryClassNames] = useState(classnames({ active: activeTab === 'equipmentHistory' }));
     const [taskTableClassNames, setTaskTableClassNames] = useState(classnames({ active: activeTab === 'taskTable' }));
@@ -39,9 +39,9 @@ const TaskTabPanes = ({ classNames, currentEquipment, taskList, areTasksLoading,
     const onTaskChangedByTaskId = useCallback((taskId: string) => {
         const task = taskList.find(task => task._uiId === taskId);
         if (task){
-            onTaskChangedRef.current(task);
+            onTaskChanged(task);
         }
-    }, [taskList, onTaskChangedRef]);
+    }, [taskList, onTaskChanged]);
 
     return <div className={classNames}>
         <Nav tabs>
@@ -51,7 +51,7 @@ const TaskTabPanes = ({ classNames, currentEquipment, taskList, areTasksLoading,
         {activeTab === "taskTable" && <TaskTable 	equipment={currentEquipment}
             areTasksLoading={areTasksLoading}
             tasks={taskList} 
-            onTaskSaved={onTaskChangedRef}
+            onTaskSaved={onTaskChanged}
             changeCurrentTask={changeCurrentTask} />}
         {activeTab === "equipmentHistory" && <EquipmentHistoryTable equipment={currentEquipment}
                 equipmentHistoryRefreshId={equipmentHistoryRefreshId}												

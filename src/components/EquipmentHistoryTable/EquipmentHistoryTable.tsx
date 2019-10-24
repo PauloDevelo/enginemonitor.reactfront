@@ -59,25 +59,22 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
     const [fetchingState, setFetchingState] = useState(FetchState.StandBy);
 
     useEffect(() => {
-      fetchEntries();
-    }, [equipmentId, equipmentHistoryRefreshId]);
-
-    const fetchEntries = async () => {
         setFetchingState(FetchState.Fetching);
 
-        try {
-            let newEntries:EntryModel[] = [];
-            if(equipmentId){
-                newEntries = await entryProxy.fetchAllEntries(equipmentId);
-            }
-            
-            setEntries(newEntries);
-            setFetchingState(FetchState.StandBy);
-        } 
-        catch (error) {
-            setFetchingState(FetchState.Error);
+        if(equipmentId){
+            entryProxy.fetchAllEntries(equipmentId).then(newEntries => {
+                setEntries(newEntries);
+                setFetchingState(FetchState.StandBy);
+            })
+            .catch(reason => {
+                setFetchingState(FetchState.Error);
+            });
         }
-    };
+        else{
+            setEntries([]);
+            setFetchingState(FetchState.StandBy);
+        }
+    }, [equipmentId, equipmentHistoryRefreshId]);
 
     const onSavedEntry = (savedEntry: EntryModel) => {
         const newCurrentHistory = entries.filter(entry => entry._uiId !== savedEntry._uiId);

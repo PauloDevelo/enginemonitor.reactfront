@@ -59,21 +59,23 @@ const MyForm = React.memo(function MyForm({ initialData , submit, children, clas
 	}
 
 	const handleInputChange = useCallback((name: string , value: string | boolean | number) => {
-		if(data.data[name] === undefined){
-			console.log('The property ' + name + ' is not defined in the data:');
-			console.log(data.data);
-		}
+		setData(previousData => {
+			if(previousData.data[name] === undefined){
+				console.log('The property ' + name + ' is not defined in the data:');
+				console.log(previousData.data);
+			}
+	
+			const newData = Object.assign({}, previousData);
+	
+			if(newData.data[name] !== undefined && typeof newData.data[name] === 'number' && typeof value === 'string'){
+				newData.data[name] = parseInt(value as string, 10);
+			}
+			else{
+				newData.data[name] = value
+			}
 
-		const newData = Object.assign({}, data);
-
-		if(newData.data[name] !== undefined && typeof newData.data[name] === 'number' && typeof value === 'string'){
-			newData.data[name] = parseInt(value as string, 10);
-		}
-		else{
-			newData.data[name] = value
-		}
-		
-		setData(newData);
+			return newData;
+		});
 	}, []);
 
 	const elementChildren = children.filter(child => isJSXElement(child)) as JSX.Element[];

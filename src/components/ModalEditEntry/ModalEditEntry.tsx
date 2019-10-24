@@ -52,15 +52,13 @@ const ModalEditEntry = ({ equipment, task, entry, visible, className, saveEntry,
 
 	const [isNewEntry, setIsNewEntry] = useState(false);
 
-	async function updateExistEntry(equId: string, entId: string | undefined){
-		setIsNewEntry(!(await entryProxy.existEntry(equId, entId)));
-	}
-
 	useEffect(() => {
 		if(equipmentId){
-			updateExistEntry(equipmentId, entryId);
+			entryProxy.existEntry(equipmentId, entryId).then(isEntryExist => {
+				setIsNewEntry(isEntryExist === false);
+			});
 		}
-	}, [equipment, entry]);
+	}, [equipmentId, entryId]);
 
 	return (
 		<Fragment>

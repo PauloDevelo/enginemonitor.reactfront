@@ -62,13 +62,15 @@ function EquipmentsInfo({userId, changeCurrentEquipment, extraClassNames}: Props
 
     useEffect(() => {
         if (equipments.length > 0){
-			if(currentEquipment === undefined || equipments.findIndex((equipment: EquipmentModel) => currentEquipment._uiId === equipment._uiId) === -1){
-				setCurrentEquipment(equipments[0]);
-			}
-			else{
-				var newCurrentEquipmentIndex = equipments.findIndex((equipment: EquipmentModel) => currentEquipment._uiId === equipment._uiId);
-				setCurrentEquipment(equipments[newCurrentEquipmentIndex]);
-			}
+			setCurrentEquipment(previousCurrentEquipment => {
+				if(previousCurrentEquipment === undefined || equipments.findIndex((equipment: EquipmentModel) => previousCurrentEquipment._uiId === equipment._uiId) === -1){
+					return equipments[0];
+				}
+				else{
+					var newCurrentEquipmentIndex = equipments.findIndex((equipment: EquipmentModel) => previousCurrentEquipment._uiId === equipment._uiId);
+					return equipments[newCurrentEquipmentIndex];
+				}
+			});
         }
         else{
             setCurrentEquipment(undefined);

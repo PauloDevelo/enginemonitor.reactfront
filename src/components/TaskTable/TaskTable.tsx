@@ -17,7 +17,6 @@ import Loading from '../Loading/Loading';
 import { getContext, getTodoText, shorten, getTodoValue, TaskTodo, createDefaultTask, getBadgeText } from '../../helpers/TaskHelper'; 
 import { useEditModal } from '../../hooks/EditModalHook';
 
-import PropTypes from 'prop-types';
 import { EquipmentModel, TaskModel } from '../../types/Types';
 
 import '../../style/Table.scss';
@@ -30,7 +29,7 @@ type Props = {
 	equipment?: EquipmentModel, 
 	tasks: TaskModel[], 
 	areTasksLoading: boolean, 
-	onTaskSaved: React.MutableRefObject<(task: TaskModel) => void>, 
+	onTaskSaved: (task: TaskModel) => void, 
 	changeCurrentTask: (task: TaskModel) => void, 
 	classNames?: string
 };
@@ -148,21 +147,12 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 			</div>
 			{equipment !== undefined && modalHook.data !== undefined && <ModalEditTask  equipment={equipment}
 							task={modalHook.data}
-							onTaskSaved={onTaskSaved.current} 
+							onTaskSaved={onTaskSaved} 
 							visible={modalHook.editModalVisibility} 
 							toggle={modalHook.toggleModal}
 							className='modal-dialog-centered'/>}
 		</Fragment>
 	);
 }
-
-TaskTable.propTypes = {
-	equipment: PropTypes.object,
-	tasks: PropTypes.array.isRequired,
-	onTaskSaved: PropTypes.object.isRequired,
-	changeCurrentTask: PropTypes.func.isRequired,
-	classNames: PropTypes.string,
-	areTasksLoading: PropTypes.bool.isRequired
-};
 
 export default React.memo(TaskTable);

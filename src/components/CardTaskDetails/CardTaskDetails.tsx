@@ -19,7 +19,7 @@ type Props = {
     equipment?: EquipmentModel, 
     tasks: TaskModel[], 
     currentTask?: TaskModel, 
-    onTaskChanged: React.MutableRefObject<(task: TaskModel) => void>, 
+    onTaskChanged: (task: TaskModel) => void, 
     onTaskDeleted: (task: TaskModel) => void, 
     changeCurrentTask: (task: TaskModel | undefined) => void, 
     classNames?: string
@@ -89,7 +89,7 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
 
             {modalHook.editModalVisibility && <ModalEditTask  equipment={equipment}
                             task={currentTask}
-                            onTaskSaved={onTaskChanged.current} 
+                            onTaskSaved={onTaskChanged} 
                             onTaskDeleted={onTaskDeleted}
                             visible={modalHook.editModalVisibility} 
                             toggle={modalHook.toggleModal} 

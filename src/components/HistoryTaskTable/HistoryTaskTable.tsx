@@ -73,7 +73,7 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
             setEntries([]);
             setFetchingState(FetchState.StandBy); 
         }
-    }, [task, taskHistoryRefreshId]);
+    }, [equipment, task, taskHistoryRefreshId]);
 
     const changeEntries = (newEntries: EntryModel[]) => {
       setEntries(newEntries);

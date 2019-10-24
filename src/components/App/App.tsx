@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useCallback, useRef } from 'react';
+import React, { Fragment, useEffect, useState, useCallback } from 'react';
 
 import { CSSTransition } from 'react-transition-group'
 
@@ -26,17 +26,19 @@ export default function App(){
 	const [user, setUser] = useState<UserModel | undefined>(undefined);
 	const [error, setError] = useState<Error | undefined>(undefined);
 
-	const refreshCurrentUser = async () => {
-		try{
-			const currentUser = await userProxy.fetchCurrentUser();
-			setUser(currentUser);
-		}
-		catch(error){
-			setUser(undefined);
-		}
-	}
+	
 
 	useEffect(() => {
+		const refreshCurrentUser = async () => {
+			try{
+				const currentUser = await userProxy.fetchCurrentUser();
+				setUser(currentUser);
+			}
+			catch(error){
+				setUser(undefined);
+			}
+		}
+
 		refreshCurrentUser();
 		errorService.registerOnListErrorChanged(onListErrorChanged);
 
@@ -67,49 +69,12 @@ export default function App(){
 	const [taskHistoryRefreshId, setTaskHistoryRefreshId] = useState(0);
 	const [equipmentHistoryRefreshId, setEquipmentHistoryRefreshId] = useState(0);
 
-	useEffect(() => {
-		refreshTaskList();
-	}, [currentEquipment]);
-
-	useEffect(() => {
-		setCurrentTaskIfRequired();
-	}, [taskList]);
-
-	const onTaskDeleted = useCallback((task: TaskModel)=>{
-		refreshTaskList();
-		setEquipmentHistoryRefreshId(equipmentHistoryRefreshId + 1);
-	}, [equipmentHistoryRefreshId, taskList, currentTask, currentEquipment]);
-
-	const onTaskChanged = (task: TaskModel)=>{
-		refreshTaskList();
-
-		const currentTaskId = currentTask ? currentTask._uiId : undefined;
-		if(task._uiId === currentTaskId){
-			setTaskHistoryRefreshId(taskHistoryRefreshId + 1);
-		}
-		else{
-			changeCurrentTask(task);
-		}
-	};
-	const onTaskChangedRef = useRef(onTaskChanged);
-	useEffect(() => {
-		onTaskChangedRef.current = onTaskChanged;
-	}, [currentEquipment, currentTask, taskHistoryRefreshId]);
-
-	const changeCurrentTask = useCallback((newCurrentTask: TaskModel | undefined) => {
-		setCurrentTask(newCurrentTask);
-	}, []);
-
-	const onTaskHistoryChanged = useCallback(() => {
-		refreshTaskList();
-		setEquipmentHistoryRefreshId(equipmentHistoryRefreshId + 1);
-	}, [equipmentHistoryRefreshId, currentEquipment]);
-	
-	const refreshTaskList = async() => {
+	const fetchTasks = useCallback(() => {
 		if(currentEquipment !== undefined && currentEquipment._uiId !== undefined){
-			try{
-				setAreTasksLoading(true);
-				const tasks = await taskProxy.fetchTasks(currentEquipment._uiId);
+			setAreTasksLoading(true);
+
+			taskProxy.fetchTasks(currentEquipment._uiId)
+			.then(tasks => {
 				tasks.sort((taskA, taskB) => {
 					if(taskB.level === taskA.level){
 						return taskA.nextDueDate.getTime() - taskB.nextDueDate.getTime();
@@ -120,36 +85,66 @@ export default function App(){
 				});
 
 				setTaskList(tasks);
-			}
-			catch(error){
+			})
+			.catch(reason => {
 				setTaskList([]);
-			}
+			});
+
 			setAreTasksLoading(false);
 		}
 		else{
 			setTaskList([]);
 		}
-	}
+	}, [currentEquipment]);
 
-	const setCurrentTaskIfRequired = () => {
-		if(taskList.length === 0){
-			setCurrentTask(undefined);
-		}
-		else{
+	useEffect(() => {
+		fetchTasks();
+	}, [fetchTasks]);
+
+	const setCurrentTaskIfRequired = useCallback(() => {
+		setCurrentTask(previousCurrentTask => {
+			if(taskList.length === 0){
+				return undefined;
+			}
 			let newCurrentTask = undefined;
-			const currentTaskId = currentTask !== undefined ? currentTask._uiId : undefined
-			if(currentTaskId){
-				newCurrentTask = taskList.find(t => t._uiId === currentTaskId);
+			const previousCurrentTaskId = previousCurrentTask !== undefined ? previousCurrentTask._uiId : undefined;
+			if(previousCurrentTaskId){
+				newCurrentTask = taskList.find(t => t._uiId === previousCurrentTaskId);
 			}
 
 			if(newCurrentTask === undefined){
 				newCurrentTask = taskList[0];
 			}
+			return newCurrentTask;
+		});
+	}, [taskList]);
 
-			setCurrentTask(newCurrentTask);
+	useEffect(() => {
+		setCurrentTaskIfRequired();
+	}, [setCurrentTaskIfRequired]);
+
+	const onTaskDeleted = useCallback((task: TaskModel)=>{
+		fetchTasks();
+		setEquipmentHistoryRefreshId(previousEquipmentHistoryRefreshId => previousEquipmentHistoryRefreshId + 1);
+	}, [fetchTasks]);
+
+	const onTaskChanged = useCallback((task: TaskModel)=>{
+		fetchTasks();
+
+		const currentTaskId = currentTask ? currentTask._uiId : undefined;
+		if(task._uiId === currentTaskId){
+			setTaskHistoryRefreshId(previousTaskHistoryRefreshId => previousTaskHistoryRefreshId + 1);
 		}
-	}
-	
+		else{
+			setCurrentTask(task);
+		}
+	}, [currentTask, fetchTasks]);
+
+	const onTaskHistoryChanged = useCallback(() => {
+		fetchTasks();
+		setEquipmentHistoryRefreshId(previousEquipmentHistoryRefreshId => previousEquipmentHistoryRefreshId + 1);
+	}, [fetchTasks]);
+
 	const [modalSignupVisible, setModalSignupVisible] = useState(false);
 	const [navBarVisible, setNavBarVisible] = useState(true);
 
@@ -183,17 +178,17 @@ export default function App(){
 														currentEquipment={currentEquipment}
 														taskList= {taskList}
 														areTasksLoading={areTasksLoading}
-														changeCurrentTask={changeCurrentTask}
+														changeCurrentTask={setCurrentTask}
 														equipmentHistoryRefreshId={equipmentHistoryRefreshId}
-														onTaskChangedRef={onTaskChangedRef} />
+														onTaskChanged={onTaskChanged} />
 									</div>
 									<div className="wrapperColumn">
 										<CardTaskDetails 	equipment={currentEquipment}
 															tasks={taskList}
 															currentTask={currentTask}
-															onTaskChanged={onTaskChangedRef}
+															onTaskChanged={onTaskChanged}
 															onTaskDeleted={onTaskDeleted}
-															changeCurrentTask={changeCurrentTask}
+															changeCurrentTask={setCurrentTask}
 															classNames={panelClassNames + ' columnHeader'}/>
 										<HistoryTaskTable 	equipment={currentEquipment}
 															task={currentTask}

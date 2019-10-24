@@ -50,22 +50,35 @@ function Gallery({parentUiId}: Props){
     }, []);
 
     const addImage = useCallback((newImage:ImageModel) => {
-        const newImages = images.concat(newImage);
-        setImages(newImages);
+        setImages(previousImages => previousImages.concat(newImage));
 
         setEditImage(newImage);
-    }, [images]);
+    }, []);
 
     const onClickThumbnail = useCallback((index: number) => {
         setIndex(index);
         setOpen(true);
     }, []);
 
+    const deleteImage = useCallback((deletedImageUiId: string) => {
+        setImages(previousImages => {
+            const newImages = previousImages.filter(image => image._uiId !== deletedImageUiId);
+            if(newImages.length === 0){
+                setOpen(false);
+            }
+            else{
+                setIndex(0);
+            }
+
+            return newImages;
+        });
+    }, []);
+
     const onEditImageDeleted = useCallback(() => {
         if(editImage !== undefined){
             deleteImage(editImage._uiId);
         }
-    }, [editImage]);
+    }, [editImage, deleteImage]);
 
     const onEditImageUpdated = (updatedImage: ImageModel) => {
         if(editImage !== undefined){
@@ -90,22 +103,11 @@ function Gallery({parentUiId}: Props){
         }).catch(reason => {
             errorService.addError(reason);
         });
-    }, [images, isOpen, index]);
+    }, [images, index, deleteImage]);
 
     const editCurrentImage = useCallback(() => {
         setEditImage(images[index]);
     }, [index, images]);
-
-    const deleteImage = (deletedImageUiId: string) => {
-        const newImages = images.filter(image => image._uiId !== deletedImageUiId);
-            if(newImages.length === 0){
-                setOpen(false);
-            }
-            else{
-                setIndex(0);
-            }
-            setImages(newImages);
-    }
 
     const additionalActions  =  [
         <Button onClick={deleteCurrentImage} className={"action-button"}><FontAwesomeIcon icon={faTrashAlt} size="lg"/></Button>,
