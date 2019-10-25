@@ -60,13 +60,16 @@ function Gallery({parentUiId}: Props){
         setOpen(true);
     }, []);
 
+    useEffect(() => {
+        if(images.length === 0){
+            setOpen(false);
+        }
+    }, [images]);
+
     const deleteImage = useCallback((deletedImageUiId: string) => {
         setImages(previousImages => {
             const newImages = previousImages.filter(image => image._uiId !== deletedImageUiId);
-            if(newImages.length === 0){
-                setOpen(false);
-            }
-            else{
+            if(newImages.length !== 0){
                 setIndex(0);
             }
 
@@ -80,18 +83,22 @@ function Gallery({parentUiId}: Props){
         }
     }, [editImage, deleteImage]);
 
-    const onEditImageUpdated = (updatedImage: ImageModel) => {
+    const onEditImageUpdated = useCallback((updatedImage: ImageModel) => {
         if(editImage !== undefined){
-            var editImageIndex = images.indexOf(editImage);
+            setImages(previousImages => {
+                var editImageIndex = previousImages.indexOf(editImage);
             
-            if (editImageIndex !== -1) {
-                const newImages = [...images];
-                newImages[editImageIndex] = updatedImage;
+                if (editImageIndex !== -1) {
+                    const newImages = [...previousImages];
+                    newImages[editImageIndex] = updatedImage;
 
-                setImages(newImages);
-            }
+                    return newImages;
+                }
+
+                return previousImages
+            });
         }
-    }
+    }, [editImage]);
 
     const closeModalEditImage = () => {
         setEditImage(undefined);
@@ -119,7 +126,7 @@ function Gallery({parentUiId}: Props){
 	return(
         <Fragment>
             <GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} turnOnCamera={turnOnCamera} />
-            {isOpen && (
+            {isOpen && images[index] !== undefined && (
                 <Lightbox
                     mainSrc={images[index].url}
                     nextSrc={images[(index + 1) % images.length].url}
@@ -139,7 +146,7 @@ function Gallery({parentUiId}: Props){
 
             {isCameraOn && <Html5Camera imageParentUiId={parentUiId} close={turnOffCamera} addImage={addImage}/>}
 
-            {editImage !== undefined && <ModalEditImage visible={editImage !== undefined} image={editImage} onImageDeleted={onEditImageDeleted} onImageSaved={onEditImageUpdated} toggle={closeModalEditImage}/>}
+            <ModalEditImage visible={editImage !== undefined} image={editImage} onImageDeleted={onEditImageDeleted} onImageSaved={onEditImageUpdated} toggle={closeModalEditImage}/>
         </Fragment>
 	);
 }
