@@ -1,7 +1,7 @@
 import ignoredMessages from '../../testHelpers/MockConsole';
 import storageService from '../StorageService';
 
-ignoredMessages.push("undefined used as a key, but it is not a string.");
+
 
 describe('Test StorageService', () => {
     const key = "a_key";
@@ -13,6 +13,11 @@ describe('Test StorageService', () => {
 
     beforeEach(() => {
         initStorage();
+    });
+
+    beforeAll(() => {
+        ignoredMessages.length = 0;
+        ignoredMessages.push("undefined used as a key, but it is not a string.");
     });
 
     afterEach(async() => {

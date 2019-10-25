@@ -7,12 +7,17 @@ import actionManager from '../ActionManager';
 
 import { updateTask } from '../../helpers/TaskHelper';
 
-ignoredMessages.push("The function TaskProxy.existTask expects a non null and non undefined task id.");
+
 
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');
 
 describe('Test TaskProxy', () => {
+    beforeAll(() => {
+        ignoredMessages.length = 0;
+        ignoredMessages.push("The function TaskProxy.existTask expects a non null and non undefined task id.");
+    });
+
     const parentEquipmentId = "an_parent_equipment";
     const urlFetchTask = process.env.REACT_APP_URL_BASE + "tasks/" + parentEquipmentId;
 

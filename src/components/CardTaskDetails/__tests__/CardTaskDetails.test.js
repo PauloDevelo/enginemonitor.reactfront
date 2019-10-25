@@ -5,9 +5,12 @@ import renderer from 'react-test-renderer';
 
 import CardTaskDetails from '../CardTaskDetails';
 
-ignoredMessages.push("[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.");
-
 describe("CardTaskDetails", () => {
+    beforeAll(() => {
+        ignoredMessages.length = 0;
+        ignoredMessages.push("[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.");
+    });
+
     const equipment = {
         _uiId: '1234',
         name: 'engine',

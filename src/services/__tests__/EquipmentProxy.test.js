@@ -7,12 +7,15 @@ import actionManager from '../ActionManager';
 
 import { updateEquipment } from '../../helpers/EquipmentHelper';
 
-ignoredMessages.push("The function EquipmentProxy.existEquipment expects a non null and non undefined equipment id.");
-
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');
 
 describe('Test EquipmentProxy', () => {
+    beforeAll(() => {
+        ignoredMessages.length = 0;
+        ignoredMessages.push("The function EquipmentProxy.existEquipment expects a non null and non undefined equipment id.");
+    });
+
     const urlFetchEquipment = process.env.REACT_APP_URL_BASE + "equipments/";
 
     const equipmentToSave = { 

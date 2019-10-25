@@ -1,0 +1,555 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component Gallery should render a list of image using the thumbnail url 1`] = `
+<Memo(Gallery)
+  parentUiId="equipment_01"
+>
+  <Memo(GalleryComponent)
+    addImage={[Function]}
+    images={
+      Array [
+        Object {
+          "_uiId": "dfc66510-f5f3-11e9-b3b1-f7086d79fbca",
+          "name": "DJI_1645.JPG",
+          "parentUiId": "equipment_01",
+          "sizeInByte": 262985,
+          "thumbnailUrl": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg",
+          "url": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339188DJI_1645.JPG.jpeg",
+        },
+        Object {
+          "_uiId": "eb074110-f5f3-11e9-b3b1-f7086d79fbca",
+          "name": "DSC_0016.JPG",
+          "parentUiId": "equipment_01",
+          "sizeInByte": 325323,
+          "thumbnailUrl": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg",
+          "url": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358061DSC_0016.JPG.jpeg",
+        },
+        Object {
+          "_uiId": "0ff4fd50-f5f4-11e9-b3b1-f7086d79fbca",
+          "name": "DSC_0005.JPG",
+          "parentUiId": "equipment_01",
+          "sizeInByte": 239719,
+          "thumbnailUrl": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg",
+          "url": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420020DSC_0005.JPG.jpeg",
+        },
+      ]
+    }
+    onClickThumbnail={[Function]}
+    parentUiId="equipment_01"
+    turnOnCamera={[Function]}
+  >
+    <div>
+      <Label
+        className="font-weight-bold"
+        tag="label"
+        widths={
+          Array [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+          ]
+        }
+      >
+        <label
+          className="font-weight-bold"
+        >
+          Gallery image
+        </label>
+      </Label>
+      <div
+        className="p-1 border border-secondary rounded shadow gallery"
+      >
+        <Memo(AddImageFileButton)
+          addImage={[Function]}
+          className="float-right"
+          parentUiId="equipment_01"
+        >
+          <Button
+            aria-label="Edit"
+            className="float-right"
+            color="light"
+            onClick={[Function]}
+            size="lg"
+            tag="button"
+          >
+            <button
+              aria-label="Edit"
+              className="float-right btn btn-light btn-lg"
+              onClick={[Function]}
+              type="button"
+            >
+              <span
+                className="fa-layers fa-fw"
+              >
+                <FontAwesomeIcon
+                  border={false}
+                  className=""
+                  fixedWidth={false}
+                  flip={null}
+                  icon={
+                    Object {
+                      "icon": Array [
+                        512,
+                        512,
+                        Array [],
+                        "f03e",
+                        "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                      ],
+                      "iconName": "image",
+                      "prefix": "fas",
+                    }
+                  }
+                  inverse={false}
+                  listItem={false}
+                  mask={null}
+                  pull={null}
+                  pulse={false}
+                  rotation={null}
+                  size="lg"
+                  spin={false}
+                  swapOpacity={false}
+                  symbol={false}
+                  title=""
+                  transform={null}
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="svg-inline--fa fa-image fa-w-16 fa-lg "
+                    data-icon="image"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    style={Object {}}
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                      fill="currentColor"
+                      style={Object {}}
+                    />
+                  </svg>
+                </FontAwesomeIcon>
+                <FontAwesomeIcon
+                  border={false}
+                  className=""
+                  fixedWidth={false}
+                  flip={null}
+                  icon={
+                    Object {
+                      "icon": Array [
+                        448,
+                        512,
+                        Array [],
+                        "f067",
+                        "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
+                      ],
+                      "iconName": "plus",
+                      "prefix": "fas",
+                    }
+                  }
+                  inverse={false}
+                  listItem={false}
+                  mask={null}
+                  pull={null}
+                  pulse={false}
+                  rotation={null}
+                  size="xs"
+                  spin={false}
+                  swapOpacity={false}
+                  symbol={false}
+                  title=""
+                  transform="down-13 left-16"
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+                    data-icon="plus"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    style={
+                      Object {
+                        "transformOrigin": "-0.5625em 1.3125em",
+                      }
+                    }
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g
+                      style={Object {}}
+                      transform="translate(224 256)"
+                    >
+                      <g
+                        style={Object {}}
+                        transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                      >
+                        <path
+                          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                          fill="currentColor"
+                          style={Object {}}
+                          transform="translate(-224 -256)"
+                        />
+                      </g>
+                    </g>
+                  </svg>
+                </FontAwesomeIcon>
+              </span>
+            </button>
+          </Button>
+        </Memo(AddImageFileButton)>
+        <Button
+          className="float-right"
+          color="light"
+          onClick={[Function]}
+          size="lg"
+          tag="button"
+        >
+          <button
+            aria-label={null}
+            className="float-right btn btn-light btn-lg"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="fa-layers fa-fw"
+            >
+              <FontAwesomeIcon
+                border={false}
+                className=""
+                fixedWidth={false}
+                flip={null}
+                icon={
+                  Object {
+                    "icon": Array [
+                      512,
+                      512,
+                      Array [],
+                      "f030",
+                      "M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z",
+                    ],
+                    "iconName": "camera",
+                    "prefix": "fas",
+                  }
+                }
+                inverse={false}
+                listItem={false}
+                mask={null}
+                pull={null}
+                pulse={false}
+                rotation={null}
+                size="lg"
+                spin={false}
+                swapOpacity={false}
+                symbol={false}
+                title=""
+                transform={null}
+              >
+                <svg
+                  aria-hidden="true"
+                  className="svg-inline--fa fa-camera fa-w-16 fa-lg "
+                  data-icon="camera"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  style={Object {}}
+                  viewBox="0 0 512 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
+                    fill="currentColor"
+                    style={Object {}}
+                  />
+                </svg>
+              </FontAwesomeIcon>
+              <FontAwesomeIcon
+                border={false}
+                className=""
+                fixedWidth={false}
+                flip={null}
+                icon={
+                  Object {
+                    "icon": Array [
+                      448,
+                      512,
+                      Array [],
+                      "f067",
+                      "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
+                    ],
+                    "iconName": "plus",
+                    "prefix": "fas",
+                  }
+                }
+                inverse={false}
+                listItem={false}
+                mask={null}
+                pull={null}
+                pulse={false}
+                rotation={null}
+                size="xs"
+                spin={false}
+                swapOpacity={false}
+                symbol={false}
+                title=""
+                transform="down-13 left-16"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+                  data-icon="plus"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  style={
+                    Object {
+                      "transformOrigin": "-0.5625em 1.3125em",
+                    }
+                  }
+                  viewBox="0 0 448 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    style={Object {}}
+                    transform="translate(224 256)"
+                  >
+                    <g
+                      style={Object {}}
+                      transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                    >
+                      <path
+                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                        fill="currentColor"
+                        style={Object {}}
+                        transform="translate(-224 -256)"
+                      />
+                    </g>
+                  </g>
+                </svg>
+              </FontAwesomeIcon>
+            </span>
+          </button>
+        </Button>
+        <Memo(Thumbnail)
+          image={
+            Object {
+              "_uiId": "dfc66510-f5f3-11e9-b3b1-f7086d79fbca",
+              "name": "DJI_1645.JPG",
+              "parentUiId": "equipment_01",
+              "sizeInByte": 262985,
+              "thumbnailUrl": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg",
+              "url": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339188DJI_1645.JPG.jpeg",
+            }
+          }
+          key="dfc66510-f5f3-11e9-b3b1-f7086d79fbca"
+          onClickImage={[Function]}
+        >
+          <Media
+            alt="undefined - undefined"
+            className="thumbnail grow"
+            object={true}
+            onClick={[Function]}
+            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg"
+          >
+            <img
+              alt="undefined - undefined"
+              className="thumbnail grow media-object"
+              onClick={[Function]}
+              src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg"
+            />
+          </Media>
+        </Memo(Thumbnail)>
+        <Memo(Thumbnail)
+          image={
+            Object {
+              "_uiId": "eb074110-f5f3-11e9-b3b1-f7086d79fbca",
+              "name": "DSC_0016.JPG",
+              "parentUiId": "equipment_01",
+              "sizeInByte": 325323,
+              "thumbnailUrl": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg",
+              "url": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358061DSC_0016.JPG.jpeg",
+            }
+          }
+          key="eb074110-f5f3-11e9-b3b1-f7086d79fbca"
+          onClickImage={[Function]}
+        >
+          <Media
+            alt="undefined - undefined"
+            className="thumbnail grow"
+            object={true}
+            onClick={[Function]}
+            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg"
+          >
+            <img
+              alt="undefined - undefined"
+              className="thumbnail grow media-object"
+              onClick={[Function]}
+              src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg"
+            />
+          </Media>
+        </Memo(Thumbnail)>
+        <Memo(Thumbnail)
+          image={
+            Object {
+              "_uiId": "0ff4fd50-f5f4-11e9-b3b1-f7086d79fbca",
+              "name": "DSC_0005.JPG",
+              "parentUiId": "equipment_01",
+              "sizeInByte": 239719,
+              "thumbnailUrl": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg",
+              "url": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420020DSC_0005.JPG.jpeg",
+            }
+          }
+          key="0ff4fd50-f5f4-11e9-b3b1-f7086d79fbca"
+          onClickImage={[Function]}
+        >
+          <Media
+            alt="undefined - undefined"
+            className="thumbnail grow"
+            object={true}
+            onClick={[Function]}
+            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
+          >
+            <img
+              alt="undefined - undefined"
+              className="thumbnail grow media-object"
+              onClick={[Function]}
+              src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
+            />
+          </Media>
+        </Memo(Thumbnail)>
+      </div>
+    </div>
+  </Memo(GalleryComponent)>
+  <ModalEditImage
+    onImageDeleted={[Function]}
+    onImageSaved={[Function]}
+    toggle={[Function]}
+    visible={false}
+  >
+    <CSSTransition
+      classNames="modal"
+      in={false}
+      timeout={300}
+    >
+      <Transition
+        appear={false}
+        enter={true}
+        exit={true}
+        in={false}
+        mountOnEnter={false}
+        onEnter={[Function]}
+        onEntered={[Function]}
+        onEntering={[Function]}
+        onExit={[Function]}
+        onExited={[Function]}
+        onExiting={[Function]}
+        timeout={300}
+        unmountOnExit={false}
+      >
+        <Modal
+          autoFocus={true}
+          backdrop={true}
+          backdropTransition={
+            Object {
+              "mountOnEnter": true,
+              "timeout": 150,
+            }
+          }
+          centered={false}
+          fade={false}
+          isOpen={false}
+          keyboard={true}
+          modalTransition={
+            Object {
+              "timeout": 300,
+            }
+          }
+          onClosed={[Function]}
+          onOpened={[Function]}
+          returnFocusAfterClose={true}
+          role="dialog"
+          scrollable={false}
+          toggle={[Function]}
+          unmountOnClose={true}
+          zIndex={1050}
+        />
+      </Transition>
+    </CSSTransition>
+    <ModalYesNoConfimation
+      className="modal-dialog-centered"
+      isActing={false}
+      message={
+        Object {
+          "defaultMessage": "Are you sure you want to delete this image?",
+          "description": "confirmation message",
+          "id": "imageDeleteMessage",
+        }
+      }
+      no={[Function]}
+      title={
+        Object {
+          "defaultMessage": "Delete image",
+          "description": "modal title",
+          "id": "imageDeleteTitle",
+        }
+      }
+      toggle={[Function]}
+      visible={false}
+      yes={[Function]}
+    >
+      <CSSTransition
+        classNames="modal"
+        in={false}
+        timeout={300}
+      >
+        <Transition
+          appear={false}
+          enter={true}
+          exit={true}
+          in={false}
+          mountOnEnter={false}
+          onEnter={[Function]}
+          onEntered={[Function]}
+          onEntering={[Function]}
+          onExit={[Function]}
+          onExited={[Function]}
+          onExiting={[Function]}
+          timeout={300}
+          unmountOnExit={false}
+        >
+          <Modal
+            autoFocus={true}
+            backdrop={true}
+            backdropTransition={
+              Object {
+                "mountOnEnter": true,
+                "timeout": 150,
+              }
+            }
+            centered={false}
+            className="modal-dialog-centered"
+            fade={false}
+            isOpen={false}
+            keyboard={true}
+            modalTransition={
+              Object {
+                "timeout": 300,
+              }
+            }
+            onClosed={[Function]}
+            onOpened={[Function]}
+            returnFocusAfterClose={true}
+            role="dialog"
+            scrollable={false}
+            toggle={[Function]}
+            unmountOnClose={true}
+            zIndex={1050}
+          />
+        </Transition>
+      </CSSTransition>
+    </ModalYesNoConfimation>
+  </ModalEditImage>
+</Memo(Gallery)>
+`;

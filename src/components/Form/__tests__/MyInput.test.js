@@ -4,8 +4,6 @@ import { mount } from 'enzyme';
 
 import MyInput from '../MyInput'
 
-ignoredMessages.push("[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.");
-
 const defaultMessage = {
     id: "defaultId",
     defaultMessage: "Default message",
@@ -13,6 +11,11 @@ const defaultMessage = {
 };
 
 describe("MyInput", () => {
+    beforeAll(() => {
+        ignoredMessages.length = 0;
+        ignoredMessages.push("[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.");
+    });
+
     it("of type text should render as expected", () => {
         // Arrange
 

@@ -4,9 +4,14 @@ import {  mount } from 'enzyme';
 
 import ActionButton from '../ActionButton'
 
-ignoredMessages.push("[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.");
+
 
 describe('Component ActionButton', () =>{
+    beforeAll(() => {
+        ignoredMessages.length = 0;
+        ignoredMessages.push("[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.");
+    });
+
     it('should render as a simple button', () => {
         const message = { id:"message", defaultMessage: "defaultMessage", description: "description"};
         const wrapper = mount(<ActionButton message={message}/>);

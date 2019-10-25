@@ -1,3 +1,5 @@
+import ignoredMessages from '../../../testHelpers/MockConsole';
+
 import React from 'react';
 import { mount } from 'enzyme';
 
@@ -6,26 +8,13 @@ import NbActionPending from '../NbActionPending'
 
 jest.mock('../../../services/ActionManager');
 
-const mockConsoleMethod = (realConsoleMethod) => {
-    const ignoredMessages = [
-        "test was not wrapped in act(...)",
-        "[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback."
-    ];
-
-    return (message, ...args) => {
-        const containsIgnoredMessage = ignoredMessages.some((ignoredMessage) => message.includes(ignoredMessage));
-
-        if (!containsIgnoredMessage) {
-        realConsoleMethod(message, ...args);
-        }
-    };
-};
-  
-// Suppress console errors and warnings to avoid polluting output in tests.
-console.warn = jest.fn(mockConsoleMethod(console.warn));
-console.error = jest.fn(mockConsoleMethod(console.error));
-
 describe('Component NbActionPending', () =>{
+    beforeAll(() => {
+        ignoredMessages.length = 0;
+        ignoredMessages.push("test was not wrapped in act(...)");
+        ignoredMessages.push("[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.");
+    });
+
     it('should render a specific message when there is no action to sync', () => {
         // Arrange
         const resp = 0;

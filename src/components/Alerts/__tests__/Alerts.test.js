@@ -4,9 +4,12 @@ import { shallow, mount } from 'enzyme';
 
 import Alerts from '../Alerts'
 
-ignoredMessages.push("[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.");
-
 describe('Component Alert', () =>{
+    beforeAll(() => {
+        ignoredMessages.length = 0;
+        ignoredMessages.push("[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.");
+    });
+
     it('should render even without props', () => {
         const wrapper = shallow(<Alerts />);
 
