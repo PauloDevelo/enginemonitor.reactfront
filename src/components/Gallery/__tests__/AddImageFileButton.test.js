@@ -14,12 +14,4 @@ describe('Component Thumbnail', () =>{
         // Assert
         expect(buttonAddImage).toMatchSnapshot();
     });
-
-    it('should render an button', () => {
-        // Arrange
-
-        // Act
-
-        // Assert
-    });
 });

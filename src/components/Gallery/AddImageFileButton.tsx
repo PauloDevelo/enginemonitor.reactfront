@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import {Button} from 'reactstrap';
 
 import { faImage, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -49,12 +49,12 @@ function AddImageFileButton({parentUiId, addImage, className}: Props){
         }
     }, [uploadImageFile]);
 
-    const fileSelector = createFileSelector(onChange);
+    const fileSelector = useRef(createFileSelector(onChange));
 
-    const handleFileSelect = (e: React.MouseEvent):void => {
+    const handleFileSelect = useCallback((e: React.MouseEvent):void => {
         e.preventDefault();
-        fileSelector.click();
-    }
+        fileSelector.current.click();
+    }, []);
 
     return (
     <Button color="light" size="lg" className={className} onClick={handleFileSelect} aria-label="Edit">
