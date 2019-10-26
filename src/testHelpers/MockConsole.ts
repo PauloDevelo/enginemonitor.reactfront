@@ -13,7 +13,8 @@ const mockConsoleMethod = (realConsoleMethod: (message?: any, ...args: any[])=> 
   
 // Suppress console errors and warnings to avoid polluting output in tests.
 console.warn = jest.fn(mockConsoleMethod(console.warn));
-console.log = jest.fn(mockConsoleMethod(console.warn));
+console.log = jest.fn(mockConsoleMethod(console.log));
+console.info = jest.fn(mockConsoleMethod(console.info));
 console.error = jest.fn(mockConsoleMethod(console.error));
 
 export default ignoredMessages;

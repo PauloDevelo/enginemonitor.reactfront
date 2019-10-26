@@ -43,6 +43,9 @@ describe('Component Gallery', () =>{
         ignoredMessages.push("test was not wrapped in act(...)");
         ignoredMessages.push("Please update the following components: ReactImageLightbox");
         ignoredMessages.push("[React Intl] Could not find required `intl` object.");
+        ignoredMessages.push("Warning: unstable_flushDiscreteUpdates: Cannot flush updates when React is already rendering.");
+        ignoredMessages.push("cssClass");
+        ignoredMessages.push('react-html5-camera-photo info');
     });
 
     beforeEach(() => {
@@ -164,6 +167,23 @@ describe('Component Gallery', () =>{
         expect(imageProxy.fetchImages).toHaveBeenCalledTimes(1);
         expect(gallery.find('Memo(GalleryComponent)').find('Memo(Thumbnail)').length).toBe(4);
         expect(gallery.find('ModalEditImage').props().visible).toBe(true);
+        expect(gallery).toMatchSnapshot();
+    });
+
+    it('should render the Html5Camera when clicking on the camera button in the GalleryComponent', async() => {
+        // Arrange
+        const gallery = mount(<Gallery parentUiId={parentUiId} />);
+        await updateWrapper(gallery);
+
+        const galleryComponent = gallery.find('Memo(GalleryComponent)');
+        const cameraButton = galleryComponent.find('Button');
+
+        // Act
+        cameraButton.at(1).simulate('click');
+        await updateWrapper(gallery);
+
+        // Assert
+        expect(gallery.find('Memo(Html5Camera)').length).toBe(1);
         expect(gallery).toMatchSnapshot();
     });
 });
