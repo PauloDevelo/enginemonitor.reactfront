@@ -1,4 +1,8 @@
 {
+  "about": {
+    "defaultMessage": "Made with love by Paul Torruella",
+    "id": "aboutMsg"
+  },
   "ok": {
     "defaultMessage": "OK",
     "id": "ok"

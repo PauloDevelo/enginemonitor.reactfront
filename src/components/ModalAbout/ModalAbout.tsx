@@ -28,7 +28,7 @@ const ModalAbout = ({ visible, className, toggle }: Props) => {
                             <Media heading>
                                 <FormattedMessage {...aboutMsg.title} />&nbsp;v{appVersion}
                             </Media>
-                            Made with love by Paul Torruella
+							<FormattedMessage {...aboutMsg.about} />
                         </Media>
 					</ModalHeader>
 					<ModalBody>
