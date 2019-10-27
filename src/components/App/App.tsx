@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useCallback } from 'react';
+import React, { Fragment, useEffect, useState, useCallback, useRef } from 'react';
 
 import { CSSTransition } from 'react-transition-group'
 
@@ -123,6 +123,16 @@ export default function App(){
 		setCurrentTaskIfRequired();
 	}, [setCurrentTaskIfRequired]);
 
+	const cardTaskDetailDomRef = useRef(null);
+	const cardTaskDetailDomCallBack = useCallback(node => cardTaskDetailDomRef.current = node, []);
+	const onClickTaskTable = useCallback((task: TaskModel) => {
+		setCurrentTask(task);
+
+		if(cardTaskDetailDomRef.current != null){
+            window.scrollTo((cardTaskDetailDomRef!.current! as any).offsetLeft, (cardTaskDetailDomRef!.current! as any).offsetTop);
+        }
+	}, [])
+
 	const onTaskDeleted = useCallback((task: TaskModel)=>{
 		fetchTasks();
 		setEquipmentHistoryRefreshId(previousEquipmentHistoryRefreshId => previousEquipmentHistoryRefreshId + 1);
@@ -178,12 +188,13 @@ export default function App(){
 														currentEquipment={currentEquipment}
 														taskList= {taskList}
 														areTasksLoading={areTasksLoading}
-														changeCurrentTask={setCurrentTask}
+														changeCurrentTask={onClickTaskTable}
 														equipmentHistoryRefreshId={equipmentHistoryRefreshId}
 														onTaskChanged={onTaskChanged} />
 									</div>
 									<div className="wrapperColumn">
-										<CardTaskDetails 	equipment={currentEquipment}
+										<CardTaskDetails 	callBackRef={cardTaskDetailDomCallBack}
+															equipment={currentEquipment}
 															tasks={taskList}
 															currentTask={currentTask}
 															onTaskChanged={onTaskChanged}

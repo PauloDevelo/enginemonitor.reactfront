@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import { Button, Card, CardBody, CardTitle, CardSubtitle, CardFooter, CardText, Badge } from 'reactstrap';
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,6 +16,7 @@ import '../../style/transition.css';
 import { EquipmentModel, TaskModel } from '../../types/Types';
 
 type Props = {
+    callBackRef: (t: any) => any,
     equipment?: EquipmentModel, 
     tasks: TaskModel[], 
     currentTask?: TaskModel, 
@@ -25,7 +26,7 @@ type Props = {
     classNames?: string
 }
 
-const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames}: Props) => {
+const CardTaskDetails = ({callBackRef, equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames}: Props) => {
     const modalHook = useEditModal(currentTask);
 
     const getTaskIndex = (task: TaskModel | undefined):number => {
@@ -33,7 +34,6 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
     }
 
     const taskIndex = getTaskIndex(currentTask);
-    
 
     if (equipment === undefined || currentTask === undefined){
         return <Card className={classNames}/>;
@@ -66,8 +66,8 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
         nextClassNames += ' invisible';
 
     return(
-        <Fragment>
-            <Card className={classNames}>        
+        <div ref={callBackRef} >
+            <Card className={classNames} >        
                 <CardBody className="d-flex p-0">
                         <div className="p-2 button-previous-task" onClick={previousTask} style={cursorPointerStyle}><div className={prevClassNames}></div></div>
                         <TransitionGroup className="p-2 flex-grow-1">
@@ -94,7 +94,7 @@ const CardTaskDetails = ({equipment, tasks, currentTask, onTaskChanged, onTaskDe
                             visible={modalHook.editModalVisibility} 
                             toggle={modalHook.toggleModal} 
                             className='modal-dialog-centered'/>}
-        </Fragment>
+        </div>
     );
 }
 
