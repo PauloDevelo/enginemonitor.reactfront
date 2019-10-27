@@ -95,475 +95,479 @@ exports[`CardTaskDetails Should render correctly even if the task array is empty
 `;
 
 exports[`CardTaskDetails should stay the same with task1 1`] = `
-<div
-  className="card"
->
+<div>
   <div
-    className="d-flex p-0 card-body"
+    className="card"
   >
     <div
-      className="p-2 button-previous-task"
-      onClick={[Function]}
-      style={
-        Object {
-          "cursor": "pointer",
-        }
-      }
+      className="d-flex p-0 card-body"
     >
       <div
-        className="card-control-prev-icon invisible"
-      />
-    </div>
-    <div
-      className="p-2 flex-grow-1"
-    >
-      <div>
-        <div
-          className="card-title"
-        >
-          taskname1
-           
-          <span
-            className="badge badge-success badge-pill"
-          >
-            Done
-          </span>
-        </div>
-        <div
-          className="card-subtitle"
-        >
-          <span>
-            To do every 
-            <b>
-              200
-               h
-               
-            </b>
-             or every 
-            <b>
-              12 months
-            </b>
-          </span>
-        </div>
-        <p
-          className="card-text"
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "task1 description",
-            }
+        className="p-2 button-previous-task"
+        onClick={[Function]}
+        style={
+          Object {
+            "cursor": "pointer",
           }
+        }
+      >
+        <div
+          className="card-control-prev-icon invisible"
         />
+      </div>
+      <div
+        className="p-2 flex-grow-1"
+      >
         <div>
-          <label
-            className="font-weight-bold"
-          >
-            Gallery image
-          </label>
           <div
-            className="p-1 border border-secondary rounded shadow gallery"
+            className="card-title"
           >
-            <button
-              aria-label="Edit"
-              className="float-right btn btn-light btn-lg"
-              onClick={[Function]}
-              type="button"
+            taskname1
+             
+            <span
+              className="badge badge-success badge-pill"
             >
-              <span
-                className="fa-layers fa-fw"
+              Done
+            </span>
+          </div>
+          <div
+            className="card-subtitle"
+          >
+            <span>
+              To do every 
+              <b>
+                200
+                 h
+                 
+              </b>
+               or every 
+              <b>
+                12 months
+              </b>
+            </span>
+          </div>
+          <p
+            className="card-text"
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "task1 description",
+              }
+            }
+          />
+          <div>
+            <label
+              className="font-weight-bold"
+            >
+              Gallery image
+            </label>
+            <div
+              className="p-1 border border-secondary rounded shadow gallery"
+            >
+              <button
+                aria-label="Edit"
+                className="float-right btn btn-light btn-lg"
+                onClick={[Function]}
+                type="button"
               >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-image fa-w-16 fa-lg "
-                  data-icon="image"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 512 512"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  className="fa-layers fa-fw"
                 >
-                  <path
-                    d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
-                    fill="currentColor"
+                  <svg
+                    aria-hidden="true"
+                    className="svg-inline--fa fa-image fa-w-16 fa-lg "
+                    data-icon="image"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
                     style={Object {}}
-                  />
-                </svg>
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-plus fa-w-14 fa-xs "
-                  data-icon="plus"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={
-                    Object {
-                      "transformOrigin": "-0.5625em 1.3125em",
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                      fill="currentColor"
+                      style={Object {}}
+                    />
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+                    data-icon="plus"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    style={
+                      Object {
+                        "transformOrigin": "-0.5625em 1.3125em",
+                      }
                     }
-                  }
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g
-                    style={Object {}}
-                    transform="translate(224 256)"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
                     <g
                       style={Object {}}
-                      transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                      transform="translate(224 256)"
                     >
-                      <path
-                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                        fill="currentColor"
+                      <g
                         style={Object {}}
-                        transform="translate(-224 -256)"
-                      />
+                        transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                      >
+                        <path
+                          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                          fill="currentColor"
+                          style={Object {}}
+                          transform="translate(-224 -256)"
+                        />
+                      </g>
                     </g>
-                  </g>
-                </svg>
-              </span>
-            </button>
-            <button
-              aria-label={null}
-              className="float-right btn btn-light btn-lg"
-              onClick={[Function]}
-              type="button"
-            >
-              <span
-                className="fa-layers fa-fw"
+                  </svg>
+                </span>
+              </button>
+              <button
+                aria-label={null}
+                className="float-right btn btn-light btn-lg"
+                onClick={[Function]}
+                type="button"
               >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-camera fa-w-16 fa-lg "
-                  data-icon="camera"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 512 512"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  className="fa-layers fa-fw"
                 >
-                  <path
-                    d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
-                    fill="currentColor"
+                  <svg
+                    aria-hidden="true"
+                    className="svg-inline--fa fa-camera fa-w-16 fa-lg "
+                    data-icon="camera"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
                     style={Object {}}
-                  />
-                </svg>
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-plus fa-w-14 fa-xs "
-                  data-icon="plus"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={
-                    Object {
-                      "transformOrigin": "-0.5625em 1.3125em",
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
+                      fill="currentColor"
+                      style={Object {}}
+                    />
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+                    data-icon="plus"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    style={
+                      Object {
+                        "transformOrigin": "-0.5625em 1.3125em",
+                      }
                     }
-                  }
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g
-                    style={Object {}}
-                    transform="translate(224 256)"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
                     <g
                       style={Object {}}
-                      transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                      transform="translate(224 256)"
                     >
-                      <path
-                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                        fill="currentColor"
+                      <g
                         style={Object {}}
-                        transform="translate(-224 -256)"
-                      />
+                        transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                      >
+                        <path
+                          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                          fill="currentColor"
+                          style={Object {}}
+                          transform="translate(-224 -256)"
+                        />
+                      </g>
                     </g>
-                  </g>
-                </svg>
-              </span>
-            </button>
+                  </svg>
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      <div
+        className="p-2 button-next-task"
+        onClick={[Function]}
+        style={
+          Object {
+            "cursor": "pointer",
+          }
+        }
+      >
+        <div
+          className="card-control-next-icon"
+        />
+      </div>
     </div>
     <div
-      className="p-2 button-next-task"
-      onClick={[Function]}
-      style={
-        Object {
-          "cursor": "pointer",
-        }
-      }
+      className="pl-5 pr-5 card-footer"
     >
-      <div
-        className="card-control-next-icon"
-      />
-    </div>
-  </div>
-  <div
-    className="pl-5 pr-5 card-footer"
-  >
-    <button
-      aria-label="Edit"
-      className="float-left btn btn-light"
-      onClick={[Function]}
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        className="svg-inline--fa fa-edit fa-w-18 "
-        data-icon="edit"
-        data-prefix="fas"
-        focusable="false"
-        role="img"
-        style={Object {}}
-        viewBox="0 0 576 512"
-        xmlns="http://www.w3.org/2000/svg"
+      <button
+        aria-label="Edit"
+        className="float-left btn btn-light"
+        onClick={[Function]}
+        type="button"
       >
-        <path
-          d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-          fill="currentColor"
+        <svg
+          aria-hidden="true"
+          className="svg-inline--fa fa-edit fa-w-18 "
+          data-icon="edit"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
           style={Object {}}
-        />
-      </svg>
-    </button>
+          viewBox="0 0 576 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+            fill="currentColor"
+            style={Object {}}
+          />
+        </svg>
+      </button>
+    </div>
   </div>
 </div>
 `;
 
 exports[`CardTaskDetails should stay the same with task2 1`] = `
-<div
-  className="card"
->
+<div>
   <div
-    className="d-flex p-0 card-body"
+    className="card"
   >
     <div
-      className="p-2 button-previous-task"
-      onClick={[Function]}
-      style={
-        Object {
-          "cursor": "pointer",
-        }
-      }
+      className="d-flex p-0 card-body"
     >
       <div
-        className="card-control-prev-icon"
-      />
-    </div>
-    <div
-      className="p-2 flex-grow-1"
-    >
-      <div>
-        <div
-          className="card-title"
-        >
-          taskname2
-           
-          <span
-            className="badge badge-danger badge-pill"
-          >
-            ToDo
-          </span>
-        </div>
-        <div
-          className="card-subtitle"
-        >
-          <span>
-            To do every 
-            <b>
-              400
-               h
-               
-            </b>
-             or every 
-            <b>
-              24 months
-            </b>
-          </span>
-        </div>
-        <p
-          className="card-text"
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "task2 description",
-            }
+        className="p-2 button-previous-task"
+        onClick={[Function]}
+        style={
+          Object {
+            "cursor": "pointer",
           }
+        }
+      >
+        <div
+          className="card-control-prev-icon"
         />
+      </div>
+      <div
+        className="p-2 flex-grow-1"
+      >
         <div>
-          <label
-            className="font-weight-bold"
-          >
-            Gallery image
-          </label>
           <div
-            className="p-1 border border-secondary rounded shadow gallery"
+            className="card-title"
           >
-            <button
-              aria-label="Edit"
-              className="float-right btn btn-light btn-lg"
-              onClick={[Function]}
-              type="button"
+            taskname2
+             
+            <span
+              className="badge badge-danger badge-pill"
             >
-              <span
-                className="fa-layers fa-fw"
+              ToDo
+            </span>
+          </div>
+          <div
+            className="card-subtitle"
+          >
+            <span>
+              To do every 
+              <b>
+                400
+                 h
+                 
+              </b>
+               or every 
+              <b>
+                24 months
+              </b>
+            </span>
+          </div>
+          <p
+            className="card-text"
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "task2 description",
+              }
+            }
+          />
+          <div>
+            <label
+              className="font-weight-bold"
+            >
+              Gallery image
+            </label>
+            <div
+              className="p-1 border border-secondary rounded shadow gallery"
+            >
+              <button
+                aria-label="Edit"
+                className="float-right btn btn-light btn-lg"
+                onClick={[Function]}
+                type="button"
               >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-image fa-w-16 fa-lg "
-                  data-icon="image"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 512 512"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  className="fa-layers fa-fw"
                 >
-                  <path
-                    d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
-                    fill="currentColor"
+                  <svg
+                    aria-hidden="true"
+                    className="svg-inline--fa fa-image fa-w-16 fa-lg "
+                    data-icon="image"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
                     style={Object {}}
-                  />
-                </svg>
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-plus fa-w-14 fa-xs "
-                  data-icon="plus"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={
-                    Object {
-                      "transformOrigin": "-0.5625em 1.3125em",
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                      fill="currentColor"
+                      style={Object {}}
+                    />
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+                    data-icon="plus"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    style={
+                      Object {
+                        "transformOrigin": "-0.5625em 1.3125em",
+                      }
                     }
-                  }
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g
-                    style={Object {}}
-                    transform="translate(224 256)"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
                     <g
                       style={Object {}}
-                      transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                      transform="translate(224 256)"
                     >
-                      <path
-                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                        fill="currentColor"
+                      <g
                         style={Object {}}
-                        transform="translate(-224 -256)"
-                      />
+                        transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                      >
+                        <path
+                          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                          fill="currentColor"
+                          style={Object {}}
+                          transform="translate(-224 -256)"
+                        />
+                      </g>
                     </g>
-                  </g>
-                </svg>
-              </span>
-            </button>
-            <button
-              aria-label={null}
-              className="float-right btn btn-light btn-lg"
-              onClick={[Function]}
-              type="button"
-            >
-              <span
-                className="fa-layers fa-fw"
+                  </svg>
+                </span>
+              </button>
+              <button
+                aria-label={null}
+                className="float-right btn btn-light btn-lg"
+                onClick={[Function]}
+                type="button"
               >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-camera fa-w-16 fa-lg "
-                  data-icon="camera"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 512 512"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  className="fa-layers fa-fw"
                 >
-                  <path
-                    d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
-                    fill="currentColor"
+                  <svg
+                    aria-hidden="true"
+                    className="svg-inline--fa fa-camera fa-w-16 fa-lg "
+                    data-icon="camera"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
                     style={Object {}}
-                  />
-                </svg>
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-plus fa-w-14 fa-xs "
-                  data-icon="plus"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={
-                    Object {
-                      "transformOrigin": "-0.5625em 1.3125em",
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
+                      fill="currentColor"
+                      style={Object {}}
+                    />
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+                    data-icon="plus"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    style={
+                      Object {
+                        "transformOrigin": "-0.5625em 1.3125em",
+                      }
                     }
-                  }
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g
-                    style={Object {}}
-                    transform="translate(224 256)"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
                     <g
                       style={Object {}}
-                      transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                      transform="translate(224 256)"
                     >
-                      <path
-                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                        fill="currentColor"
+                      <g
                         style={Object {}}
-                        transform="translate(-224 -256)"
-                      />
+                        transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                      >
+                        <path
+                          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                          fill="currentColor"
+                          style={Object {}}
+                          transform="translate(-224 -256)"
+                        />
+                      </g>
                     </g>
-                  </g>
-                </svg>
-              </span>
-            </button>
+                  </svg>
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      <div
+        className="p-2 button-next-task"
+        onClick={[Function]}
+        style={
+          Object {
+            "cursor": "pointer",
+          }
+        }
+      >
+        <div
+          className="card-control-next-icon invisible"
+        />
+      </div>
     </div>
     <div
-      className="p-2 button-next-task"
-      onClick={[Function]}
-      style={
-        Object {
-          "cursor": "pointer",
-        }
-      }
+      className="pl-5 pr-5 card-footer"
     >
-      <div
-        className="card-control-next-icon invisible"
-      />
-    </div>
-  </div>
-  <div
-    className="pl-5 pr-5 card-footer"
-  >
-    <button
-      aria-label="Edit"
-      className="float-left btn btn-light"
-      onClick={[Function]}
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        className="svg-inline--fa fa-edit fa-w-18 "
-        data-icon="edit"
-        data-prefix="fas"
-        focusable="false"
-        role="img"
-        style={Object {}}
-        viewBox="0 0 576 512"
-        xmlns="http://www.w3.org/2000/svg"
+      <button
+        aria-label="Edit"
+        className="float-left btn btn-light"
+        onClick={[Function]}
+        type="button"
       >
-        <path
-          d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-          fill="currentColor"
+        <svg
+          aria-hidden="true"
+          className="svg-inline--fa fa-edit fa-w-18 "
+          data-icon="edit"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
           style={Object {}}
-        />
-      </svg>
-    </button>
+          viewBox="0 0 576 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+            fill="currentColor"
+            style={Object {}}
+          />
+        </svg>
+      </button>
+    </div>
   </div>
 </div>
 `;
