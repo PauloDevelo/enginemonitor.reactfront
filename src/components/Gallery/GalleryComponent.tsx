@@ -1,5 +1,6 @@
 import React from 'react';
 import { Label, Button } from 'reactstrap';
+import { FormattedMessage } from 'react-intl';
 
 import Thumbnail from './Thumbnail';
 
@@ -10,6 +11,10 @@ import { faCamera, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import "./Gallery.css";
+
+import {defineMessages} from "react-intl";
+import jsonMessages from "./Gallery.messages.json";
+const galleryMsg = defineMessages(jsonMessages);
 
 type Props = {
     parentUiId: string,
@@ -26,15 +31,22 @@ function GalleryComponent({ parentUiId, images, onClickThumbnail, addImage, turn
 
 	return(
         <div>
-            <Label className="font-weight-bold">Gallery image</Label>
+            <div className="gallery-component-header">
+                <Label className="font-weight-bold"><FormattedMessage {...galleryMsg.gallerytitle}/></Label>
+                <div>
+                    <AddImageFileButton parentUiId={parentUiId} addImage={addImage} className="float-right"/>
+                    <Button color="light" onClick={turnOnCamera} className="float-right">
+                        <span className="fa-layers fa-fw">
+                            <FontAwesomeIcon icon={faCamera} size="lg"/>
+                            <FontAwesomeIcon icon={faPlus} size="xs" transform="down-13 left-16"/>
+                        </span>
+                    </Button>
+                </div>
+            </div>
+            
+            
             <div className="p-1 border border-secondary rounded shadow gallery">
-                <AddImageFileButton parentUiId={parentUiId} addImage={addImage} className="float-right"/>
-                <Button color="light" size="lg" onClick={turnOnCamera} className="float-right">
-                    <span className="fa-layers fa-fw">
-                        <FontAwesomeIcon icon={faCamera} size="lg"/>
-                        <FontAwesomeIcon icon={faPlus} size="xs" transform="down-13 left-16"/>
-                    </span>
-                </Button>
+                
                 {thumbnails}
             </div>
         </div>
