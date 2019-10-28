@@ -9,12 +9,11 @@ exports[`Component Thumbnail should render an button 1`] = `
     aria-label="Edit"
     color="light"
     onClick={[Function]}
-    size="lg"
     tag="button"
   >
     <button
       aria-label="Edit"
-      className="btn btn-light btn-lg"
+      className="btn btn-light"
       onClick={[Function]}
       type="button"
     >

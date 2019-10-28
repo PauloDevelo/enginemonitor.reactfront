@@ -12,44 +12,183 @@ exports[`Component Gallery should render 0 thumbnails since this test delete all
     turnOnCamera={[Function]}
   >
     <div>
-      <Label
-        className="font-weight-bold"
-        tag="label"
-        widths={
-          Array [
-            "xs",
-            "sm",
-            "md",
-            "lg",
-            "xl",
-          ]
-        }
-      >
-        <label
-          className="font-weight-bold"
-        >
-          Gallery image
-        </label>
-      </Label>
       <div
-        className="p-1 border border-secondary rounded shadow gallery"
+        className="gallery-component-header"
       >
-        <Memo(AddImageFileButton)
-          addImage={[Function]}
-          className="float-right"
-          parentUiId="equipment_01"
+        <Label
+          className="font-weight-bold"
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
         >
+          <label
+            className="font-weight-bold"
+          >
+            <FormattedMessage
+              defaultMessage="Gallery"
+              description="Gallery title"
+              id="gallerytitle"
+              values={Object {}}
+            >
+              Gallery
+            </FormattedMessage>
+          </label>
+        </Label>
+        <div>
+          <Memo(AddImageFileButton)
+            addImage={[Function]}
+            className="float-right"
+            parentUiId="equipment_01"
+          >
+            <Button
+              aria-label="Edit"
+              className="float-right"
+              color="light"
+              onClick={[Function]}
+              tag="button"
+            >
+              <button
+                aria-label="Edit"
+                className="float-right btn btn-light"
+                onClick={[Function]}
+                type="button"
+              >
+                <span
+                  className="fa-layers fa-fw"
+                >
+                  <FontAwesomeIcon
+                    border={false}
+                    className=""
+                    fixedWidth={false}
+                    flip={null}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          512,
+                          512,
+                          Array [],
+                          "f03e",
+                          "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                        ],
+                        "iconName": "image",
+                        "prefix": "fas",
+                      }
+                    }
+                    inverse={false}
+                    listItem={false}
+                    mask={null}
+                    pull={null}
+                    pulse={false}
+                    rotation={null}
+                    size="lg"
+                    spin={false}
+                    swapOpacity={false}
+                    symbol={false}
+                    title=""
+                    transform={null}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-image fa-w-16 fa-lg "
+                      data-icon="image"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={Object {}}
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                        fill="currentColor"
+                        style={Object {}}
+                      />
+                    </svg>
+                  </FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    border={false}
+                    className=""
+                    fixedWidth={false}
+                    flip={null}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          448,
+                          512,
+                          Array [],
+                          "f067",
+                          "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
+                        ],
+                        "iconName": "plus",
+                        "prefix": "fas",
+                      }
+                    }
+                    inverse={false}
+                    listItem={false}
+                    mask={null}
+                    pull={null}
+                    pulse={false}
+                    rotation={null}
+                    size="xs"
+                    spin={false}
+                    swapOpacity={false}
+                    symbol={false}
+                    title=""
+                    transform="down-13 left-16"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+                      data-icon="plus"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={
+                        Object {
+                          "transformOrigin": "-0.5625em 1.3125em",
+                        }
+                      }
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        style={Object {}}
+                        transform="translate(224 256)"
+                      >
+                        <g
+                          style={Object {}}
+                          transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                        >
+                          <path
+                            d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                            fill="currentColor"
+                            style={Object {}}
+                            transform="translate(-224 -256)"
+                          />
+                        </g>
+                      </g>
+                    </svg>
+                  </FontAwesomeIcon>
+                </span>
+              </button>
+            </Button>
+          </Memo(AddImageFileButton)>
           <Button
-            aria-label="Edit"
             className="float-right"
             color="light"
             onClick={[Function]}
-            size="lg"
             tag="button"
           >
             <button
-              aria-label="Edit"
-              className="float-right btn btn-light btn-lg"
+              aria-label={null}
+              className="float-right btn btn-light"
               onClick={[Function]}
               type="button"
             >
@@ -67,10 +206,10 @@ exports[`Component Gallery should render 0 thumbnails since this test delete all
                         512,
                         512,
                         Array [],
-                        "f03e",
-                        "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                        "f030",
+                        "M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z",
                       ],
-                      "iconName": "image",
+                      "iconName": "camera",
                       "prefix": "fas",
                     }
                   }
@@ -89,8 +228,8 @@ exports[`Component Gallery should render 0 thumbnails since this test delete all
                 >
                   <svg
                     aria-hidden="true"
-                    className="svg-inline--fa fa-image fa-w-16 fa-lg "
-                    data-icon="image"
+                    className="svg-inline--fa fa-camera fa-w-16 fa-lg "
+                    data-icon="camera"
                     data-prefix="fas"
                     focusable="false"
                     role="img"
@@ -99,7 +238,7 @@ exports[`Component Gallery should render 0 thumbnails since this test delete all
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                      d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
                       fill="currentColor"
                       style={Object {}}
                     />
@@ -172,140 +311,11 @@ exports[`Component Gallery should render 0 thumbnails since this test delete all
               </span>
             </button>
           </Button>
-        </Memo(AddImageFileButton)>
-        <Button
-          className="float-right"
-          color="light"
-          onClick={[Function]}
-          size="lg"
-          tag="button"
-        >
-          <button
-            aria-label={null}
-            className="float-right btn btn-light btn-lg"
-            onClick={[Function]}
-            type="button"
-          >
-            <span
-              className="fa-layers fa-fw"
-            >
-              <FontAwesomeIcon
-                border={false}
-                className=""
-                fixedWidth={false}
-                flip={null}
-                icon={
-                  Object {
-                    "icon": Array [
-                      512,
-                      512,
-                      Array [],
-                      "f030",
-                      "M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z",
-                    ],
-                    "iconName": "camera",
-                    "prefix": "fas",
-                  }
-                }
-                inverse={false}
-                listItem={false}
-                mask={null}
-                pull={null}
-                pulse={false}
-                rotation={null}
-                size="lg"
-                spin={false}
-                swapOpacity={false}
-                symbol={false}
-                title=""
-                transform={null}
-              >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-camera fa-w-16 fa-lg "
-                  data-icon="camera"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 512 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
-                    fill="currentColor"
-                    style={Object {}}
-                  />
-                </svg>
-              </FontAwesomeIcon>
-              <FontAwesomeIcon
-                border={false}
-                className=""
-                fixedWidth={false}
-                flip={null}
-                icon={
-                  Object {
-                    "icon": Array [
-                      448,
-                      512,
-                      Array [],
-                      "f067",
-                      "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
-                    ],
-                    "iconName": "plus",
-                    "prefix": "fas",
-                  }
-                }
-                inverse={false}
-                listItem={false}
-                mask={null}
-                pull={null}
-                pulse={false}
-                rotation={null}
-                size="xs"
-                spin={false}
-                swapOpacity={false}
-                symbol={false}
-                title=""
-                transform="down-13 left-16"
-              >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-plus fa-w-14 fa-xs "
-                  data-icon="plus"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={
-                    Object {
-                      "transformOrigin": "-0.5625em 1.3125em",
-                    }
-                  }
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g
-                    style={Object {}}
-                    transform="translate(224 256)"
-                  >
-                    <g
-                      style={Object {}}
-                      transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
-                    >
-                      <path
-                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                        fill="currentColor"
-                        style={Object {}}
-                        transform="translate(-224 -256)"
-                      />
-                    </g>
-                  </g>
-                </svg>
-              </FontAwesomeIcon>
-            </span>
-          </button>
-        </Button>
+        </div>
       </div>
+      <div
+        className="p-1 border border-secondary rounded shadow gallery"
+      />
     </div>
   </Memo(GalleryComponent)>
   <ModalEditImage
@@ -487,44 +497,183 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
     turnOnCamera={[Function]}
   >
     <div>
-      <Label
-        className="font-weight-bold"
-        tag="label"
-        widths={
-          Array [
-            "xs",
-            "sm",
-            "md",
-            "lg",
-            "xl",
-          ]
-        }
-      >
-        <label
-          className="font-weight-bold"
-        >
-          Gallery image
-        </label>
-      </Label>
       <div
-        className="p-1 border border-secondary rounded shadow gallery"
+        className="gallery-component-header"
       >
-        <Memo(AddImageFileButton)
-          addImage={[Function]}
-          className="float-right"
-          parentUiId="equipment_01"
+        <Label
+          className="font-weight-bold"
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
         >
+          <label
+            className="font-weight-bold"
+          >
+            <FormattedMessage
+              defaultMessage="Gallery"
+              description="Gallery title"
+              id="gallerytitle"
+              values={Object {}}
+            >
+              Gallery
+            </FormattedMessage>
+          </label>
+        </Label>
+        <div>
+          <Memo(AddImageFileButton)
+            addImage={[Function]}
+            className="float-right"
+            parentUiId="equipment_01"
+          >
+            <Button
+              aria-label="Edit"
+              className="float-right"
+              color="light"
+              onClick={[Function]}
+              tag="button"
+            >
+              <button
+                aria-label="Edit"
+                className="float-right btn btn-light"
+                onClick={[Function]}
+                type="button"
+              >
+                <span
+                  className="fa-layers fa-fw"
+                >
+                  <FontAwesomeIcon
+                    border={false}
+                    className=""
+                    fixedWidth={false}
+                    flip={null}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          512,
+                          512,
+                          Array [],
+                          "f03e",
+                          "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                        ],
+                        "iconName": "image",
+                        "prefix": "fas",
+                      }
+                    }
+                    inverse={false}
+                    listItem={false}
+                    mask={null}
+                    pull={null}
+                    pulse={false}
+                    rotation={null}
+                    size="lg"
+                    spin={false}
+                    swapOpacity={false}
+                    symbol={false}
+                    title=""
+                    transform={null}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-image fa-w-16 fa-lg "
+                      data-icon="image"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={Object {}}
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                        fill="currentColor"
+                        style={Object {}}
+                      />
+                    </svg>
+                  </FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    border={false}
+                    className=""
+                    fixedWidth={false}
+                    flip={null}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          448,
+                          512,
+                          Array [],
+                          "f067",
+                          "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
+                        ],
+                        "iconName": "plus",
+                        "prefix": "fas",
+                      }
+                    }
+                    inverse={false}
+                    listItem={false}
+                    mask={null}
+                    pull={null}
+                    pulse={false}
+                    rotation={null}
+                    size="xs"
+                    spin={false}
+                    swapOpacity={false}
+                    symbol={false}
+                    title=""
+                    transform="down-13 left-16"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+                      data-icon="plus"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={
+                        Object {
+                          "transformOrigin": "-0.5625em 1.3125em",
+                        }
+                      }
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        style={Object {}}
+                        transform="translate(224 256)"
+                      >
+                        <g
+                          style={Object {}}
+                          transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                        >
+                          <path
+                            d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                            fill="currentColor"
+                            style={Object {}}
+                            transform="translate(-224 -256)"
+                          />
+                        </g>
+                      </g>
+                    </svg>
+                  </FontAwesomeIcon>
+                </span>
+              </button>
+            </Button>
+          </Memo(AddImageFileButton)>
           <Button
-            aria-label="Edit"
             className="float-right"
             color="light"
             onClick={[Function]}
-            size="lg"
             tag="button"
           >
             <button
-              aria-label="Edit"
-              className="float-right btn btn-light btn-lg"
+              aria-label={null}
+              className="float-right btn btn-light"
               onClick={[Function]}
               type="button"
             >
@@ -542,10 +691,10 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                         512,
                         512,
                         Array [],
-                        "f03e",
-                        "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                        "f030",
+                        "M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z",
                       ],
-                      "iconName": "image",
+                      "iconName": "camera",
                       "prefix": "fas",
                     }
                   }
@@ -564,8 +713,8 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                 >
                   <svg
                     aria-hidden="true"
-                    className="svg-inline--fa fa-image fa-w-16 fa-lg "
-                    data-icon="image"
+                    className="svg-inline--fa fa-camera fa-w-16 fa-lg "
+                    data-icon="camera"
                     data-prefix="fas"
                     focusable="false"
                     role="img"
@@ -574,7 +723,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                      d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
                       fill="currentColor"
                       style={Object {}}
                     />
@@ -647,139 +796,11 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
               </span>
             </button>
           </Button>
-        </Memo(AddImageFileButton)>
-        <Button
-          className="float-right"
-          color="light"
-          onClick={[Function]}
-          size="lg"
-          tag="button"
-        >
-          <button
-            aria-label={null}
-            className="float-right btn btn-light btn-lg"
-            onClick={[Function]}
-            type="button"
-          >
-            <span
-              className="fa-layers fa-fw"
-            >
-              <FontAwesomeIcon
-                border={false}
-                className=""
-                fixedWidth={false}
-                flip={null}
-                icon={
-                  Object {
-                    "icon": Array [
-                      512,
-                      512,
-                      Array [],
-                      "f030",
-                      "M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z",
-                    ],
-                    "iconName": "camera",
-                    "prefix": "fas",
-                  }
-                }
-                inverse={false}
-                listItem={false}
-                mask={null}
-                pull={null}
-                pulse={false}
-                rotation={null}
-                size="lg"
-                spin={false}
-                swapOpacity={false}
-                symbol={false}
-                title=""
-                transform={null}
-              >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-camera fa-w-16 fa-lg "
-                  data-icon="camera"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 512 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
-                    fill="currentColor"
-                    style={Object {}}
-                  />
-                </svg>
-              </FontAwesomeIcon>
-              <FontAwesomeIcon
-                border={false}
-                className=""
-                fixedWidth={false}
-                flip={null}
-                icon={
-                  Object {
-                    "icon": Array [
-                      448,
-                      512,
-                      Array [],
-                      "f067",
-                      "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
-                    ],
-                    "iconName": "plus",
-                    "prefix": "fas",
-                  }
-                }
-                inverse={false}
-                listItem={false}
-                mask={null}
-                pull={null}
-                pulse={false}
-                rotation={null}
-                size="xs"
-                spin={false}
-                swapOpacity={false}
-                symbol={false}
-                title=""
-                transform="down-13 left-16"
-              >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-plus fa-w-14 fa-xs "
-                  data-icon="plus"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={
-                    Object {
-                      "transformOrigin": "-0.5625em 1.3125em",
-                    }
-                  }
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g
-                    style={Object {}}
-                    transform="translate(224 256)"
-                  >
-                    <g
-                      style={Object {}}
-                      transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
-                    >
-                      <path
-                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                        fill="currentColor"
-                        style={Object {}}
-                        transform="translate(-224 -256)"
-                      />
-                    </g>
-                  </g>
-                </svg>
-              </FontAwesomeIcon>
-            </span>
-          </button>
-        </Button>
+        </div>
+      </div>
+      <div
+        className="p-1 border border-secondary rounded shadow gallery"
+      >
         <Memo(Thumbnail)
           image={
             Object {
@@ -1851,44 +1872,183 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
     turnOnCamera={[Function]}
   >
     <div>
-      <Label
-        className="font-weight-bold"
-        tag="label"
-        widths={
-          Array [
-            "xs",
-            "sm",
-            "md",
-            "lg",
-            "xl",
-          ]
-        }
-      >
-        <label
-          className="font-weight-bold"
-        >
-          Gallery image
-        </label>
-      </Label>
       <div
-        className="p-1 border border-secondary rounded shadow gallery"
+        className="gallery-component-header"
       >
-        <Memo(AddImageFileButton)
-          addImage={[Function]}
-          className="float-right"
-          parentUiId="equipment_01"
+        <Label
+          className="font-weight-bold"
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
         >
+          <label
+            className="font-weight-bold"
+          >
+            <FormattedMessage
+              defaultMessage="Gallery"
+              description="Gallery title"
+              id="gallerytitle"
+              values={Object {}}
+            >
+              Gallery
+            </FormattedMessage>
+          </label>
+        </Label>
+        <div>
+          <Memo(AddImageFileButton)
+            addImage={[Function]}
+            className="float-right"
+            parentUiId="equipment_01"
+          >
+            <Button
+              aria-label="Edit"
+              className="float-right"
+              color="light"
+              onClick={[Function]}
+              tag="button"
+            >
+              <button
+                aria-label="Edit"
+                className="float-right btn btn-light"
+                onClick={[Function]}
+                type="button"
+              >
+                <span
+                  className="fa-layers fa-fw"
+                >
+                  <FontAwesomeIcon
+                    border={false}
+                    className=""
+                    fixedWidth={false}
+                    flip={null}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          512,
+                          512,
+                          Array [],
+                          "f03e",
+                          "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                        ],
+                        "iconName": "image",
+                        "prefix": "fas",
+                      }
+                    }
+                    inverse={false}
+                    listItem={false}
+                    mask={null}
+                    pull={null}
+                    pulse={false}
+                    rotation={null}
+                    size="lg"
+                    spin={false}
+                    swapOpacity={false}
+                    symbol={false}
+                    title=""
+                    transform={null}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-image fa-w-16 fa-lg "
+                      data-icon="image"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={Object {}}
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                        fill="currentColor"
+                        style={Object {}}
+                      />
+                    </svg>
+                  </FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    border={false}
+                    className=""
+                    fixedWidth={false}
+                    flip={null}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          448,
+                          512,
+                          Array [],
+                          "f067",
+                          "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
+                        ],
+                        "iconName": "plus",
+                        "prefix": "fas",
+                      }
+                    }
+                    inverse={false}
+                    listItem={false}
+                    mask={null}
+                    pull={null}
+                    pulse={false}
+                    rotation={null}
+                    size="xs"
+                    spin={false}
+                    swapOpacity={false}
+                    symbol={false}
+                    title=""
+                    transform="down-13 left-16"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+                      data-icon="plus"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={
+                        Object {
+                          "transformOrigin": "-0.5625em 1.3125em",
+                        }
+                      }
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        style={Object {}}
+                        transform="translate(224 256)"
+                      >
+                        <g
+                          style={Object {}}
+                          transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                        >
+                          <path
+                            d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                            fill="currentColor"
+                            style={Object {}}
+                            transform="translate(-224 -256)"
+                          />
+                        </g>
+                      </g>
+                    </svg>
+                  </FontAwesomeIcon>
+                </span>
+              </button>
+            </Button>
+          </Memo(AddImageFileButton)>
           <Button
-            aria-label="Edit"
             className="float-right"
             color="light"
             onClick={[Function]}
-            size="lg"
             tag="button"
           >
             <button
-              aria-label="Edit"
-              className="float-right btn btn-light btn-lg"
+              aria-label={null}
+              className="float-right btn btn-light"
               onClick={[Function]}
               type="button"
             >
@@ -1906,10 +2066,10 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
                         512,
                         512,
                         Array [],
-                        "f03e",
-                        "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                        "f030",
+                        "M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z",
                       ],
-                      "iconName": "image",
+                      "iconName": "camera",
                       "prefix": "fas",
                     }
                   }
@@ -1928,8 +2088,8 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
                 >
                   <svg
                     aria-hidden="true"
-                    className="svg-inline--fa fa-image fa-w-16 fa-lg "
-                    data-icon="image"
+                    className="svg-inline--fa fa-camera fa-w-16 fa-lg "
+                    data-icon="camera"
                     data-prefix="fas"
                     focusable="false"
                     role="img"
@@ -1938,7 +2098,7 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                      d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
                       fill="currentColor"
                       style={Object {}}
                     />
@@ -2011,139 +2171,11 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
               </span>
             </button>
           </Button>
-        </Memo(AddImageFileButton)>
-        <Button
-          className="float-right"
-          color="light"
-          onClick={[Function]}
-          size="lg"
-          tag="button"
-        >
-          <button
-            aria-label={null}
-            className="float-right btn btn-light btn-lg"
-            onClick={[Function]}
-            type="button"
-          >
-            <span
-              className="fa-layers fa-fw"
-            >
-              <FontAwesomeIcon
-                border={false}
-                className=""
-                fixedWidth={false}
-                flip={null}
-                icon={
-                  Object {
-                    "icon": Array [
-                      512,
-                      512,
-                      Array [],
-                      "f030",
-                      "M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z",
-                    ],
-                    "iconName": "camera",
-                    "prefix": "fas",
-                  }
-                }
-                inverse={false}
-                listItem={false}
-                mask={null}
-                pull={null}
-                pulse={false}
-                rotation={null}
-                size="lg"
-                spin={false}
-                swapOpacity={false}
-                symbol={false}
-                title=""
-                transform={null}
-              >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-camera fa-w-16 fa-lg "
-                  data-icon="camera"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 512 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
-                    fill="currentColor"
-                    style={Object {}}
-                  />
-                </svg>
-              </FontAwesomeIcon>
-              <FontAwesomeIcon
-                border={false}
-                className=""
-                fixedWidth={false}
-                flip={null}
-                icon={
-                  Object {
-                    "icon": Array [
-                      448,
-                      512,
-                      Array [],
-                      "f067",
-                      "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
-                    ],
-                    "iconName": "plus",
-                    "prefix": "fas",
-                  }
-                }
-                inverse={false}
-                listItem={false}
-                mask={null}
-                pull={null}
-                pulse={false}
-                rotation={null}
-                size="xs"
-                spin={false}
-                swapOpacity={false}
-                symbol={false}
-                title=""
-                transform="down-13 left-16"
-              >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-plus fa-w-14 fa-xs "
-                  data-icon="plus"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={
-                    Object {
-                      "transformOrigin": "-0.5625em 1.3125em",
-                    }
-                  }
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g
-                    style={Object {}}
-                    transform="translate(224 256)"
-                  >
-                    <g
-                      style={Object {}}
-                      transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
-                    >
-                      <path
-                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                        fill="currentColor"
-                        style={Object {}}
-                        transform="translate(-224 -256)"
-                      />
-                    </g>
-                  </g>
-                </svg>
-              </FontAwesomeIcon>
-            </span>
-          </button>
-        </Button>
+        </div>
+      </div>
+      <div
+        className="p-1 border border-secondary rounded shadow gallery"
+      >
         <Memo(Thumbnail)
           image={
             Object {
@@ -3951,44 +3983,183 @@ exports[`Component Gallery should render a list of image using the thumbnail url
     turnOnCamera={[Function]}
   >
     <div>
-      <Label
-        className="font-weight-bold"
-        tag="label"
-        widths={
-          Array [
-            "xs",
-            "sm",
-            "md",
-            "lg",
-            "xl",
-          ]
-        }
-      >
-        <label
-          className="font-weight-bold"
-        >
-          Gallery image
-        </label>
-      </Label>
       <div
-        className="p-1 border border-secondary rounded shadow gallery"
+        className="gallery-component-header"
       >
-        <Memo(AddImageFileButton)
-          addImage={[Function]}
-          className="float-right"
-          parentUiId="equipment_01"
+        <Label
+          className="font-weight-bold"
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
         >
+          <label
+            className="font-weight-bold"
+          >
+            <FormattedMessage
+              defaultMessage="Gallery"
+              description="Gallery title"
+              id="gallerytitle"
+              values={Object {}}
+            >
+              Gallery
+            </FormattedMessage>
+          </label>
+        </Label>
+        <div>
+          <Memo(AddImageFileButton)
+            addImage={[Function]}
+            className="float-right"
+            parentUiId="equipment_01"
+          >
+            <Button
+              aria-label="Edit"
+              className="float-right"
+              color="light"
+              onClick={[Function]}
+              tag="button"
+            >
+              <button
+                aria-label="Edit"
+                className="float-right btn btn-light"
+                onClick={[Function]}
+                type="button"
+              >
+                <span
+                  className="fa-layers fa-fw"
+                >
+                  <FontAwesomeIcon
+                    border={false}
+                    className=""
+                    fixedWidth={false}
+                    flip={null}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          512,
+                          512,
+                          Array [],
+                          "f03e",
+                          "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                        ],
+                        "iconName": "image",
+                        "prefix": "fas",
+                      }
+                    }
+                    inverse={false}
+                    listItem={false}
+                    mask={null}
+                    pull={null}
+                    pulse={false}
+                    rotation={null}
+                    size="lg"
+                    spin={false}
+                    swapOpacity={false}
+                    symbol={false}
+                    title=""
+                    transform={null}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-image fa-w-16 fa-lg "
+                      data-icon="image"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={Object {}}
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                        fill="currentColor"
+                        style={Object {}}
+                      />
+                    </svg>
+                  </FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    border={false}
+                    className=""
+                    fixedWidth={false}
+                    flip={null}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          448,
+                          512,
+                          Array [],
+                          "f067",
+                          "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
+                        ],
+                        "iconName": "plus",
+                        "prefix": "fas",
+                      }
+                    }
+                    inverse={false}
+                    listItem={false}
+                    mask={null}
+                    pull={null}
+                    pulse={false}
+                    rotation={null}
+                    size="xs"
+                    spin={false}
+                    swapOpacity={false}
+                    symbol={false}
+                    title=""
+                    transform="down-13 left-16"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+                      data-icon="plus"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={
+                        Object {
+                          "transformOrigin": "-0.5625em 1.3125em",
+                        }
+                      }
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        style={Object {}}
+                        transform="translate(224 256)"
+                      >
+                        <g
+                          style={Object {}}
+                          transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                        >
+                          <path
+                            d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                            fill="currentColor"
+                            style={Object {}}
+                            transform="translate(-224 -256)"
+                          />
+                        </g>
+                      </g>
+                    </svg>
+                  </FontAwesomeIcon>
+                </span>
+              </button>
+            </Button>
+          </Memo(AddImageFileButton)>
           <Button
-            aria-label="Edit"
             className="float-right"
             color="light"
             onClick={[Function]}
-            size="lg"
             tag="button"
           >
             <button
-              aria-label="Edit"
-              className="float-right btn btn-light btn-lg"
+              aria-label={null}
+              className="float-right btn btn-light"
               onClick={[Function]}
               type="button"
             >
@@ -4006,10 +4177,10 @@ exports[`Component Gallery should render a list of image using the thumbnail url
                         512,
                         512,
                         Array [],
-                        "f03e",
-                        "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                        "f030",
+                        "M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z",
                       ],
-                      "iconName": "image",
+                      "iconName": "camera",
                       "prefix": "fas",
                     }
                   }
@@ -4028,8 +4199,8 @@ exports[`Component Gallery should render a list of image using the thumbnail url
                 >
                   <svg
                     aria-hidden="true"
-                    className="svg-inline--fa fa-image fa-w-16 fa-lg "
-                    data-icon="image"
+                    className="svg-inline--fa fa-camera fa-w-16 fa-lg "
+                    data-icon="camera"
                     data-prefix="fas"
                     focusable="false"
                     role="img"
@@ -4038,7 +4209,7 @@ exports[`Component Gallery should render a list of image using the thumbnail url
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                      d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
                       fill="currentColor"
                       style={Object {}}
                     />
@@ -4111,139 +4282,11 @@ exports[`Component Gallery should render a list of image using the thumbnail url
               </span>
             </button>
           </Button>
-        </Memo(AddImageFileButton)>
-        <Button
-          className="float-right"
-          color="light"
-          onClick={[Function]}
-          size="lg"
-          tag="button"
-        >
-          <button
-            aria-label={null}
-            className="float-right btn btn-light btn-lg"
-            onClick={[Function]}
-            type="button"
-          >
-            <span
-              className="fa-layers fa-fw"
-            >
-              <FontAwesomeIcon
-                border={false}
-                className=""
-                fixedWidth={false}
-                flip={null}
-                icon={
-                  Object {
-                    "icon": Array [
-                      512,
-                      512,
-                      Array [],
-                      "f030",
-                      "M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z",
-                    ],
-                    "iconName": "camera",
-                    "prefix": "fas",
-                  }
-                }
-                inverse={false}
-                listItem={false}
-                mask={null}
-                pull={null}
-                pulse={false}
-                rotation={null}
-                size="lg"
-                spin={false}
-                swapOpacity={false}
-                symbol={false}
-                title=""
-                transform={null}
-              >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-camera fa-w-16 fa-lg "
-                  data-icon="camera"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 512 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
-                    fill="currentColor"
-                    style={Object {}}
-                  />
-                </svg>
-              </FontAwesomeIcon>
-              <FontAwesomeIcon
-                border={false}
-                className=""
-                fixedWidth={false}
-                flip={null}
-                icon={
-                  Object {
-                    "icon": Array [
-                      448,
-                      512,
-                      Array [],
-                      "f067",
-                      "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
-                    ],
-                    "iconName": "plus",
-                    "prefix": "fas",
-                  }
-                }
-                inverse={false}
-                listItem={false}
-                mask={null}
-                pull={null}
-                pulse={false}
-                rotation={null}
-                size="xs"
-                spin={false}
-                swapOpacity={false}
-                symbol={false}
-                title=""
-                transform="down-13 left-16"
-              >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-plus fa-w-14 fa-xs "
-                  data-icon="plus"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={
-                    Object {
-                      "transformOrigin": "-0.5625em 1.3125em",
-                    }
-                  }
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g
-                    style={Object {}}
-                    transform="translate(224 256)"
-                  >
-                    <g
-                      style={Object {}}
-                      transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
-                    >
-                      <path
-                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                        fill="currentColor"
-                        style={Object {}}
-                        transform="translate(-224 -256)"
-                      />
-                    </g>
-                  </g>
-                </svg>
-              </FontAwesomeIcon>
-            </span>
-          </button>
-        </Button>
+        </div>
+      </div>
+      <div
+        className="p-1 border border-secondary rounded shadow gallery"
+      >
         <Memo(Thumbnail)
           image={
             Object {
@@ -4505,44 +4548,183 @@ exports[`Component Gallery should render the Html5Camera when clicking on the ca
     turnOnCamera={[Function]}
   >
     <div>
-      <Label
-        className="font-weight-bold"
-        tag="label"
-        widths={
-          Array [
-            "xs",
-            "sm",
-            "md",
-            "lg",
-            "xl",
-          ]
-        }
-      >
-        <label
-          className="font-weight-bold"
-        >
-          Gallery image
-        </label>
-      </Label>
       <div
-        className="p-1 border border-secondary rounded shadow gallery"
+        className="gallery-component-header"
       >
-        <Memo(AddImageFileButton)
-          addImage={[Function]}
-          className="float-right"
-          parentUiId="equipment_01"
+        <Label
+          className="font-weight-bold"
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
         >
+          <label
+            className="font-weight-bold"
+          >
+            <FormattedMessage
+              defaultMessage="Gallery"
+              description="Gallery title"
+              id="gallerytitle"
+              values={Object {}}
+            >
+              Gallery
+            </FormattedMessage>
+          </label>
+        </Label>
+        <div>
+          <Memo(AddImageFileButton)
+            addImage={[Function]}
+            className="float-right"
+            parentUiId="equipment_01"
+          >
+            <Button
+              aria-label="Edit"
+              className="float-right"
+              color="light"
+              onClick={[Function]}
+              tag="button"
+            >
+              <button
+                aria-label="Edit"
+                className="float-right btn btn-light"
+                onClick={[Function]}
+                type="button"
+              >
+                <span
+                  className="fa-layers fa-fw"
+                >
+                  <FontAwesomeIcon
+                    border={false}
+                    className=""
+                    fixedWidth={false}
+                    flip={null}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          512,
+                          512,
+                          Array [],
+                          "f03e",
+                          "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                        ],
+                        "iconName": "image",
+                        "prefix": "fas",
+                      }
+                    }
+                    inverse={false}
+                    listItem={false}
+                    mask={null}
+                    pull={null}
+                    pulse={false}
+                    rotation={null}
+                    size="lg"
+                    spin={false}
+                    swapOpacity={false}
+                    symbol={false}
+                    title=""
+                    transform={null}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-image fa-w-16 fa-lg "
+                      data-icon="image"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={Object {}}
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                        fill="currentColor"
+                        style={Object {}}
+                      />
+                    </svg>
+                  </FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    border={false}
+                    className=""
+                    fixedWidth={false}
+                    flip={null}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          448,
+                          512,
+                          Array [],
+                          "f067",
+                          "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
+                        ],
+                        "iconName": "plus",
+                        "prefix": "fas",
+                      }
+                    }
+                    inverse={false}
+                    listItem={false}
+                    mask={null}
+                    pull={null}
+                    pulse={false}
+                    rotation={null}
+                    size="xs"
+                    spin={false}
+                    swapOpacity={false}
+                    symbol={false}
+                    title=""
+                    transform="down-13 left-16"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+                      data-icon="plus"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={
+                        Object {
+                          "transformOrigin": "-0.5625em 1.3125em",
+                        }
+                      }
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        style={Object {}}
+                        transform="translate(224 256)"
+                      >
+                        <g
+                          style={Object {}}
+                          transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                        >
+                          <path
+                            d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                            fill="currentColor"
+                            style={Object {}}
+                            transform="translate(-224 -256)"
+                          />
+                        </g>
+                      </g>
+                    </svg>
+                  </FontAwesomeIcon>
+                </span>
+              </button>
+            </Button>
+          </Memo(AddImageFileButton)>
           <Button
-            aria-label="Edit"
             className="float-right"
             color="light"
             onClick={[Function]}
-            size="lg"
             tag="button"
           >
             <button
-              aria-label="Edit"
-              className="float-right btn btn-light btn-lg"
+              aria-label={null}
+              className="float-right btn btn-light"
               onClick={[Function]}
               type="button"
             >
@@ -4560,10 +4742,10 @@ exports[`Component Gallery should render the Html5Camera when clicking on the ca
                         512,
                         512,
                         Array [],
-                        "f03e",
-                        "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                        "f030",
+                        "M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z",
                       ],
-                      "iconName": "image",
+                      "iconName": "camera",
                       "prefix": "fas",
                     }
                   }
@@ -4582,8 +4764,8 @@ exports[`Component Gallery should render the Html5Camera when clicking on the ca
                 >
                   <svg
                     aria-hidden="true"
-                    className="svg-inline--fa fa-image fa-w-16 fa-lg "
-                    data-icon="image"
+                    className="svg-inline--fa fa-camera fa-w-16 fa-lg "
+                    data-icon="camera"
                     data-prefix="fas"
                     focusable="false"
                     role="img"
@@ -4592,7 +4774,7 @@ exports[`Component Gallery should render the Html5Camera when clicking on the ca
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                      d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
                       fill="currentColor"
                       style={Object {}}
                     />
@@ -4665,139 +4847,11 @@ exports[`Component Gallery should render the Html5Camera when clicking on the ca
               </span>
             </button>
           </Button>
-        </Memo(AddImageFileButton)>
-        <Button
-          className="float-right"
-          color="light"
-          onClick={[Function]}
-          size="lg"
-          tag="button"
-        >
-          <button
-            aria-label={null}
-            className="float-right btn btn-light btn-lg"
-            onClick={[Function]}
-            type="button"
-          >
-            <span
-              className="fa-layers fa-fw"
-            >
-              <FontAwesomeIcon
-                border={false}
-                className=""
-                fixedWidth={false}
-                flip={null}
-                icon={
-                  Object {
-                    "icon": Array [
-                      512,
-                      512,
-                      Array [],
-                      "f030",
-                      "M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z",
-                    ],
-                    "iconName": "camera",
-                    "prefix": "fas",
-                  }
-                }
-                inverse={false}
-                listItem={false}
-                mask={null}
-                pull={null}
-                pulse={false}
-                rotation={null}
-                size="lg"
-                spin={false}
-                swapOpacity={false}
-                symbol={false}
-                title=""
-                transform={null}
-              >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-camera fa-w-16 fa-lg "
-                  data-icon="camera"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 512 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
-                    fill="currentColor"
-                    style={Object {}}
-                  />
-                </svg>
-              </FontAwesomeIcon>
-              <FontAwesomeIcon
-                border={false}
-                className=""
-                fixedWidth={false}
-                flip={null}
-                icon={
-                  Object {
-                    "icon": Array [
-                      448,
-                      512,
-                      Array [],
-                      "f067",
-                      "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
-                    ],
-                    "iconName": "plus",
-                    "prefix": "fas",
-                  }
-                }
-                inverse={false}
-                listItem={false}
-                mask={null}
-                pull={null}
-                pulse={false}
-                rotation={null}
-                size="xs"
-                spin={false}
-                swapOpacity={false}
-                symbol={false}
-                title=""
-                transform="down-13 left-16"
-              >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-plus fa-w-14 fa-xs "
-                  data-icon="plus"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={
-                    Object {
-                      "transformOrigin": "-0.5625em 1.3125em",
-                    }
-                  }
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g
-                    style={Object {}}
-                    transform="translate(224 256)"
-                  >
-                    <g
-                      style={Object {}}
-                      transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
-                    >
-                      <path
-                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                        fill="currentColor"
-                        style={Object {}}
-                        transform="translate(-224 -256)"
-                      />
-                    </g>
-                  </g>
-                </svg>
-              </FontAwesomeIcon>
-            </span>
-          </button>
-        </Button>
+        </div>
+      </div>
+      <div
+        className="p-1 border border-secondary rounded shadow gallery"
+      >
         <Memo(Thumbnail)
           image={
             Object {
@@ -5139,44 +5193,183 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
     turnOnCamera={[Function]}
   >
     <div>
-      <Label
-        className="font-weight-bold"
-        tag="label"
-        widths={
-          Array [
-            "xs",
-            "sm",
-            "md",
-            "lg",
-            "xl",
-          ]
-        }
-      >
-        <label
-          className="font-weight-bold"
-        >
-          Gallery image
-        </label>
-      </Label>
       <div
-        className="p-1 border border-secondary rounded shadow gallery"
+        className="gallery-component-header"
       >
-        <Memo(AddImageFileButton)
-          addImage={[Function]}
-          className="float-right"
-          parentUiId="equipment_01"
+        <Label
+          className="font-weight-bold"
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
         >
+          <label
+            className="font-weight-bold"
+          >
+            <FormattedMessage
+              defaultMessage="Gallery"
+              description="Gallery title"
+              id="gallerytitle"
+              values={Object {}}
+            >
+              Gallery
+            </FormattedMessage>
+          </label>
+        </Label>
+        <div>
+          <Memo(AddImageFileButton)
+            addImage={[Function]}
+            className="float-right"
+            parentUiId="equipment_01"
+          >
+            <Button
+              aria-label="Edit"
+              className="float-right"
+              color="light"
+              onClick={[Function]}
+              tag="button"
+            >
+              <button
+                aria-label="Edit"
+                className="float-right btn btn-light"
+                onClick={[Function]}
+                type="button"
+              >
+                <span
+                  className="fa-layers fa-fw"
+                >
+                  <FontAwesomeIcon
+                    border={false}
+                    className=""
+                    fixedWidth={false}
+                    flip={null}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          512,
+                          512,
+                          Array [],
+                          "f03e",
+                          "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                        ],
+                        "iconName": "image",
+                        "prefix": "fas",
+                      }
+                    }
+                    inverse={false}
+                    listItem={false}
+                    mask={null}
+                    pull={null}
+                    pulse={false}
+                    rotation={null}
+                    size="lg"
+                    spin={false}
+                    swapOpacity={false}
+                    symbol={false}
+                    title=""
+                    transform={null}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-image fa-w-16 fa-lg "
+                      data-icon="image"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={Object {}}
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                        fill="currentColor"
+                        style={Object {}}
+                      />
+                    </svg>
+                  </FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    border={false}
+                    className=""
+                    fixedWidth={false}
+                    flip={null}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          448,
+                          512,
+                          Array [],
+                          "f067",
+                          "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
+                        ],
+                        "iconName": "plus",
+                        "prefix": "fas",
+                      }
+                    }
+                    inverse={false}
+                    listItem={false}
+                    mask={null}
+                    pull={null}
+                    pulse={false}
+                    rotation={null}
+                    size="xs"
+                    spin={false}
+                    swapOpacity={false}
+                    symbol={false}
+                    title=""
+                    transform="down-13 left-16"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+                      data-icon="plus"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={
+                        Object {
+                          "transformOrigin": "-0.5625em 1.3125em",
+                        }
+                      }
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        style={Object {}}
+                        transform="translate(224 256)"
+                      >
+                        <g
+                          style={Object {}}
+                          transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                        >
+                          <path
+                            d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                            fill="currentColor"
+                            style={Object {}}
+                            transform="translate(-224 -256)"
+                          />
+                        </g>
+                      </g>
+                    </svg>
+                  </FontAwesomeIcon>
+                </span>
+              </button>
+            </Button>
+          </Memo(AddImageFileButton)>
           <Button
-            aria-label="Edit"
             className="float-right"
             color="light"
             onClick={[Function]}
-            size="lg"
             tag="button"
           >
             <button
-              aria-label="Edit"
-              className="float-right btn btn-light btn-lg"
+              aria-label={null}
+              className="float-right btn btn-light"
               onClick={[Function]}
               type="button"
             >
@@ -5194,10 +5387,10 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
                         512,
                         512,
                         Array [],
-                        "f03e",
-                        "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                        "f030",
+                        "M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z",
                       ],
-                      "iconName": "image",
+                      "iconName": "camera",
                       "prefix": "fas",
                     }
                   }
@@ -5216,8 +5409,8 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
                 >
                   <svg
                     aria-hidden="true"
-                    className="svg-inline--fa fa-image fa-w-16 fa-lg "
-                    data-icon="image"
+                    className="svg-inline--fa fa-camera fa-w-16 fa-lg "
+                    data-icon="camera"
                     data-prefix="fas"
                     focusable="false"
                     role="img"
@@ -5226,7 +5419,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                      d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
                       fill="currentColor"
                       style={Object {}}
                     />
@@ -5299,139 +5492,11 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
               </span>
             </button>
           </Button>
-        </Memo(AddImageFileButton)>
-        <Button
-          className="float-right"
-          color="light"
-          onClick={[Function]}
-          size="lg"
-          tag="button"
-        >
-          <button
-            aria-label={null}
-            className="float-right btn btn-light btn-lg"
-            onClick={[Function]}
-            type="button"
-          >
-            <span
-              className="fa-layers fa-fw"
-            >
-              <FontAwesomeIcon
-                border={false}
-                className=""
-                fixedWidth={false}
-                flip={null}
-                icon={
-                  Object {
-                    "icon": Array [
-                      512,
-                      512,
-                      Array [],
-                      "f030",
-                      "M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z",
-                    ],
-                    "iconName": "camera",
-                    "prefix": "fas",
-                  }
-                }
-                inverse={false}
-                listItem={false}
-                mask={null}
-                pull={null}
-                pulse={false}
-                rotation={null}
-                size="lg"
-                spin={false}
-                swapOpacity={false}
-                symbol={false}
-                title=""
-                transform={null}
-              >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-camera fa-w-16 fa-lg "
-                  data-icon="camera"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 512 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M512 144v288c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48h88l12.3-32.9c7-18.7 24.9-31.1 44.9-31.1h125.5c20 0 37.9 12.4 44.9 31.1L376 96h88c26.5 0 48 21.5 48 48zM376 288c0-66.2-53.8-120-120-120s-120 53.8-120 120 53.8 120 120 120 120-53.8 120-120zm-32 0c0 48.5-39.5 88-88 88s-88-39.5-88-88 39.5-88 88-88 88 39.5 88 88z"
-                    fill="currentColor"
-                    style={Object {}}
-                  />
-                </svg>
-              </FontAwesomeIcon>
-              <FontAwesomeIcon
-                border={false}
-                className=""
-                fixedWidth={false}
-                flip={null}
-                icon={
-                  Object {
-                    "icon": Array [
-                      448,
-                      512,
-                      Array [],
-                      "f067",
-                      "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
-                    ],
-                    "iconName": "plus",
-                    "prefix": "fas",
-                  }
-                }
-                inverse={false}
-                listItem={false}
-                mask={null}
-                pull={null}
-                pulse={false}
-                rotation={null}
-                size="xs"
-                spin={false}
-                swapOpacity={false}
-                symbol={false}
-                title=""
-                transform="down-13 left-16"
-              >
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-plus fa-w-14 fa-xs "
-                  data-icon="plus"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={
-                    Object {
-                      "transformOrigin": "-0.5625em 1.3125em",
-                    }
-                  }
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g
-                    style={Object {}}
-                    transform="translate(224 256)"
-                  >
-                    <g
-                      style={Object {}}
-                      transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
-                    >
-                      <path
-                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                        fill="currentColor"
-                        style={Object {}}
-                        transform="translate(-224 -256)"
-                      />
-                    </g>
-                  </g>
-                </svg>
-              </FontAwesomeIcon>
-            </span>
-          </button>
-        </Button>
+        </div>
+      </div>
+      <div
+        className="p-1 border border-secondary rounded shadow gallery"
+      >
         <Memo(Thumbnail)
           image={
             Object {
