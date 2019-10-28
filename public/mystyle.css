@@ -25,6 +25,7 @@ a.active.nav-link {
 
 .nav-link {
 	cursor: pointer;
+	padding: .2rem 0.5rem !important;
 }
 
 .clickable{
