@@ -57,7 +57,7 @@ function AddImageFileButton({parentUiId, addImage, className}: Props){
     }, []);
 
     return (
-    <Button color="light" size="lg" className={className} onClick={handleFileSelect} aria-label="Edit">
+    <Button color="light" className={className} onClick={handleFileSelect} aria-label="Edit">
         <span className="fa-layers fa-fw">
             <FontAwesomeIcon icon={faImage} size="lg"/>
             <FontAwesomeIcon icon={faPlus} size="xs" transform="down-13 left-16"/>
