@@ -1,5 +1,7 @@
 import React, { Fragment, useEffect, useState, useCallback, useRef } from 'react';
 
+import {scrollTo} from '../../helpers/Helpers';
+
 import { CSSTransition } from 'react-transition-group'
 
 import TaskTabPanes from '../TaskTabPanes/TaskTabPanes';
@@ -129,9 +131,9 @@ export default function App(){
 		setCurrentTask(task);
 
 		if(cardTaskDetailDomRef.current != null){
-            window.scrollTo((cardTaskDetailDomRef!.current! as any).offsetLeft, (cardTaskDetailDomRef!.current! as any).offsetTop);
+            scrollTo((cardTaskDetailDomRef!.current! as any).offsetLeft, (cardTaskDetailDomRef!.current! as any).offsetTop, 250);
         }
-	}, [])
+	}, []);
 
 	const onTaskDeleted = useCallback((task: TaskModel)=>{
 		fetchTasks();
