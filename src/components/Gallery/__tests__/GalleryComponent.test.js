@@ -4,7 +4,6 @@ import updateWrapper from '../../../testHelpers/EnzymeHelper';
 import React from 'react';
 import { mount } from 'enzyme';
 
-import imageProxy from '../../../services/ImageProxy';
 import GalleryComponent from '../GalleryComponent';
 
 jest.mock('../../../services/ImageProxy');
@@ -40,6 +39,7 @@ describe('Component GalleryComponent', () =>{
 
     beforeAll(() => {
         ignoredMessages.length = 0;
+        ignoredMessages.push("[React Intl] Could not find required `intl` object.");
         
     });
 

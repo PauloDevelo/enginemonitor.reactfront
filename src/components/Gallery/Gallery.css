@@ -15,11 +15,3 @@
 .gallery{
     min-height: 58px;
 }
-
-.gallery-component-header{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: flex-end;
-}

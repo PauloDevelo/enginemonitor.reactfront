@@ -32,3 +32,16 @@ a.active.nav-link {
     cursor: pointer;
 }
 
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+	align-items: flex-end;
+	width: 100%;
+}
+
+.top-padding-4px{
+	padding: 4px 0px 0px 0px;
+}
+

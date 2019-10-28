@@ -26,11 +26,15 @@ function EquipmentInfoTab({equipment, displayEquipment}: Props){
 
 	return(
         <TabPane tabId={equipment._uiId}>
-            <Button color="light" size="sm" className="float-right" onClick={displayEquipmentCallBack} aria-label="Edit"><FontAwesomeIcon icon={faEdit} /></Button>					
-            <span>{equipment.brand} {equipment.model} </span>
-            {equipment.ageAcquisitionType !== AgeAcquisitionType.time && <span className="font-weight-bold">{equipment.age} h </span>}
-            <FormattedMessage {...equipmentInfoMsg.installedOn} />
-            <FormattedDate value={equipment.installation} />
+            <div className="flex-row">
+                <div>
+                    <span>{equipment.brand} {equipment.model} </span>
+                    {equipment.ageAcquisitionType !== AgeAcquisitionType.time && <span className="font-weight-bold">{equipment.age} h </span>}
+                    <FormattedMessage {...equipmentInfoMsg.installedOn} />
+                    <FormattedDate value={equipment.installation} />
+                </div>
+                <Button color="light" size="sm" onClick={displayEquipmentCallBack} aria-label="Edit"><FontAwesomeIcon icon={faEdit} /></Button>
+            </div>
             <Gallery parentUiId={equipment._uiId} />
         </TabPane>
 	);

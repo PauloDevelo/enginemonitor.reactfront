@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Label, Button } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 
@@ -30,8 +30,8 @@ function GalleryComponent({ parentUiId, images, onClickThumbnail, addImage, turn
     });
 
 	return(
-        <div>
-            <div className="gallery-component-header">
+        <Fragment>
+            <div className="flex-row top-padding-4px">
                 <Label className="font-weight-bold"><FormattedMessage {...galleryMsg.gallerytitle}/></Label>
                 <div>
                     <AddImageFileButton parentUiId={parentUiId} addImage={addImage} className="float-right"/>
@@ -43,13 +43,10 @@ function GalleryComponent({ parentUiId, images, onClickThumbnail, addImage, turn
                     </Button>
                 </div>
             </div>
-            
-            
             <div className="p-1 border border-secondary rounded shadow gallery">
-                
                 {thumbnails}
             </div>
-        </div>
+        </Fragment>
 	);
 }
 
