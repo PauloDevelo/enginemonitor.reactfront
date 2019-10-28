@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect, useState, useCallback} from 'react';
 import { Button, Badge } from 'reactstrap';
 import { 
   composeDecorators,
@@ -58,16 +58,16 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 		tasksData = tasks.map((task, index) => {
 			return {
 				task: task,
-        name: task.name,
-        todo: getTodoValue(equipment, task),
-        shortenDescription: shorten(task.description),
+				name: task.name,
+				todo: getTodoValue(equipment, task),
+				shortenDescription: shorten(task.description),
 				level: task.level,
 				initialIndex: index
-      };
+      		};
 		});
 	}
 
-	const innerTaskCell = (task:DisplayableTask, content: JSX.Element, classNames?: string) => {
+	const innerTaskCell = useCallback((task:DisplayableTask, content: JSX.Element, classNames?: string) => {
 		classNames = classNames === undefined ? '' : classNames;
 		classNames += ' table-' + getContext(task.level);
 
@@ -76,9 +76,9 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 				{content}
 			</div>
 		);
-	}
+	}, []);
 
-	const columns = [
+	const [columns, setColumns] = useState([
 		{
 			name: 'name',
 			header: () => (
@@ -114,20 +114,45 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 				return innerTaskCell(content.data, getTodoText(content.data.todo));
 			},
 			sortable: false
-		},
-		{
-			name: 'description',
-			header: () => (
-				<div className={'text-center innerTdHead'}>
-					<FormattedMessage {...taskTableMsg.taskdesc} />
-				</div>
-			),
-			cell: (content: any) => {
-				return innerTaskCell(content.data, <span>{content.data.shortenDescription}</span>);
-			},
-			sortable: false
 		}
-	];
+	]);
+
+	
+
+	useEffect(() => {
+		const onResize = () => {
+			setColumns(previousColumns => {
+				if(window.innerWidth < 1200){
+					if(previousColumns.length !== 3){
+						previousColumns.length = 3;
+						return previousColumns.concat([]);
+					}
+				}
+				else{
+					if(previousColumns.length === 3){
+						return previousColumns.concat([{
+							name: 'description',
+							header: () => (
+								<div className={'text-center innerTdHead'}>
+									<FormattedMessage {...taskTableMsg.taskdesc} />
+								</div>
+							),
+							cell: (content: any) => {
+								return innerTaskCell(content.data, <span>{content.data.shortenDescription}</span>);
+							},
+							sortable: false
+						}]);
+					}
+				}
+
+				return previousColumns;
+			});
+		};
+
+		onResize();
+		window.addEventListener("resize", onResize);
+		return () => window.removeEventListener("resize", onResize);
+	}, [innerTaskCell]);
 
 	return (
 		<Fragment>
