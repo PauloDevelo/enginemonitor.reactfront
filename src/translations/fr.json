@@ -37,6 +37,7 @@
   "equipmentname": "Nom",
   "errorFetching": "Une erreur est survenue ...",
   "firstname": "Prénom",
+  "gallerytitle": "Gallerie",
   "imageDeleteMessage": "Etes vous sure de vouloir supprimer cette image ?",
   "imageDeleteTitle": "Suppression d'une image",
   "imageDescription": "Description",
@@ -108,6 +109,5 @@
   "usagePeriodInHour": "Période en heure à l'usage",
   "userExceedStorageLimit": "Vous avez dépassé la limite du stockage qui vous a été attribué. Veuillez supprimer des images avant d'en rajouter.",
   "yearperiod": "{year, plural, one {# année} other {# années}}",
-  "yes": "Oui",
-  "gallerytitle": "Gallerie"
+  "yes": "Oui"
 }

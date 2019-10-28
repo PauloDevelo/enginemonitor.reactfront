@@ -1,10 +1,7 @@
-
-
 {
-    "gallerytitle": {
-      "defaultMessage": "Gallery",
-      "description": "Gallery title",
-      "id": "gallerytitle"
-    }
+  "gallerytitle": {
+    "defaultMessage": "Gallery",
+    "description": "Gallery title",
+    "id": "gallerytitle"
   }
-  
+}
