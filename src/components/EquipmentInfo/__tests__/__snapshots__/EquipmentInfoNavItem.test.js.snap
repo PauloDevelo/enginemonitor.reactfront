@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EquipmentInfoNavItem Should render an tab nav item active 1`] = `
+<Memo(EquipmentInfoNavItem)
+  active={true}
+  equipment={
+    Object {
+      "_uiId": "1234",
+      "age": 2563,
+      "brand": "nanni",
+      "installation": 2011-02-22T16:00:00.000Z,
+      "model": "N3.30",
+      "name": "engine",
+    }
+  }
+  setCurrentEquipment={[MockFunction]}
+>
+  <NavItem
+    tag="li"
+  >
+    <li
+      className="nav-item"
+    >
+      <NavLink
+        className="active"
+        onClick={[Function]}
+        tag="a"
+      >
+        <a
+          className="active nav-link"
+          onClick={[Function]}
+        >
+          engine
+        </a>
+      </NavLink>
+    </li>
+  </NavItem>
+</Memo(EquipmentInfoNavItem)>
+`;
+
+exports[`EquipmentInfoNavItem Should render an tab nav item not active 1`] = `
+<Memo(EquipmentInfoNavItem)
+  active={false}
+  equipment={
+    Object {
+      "_uiId": "1234",
+      "age": 2563,
+      "brand": "nanni",
+      "installation": 2011-02-22T16:00:00.000Z,
+      "model": "N3.30",
+      "name": "engine",
+    }
+  }
+  setCurrentEquipment={[MockFunction]}
+>
+  <NavItem
+    tag="li"
+  >
+    <li
+      className="nav-item"
+    >
+      <NavLink
+        className=""
+        onClick={[Function]}
+        tag="a"
+      >
+        <a
+          className="nav-link"
+          onClick={[Function]}
+        >
+          engine
+        </a>
+      </NavLink>
+    </li>
+  </NavItem>
+</Memo(EquipmentInfoNavItem)>
+`;
