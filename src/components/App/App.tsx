@@ -87,12 +87,12 @@ export default function App(){
 				});
 
 				setTaskList(tasks);
+				setAreTasksLoading(false);
 			})
 			.catch(reason => {
 				setTaskList([]);
+				setAreTasksLoading(false);
 			});
-
-			setAreTasksLoading(false);
 		}
 		else{
 			setTaskList([]);

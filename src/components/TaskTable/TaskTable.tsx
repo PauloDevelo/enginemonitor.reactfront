@@ -53,19 +53,23 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 	classNames = classNames === undefined ? 'tasktable' : classNames + ' tasktable';
 	const modalHook = useEditModal<TaskModel | undefined>(undefined);
 	
-	let tasksData:DisplayableTask[] = [];
-	if(tasks && equipment){
-		tasksData = tasks.map((task, index) => {
-			return {
-				task: task,
-				name: task.name,
-				todo: getTodoValue(equipment, task),
-				shortenDescription: shorten(task.description),
-				level: task.level,
-				initialIndex: index
-      		};
-		});
-	}
+	const getTasksData = useCallback(() => {
+		let tasksData: DisplayableTask[] = [];
+		if(tasks && equipment){
+			tasksData = tasks.map((task, index) => {
+				return {
+					task: task,
+					name: task.name,
+					todo: getTodoValue(equipment, task),
+					shortenDescription: shorten(task.description),
+					level: task.level,
+					initialIndex: index
+				};
+			});
+		}
+
+		return tasksData;
+	}, [tasks, equipment]);
 
 	const innerTaskCell = useCallback((task:DisplayableTask, content: JSX.Element, classNames?: string) => {
 		classNames = classNames === undefined ? '' : classNames;
@@ -162,13 +166,12 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 				</span>
 				{areTasksLoading ? <Loading/> :
 				<Table
-					data={tasksData}
+					data={getTasksData()}
 					className="default-theme"
 					defaultSortParameter="status"
 					defaultSortDirection="desc"
 					columns={columns}
 				/>}
-
 			</div>
 			{equipment !== undefined && modalHook.data !== undefined && <ModalEditTask  equipment={equipment}
 							task={modalHook.data}
