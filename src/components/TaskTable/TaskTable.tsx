@@ -80,7 +80,7 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 				{content}
 			</div>
 		);
-	}, []);
+	}, [changeCurrentTask]);
 
 	const [columns, setColumns] = useState([
 		{
@@ -120,8 +120,6 @@ export const TaskTable = ({equipment, tasks, areTasksLoading, onTaskSaved, chang
 			sortable: false
 		}
 	]);
-
-	
 
 	useEffect(() => {
 		const onResize = () => {
