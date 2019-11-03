@@ -1,4 +1,6 @@
-import  React, { useEffect, useState, Fragment } from 'react';
+import  React, { useEffect, useState, Fragment, useCallback, useRef } from 'react';
+import {useAsync} from 'react-async';
+import {useTraceUpdate} from '../../hooks/Debug';
 import { Button } from 'reactstrap';
 import { 
     composeDecorators,
@@ -12,8 +14,6 @@ import Loading from '../Loading/Loading';
 
 import { faCheckSquare, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import PropTypes from 'prop-types';
 
 import * as moment from 'moment';
 import entryProxy from '../../services/EntryProxy';
@@ -44,37 +44,34 @@ const Table = composeDecorators(
   withFixedHeader // should be last
 )();
 
-enum FetchState{
-    StandBy,
-    Fetching,
-    Error
-}
-
 const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChanged, classNames}: Props) => {
+    useTraceUpdate("HistoryTaskTable", {equipment, task, taskHistoryRefreshId, onHistoryChanged, classNames});
     const modalHook = useEditModal<EntryModel | undefined>(undefined);
-
     const [entries, setEntries] = useState<EntryModel[]>([]);
-    const [fetchingState, setFetchingState] = useState(FetchState.StandBy);
 
-    useEffect(() => {
-        setFetchingState(FetchState.Fetching);
-
+    const fetchEntries = useCallback(async(props: any):Promise<EntryModel[]> => {
         if(equipment && task){
-            entryProxy.fetchEntries(equipment._uiId, task._uiId)
-            .then((newEntries) => {
-                setEntries(newEntries);
-                setFetchingState(FetchState.StandBy); 
-            })
-            .catch((reason) => {
-                setFetchingState(FetchState.Error);
-            });
+            return await entryProxy.fetchEntries(equipment._uiId, task._uiId);
         }
         else{
-            setEntries([]);
-            setFetchingState(FetchState.StandBy); 
+            return [];
         }
-    }, [equipment, task, taskHistoryRefreshId]);
+    }, [equipment, task]);
+    const {data: fetchedEntries, error, isLoading, reload} = useAsync({ promiseFn: fetchEntries });
 
+    const reloadRef = useRef(reload);
+    useEffect(() => {
+        reloadRef.current = reload;
+    }, [reload]);
+
+    useEffect(() => {
+        reloadRef.current();
+    }, [taskHistoryRefreshId, reloadRef]);
+
+    useEffect(() => {
+        setEntries(fetchedEntries ? fetchedEntries : []);
+    }, [fetchedEntries])
+    
     const changeEntries = (newEntries: EntryModel[]) => {
       setEntries(newEntries);
       if(onHistoryChanged){
@@ -98,9 +95,7 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
     const innerEntryCell = (entry:EntryModel, content: JSX.Element, classNames?: string) => {
 		classNames = classNames === undefined ? '' : classNames;
 		return (
-			<div onClick={() => modalHook.displayData(entry)} className={classNames + ' innerTd clickable'} >
-				{content}
-			</div>
+			<div onClick={() => modalHook.displayData(entry)} className={classNames + ' innerTd clickable'} >{content}</div>
 		);
 	}
 
@@ -108,9 +103,7 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
 		{
 			name: 'date',
 			header: () => (
-				<div className={'innerTdHead'}>
-					<FormattedMessage {...messages.ackDate} />
-				</div>
+				<div className={'innerTdHead'}><FormattedMessage {...messages.ackDate} /></div>
 			),
 			cell: (content: any) => {
                 const entryDate = new Date(content.data.date);
@@ -122,9 +115,7 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
 		{
 			name: 'age',
 			header: () => (
-				<div className={'innerTdHead'}>
-					<FormattedMessage {...messages.age} />
-				</div>
+				<div className={'innerTdHead'}><FormattedMessage {...messages.age} /></div>
 			),
 			cell: (content: any) => {
                 const entry:EntryModel = content.data;
@@ -154,9 +145,7 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
 		{
 			name: 'remarks',
 			header: () => (
-				<div className={'text-center innerTdHead'}>
-					<FormattedMessage {...messages.remarks}/>
-				</div>
+				<div className={'text-center innerTdHead'}><FormattedMessage {...messages.remarks}/></div>
 			),
 			cell: (content: any) => {
                 const entry:EntryModel = content.data;
@@ -174,15 +163,13 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
         <div className={classNames + ' historytasktable'}>
             <span className="mb-2">
                 <b><FormattedMessage {...messages.taskHistoryTitle} /></b>
-                {equipment && task && <Button aria-label="Add" color="success" size="sm" className="float-right mb-2" onClick={() => {
-                    modalHook.displayData(createDefaultEntry(equipment, task));
-                }}>
+                {equipment && task && <Button aria-label="Add" color="success" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEntry(equipment, task))}>
                     <FontAwesomeIcon icon={faCheckSquare} />
                 </Button>}
             </span>
-            {fetchingState === FetchState.Error && <div><FontAwesomeIcon icon={faExclamationTriangle} color="red"/><FormattedMessage {...messages.errorFetching} /></div>}
-            {fetchingState === FetchState.Fetching && <Loading/>}
-            {fetchingState === FetchState.StandBy && 
+            {error && <div><FontAwesomeIcon icon={faExclamationTriangle} color="red"/><FormattedMessage {...messages.errorFetching} /></div>}
+            {isLoading && <Loading/>}
+            {error === undefined && isLoading === false &&
             <Table
                 data={entries}
                 className="default-theme"
@@ -205,12 +192,5 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
         </div>
     );
 }
-
-HistoryTaskTable.propTypes = {
-    equipment: PropTypes.object,
-    task: PropTypes.object,
-    classNames: PropTypes.string,
-    onHistoryChanged: PropTypes.func,
-};
 
 export default React.memo(HistoryTaskTable);
