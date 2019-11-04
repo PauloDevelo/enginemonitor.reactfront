@@ -62,7 +62,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
         setFetchingState(FetchState.Fetching);
 
         if(equipmentId){
-            entryProxy.fetchAllEntries(equipmentId).then(newEntries => {
+            entryProxy.fetchAllEntries({equipmentId}).then(newEntries => {
                 setEntries(newEntries);
                 setFetchingState(FetchState.StandBy);
             })

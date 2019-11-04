@@ -5,12 +5,24 @@ import storageService from './StorageService';
 import { updateEntry } from '../helpers/EntryHelper'
 import { EntryModel} from '../types/Types'
 import imageProxy from './ImageProxy';
+import { CancelToken } from 'axios';
 
+export interface FetchEntriesProps extends FetchAllEntriesProps{
+    taskId: string|undefined;
+}
+
+export interface FetchAllEntriesProps{
+    equipmentId: string|undefined
+    cancelToken?: CancelToken;
+    forceToLookUpInStorage?: boolean;
+}
 export interface IEntryProxy{
     createOrSaveEntry(equipmentId: string, taskId: string | undefined, newEntry: EntryModel): Promise<EntryModel>;
     deleteEntry(equipmentId: string, taskId: string | undefined, entryId: string): Promise<EntryModel>;
-    fetchEntries(equipmentId: string, taskId: string):Promise<EntryModel[]>;
-    fetchAllEntries(equipmentId: string):Promise<EntryModel[]>;
+    
+    
+    fetchEntries(props: FetchEntriesProps):Promise<EntryModel[]>;
+    fetchAllEntries(props: FetchAllEntriesProps):Promise<EntryModel[]>;
 
     getStoredEntries(equipmentId: string, taskId: string | undefined):Promise<EntryModel[]>;
 
@@ -45,16 +57,16 @@ class EntryProxy implements IEntryProxy{
         return deletedEntry;
     }
 
-    fetchEntries = async(equipmentId: string, taskId: string, forceToLookUpInStorage: boolean = false):Promise<EntryModel[]> => {
+    fetchEntries = async({equipmentId, taskId, cancelToken = undefined, forceToLookUpInStorage = false}: FetchEntriesProps):Promise<EntryModel[]> => {
         if (equipmentId === undefined || taskId === undefined)
             return [];
 
-        const allEntries = await this.fetchAllEntries(equipmentId, forceToLookUpInStorage);
+        const allEntries = await this.fetchAllEntries({equipmentId, cancelToken, forceToLookUpInStorage});
 
         return allEntries.filter(entry => entry.taskUiId === taskId);
     }
 
-    fetchAllEntries = async(equipmentId: string, forceToLookUpInStorage: boolean = false):Promise<EntryModel[]> => {
+    fetchAllEntries = async({equipmentId, cancelToken = undefined, forceToLookUpInStorage = false}:FetchAllEntriesProps):Promise<EntryModel[]> => {
         if (equipmentId === undefined)
             return [];
 
@@ -62,15 +74,15 @@ class EntryProxy implements IEntryProxy{
             return await storageService.getArray(this.baseUrl + equipmentId);
         }
 
-        return await progressiveHttpProxy.getArrayOnlineFirst<EntryModel>(this.baseUrl + equipmentId, "entries", updateEntry);
+        return await progressiveHttpProxy.getArrayOnlineFirst<EntryModel>(this.baseUrl + equipmentId, "entries", updateEntry, cancelToken);
     }
 
     getStoredEntries = async(equipmentId: string, taskId: string | undefined = undefined):Promise<EntryModel[]> => {
         if(taskId !== undefined){
-            return this.fetchEntries(equipmentId, taskId, true);
+            return this.fetchEntries({equipmentId, taskId, forceToLookUpInStorage:true});
         }
         else{
-            return this.fetchAllEntries(equipmentId, true);
+            return this.fetchAllEntries({equipmentId, cancelToken:undefined, forceToLookUpInStorage:true});
         }
     }
 
@@ -79,7 +91,7 @@ class EntryProxy implements IEntryProxy{
             return false;
         }
 
-        const allEntries = await this.fetchAllEntries(equipmentId, true);
+        const allEntries = await this.fetchAllEntries({ equipmentId, cancelToken: undefined, forceToLookUpInStorage: true });
 
         return allEntries.findIndex(entry => entry._uiId === entryId) !== -1;
     }

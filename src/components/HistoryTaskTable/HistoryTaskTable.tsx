@@ -1,6 +1,5 @@
 import  React, { useEffect, useState, Fragment, useCallback, useRef } from 'react';
 import {useAsync} from 'react-async';
-import {useTraceUpdate} from '../../hooks/Debug';
 import { Button } from 'reactstrap';
 import { 
     composeDecorators,
@@ -28,6 +27,8 @@ import './HistoryTaskTable.css';
 import { EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType } from '../../types/Types';
 
 import jsonMessages from "./HistoryTaskTable.messages.json";
+import httpProxy from '../../services/HttpProxy';
+import { CancelTokenSource } from 'axios';
 const messages = defineMessages(jsonMessages);
 
 type Props = {
@@ -45,19 +46,24 @@ const Table = composeDecorators(
 )();
 
 const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChanged, classNames}: Props) => {
-    useTraceUpdate("HistoryTaskTable", {equipment, task, taskHistoryRefreshId, onHistoryChanged, classNames});
     const modalHook = useEditModal<EntryModel | undefined>(undefined);
     const [entries, setEntries] = useState<EntryModel[]>([]);
 
-    const fetchEntries = useCallback(async(props: any):Promise<EntryModel[]> => {
+    const cancelTokenSourceRef = useRef<CancelTokenSource | undefined>(undefined);
+    const fetchEntries = useCallback(async():Promise<EntryModel[]> => {
         if(equipment && task){
-            return await entryProxy.fetchEntries(equipment._uiId, task._uiId);
+            cancelTokenSourceRef.current = httpProxy.createCancelTokenSource();
+            return await entryProxy.fetchEntries({ equipmentId: equipment._uiId, taskId: task._uiId, cancelToken: cancelTokenSourceRef.current.token});
         }
         else{
             return [];
         }
     }, [equipment, task]);
-    const {data: fetchedEntries, error, isLoading, reload} = useAsync({ promiseFn: fetchEntries });
+    const {data: fetchedEntries, error, isLoading, reload} = useAsync({ promiseFn: fetchEntries, onCancel: () => {
+        if (cancelTokenSourceRef.current){
+            cancelTokenSourceRef.current.cancel("Cancellation of the entry fetch.");
+        }
+    }});
 
     const reloadRef = useRef(reload);
     useEffect(() => {

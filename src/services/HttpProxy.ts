@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { CancelToken, CancelTokenSource } from "axios";
 import axiosRetry from 'axios-retry';
 
 import HttpError from '../http/HttpError'
@@ -12,8 +12,9 @@ export type Config = {
 export interface IHttpProxy{
     post(url: string, data: any): Promise<any>;
     deleteReq(url: string): Promise<any>;
-    get(url: string): Promise<any>;
+    get(url: string, cancelToken?: CancelToken | undefined): Promise<any>;
     setConfig(config: Config | undefined): void;
+    createCancelTokenSource(): CancelTokenSource;
 }
 
 class HttpProxy implements IHttpProxy{
@@ -47,9 +48,10 @@ class HttpProxy implements IHttpProxy{
         }
     }
 
-    get = async (url: string) => {
+    get = async (url: string, cancelToken: CancelToken | undefined = undefined) => {
         try{
-            const response = await axios.get(url, this.config);
+            const config = cancelToken ? Object.assign({ cancelToken }, this.config) : this.config;
+            const response = await axios.get(url, config);
 		    return response.data;
         }
         catch(error){
@@ -75,6 +77,10 @@ class HttpProxy implements IHttpProxy{
             
             throw new HttpError(data);
         }
+    }
+
+    createCancelTokenSource() {
+        return axios.CancelToken.source();
     }
 }
 

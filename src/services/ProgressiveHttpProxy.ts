@@ -3,6 +3,7 @@ import httpProxy from './HttpProxy';
 
 import actionManager, { Action, ActionType } from './ActionManager';
 import storageService from './StorageService';
+import { CancelToken } from 'axios';
 
 /**
  * This interface is an enhanced http proxy that manages offline mode.
@@ -34,7 +35,7 @@ export interface ISyncHttpProxy{
      * @param keyName The field name that contain the array
      * @param init The function init to call on each item before returning the array to the callee
      */
-    getArrayOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T): Promise<T[]>;
+    getArrayOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T, cancelToken?: CancelToken | undefined): Promise<T[]>;
 }
 
 class ProgressiveHttpProxy implements ISyncHttpProxy{
@@ -66,9 +67,9 @@ class ProgressiveHttpProxy implements ISyncHttpProxy{
         }
     }
 
-    async getArrayOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T): Promise<T[]> {
+    async getArrayOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T[]> {
         if(await syncService.isOnlineAndSynced()){
-            const array = (await httpProxy.get(url))[keyName] as T[];
+            const array = (await httpProxy.get(url, cancelToken))[keyName] as T[];
             const initArray = array.map(init);
 
             storageService.setItem<T[]>(url, initArray);
