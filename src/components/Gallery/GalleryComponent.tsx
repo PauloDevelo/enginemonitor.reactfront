@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Label, Button } from 'reactstrap';
+import Loading from '../Loading/Loading';
 import { FormattedMessage } from 'react-intl';
 
 import Thumbnail from './Thumbnail';
@@ -19,12 +20,13 @@ const galleryMsg = defineMessages(jsonMessages);
 type Props = {
     parentUiId: string,
     images: ImageModel[],
+    isLoading: boolean
     onClickThumbnail: (index: number) => void,
     addImage: (image: ImageModel) => void,
     turnOnCamera: () => void
 };
 
-function GalleryComponent({ parentUiId, images, onClickThumbnail, addImage, turnOnCamera }: Props){
+function GalleryComponent({ parentUiId, images, isLoading, onClickThumbnail, addImage, turnOnCamera }: Props){
     const thumbnails = images.map((image, index) => {
         return <Thumbnail key={image._uiId} image={image} onClickImage={() => onClickThumbnail(index)} />;
     });
@@ -44,7 +46,7 @@ function GalleryComponent({ parentUiId, images, onClickThumbnail, addImage, turn
                 </div>
             </div>
             <div className="p-1 border border-secondary rounded shadow gallery">
-                {thumbnails}
+                {isLoading ? <Loading/>: thumbnails}
             </div>
         </Fragment>
 	);

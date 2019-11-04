@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback,Fragment } from 'react';
+import React, { useState, useEffect, useCallback, useRef, Fragment } from 'react';
 import { Button } from 'reactstrap';
 
 import Lightbox from 'react-image-lightbox';
@@ -17,6 +17,10 @@ import imageProxy from '../../services/ImageProxy';
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import {useAsync} from 'react-async';
+import httpProxy from '../../services/HttpProxy';
+import { CancelTokenSource } from 'axios';
+
 import "./Gallery.css";
 
 type Props = {
@@ -30,16 +34,28 @@ function Gallery({parentUiId}: Props){
     const [isCameraOn, setCamera] = useState(false);
     const [index, setIndex] = useState(-1);
 
-    useEffect(() => {
-        imageProxy.fetchImages(parentUiId)
-        .then(images => {
-            setImages(images);
-        })
-        .catch((error) => {
-            console.error("Error when fetching the image for " + parentUiId);
-            errorService.addError(error);
-        });
+    const cancelTokenSourceRef = useRef<CancelTokenSource | undefined>(undefined);
+    const fetchImages = useCallback(async() => {
+        cancelTokenSourceRef.current = httpProxy.createCancelTokenSource();
+        return imageProxy.fetchImages({parentUiId, cancelToken: cancelTokenSourceRef.current.token});
     }, [parentUiId]);
+
+    const {data: fetchedImages, error: errorFetchingImage, isLoading} = useAsync({ promiseFn: fetchImages, onCancel: () => {
+        if (cancelTokenSourceRef.current){
+            cancelTokenSourceRef.current.cancel("Cancellation of the image fetch.");
+        }
+    }});
+	
+	useEffect(() => {
+		setImages(fetchedImages?fetchedImages:[]);
+    }, [fetchedImages]);
+
+    useEffect(() => {
+        if(errorFetchingImage){
+            console.error("Error when fetching the image for " + parentUiId);
+            errorService.addError(errorFetchingImage);
+        }
+    });
 
     const turnOnCamera = useCallback(() => {
         setCamera(true);
@@ -125,7 +141,7 @@ function Gallery({parentUiId}: Props){
 
 	return(
         <Fragment>
-            <GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} turnOnCamera={turnOnCamera} />
+            <GalleryComponent parentUiId={parentUiId} images={images} isLoading={isLoading} onClickThumbnail={onClickThumbnail} addImage={addImage} turnOnCamera={turnOnCamera} />
             {isOpen && images[index] !== undefined && (
                 <Lightbox
                     mainSrc={images[index].url}

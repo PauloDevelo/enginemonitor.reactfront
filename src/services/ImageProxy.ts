@@ -6,9 +6,16 @@ import storageService from './StorageService';
 import { ImageModel } from '../types/Types'
 
 import userContext from './UserContext';
+import { CancelToken } from 'axios';
+
+export interface FetchImagesProps{
+    parentUiId: string;
+    forceToLookUpInStorage?: boolean;
+    cancelToken?: CancelToken | undefined;
+}
 
 export interface IImageProxy{
-    fetchImages(parentUiId: string): Promise<ImageModel[]>;
+    fetchImages(props: FetchImagesProps): Promise<ImageModel[]>;
     createImage(imgFormObj: FormData):Promise<ImageModel>;
     updateImage(imageToSave: ImageModel):Promise<ImageModel>;
     deleteImage(image: ImageModel): Promise<ImageModel>;
@@ -20,12 +27,12 @@ class ImageProxy implements IImageProxy{
     private baseUrl:string = process.env.REACT_APP_URL_BASE + "images/";
 
     ////////////////Equipment////////////////////////
-    fetchImages = async(parentUiId: string, forceToLookUpInStorage: boolean = false): Promise<ImageModel[]> => {
+    fetchImages = async({ parentUiId, forceToLookUpInStorage = false, cancelToken = undefined }: FetchImagesProps): Promise<ImageModel[]> => {
         if (forceToLookUpInStorage){
             return await storageService.getArray<ImageModel>(this.baseUrl + parentUiId);
         }
         
-        return await progressiveHttpProxy.getArrayOnlineFirst<ImageModel>(this.baseUrl + parentUiId, "images", (image) => image);
+        return await progressiveHttpProxy.getArrayOnlineFirst<ImageModel>(this.baseUrl + parentUiId, "images", (image) => image, cancelToken);
     }
     
     createImage = async(imgFormObj: FormData):Promise<ImageModel> => {
@@ -50,7 +57,7 @@ class ImageProxy implements IImageProxy{
     }
 
     onEntityDeleted = async(parentUiId: string):Promise<void> => {
-        var images = await this.fetchImages(parentUiId, true);
+        var images = await this.fetchImages({ parentUiId, forceToLookUpInStorage:true });
 
         await images.reduce(async (previousPromise, image) => {
             await previousPromise;
