@@ -1,8 +1,8 @@
-import React, {Fragment, useState, useEffect, useCallback} from 'react';
+import React, {Fragment, useState, useEffect, useCallback, useRef} from 'react';
 import { Button, Nav, TabContent } from 'reactstrap';
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import {useAsync} from 'react-async';
 import equipmentProxy from '../../services/EquipmentProxy';
 
 import { useEditModal } from '../../hooks/EditModalHook';
@@ -41,24 +41,21 @@ function EquipmentsInfo({userId, changeCurrentEquipment, extraClassNames}: Props
 	}, [currentEquipment, changeCurrentEquipment]);
 
 	const [equipments, setEquipments] = useState<EquipmentModel[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
 
-	const fetchEquipments = async () => {
-		setIsLoading(true);
+	const {data: fetchedEquipments, isLoading, reload} = useAsync({ promiseFn: equipmentProxy.fetchEquipments});
 
-		try {
-			const equipments = await equipmentProxy.fetchEquipments();
-			setEquipments(equipments);
-		} catch (error) {
-			setEquipments([]);
-		}
+    const reloadRef = useRef(reload);
+    useEffect(() => {
+        reloadRef.current = reload;
+    }, [reload]);
 
-		setIsLoading(false);
-	};
+    useEffect(() => {
+        reloadRef.current();
+    }, [userId]);
 
-	useEffect(() => {
-		fetchEquipments();
-	}, [userId]);
+    useEffect(() => {
+        setEquipments(fetchedEquipments ? fetchedEquipments : []);
+    }, [fetchedEquipments])
 
     useEffect(() => {
         if (equipments.length > 0){

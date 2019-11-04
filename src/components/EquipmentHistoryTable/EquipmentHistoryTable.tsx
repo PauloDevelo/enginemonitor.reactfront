@@ -201,7 +201,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
             </span>
             {error && <div><FontAwesomeIcon icon={faExclamationTriangle} color="red"/><FormattedMessage {...messages.errorFetching} /></div>}
             {isLoading && <Loading/>}
-            {error === undefined && isLoading == false && 
+            {error === undefined && isLoading === false && 
             <Table
                 data={entries}
                 className="default-theme"
