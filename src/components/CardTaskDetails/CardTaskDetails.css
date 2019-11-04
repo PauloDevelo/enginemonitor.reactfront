@@ -24,3 +24,10 @@
 .clickable {
     cursor: pointer;
 }
+
+.hover { 
+    z-index: -1; 
+    opacity: 0.5; 
+    transform-style:all; 
+    transition-duration: 1s; 
+} 

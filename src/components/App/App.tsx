@@ -69,6 +69,7 @@ export default function App(){
 	const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
 	const [taskList, setTaskList] = useState<TaskModel[]>([]);
 	const [currentTask, setCurrentTask] = useState<TaskModel | undefined>(undefined);
+	const [currentTaskIsChanging, setCurrentTaskIsChanging] = useState(false);
 
 	const [taskHistoryRefreshId, setTaskHistoryRefreshId] = useState(0);
 	const [equipmentHistoryRefreshId, setEquipmentHistoryRefreshId] = useState(0);
@@ -92,6 +93,10 @@ export default function App(){
 
 		return tasks;
 	
+	}, [currentEquipment]);
+
+	useEffect(() => {
+		setCurrentTaskIsChanging(true);
 	}, [currentEquipment]);
 
 	const {data: fetchedTasks, isLoading, reload} = useAsync({ promiseFn: fetchTasks, onCancel: () => {
@@ -130,6 +135,10 @@ export default function App(){
 	useEffect(() => {
 		setCurrentTaskIfRequired();
 	}, [setCurrentTaskIfRequired]);
+
+	useEffect(() => {
+		setCurrentTaskIsChanging(false);
+	}, [currentTask]);
 
 	const cardTaskDetailDomRef = useRef(null);
 	const cardTaskDetailDomCallBack = useCallback(node => cardTaskDetailDomRef.current = node, []);
@@ -202,6 +211,7 @@ export default function App(){
 									</div>
 									<div className="wrapperColumn">
 										<CardTaskDetails 	callBackRef={cardTaskDetailDomCallBack}
+															currentTaskIsChanging={currentTaskIsChanging}
 															equipment={currentEquipment}
 															tasks={taskList}
 															currentTask={currentTask}
