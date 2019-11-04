@@ -5,14 +5,20 @@ import imageProxy from './ImageProxy';
 
 import storageService from './StorageService';
 
-import { updateTask, updateRealtimeFields } from '../helpers/TaskHelper'
-import { TaskModel} from '../types/Types'
+import { updateTask, updateRealtimeFields } from '../helpers/TaskHelper';
+import { TaskModel} from '../types/Types';
+import { CancelToken } from 'axios';
 
+export interface FetchTaskProps{
+    equipmentId: string;
+    cancelToken?: CancelToken | undefined;
+    forceToLookUpInStorage?: boolean;
+}
 
 export interface ITaskProxy{
     createOrSaveTask(equipmentId: string, newTask: TaskModel):Promise<TaskModel>;
     deleteTask(equipmentId: string, taskId: string): Promise<TaskModel>;
-    fetchTasks(equipmentId: string): Promise<TaskModel[]>;
+    fetchTasks(props: FetchTaskProps): Promise<TaskModel[]>;
 
     existTask(equipmentId: string | undefined, taskId: string | undefined):Promise<boolean>;
 
@@ -41,12 +47,12 @@ class TaskProxy implements ITaskProxy{
         return updateTask(removedTask);
     }
 
-    fetchTasks = async(equipmentId: string, forceToLookUpInStorage: boolean = false): Promise<TaskModel[]> => {
+    fetchTasks = async({equipmentId, forceToLookUpInStorage = false, cancelToken = undefined} :FetchTaskProps): Promise<TaskModel[]> => {
         if(forceToLookUpInStorage){
             return await storageService.getArray(this.baseUrl + equipmentId);
         }
 
-        const tasks:TaskModel[] = await progressiveHttpProxy.getArrayOnlineFirst(this.baseUrl + equipmentId, "tasks", updateTask);
+        const tasks:TaskModel[] = await progressiveHttpProxy.getArrayOnlineFirst(this.baseUrl + equipmentId, "tasks", updateTask, cancelToken);
         await Promise.all(tasks.map(async (task) => {
             await updateRealtimeFields(equipmentId, task);
         }));
@@ -60,13 +66,13 @@ class TaskProxy implements ITaskProxy{
             return false;
         }
 
-        const allTasks = await this.fetchTasks(equipmentId, true);
+        const allTasks = await this.fetchTasks({equipmentId, forceToLookUpInStorage:true});
 
         return allTasks.findIndex(task => task._uiId === taskId) !== -1;
     }
 
     onEquipmentDeleted = async (equipmentId: string): Promise<void> => {
-        var tasks = await this.fetchTasks(equipmentId, true);
+        var tasks = await this.fetchTasks({equipmentId, forceToLookUpInStorage:true});
 
         await tasks.reduce(async (previousPromise, task) => {
             await previousPromise;

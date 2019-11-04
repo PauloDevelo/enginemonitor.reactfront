@@ -24,6 +24,11 @@ import './App.css'
 
 import { UserModel, EquipmentModel, TaskModel } from '../../types/Types';
 
+
+import {useAsync} from 'react-async';
+import httpProxy from '../../services/HttpProxy';
+import { CancelTokenSource } from 'axios';
+
 export default function App(){
 	const [user, setUser] = useState<UserModel | undefined>(undefined);
 	const [error, setError] = useState<Error | undefined>(undefined);
@@ -67,41 +72,45 @@ export default function App(){
 	const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
 	const [taskList, setTaskList] = useState<TaskModel[]>([]);
 	const [currentTask, setCurrentTask] = useState<TaskModel | undefined>(undefined);
-	const [areTasksLoading, setAreTasksLoading] = useState(false);
+
 	const [taskHistoryRefreshId, setTaskHistoryRefreshId] = useState(0);
 	const [equipmentHistoryRefreshId, setEquipmentHistoryRefreshId] = useState(0);
 
-	const fetchTasks = useCallback(() => {
-		if(currentEquipment !== undefined && currentEquipment._uiId !== undefined){
-			setAreTasksLoading(true);
-
-			taskProxy.fetchTasks(currentEquipment._uiId)
-			.then(tasks => {
-				tasks.sort((taskA, taskB) => {
-					if(taskB.level === taskA.level){
-						return taskA.nextDueDate.getTime() - taskB.nextDueDate.getTime();
-					}
-					else{
-						return taskB.level - taskA.level;
-					}
-				});
-
-				setTaskList(tasks);
-				setAreTasksLoading(false);
-			})
-			.catch(reason => {
-				setTaskList([]);
-				setAreTasksLoading(false);
-			});
+	const cancelTokenSourceRef = useRef<CancelTokenSource | undefined>(undefined);
+	const fetchTasks = useCallback(async() => {
+		if(currentEquipment === undefined || currentEquipment._uiId === undefined){
+			return [];
 		}
-		else{
-			setTaskList([]);
-		}
+
+		cancelTokenSourceRef.current = httpProxy.createCancelTokenSource();
+		const tasks = await taskProxy.fetchTasks({ equipmentId: currentEquipment._uiId, cancelToken: cancelTokenSourceRef.current.token});
+		tasks.sort((taskA, taskB) => {
+			if(taskB.level === taskA.level){
+				return taskA.nextDueDate.getTime() - taskB.nextDueDate.getTime();
+			}
+			else{
+				return taskB.level - taskA.level;
+			}
+		});
+
+		return tasks;
+	
 	}, [currentEquipment]);
 
+	const {data: fetchedTasks, isLoading, reload} = useAsync({ promiseFn: fetchTasks, onCancel: () => {
+        if (cancelTokenSourceRef.current){
+            cancelTokenSourceRef.current.cancel("Cancellation of the task fetch.");
+        }
+    }});
+
+    const reloadTasksRef = useRef(reload);
+    useEffect(() => {
+        reloadTasksRef.current = reload;
+	}, [reload]);
+	
 	useEffect(() => {
-		fetchTasks();
-	}, [fetchTasks]);
+		setTaskList(fetchedTasks?fetchedTasks:[]);
+	}, [fetchedTasks]);
 
 	const setCurrentTaskIfRequired = useCallback(() => {
 		setCurrentTask(previousCurrentTask => {
@@ -136,12 +145,12 @@ export default function App(){
 	}, []);
 
 	const onTaskDeleted = useCallback((task: TaskModel)=>{
-		fetchTasks();
+		reloadTasksRef.current();
 		setEquipmentHistoryRefreshId(previousEquipmentHistoryRefreshId => previousEquipmentHistoryRefreshId + 1);
-	}, [fetchTasks]);
+	}, []);
 
 	const onTaskChanged = useCallback((task: TaskModel)=>{
-		fetchTasks();
+		reloadTasksRef.current();
 
 		const currentTaskId = currentTask ? currentTask._uiId : undefined;
 		if(task._uiId === currentTaskId){
@@ -150,12 +159,12 @@ export default function App(){
 		else{
 			setCurrentTask(task);
 		}
-	}, [currentTask, fetchTasks]);
+	}, [currentTask]);
 
 	const onTaskHistoryChanged = useCallback(() => {
-		fetchTasks();
+		reloadTasksRef.current();
 		setEquipmentHistoryRefreshId(previousEquipmentHistoryRefreshId => previousEquipmentHistoryRefreshId + 1);
-	}, [fetchTasks]);
+	}, []);
 
 	const [modalSignupVisible, setModalSignupVisible] = useState(false);
 	const [navBarVisible, setNavBarVisible] = useState(true);
@@ -189,7 +198,7 @@ export default function App(){
 										<TaskTabPanes classNames={panelClassNames + ' columnBody'}
 														currentEquipment={currentEquipment}
 														taskList= {taskList}
-														areTasksLoading={areTasksLoading}
+														areTasksLoading={isLoading}
 														changeCurrentTask={onClickTaskTable}
 														equipmentHistoryRefreshId={equipmentHistoryRefreshId}
 														onTaskChanged={onTaskChanged} />
