@@ -1,5 +1,5 @@
 import  React, { useEffect, useState, Fragment, useCallback, useRef } from 'react';
-import {useAsync} from 'react-async';
+
 import { Button } from 'reactstrap';
 import { 
     composeDecorators,
@@ -26,9 +26,11 @@ import './HistoryTaskTable.css';
 
 import { EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType } from '../../types/Types';
 
-import jsonMessages from "./HistoryTaskTable.messages.json";
+import {useAsync} from 'react-async';
 import httpProxy from '../../services/HttpProxy';
 import { CancelTokenSource } from 'axios';
+
+import jsonMessages from "./HistoryTaskTable.messages.json";
 const messages = defineMessages(jsonMessages);
 
 type Props = {
