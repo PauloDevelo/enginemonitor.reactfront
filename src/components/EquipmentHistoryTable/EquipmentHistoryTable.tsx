@@ -1,4 +1,4 @@
-import  React, { useEffect, useState, Fragment } from 'react';
+import  React, { useEffect, useState, useRef, useCallback, Fragment } from 'react';
 import { Button } from 'reactstrap';
 import { 
     composeDecorators,
@@ -10,10 +10,12 @@ import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
 
+import {CancelTokenSource} from 'axios';
+import httpProxy from '../../services/HttpProxy';
+import {useAsync} from 'react-async';
+
 import { faPlusSquare, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import PropTypes from 'prop-types';
 
 import * as moment from 'moment';
 import entryProxy from '../../services/EntryProxy';
@@ -43,12 +45,6 @@ const Table = composeDecorators(
   withFixedHeader // should be last
 )();
 
-enum FetchState{
-    StandBy,
-    Fetching,
-    Error
-}
-
 const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefreshId, classNames}: Props) => {
     classNames = classNames ? classNames + ' historytasktable' : 'historytasktable';
     const equipmentId = equipment ? equipment._uiId : undefined;
@@ -56,25 +52,36 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
     const modalHook = useEditModal<EntryModel | undefined>(undefined);
 
     const [entries, setEntries] = useState<EntryModel[]>([]);
-    const [fetchingState, setFetchingState] = useState(FetchState.StandBy);
+    
 
-    useEffect(() => {
-        setFetchingState(FetchState.Fetching);
-
+    const cancelTokenSourceRef = useRef<CancelTokenSource | undefined>(undefined);
+    const fetchEntries = useCallback(async():Promise<EntryModel[]> => {
         if(equipmentId){
-            entryProxy.fetchAllEntries({equipmentId}).then(newEntries => {
-                setEntries(newEntries);
-                setFetchingState(FetchState.StandBy);
-            })
-            .catch(reason => {
-                setFetchingState(FetchState.Error);
-            });
+            cancelTokenSourceRef.current = httpProxy.createCancelTokenSource();
+            return await entryProxy.fetchAllEntries({ equipmentId, cancelToken: cancelTokenSourceRef.current.token});
         }
         else{
-            setEntries([]);
-            setFetchingState(FetchState.StandBy);
+            return [];
         }
-    }, [equipmentId, equipmentHistoryRefreshId]);
+    }, [equipmentId]);
+    const {data: fetchedEntries, error, isLoading, reload} = useAsync({ promiseFn: fetchEntries, onCancel: () => {
+        if (cancelTokenSourceRef.current){
+            cancelTokenSourceRef.current.cancel("Cancellation of the entry fetch.");
+        }
+    }});
+
+    const reloadRef = useRef(reload);
+    useEffect(() => {
+        reloadRef.current = reload;
+    }, [reload]);
+
+    useEffect(() => {
+        reloadRef.current();
+    }, [equipmentHistoryRefreshId, reloadRef]);
+
+    useEffect(() => {
+        setEntries(fetchedEntries?fetchedEntries:[]);
+    }, [fetchedEntries]);
 
     const onSavedEntry = (savedEntry: EntryModel) => {
         const newCurrentHistory = entries.filter(entry => entry._uiId !== savedEntry._uiId);
@@ -192,9 +199,9 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
                     <FontAwesomeIcon icon={faPlusSquare} />
                 </Button>}
             </span>
-            {fetchingState === FetchState.Error && <div><FontAwesomeIcon icon={faExclamationTriangle} color="red"/><FormattedMessage {...messages.errorFetching} /></div>}
-            {fetchingState === FetchState.Fetching && <Loading/>}
-            {fetchingState === FetchState.StandBy && 
+            {error && <div><FontAwesomeIcon icon={faExclamationTriangle} color="red"/><FormattedMessage {...messages.errorFetching} /></div>}
+            {isLoading && <Loading/>}
+            {error === undefined && isLoading == false && 
             <Table
                 data={entries}
                 className="default-theme"
@@ -216,11 +223,5 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
         </div>
     );
 }
-
-EquipmentHistoryTable.propTypes = {
-    equipment: PropTypes.object,
-    classNames: PropTypes.string,
-    onEntryDeleted: PropTypes.object,
-};
 
 export default React.memo(EquipmentHistoryTable);
