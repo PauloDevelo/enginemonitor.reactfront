@@ -120,18 +120,8 @@ describe("CardTaskDetails", () => {
         expect(onTaskChangedMock).toHaveBeenCalledTimes(0);
         expect(onTaskDeletedMock).toHaveBeenCalledTimes(0);
         expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
-    });
 
-    it("should stay the same with task1", () => {
-        const tree = renderer.create(<CardTaskDetails 
-                                        equipment={equipment} 
-                                        tasks={tasks} 
-                                        currentTask={task1}
-                                        onTaskChanged={onTaskChangedMock}
-                                        onTaskDeleted={onTaskDeletedMock}
-                                        changeCurrentTask={changeCurrentTaskMock} 
-                                    />).toJSON();
-        expect(tree).toMatchSnapshot();
+        expect(wrapper).toMatchSnapshot();
     });
 
     it("Should render the task 2 details", () => {
@@ -153,18 +143,7 @@ describe("CardTaskDetails", () => {
         expect(onTaskChangedMock).toHaveBeenCalledTimes(0);
         expect(onTaskDeletedMock).toHaveBeenCalledTimes(0);
         expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
-    });
-
-    it("should stay the same with task2", () => {
-        const tree = renderer.create(<CardTaskDetails 
-                                        equipment={equipment} 
-                                        tasks={tasks} 
-                                        currentTask={task2}
-                                        onTaskChanged={onTaskChangedMock}
-                                        onTaskDeleted={onTaskDeletedMock}
-                                        changeCurrentTask={changeCurrentTaskMock} 
-                                    />).toJSON();
-        expect(tree).toMatchSnapshot();
+        expect(wrapper).toMatchSnapshot();
     });
 
     it("Should call changeCurrentTask after clicking on the next button", () => {
