@@ -24,7 +24,6 @@ import './App.css'
 
 import { UserModel, EquipmentModel, TaskModel } from '../../types/Types';
 
-
 import {useAsync} from 'react-async';
 import httpProxy from '../../services/HttpProxy';
 import { CancelTokenSource } from 'axios';
@@ -32,8 +31,6 @@ import { CancelTokenSource } from 'axios';
 export default function App(){
 	const [user, setUser] = useState<UserModel | undefined>(undefined);
 	const [error, setError] = useState<Error | undefined>(undefined);
-
-	
 
 	useEffect(() => {
 		const refreshCurrentUser = async () => {
