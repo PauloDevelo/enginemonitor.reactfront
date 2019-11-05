@@ -59,6 +59,20 @@ describe('Component Gallery', () =>{
         imageProxy.deleteImage.mockRestore();
     })
 
+    it('should render a spinner the time to get the answer from the backend', async () => {
+        // Arrange
+        
+        // Act
+        const gallery = mount(<Gallery parentUiId={parentUiId} />);
+        
+        // Assert
+        var loading = gallery.find('Loading');
+        expect(loading.length).toBe(1);
+ 
+        expect(imageProxy.fetchImages).toHaveBeenCalledTimes(1);
+        expect(gallery).toMatchSnapshot();
+    });
+
     it('should render a list of image using the thumbnail url', async () => {
         // Arrange
         
