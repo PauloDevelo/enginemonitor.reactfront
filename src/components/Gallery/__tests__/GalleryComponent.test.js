@@ -51,6 +51,26 @@ describe('Component GalleryComponent', () =>{
     afterEach(() => {
     })
 
+    it('should render a spinner the time to get the answer from the back end.', async () => {
+        // Arrange
+        const onClickThumbnail = jest.fn();
+        const addImage = jest.fn();
+        const turnOnCamera = jest.fn();
+        
+        // Act
+        const galleryComponent = mount(<GalleryComponent parentUiId={parentUiId} isLoading={true} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} turnOnCamera={turnOnCamera}/>);
+        
+        // Assert
+        var loading = galleryComponent.find('Loading');
+        expect(loading.length).toBe(1);
+
+        expect(onClickThumbnail).toHaveBeenCalledTimes(0);
+        expect(addImage).toHaveBeenCalledTimes(0);
+        expect(turnOnCamera).toHaveBeenCalledTimes(0);
+
+        expect(galleryComponent).toMatchSnapshot();
+    });
+
     it('should render a list of image using the thumbnail url', async () => {
         // Arrange
         const onClickThumbnail = jest.fn();
@@ -59,7 +79,6 @@ describe('Component GalleryComponent', () =>{
         
         // Act
         const galleryComponent = mount(<GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} turnOnCamera={turnOnCamera}/>);
-        await updateWrapper(galleryComponent);
 
         // Assert
         var thumbnails = galleryComponent.find('Memo(Thumbnail)');
@@ -82,7 +101,6 @@ describe('Component GalleryComponent', () =>{
         const turnOnCamera = jest.fn();
 
         const galleryComponent = mount(<GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} turnOnCamera={turnOnCamera}/>);
-        await updateWrapper(galleryComponent);
 
         var thumbnails = galleryComponent.find('Memo(Thumbnail)');
         
@@ -106,7 +124,6 @@ describe('Component GalleryComponent', () =>{
         const turnOnCamera = jest.fn();
 
         const galleryComponent = mount(<GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} turnOnCamera={turnOnCamera}/>);
-        await updateWrapper(galleryComponent);
 
         var cameraButton = galleryComponent.find('Button').at(1);
         
