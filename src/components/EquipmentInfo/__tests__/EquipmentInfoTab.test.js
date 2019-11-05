@@ -1,12 +1,17 @@
 
 import { mount } from 'enzyme';
 import ignoredMessages from '../../../testHelpers/MockConsole';
-import updateWrapper from '../../../testHelpers/EnzymeHelper';
+
 
 import React from 'react';
 import { IntlProvider } from "react-intl";
 
 import EquipmentInfoTab from '../EquipmentInfoTab';
+
+import imageProxy from '../../../services/ImageProxy';
+import updateWrapper from '../../../testHelpers/EnzymeHelper';
+
+jest.mock('../../../services/ImageProxy');
 
 describe("EquipmentInfoTab", () => {
 
@@ -21,19 +26,20 @@ describe("EquipmentInfoTab", () => {
 
     beforeAll(() => {
         ignoredMessages.length = 0;
+        ignoredMessages.push("test was not wrapped in act(...)");
         ignoredMessages.push("[React Intl] Could not find required `intl` object.");
         ignoredMessages.push("[React Intl] Missing message");
     });
 
     beforeEach(() => {
-        
+        imageProxy.fetchImages.mockResolvedValue([]);
     });
 
     afterEach(() => {
-
+        imageProxy.fetchImages.mockRestore();
     });
 
-    it("Should render an equipment", () => {
+    it("Should render an equipment", async() => {
         // Arrange
         const displayEquipment = jest.fn();
 
@@ -41,6 +47,7 @@ describe("EquipmentInfoTab", () => {
         const equipmentInfoTab = mount(<IntlProvider locale={navigator.language}>
                                             <EquipmentInfoTab equipment={equipment} displayEquipment={displayEquipment}/>
                                         </IntlProvider>);
+        await updateWrapper(equipmentInfoTab);
         
         // Assert
         expect(displayEquipment).toHaveBeenCalledTimes(0);
@@ -52,12 +59,13 @@ describe("EquipmentInfoTab", () => {
         expect(equipmentInfoTab).toMatchSnapshot();
     });
 
-    it("Should render the equipment edition modal when clicking on the edit button", () => {
+    it("Should render the equipment edition modal when clicking on the edit button", async() => {
         // Arrange
         const displayEquipment = jest.fn();
         const equipmentInfoTab = mount(<IntlProvider locale={navigator.language}>
                                             <EquipmentInfoTab equipment={equipment} displayEquipment={displayEquipment}/>
                                         </IntlProvider>);
+        await updateWrapper(equipmentInfoTab);
         
         // Act
         equipmentInfoTab.find('TabPane').find('Button').at(0).simulate('click');

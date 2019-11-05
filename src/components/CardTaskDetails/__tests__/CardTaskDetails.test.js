@@ -1,13 +1,17 @@
 import ignoredMessages from '../../../testHelpers/MockConsole';
 import React from 'react';
 import { mount } from 'enzyme';
-import renderer from 'react-test-renderer';
+
+import imageProxy from '../../../services/ImageProxy';
 
 import CardTaskDetails from '../CardTaskDetails';
+
+jest.mock('../../../services/ImageProxy');
 
 describe("CardTaskDetails", () => {
     beforeAll(() => {
         ignoredMessages.length = 0;
+        ignoredMessages.push("test was not wrapped in act(...)");
         ignoredMessages.push("[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.");
     });
 
@@ -51,6 +55,12 @@ describe("CardTaskDetails", () => {
         onTaskChangedMock.mockClear();
         onTaskDeletedMock.mockClear();
         changeCurrentTaskMock.mockClear();
+
+        imageProxy.fetchImages.mockResolvedValue([]);
+    });
+
+    afterEach(() => {
+        imageProxy.fetchImages.mockRestore();
     });
 
     it("Should render correctly even if the equipment is undefined", () => {
