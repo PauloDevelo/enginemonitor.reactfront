@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef, Fragment } from 'react';
+import React, { useState, useEffect, useCallback, useRef, Fragment, useMemo } from 'react';
 import { Button } from 'reactstrap';
 
 import Lightbox from 'react-image-lightbox';
@@ -35,27 +35,29 @@ function Gallery({parentUiId}: Props){
     const [index, setIndex] = useState(-1);
 
     const cancelTokenSourceRef = useRef<CancelTokenSource | undefined>(undefined);
+    const cancelFetchImages = useCallback(() => {
+        if (cancelTokenSourceRef.current){
+            cancelTokenSourceRef.current.cancel("Cancellation of the image fetch.");
+        }
+    }, []);
+
     const fetchImages = useCallback(async() => {
         cancelTokenSourceRef.current = httpProxy.createCancelTokenSource();
         return imageProxy.fetchImages({parentUiId, cancelToken: cancelTokenSourceRef.current.token});
     }, [parentUiId]);
 
-    const {data: fetchedImages, error: errorFetchingImage, isLoading} = useAsync({ promiseFn: fetchImages, onCancel: () => {
-        if (cancelTokenSourceRef.current){
-            cancelTokenSourceRef.current.cancel("Cancellation of the image fetch.");
-        }
-    }});
+    const {data: fetchedImages, error: errorFetchingImages, isLoading} = useAsync({ promiseFn: fetchImages, onCancel: cancelFetchImages });
 	
 	useEffect(() => {
-		setImages(fetchedImages?fetchedImages:[]);
+        setImages(fetchedImages?fetchedImages:[]);
     }, [fetchedImages]);
 
     useEffect(() => {
-        if(errorFetchingImage){
+        if(errorFetchingImages !== undefined){
             console.error("Error when fetching the image for " + parentUiId);
-            errorService.addError(errorFetchingImage);
+            errorService.addError(errorFetchingImages);
         }
-    });
+    }, [errorFetchingImages]);
 
     const turnOnCamera = useCallback(() => {
         setCamera(true);

@@ -4,10 +4,12 @@ import updateWrapper from '../../../testHelpers/EnzymeHelper';
 import React from 'react';
 import { mount } from 'enzyme';
 
+import localforage from 'localforage';
 import imageProxy from '../../../services/ImageProxy';
 import Gallery from '../Gallery';
 
 jest.mock('../../../services/ImageProxy');
+jest.mock('localforage');
 
 describe('Component Gallery', () =>{
     const parentUiId = "equipment_01";
@@ -63,7 +65,7 @@ describe('Component Gallery', () =>{
         // Act
         const gallery = mount(<Gallery parentUiId={parentUiId} />);
         await updateWrapper(gallery);
-
+        
         // Assert
         var thumbnails = gallery.find('Memo(Thumbnail)');
         expect(thumbnails.length).toBe(3);
@@ -180,7 +182,6 @@ describe('Component Gallery', () =>{
 
         // Act
         cameraButton.at(1).simulate('click');
-        await updateWrapper(gallery);
 
         // Assert
         expect(gallery.find('Memo(Html5Camera)').length).toBe(1);

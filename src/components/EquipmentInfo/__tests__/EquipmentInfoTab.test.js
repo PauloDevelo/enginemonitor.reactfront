@@ -1,6 +1,7 @@
 
 import { mount } from 'enzyme';
 import ignoredMessages from '../../../testHelpers/MockConsole';
+import localforage from 'localforage';
 
 
 import React from 'react';
@@ -12,6 +13,7 @@ import imageProxy from '../../../services/ImageProxy';
 import updateWrapper from '../../../testHelpers/EnzymeHelper';
 
 jest.mock('../../../services/ImageProxy');
+jest.mock('localforage');
 
 describe("EquipmentInfoTab", () => {
 

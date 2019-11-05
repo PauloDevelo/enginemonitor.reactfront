@@ -131,7 +131,7 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
           <Memo(GalleryComponent)
             addImage={[Function]}
             images={Array []}
-            isLoading={true}
+            isLoading={false}
             onClickThumbnail={[Function]}
             parentUiId="1234"
             turnOnCamera={[Function]}
@@ -439,26 +439,7 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
             </div>
             <div
               className="p-1 border border-secondary rounded shadow gallery"
-            >
-              <Loading>
-                <div
-                  className="lds-spinner"
-                >
-                  <div />
-                  <div />
-                  <div />
-                  <div />
-                  <div />
-                  <div />
-                  <div />
-                  <div />
-                  <div />
-                  <div />
-                  <div />
-                  <div />
-                </div>
-              </Loading>
-            </div>
+            />
           </Memo(GalleryComponent)>
           <ModalEditImage
             onImageDeleted={[Function]}

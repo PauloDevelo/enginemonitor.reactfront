@@ -1,8 +1,8 @@
 const updateWrapper = (wrapper: any): Promise<void> => {
     return new Promise((resolve, reject) => {
-        Promise.resolve(wrapper) .then(() => {
-            wrapper.update();
-            resolve();
+        Promise.resolve(wrapper).then(() => {
+            setTimeout(() => wrapper.update(), 10);
+            setTimeout(resolve, 20);
         });
     });
 }

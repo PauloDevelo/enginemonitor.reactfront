@@ -5,8 +5,10 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import GalleryComponent from '../GalleryComponent';
+import localforage from 'localforage';
 
 jest.mock('../../../services/ImageProxy');
+jest.mock('localforage');
 
 describe('Component GalleryComponent', () =>{
     const parentUiId = "equipment_01";
