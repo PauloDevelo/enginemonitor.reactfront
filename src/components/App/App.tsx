@@ -134,7 +134,7 @@ export default function App(){
 	const onTaskDeleted = useCallback((task: TaskModel)=>{
 		reloadTasksRef.current();
 		setEquipmentHistoryRefreshId(previousEquipmentHistoryRefreshId => previousEquipmentHistoryRefreshId + 1);
-	}, []);
+	}, [reloadTasksRef]);
 
 	const onTaskChanged = useCallback((task: TaskModel)=>{
 		reloadTasksRef.current();
@@ -146,12 +146,12 @@ export default function App(){
 		else{
 			setCurrentTask(task);
 		}
-	}, [currentTask]);
+	}, [currentTask, reloadTasksRef]);
 
 	const onTaskHistoryChanged = useCallback(() => {
 		reloadTasksRef.current();
 		setEquipmentHistoryRefreshId(previousEquipmentHistoryRefreshId => previousEquipmentHistoryRefreshId + 1);
-	}, []);
+	}, [reloadTasksRef]);
 
 	const [modalSignupVisible, setModalSignupVisible] = useState(false);
 	const [navBarVisible, setNavBarVisible] = useState(true);

@@ -1,6 +1,6 @@
 import { useRef, useCallback, useEffect } from 'react';
 
-import {useAsync, AsyncState} from 'react-async';
+import {useAsync} from 'react-async';
 import httpProxy from '../services/HttpProxy';
 import { CancelTokenSource } from 'axios';
 
@@ -23,14 +23,15 @@ export function useFetcher<T, P>({ fetchPromise, fetchProps, cancellationMsg}:Ax
         if (cancelTokenSourceRef.current){
             cancelTokenSourceRef.current.cancel(cancellationMsg);
         }
-    }, []);
+    }, [cancelTokenSourceRef, cancellationMsg]);
 
     const fetch = useCallback(async() => {
         cancelTokenSourceRef.current = httpProxy.createCancelTokenSource();
         const extendedFetchProps = Object.assign({cancelToken: cancelTokenSourceRef.current.token}, fetchProps);
 
         return fetchPromise(extendedFetchProps);
-    }, Object.values(fetchProps));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchPromise, cancelTokenSourceRef, ...Object.values(fetchProps)]);
 
     const {data, error, isLoading, reload} = useAsync({ promiseFn: fetch, onCancel: cancelFetchImages });
 

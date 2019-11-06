@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef, Fragment, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import { Button } from 'reactstrap';
 
 import Lightbox from 'react-image-lightbox';
@@ -40,7 +40,6 @@ function Gallery({parentUiId}: Props){
 
     useEffect(() => {
         if(errorFetchingImages !== undefined){
-            console.error("Error when fetching the image for " + parentUiId);
             errorService.addError(errorFetchingImages);
         }
     }, [errorFetchingImages]);
