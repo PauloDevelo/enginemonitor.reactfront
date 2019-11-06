@@ -10,7 +10,7 @@ import { TaskModel} from '../types/Types';
 import { CancelToken } from 'axios';
 
 export interface FetchTaskProps{
-    equipmentId: string;
+    equipmentId: string | undefined;
     cancelToken?: CancelToken | undefined;
     forceToLookUpInStorage?: boolean;
 }
@@ -48,6 +48,11 @@ class TaskProxy implements ITaskProxy{
     }
 
     fetchTasks = async({equipmentId, forceToLookUpInStorage = false, cancelToken = undefined} :FetchTaskProps): Promise<TaskModel[]> => {
+        if(equipmentId === undefined)
+        {
+            return [];
+        }
+
         if(forceToLookUpInStorage){
             return await storageService.getArray(this.baseUrl + equipmentId);
         }

@@ -10,9 +10,7 @@ import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
 
-import {CancelTokenSource} from 'axios';
-import httpProxy from '../../services/HttpProxy';
-import {useAsync} from 'react-async';
+import { useFetcher} from '../../hooks/Fetcher';
 
 import { faPlusSquare, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -50,30 +48,8 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
     const equipmentId = equipment ? equipment._uiId : undefined;
     
     const modalHook = useEditModal<EntryModel | undefined>(undefined);
-
     const [entries, setEntries] = useState<EntryModel[]>([]);
-    
-
-    const cancelTokenSourceRef = useRef<CancelTokenSource | undefined>(undefined);
-    const fetchEntries = useCallback(async():Promise<EntryModel[]> => {
-        if(equipmentId){
-            cancelTokenSourceRef.current = httpProxy.createCancelTokenSource();
-            return await entryProxy.fetchAllEntries({ equipmentId, cancelToken: cancelTokenSourceRef.current.token});
-        }
-        else{
-            return [];
-        }
-    }, [equipmentId]);
-    const {data: fetchedEntries, error, isLoading, reload} = useAsync({ promiseFn: fetchEntries, onCancel: () => {
-        if (cancelTokenSourceRef.current){
-            cancelTokenSourceRef.current.cancel("Cancellation of the entry fetch.");
-        }
-    }});
-
-    const reloadRef = useRef(reload);
-    useEffect(() => {
-        reloadRef.current = reload;
-    }, [reload]);
+    const {data: fetchedEntries, error, isLoading, reloadRef} = useFetcher({ fetchPromise: entryProxy.fetchAllEntries, fetchProps: {equipmentId}, cancellationMsg:"Cancellation of equipment history fetching"});
 
     useEffect(() => {
         reloadRef.current();

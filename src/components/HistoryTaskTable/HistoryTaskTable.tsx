@@ -26,9 +26,7 @@ import './HistoryTaskTable.css';
 
 import { EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType } from '../../types/Types';
 
-import {useAsync} from 'react-async';
-import httpProxy from '../../services/HttpProxy';
-import { CancelTokenSource } from 'axios';
+import {useFetcher} from '../../hooks/Fetcher';
 
 import jsonMessages from "./HistoryTaskTable.messages.json";
 const messages = defineMessages(jsonMessages);
@@ -48,29 +46,13 @@ const Table = composeDecorators(
 )();
 
 const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChanged, classNames}: Props) => {
+    const equipmentId = equipment ? equipment._uiId: undefined;
+    const taskId = task ? task._uiId : undefined;
+
     const modalHook = useEditModal<EntryModel | undefined>(undefined);
     const [entries, setEntries] = useState<EntryModel[]>([]);
 
-    const cancelTokenSourceRef = useRef<CancelTokenSource | undefined>(undefined);
-    const fetchEntries = useCallback(async():Promise<EntryModel[]> => {
-        if(equipment && task){
-            cancelTokenSourceRef.current = httpProxy.createCancelTokenSource();
-            return await entryProxy.fetchEntries({ equipmentId: equipment._uiId, taskId: task._uiId, cancelToken: cancelTokenSourceRef.current.token});
-        }
-        else{
-            return [];
-        }
-    }, [equipment, task]);
-    const {data: fetchedEntries, error, isLoading, reload} = useAsync({ promiseFn: fetchEntries, onCancel: () => {
-        if (cancelTokenSourceRef.current){
-            cancelTokenSourceRef.current.cancel("Cancellation of the entry fetch.");
-        }
-    }});
-
-    const reloadRef = useRef(reload);
-    useEffect(() => {
-        reloadRef.current = reload;
-    }, [reload]);
+    const {data: fetchedEntries, error, isLoading, reloadRef} = useFetcher({ fetchPromise: entryProxy.fetchEntries, fetchProps:{equipmentId, taskId}, cancellationMsg:"Cancellation of task history fetching"});
 
     useEffect(() => {
         reloadRef.current();

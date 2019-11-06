@@ -24,9 +24,7 @@ import './App.css'
 
 import { UserModel, EquipmentModel, TaskModel } from '../../types/Types';
 
-import {useAsync} from 'react-async';
-import httpProxy from '../../services/HttpProxy';
-import { CancelTokenSource } from 'axios';
+import {useFetcher} from '../../hooks/Fetcher';
 
 export default function App(){
 	const [user, setUser] = useState<UserModel | undefined>(undefined);
@@ -67,6 +65,8 @@ export default function App(){
 	}, [error]);
 
 	const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
+	const currentEquipmentId = currentEquipment ? currentEquipment._uiId : undefined;
+
 	const [taskList, setTaskList] = useState<TaskModel[]>([]);
 	const [currentTask, setCurrentTask] = useState<TaskModel | undefined>(undefined);
 	const [currentTaskIsChanging, setCurrentTaskIsChanging] = useState(false);
@@ -74,43 +74,24 @@ export default function App(){
 	const [taskHistoryRefreshId, setTaskHistoryRefreshId] = useState(0);
 	const [equipmentHistoryRefreshId, setEquipmentHistoryRefreshId] = useState(0);
 
-	const cancelTokenSourceRef = useRef<CancelTokenSource | undefined>(undefined);
-	const fetchTasks = useCallback(async() => {
-		if(currentEquipment === undefined || currentEquipment._uiId === undefined){
-			return [];
-		}
-
-		cancelTokenSourceRef.current = httpProxy.createCancelTokenSource();
-		const tasks = await taskProxy.fetchTasks({ equipmentId: currentEquipment._uiId, cancelToken: cancelTokenSourceRef.current.token});
-		tasks.sort((taskA, taskB) => {
-			if(taskB.level === taskA.level){
-				return taskA.nextDueDate.getTime() - taskB.nextDueDate.getTime();
-			}
-			else{
-				return taskB.level - taskA.level;
-			}
-		});
-
-		return tasks;
-	
-	}, [currentEquipment]);
+	const {data: fetchedTasks, isLoading, reloadRef: reloadTasksRef} = useFetcher({ fetchPromise: taskProxy.fetchTasks, fetchProps: {equipmentId: currentEquipmentId}, cancellationMsg:"Cancellation of tasks fetching"});
 
 	useEffect(() => {
 		setCurrentTaskIsChanging(true);
 	}, [currentEquipment]);
-
-	const {data: fetchedTasks, isLoading, reload} = useAsync({ promiseFn: fetchTasks, onCancel: () => {
-        if (cancelTokenSourceRef.current){
-            cancelTokenSourceRef.current.cancel("Cancellation of the task fetch.");
-        }
-    }});
-
-    const reloadTasksRef = useRef(reload);
-    useEffect(() => {
-        reloadTasksRef.current = reload;
-	}, [reload]);
 	
 	useEffect(() => {
+		if(fetchedTasks){
+			fetchedTasks.sort((taskA, taskB) => {
+				if(taskB.level === taskA.level){
+					return taskA.nextDueDate.getTime() - taskB.nextDueDate.getTime();
+				}
+				else{
+					return taskB.level - taskA.level;
+				}
+			});
+		}
+
 		setTaskList(fetchedTasks?fetchedTasks:[]);
 	}, [fetchedTasks]);
 

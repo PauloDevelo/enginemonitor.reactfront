@@ -17,9 +17,7 @@ import imageProxy from '../../services/ImageProxy';
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {useAsync} from 'react-async';
-import httpProxy from '../../services/HttpProxy';
-import { CancelTokenSource } from 'axios';
+import {useFetcher} from '../../hooks/Fetcher';
 
 import "./Gallery.css";
 
@@ -34,19 +32,7 @@ function Gallery({parentUiId}: Props){
     const [isCameraOn, setCamera] = useState(false);
     const [index, setIndex] = useState(-1);
 
-    const cancelTokenSourceRef = useRef<CancelTokenSource | undefined>(undefined);
-    const cancelFetchImages = useCallback(() => {
-        if (cancelTokenSourceRef.current){
-            cancelTokenSourceRef.current.cancel("Cancellation of the image fetch.");
-        }
-    }, []);
-
-    const fetchImages = useCallback(async() => {
-        cancelTokenSourceRef.current = httpProxy.createCancelTokenSource();
-        return imageProxy.fetchImages({parentUiId, cancelToken: cancelTokenSourceRef.current.token});
-    }, [parentUiId]);
-
-    const {data: fetchedImages, error: errorFetchingImages, isLoading} = useAsync({ promiseFn: fetchImages, onCancel: cancelFetchImages });
+    const {data: fetchedImages, error: errorFetchingImages, isLoading} = useFetcher({ fetchPromise: imageProxy.fetchImages, fetchProps: { parentUiId }, cancellationMsg:"Cancellation of images fetching" });
 	
 	useEffect(() => {
         setImages(fetchedImages?fetchedImages:[]);
