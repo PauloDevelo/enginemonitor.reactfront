@@ -42,7 +42,7 @@ function EquipmentsInfo({userId, changeCurrentEquipment, extraClassNames}: Props
 
 	const [equipments, setEquipments] = useState<EquipmentModel[]>([]);
 
-	const {data: fetchedEquipments, isLoading, reload} = useAsync({ promiseFn: equipmentProxy.fetchEquipments});
+	const {data: fetchedEquipments, isLoading, isRejected, reload} = useAsync({ promiseFn: equipmentProxy.fetchEquipments});
 
     const reloadRef = useRef(reload);
     useEffect(() => {
@@ -55,7 +55,13 @@ function EquipmentsInfo({userId, changeCurrentEquipment, extraClassNames}: Props
 
     useEffect(() => {
         setEquipments(fetchedEquipments ? fetchedEquipments : []);
-    }, [fetchedEquipments])
+	}, [fetchedEquipments]);
+	
+	useEffect(() => {
+		if(isRejected){
+			setEquipments([]);
+		}
+	}, [isRejected]);
 
     useEffect(() => {
         if (equipments.length > 0){
