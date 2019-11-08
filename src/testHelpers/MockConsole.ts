@@ -3,7 +3,7 @@ const ignoredMessages:string[] = [
 
 const mockConsoleMethod = (realConsoleMethod: (message?: any, ...args: any[])=> void) => {
     return (message?: any, ...args: any[]) => {
-        const containsIgnoredMessage = ignoredMessages.some((ignoredMessage) => message.includes(ignoredMessage));
+        const containsIgnoredMessage = ignoredMessages.some((ignoredMessage) => message.toString().includes(ignoredMessage));
 
         if (!containsIgnoredMessage) {
             realConsoleMethod(message, ...args);
