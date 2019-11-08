@@ -9,8 +9,6 @@ import ToolTip from '../ToolTip'
 describe('Component ToolTip', () =>{
     let element;
     let container;
-    let target;
-    let innerTarget;
 
     beforeEach(() => {
         element = document.createElement('div');
@@ -20,8 +18,6 @@ describe('Component ToolTip', () =>{
         container.setAttribute('id', 'container');
         element.appendChild(container);
         document.body.appendChild(element);
-        target = document.getElementById('target');
-        innerTarget = document.getElementById('innerTarget');
     
         jest.useFakeTimers();
       });
