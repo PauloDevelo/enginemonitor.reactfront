@@ -143,4 +143,32 @@ describe("EquipmentHistoryTable", () => {
         
         expect(equipmentHistoryTable).toMatchSnapshot();
     });
+
+    it("Should rerender all the entries for an equipment when equipmentHistoryRefreshId change", async() => {
+        // Arrange
+        const onEquipmentChanged = jest.fn();
+
+        const properties = {equipment, onTaskChanged:onEquipmentChanged, equipmentHistoryRefreshId: 0};
+        const wrapper = mount(
+            React.createElement(
+                props => (
+                    <IntlProvider locale={navigator.language}>
+                        <EquipmentHistoryTable 
+                        {...props}/>
+                    </IntlProvider>
+                ),
+                properties)
+            );
+        await updateWrapper(wrapper);
+
+        // Act
+        properties.equipmentHistoryRefreshId = 1;
+
+        wrapper.setProps(properties); 
+        await updateWrapper(wrapper);
+        
+        // Assert
+        expect(entryProxy.fetchAllEntries).toBeCalledTimes(2);
+        expect(onEquipmentChanged).toBeCalledTimes(0);
+    });
 });
