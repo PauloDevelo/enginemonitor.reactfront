@@ -1,11 +1,11 @@
 import  React, { useEffect, useState, Fragment } from 'react';
 import { Button } from 'reactstrap';
-import { 
-    composeDecorators,
-    withInMemorySortingContext,
-    withFixedHeader,
-    withHeaderControl,
-  } from 'react-table-factory';
+
+import { composeDecorators } from '../react-table-factory/table';
+import { withInMemorySortingContext } from '../react-table-factory/withSortingContext';
+import { withHeaderControl } from '../react-table-factory/withHeaderControl';
+import { withFixedHeader } from '../react-table-factory/withFixedHeader';
+
 import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';

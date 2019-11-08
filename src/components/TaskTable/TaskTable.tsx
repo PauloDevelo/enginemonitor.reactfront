@@ -1,11 +1,10 @@
 import React, {Fragment, useEffect, useState, useCallback} from 'react';
 import { Button, Badge } from 'reactstrap';
-import { 
-  composeDecorators,
-  withInMemorySortingContext,
-  withFixedHeader,
-  withHeaderControl,
-} from 'react-table-factory';
+
+import { composeDecorators } from '../react-table-factory/table';
+import { withInMemorySortingContext } from '../react-table-factory/withSortingContext';
+import { withHeaderControl } from '../react-table-factory/withHeaderControl';
+import {withFixedHeader} from '../react-table-factory/withFixedHeader';
 
 import { FormattedMessage, defineMessages } from 'react-intl';
 import { faTasks, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
