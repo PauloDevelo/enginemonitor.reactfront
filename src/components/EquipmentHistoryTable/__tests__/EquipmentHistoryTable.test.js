@@ -90,7 +90,7 @@ describe("EquipmentHistoryTable", () => {
         // Assert
         expect(equipmentHistoryTable.find('tbody').length).toBe(0);
         expect(equipmentHistoryTable.find('Loading').length).toBe(1);
-        // expect(entryProxy.fetchAllEntries).toBeCalledTimes(1);
+        expect(entryProxy.fetchAllEntries).toBeCalledTimes(1);
         expect(onEquipmentChanged).toBeCalledTimes(0);
 
         expect(equipmentHistoryTable).toMatchSnapshot();
@@ -115,7 +115,7 @@ describe("EquipmentHistoryTable", () => {
         for(let i = 0; i < entries.length; i++){
             expect(tbodyProps.children[i].props.data).toBe(entries[i]);
         }
-        // expect(entryProxy.fetchAllEntries).toBeCalledTimes(1);
+        expect(entryProxy.fetchAllEntries).toBeCalledTimes(1);
         expect(onEquipmentChanged).toBeCalledTimes(0);
         
         expect(equipmentHistoryTable).toMatchSnapshot();
@@ -138,7 +138,7 @@ describe("EquipmentHistoryTable", () => {
         // Assert
         const tbodyProps = equipmentHistoryTable.find('tbody').at(0).props();
         expect(tbodyProps.children.length).toBe(0);
-        // expect(entryProxy.fetchAllEntries).toBeCalledTimes(1);
+        expect(entryProxy.fetchAllEntries).toBeCalledTimes(1);
         expect(onEquipmentChanged).toBeCalledTimes(0);
         
         expect(equipmentHistoryTable).toMatchSnapshot();

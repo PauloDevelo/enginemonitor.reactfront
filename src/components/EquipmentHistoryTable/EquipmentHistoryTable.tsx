@@ -16,7 +16,7 @@ import { faPlusSquare, faExclamationTriangle } from "@fortawesome/free-solid-svg
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import * as moment from 'moment';
-import entryProxy from '../../services/EntryProxy';
+import entryProxy, { FetchAllEntriesProps } from '../../services/EntryProxy';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 
@@ -45,6 +45,7 @@ const Table = composeDecorators(
 
 const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefreshId, classNames}: Props) => {
     classNames = classNames ? classNames + ' historytasktable' : 'historytasktable';
+
     const equipmentId = equipment ? equipment._uiId : undefined;
     
     const modalHook = useEditModal<EntryModel | undefined>(undefined);
@@ -52,7 +53,9 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
     const {data: fetchedEntries, error, isLoading, reloadRef} = useFetcher({ fetchPromise: entryProxy.fetchAllEntries, fetchProps: {equipmentId}, cancellationMsg:"Cancellation of equipment history fetching"});
 
     useEffect(() => {
-        reloadRef.current();
+        if(equipmentHistoryRefreshId !== 0){
+            reloadRef.current();
+        }
     }, [equipmentHistoryRefreshId, reloadRef]);
 
     useEffect(() => {
