@@ -1,0 +1,27 @@
+.scrollable-table {
+    height: 100%;
+}
+
+.scrollable-table > .scrollable-table-wrapper,
+.scrollable-table > .scrollable-table-content > .scrollable-table-wrapper {
+    padding: 0px 20px;
+}
+
+.scrollable-table > .scrollable-table-content {
+    position: relative;
+    overflow-y: auto;
+    top: var(--cell-height);
+    height: 100%;
+}
+
+.scrollable-table > .scrollable-table-content > table {
+    margin-top: calc(var(--cell-height)*(-1));
+    border-bottom: 2px solid var(--border-color);
+    width: 100%;
+}
+
+/* dirty hack */
+.scrollable-table .scrollable-table-content th {
+    position: relative;
+    opacity: 0;
+}

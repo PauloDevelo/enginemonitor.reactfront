@@ -1,0 +1,40 @@
+table .sorter,
+table .sortable-column {
+    cursor: pointer;
+}
+
+table > thead > tr > th.sortable-column,
+table > thead > tr > th[class*="sorted"] {
+    position: relative;
+    padding-right: 30px;
+}
+
+table > thead > tr > th .sortable-column:hover,
+table > thead > tr > th[class*="sorted"].sortable-column {
+    text-decoration: underline;
+}
+
+table > thead > tr > th[class*="sorted"] .sort-image {
+    content: '';
+    position: absolute;
+    display: block;
+    right: 12px;
+    top: calc(50% - 2px);
+    border-style: solid;
+    border-width: 1px 0px 0px 1px;
+    border-color: #000;
+    width: 4px;
+    height: 4px;
+    transform: rotate(45deg);
+    transform-origin: 50% 50%;
+    transition: transform .3s ease-in-out;
+}
+
+table > thead > tr > th.sorted-desc .sort-image {
+    transform: rotate(-135deg);
+}
+
+table > thead > tr > th .sorter:hover,
+table > thead > tr > th:not(:hover) .sorter.sorted {
+    text-decoration: underline;
+}

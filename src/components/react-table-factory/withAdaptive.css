@@ -1,0 +1,60 @@
+table.adaptive-table {
+    table-layout: auto !important;
+    width: 100%;
+}
+
+table.adaptive-table > thead {
+    display: none;
+}
+
+table.adaptive-table > tbody > tr {
+    display: block;
+    border-color: var(--border-color);
+    border-style: solid;
+    border-width: 1px 1px 0px 1px;
+}
+
+table.adaptive-table > tbody > tr > td {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-color) !important;
+}
+
+table.adaptive-table > tfoot > tr,
+table.adaptive-table > tfoot > tr > td
+{
+    display: block;
+}
+
+table.adaptive-table > tbody > tr:not(.selected-row) {
+    margin-bottom: 30px;
+}
+
+table.adaptive-table > tbody > :not(.inline-details) > td > * {
+    flex: auto;
+    text-align: right;
+}
+
+table.adaptive-table > tbody > :not(.inline-details) > td > :first-child {
+    text-align: left;
+}
+
+table.adaptive-table > tbody > tr > td > .adaptive-col-name {
+    display: block;
+}
+
+div.adaptive-table > .scrollable-table-content {
+    top: 20px !important;
+    height: calc(100% - 20px) !important;
+}
+
+div.adaptive-table > .scrollable-table-content > .scrollable-table-wrapper > .table-wrapper > table {
+    margin-top: 0 !important;
+    border: 0;
+}
+
+div.adaptive-table > .scrollable-table-wrapper,
+div.adaptive-table > .scrollable-table-content > .scrollable-table-wrapper {
+    padding: 0 20px 0 8px;
+}
