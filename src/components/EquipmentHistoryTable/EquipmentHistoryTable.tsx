@@ -1,4 +1,4 @@
-import  React, { useEffect, useState, Fragment } from 'react';
+import  React, { useEffect, useState, Fragment, useCallback } from 'react';
 import { Button } from 'reactstrap';
 
 import { composeDecorators } from '../react-table-factory/table';
@@ -9,6 +9,7 @@ import { withFixedHeader } from '../react-table-factory/withFixedHeader';
 import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
+import ClickableCell from '../Table/ClickableCell';
 
 import { useFetcher} from '../../hooks/Fetcher';
 
@@ -16,7 +17,7 @@ import { faPlusSquare, faExclamationTriangle } from "@fortawesome/free-solid-svg
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import * as moment from 'moment';
-import entryProxy, { FetchAllEntriesProps } from '../../services/EntryProxy';
+import entryProxy from '../../services/EntryProxy';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 
@@ -83,15 +84,9 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
         }
     }
 
-    const innerEntryCell = (entry:EntryModel, content: JSX.Element, classNames?: string) => {
-        classNames = classNames === undefined ? '' : classNames;
-		classNames += ' table-' + (entry.taskUiId === undefined ? "warning" : "white" );
-		return (
-			<div onClick={() => modalHook.displayData(entry)} className={classNames + ' innerTd clickable'} >
-				{content}
-			</div>
-		);
-	}
+    const displayEntry = useCallback((entry:EntryModel) => {
+        modalHook.displayData(entry)
+    }, [modalHook]);
 
     const columns = [
 		{
@@ -102,8 +97,10 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
 				</div>
 			),
 			cell: (content: any) => {
-                const entryDate = new Date(content.data.date);
-				return innerEntryCell(content.data, <FormattedDate value={entryDate} />);
+                const entry: EntryModel = content.data;
+                return (<ClickableCell data={content.data} onDisplayData={displayEntry} classNames={'table-' + (entry.taskUiId === undefined ? "warning" : "white" )}>
+                            <FormattedDate value={entry.date} />
+                        </ClickableCell>);
             },
             style: {width:"20%"},
 			sortable: true
@@ -116,8 +113,11 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
 				</div>
 			),
 			cell: (content: any) => {
-                const entryName = content.data.name;
-				return innerEntryCell(content.data, <Fragment>{entryName}</Fragment>);
+                const entry: EntryModel = content.data;
+                const entryName = entry.name;
+                return (<ClickableCell data={content.data} onDisplayData={displayEntry} classNames={'table-' + (entry.taskUiId === undefined ? "warning" : "white" )}>
+                            <Fragment>{entryName}</Fragment>
+                        </ClickableCell>);
             },
             style: {width:"20%"},
 			sortable: true
@@ -134,18 +134,22 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
                 const equ = equipment;
 
                 if (equ === undefined || equ.ageAcquisitionType !== AgeAcquisitionType.time){
-                    return innerEntryCell(entry, <Fragment>{entry.age === -1?"":entry.age + 'h'}</Fragment>);
+                    return (<ClickableCell data={entry} onDisplayData={displayEntry} classNames={'table-' + (entry.taskUiId === undefined ? "warning" : "white" )}>
+                            <Fragment>{entry.age === -1?"":entry.age + 'h'}</Fragment>
+                        </ClickableCell>);
                 }
                 else{
                     const diff = moment.duration(entry.date.getTime() - equ.installation.getTime());
                     const year = diff.years();
                     const month = diff.months();
                     const day = diff.days();
-                    return innerEntryCell(entry, <Fragment>
-                        {diff.years() > 0 && <FormattedMessage {... messages.yearperiod} values={{year}}/>}{' '}
-                        {diff.months() > 0 && <FormattedMessage {... messages.monthperiod} values={{month}}/>}{' '}
-                        {diff.days() > 0 && <FormattedMessage {... messages.dayperiod} values={{day}}/>}
-                    </Fragment>);
+                    return (<ClickableCell data={entry} onDisplayData={displayEntry} classNames={'table-' + (entry.taskUiId === undefined ? "warning" : "white" )}>
+                            <Fragment>
+                                {diff.years() > 0 && <FormattedMessage {... messages.yearperiod} values={{year}}/>}{' '}
+                                {diff.months() > 0 && <FormattedMessage {... messages.monthperiod} values={{month}}/>}{' '}
+                                {diff.days() > 0 && <FormattedMessage {... messages.dayperiod} values={{day}}/>}
+                            </Fragment>
+                        </ClickableCell>);
                 }
             },
             style: {width:"15%"},
@@ -163,7 +167,9 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
                 var remarks = entry.remarks.replace(/\n/g, '<br />');
                 var shortenRemarks = shorten(remarks);
 
-				return innerEntryCell(entry, <div dangerouslySetInnerHTML={{ __html: shortenRemarks }}/>);
+                return (<ClickableCell data={entry} onDisplayData={displayEntry} classNames={'table-' + (entry.taskUiId === undefined ? "warning" : "white" )}>
+                            <div dangerouslySetInnerHTML={{ __html: shortenRemarks }}/>
+                        </ClickableCell>);
             },
             style: {width:"45%"},
 			sortable: false

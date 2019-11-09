@@ -153,6 +153,24 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
         data={
           Array [
             Object {
+              "_uiId": "entry_04",
+              "age": 1214,
+              "date": 2019-11-09T00:11:19.112Z,
+              "equipmentUiId": "equipment_01",
+              "name": "vidange inverseur",
+              "remarks": "RAS",
+              "taskUiId": "task_02",
+            },
+            Object {
+              "_uiId": "entry_03",
+              "age": 1214,
+              "date": 2019-11-09T00:11:18.112Z,
+              "equipmentUiId": "equipment_01",
+              "name": "vidange inverseur",
+              "remarks": "RAS",
+              "taskUiId": "task_02",
+            },
+            Object {
               "_uiId": "entry_01",
               "age": 1234,
               "date": 2019-11-08T00:11:18.112Z,
@@ -219,6 +237,24 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
           }
           data={
             Array [
+              Object {
+                "_uiId": "entry_04",
+                "age": 1214,
+                "date": 2019-11-09T00:11:19.112Z,
+                "equipmentUiId": "equipment_01",
+                "name": "vidange inverseur",
+                "remarks": "RAS",
+                "taskUiId": "task_02",
+              },
+              Object {
+                "_uiId": "entry_03",
+                "age": 1214,
+                "date": 2019-11-09T00:11:18.112Z,
+                "equipmentUiId": "equipment_01",
+                "name": "vidange inverseur",
+                "remarks": "RAS",
+                "taskUiId": "task_02",
+              },
               Object {
                 "_uiId": "entry_01",
                 "age": 1234,
@@ -288,6 +324,24 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
             data={
               Array [
                 Object {
+                  "_uiId": "entry_04",
+                  "age": 1214,
+                  "date": 2019-11-09T00:11:19.112Z,
+                  "equipmentUiId": "equipment_01",
+                  "name": "vidange inverseur",
+                  "remarks": "RAS",
+                  "taskUiId": "task_02",
+                },
+                Object {
+                  "_uiId": "entry_03",
+                  "age": 1214,
+                  "date": 2019-11-09T00:11:18.112Z,
+                  "equipmentUiId": "equipment_01",
+                  "name": "vidange inverseur",
+                  "remarks": "RAS",
+                  "taskUiId": "task_02",
+                },
+                Object {
                   "_uiId": "entry_01",
                   "age": 1234,
                   "date": 2019-11-08T00:11:18.112Z,
@@ -352,6 +406,24 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
               }
               data={
                 Array [
+                  Object {
+                    "_uiId": "entry_04",
+                    "age": 1214,
+                    "date": 2019-11-09T00:11:19.112Z,
+                    "equipmentUiId": "equipment_01",
+                    "name": "vidange inverseur",
+                    "remarks": "RAS",
+                    "taskUiId": "task_02",
+                  },
+                  Object {
+                    "_uiId": "entry_03",
+                    "age": 1214,
+                    "date": 2019-11-09T00:11:18.112Z,
+                    "equipmentUiId": "equipment_01",
+                    "name": "vidange inverseur",
+                    "remarks": "RAS",
+                    "taskUiId": "task_02",
+                  },
                   Object {
                     "_uiId": "entry_01",
                     "age": 1234,
@@ -434,6 +506,24 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                         }
                         data={
                           Array [
+                            Object {
+                              "_uiId": "entry_04",
+                              "age": 1214,
+                              "date": 2019-11-09T00:11:19.112Z,
+                              "equipmentUiId": "equipment_01",
+                              "name": "vidange inverseur",
+                              "remarks": "RAS",
+                              "taskUiId": "task_02",
+                            },
+                            Object {
+                              "_uiId": "entry_03",
+                              "age": 1214,
+                              "date": 2019-11-09T00:11:18.112Z,
+                              "equipmentUiId": "equipment_01",
+                              "name": "vidange inverseur",
+                              "remarks": "RAS",
+                              "taskUiId": "task_02",
+                            },
                             Object {
                               "_uiId": "entry_01",
                               "age": 1234,
@@ -1160,13 +1250,13 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                               }
                               data={
                                 Object {
-                                  "_uiId": "entry_01",
-                                  "age": 1234,
-                                  "date": 2019-11-08T00:11:18.112Z,
+                                  "_uiId": "entry_04",
+                                  "age": 1214,
+                                  "date": 2019-11-09T00:11:19.112Z,
                                   "equipmentUiId": "equipment_01",
-                                  "name": "vidange",
+                                  "name": "vidange inverseur",
                                   "remarks": "RAS",
-                                  "taskUiId": "task_01",
+                                  "taskUiId": "task_02",
                                 }
                               }
                               dataCellRenderer={
@@ -1281,13 +1371,13 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_01",
-                                              "age": 1234,
-                                              "date": 2019-11-08T00:11:18.112Z,
+                                              "_uiId": "entry_04",
+                                              "age": 1214,
+                                              "date": 2019-11-09T00:11:19.112Z,
                                               "equipmentUiId": "equipment_01",
-                                              "name": "vidange",
+                                              "name": "vidange inverseur",
                                               "remarks": "RAS",
-                                              "taskUiId": "task_01",
+                                              "taskUiId": "task_02",
                                             }
                                           }
                                           header={[Function]}
@@ -1304,13 +1394,13 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_01",
-                                                "age": 1234,
-                                                "date": 2019-11-08T00:11:18.112Z,
+                                                "_uiId": "entry_04",
+                                                "age": 1214,
+                                                "date": 2019-11-09T00:11:19.112Z,
                                                 "equipmentUiId": "equipment_01",
-                                                "name": "vidange",
+                                                "name": "vidange inverseur",
                                                 "remarks": "RAS",
-                                                "taskUiId": "task_01",
+                                                "taskUiId": "task_02",
                                               }
                                             }
                                             index={0}
@@ -1322,16 +1412,32 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               }
                                             }
                                           >
-                                            <div
-                                              className=" table-white innerTd clickable"
-                                              onClick={[Function]}
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_04",
+                                                  "age": 1214,
+                                                  "date": 2019-11-09T00:11:19.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
                                             >
-                                              <FormattedDate
-                                                value={2019-11-08T00:11:18.112Z}
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
                                               >
-                                                11/8/2019
-                                              </FormattedDate>
-                                            </div>
+                                                <FormattedDate
+                                                  value={2019-11-09T00:11:19.112Z}
+                                                >
+                                                  11/9/2019
+                                                </FormattedDate>
+                                              </div>
+                                            </ClickableCell>
                                           </cell>
                                         </ForwardRef>
                                       </td>
@@ -1431,13 +1537,13 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_01",
-                                              "age": 1234,
-                                              "date": 2019-11-08T00:11:18.112Z,
+                                              "_uiId": "entry_04",
+                                              "age": 1214,
+                                              "date": 2019-11-09T00:11:19.112Z,
                                               "equipmentUiId": "equipment_01",
-                                              "name": "vidange",
+                                              "name": "vidange inverseur",
                                               "remarks": "RAS",
-                                              "taskUiId": "task_01",
+                                              "taskUiId": "task_02",
                                             }
                                           }
                                           header={[Function]}
@@ -1454,13 +1560,13 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_01",
-                                                "age": 1234,
-                                                "date": 2019-11-08T00:11:18.112Z,
+                                                "_uiId": "entry_04",
+                                                "age": 1214,
+                                                "date": 2019-11-09T00:11:19.112Z,
                                                 "equipmentUiId": "equipment_01",
-                                                "name": "vidange",
+                                                "name": "vidange inverseur",
                                                 "remarks": "RAS",
-                                                "taskUiId": "task_01",
+                                                "taskUiId": "task_02",
                                               }
                                             }
                                             index={1}
@@ -1472,12 +1578,28 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               }
                                             }
                                           >
-                                            <div
-                                              className=" table-white innerTd clickable"
-                                              onClick={[Function]}
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_04",
+                                                  "age": 1214,
+                                                  "date": 2019-11-09T00:11:19.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
                                             >
-                                              vidange
-                                            </div>
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                vidange inverseur
+                                              </div>
+                                            </ClickableCell>
                                           </cell>
                                         </ForwardRef>
                                       </td>
@@ -1577,13 +1699,13 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_01",
-                                              "age": 1234,
-                                              "date": 2019-11-08T00:11:18.112Z,
+                                              "_uiId": "entry_04",
+                                              "age": 1214,
+                                              "date": 2019-11-09T00:11:19.112Z,
                                               "equipmentUiId": "equipment_01",
-                                              "name": "vidange",
+                                              "name": "vidange inverseur",
                                               "remarks": "RAS",
-                                              "taskUiId": "task_01",
+                                              "taskUiId": "task_02",
                                             }
                                           }
                                           header={[Function]}
@@ -1600,13 +1722,13 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_01",
-                                                "age": 1234,
-                                                "date": 2019-11-08T00:11:18.112Z,
+                                                "_uiId": "entry_04",
+                                                "age": 1214,
+                                                "date": 2019-11-09T00:11:19.112Z,
                                                 "equipmentUiId": "equipment_01",
-                                                "name": "vidange",
+                                                "name": "vidange inverseur",
                                                 "remarks": "RAS",
-                                                "taskUiId": "task_01",
+                                                "taskUiId": "task_02",
                                               }
                                             }
                                             index={2}
@@ -1618,12 +1740,28 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               }
                                             }
                                           >
-                                            <div
-                                              className=" table-white innerTd clickable"
-                                              onClick={[Function]}
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_04",
+                                                  "age": 1214,
+                                                  "date": 2019-11-09T00:11:19.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
                                             >
-                                              1234h
-                                            </div>
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                1214h
+                                              </div>
+                                            </ClickableCell>
                                           </cell>
                                         </ForwardRef>
                                       </td>
@@ -1723,13 +1861,13 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_01",
-                                              "age": 1234,
-                                              "date": 2019-11-08T00:11:18.112Z,
+                                              "_uiId": "entry_04",
+                                              "age": 1214,
+                                              "date": 2019-11-09T00:11:19.112Z,
                                               "equipmentUiId": "equipment_01",
-                                              "name": "vidange",
+                                              "name": "vidange inverseur",
                                               "remarks": "RAS",
-                                              "taskUiId": "task_01",
+                                              "taskUiId": "task_02",
                                             }
                                           }
                                           header={[Function]}
@@ -1746,13 +1884,13 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_01",
-                                                "age": 1234,
-                                                "date": 2019-11-08T00:11:18.112Z,
+                                                "_uiId": "entry_04",
+                                                "age": 1214,
+                                                "date": 2019-11-09T00:11:19.112Z,
                                                 "equipmentUiId": "equipment_01",
-                                                "name": "vidange",
+                                                "name": "vidange inverseur",
                                                 "remarks": "RAS",
-                                                "taskUiId": "task_01",
+                                                "taskUiId": "task_02",
                                               }
                                             }
                                             index={3}
@@ -1764,18 +1902,34 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               }
                                             }
                                           >
-                                            <div
-                                              className=" table-white innerTd clickable"
-                                              onClick={[Function]}
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_04",
+                                                  "age": 1214,
+                                                  "date": 2019-11-09T00:11:19.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
                                             >
                                               <div
-                                                dangerouslySetInnerHTML={
-                                                  Object {
-                                                    "__html": "RAS",
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                <div
+                                                  dangerouslySetInnerHTML={
+                                                    Object {
+                                                      "__html": "RAS",
+                                                    }
                                                   }
-                                                }
-                                              />
-                                            </div>
+                                                />
+                                              </div>
+                                            </ClickableCell>
                                           </cell>
                                         </ForwardRef>
                                       </td>
@@ -1833,9 +1987,9 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                               }
                               data={
                                 Object {
-                                  "_uiId": "entry_02",
+                                  "_uiId": "entry_03",
                                   "age": 1214,
-                                  "date": 2019-11-06T00:11:18.112Z,
+                                  "date": 2019-11-09T00:11:18.112Z,
                                   "equipmentUiId": "equipment_01",
                                   "name": "vidange inverseur",
                                   "remarks": "RAS",
@@ -1954,9 +2108,9 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_02",
+                                              "_uiId": "entry_03",
                                               "age": 1214,
-                                              "date": 2019-11-06T00:11:18.112Z,
+                                              "date": 2019-11-09T00:11:18.112Z,
                                               "equipmentUiId": "equipment_01",
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
@@ -1977,9 +2131,9 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_02",
+                                                "_uiId": "entry_03",
                                                 "age": 1214,
-                                                "date": 2019-11-06T00:11:18.112Z,
+                                                "date": 2019-11-09T00:11:18.112Z,
                                                 "equipmentUiId": "equipment_01",
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
@@ -1995,16 +2149,32 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               }
                                             }
                                           >
-                                            <div
-                                              className=" table-white innerTd clickable"
-                                              onClick={[Function]}
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_03",
+                                                  "age": 1214,
+                                                  "date": 2019-11-09T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
                                             >
-                                              <FormattedDate
-                                                value={2019-11-06T00:11:18.112Z}
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
                                               >
-                                                11/6/2019
-                                              </FormattedDate>
-                                            </div>
+                                                <FormattedDate
+                                                  value={2019-11-09T00:11:18.112Z}
+                                                >
+                                                  11/9/2019
+                                                </FormattedDate>
+                                              </div>
+                                            </ClickableCell>
                                           </cell>
                                         </ForwardRef>
                                       </td>
@@ -2104,9 +2274,9 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_02",
+                                              "_uiId": "entry_03",
                                               "age": 1214,
-                                              "date": 2019-11-06T00:11:18.112Z,
+                                              "date": 2019-11-09T00:11:18.112Z,
                                               "equipmentUiId": "equipment_01",
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
@@ -2127,9 +2297,9 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_02",
+                                                "_uiId": "entry_03",
                                                 "age": 1214,
-                                                "date": 2019-11-06T00:11:18.112Z,
+                                                "date": 2019-11-09T00:11:18.112Z,
                                                 "equipmentUiId": "equipment_01",
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
@@ -2145,12 +2315,28 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               }
                                             }
                                           >
-                                            <div
-                                              className=" table-white innerTd clickable"
-                                              onClick={[Function]}
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_03",
+                                                  "age": 1214,
+                                                  "date": 2019-11-09T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
                                             >
-                                              vidange inverseur
-                                            </div>
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                vidange inverseur
+                                              </div>
+                                            </ClickableCell>
                                           </cell>
                                         </ForwardRef>
                                       </td>
@@ -2250,9 +2436,9 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_02",
+                                              "_uiId": "entry_03",
                                               "age": 1214,
-                                              "date": 2019-11-06T00:11:18.112Z,
+                                              "date": 2019-11-09T00:11:18.112Z,
                                               "equipmentUiId": "equipment_01",
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
@@ -2273,9 +2459,9 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_02",
+                                                "_uiId": "entry_03",
                                                 "age": 1214,
-                                                "date": 2019-11-06T00:11:18.112Z,
+                                                "date": 2019-11-09T00:11:18.112Z,
                                                 "equipmentUiId": "equipment_01",
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
@@ -2291,12 +2477,28 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               }
                                             }
                                           >
-                                            <div
-                                              className=" table-white innerTd clickable"
-                                              onClick={[Function]}
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_03",
+                                                  "age": 1214,
+                                                  "date": 2019-11-09T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
                                             >
-                                              1214h
-                                            </div>
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                1214h
+                                              </div>
+                                            </ClickableCell>
                                           </cell>
                                         </ForwardRef>
                                       </td>
@@ -2396,9 +2598,9 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_02",
+                                              "_uiId": "entry_03",
                                               "age": 1214,
-                                              "date": 2019-11-06T00:11:18.112Z,
+                                              "date": 2019-11-09T00:11:18.112Z,
                                               "equipmentUiId": "equipment_01",
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
@@ -2419,9 +2621,9 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_02",
+                                                "_uiId": "entry_03",
                                                 "age": 1214,
-                                                "date": 2019-11-06T00:11:18.112Z,
+                                                "date": 2019-11-09T00:11:18.112Z,
                                                 "equipmentUiId": "equipment_01",
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
@@ -2437,18 +2639,1508 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               }
                                             }
                                           >
-                                            <div
-                                              className=" table-white innerTd clickable"
-                                              onClick={[Function]}
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_03",
+                                                  "age": 1214,
+                                                  "date": 2019-11-09T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
                                             >
                                               <div
-                                                dangerouslySetInnerHTML={
-                                                  Object {
-                                                    "__html": "RAS",
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                <div
+                                                  dangerouslySetInnerHTML={
+                                                    Object {
+                                                      "__html": "RAS",
+                                                    }
                                                   }
+                                                />
+                                              </div>
+                                            </ClickableCell>
+                                          </cell>
+                                        </ForwardRef>
+                                      </td>
+                                    </ForwardRef>
+                                  </ForwardRef>
+                                </tr>
+                              </ForwardRef>
+                            </ForwardRef>
+                            <ForwardRef
+                              cellRenderer={
+                                Object {
+                                  "$$typeof": Symbol(react.forward_ref),
+                                  "render": [Function],
+                                }
+                              }
+                              columns={
+                                Array [
+                                  Object {
+                                    "cell": [Function],
+                                    "header": [Function],
+                                    "name": "date",
+                                    "sortable": true,
+                                    "style": Object {
+                                      "width": "20%",
+                                    },
+                                  },
+                                  Object {
+                                    "cell": [Function],
+                                    "header": [Function],
+                                    "name": "name",
+                                    "sortable": true,
+                                    "style": Object {
+                                      "width": "20%",
+                                    },
+                                  },
+                                  Object {
+                                    "cell": [Function],
+                                    "header": [Function],
+                                    "name": "age",
+                                    "sortable": true,
+                                    "style": Object {
+                                      "width": "15%",
+                                    },
+                                  },
+                                  Object {
+                                    "cell": [Function],
+                                    "header": [Function],
+                                    "name": "remarks",
+                                    "sortable": false,
+                                    "style": Object {
+                                      "width": "45%",
+                                    },
+                                  },
+                                ]
+                              }
+                              data={
+                                Object {
+                                  "_uiId": "entry_01",
+                                  "age": 1234,
+                                  "date": 2019-11-08T00:11:18.112Z,
+                                  "equipmentUiId": "equipment_01",
+                                  "name": "vidange",
+                                  "remarks": "RAS",
+                                  "taskUiId": "task_01",
+                                }
+                              }
+                              dataCellRenderer={
+                                Object {
+                                  "$$typeof": Symbol(react.forward_ref),
+                                  "render": [Function],
+                                }
+                              }
+                              index={2}
+                              key="2"
+                              rowRenderer={
+                                Object {
+                                  "$$typeof": Symbol(react.forward_ref),
+                                  "render": [Function],
+                                }
+                              }
+                              tableProps={Object {}}
+                            >
+                              <ForwardRef>
+                                <tr>
+                                  <ForwardRef
+                                    columns={
+                                      Array [
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "date",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "name",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "age",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "15%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "remarks",
+                                          "sortable": false,
+                                          "style": Object {
+                                            "width": "45%",
+                                          },
+                                        },
+                                      ]
+                                    }
+                                    index={0}
+                                    key="0"
+                                    rowIndex={2}
+                                  >
+                                    <ForwardRef
+                                      columns={
+                                        Array [
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "date",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "name",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "age",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "15%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "remarks",
+                                            "sortable": false,
+                                            "style": Object {
+                                              "width": "45%",
+                                            },
+                                          },
+                                        ]
+                                      }
+                                      index={0}
+                                      rowIndex={2}
+                                    >
+                                      <td>
+                                        <ForwardRef
+                                          cell={[Function]}
+                                          data={
+                                            Object {
+                                              "_uiId": "entry_01",
+                                              "age": 1234,
+                                              "date": 2019-11-08T00:11:18.112Z,
+                                              "equipmentUiId": "equipment_01",
+                                              "name": "vidange",
+                                              "remarks": "RAS",
+                                              "taskUiId": "task_01",
+                                            }
+                                          }
+                                          header={[Function]}
+                                          index={0}
+                                          name="date"
+                                          rowIndex={2}
+                                          sortable={true}
+                                          style={
+                                            Object {
+                                              "width": "20%",
+                                            }
+                                          }
+                                        >
+                                          <cell
+                                            data={
+                                              Object {
+                                                "_uiId": "entry_01",
+                                                "age": 1234,
+                                                "date": 2019-11-08T00:11:18.112Z,
+                                                "equipmentUiId": "equipment_01",
+                                                "name": "vidange",
+                                                "remarks": "RAS",
+                                                "taskUiId": "task_01",
+                                              }
+                                            }
+                                            index={0}
+                                            rowIndex={2}
+                                            sortable={true}
+                                            style={
+                                              Object {
+                                                "width": "20%",
+                                              }
+                                            }
+                                          >
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_01",
+                                                  "age": 1234,
+                                                  "date": 2019-11-08T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_01",
                                                 }
-                                              />
-                                            </div>
+                                              }
+                                              onDisplayData={[Function]}
+                                            >
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                <FormattedDate
+                                                  value={2019-11-08T00:11:18.112Z}
+                                                >
+                                                  11/8/2019
+                                                </FormattedDate>
+                                              </div>
+                                            </ClickableCell>
+                                          </cell>
+                                        </ForwardRef>
+                                      </td>
+                                    </ForwardRef>
+                                  </ForwardRef>
+                                  <ForwardRef
+                                    columns={
+                                      Array [
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "date",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "name",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "age",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "15%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "remarks",
+                                          "sortable": false,
+                                          "style": Object {
+                                            "width": "45%",
+                                          },
+                                        },
+                                      ]
+                                    }
+                                    index={1}
+                                    key="1"
+                                    rowIndex={2}
+                                  >
+                                    <ForwardRef
+                                      columns={
+                                        Array [
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "date",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "name",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "age",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "15%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "remarks",
+                                            "sortable": false,
+                                            "style": Object {
+                                              "width": "45%",
+                                            },
+                                          },
+                                        ]
+                                      }
+                                      index={1}
+                                      rowIndex={2}
+                                    >
+                                      <td>
+                                        <ForwardRef
+                                          cell={[Function]}
+                                          data={
+                                            Object {
+                                              "_uiId": "entry_01",
+                                              "age": 1234,
+                                              "date": 2019-11-08T00:11:18.112Z,
+                                              "equipmentUiId": "equipment_01",
+                                              "name": "vidange",
+                                              "remarks": "RAS",
+                                              "taskUiId": "task_01",
+                                            }
+                                          }
+                                          header={[Function]}
+                                          index={1}
+                                          name="name"
+                                          rowIndex={2}
+                                          sortable={true}
+                                          style={
+                                            Object {
+                                              "width": "20%",
+                                            }
+                                          }
+                                        >
+                                          <cell
+                                            data={
+                                              Object {
+                                                "_uiId": "entry_01",
+                                                "age": 1234,
+                                                "date": 2019-11-08T00:11:18.112Z,
+                                                "equipmentUiId": "equipment_01",
+                                                "name": "vidange",
+                                                "remarks": "RAS",
+                                                "taskUiId": "task_01",
+                                              }
+                                            }
+                                            index={1}
+                                            rowIndex={2}
+                                            sortable={true}
+                                            style={
+                                              Object {
+                                                "width": "20%",
+                                              }
+                                            }
+                                          >
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_01",
+                                                  "age": 1234,
+                                                  "date": 2019-11-08T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_01",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
+                                            >
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                vidange
+                                              </div>
+                                            </ClickableCell>
+                                          </cell>
+                                        </ForwardRef>
+                                      </td>
+                                    </ForwardRef>
+                                  </ForwardRef>
+                                  <ForwardRef
+                                    columns={
+                                      Array [
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "date",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "name",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "age",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "15%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "remarks",
+                                          "sortable": false,
+                                          "style": Object {
+                                            "width": "45%",
+                                          },
+                                        },
+                                      ]
+                                    }
+                                    index={2}
+                                    key="2"
+                                    rowIndex={2}
+                                  >
+                                    <ForwardRef
+                                      columns={
+                                        Array [
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "date",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "name",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "age",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "15%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "remarks",
+                                            "sortable": false,
+                                            "style": Object {
+                                              "width": "45%",
+                                            },
+                                          },
+                                        ]
+                                      }
+                                      index={2}
+                                      rowIndex={2}
+                                    >
+                                      <td>
+                                        <ForwardRef
+                                          cell={[Function]}
+                                          data={
+                                            Object {
+                                              "_uiId": "entry_01",
+                                              "age": 1234,
+                                              "date": 2019-11-08T00:11:18.112Z,
+                                              "equipmentUiId": "equipment_01",
+                                              "name": "vidange",
+                                              "remarks": "RAS",
+                                              "taskUiId": "task_01",
+                                            }
+                                          }
+                                          header={[Function]}
+                                          index={2}
+                                          name="age"
+                                          rowIndex={2}
+                                          sortable={true}
+                                          style={
+                                            Object {
+                                              "width": "15%",
+                                            }
+                                          }
+                                        >
+                                          <cell
+                                            data={
+                                              Object {
+                                                "_uiId": "entry_01",
+                                                "age": 1234,
+                                                "date": 2019-11-08T00:11:18.112Z,
+                                                "equipmentUiId": "equipment_01",
+                                                "name": "vidange",
+                                                "remarks": "RAS",
+                                                "taskUiId": "task_01",
+                                              }
+                                            }
+                                            index={2}
+                                            rowIndex={2}
+                                            sortable={true}
+                                            style={
+                                              Object {
+                                                "width": "15%",
+                                              }
+                                            }
+                                          >
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_01",
+                                                  "age": 1234,
+                                                  "date": 2019-11-08T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_01",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
+                                            >
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                1234h
+                                              </div>
+                                            </ClickableCell>
+                                          </cell>
+                                        </ForwardRef>
+                                      </td>
+                                    </ForwardRef>
+                                  </ForwardRef>
+                                  <ForwardRef
+                                    columns={
+                                      Array [
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "date",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "name",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "age",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "15%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "remarks",
+                                          "sortable": false,
+                                          "style": Object {
+                                            "width": "45%",
+                                          },
+                                        },
+                                      ]
+                                    }
+                                    index={3}
+                                    key="3"
+                                    rowIndex={2}
+                                  >
+                                    <ForwardRef
+                                      columns={
+                                        Array [
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "date",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "name",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "age",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "15%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "remarks",
+                                            "sortable": false,
+                                            "style": Object {
+                                              "width": "45%",
+                                            },
+                                          },
+                                        ]
+                                      }
+                                      index={3}
+                                      rowIndex={2}
+                                    >
+                                      <td>
+                                        <ForwardRef
+                                          cell={[Function]}
+                                          data={
+                                            Object {
+                                              "_uiId": "entry_01",
+                                              "age": 1234,
+                                              "date": 2019-11-08T00:11:18.112Z,
+                                              "equipmentUiId": "equipment_01",
+                                              "name": "vidange",
+                                              "remarks": "RAS",
+                                              "taskUiId": "task_01",
+                                            }
+                                          }
+                                          header={[Function]}
+                                          index={3}
+                                          name="remarks"
+                                          rowIndex={2}
+                                          sortable={false}
+                                          style={
+                                            Object {
+                                              "width": "45%",
+                                            }
+                                          }
+                                        >
+                                          <cell
+                                            data={
+                                              Object {
+                                                "_uiId": "entry_01",
+                                                "age": 1234,
+                                                "date": 2019-11-08T00:11:18.112Z,
+                                                "equipmentUiId": "equipment_01",
+                                                "name": "vidange",
+                                                "remarks": "RAS",
+                                                "taskUiId": "task_01",
+                                              }
+                                            }
+                                            index={3}
+                                            rowIndex={2}
+                                            sortable={false}
+                                            style={
+                                              Object {
+                                                "width": "45%",
+                                              }
+                                            }
+                                          >
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_01",
+                                                  "age": 1234,
+                                                  "date": 2019-11-08T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_01",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
+                                            >
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                <div
+                                                  dangerouslySetInnerHTML={
+                                                    Object {
+                                                      "__html": "RAS",
+                                                    }
+                                                  }
+                                                />
+                                              </div>
+                                            </ClickableCell>
+                                          </cell>
+                                        </ForwardRef>
+                                      </td>
+                                    </ForwardRef>
+                                  </ForwardRef>
+                                </tr>
+                              </ForwardRef>
+                            </ForwardRef>
+                            <ForwardRef
+                              cellRenderer={
+                                Object {
+                                  "$$typeof": Symbol(react.forward_ref),
+                                  "render": [Function],
+                                }
+                              }
+                              columns={
+                                Array [
+                                  Object {
+                                    "cell": [Function],
+                                    "header": [Function],
+                                    "name": "date",
+                                    "sortable": true,
+                                    "style": Object {
+                                      "width": "20%",
+                                    },
+                                  },
+                                  Object {
+                                    "cell": [Function],
+                                    "header": [Function],
+                                    "name": "name",
+                                    "sortable": true,
+                                    "style": Object {
+                                      "width": "20%",
+                                    },
+                                  },
+                                  Object {
+                                    "cell": [Function],
+                                    "header": [Function],
+                                    "name": "age",
+                                    "sortable": true,
+                                    "style": Object {
+                                      "width": "15%",
+                                    },
+                                  },
+                                  Object {
+                                    "cell": [Function],
+                                    "header": [Function],
+                                    "name": "remarks",
+                                    "sortable": false,
+                                    "style": Object {
+                                      "width": "45%",
+                                    },
+                                  },
+                                ]
+                              }
+                              data={
+                                Object {
+                                  "_uiId": "entry_02",
+                                  "age": 1214,
+                                  "date": 2019-11-06T00:11:18.112Z,
+                                  "equipmentUiId": "equipment_01",
+                                  "name": "vidange inverseur",
+                                  "remarks": "RAS",
+                                  "taskUiId": "task_02",
+                                }
+                              }
+                              dataCellRenderer={
+                                Object {
+                                  "$$typeof": Symbol(react.forward_ref),
+                                  "render": [Function],
+                                }
+                              }
+                              index={3}
+                              key="3"
+                              rowRenderer={
+                                Object {
+                                  "$$typeof": Symbol(react.forward_ref),
+                                  "render": [Function],
+                                }
+                              }
+                              tableProps={Object {}}
+                            >
+                              <ForwardRef>
+                                <tr>
+                                  <ForwardRef
+                                    columns={
+                                      Array [
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "date",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "name",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "age",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "15%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "remarks",
+                                          "sortable": false,
+                                          "style": Object {
+                                            "width": "45%",
+                                          },
+                                        },
+                                      ]
+                                    }
+                                    index={0}
+                                    key="0"
+                                    rowIndex={3}
+                                  >
+                                    <ForwardRef
+                                      columns={
+                                        Array [
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "date",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "name",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "age",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "15%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "remarks",
+                                            "sortable": false,
+                                            "style": Object {
+                                              "width": "45%",
+                                            },
+                                          },
+                                        ]
+                                      }
+                                      index={0}
+                                      rowIndex={3}
+                                    >
+                                      <td>
+                                        <ForwardRef
+                                          cell={[Function]}
+                                          data={
+                                            Object {
+                                              "_uiId": "entry_02",
+                                              "age": 1214,
+                                              "date": 2019-11-06T00:11:18.112Z,
+                                              "equipmentUiId": "equipment_01",
+                                              "name": "vidange inverseur",
+                                              "remarks": "RAS",
+                                              "taskUiId": "task_02",
+                                            }
+                                          }
+                                          header={[Function]}
+                                          index={0}
+                                          name="date"
+                                          rowIndex={3}
+                                          sortable={true}
+                                          style={
+                                            Object {
+                                              "width": "20%",
+                                            }
+                                          }
+                                        >
+                                          <cell
+                                            data={
+                                              Object {
+                                                "_uiId": "entry_02",
+                                                "age": 1214,
+                                                "date": 2019-11-06T00:11:18.112Z,
+                                                "equipmentUiId": "equipment_01",
+                                                "name": "vidange inverseur",
+                                                "remarks": "RAS",
+                                                "taskUiId": "task_02",
+                                              }
+                                            }
+                                            index={0}
+                                            rowIndex={3}
+                                            sortable={true}
+                                            style={
+                                              Object {
+                                                "width": "20%",
+                                              }
+                                            }
+                                          >
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_02",
+                                                  "age": 1214,
+                                                  "date": 2019-11-06T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
+                                            >
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                <FormattedDate
+                                                  value={2019-11-06T00:11:18.112Z}
+                                                >
+                                                  11/6/2019
+                                                </FormattedDate>
+                                              </div>
+                                            </ClickableCell>
+                                          </cell>
+                                        </ForwardRef>
+                                      </td>
+                                    </ForwardRef>
+                                  </ForwardRef>
+                                  <ForwardRef
+                                    columns={
+                                      Array [
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "date",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "name",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "age",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "15%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "remarks",
+                                          "sortable": false,
+                                          "style": Object {
+                                            "width": "45%",
+                                          },
+                                        },
+                                      ]
+                                    }
+                                    index={1}
+                                    key="1"
+                                    rowIndex={3}
+                                  >
+                                    <ForwardRef
+                                      columns={
+                                        Array [
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "date",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "name",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "age",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "15%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "remarks",
+                                            "sortable": false,
+                                            "style": Object {
+                                              "width": "45%",
+                                            },
+                                          },
+                                        ]
+                                      }
+                                      index={1}
+                                      rowIndex={3}
+                                    >
+                                      <td>
+                                        <ForwardRef
+                                          cell={[Function]}
+                                          data={
+                                            Object {
+                                              "_uiId": "entry_02",
+                                              "age": 1214,
+                                              "date": 2019-11-06T00:11:18.112Z,
+                                              "equipmentUiId": "equipment_01",
+                                              "name": "vidange inverseur",
+                                              "remarks": "RAS",
+                                              "taskUiId": "task_02",
+                                            }
+                                          }
+                                          header={[Function]}
+                                          index={1}
+                                          name="name"
+                                          rowIndex={3}
+                                          sortable={true}
+                                          style={
+                                            Object {
+                                              "width": "20%",
+                                            }
+                                          }
+                                        >
+                                          <cell
+                                            data={
+                                              Object {
+                                                "_uiId": "entry_02",
+                                                "age": 1214,
+                                                "date": 2019-11-06T00:11:18.112Z,
+                                                "equipmentUiId": "equipment_01",
+                                                "name": "vidange inverseur",
+                                                "remarks": "RAS",
+                                                "taskUiId": "task_02",
+                                              }
+                                            }
+                                            index={1}
+                                            rowIndex={3}
+                                            sortable={true}
+                                            style={
+                                              Object {
+                                                "width": "20%",
+                                              }
+                                            }
+                                          >
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_02",
+                                                  "age": 1214,
+                                                  "date": 2019-11-06T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
+                                            >
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                vidange inverseur
+                                              </div>
+                                            </ClickableCell>
+                                          </cell>
+                                        </ForwardRef>
+                                      </td>
+                                    </ForwardRef>
+                                  </ForwardRef>
+                                  <ForwardRef
+                                    columns={
+                                      Array [
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "date",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "name",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "age",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "15%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "remarks",
+                                          "sortable": false,
+                                          "style": Object {
+                                            "width": "45%",
+                                          },
+                                        },
+                                      ]
+                                    }
+                                    index={2}
+                                    key="2"
+                                    rowIndex={3}
+                                  >
+                                    <ForwardRef
+                                      columns={
+                                        Array [
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "date",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "name",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "age",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "15%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "remarks",
+                                            "sortable": false,
+                                            "style": Object {
+                                              "width": "45%",
+                                            },
+                                          },
+                                        ]
+                                      }
+                                      index={2}
+                                      rowIndex={3}
+                                    >
+                                      <td>
+                                        <ForwardRef
+                                          cell={[Function]}
+                                          data={
+                                            Object {
+                                              "_uiId": "entry_02",
+                                              "age": 1214,
+                                              "date": 2019-11-06T00:11:18.112Z,
+                                              "equipmentUiId": "equipment_01",
+                                              "name": "vidange inverseur",
+                                              "remarks": "RAS",
+                                              "taskUiId": "task_02",
+                                            }
+                                          }
+                                          header={[Function]}
+                                          index={2}
+                                          name="age"
+                                          rowIndex={3}
+                                          sortable={true}
+                                          style={
+                                            Object {
+                                              "width": "15%",
+                                            }
+                                          }
+                                        >
+                                          <cell
+                                            data={
+                                              Object {
+                                                "_uiId": "entry_02",
+                                                "age": 1214,
+                                                "date": 2019-11-06T00:11:18.112Z,
+                                                "equipmentUiId": "equipment_01",
+                                                "name": "vidange inverseur",
+                                                "remarks": "RAS",
+                                                "taskUiId": "task_02",
+                                              }
+                                            }
+                                            index={2}
+                                            rowIndex={3}
+                                            sortable={true}
+                                            style={
+                                              Object {
+                                                "width": "15%",
+                                              }
+                                            }
+                                          >
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_02",
+                                                  "age": 1214,
+                                                  "date": 2019-11-06T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
+                                            >
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                1214h
+                                              </div>
+                                            </ClickableCell>
+                                          </cell>
+                                        </ForwardRef>
+                                      </td>
+                                    </ForwardRef>
+                                  </ForwardRef>
+                                  <ForwardRef
+                                    columns={
+                                      Array [
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "date",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "name",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "age",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "15%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "remarks",
+                                          "sortable": false,
+                                          "style": Object {
+                                            "width": "45%",
+                                          },
+                                        },
+                                      ]
+                                    }
+                                    index={3}
+                                    key="3"
+                                    rowIndex={3}
+                                  >
+                                    <ForwardRef
+                                      columns={
+                                        Array [
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "date",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "name",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "age",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "15%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "remarks",
+                                            "sortable": false,
+                                            "style": Object {
+                                              "width": "45%",
+                                            },
+                                          },
+                                        ]
+                                      }
+                                      index={3}
+                                      rowIndex={3}
+                                    >
+                                      <td>
+                                        <ForwardRef
+                                          cell={[Function]}
+                                          data={
+                                            Object {
+                                              "_uiId": "entry_02",
+                                              "age": 1214,
+                                              "date": 2019-11-06T00:11:18.112Z,
+                                              "equipmentUiId": "equipment_01",
+                                              "name": "vidange inverseur",
+                                              "remarks": "RAS",
+                                              "taskUiId": "task_02",
+                                            }
+                                          }
+                                          header={[Function]}
+                                          index={3}
+                                          name="remarks"
+                                          rowIndex={3}
+                                          sortable={false}
+                                          style={
+                                            Object {
+                                              "width": "45%",
+                                            }
+                                          }
+                                        >
+                                          <cell
+                                            data={
+                                              Object {
+                                                "_uiId": "entry_02",
+                                                "age": 1214,
+                                                "date": 2019-11-06T00:11:18.112Z,
+                                                "equipmentUiId": "equipment_01",
+                                                "name": "vidange inverseur",
+                                                "remarks": "RAS",
+                                                "taskUiId": "task_02",
+                                              }
+                                            }
+                                            index={3}
+                                            rowIndex={3}
+                                            sortable={false}
+                                            style={
+                                              Object {
+                                                "width": "45%",
+                                              }
+                                            }
+                                          >
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_02",
+                                                  "age": 1214,
+                                                  "date": 2019-11-06T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
+                                            >
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                <div
+                                                  dangerouslySetInnerHTML={
+                                                    Object {
+                                                      "__html": "RAS",
+                                                    }
+                                                  }
+                                                />
+                                              </div>
+                                            </ClickableCell>
                                           </cell>
                                         </ForwardRef>
                                       </td>

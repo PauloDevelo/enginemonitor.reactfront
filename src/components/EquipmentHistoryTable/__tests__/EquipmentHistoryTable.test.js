@@ -1,4 +1,6 @@
 import ignoredMessages from '../../../testHelpers/MockConsole';
+import chai, {assert} from 'chai';
+
 
 import React from 'react';
 import { IntlProvider } from "react-intl";
@@ -16,6 +18,8 @@ import updateWrapper from '../../../testHelpers/EnzymeHelper';
 jest.mock('../../../services/ImageProxy');
 jest.mock('../../../services/EntryProxy');
 jest.mock('localforage');
+
+chai.use(require('chai-datetime'));
 
 describe("EquipmentHistoryTable", () => {
     const equipment = {
@@ -47,6 +51,24 @@ describe("EquipmentHistoryTable", () => {
             remarks: 'RAS',
             taskUiId: "task_02",
             equipmentUiId: "equipment_01"
+        },
+        {
+            _uiId: "entry_03",
+            name: "vidange inverseur",
+            date: new Date("2019-11-09T00:11:18.112Z"),
+            age: 1214,
+            remarks: 'RAS',
+            taskUiId: "task_02",
+            equipmentUiId: "equipment_01"
+        },
+        {
+            _uiId: "entry_04",
+            name: "vidange inverseur",
+            date: new Date("2019-11-09T00:11:19.112Z"),
+            age: 1214,
+            remarks: 'RAS',
+            taskUiId: "task_02",
+            equipmentUiId: "equipment_01"
         }
     ];
 
@@ -61,17 +83,24 @@ describe("EquipmentHistoryTable", () => {
             if (props.equipmentId){
                 return Promise.resolve(entries);
             }
-            else{
-                Promise.resolve([]);
-            }
+            Promise.resolve([]);
         });
+
+        jest.spyOn(entryProxy, "existEntry").mockImplementation(async (equipmentId, entryId) => {
+            if (entries.findIndex(e => e._uiId === entryId) !== -1){
+                return Promise.resolve(true);
+            }
+            return Promise.resolve(false);
+        });
+
 
         imageProxy.fetchImages.mockResolvedValue([]);
     });
 
     afterEach(() => {
         entryProxy.fetchAllEntries.mockRestore();
-        imageProxy.fetchImages.mockRestore([]);
+        entryProxy.existEntry.mockRestore();
+        imageProxy.fetchImages.mockRestore();
     });
 
     it("Should render render the loading spinner while loading the entries", async() => {
@@ -170,5 +199,65 @@ describe("EquipmentHistoryTable", () => {
         // Assert
         expect(entryProxy.fetchAllEntries).toBeCalledTimes(2);
         expect(onEquipmentChanged).toBeCalledTimes(0);
+    });
+
+    it("Should open the edition entry modal when clicking on any cell", async() => {
+        // Arrange
+        const onEquipmentChanged = jest.fn();
+
+        const equipmentHistoryTable = mount(
+            <IntlProvider locale={navigator.language}>
+                <EquipmentHistoryTable 
+                equipment={equipment} 
+                onTaskChanged={onEquipmentChanged} 
+                equipmentHistoryRefreshId={0}/>
+            </IntlProvider>);
+        await updateWrapper(equipmentHistoryTable);
+        const cells = equipmentHistoryTable.find('ClickableCell');
+
+        for(let i = 0; i < entries.length; i++){
+            for(let numColumn = 0; numColumn < 4; numColumn++){
+                // Act
+                cells.at(i * 4 + numColumn).simulate('click');
+                await updateWrapper(equipmentHistoryTable);
+
+                // Assert
+                const editEntryModal = equipmentHistoryTable.find('ModalEditEntry');
+                expect(editEntryModal.length).toBe(1);
+                expect(editEntryModal.props().visible).toBe(true);
+                expect(editEntryModal.props().equipment).toBe(equipment);
+                expect(editEntryModal.props().entry).toBe(entries[i]);
+            }
+        }
+    });
+
+    it("Should display the entries from the most recent to the oldest by default", async() => {
+        // Arrange
+        const onEquipmentChanged = jest.fn();
+
+        // Act
+        const equipmentHistoryTable = mount(
+            <IntlProvider locale={navigator.language}>
+                <EquipmentHistoryTable 
+                equipment={equipment} 
+                onTaskChanged={onEquipmentChanged} 
+                equipmentHistoryRefreshId={0}/>
+            </IntlProvider>);
+        await updateWrapper(equipmentHistoryTable);
+
+        // Assert
+        const cells = equipmentHistoryTable.find('ClickableCell');
+        let previousDate = undefined;
+        for(let i = 0; i < entries.length; i++){
+            for(let numColumn = 0; numColumn < 4; numColumn++){
+                const currentDate = cells.at(i * 4 + numColumn).props().data.date;
+                
+                if(previousDate !== undefined && currentDate !== previousDate){
+                    assert.afterTime(previousDate, currentDate);
+                }
+
+                previousDate = currentDate;
+            }
+        }
     });
 });
