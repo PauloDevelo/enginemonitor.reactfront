@@ -162,28 +162,29 @@ describe("HistoryTaskTable", () => {
         expect(onHistoryChanged).toMatchSnapshot();
     });
 
-    // it("Should render an empty table even when the equipment is undefined", async() => {
-    //     // Arrange
-    //     const onEquipmentChanged = jest.fn();
+    it("Should render an empty table even when the task is undefined", async() => {
+        // Arrange
+        const onHistoryChanged = jest.fn();
 
-    //     // Act
-    //     const equipmentHistoryTable = mount(
-    //         <IntlProvider locale={navigator.language}>
-    //             <EquipmentHistoryTable 
-    //             equipment={undefined} 
-    //             onTaskChanged={onEquipmentChanged} 
-    //             equipmentHistoryRefreshId={0}/>
-    //         </IntlProvider>);
-    //     await updateWrapper(equipmentHistoryTable);
+        // Act
+        const historyTaskTable = mount(
+            <IntlProvider locale={navigator.language}>
+                <HistoryTaskTable 
+                equipment={equipment} 
+                task={undefined}
+                onHistoryChanged={onHistoryChanged} 
+                taskHistoryRefreshId={0}/>
+            </IntlProvider>);
+        await updateWrapper(historyTaskTable);
 
-    //     // Assert
-    //     const tbodyProps = equipmentHistoryTable.find('tbody').at(0).props();
-    //     expect(tbodyProps.children.length).toBe(0);
-    //     expect(entryProxy.fetchAllEntries).toBeCalledTimes(1);
-    //     expect(onEquipmentChanged).toBeCalledTimes(0);
+        // Assert
+        const tbodyProps = historyTaskTable.find('tbody').at(0).props();
+        expect(tbodyProps.children.length).toBe(0);
+        expect(entryProxy.fetchEntries).toBeCalledTimes(1);
+        expect(onHistoryChanged).toBeCalledTimes(0);
         
-    //     expect(equipmentHistoryTable).toMatchSnapshot();
-    // });
+        expect(onHistoryChanged).toMatchSnapshot();
+    });
 
     // it("Should rerender all the entries for an equipment when equipmentHistoryRefreshId change", async() => {
     //     // Arrange

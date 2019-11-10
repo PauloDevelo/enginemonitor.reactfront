@@ -2,6 +2,8 @@
 
 exports[`HistoryTaskTable Should render all the entries for a task 1`] = `[MockFunction]`;
 
+exports[`HistoryTaskTable Should render an empty table even when the task is undefined 1`] = `[MockFunction]`;
+
 exports[`HistoryTaskTable Should render render the loading spinner while loading the entries 1`] = `
 <IntlProvider
   defaultFormats={Object {}}
