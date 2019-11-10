@@ -92,12 +92,12 @@ describe("EquipmentsInfo", () => {
         // Arrange
         const changeCurrentEquipment = jest.fn();
 
-        // Act
         const equipmentsInfo = mount(<IntlProvider locale={navigator.language}>
                                             <EquipmentsInfo userId={"paul"} changeCurrentEquipment={changeCurrentEquipment} extraClassNames=""/>
                                         </IntlProvider>);
         await updateWrapper(equipmentsInfo);
 
+        // Act
         let navItems = equipmentsInfo.find("Memo(EquipmentInfoNavItem)");
         navItems.at(1).find('NavLink').simulate('click');
         await updateWrapper(equipmentsInfo);
@@ -114,5 +114,53 @@ describe("EquipmentsInfo", () => {
         expect(navItems.at(0).props().active).toBe(false);
         expect(navItems.at(1).props().active).toBe(true);
         expect(navItems.at(2).props().active).toBe(false);
+    });
+
+    it("Should render a new equipment tab because we created a new equipment", async() => {
+        jest.setTimeout(30000);
+
+        // Arrange
+        const changeCurrentEquipment = jest.fn();
+
+        
+        const equipmentsInfo = mount(<IntlProvider locale={navigator.language}>
+                                            <EquipmentsInfo userId={"paul"} changeCurrentEquipment={changeCurrentEquipment} extraClassNames=""/>
+                                        </IntlProvider>);
+        await updateWrapper(equipmentsInfo);
+
+        let addEquipmentButton = equipmentsInfo.find("Button").at(0);
+        addEquipmentButton.simulate('click');
+        await updateWrapper(equipmentsInfo);
+
+        const editEquipmentModal = equipmentsInfo.find('ModalEquipmentInfo');
+        const onEquipmentInfoSaved = editEquipmentModal.props().onEquipmentInfoSaved;
+
+        const newEquipment = {
+            _uiId: '4',
+            name: 'outboard engine',
+            brand: 'Parsun',
+            model: '5.8',
+            age: 200,
+            installation: new Date('2018-04-15T10:00:00.000Z')
+        }
+
+        // Act
+        onEquipmentInfoSaved(newEquipment);
+        await updateWrapper(equipmentsInfo);
+        
+        // Assert
+        expect(changeCurrentEquipment).toHaveBeenCalledTimes(3);
+        expect(equipmentProxy.fetchEquipments).toHaveBeenCalledTimes(2);
+        expect(equipmentProxy.fetchEquipments).toHaveBeenNthCalledWith(2, true);
+
+        expect(equipmentsInfo.find('Memo(EquipmentInfoTab)').length).toBe(equipments.length + 1);
+        expect(equipmentsInfo.find("TabContent").props().activeTab).toBe(newEquipment._uiId);
+
+        const navItems = equipmentsInfo.find("Memo(EquipmentInfoNavItem)");
+        expect(navItems.length).toBe(equipments.length + 1);
+        expect(navItems.at(0).props().active).toBe(false);
+        expect(navItems.at(1).props().active).toBe(false);
+        expect(navItems.at(2).props().active).toBe(false);
+        expect(navItems.at(3).props().active).toBe(true);
     });
 });
