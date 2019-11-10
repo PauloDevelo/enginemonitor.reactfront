@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useEffect, useCallback, useRef} from 'react';
+import React, {Fragment, useState, useEffect, useCallback} from 'react';
 import { Button, Nav, TabContent } from 'reactstrap';
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -42,16 +42,15 @@ function EquipmentsInfo({userId, changeCurrentEquipment, extraClassNames}: Props
 
 	const [equipments, setEquipments] = useState<EquipmentModel[]>([]);
 
-	const {data: fetchedEquipments, isLoading, isRejected, reload} = useAsync({ promiseFn: equipmentProxy.fetchEquipments});
-
-    const reloadRef = useRef(reload);
-    useEffect(() => {
-        reloadRef.current = reload;
-    }, [reload]);
-
-    useEffect(() => {
-        reloadRef.current();
-    }, [userId]);
+	const fetchEquipments = useCallback(async () => {
+		if(userId !== undefined){
+			return await equipmentProxy.fetchEquipments();
+		}
+		else{
+			return Promise.resolve([]);
+		}
+	}, [userId]);
+	const {data: fetchedEquipments, isLoading, isRejected} = useAsync({ promiseFn: fetchEquipments});
 
     useEffect(() => {
         setEquipments(fetchedEquipments ? fetchedEquipments : []);
