@@ -66,7 +66,6 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
     const onSavedEntry = (savedEntry: EntryModel) => {
         const newCurrentHistory = entries.filter(entry => entry._uiId !== savedEntry._uiId);
         newCurrentHistory.unshift(savedEntry);
-        newCurrentHistory.sort((entryA, entryB) => entryA.date.getTime() - entryB.date.getTime());
 
         setEntries(newCurrentHistory);
 
@@ -85,7 +84,7 @@ const EquipmentHistoryTable = ({equipment, onTaskChanged, equipmentHistoryRefres
     }
 
     const displayEntry = useCallback((entry:EntryModel) => {
-        modalHook.displayData(entry)
+        modalHook.displayData(entry);
     }, [modalHook]);
 
     const columns = [
