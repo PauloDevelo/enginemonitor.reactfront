@@ -764,6 +764,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                     "top": 0,
                                                   }
                                                 }
+                                                title="resizeTrigger"
                                                 width="100%"
                                               />
                                             </ResizeTrigger>
@@ -907,6 +908,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                     "top": 0,
                                                   }
                                                 }
+                                                title="resizeTrigger"
                                                 width="100%"
                                               />
                                             </ResizeTrigger>
@@ -1050,6 +1052,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                     "top": 0,
                                                   }
                                                 }
+                                                title="resizeTrigger"
                                                 width="100%"
                                               />
                                             </ResizeTrigger>
@@ -1187,6 +1190,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                     "top": 0,
                                                   }
                                                 }
+                                                title="resizeTrigger"
                                                 width="100%"
                                               />
                                             </ResizeTrigger>
@@ -5228,6 +5232,7 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
                                                     "top": 0,
                                                   }
                                                 }
+                                                title="resizeTrigger"
                                                 width="100%"
                                               />
                                             </ResizeTrigger>
@@ -5371,6 +5376,7 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
                                                     "top": 0,
                                                   }
                                                 }
+                                                title="resizeTrigger"
                                                 width="100%"
                                               />
                                             </ResizeTrigger>
@@ -5514,6 +5520,7 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
                                                     "top": 0,
                                                   }
                                                 }
+                                                title="resizeTrigger"
                                                 width="100%"
                                               />
                                             </ResizeTrigger>
@@ -5651,6 +5658,7 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
                                                     "top": 0,
                                                   }
                                                 }
+                                                title="resizeTrigger"
                                                 width="100%"
                                               />
                                             </ResizeTrigger>

@@ -1,8 +1,6 @@
 /* Inject styles */
 @import '../components/react-table-factory/withFixedHeader';
-@import '../components/react-table-factory/withHeaderCellOverflow';
 @import '../components/react-table-factory/withSortingContext';
-@import '../components/react-table-factory/withInlineDetailsContext';
 @import '../components/react-table-factory/table';
 
 /* Inject adaptive behavior */
@@ -11,7 +9,6 @@
 }
 
 @media all and (max-width: 940px) {
-    @import '../components/react-table-factory/withAdaptive';
     
     .scrollable-table {
         @extend .adaptive-scrollable-table !optional;

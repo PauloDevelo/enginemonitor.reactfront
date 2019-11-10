@@ -1,6 +1,6 @@
-import React, { forwardRef, useRef, useLayoutEffect, useImperativeHandle, useContext } from 'react';
+import React, { forwardRef, useRef, useLayoutEffect, useImperativeHandle, useContext, useCallback } from 'react';
 
-import { table, DefaultHeaderRenderer, DefaultHeaderCellRenderer } from './table';
+import { table, DefaultHeaderCellRenderer } from './table';
 
 const cloneStyles = (
     node,
@@ -36,14 +36,14 @@ export const ResizeTrigger = ({onResize}) => {
     const ref = useRef();
     useLayoutEffect(
         () => {
-            if(ref.current.contentWindow){
-                ref.current.contentWindow.addEventListener('resize', onResize);
+            const contentWindow = ref.current.contentWindow;
+            if(contentWindow){
+                contentWindow.addEventListener('resize', onResize);
             }
             
-
             return () => {
-                if(ref.current.contentWindow){
-                    ref.current.contentWindow.removeEventListener('resize', onResize);
+                if(contentWindow){
+                    contentWindow.removeEventListener('resize', onResize);
                 }    
             }
         }
@@ -55,6 +55,7 @@ export const ResizeTrigger = ({onResize}) => {
             height="100%"
             style={{position: 'absolute', top: 0, left: 0}}
             ref={ref}
+            title="resizeTrigger"
         />
     )
 }
@@ -122,10 +123,10 @@ export const withFixedHeader = (tableFactory=table) => ({
             head: tableRef.current.head
         }));
 
-        let t;
-        const layout = () => {
-            cancelAnimationFrame(t);
-            t = requestAnimationFrame(() => {
+        const t = useRef(undefined);
+        const layout = useCallback(() => {
+            cancelAnimationFrame(t.current);
+            t.current = requestAnimationFrame(() => {
                 cloneStyles(
                     tableRef.current.table.current,
                     clone.current.table.current,
@@ -146,16 +147,16 @@ export const withFixedHeader = (tableFactory=table) => ({
                     'th',
                 );
             });
-        }
+        }, []);
 
         useLayoutEffect(
             () => {
                 layout();
 
                 return () => {
-                    cancelAnimationFrame(t);
+                    cancelAnimationFrame(t.current);
                 }
-            }, []
+            }, [layout]
         )
     
         return (
