@@ -246,7 +246,57 @@ describe("EquipmentHistoryTable", () => {
         await updateWrapper(equipmentHistoryTable);
 
         // Assert
-        const cells = equipmentHistoryTable.find('ClickableCell');
+        assertTableSortedByDate(equipmentHistoryTable);
+    });
+
+    it("Should add an entry and it should remain sorted by date", async() => {
+        // Arrange
+        const onEquipmentChanged = jest.fn();
+        
+        const equipmentHistoryTable = mount(
+            <IntlProvider locale={navigator.language}>
+                <EquipmentHistoryTable 
+                equipment={equipment} 
+                onTaskChanged={onEquipmentChanged} 
+                equipmentHistoryRefreshId={0}/>
+            </IntlProvider>);
+        await updateWrapper(equipmentHistoryTable);
+
+        const addButton = equipmentHistoryTable.find('Button');
+        addButton.simulate('click');
+        await updateWrapper(equipmentHistoryTable);
+
+        const editEntryModal = equipmentHistoryTable.find('ModalEditEntry');
+        const saveEntry = editEntryModal.props().saveEntry;
+
+        const newEntry = {
+            _uiId: "entry_088",
+            name: "remplacement silent bloc",
+            date: new Date("2019-09-08T00:11:18.112Z"),
+            age: 125894,
+            remarks: 'RAS',
+            taskUiId: "task_08",
+            equipmentUiId: "equipment_01"
+        }
+        // Act
+        saveEntry(newEntry);
+        await updateWrapper(equipmentHistoryTable);
+
+        // Assert
+        expect(editEntryModal.length).toBe(1);
+        expect(editEntryModal.props().visible).toBe(true);
+        expect(editEntryModal.props().equipment).toBe(equipment);
+
+        expect(equipmentHistoryTable.find('ClickableCell').length).toBe((entries.length + 1) * 4);
+        const newCells = equipmentHistoryTable.find('ClickableCell').findWhere(n => n.props().data === newEntry);
+        expect(newCells.length).toBe(4);
+
+        assertTableSortedByDate(equipmentHistoryTable);
+        expect(onEquipmentChanged).toBeCalledTimes(1);
+    });
+
+    function assertTableSortedByDate(table){
+        const cells = table.find('ClickableCell');
         let previousDate = undefined;
         for(let i = 0; i < entries.length; i++){
             for(let numColumn = 0; numColumn < 4; numColumn++){
@@ -259,5 +309,5 @@ describe("EquipmentHistoryTable", () => {
                 previousDate = currentDate;
             }
         }
-    });
+    }
 });
