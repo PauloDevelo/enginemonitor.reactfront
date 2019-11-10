@@ -214,35 +214,38 @@ describe("HistoryTaskTable", () => {
         expect(onHistoryChanged).toBeCalledTimes(0);
     });
 
-    // it("Should open the edition entry modal when clicking on any cell", async() => {
-    //     // Arrange
-    //     const onEquipmentChanged = jest.fn();
+    it("Should open the edition entry modal when clicking on any cell", async() => {
+        // Arrange
+        const onHistoryChanged = jest.fn();
 
-    //     const equipmentHistoryTable = mount(
-    //         <IntlProvider locale={navigator.language}>
-    //             <EquipmentHistoryTable 
-    //             equipment={equipment} 
-    //             onTaskChanged={onEquipmentChanged} 
-    //             equipmentHistoryRefreshId={0}/>
-    //         </IntlProvider>);
-    //     await updateWrapper(equipmentHistoryTable);
-    //     const cells = equipmentHistoryTable.find('ClickableCell');
+        const historyTaskTable = mount(
+            <IntlProvider locale={navigator.language}>
+                <HistoryTaskTable 
+                equipment={equipment} 
+                task={task}
+                onHistoryChanged={onHistoryChanged} 
+                taskHistoryRefreshId={0}/>
+            </IntlProvider>);
+        await updateWrapper(historyTaskTable);
 
-    //     for(let i = 0; i < entries.length; i++){
-    //         for(let numColumn = 0; numColumn < 4; numColumn++){
-    //             // Act
-    //             cells.at(i * 4 + numColumn).simulate('click');
-    //             await updateWrapper(equipmentHistoryTable);
+        const cells = historyTaskTable.find('ClickableCell');
 
-    //             // Assert
-    //             const editEntryModal = equipmentHistoryTable.find('ModalEditEntry');
-    //             expect(editEntryModal.length).toBe(1);
-    //             expect(editEntryModal.props().visible).toBe(true);
-    //             expect(editEntryModal.props().equipment).toBe(equipment);
-    //             expect(editEntryModal.props().entry).toBe(entries[i]);
-    //         }
-    //     }
-    // });
+        for(let i = 0; i < entries.length; i++){
+            for(let numColumn = 0; numColumn < 3; numColumn++){
+                // Act
+                cells.at(i * 3 + numColumn).simulate('click');
+                await updateWrapper(historyTaskTable);
+
+                // Assert
+                const editEntryModal = historyTaskTable.find('ModalEditEntry');
+                expect(editEntryModal.length).toBe(1);
+                expect(editEntryModal.props().visible).toBe(true);
+                expect(editEntryModal.props().equipment).toBe(equipment);
+                expect(editEntryModal.props().task).toBe(task);
+                expect(editEntryModal.props().entry).toBe(entries[i]);
+            }
+        }
+    });
 
     // it("Should display the entries from the most recent to the oldest by default", async() => {
     //     // Arrange

@@ -1,10 +1,11 @@
-import  React, { useEffect, useState, Fragment } from 'react';
+import  React, { useEffect, useState, Fragment, useCallback } from 'react';
 
 import { Button } from 'reactstrap';
 
 import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
+import ClickableCell from '../Table/ClickableCell';
 
 import { composeDecorators } from '../react-table-factory/table';
 import { withInMemorySortingContext } from '../react-table-factory/withSortingContext';
@@ -89,7 +90,12 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
 		return (
 			<div onClick={() => modalHook.displayData(entry)} className={classNames + ' innerTd clickable'} >{content}</div>
 		);
-	}
+    }
+    
+    const displayEntry = useCallback((entry:EntryModel) => {
+        modalHook.displayData(entry);
+    }, [modalHook]);
+
 
     const columns = [
 		{
@@ -98,8 +104,10 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
 				<div className={'innerTdHead'}><FormattedMessage {...messages.ackDate} /></div>
 			),
 			cell: (content: any) => {
-                const entryDate = new Date(content.data.date);
-				return innerEntryCell(content.data, <FormattedDate value={entryDate} />);
+                const entry : EntryModel = content.data;
+				return (<ClickableCell data={entry} onDisplayData={displayEntry}>
+                            <FormattedDate value={entry.date} />
+                        </ClickableCell>);
             },
             style: {width:"25%"},
 			sortable: true
@@ -116,18 +124,24 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
                 }
                 else{
                     if (equipment.ageAcquisitionType !== AgeAcquisitionType.time){
-                        return innerEntryCell(entry, <Fragment>{entry.age === -1?"":entry.age + 'h'}</Fragment>);
+                        return (<ClickableCell data={entry} onDisplayData={displayEntry}>
+                            <Fragment>{entry.age === -1?"":entry.age + 'h'}</Fragment>
+                        </ClickableCell>);
+
                     }
                     else{
                         const diff = moment.duration(entry.date.getTime() - equipment.installation.getTime());
                         const year = diff.years();
                         const month = diff.months();
                         const day = diff.days();
-                        return innerEntryCell(entry, <Fragment>
-                            {diff.years() > 0 && <FormattedMessage {... messages.yearperiod} values={{year}}/>}{' '}
-                            {diff.months() > 0 && <FormattedMessage {... messages.monthperiod} values={{month}}/>}{' '}
-                            {diff.days() > 0 && <FormattedMessage {... messages.dayperiod} values={{day}}/>}
-                        </Fragment>);
+
+                        return (<ClickableCell data={entry} onDisplayData={displayEntry}>
+                                    <Fragment>
+                                        {diff.years() > 0 && <FormattedMessage {... messages.yearperiod} values={{year}}/>}{' '}
+                                        {diff.months() > 0 && <FormattedMessage {... messages.monthperiod} values={{month}}/>}{' '}
+                                        {diff.days() > 0 && <FormattedMessage {... messages.dayperiod} values={{day}}/>}
+                                    </Fragment>
+                                </ClickableCell>);
                     }
                 }
             },
@@ -144,7 +158,9 @@ const HistoryTaskTable = ({equipment, task, taskHistoryRefreshId, onHistoryChang
                 var remarks = entry.remarks.replace(/\n/g, '<br />');
                 var shortenRemarks = shorten(remarks);
 
-				return innerEntryCell(entry, <div dangerouslySetInnerHTML={{ __html: shortenRemarks }}/>);
+                return (<ClickableCell data={entry} onDisplayData={displayEntry}>
+                    <div dangerouslySetInnerHTML={{ __html: shortenRemarks }}/>
+                </ClickableCell>);
             },
             style: {width:"50%"},
 			sortable: false
