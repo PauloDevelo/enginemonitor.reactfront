@@ -64,7 +64,7 @@ describe("EquipmentsInfo", () => {
         equipmentProxy.fetchEquipments.mockRestore();
     });
 
-    it("Should render a equipment tabs because", async() => {
+    it("Should render a equipment tabs with hte first equipment selected", async() => {
         // Arrange
         const changeCurrentEquipment = jest.fn();
 
@@ -77,8 +77,42 @@ describe("EquipmentsInfo", () => {
         // Assert
         expect(changeCurrentEquipment).toHaveBeenCalledTimes(2);
         expect(equipmentProxy.fetchEquipments).toHaveBeenCalledTimes(1);
+
         expect(equipmentsInfo.find('Memo(EquipmentInfoTab)').length).toBe(equipments.length);
+        expect(equipmentsInfo.find("TabContent").props().activeTab).toBe(equipments[0]._uiId);
+
+        const navItems = equipmentsInfo.find("Memo(EquipmentInfoNavItem)");
+        expect(navItems.length).toBe(equipments.length);
+        expect(navItems.at(0).props().active).toBe(true);
 
         expect(equipmentsInfo).toMatchSnapshot();
+    });
+
+    it("Should render a equipment tabs with the second equipment selected because we clicked on it", async() => {
+        // Arrange
+        const changeCurrentEquipment = jest.fn();
+
+        // Act
+        const equipmentsInfo = mount(<IntlProvider locale={navigator.language}>
+                                            <EquipmentsInfo userId={"paul"} changeCurrentEquipment={changeCurrentEquipment} extraClassNames=""/>
+                                        </IntlProvider>);
+        await updateWrapper(equipmentsInfo);
+
+        let navItems = equipmentsInfo.find("Memo(EquipmentInfoNavItem)");
+        navItems.at(1).find('NavLink').simulate('click');
+        await updateWrapper(equipmentsInfo);
+        
+        // Assert
+        expect(changeCurrentEquipment).toHaveBeenCalledTimes(3);
+        expect(equipmentProxy.fetchEquipments).toHaveBeenCalledTimes(1);
+
+        expect(equipmentsInfo.find('Memo(EquipmentInfoTab)').length).toBe(equipments.length);
+        expect(equipmentsInfo.find("TabContent").props().activeTab).toBe(equipments[1]._uiId);
+
+        navItems = equipmentsInfo.find("Memo(EquipmentInfoNavItem)");
+        expect(navItems.length).toBe(equipments.length);
+        expect(navItems.at(0).props().active).toBe(false);
+        expect(navItems.at(1).props().active).toBe(true);
+        expect(navItems.at(2).props().active).toBe(false);
     });
 });

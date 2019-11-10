@@ -14,7 +14,6 @@ import Loading from '../Loading/Loading';
 
 import { createDefaultEquipment } from '../../helpers/EquipmentHelper';
 
-import PropTypes from 'prop-types';
 import { EquipmentModel } from '../../types/Types';
 
 type Props = {
@@ -27,14 +26,14 @@ function EquipmentsInfo({userId, changeCurrentEquipment, extraClassNames}: Props
 	const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
 	const modalHook = useEditModal<EquipmentModel | undefined>(undefined);
 	
-	const isCurrentEquipment = (equipment: EquipmentModel) => {
+	const isCurrentEquipment = useCallback((equipment: EquipmentModel) => {
 		if (currentEquipment === undefined || equipment === undefined){
 			return false;
 		}
 		else{
 			return currentEquipment._uiId === equipment._uiId;
 		}
-	}
+	}, [currentEquipment]);
 
 	useEffect(() => {
 		changeCurrentEquipment(currentEquipment);
@@ -141,9 +140,3 @@ function EquipmentsInfo({userId, changeCurrentEquipment, extraClassNames}: Props
 }
 
 export default React.memo(EquipmentsInfo);
-
-EquipmentsInfo.propTypes = {
-	userId: PropTypes.string,
-	changeCurrentEquipment: PropTypes.func.isRequired,
-	extraClassNames: PropTypes.string
-};
