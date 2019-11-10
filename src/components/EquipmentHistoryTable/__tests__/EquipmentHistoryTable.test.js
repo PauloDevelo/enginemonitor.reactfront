@@ -295,6 +295,44 @@ describe("EquipmentHistoryTable", () => {
         expect(onEquipmentChanged).toBeCalledTimes(1);
     });
 
+    it("Should remove an entry", async() => {
+        // Arrange
+        const onTaskChanged = jest.fn();
+        
+        const equipmentHistoryTable = mount(
+            <IntlProvider locale={navigator.language}>
+                <EquipmentHistoryTable 
+                equipment={equipment} 
+                onTaskChanged={onTaskChanged} 
+                equipmentHistoryRefreshId={0}/>
+            </IntlProvider>);
+        await updateWrapper(equipmentHistoryTable);
+
+        const cells = equipmentHistoryTable.find('ClickableCell').at(5);
+        cells.simulate('click');
+        const entryToDelete = cells.props().data;
+        await updateWrapper(equipmentHistoryTable);
+
+        const editEntryModal = equipmentHistoryTable.find('ModalEditEntry');
+        const deleteEntry = editEntryModal.props().deleteEntry;
+
+        // Act
+        deleteEntry(entryToDelete);
+        await updateWrapper(equipmentHistoryTable);
+
+        // Assert
+        expect(editEntryModal.length).toBe(1);
+        expect(editEntryModal.props().visible).toBe(true);
+        expect(editEntryModal.props().equipment).toBe(equipment);
+        expect(editEntryModal.props().entry).toBe(entryToDelete);
+
+        expect(equipmentHistoryTable.find('ClickableCell').length).toBe((entries.length - 1) * 4);
+        const newCells = equipmentHistoryTable.find('ClickableCell').findWhere(n => n.props().data === entryToDelete);
+        expect(newCells.length).toBe(0);
+
+        expect(onTaskChanged).toBeCalledTimes(1);
+    });
+
     function assertTableSortedByDate(table){
         const cells = table.find('ClickableCell');
         let previousDate = undefined;
