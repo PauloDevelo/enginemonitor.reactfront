@@ -117,8 +117,6 @@ describe("EquipmentsInfo", () => {
     });
 
     it("Should render a new equipment tab because we created a new equipment", async() => {
-        jest.setTimeout(30000);
-
         // Arrange
         const changeCurrentEquipment = jest.fn();
 
@@ -162,5 +160,45 @@ describe("EquipmentsInfo", () => {
         expect(navItems.at(1).props().active).toBe(false);
         expect(navItems.at(2).props().active).toBe(false);
         expect(navItems.at(3).props().active).toBe(true);
+    });
+
+    it("Should render only 2 equipment tabs because we removed an equipment", async() => {
+        // Arrange
+        const changeCurrentEquipment = jest.fn();
+
+        
+        const equipmentsInfo = mount(<IntlProvider locale={navigator.language}>
+                                            <EquipmentsInfo userId={"paul"} changeCurrentEquipment={changeCurrentEquipment} extraClassNames=""/>
+                                        </IntlProvider>);
+        await updateWrapper(equipmentsInfo);
+
+        let navItems = equipmentsInfo.find("Memo(EquipmentInfoNavItem)");
+        navItems.at(1).find('NavLink').simulate('click');
+        await updateWrapper(equipmentsInfo);
+
+        const editEquipmentButton = equipmentsInfo.find("Memo(EquipmentInfoTab)").at(1).find('Button').at(0);
+        editEquipmentButton.simulate('click');
+        await updateWrapper(equipmentsInfo);
+
+        const editEquipmentModal = equipmentsInfo.find('ModalEquipmentInfo');
+        const onEquipmentDeleted = editEquipmentModal.props().onEquipmentDeleted;
+
+        // Act
+        onEquipmentDeleted(equipments[1]);
+        await updateWrapper(equipmentsInfo);
+        
+        // Assert
+        expect(changeCurrentEquipment).toHaveBeenCalledTimes(2 + 1 + 1);
+        expect(equipmentProxy.fetchEquipments).toHaveBeenCalledTimes(2);
+        expect(equipmentProxy.fetchEquipments).toHaveBeenNthCalledWith(2, true);
+
+        expect(equipmentsInfo.find('Memo(EquipmentInfoTab)').length).toBe(equipments.length - 1);
+        expect(equipmentsInfo.find("TabContent").props().activeTab).toBe(equipments[0]._uiId);
+
+        navItems = equipmentsInfo.find("Memo(EquipmentInfoNavItem)");
+        expect(navItems.length).toBe(equipments.length - 1);
+        expect(navItems.at(0).props().active).toBe(true);
+        expect(navItems.at(1).props().active).toBe(false);
+        
     });
 });
