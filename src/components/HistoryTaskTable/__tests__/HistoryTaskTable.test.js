@@ -186,33 +186,33 @@ describe("HistoryTaskTable", () => {
         expect(onHistoryChanged).toMatchSnapshot();
     });
 
-    // it("Should rerender all the entries for an equipment when equipmentHistoryRefreshId change", async() => {
-    //     // Arrange
-    //     const onEquipmentChanged = jest.fn();
+    it("Should rerender all the entries for a task when equipmentHistoryRefreshId change", async() => {
+        // Arrange
+        const onHistoryChanged = jest.fn();
 
-    //     const properties = {equipment, onTaskChanged:onEquipmentChanged, equipmentHistoryRefreshId: 0};
-    //     const wrapper = mount(
-    //         React.createElement(
-    //             props => (
-    //                 <IntlProvider locale={navigator.language}>
-    //                     <EquipmentHistoryTable 
-    //                     {...props}/>
-    //                 </IntlProvider>
-    //             ),
-    //             properties)
-    //         );
-    //     await updateWrapper(wrapper);
+        const properties = {equipment, task, onHistoryChanged, taskHistoryRefreshId: 0};
+        const wrapper = mount(
+            React.createElement(
+                props => (
+                    <IntlProvider locale={navigator.language}>
+                        <HistoryTaskTable 
+                        {...props}/>
+                    </IntlProvider>
+                ),
+                properties)
+            );
+        await updateWrapper(wrapper);
 
-    //     // Act
-    //     properties.equipmentHistoryRefreshId = 1;
+        // Act
+        properties.taskHistoryRefreshId = 1;
 
-    //     wrapper.setProps(properties); 
-    //     await updateWrapper(wrapper);
+        wrapper.setProps(properties); 
+        await updateWrapper(wrapper);
         
-    //     // Assert
-    //     expect(entryProxy.fetchAllEntries).toBeCalledTimes(2);
-    //     expect(onEquipmentChanged).toBeCalledTimes(0);
-    // });
+        // Assert
+        expect(entryProxy.fetchEntries).toBeCalledTimes(2);
+        expect(onHistoryChanged).toBeCalledTimes(0);
+    });
 
     // it("Should open the edition entry modal when clicking on any cell", async() => {
     //     // Arrange
