@@ -83,7 +83,7 @@ describe('EquipmentHistoryTable', () => {
       if (props.equipmentId) {
         return Promise.resolve(entries);
       }
-      Promise.resolve([]);
+      return Promise.resolve([]);
     });
 
     jest.spyOn(entryProxy, 'existEntry').mockImplementation(async (equipmentId, entryId) => {
@@ -199,6 +199,7 @@ describe('EquipmentHistoryTable', () => {
     // Arrange
     const onEquipmentChanged = jest.fn();
 
+    // eslint-disable-next-line max-len
     const properties = { equipment, onTaskChanged: onEquipmentChanged, equipmentHistoryRefreshId: 0 };
     const wrapper = mount(
       React.createElement(
