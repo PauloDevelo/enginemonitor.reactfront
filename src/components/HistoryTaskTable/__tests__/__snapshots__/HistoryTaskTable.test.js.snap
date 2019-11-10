@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HistoryTaskTable Should render all the entries for a task 1`] = `[MockFunction]`;
+
+exports[`HistoryTaskTable Should render render the loading spinner while loading the entries 1`] = `
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+>
+  <Memo(HistoryTaskTable)
+    equipment={
+      Object {
+        "_uiId": "equipment_01",
+        "age": 2750,
+        "ageAcquisitionType": 1,
+        "ageUrl": "",
+        "brand": "Nanni",
+        "installation": 2019-11-07T23:39:36.288Z,
+        "model": "N3.30",
+        "name": "moteur",
+      }
+    }
+    onHistoryChanged={[MockFunction]}
+    task={
+      Object {
+        "_uiId": "task_01",
+        "description": "Change the oil",
+        "level": 0,
+        "name": "vidange",
+        "nextDueDate": 2019-11-07T23:39:36.288Z,
+        "periodInMonth": 6,
+        "usageInHourLeft": 100,
+        "usagePeriodInHour": 200,
+      }
+    }
+    taskHistoryRefreshId={0}
+  >
+    <div
+      className="undefined historytasktable"
+    >
+      <span
+        className="mb-2"
+      >
+        <b>
+          <FormattedMessage
+            defaultMessage="Task history"
+            description="Title"
+            id="taskHistoryTitle"
+            values={Object {}}
+          >
+            Task history
+          </FormattedMessage>
+        </b>
+        <Button
+          aria-label="Add"
+          className="float-right mb-2"
+          color="success"
+          onClick={[Function]}
+          size="sm"
+          tag="button"
+        >
+          <button
+            aria-label="Add"
+            className="float-right mb-2 btn btn-success btn-sm"
+            onClick={[Function]}
+            type="button"
+          >
+            <FontAwesomeIcon
+              border={false}
+              className=""
+              fixedWidth={false}
+              flip={null}
+              icon={
+                Object {
+                  "icon": Array [
+                    448,
+                    512,
+                    Array [],
+                    "f14a",
+                    "M400 480H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h352c26.51 0 48 21.49 48 48v352c0 26.51-21.49 48-48 48zm-204.686-98.059l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.248-16.379-6.249-22.628 0L184 302.745l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.25 16.379 6.25 22.628.001z",
+                  ],
+                  "iconName": "check-square",
+                  "prefix": "fas",
+                }
+              }
+              inverse={false}
+              listItem={false}
+              mask={null}
+              pull={null}
+              pulse={false}
+              rotation={null}
+              size={null}
+              spin={false}
+              swapOpacity={false}
+              symbol={false}
+              title=""
+              transform={null}
+            >
+              <svg
+                aria-hidden="true"
+                className="svg-inline--fa fa-check-square fa-w-14 "
+                data-icon="check-square"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                style={Object {}}
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M400 480H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h352c26.51 0 48 21.49 48 48v352c0 26.51-21.49 48-48 48zm-204.686-98.059l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.248-16.379-6.249-22.628 0L184 302.745l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.25 16.379 6.25 22.628.001z"
+                  fill="currentColor"
+                  style={Object {}}
+                />
+              </svg>
+            </FontAwesomeIcon>
+          </button>
+        </Button>
+      </span>
+      <Loading>
+        <div
+          className="lds-spinner"
+        >
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
+      </Loading>
+    </div>
+  </Memo(HistoryTaskTable)>
+</IntlProvider>
+`;
