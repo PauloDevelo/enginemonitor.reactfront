@@ -298,51 +298,54 @@ describe('HistoryTaskTable', () => {
     assertTableSortedByDate(historyTaskTable);
   });
 
-  // it("Should add an entry and it should remain sorted by date", async() => {
-  //     // Arrange
-  //     const onEquipmentChanged = jest.fn();
+  it('Should add an entry and it should remain sorted by date', async () => {
+    // Arrange
+    const onHistoryChanged = jest.fn();
 
-  //     const equipmentHistoryTable = mount(
-  //         <IntlProvider locale={navigator.language}>
-  //             <EquipmentHistoryTable
-  //             equipment={equipment}
-  //             onTaskChanged={onEquipmentChanged}
-  //             equipmentHistoryRefreshId={0}/>
-  //         </IntlProvider>);
-  //     await updateWrapper(equipmentHistoryTable);
+    const historyTaskTable = mount(
+      <IntlProvider locale={navigator.language}>
+        <HistoryTaskTable
+          equipment={equipment}
+          task={task}
+          onHistoryChanged={onHistoryChanged}
+          taskHistoryRefreshId={0}
+        />
+      </IntlProvider>,
+    );
+    await updateWrapper(historyTaskTable);
 
-  //     const addButton = equipmentHistoryTable.find('Button');
-  //     addButton.simulate('click');
-  //     await updateWrapper(equipmentHistoryTable);
+    const addButton = historyTaskTable.find('Button');
+    addButton.simulate('click');
+    await updateWrapper(historyTaskTable);
 
-  //     const editEntryModal = equipmentHistoryTable.find('ModalEditEntry');
-  //     const saveEntry = editEntryModal.props().saveEntry;
+    const editEntryModal = historyTaskTable.find('ModalEditEntry');
+    const { saveEntry } = editEntryModal.props();
 
-  //     const newEntry = {
-  //         _uiId: "entry_088",
-  //         name: "remplacement silent bloc",
-  //         date: new Date("2019-09-08T00:11:18.112Z"),
-  //         age: 125894,
-  //         remarks: 'RAS',
-  //         taskUiId: "task_08",
-  //         equipmentUiId: "equipment_01"
-  //     }
-  //     // Act
-  //     saveEntry(newEntry);
-  //     await updateWrapper(equipmentHistoryTable);
+    const newEntry = {
+      _uiId: 'entry_088',
+      name: 'remplacement silent bloc',
+      date: new Date('2019-09-08T00:11:18.112Z'),
+      age: 125894,
+      remarks: 'RAS',
+      taskUiId: task._uiId,
+      equipmentUiId: equipment._uiId,
+    };
+    // Act
+    saveEntry(newEntry);
+    await updateWrapper(historyTaskTable);
 
-  //     // Assert
-  //     expect(editEntryModal.length).toBe(1);
-  //     expect(editEntryModal.props().visible).toBe(true);
-  //     expect(editEntryModal.props().equipment).toBe(equipment);
+    // Assert
+    expect(editEntryModal.length).toBe(1);
+    expect(editEntryModal.props().visible).toBe(true);
+    expect(editEntryModal.props().equipment).toBe(equipment);
 
-  //     expect(equipmentHistoryTable.find('ClickableCell').length).toBe((entries.length + 1) * 4);
-  //     const newCells = equipmentHistoryTable.find('ClickableCell').findWhere(n => n.props().data === newEntry);
-  //     expect(newCells.length).toBe(4);
+    expect(historyTaskTable.find('ClickableCell').length).toBe((entries.length + 1) * 3);
+    const newCells = historyTaskTable.find('ClickableCell').findWhere((n) => n.props().data === newEntry);
+    expect(newCells.length).toBe(3);
 
-  //     assertTableSortedByDate(equipmentHistoryTable);
-  //     expect(onEquipmentChanged).toBeCalledTimes(1);
-  // });
+    assertTableSortedByDate(historyTaskTable);
+    expect(onHistoryChanged).toBeCalledTimes(1);
+  });
 
   // it("Should remove an entry", async() => {
   //     // Arrange
