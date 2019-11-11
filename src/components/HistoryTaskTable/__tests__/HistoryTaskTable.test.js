@@ -347,41 +347,44 @@ describe('HistoryTaskTable', () => {
     expect(onHistoryChanged).toBeCalledTimes(1);
   });
 
-  // it("Should remove an entry", async() => {
-  //     // Arrange
-  //     const onTaskChanged = jest.fn();
+  it('Should remove an entry', async () => {
+    // Arrange
+    const onHistoryChanged = jest.fn();
 
-  //     const equipmentHistoryTable = mount(
-  //         <IntlProvider locale={navigator.language}>
-  //             <EquipmentHistoryTable
-  //             equipment={equipment}
-  //             onTaskChanged={onTaskChanged}
-  //             equipmentHistoryRefreshId={0}/>
-  //         </IntlProvider>);
-  //     await updateWrapper(equipmentHistoryTable);
+    const historyTaskTable = mount(
+      <IntlProvider locale={navigator.language}>
+        <HistoryTaskTable
+          equipment={equipment}
+          task={task}
+          onHistoryChanged={onHistoryChanged}
+          taskHistoryRefreshId={0}
+        />
+      </IntlProvider>,
+    );
+    await updateWrapper(historyTaskTable);
 
-  //     const cells = equipmentHistoryTable.find('ClickableCell').at(5);
-  //     cells.simulate('click');
-  //     const entryToDelete = cells.props().data;
-  //     await updateWrapper(equipmentHistoryTable);
+    const cells = historyTaskTable.find('ClickableCell').at(5);
+    cells.simulate('click');
+    const entryToDelete = cells.props().data;
+    await updateWrapper(historyTaskTable);
 
-  //     const editEntryModal = equipmentHistoryTable.find('ModalEditEntry');
-  //     const deleteEntry = editEntryModal.props().deleteEntry;
+    const editEntryModal = historyTaskTable.find('ModalEditEntry');
+    const { deleteEntry } = editEntryModal.props();
 
-  //     // Act
-  //     deleteEntry(entryToDelete);
-  //     await updateWrapper(equipmentHistoryTable);
+    // Act
+    deleteEntry(entryToDelete);
+    await updateWrapper(historyTaskTable);
 
-  //     // Assert
-  //     expect(editEntryModal.length).toBe(1);
-  //     expect(editEntryModal.props().visible).toBe(true);
-  //     expect(editEntryModal.props().equipment).toBe(equipment);
-  //     expect(editEntryModal.props().entry).toBe(entryToDelete);
+    // Assert
+    expect(editEntryModal.length).toBe(1);
+    expect(editEntryModal.props().visible).toBe(true);
+    expect(editEntryModal.props().equipment).toBe(equipment);
+    expect(editEntryModal.props().entry).toBe(entryToDelete);
 
-  //     expect(equipmentHistoryTable.find('ClickableCell').length).toBe((entries.length - 1) * 4);
-  //     const newCells = equipmentHistoryTable.find('ClickableCell').findWhere(n => n.props().data === entryToDelete);
-  //     expect(newCells.length).toBe(0);
+    expect(historyTaskTable.find('ClickableCell').length).toBe((entries.length - 1) * 3);
+    const newCells = historyTaskTable.find('ClickableCell').findWhere((n) => n.props().data === entryToDelete);
+    expect(newCells.length).toBe(0);
 
-  //     expect(onTaskChanged).toBeCalledTimes(1);
-  // });
+    expect(onHistoryChanged).toBeCalledTimes(1);
+  });
 });
