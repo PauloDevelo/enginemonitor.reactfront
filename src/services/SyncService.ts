@@ -1,4 +1,6 @@
+// eslint-disable-next-line no-unused-vars
 import actionManager, { Action, NoActionPendingError } from './ActionManager';
+// eslint-disable-next-line no-unused-vars
 import storageService, { IUserStorageListener } from './StorageService';
 
 export interface ISyncService {
@@ -23,129 +25,122 @@ export type SyncContext = {
     remainingActionToSync: number;
 }
 
-class SyncService implements ISyncService, IUserStorageListener{
+let syncService: ISyncService;
+
+class SyncService implements ISyncService, IUserStorageListener {
     private offlineModeActivated:boolean = false;
 
-    constructor(){
-        window.addEventListener('offline', async (e) => await syncService.setIsOnline(false && this.isOfflineModeActivated() === false ));
-        window.addEventListener('online', async (e) => await syncService.setIsOnline(true && this.isOfflineModeActivated() === false ));
+    constructor() {
+      window.addEventListener('offline', async () => (syncService as SyncService).setIsOnline(false && this.isOfflineModeActivated() === false));
+      window.addEventListener('online', async () => (syncService as SyncService).setIsOnline(true && this.isOfflineModeActivated() === false));
 
-        storageService.registerUserStorageListener(this);
+      storageService.registerUserStorageListener(this);
     }
 
     private listeners: ((isOnline: boolean) => void)[] = [];
+
     private syncListeners: ((context: SyncContext) => void)[] = [];
 
     registerSyncListener(listener: (context: SyncContext) => void):void{
-        this.syncListeners.push(listener);
+      this.syncListeners.push(listener);
     }
 
     unregisterSyncListener(listenerToRemove: (context: SyncContext) => void):void{
-        this.syncListeners = this.syncListeners.filter(listener => listener !== listenerToRemove);
+      this.syncListeners = this.syncListeners.filter((listener) => listener !== listenerToRemove);
     }
 
     registerIsOnlineListener(listener: (isOnline: boolean) => void):void{
-        this.listeners.push(listener);
+      this.listeners.push(listener);
     }
 
     unregisterIsOnlineListener(listenerToRemove: (isOnline: boolean) => void):void{
-        this.listeners = this.listeners.filter(listener => listener !== listenerToRemove);
+      this.listeners = this.listeners.filter((listener) => listener !== listenerToRemove);
     }
 
-    private async triggerIsOnlineChanged(): Promise<void>{
-        const isOnline = await this.isOnline();
-        this.listeners.map(listener => listener(isOnline));
+    private async triggerIsOnlineChanged(): Promise<void> {
+      const isOnline = await this.isOnline();
+      this.listeners.map((listener) => listener(isOnline));
     }
 
-    private async triggerSyncContextChanged(context: SyncContext): Promise<void>{
-        this.syncListeners.map(listener => listener(Object.assign({}, context)));
+    private async triggerSyncContextChanged(context: SyncContext): Promise<void> {
+      this.syncListeners.map((listener) => listener({ ...context }));
     }
 
-    isOnlineAndSynced = async(): Promise<boolean> => {
-        return this.isOnline() && await this.isSynced();
-    };
+    isOnlineAndSynced = async (): Promise<boolean> => this.isOnline() && this.isSynced();
 
-    isOnline = (): boolean => {
-        return window.navigator.onLine && this.isOfflineModeActivated() === false;
-    };
+    isOnline = (): boolean => window.navigator.onLine && this.isOfflineModeActivated() === false;
 
-    isSynced = async ():Promise<boolean> => {
-        return (await actionManager.countAction()) === 0;
-    }
+    isSynced = async ():Promise<boolean> => (await actionManager.countAction()) === 0
 
-    isOfflineModeActivated = ():boolean => {
-        return this.offlineModeActivated;
-    }
+    isOfflineModeActivated = ():boolean => this.offlineModeActivated
 
     setOfflineMode(offlineMode: boolean): void {
-        this.offlineModeActivated = offlineMode;
-        this.setIsOnline(this.isOfflineModeActivated() && window.navigator.onLine);
+      this.offlineModeActivated = offlineMode;
+      this.setIsOnline(this.isOfflineModeActivated() && window.navigator.onLine);
     }
 
-    setIsOnline = async(isOnline: boolean): Promise<void> => {
-        if(isOnline){
-            await this.syncStorage();
+    setIsOnline = async (isOnline: boolean): Promise<void> => {
+      if (isOnline) {
+        await this.syncStorage();
+      }
+
+      await this.triggerIsOnlineChanged();
+    }
+
+    synchronize = async (): Promise<void> => {
+      this.syncStorage();
+    }
+
+    private syncStorage = async (): Promise<void> => {
+      const nbActionToSync = await actionManager.countAction();
+      const context: SyncContext = {
+        isSyncing: true,
+        totalActionToSync: nbActionToSync,
+        remainingActionToSync: nbActionToSync,
+      };
+      this.triggerSyncContextChanged(context);
+
+      while (1) {
+        let action: Action;
+        try {
+          action = await actionManager.getNextActionToPerform();
+        } catch (error) {
+          if (error instanceof NoActionPendingError) {
+            this.triggerEndSync(context);
+            return;
+          }
+
+          console.log(error);
+          this.triggerEndSync(context);
+          return;
         }
-        
-        await this.triggerIsOnlineChanged();
-    }
 
-    synchronize = async(): Promise<void> => {
-        this.syncStorage();
-    }
+        try {
+          await actionManager.performAction(action);
+          context.remainingActionToSync--;
+          this.triggerSyncContextChanged(context);
+        } catch (error) {
+          await actionManager.putBackAction(action);
 
-    private syncStorage = async(): Promise<void> => {
-        const nbActionToSync = await actionManager.countAction();
-        const context: SyncContext = {
-            isSyncing: true,
-            totalActionToSync: nbActionToSync,
-            remainingActionToSync: nbActionToSync,
+          console.log(error);
+          this.triggerEndSync(context);
+          return;
         }
-        this.triggerSyncContextChanged(context);
-
-        while(1){
-            let action: Action;
-            try{
-                action = await actionManager.getNextActionToPerform();
-            }
-            catch(error){
-                if(error instanceof NoActionPendingError){
-                    this.triggerEndSync(context);
-                    return;
-                }
-
-                console.log(error);
-                this.triggerEndSync(context);
-                return;
-            }
-
-            try{
-                await actionManager.performAction(action);
-                context.remainingActionToSync--;
-                this.triggerSyncContextChanged(context);
-            }
-            catch(error){
-                await actionManager.putBackAction(action);
-
-                console.log(error);
-                this.triggerEndSync(context);
-                return;
-            }
-        }
+      }
     }
 
-    private triggerEndSync(context: SyncContext){
-        context.isSyncing = false;
-        this.triggerSyncContextChanged(context);
+    private triggerEndSync(context: SyncContext) {
+      context.isSyncing = false;
+      this.triggerSyncContextChanged(context);
     }
 
     async onUserStorageOpened(): Promise<void> {
-        return this.setIsOnline(this.isOfflineModeActivated() === false && window.navigator.onLine);
+      return this.setIsOnline(this.isOfflineModeActivated() === false && window.navigator.onLine);
     }
 
-    async onUserStorageClosed(): Promise<void> {}
+    onUserStorageClosed = async (): Promise<void> => {}
 }
 
-const syncService = new SyncService();
+syncService = new SyncService();
 
 export default syncService as ISyncService;
