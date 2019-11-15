@@ -15,6 +15,7 @@ describe('Test SyncService', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('undefined used as a key, but it is not a string.');
+    ignoredMessages.push('something wrong happened');
   });
 
   afterEach(async () => {
