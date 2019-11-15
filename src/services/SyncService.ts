@@ -1,3 +1,4 @@
+import log from 'loglevel';
 // eslint-disable-next-line no-unused-vars
 import actionManager, { Action, NoActionPendingError } from './ActionManager';
 // eslint-disable-next-line no-unused-vars
@@ -108,7 +109,7 @@ class SyncService implements ISyncService, IUserStorageListener {
           action = await actionManager.getNextActionToPerform();
         } catch (error) {
           if (error instanceof NoActionPendingError === false) {
-            console.error(error);
+            log.error(error);
           } else {
             success = true;
           }
@@ -126,7 +127,7 @@ class SyncService implements ISyncService, IUserStorageListener {
           // eslint-disable-next-line no-await-in-loop
           await actionManager.putBackAction(action);
 
-          console.error(error);
+          log.error(error);
           stopCondition = true;
         }
       }
