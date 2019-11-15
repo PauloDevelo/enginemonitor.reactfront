@@ -1,79 +1,85 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable global-require */
 
+const log = require('loglevel');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const chalk = require('chalk');
-const translation_fr = require("../src/translations/fr.json");
-const translation_en = require("../src/translations/en.json");
+// eslint-disable-next-line import/no-extraneous-dependencies
+const recursive = require('recursive-readdir');
+
+const translationFr = require('../src/translations/fr.json');
+const translationEn = require('../src/translations/en.json');
+
+log.setLevel('trace', false);
 
 const translations = {
-    'fr': translation_fr,
-    'en': translation_en
+  fr: translationFr,
+  en: translationEn,
 };
 const keys = {
-    'fr': Object.keys(translation_fr),
-    'en': Object.keys(translation_en)
+  fr: Object.keys(translationFr),
+  en: Object.keys(translationEn),
+};
+
+function removeKey(keyArray, key) {
+  const keyIndex = keyArray.indexOf(key);
+  if (keyIndex !== -1) {
+    keyArray.splice(keyIndex, 1);
+  }
 }
 
-function removeKey(keys, key){
-    const keyIndex = keys.indexOf(key);
-    if (keyIndex !== -1){
-        keys.splice(keyIndex, 1);
-    }
+function ignoreFunc(file, stats) {
+  return stats.isDirectory() === false && file.endsWith('.messages.json') === false;
 }
 
-try{
-    var recursive = require("recursive-readdir");
-    
-    function ignoreFunc(file, stats) {
-        return stats.isDirectory() === false && file.endsWith(".messages.json") === false;
-    }
+try {
+  let nbError = 0;
 
-    let nbError = 0;
-    
-    recursive("src", [ignoreFunc], function (err, files) {
-        files.forEach((messagesFile) => {
-            const messagesModule = require("../" + messagesFile);
-            console.log(chalk.white(messagesFile + " -> "));
-            let containError = false;
+  recursive('src', [ignoreFunc], (err, files) => {
+    files.forEach((messagesFile) => {
+      // eslint-disable-next-line import/no-dynamic-require
+      const messagesModule = require(`../${messagesFile}`);
+      log.info(chalk.white(`${messagesFile} -> `));
+      let containError = false;
 
-            for(const messageKey in messagesModule){
-                const message = messagesModule[messageKey];
+      for (const messageKey in messagesModule) {
+        const message = messagesModule[messageKey];
+        for (const translationKey in translations) {
+          removeKey(keys[translationKey], message.id);
 
-                for(const translationKey in translations){
-                    removeKey(keys[translationKey], message.id);
-
-                    if(translations[translationKey][message.id] === undefined){
-                        nbError++;
-                        containError = true;
-                        console.error(chalk.red("[" + messageKey + '] id "' + message.id + '" is missing in the ' + translationKey + " translation"));
-                    }
-                }
-            }
-
-            if(containError === false){
-                console.log(chalk.green("OK"));
-            }
-            console.log();
-        });
-
-        for(const translationKey in keys){
-            nbError += keys[translationKey].length;
-            if(keys[translationKey].length === 0){
-                console.log(chalk.green("There isn't unused translation in " + translationKey));
-            }
-            else{
-                console.log(chalk.red("List of the unused translation for " + translationKey));
-                keys[translationKey].forEach((key) => {
-                    console.log(chalk.red(key));
-                });
-                console.log();
-            }
+          if (translations[translationKey][message.id] === undefined) {
+            nbError++;
+            containError = true;
+            log.error(chalk.red(`[${messageKey}] id "${message.id}" is missing in the ${translationKey} translation`));
+          }
         }
+      }
+
+      if (containError === false) {
+        log.info(chalk.green('OK'));
+      }
+      log.info();
     });
 
-    if (nbError > 0){
-        process.exit(nbError);
+    for (const translationKey in keys) {
+      nbError += keys[translationKey].length;
+      if (keys[translationKey].length === 0) {
+        log.info(chalk.green(`There isn't unused translation in ${translationKey}`));
+      } else {
+        log.info(chalk.red(`List of the unused translation for ${translationKey}`));
+        keys[translationKey].forEach((key) => {
+          log.info(chalk.red(key));
+        });
+        log.info();
+      }
     }
-}
-catch(err){
-    console(err);
-    process.exit(1);
+  });
+
+  if (nbError > 0) {
+    process.exit(nbError);
+  }
+} catch (err) {
+  log.error(err);
+  process.exit(1);
 }
