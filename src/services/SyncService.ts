@@ -10,7 +10,7 @@ export interface ISyncService {
     isOfflineModeActivated():boolean;
 
     setOfflineMode(offlineMode: boolean):void;
-    synchronize(): Promise<void>;
+    synchronize(): Promise<boolean>;
 
     registerIsOnlineListener(listener: (isOnline: boolean) => void):void;
     unregisterIsOnlineListener(listenerToRemove: (isOnline: boolean) => void):void;
@@ -68,7 +68,8 @@ class SyncService implements ISyncService, IUserStorageListener {
 
     isOnlineAndSynced = async (): Promise<boolean> => this.isOnline() && this.isSynced();
 
-    isOnline = (): boolean => window.navigator.onLine && this.isOfflineModeActivated() === false;
+    // eslint-disable-next-line max-len
+    isOnline = (): boolean => window.navigator.onLine === true && this.isOfflineModeActivated() === false;
 
     isSynced = async ():Promise<boolean> => (await actionManager.countAction()) === 0
 
@@ -87,11 +88,9 @@ class SyncService implements ISyncService, IUserStorageListener {
       await this.triggerIsOnlineChanged();
     }
 
-    synchronize = async (): Promise<void> => {
-      this.syncStorage();
-    }
+    synchronize = async (): Promise<boolean> => this.syncStorage()
 
-    private syncStorage = async (): Promise<void> => {
+    private syncStorage = async (): Promise<boolean> => {
       const nbActionToSync = await actionManager.countAction();
       const context: SyncContext = {
         isSyncing: true,
@@ -107,12 +106,12 @@ class SyncService implements ISyncService, IUserStorageListener {
         } catch (error) {
           if (error instanceof NoActionPendingError) {
             this.triggerEndSync(context);
-            return;
+            return Promise.resolve(true);
           }
 
           console.log(error);
           this.triggerEndSync(context);
-          return;
+          return Promise.resolve(false);
         }
 
         try {
@@ -124,14 +123,15 @@ class SyncService implements ISyncService, IUserStorageListener {
 
           console.log(error);
           this.triggerEndSync(context);
-          return;
+          return Promise.resolve(false);
         }
       }
     }
 
     private triggerEndSync(context: SyncContext) {
-      context.isSyncing = false;
-      this.triggerSyncContextChanged(context);
+      const newContext = { ...context };
+      newContext.isSyncing = false;
+      this.triggerSyncContextChanged(newContext);
     }
 
     async onUserStorageOpened(): Promise<void> {
