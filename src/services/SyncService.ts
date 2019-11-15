@@ -99,33 +99,40 @@ class SyncService implements ISyncService, IUserStorageListener {
       };
       this.triggerSyncContextChanged(context);
 
-      while (1) {
+      let success = false;
+      let stopCondition = false;
+      while (stopCondition === false) {
         let action: Action;
         try {
+          // eslint-disable-next-line no-await-in-loop
           action = await actionManager.getNextActionToPerform();
         } catch (error) {
-          if (error instanceof NoActionPendingError) {
-            this.triggerEndSync(context);
-            return Promise.resolve(true);
+          if (error instanceof NoActionPendingError === false) {
+            console.error(error);
+          } else {
+            success = true;
           }
 
-          console.log(error);
-          this.triggerEndSync(context);
-          return Promise.resolve(false);
+          stopCondition = true;
+          break;
         }
 
         try {
+          // eslint-disable-next-line no-await-in-loop
           await actionManager.performAction(action);
           context.remainingActionToSync--;
           this.triggerSyncContextChanged(context);
         } catch (error) {
+          // eslint-disable-next-line no-await-in-loop
           await actionManager.putBackAction(action);
 
-          console.log(error);
-          this.triggerEndSync(context);
-          return Promise.resolve(false);
+          console.error(error);
+          stopCondition = true;
         }
       }
+
+      this.triggerEndSync(context);
+      return Promise.resolve(success);
     }
 
     private triggerEndSync(context: SyncContext) {
