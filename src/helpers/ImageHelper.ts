@@ -1,3 +1,4 @@
+import * as log from 'loglevel';
 import uuidv1 from 'uuid/v1';
 
 import Resizer from 'react-image-file-resizer';
@@ -51,8 +52,8 @@ const getOrientationInDegrees = async (file: File): Promise<number> => {
     const tags = await readExifTags(file);
     return convertExifOrientationIntoDegree(tags.Orientation);
   } catch (error) {
-    console.error('Impossible to get the image orientation in the Exif data.');
-    console.error(error);
+    log.error('Impossible to get the image orientation in the Exif data.');
+    log.error(error);
     return 0;
   }
 };
@@ -110,7 +111,7 @@ const resizeBase64ImageIntoBlob = (base64Str: string, maxWidth = 400, maxHeight 
   });
 
   img.addEventListener('error', (event: Event| string) => {
-    console.error(event);
+    log.error(event);
     reject(new Error(event.toString()));
   });
 
