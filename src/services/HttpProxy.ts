@@ -1,7 +1,10 @@
-import axios, { CancelToken, CancelTokenSource } from "axios";
+import * as log from 'loglevel';
+
+// eslint-disable-next-line no-unused-vars
+import axios, { CancelToken, CancelTokenSource } from 'axios';
 import axiosRetry from 'axios-retry';
 
-import HttpError from '../http/HttpError'
+import HttpError from '../http/HttpError';
 
 export type Config = {
     headers: {
@@ -17,71 +20,66 @@ export interface IHttpProxy{
     createCancelTokenSource(): CancelTokenSource;
 }
 
-class HttpProxy implements IHttpProxy{
+function processError(error: any) {
+  log.error(error);
+
+  let data:any = { message: error.message };
+  if (error.response) {
+    if (error.response.data) {
+      if (error.response.data.errors) {
+        data = error.response.data.errors;
+      } else {
+        data = error.response.data;
+      }
+    }
+  }
+
+  throw new HttpError(data);
+}
+
+class HttpProxy implements IHttpProxy {
     private config:Config | undefined;
 
-    constructor(){
-        axiosRetry(axios, { retries: 1, retryDelay: () => 1000 });
+    constructor() {
+      axiosRetry(axios, { retries: 1, retryDelay: () => 1000 });
     }
 
-    setConfig(config: Config){
-        this.config = config;
+    setConfig(config: Config) {
+      this.config = config;
     }
 
+    // eslint-disable-next-line consistent-return
     post = async (url: string, data: any) => {
-        try{
-            const response = await axios.post(url, data, this.config);
-		    return response.data;
-        }
-        catch(error){
-            this.processError(error);
-        }
+      try {
+        const response = await axios.post(url, data, this.config);
+        return response.data;
+      } catch (error) {
+        processError(error);
+      }
     }
-    
+
+    // eslint-disable-next-line consistent-return
     deleteReq = async (url: string) => {
-        try{
-            const response = await axios.delete(url, this.config);
-		    return response.data;
-        }
-        catch(error){
-            this.processError(error);
-        }
+      try {
+        const response = await axios.delete(url, this.config);
+        return response.data;
+      } catch (error) {
+        processError(error);
+      }
     }
 
+    // eslint-disable-next-line consistent-return
     get = async (url: string, cancelToken: CancelToken | undefined = undefined) => {
-        try{
-            const config = cancelToken ? Object.assign({ cancelToken }, this.config) : this.config;
-            const response = await axios.get(url, config);
-		    return response.data;
-        }
-        catch(error){
-            this.processError(error);
-        }
+      try {
+        const config = cancelToken ? ({ cancelToken, ...this.config }) : this.config;
+        const response = await axios.get(url, config);
+        return response.data;
+      } catch (error) {
+        processError(error);
+      }
     }
 
-    processError(error: any){
-        if(error){
-            console.log( error );
-
-            let data:any = { message: error.message};
-            if(error.response){
-                if(error.response.data){
-                    if(error.response.data.errors){
-                        data = error.response.data.errors;
-                    }
-                    else{
-                        data = error.response.data;
-                    }
-                }
-            }
-            
-            throw new HttpError(data);
-        }
-    }
-
-    createCancelTokenSource() {
-        return axios.CancelToken.source();
-    }
+    createCancelTokenSource = () => axios.CancelToken.source()
 }
 
 const httpProxy:IHttpProxy = new HttpProxy();
