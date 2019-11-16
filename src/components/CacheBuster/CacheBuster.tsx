@@ -1,3 +1,4 @@
+import * as log from 'loglevel';
 import { useState, useEffect } from 'react';
 import appVersion from '../../global';
 
@@ -24,45 +25,49 @@ const CacheBuster = (props: any) => {
     isLatestVersion: false,
   });
 
-  const refreshCacheAndReload = async(): Promise<void> => {
-    console.log('Clearing cache and hard reloading...')
+  const refreshCacheAndReload = async (): Promise<void> => {
+    log.info('Clearing cache and hard reloading...');
     if (caches) {
       // Service worker cache should be cleared with caches.delete()
       const names = await caches.keys();
-      for (let name of names) {
-        console.log("delete " + name);
-        await caches.delete(name);
-      }
+
+      const deletionsPromise:Promise<boolean>[] = [];
+      names.forEach((name) => {
+        log.info(`delete ${name}`);
+        deletionsPromise.push(caches.delete(name));
+      });
+
+      await Promise.all(deletionsPromise);
     }
 
-    console.log("hard reload");
+    log.info('hard reload');
     window.location.reload(true);
-  }
+  };
 
   useEffect(() => {
-    fetch('/meta.json', {cache: "no-store"})
-    .then((response) => response.json())
-    .then((meta) => {
-      const latestVersion = meta.version;
-      const currentVersion = appVersion;
+    fetch('/meta.json', { cache: 'no-store' })
+      .then((response) => response.json())
+      .then((meta) => {
+        const latestVersion = meta.version;
+        const currentVersion = appVersion;
 
-      const shouldForceRefresh = semverGreaterThan(latestVersion, currentVersion);
-      if (shouldForceRefresh) {
-        console.log(`We have a new version - ${latestVersion}. Should force refresh`);
-        setState({ loading: false, isLatestVersion: false });
-      } else {
-        console.log(`You already have the latest version - ${latestVersion}. No cache refresh needed.`);
+        const shouldForceRefresh = semverGreaterThan(latestVersion, currentVersion);
+        if (shouldForceRefresh) {
+          log.info(`We have a new version - ${latestVersion}. Should force refresh`);
+          setState({ loading: false, isLatestVersion: false });
+        } else {
+          log.info(`You already have the latest version - ${latestVersion}. No cache refresh needed.`);
+          setState({ loading: false, isLatestVersion: true });
+        }
+      })
+      .catch((error) => {
+        log.error(error);
         setState({ loading: false, isLatestVersion: true });
-      }
-    })
-    .catch((error)=>{
-      console.error(error);
-      setState({ loading: false, isLatestVersion: true });
-    });
+      });
   }, []);
 
-  return props.children({ loading:state.loading, isLatestVersion:state.isLatestVersion, refreshCacheAndReload });
-  
-}
+  // eslint-disable-next-line max-len
+  return props.children({ loading: state.loading, isLatestVersion: state.isLatestVersion, refreshCacheAndReload });
+};
 
 export default CacheBuster;
