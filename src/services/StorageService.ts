@@ -1,13 +1,16 @@
+import * as log from 'loglevel';
 import localforage from 'localforage';
+
+// eslint-disable-next-line no-unused-vars
 import { UserModel, EntityModel } from '../types/Types';
 
 localforage.config({
-    driver      : localforage.WEBSQL, // Force WebSQL; same as using setDriver()
-    name        : 'maintenance reminder',
-    version     : 1.0,
-    size        : 4980736, // Size of database, in bytes. WebSQL-only for now.
-    storeName   : 'keyvaluepairs', // Should be alphanumeric, with underscores.
-    description : 'Contains all the information contained in Maintenance monitor'
+  driver: localforage.WEBSQL, // Force WebSQL; same as using setDriver()
+  name: 'maintenance reminder',
+  version: 1.0,
+  size: 4980736, // Size of database, in bytes. WebSQL-only for now.
+  storeName: 'keyvaluepairs', // Should be alphanumeric, with underscores.
+  description: 'Contains all the information contained in Maintenance monitor',
 });
 
 export interface IUserStorageListener{
@@ -32,136 +35,136 @@ export interface IStorageService{
 
     updateArray<T extends EntityModel>(key: string, item:T):Promise<void>;
     removeItemInArray<T extends EntityModel>(key: string, itemId: string): Promise<T>;
-};
+}
 
-class StorageService implements IStorageService{
+class StorageService implements IStorageService {
     private userStorageListeners:IUserStorageListener[] = [];
+
     private userStorage: LocalForage | undefined;
 
+    // eslint-disable-next-line class-methods-use-this
     async setGlobalItem<T>(key: string, value: T): Promise<T> {
-        try{
-            return localforage.setItem<T>(key, value);
-        }
-        catch(error){
-            console.error(error);
-            throw error;
-        }
+      try {
+        return localforage.setItem<T>(key, value);
+      } catch (error) {
+        log.error(error);
+        throw error;
+      }
     }
 
-    async removeGlobalItem(key: string): Promise<void>{
-        try{
-            localforage.removeItem(key);
-        }
-        catch(error){
-            console.error(error);
-            throw error;
-        }
+    // eslint-disable-next-line class-methods-use-this
+    async removeGlobalItem(key: string): Promise<void> {
+      try {
+        localforage.removeItem(key);
+      } catch (error) {
+        log.error(error);
+        throw error;
+      }
     }
 
-    async getGlobalItem<T>(key: string): Promise<T>{
-        try{
-            return localforage.getItem(key)
-        }
-        catch(error){
-            console.error(error);
-            throw error;
-        }
+    // eslint-disable-next-line class-methods-use-this
+    async getGlobalItem<T>(key: string): Promise<T> {
+      try {
+        return localforage.getItem(key);
+      } catch (error) {
+        log.error(error);
+        throw error;
+      }
     }
 
     registerUserStorageListener(listener: IUserStorageListener): void{
-        this.userStorageListeners.push(listener);
+      this.userStorageListeners.push(listener);
     }
 
     unregisterUserStorageListener(listenerToRemove: IUserStorageListener): void{
-        this.userStorageListeners = this.userStorageListeners.filter(listener => listener !== listenerToRemove);
+      // eslint-disable-next-line max-len
+      this.userStorageListeners = this.userStorageListeners.filter((listener) => listener !== listenerToRemove);
     }
 
-    isUserStorageOpened(): boolean{
-        return this.userStorage !== undefined;
+    isUserStorageOpened(): boolean {
+      return this.userStorage !== undefined;
     }
 
-    async openUserStorage(user: UserModel): Promise<void>{
-        this.userStorage = localforage.createInstance({
-            name: user.email
-        });
-        return await this.triggerOnUserStorageOpened();
+    async openUserStorage(user: UserModel): Promise<void> {
+      this.userStorage = localforage.createInstance({
+        name: user.email,
+      });
+      return this.triggerOnUserStorageOpened();
     }
 
-    async closeUserStorage(): Promise<void>{
-        this.userStorage = undefined;
-        return await this.triggerOnUserStorageClosed();
+    async closeUserStorage(): Promise<void> {
+      this.userStorage = undefined;
+      return this.triggerOnUserStorageClosed();
     }
 
-    async updateArray<T extends EntityModel>(key: string, item:T):Promise<void>{
-        let items = await this.getUserStorage().getItem<T[]>(key);
-        
-        if (items){
-            items = items.filter(i => i._uiId !== item._uiId);
-        }
-        else{
-            items = [];
-        }
+    async updateArray<T extends EntityModel>(key: string, item:T):Promise<void> {
+      let items = await this.getUserStorage().getItem<T[]>(key);
 
-        items.push(item);
+      if (items) {
+        items = items.filter((i) => i._uiId !== item._uiId);
+      } else {
+        items = [];
+      }
 
-        this.getUserStorage().setItem<T[]>(key, items);
+      items.push(item);
+
+      this.getUserStorage().setItem<T[]>(key, items);
     }
 
-    async removeItemInArray<T extends EntityModel>(key: string, itemId: string): Promise<T>{
-        const items = await this.getUserStorage().getItem<T[]>(key);
+    async removeItemInArray<T extends EntityModel>(key: string, itemId: string): Promise<T> {
+      const items = await this.getUserStorage().getItem<T[]>(key);
 
-        const newItems = items.filter(i => i._uiId !== itemId);
-        const removedItem = items.find(i => i._uiId === itemId);
+      const newItems = items.filter((i) => i._uiId !== itemId);
+      const removedItem = items.find((i) => i._uiId === itemId);
 
-        if(removedItem){
-            await this.getUserStorage().setItem<T[]>(key, newItems);
-            return removedItem;
-        }
-        else{
-            throw new Error("The item " + itemId + " cannot be found in the array " + key);
-        }
+      if (removedItem) {
+        await this.getUserStorage().setItem<T[]>(key, newItems);
+        return removedItem;
+      }
+
+      throw new Error(`The item ${itemId} cannot be found in the array ${key}`);
     }
 
-    async setItem<T>(key: string, value: T): Promise<T>{
-        if (value === undefined || value === null){
-            await this.getUserStorage().removeItem(key);    
-            return value;
-        }
-        
-        return await this.getUserStorage().setItem<T>(key, value);
+    async setItem<T>(key: string, value: T): Promise<T> {
+      if (value === undefined || value === null) {
+        await this.getUserStorage().removeItem(key);
+        return value;
+      }
+
+      return this.getUserStorage().setItem<T>(key, value);
     }
 
-    async getItem<T>(key: string): Promise<T>{
-        return await this.getUserStorage().getItem<T>(key);
+    async getItem<T>(key: string): Promise<T> {
+      return this.getUserStorage().getItem<T>(key);
     }
 
-    async getArray<T>(key: string):Promise<T[]>{
-        const array = await this.getUserStorage().getItem<T[]>(key);
-        if(array){
-            return array;
-        }
+    async getArray<T>(key: string):Promise<T[]> {
+      const array = await this.getUserStorage().getItem<T[]>(key);
+      if (array) {
+        return array;
+      }
 
-        return [];
+      return [];
     }
 
-    private getUserStorage(): LocalForage{
-        if(this.userStorage){
-            return this.userStorage;
-        }
+    private getUserStorage(): LocalForage {
+      if (this.userStorage) {
+        return this.userStorage;
+      }
 
-        throw new Error("The storage is undefined yet. You must connect first.");
+      throw new Error('The storage is undefined yet. You must connect first.');
     }
 
-    private async triggerOnUserStorageOpened():Promise<void>{
-        await Promise.all(this.userStorageListeners.map(async (listener) => {
-            await listener.onUserStorageOpened();
-        }));
+    private async triggerOnUserStorageOpened():Promise<void> {
+      await Promise.all(this.userStorageListeners.map(async (listener) => {
+        await listener.onUserStorageOpened();
+      }));
     }
 
-    private async triggerOnUserStorageClosed():Promise<void>{
-        await Promise.all(this.userStorageListeners.map(async (listener) => {
-            await listener.onUserStorageClosed();
-        }));
+    private async triggerOnUserStorageClosed():Promise<void> {
+      await Promise.all(this.userStorageListeners.map(async (listener) => {
+        await listener.onUserStorageClosed();
+      }));
     }
 }
 
