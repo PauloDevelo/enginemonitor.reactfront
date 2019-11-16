@@ -1,7 +1,7 @@
 import * as log from 'loglevel';
 import { useRef, useEffect } from 'react';
 
-function useTraceUpdate(componentName: string, props: any) {
+export default function useTraceUpdate(componentName: string, props: any) {
   const prev = useRef(props);
   useEffect(() => {
     const changedProps = Object.entries(props).reduce((ps: any, [k, v]) => {
@@ -17,5 +17,3 @@ function useTraceUpdate(componentName: string, props: any) {
     prev.current = props;
   });
 }
-
-export default useTraceUpdate;
