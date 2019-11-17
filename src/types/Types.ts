@@ -1,7 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/prefer-default-export */
+
 export enum AgeAcquisitionType{
-    time = 0,
-    manualEntry=1,
-    tracker=2
+  time = 0,
+  manualEntry=1,
+  tracker=2
 }
 
 export interface EntityModel{
