@@ -77,7 +77,6 @@ class StorageService implements IStorageService {
     }
 
     unregisterUserStorageListener(listenerToRemove: IUserStorageListener): void{
-      // eslint-disable-next-line max-len
       this.userStorageListeners = this.userStorageListeners.filter((listener) => listener !== listenerToRemove);
     }
 

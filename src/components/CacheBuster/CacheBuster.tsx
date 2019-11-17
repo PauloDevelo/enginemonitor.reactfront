@@ -66,7 +66,6 @@ const CacheBuster = (props: any) => {
       });
   }, []);
 
-  // eslint-disable-next-line max-len
   return props.children({ loading: state.loading, isLatestVersion: state.isLatestVersion, refreshCacheAndReload });
 };
 

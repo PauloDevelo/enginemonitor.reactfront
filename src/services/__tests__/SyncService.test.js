@@ -181,13 +181,9 @@ describe('Test SyncService', () => {
       // Assert
       expect(syncListener).toHaveBeenCalledTimes(4);
 
-      // eslint-disable-next-line max-len
       expect(contexts[0]).toEqual({ isSyncing: true, totalActionToSync: 2, remainingActionToSync: 2 });
-      // eslint-disable-next-line max-len
       expect(contexts[1]).toEqual({ isSyncing: true, totalActionToSync: 2, remainingActionToSync: 1 });
-      // eslint-disable-next-line max-len
       expect(contexts[2]).toEqual({ isSyncing: true, totalActionToSync: 2, remainingActionToSync: 0 });
-      // eslint-disable-next-line max-len
       expect(contexts[3]).toEqual({ isSyncing: false, totalActionToSync: 2, remainingActionToSync: 0 });
 
       expect(getNextActionToPerform).toBeCalledTimes(3);
@@ -251,13 +247,9 @@ describe('Test SyncService', () => {
       // Assert
       expect(syncListener).toHaveBeenCalledTimes(4);
 
-      // eslint-disable-next-line max-len
       expect(contexts[0]).toEqual({ isSyncing: true, totalActionToSync: 3, remainingActionToSync: 3 });
-      // eslint-disable-next-line max-len
       expect(contexts[1]).toEqual({ isSyncing: true, totalActionToSync: 3, remainingActionToSync: 2 });
-      // eslint-disable-next-line max-len
       expect(contexts[2]).toEqual({ isSyncing: true, totalActionToSync: 3, remainingActionToSync: 1 });
-      // eslint-disable-next-line max-len
       expect(contexts[3]).toEqual({ isSyncing: false, totalActionToSync: 3, remainingActionToSync: 1 });
 
       expect(getNextActionToPerform).toBeCalledTimes(3);

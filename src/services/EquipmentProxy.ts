@@ -25,7 +25,6 @@ class EquipmentProxy implements IEquipmentProxy {
     private baseUrl:string = `${process.env.REACT_APP_URL_BASE}equipments/`;
 
     // //////////////Equipment////////////////////////
-    // eslint-disable-next-line max-len
     fetchEquipments = async (forceToLookUpInStorage: boolean = false): Promise<EquipmentModel[]> => {
       if (forceToLookUpInStorage) {
         return storageService.getArray<EquipmentModel>(this.baseUrl);
@@ -47,7 +46,6 @@ class EquipmentProxy implements IEquipmentProxy {
       await taskProxy.onEquipmentDeleted(idEquipment);
       await imageProxy.onEntityDeleted(idEquipment);
 
-      // eslint-disable-next-line max-len
       const deletedEquipment = await storageService.removeItemInArray<EquipmentModel>(this.baseUrl, idEquipment);
       return updateEquipment(deletedEquipment);
     }

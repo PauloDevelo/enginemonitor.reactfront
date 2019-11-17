@@ -37,7 +37,6 @@ class UserContext implements IUserContext {
     }
 
     unregisterOnUserStorageSizeChanged(listenerToRemove: (newUserStorageSize: number) => void):void{
-      // eslint-disable-next-line max-len
       this.userStorageSizeListeners = this.userStorageSizeListeners.filter((listener) => listener !== listenerToRemove);
     }
 

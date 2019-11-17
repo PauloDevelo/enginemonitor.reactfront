@@ -69,7 +69,6 @@ class SyncService implements ISyncService, IUserStorageListener {
 
     isOnlineAndSynced = async (): Promise<boolean> => this.isOnline() && this.isSynced();
 
-    // eslint-disable-next-line max-len
     isOnline = (): boolean => window.navigator.onLine === true && this.isOfflineModeActivated() === false;
 
     isSynced = async ():Promise<boolean> => (await actionManager.countAction()) === 0

@@ -3,9 +3,7 @@
 const ignoredMessages:string[] = [
 ];
 
-// eslint-disable-next-line max-len
 const mockConsoleMethod = (realConsoleMethod: (message?: any, ...args: any[])=> void) => (message?: any, ...args: any[]) => {
-  // eslint-disable-next-line max-len
   const containsIgnoredMessage = ignoredMessages.some((ignoredMessage) => message.toString().includes(ignoredMessage));
 
   if (!containsIgnoredMessage) {

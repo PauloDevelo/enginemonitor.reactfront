@@ -199,7 +199,6 @@ describe('EquipmentHistoryTable', () => {
     // Arrange
     const onEquipmentChanged = jest.fn();
 
-    // eslint-disable-next-line max-len
     const properties = { equipment, onTaskChanged: onEquipmentChanged, equipmentHistoryRefreshId: 0 };
     const wrapper = mount(
       React.createElement(

@@ -58,7 +58,6 @@ const getOrientationInDegrees = async (file: File): Promise<number> => {
   }
 };
 
-// eslint-disable-next-line max-len
 const resizeImageIntoBlob = (imageFile: File, maxWidth: number, maxHeight: number, orientationInDegrees: number):Promise<string> => new Promise((resolve) => {
   Resizer.imageFileResizer(
     imageFile,
@@ -72,7 +71,6 @@ const resizeImageIntoBlob = (imageFile: File, maxWidth: number, maxHeight: numbe
   );
 });
 
-// eslint-disable-next-line max-len
 const resizeBase64ImageIntoBlob = (base64Str: string, maxWidth = 400, maxHeight = 350):Promise<Blob> => new Promise((resolve, reject) => {
   const img = new Image();
 
@@ -118,7 +116,6 @@ const resizeBase64ImageIntoBlob = (base64Str: string, maxWidth = 400, maxHeight 
   img.src = base64Str;
 });
 
-// eslint-disable-next-line max-len
 export const resizeAndSaveBase64Image = async (imageBase64: string, parentUiId: string):Promise<ImageModel> => {
   const resizedBlob = await resizeBase64ImageIntoBlob(imageBase64, 1024, 1024);
   const thumbnailBlob = await resizeBase64ImageIntoBlob(imageBase64, 100, 100);

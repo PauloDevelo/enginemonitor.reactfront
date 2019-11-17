@@ -43,7 +43,6 @@ class TaskProxy implements ITaskProxy {
     deleteTask = async (equipmentId: string, taskId: string): Promise<TaskModel> => {
       await progressiveHttpProxy.deleteAndUpdate<TaskModel>(`${this.baseUrl + equipmentId}/${taskId}`, 'task', updateTask);
 
-      // eslint-disable-next-line max-len
       const removedTask = await storageService.removeItemInArray<TaskModel>(this.baseUrl + equipmentId, taskId);
       await entryProxy.onTaskDeleted(equipmentId, taskId);
       await imageProxy.onEntityDeleted(taskId);
@@ -51,7 +50,6 @@ class TaskProxy implements ITaskProxy {
       return updateTask(removedTask);
     }
 
-    // eslint-disable-next-line max-len
     fetchTasks = async ({ equipmentId, forceToLookUpInStorage = false, cancelToken = undefined } :FetchTaskProps): Promise<TaskModel[]> => {
       if (equipmentId === undefined) {
         return [];
@@ -69,7 +67,6 @@ class TaskProxy implements ITaskProxy {
       return tasks;
     }
 
-    // eslint-disable-next-line max-len
     existTask = async (equipmentId: string | undefined, taskId: string | undefined):Promise<boolean> => {
       if (equipmentId === undefined || taskId === undefined) {
         log.error('The function TaskProxy.existTask expects a non null and non undefined task id.');
