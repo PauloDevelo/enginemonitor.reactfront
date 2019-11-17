@@ -28,7 +28,8 @@
         "react/jsx-props-no-spreadin": "off",
         "react/prop-types": "off",
         "no-plusplus": "off",
-        "react/jsx-props-no-spreading": "off"
+        "react/jsx-props-no-spreading": "off",
+        "max-len": "off"
     },
     "settings": {
         "import/resolver": {
