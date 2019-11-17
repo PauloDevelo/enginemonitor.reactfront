@@ -1,9 +1,10 @@
 import httpProxy from './HttpProxy';
-import HttpError from '../http/HttpError'
+import HttpError from '../http/HttpError';
 
 import storageService from './StorageService';
 
-import {UserModel, AuthInfo} from '../types/Types'
+// eslint-disable-next-line no-unused-vars
+import { UserModel, AuthInfo } from '../types/Types';
 import userContext from './UserContext';
 
 type Config = {
@@ -21,69 +22,69 @@ export interface IUserProxy{
     fetchCurrentUser():Promise<UserModel | undefined>;
 }
 
-class UserProxy implements IUserProxy{
+class UserProxy implements IUserProxy {
     baseUrl = process.env.REACT_APP_URL_BASE;
 
-    /////////////////////User/////////////////////////
+    // ///////////////////User/////////////////////////
     signup = async (newUser: UserModel): Promise<void> => {
-        await httpProxy.post(this.baseUrl + "users/", { user: newUser });
+      await httpProxy.post(`${this.baseUrl}users/`, { user: newUser });
     }
 
-    sendVerificationEmail = async(email: string): Promise<void> => {
-        await httpProxy.post(this.baseUrl + "users/verificationemail", { email: email });
+    sendVerificationEmail = async (email: string): Promise<void> => {
+      await httpProxy.post(`${this.baseUrl}users/verificationemail`, { email });
     }
 
     resetPassword = async (email: string, password: string): Promise<void> => {
-        await httpProxy.post(this.baseUrl + "users/resetpassword", { email: email, newPassword: password });
+      await httpProxy.post(`${this.baseUrl}users/resetpassword`, { email, newPassword: password });
     }
 
     authenticate = async (authInfo: AuthInfo):Promise<UserModel> => {
-        this.logout();
+      this.logout();
 
-        const data = await httpProxy.post(this.baseUrl + "users/login", { user: authInfo });
-        
-        if(data.user){
-            const user = data.user as UserModel;
-            const config:Config = { headers: { Authorization: 'Token ' + data.user.token }};
-            httpProxy.setConfig(config);
+      const data = await httpProxy.post(`${this.baseUrl}users/login`, { user: authInfo });
 
-            if(authInfo.remember){
-                storageService.setGlobalItem('EquipmentMonitorServiceProxy.config', config);
-                storageService.setGlobalItem('currentUser', user);
-            }
+      if (data.user) {
+        const user = data.user as UserModel;
+        const config:Config = { headers: { Authorization: `Token ${data.user.token}` } };
+        httpProxy.setConfig(config);
 
-            await storageService.openUserStorage(user);
-            userContext.onUserChanged(user);
-
-            return user;
+        if (authInfo.remember) {
+          storageService.setGlobalItem('EquipmentMonitorServiceProxy.config', config);
+          storageService.setGlobalItem('currentUser', user);
         }
-        
-        throw new HttpError( { loginerror: "loginfailed"} );
+
+        await storageService.openUserStorage(user);
+        userContext.onUserChanged(user);
+
+        return user;
+      }
+
+      throw new HttpError({ loginerror: 'loginfailed' });
     }
 
     logout = async (): Promise<void> => {
-        storageService.removeGlobalItem('EquipmentMonitorServiceProxy.config');
-        storageService.removeGlobalItem('currentUser');
-        httpProxy.setConfig(undefined);
-        storageService.closeUserStorage();
-        userContext.onUserChanged(undefined);
+      storageService.removeGlobalItem('EquipmentMonitorServiceProxy.config');
+      storageService.removeGlobalItem('currentUser');
+      httpProxy.setConfig(undefined);
+      storageService.closeUserStorage();
+      userContext.onUserChanged(undefined);
     }
 
-    fetchCurrentUser = async():Promise<UserModel | undefined> => {
-        const config = await storageService.getGlobalItem<Config>('EquipmentMonitorServiceProxy.config');
-        httpProxy.setConfig(config);
+    fetchCurrentUser = async ():Promise<UserModel | undefined> => {
+      const config = await storageService.getGlobalItem<Config>('EquipmentMonitorServiceProxy.config');
+      httpProxy.setConfig(config);
 
-        if(config){
-            const user = await storageService.getGlobalItem<UserModel>('currentUser');
-            if (user){
-                await storageService.openUserStorage(user);
-                userContext.onUserChanged(user);
-                return user;
-            }
+      if (config) {
+        const user = await storageService.getGlobalItem<UserModel>('currentUser');
+        if (user) {
+          await storageService.openUserStorage(user);
+          userContext.onUserChanged(user);
+          return user;
         }
-        
-        userContext.onUserChanged(undefined);
-        return undefined;
+      }
+
+      userContext.onUserChanged(undefined);
+      return undefined;
     }
 }
 
