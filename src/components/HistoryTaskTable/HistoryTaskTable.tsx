@@ -32,7 +32,7 @@ import {
   EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType,
 } from '../../types/Types';
 
-import { useFetcher } from '../../hooks/Fetcher';
+import useFetcher from '../../hooks/Fetcher';
 
 import jsonMessages from './HistoryTaskTable.messages.json';
 

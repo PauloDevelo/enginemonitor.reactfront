@@ -1,8 +1,9 @@
 import { useRef, useCallback, useEffect } from 'react';
 
-import {useAsync} from 'react-async';
-import httpProxy from '../services/HttpProxy';
+import { useAsync } from 'react-async';
+// eslint-disable-next-line no-unused-vars
 import { CancelTokenSource } from 'axios';
+import httpProxy from '../services/HttpProxy';
 
 export type AxiosAsyncProps<T, P> = {
     fetchPromise: (props:P) => Promise<T>,
@@ -17,28 +18,31 @@ export type FetcherState<T> = {
     reloadRef: React.MutableRefObject<() => void>
 }
 
-export function useFetcher<T, P>({ fetchPromise, fetchProps, cancellationMsg}:AxiosAsyncProps<T, P>):FetcherState<T> {
-    const cancelTokenSourceRef = useRef<CancelTokenSource | undefined>(undefined);
-    const cancelFetchImages = useCallback(() => {
-        if (cancelTokenSourceRef.current){
-            cancelTokenSourceRef.current.cancel(cancellationMsg);
-        }
-    }, [cancelTokenSourceRef, cancellationMsg]);
+export default function useFetcher<T, P>({ fetchPromise, fetchProps, cancellationMsg }:AxiosAsyncProps<T, P>):FetcherState<T> {
+  const cancelTokenSourceRef = useRef<CancelTokenSource | undefined>(undefined);
+  const cancelFetchImages = useCallback(() => {
+    if (cancelTokenSourceRef.current) {
+      cancelTokenSourceRef.current.cancel(cancellationMsg);
+    }
+  }, [cancelTokenSourceRef, cancellationMsg]);
 
-    const fetch = useCallback(async() => {
-        cancelTokenSourceRef.current = httpProxy.createCancelTokenSource();
-        const extendedFetchProps = Object.assign({cancelToken: cancelTokenSourceRef.current.token}, fetchProps);
+  const fetch = useCallback(async () => {
+    cancelTokenSourceRef.current = httpProxy.createCancelTokenSource();
+    const extendedFetchProps = { cancelToken: cancelTokenSourceRef.current.token, ...fetchProps };
 
-        return fetchPromise(extendedFetchProps);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchPromise, cancelTokenSourceRef, ...Object.values(fetchProps)]);
+    return fetchPromise(extendedFetchProps);
+  }, [fetchPromise, cancelTokenSourceRef, ...Object.values(fetchProps)]);
 
-    const {data, error, isLoading, reload} = useAsync({ promiseFn: fetch, onCancel: cancelFetchImages });
+  const {
+    data, error, isLoading, reload,
+  } = useAsync({ promiseFn: fetch, onCancel: cancelFetchImages });
 
-    const reloadRef = useRef(reload);
-    useEffect(() => {
-        reloadRef.current = reload;
-    }, [reload]);
+  const reloadRef = useRef(reload);
+  useEffect(() => {
+    reloadRef.current = reload;
+  }, [reload]);
 
-    return {data, error, isLoading, reloadRef};
+  return {
+    data, error, isLoading, reloadRef,
+  };
 }

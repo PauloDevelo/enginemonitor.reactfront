@@ -19,7 +19,7 @@ import ModalEditImage from '../ModalImage/ModalEditImage';
 import errorService from '../../services/ErrorService';
 import imageProxy from '../../services/ImageProxy';
 
-import { useFetcher } from '../../hooks/Fetcher';
+import useFetcher from '../../hooks/Fetcher';
 
 import './Gallery.css';
 
