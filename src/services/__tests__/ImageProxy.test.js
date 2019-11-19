@@ -214,4 +214,37 @@ describe('Test ImageProxy', () => {
       expect(httpProxy.deleteReq).toBeCalledTimes(1);
     });
   });
+
+  describe('onEntityDeleted', () => {
+    it('Should delete the image on the server and in the storage only for the entity deleted', async () => {
+      // Arrange
+      const newImage = {
+        _uiId: '125f58f',
+        url: 'image url',
+        thumbnailUrl: 'thumbnail url',
+        parentUiId: parentId,
+        title: 'image title',
+        description: 'image description',
+        sizeInByte: 1024,
+      };
+
+      httpProxy.post.mockImplementationOnce(() => ({
+        image: newImage,
+      }));
+
+      httpProxy.deleteReq.mockImplementationOnce((imageToDelete) => ({
+        image: imageToDelete,
+      }));
+
+      await imageProxy.createImage(imageToSave);
+
+      // Act
+      await imageProxy.onEntityDeleted(parentId);
+
+      // Assert
+      const images = await storageService.getItem(urlFetchImage);
+      expect(images.length).toBe(0);
+      expect(httpProxy.deleteReq).toBeCalledTimes(0);
+    });
+  });
 });
