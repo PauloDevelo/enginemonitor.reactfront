@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import * as log from 'loglevel';
 import { useRef, useEffect } from 'react';
 
