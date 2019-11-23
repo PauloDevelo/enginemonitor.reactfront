@@ -1,5 +1,6 @@
 export default class HttpError extends Error {
   private readonly date:Date;
+
   public readonly data:any;
 
   constructor(data: any, ...params:any) {
