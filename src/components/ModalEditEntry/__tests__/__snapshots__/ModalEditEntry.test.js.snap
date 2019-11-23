@@ -960,7 +960,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                   noValidate={true}
                                   onSubmit={[Function]}
                                 >
-                                  <Memo(MyInput)
+                                  <Memo()
                                     handleChange={[Function]}
                                     key=".0"
                                     label={
@@ -1041,8 +1041,8 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                         </Input>
                                       </div>
                                     </FormGroup>
-                                  </Memo(MyInput)>
-                                  <Memo(MyInput)
+                                  </Memo()>
+                                  <Memo()
                                     handleChange={[Function]}
                                     key=".1"
                                     label={
@@ -1123,8 +1123,8 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                         </Input>
                                       </div>
                                     </FormGroup>
-                                  </Memo(MyInput)>
-                                  <Memo(MyInput)
+                                  </Memo()>
+                                  <Memo()
                                     handleChange={[Function]}
                                     key=".2"
                                     label={
@@ -1209,8 +1209,8 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                         </Input>
                                       </div>
                                     </FormGroup>
-                                  </Memo(MyInput)>
-                                  <Memo(MyInput)
+                                  </Memo()>
+                                  <Memo()
                                     handleChange={[Function]}
                                     key=".3"
                                     label={
@@ -1290,7 +1290,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                         </Input>
                                       </div>
                                     </FormGroup>
-                                  </Memo(MyInput)>
+                                  </Memo()>
                                 </form>
                               </Form>
                             </Memo(MyForm)>

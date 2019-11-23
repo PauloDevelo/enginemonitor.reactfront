@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MyInput of type checkox should render as expected 1`] = `
-<Memo(MyInput)
+<Memo()
   label={
     Object {
       "defaultMessage": "Default message",
@@ -68,11 +68,11 @@ exports[`MyInput of type checkox should render as expected 1`] = `
       </Label>
     </div>
   </FormGroup>
-</Memo(MyInput)>
+</Memo()>
 `;
 
 exports[`MyInput of type text should render as expected 1`] = `
-<Memo(MyInput)
+<Memo()
   label={
     Object {
       "defaultMessage": "Default message",
@@ -146,5 +146,5 @@ exports[`MyInput of type text should render as expected 1`] = `
       </Input>
     </div>
   </FormGroup>
-</Memo(MyInput)>
+</Memo()>
 `;
