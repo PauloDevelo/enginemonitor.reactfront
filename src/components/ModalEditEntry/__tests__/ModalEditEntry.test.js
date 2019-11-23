@@ -1,13 +1,26 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import localforage from 'localforage';
 import ignoredMessages from '../../../testHelpers/MockConsole';
 
+import entryProxy from '../../../services/EntryProxy';
+
 import ModalEditEntry from '../ModalEditEntry';
+import updateWrapper from '../../../testHelpers/EnzymeHelper';
+
+jest.mock('../../../services/EntryProxy');
+jest.mock('localforage');
 
 describe('ModalEditEntry', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.');
+    ignoredMessages.push('a test was not wrapped in act');
+  });
+
+  afterEach(() => {
+    entryProxy.createOrSaveEntry.mockReset();
+    entryProxy.existEntry.mockReset();
   });
 
   const equipment = {
@@ -44,6 +57,8 @@ describe('ModalEditEntry', () => {
 
   it('should render', () => {
     // Arrange
+    entryProxy.existEntry.mockImplementation(async () => Promise.resolve(true));
+
     const onSavedEntry = jest.fn();
     const onDeletedEntry = jest.fn();
     let isVisible = true;
@@ -56,5 +71,30 @@ describe('ModalEditEntry', () => {
 
     // Assert
     expect(modalEditEntry).toMatchSnapshot();
+  });
+
+  it('Should save the entry using the entry proxy when clicking on Save', async () => {
+    // Arrange
+    entryProxy.existEntry.mockImplementation(async () => Promise.resolve(true));
+    jest.spyOn(entryProxy, 'createOrSaveEntry').mockImplementation(async (equipmentId, taskId, newEntry) => Promise.resolve(newEntry));
+
+    const onSavedEntry = jest.fn();
+
+    const onDeletedEntry = jest.fn();
+    let isVisible = true;
+    const toggleFn = jest.fn().mockImplementation(() => {
+      isVisible = !isVisible;
+    });
+
+    const modalEditEntry = mount(<ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />);
+    const myForm = modalEditEntry.find('Memo(MyForm)');
+
+    // Act
+    myForm.simulate('submit');
+    await updateWrapper(modalEditEntry);
+
+    // Assert
+    expect(entryProxy.createOrSaveEntry).toBeCalledTimes(1);
+    expect(onSavedEntry).toBeCalledTimes(1);
   });
 });
