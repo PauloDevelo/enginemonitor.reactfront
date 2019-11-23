@@ -228,4 +228,69 @@ describe('ModalLogin', () => {
     expect(modalLogin.find('ModalPasswordReset').length).toBe(1);
     expect(modalLogin.find('ModalPasswordReset').props().visible).toBe(true);
   });
+
+  it('should display an alert message when an unexpected error occurs during the authentication', async () => {
+    // Arrange
+    let signupVisible = false;
+    const toggleModalSignup = jest.fn().mockImplementation(() => {
+      signupVisible = !signupVisible;
+    });
+    const onLoggedIn = jest.fn();
+
+    jest.spyOn(userProxy, 'authenticate').mockImplementation(() => Promise.reject(new HttpError({ error: 'Network error' })));
+
+    const modalLogin = mount(<ModalLogin visible onLoggedIn={onLoggedIn} className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
+    await updateWrapper(modalLogin);
+
+    const myForm = modalLogin.find('Memo(MyForm)');
+    const inputs = myForm.find('input');
+    inputs.at(0).simulate('change', { target: { value: 'paulodevelo@lovestreet.com' } });
+    inputs.at(1).simulate('change', { target: { value: 'mypassword' } });
+    inputs.at(2).simulate('change', { target: { type: 'checkbox', checked: true } });
+
+    // Act
+    myForm.simulate('submit');
+    await updateWrapper(modalLogin);
+
+    // Assert
+    expect(userProxy.authenticate).toHaveBeenCalledTimes(1);
+    expect(userProxy.authenticate.mock.calls[0][0]).toEqual({ email: 'paulodevelo@lovestreet.com', password: 'mypassword', remember: true });
+
+    expect(onLoggedIn).toBeCalledTimes(0);
+
+    expect(modalLogin.find('ModalFooter').find('Button').length).toBe(2);
+    const alerts = modalLogin.find('Alerts');
+    expect(alerts.length).toBe(1);
+
+    expect(modalLogin.find('ModalPasswordReset').length).toBe(1);
+    expect(modalLogin.find('ModalPasswordReset').props().visible).toBe(false);
+  });
+
+  it('should call the toggleModalSignup when clicking on the signup button', async () => {
+    // Arrange
+    let signupVisible = false;
+    const toggleModalSignup = jest.fn().mockImplementation(() => {
+      signupVisible = !signupVisible;
+    });
+    const onLoggedIn = jest.fn();
+
+    const modalLogin = mount(<ModalLogin visible onLoggedIn={onLoggedIn} className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
+    await updateWrapper(modalLogin);
+
+    const signupButton = modalLogin.find('ModalFooter').find('Button').at(0);
+
+    // Act
+    signupButton.simulate('click');
+    await updateWrapper(modalLogin);
+
+    // Assert
+    expect(onLoggedIn).toBeCalledTimes(0);
+
+    expect(modalLogin.find('ModalFooter').find('Button').length).toBe(2);
+
+    const alerts = modalLogin.find('Alerts');
+    expect(alerts.length).toBe(0);
+
+    expect(toggleModalSignup).toBeCalledTimes(1);
+  });
 });
