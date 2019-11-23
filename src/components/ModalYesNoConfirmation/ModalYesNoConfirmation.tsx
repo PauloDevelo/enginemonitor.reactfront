@@ -24,7 +24,7 @@ type Props = {
     toggle: () => void
 }
 
-const ModalYesNoConfimation = ({
+const ModalYesNoConfirmation = ({
   yes, isActing, no, visible, className, title, message, toggle,
 }: Props) => (
   <CSSTransition in={visible} timeout={300} classNames="modal">
@@ -41,4 +41,4 @@ const ModalYesNoConfimation = ({
   </CSSTransition>
 );
 
-export default ModalYesNoConfimation;
+export default ModalYesNoConfirmation;
