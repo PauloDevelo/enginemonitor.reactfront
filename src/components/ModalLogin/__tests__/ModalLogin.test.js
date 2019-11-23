@@ -127,7 +127,7 @@ describe('ModalLogin', () => {
     expect(alerts.length).toBe(1);
   });
 
-  it('should display the button to resend the verification email because the user is not verified', async () => {
+  it('should call the sendVerificationEmail because the user clicked on the button to resend the verification email', async () => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -158,5 +158,41 @@ describe('ModalLogin', () => {
     // Assert
     expect(userProxy.sendVerificationEmail).toHaveBeenCalledTimes(1);
     expect(userProxy.sendVerificationEmail.mock.calls[0][0]).toEqual('paulodevelo@lovestreet.com');
+  });
+
+  it('should display the button to reset the password because the user set an incorrect password', async () => {
+    // Arrange
+    let signupVisible = false;
+    const toggleModalSignup = jest.fn().mockImplementation(() => {
+      signupVisible = !signupVisible;
+    });
+    const onLoggedIn = jest.fn();
+
+    jest.spyOn(userProxy, 'authenticate').mockImplementation(() => Promise.reject(new HttpError({ password: 'invalid' })));
+
+    const modalLogin = mount(<ModalLogin visible onLoggedIn={onLoggedIn} className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
+    await updateWrapper(modalLogin);
+
+    const myForm = modalLogin.find('Memo(MyForm)');
+    const inputs = myForm.find('input');
+    inputs.at(0).simulate('change', { target: { value: 'paulodevelo@lovestreet.com' } });
+    inputs.at(1).simulate('change', { target: { value: 'mypassword' } });
+    inputs.at(2).simulate('change', { target: { type: 'checkbox', checked: true } });
+
+    // Act
+    myForm.simulate('submit');
+    await updateWrapper(modalLogin);
+
+    // Assert
+    expect(userProxy.authenticate).toHaveBeenCalledTimes(1);
+    expect(userProxy.authenticate.mock.calls[0][0]).toEqual({ email: 'paulodevelo@lovestreet.com', password: 'mypassword', remember: true });
+
+    expect(onLoggedIn).toBeCalledTimes(0);
+
+    expect(modalLogin.find('ModalFooter').find('Button').length).toBe(3);
+    const alerts = modalLogin.find('Alerts');
+    expect(alerts.length).toBe(1);
+
+    expect(modalLogin.find('Memo(MyForm)'));
   });
 });
