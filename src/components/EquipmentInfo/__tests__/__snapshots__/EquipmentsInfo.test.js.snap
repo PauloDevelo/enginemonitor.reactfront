@@ -727,7 +727,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with hte first equipment 
                         />
                       </Transition>
                     </CSSTransition>
-                    <ModalYesNoConfimation
+                    <ModalYesNoConfirmation
                       className="modal-dialog-centered"
                       isActing={false}
                       message={
@@ -799,7 +799,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with hte first equipment 
                           />
                         </Transition>
                       </CSSTransition>
-                    </ModalYesNoConfimation>
+                    </ModalYesNoConfirmation>
                   </ModalEditImage>
                 </Memo(Gallery)>
               </div>
@@ -1292,7 +1292,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with hte first equipment 
                         />
                       </Transition>
                     </CSSTransition>
-                    <ModalYesNoConfimation
+                    <ModalYesNoConfirmation
                       className="modal-dialog-centered"
                       isActing={false}
                       message={
@@ -1364,7 +1364,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with hte first equipment 
                           />
                         </Transition>
                       </CSSTransition>
-                    </ModalYesNoConfimation>
+                    </ModalYesNoConfirmation>
                   </ModalEditImage>
                 </Memo(Gallery)>
               </div>
@@ -1857,7 +1857,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with hte first equipment 
                         />
                       </Transition>
                     </CSSTransition>
-                    <ModalYesNoConfimation
+                    <ModalYesNoConfirmation
                       className="modal-dialog-centered"
                       isActing={false}
                       message={
@@ -1929,7 +1929,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with hte first equipment 
                           />
                         </Transition>
                       </CSSTransition>
-                    </ModalYesNoConfimation>
+                    </ModalYesNoConfirmation>
                   </ModalEditImage>
                 </Memo(Gallery)>
               </div>

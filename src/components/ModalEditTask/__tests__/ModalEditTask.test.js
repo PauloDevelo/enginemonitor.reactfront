@@ -158,7 +158,7 @@ describe('ModalEditTask', () => {
     await updateWrapper(modalEditTask);
 
     // Assert
-    const confirmationModal = modalEditTask.find('ModalYesNoConfimation');
+    const confirmationModal = modalEditTask.find('ModalYesNoConfirmation');
     expect(confirmationModal.props().visible).toBe(true);
   });
 
@@ -181,7 +181,7 @@ describe('ModalEditTask', () => {
     deleteButton.simulate('click');
     await updateWrapper(modalEditTask);
 
-    const confirmationModal = modalEditTask.find('ModalYesNoConfimation');
+    const confirmationModal = modalEditTask.find('ModalYesNoConfirmation');
     const yesButton = confirmationModal.find('ActionButton');
 
     // Act
@@ -192,7 +192,7 @@ describe('ModalEditTask', () => {
     expect(taskProxy.deleteTask).toBeCalledTimes(1);
     expect(onTaskDeleted).toBeCalledTimes(1);
     expect(toggleFn).toBeCalledTimes(1);
-    expect(modalEditTask.find('ModalYesNoConfimation').props().visible).toBe(false);
+    expect(modalEditTask.find('ModalYesNoConfirmation').props().visible).toBe(false);
   });
 
   it('Clicking No on the confirmation should not call the entryProxy.delete function but just close the confirmation modal', async () => {
@@ -214,7 +214,7 @@ describe('ModalEditTask', () => {
     deleteButton.simulate('click');
     await updateWrapper(modalEditTask);
 
-    const confirmationModal = modalEditTask.find('ModalYesNoConfimation');
+    const confirmationModal = modalEditTask.find('ModalYesNoConfirmation');
     const noButton = confirmationModal.find('Button').at(1);
 
     // Act
@@ -225,6 +225,6 @@ describe('ModalEditTask', () => {
     expect(taskProxy.deleteTask).toBeCalledTimes(0);
     expect(onTaskDeleted).toBeCalledTimes(0);
     expect(toggleFn).toBeCalledTimes(0);
-    expect(modalEditTask.find('ModalYesNoConfimation').props().visible).toBe(false);
+    expect(modalEditTask.find('ModalYesNoConfirmation').props().visible).toBe(false);
   });
 });

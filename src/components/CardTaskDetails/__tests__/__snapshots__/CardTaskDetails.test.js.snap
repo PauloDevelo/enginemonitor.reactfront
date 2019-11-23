@@ -678,7 +678,7 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                               />
                             </Transition>
                           </CSSTransition>
-                          <ModalYesNoConfimation
+                          <ModalYesNoConfirmation
                             className="modal-dialog-centered"
                             isActing={false}
                             message={
@@ -750,7 +750,7 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                                 />
                               </Transition>
                             </CSSTransition>
-                          </ModalYesNoConfimation>
+                          </ModalYesNoConfirmation>
                         </ModalEditImage>
                       </Memo(Gallery)>
                     </div>
@@ -1436,7 +1436,7 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                               />
                             </Transition>
                           </CSSTransition>
-                          <ModalYesNoConfimation
+                          <ModalYesNoConfirmation
                             className="modal-dialog-centered"
                             isActing={false}
                             message={
@@ -1508,7 +1508,7 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                                 />
                               </Transition>
                             </CSSTransition>
-                          </ModalYesNoConfimation>
+                          </ModalYesNoConfirmation>
                         </ModalEditImage>
                       </Memo(Gallery)>
                     </div>

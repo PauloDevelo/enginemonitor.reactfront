@@ -372,7 +372,7 @@ exports[`Component Gallery should render 0 thumbnails since this test delete all
         />
       </Transition>
     </CSSTransition>
-    <ModalYesNoConfimation
+    <ModalYesNoConfirmation
       className="modal-dialog-centered"
       isActing={false}
       message={
@@ -444,7 +444,7 @@ exports[`Component Gallery should render 0 thumbnails since this test delete all
           />
         </Transition>
       </CSSTransition>
-    </ModalYesNoConfimation>
+    </ModalYesNoConfirmation>
   </ModalEditImage>
 </Memo(Gallery)>
 `;
@@ -1754,7 +1754,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
         </Modal>
       </Transition>
     </CSSTransition>
-    <ModalYesNoConfimation
+    <ModalYesNoConfirmation
       className="modal-dialog-centered"
       isActing={false}
       message={
@@ -1826,7 +1826,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
           />
         </Transition>
       </CSSTransition>
-    </ModalYesNoConfimation>
+    </ModalYesNoConfirmation>
   </ModalEditImage>
 </Memo(Gallery)>
 `;
@@ -3864,7 +3864,7 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
         />
       </Transition>
     </CSSTransition>
-    <ModalYesNoConfimation
+    <ModalYesNoConfirmation
       className="modal-dialog-centered"
       isActing={false}
       message={
@@ -3936,7 +3936,7 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
           />
         </Transition>
       </CSSTransition>
-    </ModalYesNoConfimation>
+    </ModalYesNoConfirmation>
   </ModalEditImage>
 </Memo(Gallery)>
 `;
@@ -4428,7 +4428,7 @@ exports[`Component Gallery should render a list of image using the thumbnail url
         />
       </Transition>
     </CSSTransition>
-    <ModalYesNoConfimation
+    <ModalYesNoConfirmation
       className="modal-dialog-centered"
       isActing={false}
       message={
@@ -4500,7 +4500,7 @@ exports[`Component Gallery should render a list of image using the thumbnail url
           />
         </Transition>
       </CSSTransition>
-    </ModalYesNoConfimation>
+    </ModalYesNoConfirmation>
   </ModalEditImage>
 </Memo(Gallery)>
 `;
@@ -4896,7 +4896,7 @@ exports[`Component Gallery should render a spinner the time to get the answer fr
         />
       </Transition>
     </CSSTransition>
-    <ModalYesNoConfimation
+    <ModalYesNoConfirmation
       className="modal-dialog-centered"
       isActing={false}
       message={
@@ -4968,7 +4968,7 @@ exports[`Component Gallery should render a spinner the time to get the answer fr
           />
         </Transition>
       </CSSTransition>
-    </ModalYesNoConfimation>
+    </ModalYesNoConfirmation>
   </ModalEditImage>
 </Memo(Gallery)>
 `;
@@ -5548,7 +5548,7 @@ exports[`Component Gallery should render the Html5Camera when clicking on the ca
         />
       </Transition>
     </CSSTransition>
-    <ModalYesNoConfimation
+    <ModalYesNoConfirmation
       className="modal-dialog-centered"
       isActing={false}
       message={
@@ -5620,7 +5620,7 @@ exports[`Component Gallery should render the Html5Camera when clicking on the ca
           />
         </Transition>
       </CSSTransition>
-    </ModalYesNoConfimation>
+    </ModalYesNoConfirmation>
   </ModalEditImage>
 </Memo(Gallery)>
 `;
@@ -8179,7 +8179,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
         />
       </Transition>
     </CSSTransition>
-    <ModalYesNoConfimation
+    <ModalYesNoConfirmation
       className="modal-dialog-centered"
       isActing={false}
       message={
@@ -8251,7 +8251,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
           />
         </Transition>
       </CSSTransition>
-    </ModalYesNoConfimation>
+    </ModalYesNoConfirmation>
   </ModalEditImage>
 </Memo(Gallery)>
 `;

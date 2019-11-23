@@ -496,7 +496,7 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
                 />
               </Transition>
             </CSSTransition>
-            <ModalYesNoConfimation
+            <ModalYesNoConfirmation
               className="modal-dialog-centered"
               isActing={false}
               message={
@@ -568,7 +568,7 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
                   />
                 </Transition>
               </CSSTransition>
-            </ModalYesNoConfimation>
+            </ModalYesNoConfirmation>
           </ModalEditImage>
         </Memo(Gallery)>
       </div>

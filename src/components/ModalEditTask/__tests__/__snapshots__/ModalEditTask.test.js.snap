@@ -1126,7 +1126,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
       </Modal>
     </Transition>
   </CSSTransition>
-  <ModalYesNoConfimation
+  <ModalYesNoConfirmation
     className="modal-dialog-centered"
     isActing={false}
     message={
@@ -1198,6 +1198,6 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
         />
       </Transition>
     </CSSTransition>
-  </ModalYesNoConfimation>
+  </ModalYesNoConfirmation>
 </ModalEditTask>
 `;

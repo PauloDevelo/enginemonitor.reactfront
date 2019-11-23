@@ -1684,7 +1684,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                     />
                                   </Transition>
                                 </CSSTransition>
-                                <ModalYesNoConfimation
+                                <ModalYesNoConfirmation
                                   className="modal-dialog-centered"
                                   isActing={false}
                                   message={
@@ -1756,7 +1756,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       />
                                     </Transition>
                                   </CSSTransition>
-                                </ModalYesNoConfimation>
+                                </ModalYesNoConfirmation>
                               </ModalEditImage>
                             </Memo(Gallery)>
                             <Alerts />
@@ -1865,7 +1865,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
       </Modal>
     </Transition>
   </CSSTransition>
-  <ModalYesNoConfimation
+  <ModalYesNoConfirmation
     className="modal-dialog-centered"
     isActing={false}
     message={
@@ -1937,6 +1937,6 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
         />
       </Transition>
     </CSSTransition>
-  </ModalYesNoConfimation>
+  </ModalYesNoConfirmation>
 </ModalEditEntry>
 `;
