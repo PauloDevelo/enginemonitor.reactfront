@@ -29,10 +29,10 @@ import jsonMessages from './Login.messages.json';
 const loginmsg = defineMessages(jsonMessages);
 
 type Props = {
-	onLoggedIn: (user:UserModel) => void,
-	visible: boolean,
-	className: string,
-	toggleModalSignup: () => void
+onLoggedIn: (user:UserModel) => void,
+visible: boolean,
+className: string,
+toggleModalSignup: () => void
 }
 
 enum LoginState {
