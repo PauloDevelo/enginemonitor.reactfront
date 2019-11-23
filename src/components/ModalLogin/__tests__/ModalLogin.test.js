@@ -193,6 +193,39 @@ describe('ModalLogin', () => {
     const alerts = modalLogin.find('Alerts');
     expect(alerts.length).toBe(1);
 
-    expect(modalLogin.find('Memo(MyForm)'));
+    expect(modalLogin.find('ModalPasswordReset').length).toBe(1);
+    expect(modalLogin.find('ModalPasswordReset').props().visible).toBe(false);
+  });
+
+  it('should display the Modal to reset the password because the user clicked on the button to reset the password', async () => {
+    // Arrange
+    let signupVisible = false;
+    const toggleModalSignup = jest.fn().mockImplementation(() => {
+      signupVisible = !signupVisible;
+    });
+    const onLoggedIn = jest.fn();
+
+    jest.spyOn(userProxy, 'authenticate').mockImplementation(() => Promise.reject(new HttpError({ password: 'invalid' })));
+
+    const modalLogin = mount(<ModalLogin visible onLoggedIn={onLoggedIn} className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
+    await updateWrapper(modalLogin);
+
+    const myForm = modalLogin.find('Memo(MyForm)');
+    const inputs = myForm.find('input');
+    inputs.at(0).simulate('change', { target: { value: 'paulodevelo@lovestreet.com' } });
+    inputs.at(1).simulate('change', { target: { value: 'mypassword' } });
+    inputs.at(2).simulate('change', { target: { type: 'checkbox', checked: true } });
+
+    myForm.simulate('submit');
+    await updateWrapper(modalLogin);
+
+    const resetPasswordButton = modalLogin.find('ModalFooter').find('Button').at(1);
+
+    // Act
+    resetPasswordButton.simulate('click');
+
+    // Assert
+    expect(modalLogin.find('ModalPasswordReset').length).toBe(1);
+    expect(modalLogin.find('ModalPasswordReset').props().visible).toBe(true);
   });
 });
