@@ -56,7 +56,7 @@ infoMsg?: string,
 errors?: any
 }
 
-const ModaLogin = ({
+const ModalLogin = ({
   onLoggedIn, visible, className, toggleModalSignup,
 }: Props) => {
   const [user, setUser] = useState<AuthInfo>({ email: '', password: '', remember: false });
@@ -143,4 +143,4 @@ const ModaLogin = ({
   );
 };
 
-export default ModaLogin;
+export default ModalLogin;

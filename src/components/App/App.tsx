@@ -5,7 +5,6 @@ import React, {
 import { CSSTransition } from 'react-transition-group';
 import { scrollTo } from '../../helpers/Helpers';
 
-
 import TaskTabPanes from '../TaskTabPanes/TaskTabPanes';
 import EquipmentsInfo from '../EquipmentInfo/EquipmentsInfo';
 import HistoryTaskTable from '../HistoryTaskTable/HistoryTaskTable';
@@ -132,6 +131,7 @@ export default function App() {
     }
   }, []);
 
+  // eslint-disable-next-line no-unused-vars
   const onTaskDeleted = useCallback((task: TaskModel) => {
     reloadTasksRef.current();
     setEquipmentHistoryRefreshId((previousEquipmentHistoryRefreshId) => previousEquipmentHistoryRefreshId + 1);
@@ -165,77 +165,77 @@ export default function App() {
   return (
     <CacheBuster>
       {({ loading, isLatestVersion, refreshCacheAndReload }:any) => {
-			  if (loading) return null;
-			  if (!loading && !isLatestVersion) {
-			    // You can decide how and when you want to force reload
-			    refreshCacheAndReload();
-			  }
+        if (loading) return null;
+        if (!loading && !isLatestVersion) {
+          // You can decide how and when you want to force reload
+          refreshCacheAndReload();
+        }
 
-			  return (
-  <>
+        return (
+          <>
             <CSSTransition in appear timeout={1000} classNames="fade">
-      <>
+              <>
                 <NavBar onLoggedOut={logOut} isOpened={navBarVisible} toggle={toggleNavBar} />
                 <div className="appBody mb-2">
-                <div className="wrapperColumn">
-                <EquipmentsInfo
-              userId={user ? user._uiId : undefined}
-              changeCurrentEquipment={setCurrentEquipment}
-              extraClassNames={`${panelClassNames} columnHeader`}
-            />
-                <TaskTabPanes
-              classNames={`${panelClassNames} columnBody`}
-              currentEquipment={currentEquipment}
-              taskList={taskList}
-              areTasksLoading={isLoading}
-              changeCurrentTask={onClickTaskTable}
-              equipmentHistoryRefreshId={equipmentHistoryRefreshId}
-              onTaskChanged={onTaskChanged}
-            />
-              </div>
-                <div className="wrapperColumn">
-                <CardTaskDetails
-              callBackRef={cardTaskDetailDomCallBack}
-              currentTaskIsChanging={currentTaskIsChanging}
-              equipment={currentEquipment}
-              tasks={taskList}
-              currentTask={currentTask}
-              onTaskChanged={onTaskChanged}
-              onTaskDeleted={onTaskDeleted}
-              changeCurrentTask={setCurrentTask}
-              classNames={`${panelClassNames} columnHeader`}
-            />
-                <HistoryTaskTable
-              equipment={currentEquipment}
-              task={currentTask}
-              onHistoryChanged={onTaskHistoryChanged}
-              taskHistoryRefreshId={taskHistoryRefreshId}
-              classNames={`${panelClassNames} columnBody lastBlock`}
-            />
-              </div>
-              </div>
+                  <div className="wrapperColumn">
+                    <EquipmentsInfo
+                      userId={user ? user._uiId : undefined}
+                      changeCurrentEquipment={setCurrentEquipment}
+                      extraClassNames={`${panelClassNames} columnHeader`}
+                    />
+                    <TaskTabPanes
+                      classNames={`${panelClassNames} columnBody`}
+                      currentEquipment={currentEquipment}
+                      taskList={taskList}
+                      areTasksLoading={isLoading}
+                      changeCurrentTask={onClickTaskTable}
+                      equipmentHistoryRefreshId={equipmentHistoryRefreshId}
+                      onTaskChanged={onTaskChanged}
+                    />
+                  </div>
+                  <div className="wrapperColumn">
+                    <CardTaskDetails
+                      callBackRef={cardTaskDetailDomCallBack}
+                      currentTaskIsChanging={currentTaskIsChanging}
+                      equipment={currentEquipment}
+                      tasks={taskList}
+                      currentTask={currentTask}
+                      onTaskChanged={onTaskChanged}
+                      onTaskDeleted={onTaskDeleted}
+                      changeCurrentTask={setCurrentTask}
+                      classNames={`${panelClassNames} columnHeader`}
+                    />
+                    <HistoryTaskTable
+                      equipment={currentEquipment}
+                      task={currentTask}
+                      onHistoryChanged={onTaskHistoryChanged}
+                      taskHistoryRefreshId={taskHistoryRefreshId}
+                      classNames={`${panelClassNames} columnBody lastBlock`}
+                    />
+                  </div>
+                </div>
                 <SyncAlert className="bottomright" />
                 <ErrorAlert error={error} onDismiss={dismissError} className="bottomright" />
               </>
-    </CSSTransition>
+            </CSSTransition>
             {!user && (
-    <ModalLogin
+            <ModalLogin
               visible={!user}
               onLoggedIn={setUser}
               className="modal-dialog-centered"
               toggleModalSignup={toggleModalSignup}
             />
-    )}
+            )}
 
             {modalSignupVisible && (
-    <ModalSignup
+            <ModalSignup
               visible={modalSignupVisible}
               toggle={toggleModalSignup}
               className="modal-dialog-centered"
             />
-    )}
+            )}
           </>
-			  );
+        );
       }}
     </CacheBuster>
   );
