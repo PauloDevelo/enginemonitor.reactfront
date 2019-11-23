@@ -19,7 +19,7 @@ name: string,
 min?: number,
 max?: number,
 required?: boolean,
-readonly?: string,
+readOnly?: boolean,
 children?: JSX.Element[] | JSX.Element
 };
 
