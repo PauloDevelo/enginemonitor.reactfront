@@ -556,7 +556,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                   noValidate={true}
                                   onSubmit={[Function]}
                                 >
-                                  <Memo(MyInput)
+                                  <Memo()
                                     handleChange={[Function]}
                                     key=".0"
                                     label={
@@ -637,8 +637,8 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                         </Input>
                                       </div>
                                     </FormGroup>
-                                  </Memo(MyInput)>
-                                  <Memo(MyInput)
+                                  </Memo()>
+                                  <Memo()
                                     handleChange={[Function]}
                                     key=".1"
                                     label={
@@ -719,8 +719,8 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                         </Input>
                                       </div>
                                     </FormGroup>
-                                  </Memo(MyInput)>
-                                  <Memo(MyInput)
+                                  </Memo()>
+                                  <Memo()
                                     handleChange={[Function]}
                                     key=".2"
                                     label={
@@ -790,7 +790,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                         </Label>
                                       </div>
                                     </FormGroup>
-                                  </Memo(MyInput)>
+                                  </Memo()>
                                 </form>
                               </Form>
                             </Memo(MyForm)>
