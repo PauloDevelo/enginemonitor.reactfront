@@ -10,6 +10,7 @@ import userProxy from '../../../services/UserProxy';
 
 import ModalLogin from '../ModalLogin';
 import updateWrapper from '../../../testHelpers/EnzymeHelper';
+import HttpError from '../../../http/HttpError';
 
 jest.mock('../../../services/UserProxy');
 jest.mock('localforage');
@@ -52,7 +53,7 @@ describe('ModalLogin', () => {
 
     // Assert
     expect(modalLogin).toMatchSnapshot();
-    expect(modalLogin.props().visible).toBe(true);
+    expect(modalLogin.find('ModalFooter').find('Button').length).toBe(2);
   });
 
   it('should authenticate with the value input', async () => {
@@ -64,7 +65,6 @@ describe('ModalLogin', () => {
     const onLoggedIn = jest.fn();
 
     jest.spyOn(userProxy, 'authenticate').mockImplementation(() => Promise.resolve(user));
-
 
     const modalLogin = mount(<ModalLogin visible onLoggedIn={onLoggedIn} className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
     await updateWrapper(modalLogin);
@@ -84,5 +84,39 @@ describe('ModalLogin', () => {
 
     expect(onLoggedIn).toBeCalledTimes(1);
     expect(onLoggedIn.mock.calls[0][0]).toEqual(user);
+  });
+
+  it('should display the button to resend the verification email because the user is not verified', async () => {
+    // Arrange
+    let signupVisible = false;
+    const toggleModalSignup = jest.fn().mockImplementation(() => {
+      signupVisible = !signupVisible;
+    });
+    const onLoggedIn = jest.fn();
+
+    jest.spyOn(userProxy, 'authenticate').mockImplementation(() => Promise.reject(new HttpError({ email: 'needVerification'})));
+
+    const modalLogin = mount(<ModalLogin visible onLoggedIn={onLoggedIn} className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
+    await updateWrapper(modalLogin);
+
+    const myForm = modalLogin.find('Memo(MyForm)');
+    const inputs = myForm.find('input');
+    inputs.at(0).simulate('change', { target: { value: 'paulodevelo@lovestreet.com' } });
+    inputs.at(1).simulate('change', { target: { value: 'mypassword' } });
+    inputs.at(2).simulate('change', { target: { type: 'checkbox', checked: true } });
+
+    // Act
+    myForm.simulate('submit');
+    await updateWrapper(modalLogin);
+
+    // Assert
+    expect(userProxy.authenticate).toHaveBeenCalledTimes(1);
+    expect(userProxy.authenticate.mock.calls[0][0]).toEqual({ email: 'paulodevelo@lovestreet.com', password: 'mypassword', remember: true });
+
+    expect(onLoggedIn).toBeCalledTimes(0);
+
+    const alerts = modalLogin.find('Alerts');
+    expect(alerts.length).toBe(1);
+    expect(alerts.props().)
   });
 });

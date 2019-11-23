@@ -1,14 +1,14 @@
-import React, {Fragment} from "react";
+import React from 'react';
 import { Alert } from 'reactstrap';
 import { FormattedMessage, defineMessages } from 'react-intl';
-import PropTypes from 'prop-types';
 
-import jsonMessages from "./Alerts.messages.json";
+import jsonMessages from './Alerts.messages.json';
+
 const alertMsg = defineMessages(jsonMessages);
 
-function isString (value: any) {
-    return typeof value === 'string' || value instanceof String;
-};
+function isString(value: any) {
+  return typeof value === 'string' || value instanceof String;
+}
 
 type Props = {
     color?: string,
@@ -17,77 +17,73 @@ type Props = {
     children?: JSX.Element[] | JSX.Element
 };
 
-const Alerts = ({color, error, errors, children}:Props) => {
-    if(color === undefined){
-        color = "danger";
+const Alerts = ({
+  color, error, errors, children,
+}:Props) => {
+  const strColor = color === undefined ? 'danger' : color;
+
+  const strError = isString(errors) ? errors : error;
+
+  if (strError) {
+    let value:any;
+    const messageDescIndex = Object.keys(alertMsg).indexOf(strError);
+    if (messageDescIndex !== -1) {
+      const messageDesc = Object.values(alertMsg)[messageDescIndex];
+      value = <FormattedMessage {...messageDesc} />;
+    } else {
+      value = strError;
     }
+    return (
+      <Alert className="sm" color={strColor}>
+        {value}
+        {children}
+      </Alert>
+    );
+  }
 
-    if(isString(errors)){
-        error = errors;
-    }
-    
-    if(error){
-        let value:any;
-        const messageDescIndex = Object.keys(alertMsg).indexOf(error);
-        if(messageDescIndex !== -1){
-            const messageDesc = Object.values(alertMsg)[messageDescIndex];
-            value = <FormattedMessage {...messageDesc}/>;
-        }
-        else{
-            value = error;
-        }
-        return <Alert className="sm" color={color}>
-            {value}
-            {children}
-        </Alert>;
-    }
+  let alerts:JSX.Element[] = [];
+  if (errors) {
+    const validKeys:string[] = [];
+    const keys: string[] = Object.keys(errors);
+    keys.forEach((key) => {
+      if (isString(errors[key])) {
+        validKeys.push(key);
+      }
+    });
 
-    let alerts:JSX.Element[] = [];
-    if(errors){
-        const validKeys:string[] = [];
-        const keys: string[] = Object.keys(errors);
-        keys.forEach(key => {
-            if(isString(errors[key])){
-                validKeys.push(key);
-            }
-        });
+    alerts = validKeys.map((key) => {
+      let fieldElement: any = key;
+      let messageDescIndex = Object.keys(alertMsg).indexOf(key);
+      if (messageDescIndex !== -1) {
+        const messageDesc = Object.values(alertMsg)[messageDescIndex];
+        fieldElement = <FormattedMessage {...messageDesc} />;
+      }
 
-        alerts = validKeys.map(key => {
-            let fieldElement: any = key;
-            let messageDescIndex = Object.keys(alertMsg).indexOf(key);
-            if(messageDescIndex !== -1){
-                const messageDesc = Object.values(alertMsg)[messageDescIndex];
-                fieldElement = <FormattedMessage {...messageDesc}/>
-            }
+      let valueElement: any = errors[key];
+      messageDescIndex = Object.keys(alertMsg).indexOf(valueElement);
+      if (messageDescIndex !== -1) {
+        const messageDesc = Object.values(alertMsg)[messageDescIndex];
+        valueElement = <FormattedMessage {...messageDesc} />;
+      }
 
-            let valueElement: any = errors[key];
-            messageDescIndex = Object.keys(alertMsg).indexOf(valueElement);
-            if(messageDescIndex !== -1){
-                const messageDesc = Object.values(alertMsg)[messageDescIndex];
-                valueElement = <FormattedMessage {...messageDesc}/>;
-            }
+      return (
+        <Alert className="sm" key={key} color={strColor}>
+          { fieldElement }
+          <span>
+            {' '}
+            {valueElement}
+          </span>
+          {children}
+        </Alert>
+      );
+    });
+  }
 
-            return(
-                <Alert className="sm" key={key} color={color}>
-                    { fieldElement }<span>{' '}{valueElement}</span>
-                    {children}
-                </Alert>
-            );
-        });
-    }
-
-    return <Fragment>
-        {alerts}
-    </Fragment>
-};
-
-Alerts.propTypes = {
-    errors: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.object
-      ]),
-    color: PropTypes.string,
-    children: PropTypes.node,
+  return (
+    <>
+      {alerts}
+    </>
+  );
 };
 
 export default Alerts;
