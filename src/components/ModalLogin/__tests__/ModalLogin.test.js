@@ -54,6 +54,9 @@ describe('ModalLogin', () => {
     // Assert
     expect(modalLogin).toMatchSnapshot();
     expect(modalLogin.find('ModalFooter').find('Button').length).toBe(2);
+
+    const alerts = modalLogin.find('Alerts');
+    expect(alerts.length).toBe(0);
   });
 
   it('should authenticate with the value input', async () => {
@@ -84,6 +87,9 @@ describe('ModalLogin', () => {
 
     expect(onLoggedIn).toBeCalledTimes(1);
     expect(onLoggedIn.mock.calls[0][0]).toEqual(user);
+
+    const alerts = modalLogin.find('Alerts');
+    expect(alerts.length).toBe(0);
   });
 
   it('should display the button to resend the verification email because the user is not verified', async () => {
@@ -94,7 +100,7 @@ describe('ModalLogin', () => {
     });
     const onLoggedIn = jest.fn();
 
-    jest.spyOn(userProxy, 'authenticate').mockImplementation(() => Promise.reject(new HttpError({ email: 'needVerification'})));
+    jest.spyOn(userProxy, 'authenticate').mockImplementation(() => Promise.reject(new HttpError({ email: 'needVerification' })));
 
     const modalLogin = mount(<ModalLogin visible onLoggedIn={onLoggedIn} className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
     await updateWrapper(modalLogin);
@@ -117,6 +123,5 @@ describe('ModalLogin', () => {
 
     const alerts = modalLogin.find('Alerts');
     expect(alerts.length).toBe(1);
-    expect(alerts.props().)
   });
 });
