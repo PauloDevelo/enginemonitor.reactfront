@@ -34,7 +34,7 @@ const SyncAlert = ({ className }:Type) => {
       {syncContext.isSyncing && (
         <UncontrolledAlert color="warning" className={className}>
           <div className="text-center"><FormattedMessage {...syncAlertMsg.syncInProgress} /></div>
-          <Progress animated color="warning" value={syncContext.remainingActionToSync * 100 / syncContext.totalActionToSync}>
+          <Progress animated color="warning" value={(syncContext.remainingActionToSync * 100) / syncContext.totalActionToSync}>
             {syncContext.remainingActionToSync}
 /
             {syncContext.totalActionToSync}
