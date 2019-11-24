@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ConnectionStateMessage synchronize should display the connection when isOnline is false and the application is synced false 1`] = `
+exports[`ConnectionStateMessage Render should display the connection when isOnline is false and the application is synced false 1`] = `
 <Memo(ConnectionStateMessage)
   isOnline={false}
   isSynced={false}
@@ -15,7 +15,7 @@ exports[`ConnectionStateMessage synchronize should display the connection when i
 </Memo(ConnectionStateMessage)>
 `;
 
-exports[`ConnectionStateMessage synchronize should display the connection when isOnline is false and the application is synced true 1`] = `
+exports[`ConnectionStateMessage Render should display the connection when isOnline is false and the application is synced true 1`] = `
 <Memo(ConnectionStateMessage)
   isOnline={false}
   isSynced={true}
@@ -30,7 +30,7 @@ exports[`ConnectionStateMessage synchronize should display the connection when i
 </Memo(ConnectionStateMessage)>
 `;
 
-exports[`ConnectionStateMessage synchronize should display the connection when isOnline is true and the application is synced false 1`] = `
+exports[`ConnectionStateMessage Render should display the connection when isOnline is true and the application is synced false 1`] = `
 <Memo(ConnectionStateMessage)
   isOnline={true}
   isSynced={false}
@@ -45,7 +45,7 @@ exports[`ConnectionStateMessage synchronize should display the connection when i
 </Memo(ConnectionStateMessage)>
 `;
 
-exports[`ConnectionStateMessage synchronize should display the connection when isOnline is true and the application is synced true 1`] = `
+exports[`ConnectionStateMessage Render should display the connection when isOnline is true and the application is synced true 1`] = `
 <Memo(ConnectionStateMessage)
   isOnline={true}
   isSynced={true}

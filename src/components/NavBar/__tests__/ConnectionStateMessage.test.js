@@ -29,7 +29,7 @@ describe('ConnectionStateMessage', () => {
     { isOnline: false, isSynced: false },
   ];
 
-  describe.each(connectionStates)('synchronize', ({ isOnline, isSynced }) => {
+  describe.each(connectionStates)('Render', ({ isOnline, isSynced }) => {
     it(`should display the connection when isOnline is ${isOnline} and the application is synced ${isSynced}`, async (done) => {
       // Arrange
 
