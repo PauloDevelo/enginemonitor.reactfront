@@ -29,7 +29,7 @@ newPassword2?:string
 
 type Props = {
 visible: boolean,
-className: string,
+className?: string,
 toggle: () => void,
 data: NewPassword
 };
