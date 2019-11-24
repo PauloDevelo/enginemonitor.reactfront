@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClocLabel should Render the clock as expected 1`] = `
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+>
+  <ClockLabel>
+    <span>
+      <FormattedDate
+        value={2019-11-24T12:51:00.000Z}
+      >
+        11/24/2019
+      </FormattedDate>
+      <span>
+         
+      </span>
+      <FormattedTime
+        hour="numeric"
+        minute="numeric"
+        second="numeric"
+        value={2019-11-24T12:51:00.000Z}
+      >
+        8:51:00 PM
+      </FormattedTime>
+    </span>
+  </ClockLabel>
+</IntlProvider>
+`;
