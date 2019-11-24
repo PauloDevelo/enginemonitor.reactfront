@@ -60,6 +60,12 @@ describe('DropDownConnectionStateItem', () => {
 
       // Assert
       expect(dropDownConnectionStateItemWrapper).toMatchSnapshot();
+      expect(syncService.registerIsOnlineListener).toBeCalledTimes(1);
+      expect(actionManager.registerOnActionManagerChanged).toBeCalledTimes(2);
+
+      dropDownConnectionStateItemWrapper.unmount();
+      expect(syncService.unregisterIsOnlineListener).toBeCalledTimes(1);
+      expect(actionManager.unregisterOnActionManagerChanged).toBeCalledTimes(2);
       done();
     });
   });
