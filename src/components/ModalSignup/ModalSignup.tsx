@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap';
@@ -48,13 +48,13 @@ const ModalSignup = ({ visible, className, toggle }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const cancel = () => {
+  const cancel = useCallback(() => {
     setSignupErrors(undefined);
     setInfoMsg(undefined);
     toggle();
-  };
+  }, [toggle]);
 
-  const handleSubmit = async (newUser: UserModel) => {
+  const handleSubmit = useCallback(async (newUser: UserModel) => {
     setIsError(false);
     setIsLoading(true);
     setInfoMsg(undefined);
@@ -72,7 +72,7 @@ const ModalSignup = ({ visible, className, toggle }: Props) => {
       }
     }
     setIsLoading(false);
-  };
+  }, []);
 
   return (
     <CSSTransition in={visible} timeout={300} classNames="modal">
