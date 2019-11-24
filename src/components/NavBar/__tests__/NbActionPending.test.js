@@ -1,80 +1,80 @@
-import ignoredMessages from '../../../testHelpers/MockConsole';
 
 import React from 'react';
 import { mount } from 'enzyme';
+import ignoredMessages from '../../../testHelpers/MockConsole';
 
 import actionManager from '../../../services/ActionManager';
-import NbActionPending from '../NbActionPending'
+import NbActionPending from '../NbActionPending';
 
 jest.mock('../../../services/ActionManager');
 
-describe('Component NbActionPending', () =>{
-    beforeAll(() => {
-        ignoredMessages.length = 0;
-        ignoredMessages.push("test was not wrapped in act(...)");
-        ignoredMessages.push("[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.");
-    });
+describe('Component NbActionPending', () => {
+  beforeAll(() => {
+    ignoredMessages.length = 0;
+    ignoredMessages.push('test was not wrapped in act(...)');
+    ignoredMessages.push('[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.');
+  });
 
-    it('should render a specific message when there is no action to sync', () => {
-        // Arrange
-        const resp = 0;
-        actionManager.countAction.mockResolvedValue(resp);
+  it('should render a specific message when there is no action to sync', () => {
+    // Arrange
+    const resp = 0;
+    actionManager.countAction.mockResolvedValue(resp);
 
-        // Act
-        const wrapper = mount(<NbActionPending />);
-        
-        return Promise
-            .resolve(wrapper)
-            .then(() => {
-                wrapper.update();
+    // Act
+    const wrapper = mount(<NbActionPending />);
 
-                // Assert
-                expect(wrapper).toMatchSnapshot();
+    return Promise
+      .resolve(wrapper)
+      .then(() => {
+        wrapper.update();
 
-                expect(wrapper).toContainExactlyOneMatchingElement("FormattedMessage");
-                expect(wrapper.text()).toBe("synced");
-            });
-    });
+        // Assert
+        expect(wrapper).toMatchSnapshot();
 
-    it('should render a specific message when there is several action to sync', () => {
-        // Arrange
-        const resp = 3;
-        actionManager.countAction.mockResolvedValue(resp);
+        expect(wrapper).toContainExactlyOneMatchingElement('FormattedMessage');
+        expect(wrapper.text()).toBe('synced');
+      });
+  });
 
-        // Act
-        const wrapper = mount(<NbActionPending />);
+  it('should render a specific message when there is several action to sync', () => {
+    // Arrange
+    const resp = 3;
+    actionManager.countAction.mockResolvedValue(resp);
 
-        return Promise
-            .resolve(wrapper)
-            .then(() => {
-                wrapper.update();
+    // Act
+    const wrapper = mount(<NbActionPending />);
 
-                // Assert
-                expect(wrapper).toMatchSnapshot();
+    return Promise
+      .resolve(wrapper)
+      .then(() => {
+        wrapper.update();
 
-                expect(wrapper).toContainExactlyOneMatchingElement("FormattedMessage");
-                expect(wrapper.text()).toBe("3 actions to sync");
-            });
-    });
+        // Assert
+        expect(wrapper).toMatchSnapshot();
 
-    it('should render a specific message when there is one action to sync', () => {
-        // Arrange
-        const resp = 1;
-        actionManager.countAction.mockResolvedValue(resp);
+        expect(wrapper).toContainExactlyOneMatchingElement('FormattedMessage');
+        expect(wrapper.text()).toBe('3 actions to sync');
+      });
+  });
 
-        // Act
-        const wrapper = mount(<NbActionPending />);
+  it('should render a specific message when there is one action to sync', () => {
+    // Arrange
+    const resp = 1;
+    actionManager.countAction.mockResolvedValue(resp);
 
-        return Promise
-            .resolve(wrapper)
-            .then(() => {
-                wrapper.update();
+    // Act
+    const wrapper = mount(<NbActionPending />);
 
-                // Assert
-                expect(wrapper).toMatchSnapshot();
+    return Promise
+      .resolve(wrapper)
+      .then(() => {
+        wrapper.update();
 
-                expect(wrapper).toContainExactlyOneMatchingElement("FormattedMessage");
-                expect(wrapper.text()).toBe("1 action to sync");
-            });
-    });
+        // Assert
+        expect(wrapper).toMatchSnapshot();
+
+        expect(wrapper).toContainExactlyOneMatchingElement('FormattedMessage');
+        expect(wrapper.text()).toBe('1 action to sync');
+      });
+  });
 });
