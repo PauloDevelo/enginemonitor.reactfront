@@ -543,7 +543,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                               id="formSignup"
                               initialData={
                                 Object {
-                                  "_uiId": "5b02eb10-0e4d-11ea-bfdb-1bbbcecf7eb4",
+                                  "_uiId": "user_01",
                                   "email": "",
                                   "firstname": "",
                                   "imageFolderSizeInByte": 0,

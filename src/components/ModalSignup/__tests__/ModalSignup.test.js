@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 // eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
 
+import uuidv1 from 'uuid/v1';
 import ignoredMessages from '../../../testHelpers/MockConsole';
 
 import userProxy from '../../../services/UserProxy';
@@ -14,6 +15,7 @@ import HttpError from '../../../http/HttpError';
 
 jest.mock('../../../services/UserProxy');
 jest.mock('localforage');
+jest.mock('uuid/v1');
 
 describe('ModalSignup', () => {
   beforeAll(() => {
@@ -38,6 +40,8 @@ describe('ModalSignup', () => {
 
   it('should render the ModalSignup', async () => {
     // Arrange
+    uuidv1.mockImplementation(() => 'user_01');
+
     let signupVisible = false;
     const toggle = jest.fn().mockImplementation(() => {
       signupVisible = !signupVisible;
