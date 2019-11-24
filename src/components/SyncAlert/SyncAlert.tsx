@@ -12,7 +12,7 @@ import jsonMessages from './SyncAlert.messages.json';
 const syncAlertMsg = defineMessages(jsonMessages);
 
 type Type = {
-    className: string
+    className?: string
 }
 
 const SyncAlert = ({ className }:Type) => {
@@ -28,7 +28,6 @@ const SyncAlert = ({ className }:Type) => {
 
     return () => syncService.unregisterSyncListener(setSyncContext);
   }, []);
-
 
   return (
     <>
