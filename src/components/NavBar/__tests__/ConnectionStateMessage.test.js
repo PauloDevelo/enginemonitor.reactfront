@@ -7,7 +7,6 @@ import localforage from 'localforage';
 import ConnectionStateMessage from '../ConnectionStateMessage';
 
 import ignoredMessages from '../../../testHelpers/MockConsole';
-import updateWrapper from '../../../testHelpers/EnzymeHelper';
 
 jest.mock('localforage');
 
