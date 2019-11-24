@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConnectionStateMessage synchronize should display the connection when isOnline is false and the application is synced false 1`] = `
+<Memo(ConnectionStateMessage)
+  isOnline={false}
+  isSynced={false}
+>
+  <FormattedMessage
+    defaultMessage="Disconnected"
+    id="notonline"
+    values={Object {}}
+  >
+    Disconnected
+  </FormattedMessage>
+</Memo(ConnectionStateMessage)>
+`;
+
+exports[`ConnectionStateMessage synchronize should display the connection when isOnline is false and the application is synced true 1`] = `
+<Memo(ConnectionStateMessage)
+  isOnline={false}
+  isSynced={true}
+>
+  <FormattedMessage
+    defaultMessage="Disconnected"
+    id="notonline"
+    values={Object {}}
+  >
+    Disconnected
+  </FormattedMessage>
+</Memo(ConnectionStateMessage)>
+`;
+
+exports[`ConnectionStateMessage synchronize should display the connection when isOnline is true and the application is synced false 1`] = `
+<Memo(ConnectionStateMessage)
+  isOnline={true}
+  isSynced={false}
+>
+  <FormattedMessage
+    defaultMessage="Synchronize"
+    id="syncAction"
+    values={Object {}}
+  >
+    Synchronize
+  </FormattedMessage>
+</Memo(ConnectionStateMessage)>
+`;
+
+exports[`ConnectionStateMessage synchronize should display the connection when isOnline is true and the application is synced true 1`] = `
+<Memo(ConnectionStateMessage)
+  isOnline={true}
+  isSynced={true}
+>
+  <FormattedMessage
+    defaultMessage="Online"
+    id="online"
+    values={Object {}}
+  >
+    Online
+  </FormattedMessage>
+</Memo(ConnectionStateMessage)>
+`;
