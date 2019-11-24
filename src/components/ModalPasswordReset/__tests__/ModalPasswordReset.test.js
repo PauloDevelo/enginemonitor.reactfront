@@ -44,94 +44,126 @@ describe('ModalPasswordReset', () => {
     expect(alerts.length).toBe(0);
   });
 
-  // it('should close the modal if the user click Cancel', async () => {
-  //   // Arrange
-  //   uuidv1.mockImplementation(() => 'user_01');
+  it('should close the modal if the user click Cancel', async () => {
+    // Arrange
+    const toggle = jest.fn();
 
-  //   const toggle = jest.fn();
+    const modalPasswordReset = mount(<ModalPasswordReset visible toggle={toggle} data={data} />);
+    await updateWrapper(modalPasswordReset);
 
-  //   const modalSignup = mount(<ModalSignup visible toggle={toggle} />);
-  //   await updateWrapper(modalSignup);
+    const cancelButton = modalPasswordReset.find('ModalFooter').find('Button').at(1);
 
-  //   const cancelButton = modalSignup.find('ModalFooter').find('Button').at(1);
+    // Act
+    cancelButton.simulate('click');
+    await updateWrapper(modalPasswordReset);
 
-  //   // Act
-  //   cancelButton.simulate('click');
-  //   await updateWrapper(modalSignup);
+    // Assert
+    expect(modalPasswordReset.find('ModalFooter').find('Button').length).toBe(2);
 
-  //   // Assert
-  //   expect(modalSignup.find('ModalFooter').find('Button').length).toBe(2);
+    const alerts = modalPasswordReset.find('Alerts');
+    expect(alerts.length).toBe(0);
 
-  //   const alerts = modalSignup.find('Alerts');
-  //   expect(alerts.length).toBe(0);
-  //   expect(toggle).toBeCalledTimes(1);
-  // });
+    expect(toggle).toBeCalledTimes(1);
+  });
 
-  // it('should call signup with all the data input when the user click on signup', async () => {
-  //   // Arrange
-  //   uuidv1.mockImplementation(() => user._uiId);
+  it('should call resetPassword with all the data input when the user click on reset Password, then the modal should close if the user click the Close button', async () => {
+    // Arrange
+    const toggle = jest.fn();
+    jest.spyOn(userProxy, 'resetPassword').mockImplementation(() => Promise.resolve());
 
-  //   const toggle = jest.fn();
-  //   jest.spyOn(userProxy, 'signup').mockImplementation(() => Promise.resolve());
+    const modalPasswordReset = mount(<ModalPasswordReset visible toggle={toggle} data={data} />);
+    await updateWrapper(modalPasswordReset);
 
-  //   const modalSignup = mount(<ModalSignup visible toggle={toggle} />);
-  //   await updateWrapper(modalSignup);
+    const myForm = modalPasswordReset.find('Memo(MyForm)');
+    const inputs = myForm.find('input');
+    inputs.at(0).simulate('change', { target: { value: data.email } });
+    inputs.at(1).simulate('change', { target: { value: 'password1' } });
+    inputs.at(2).simulate('change', { target: { value: 'password1' } });
+    await updateWrapper(modalPasswordReset);
 
-  //   const myForm = modalSignup.find('Memo(MyForm)');
-  //   const inputs = myForm.find('input');
-  //   inputs.at(0).simulate('change', { target: { value: user.name } });
-  //   inputs.at(1).simulate('change', { target: { value: user.firstname } });
-  //   inputs.at(2).simulate('change', { target: { value: user.email } });
-  //   inputs.at(3).simulate('change', { target: { value: user.password } });
-  //   await updateWrapper(modalSignup);
+    // Act
+    modalPasswordReset.find('Memo(MyForm)').simulate('submit');
+    await updateWrapper(modalPasswordReset);
 
-  //   // Act
-  //   modalSignup.find('Memo(MyForm)').simulate('submit');
-  //   await updateWrapper(modalSignup);
+    // Assert
+    expect(modalPasswordReset.find('ModalFooter').find('Button').length).toBe(1);
 
-  //   // Assert
-  //   expect(modalSignup.find('ModalFooter').find('Button').length).toBe(2);
+    const alerts = modalPasswordReset.find('Alerts');
+    expect(alerts.length).toBe(1);
+    expect(alerts.props()).toEqual({ error: 'confirmPasswordChange', color: 'success' });
+    expect(toggle).toBeCalledTimes(0);
 
-  //   const alerts = modalSignup.find('Alerts');
-  //   expect(alerts.length).toBe(1);
-  //   expect(alerts.props()).toEqual({ error: 'emailSent', color: 'success' });
-  //   expect(toggle).toBeCalledTimes(0);
+    expect(userProxy.resetPassword).toBeCalledTimes(1);
+    expect(userProxy.resetPassword.mock.calls[0][0]).toEqual(data.email);
+    expect(userProxy.resetPassword.mock.calls[0][1]).toEqual('password1');
 
-  //   expect(userProxy.signup).toBeCalledTimes(1);
-  //   expect(userProxy.signup.mock.calls[0][0]).toEqual(user);
-  // });
+    // Act
+    modalPasswordReset.find('Memo(MyForm)').simulate('submit');
+    await updateWrapper(modalPasswordReset);
 
-  // it('should display an error if an error occurs during signup', async () => {
-  //   // Arrange
-  //   uuidv1.mockImplementation(() => user._uiId);
+    // Assert
+    expect(toggle).toBeCalledTimes(1);
+  });
 
-  //   const toggle = jest.fn();
-  //   jest.spyOn(userProxy, 'signup').mockImplementation(() => Promise.reject(new HttpError({ email: 'alreadyexisting' })));
+  it('should display an error if the 2 passwords are not the same', async () => {
+    // Arrange
+    const toggle = jest.fn();
+    jest.spyOn(userProxy, 'resetPassword').mockImplementation(() => Promise.resolve());
 
-  //   const modalSignup = mount(<ModalSignup visible toggle={toggle} />);
-  //   await updateWrapper(modalSignup);
+    const modalPasswordReset = mount(<ModalPasswordReset visible toggle={toggle} data={data} />);
+    await updateWrapper(modalPasswordReset);
 
-  //   const myForm = modalSignup.find('Memo(MyForm)');
-  //   const inputs = myForm.find('input');
-  //   inputs.at(0).simulate('change', { target: { value: user.name } });
-  //   inputs.at(1).simulate('change', { target: { value: user.firstname } });
-  //   inputs.at(2).simulate('change', { target: { value: user.email } });
-  //   inputs.at(3).simulate('change', { target: { value: user.password } });
-  //   await updateWrapper(modalSignup);
+    const myForm = modalPasswordReset.find('Memo(MyForm)');
+    const inputs = myForm.find('input');
+    inputs.at(0).simulate('change', { target: { value: data.email } });
+    inputs.at(1).simulate('change', { target: { value: 'password1' } });
+    inputs.at(2).simulate('change', { target: { value: 'password2' } });
+    await updateWrapper(modalPasswordReset);
 
-  //   // Act
-  //   modalSignup.find('Memo(MyForm)').simulate('submit');
-  //   await updateWrapper(modalSignup);
+    // Act
+    modalPasswordReset.find('Memo(MyForm)').simulate('submit');
+    await updateWrapper(modalPasswordReset);
 
-  //   // Assert
-  //   expect(modalSignup.find('ModalFooter').find('Button').length).toBe(2);
+    // Assert
+    expect(modalPasswordReset.find('ModalFooter').find('Button').length).toBe(2);
 
-  //   const alerts = modalSignup.find('Alerts');
-  //   expect(alerts.length).toBe(1);
-  //   expect(alerts.props()).toEqual({ errors: { email: 'alreadyexisting' } });
-  //   expect(toggle).toBeCalledTimes(0);
+    const alerts = modalPasswordReset.find('Alerts');
+    expect(alerts.length).toBe(1);
+    expect(alerts.props()).toEqual({ errors: { password: 'passwordsHaveToBeIdentical' } });
+    expect(toggle).toBeCalledTimes(0);
 
-  //   expect(userProxy.signup).toBeCalledTimes(1);
-  //   expect(userProxy.signup.mock.calls[0][0]).toEqual(user);
-  // });
+    expect(userProxy.resetPassword).toBeCalledTimes(0);
+  });
+
+  it('should display an error message if an error occurs during the password reset', async () => {
+    // Arrange
+    const toggle = jest.fn();
+    jest.spyOn(userProxy, 'resetPassword').mockImplementation(() => Promise.reject(new HttpError({ error: 'network error' })));
+
+    const modalPasswordReset = mount(<ModalPasswordReset visible toggle={toggle} data={data} />);
+    await updateWrapper(modalPasswordReset);
+
+    const myForm = modalPasswordReset.find('Memo(MyForm)');
+    const inputs = myForm.find('input');
+    inputs.at(0).simulate('change', { target: { value: data.email } });
+    inputs.at(1).simulate('change', { target: { value: 'password1' } });
+    inputs.at(2).simulate('change', { target: { value: 'password1' } });
+    await updateWrapper(modalPasswordReset);
+
+    // Act
+    modalPasswordReset.find('Memo(MyForm)').simulate('submit');
+    await updateWrapper(modalPasswordReset);
+
+    // Assert
+    expect(modalPasswordReset.find('ModalFooter').find('Button').length).toBe(2);
+
+    const alerts = modalPasswordReset.find('Alerts');
+    expect(alerts.length).toBe(1);
+    expect(alerts.props()).toEqual({ errors: { error: 'network error' } });
+    expect(toggle).toBeCalledTimes(0);
+
+    expect(userProxy.resetPassword).toBeCalledTimes(1);
+    expect(userProxy.resetPassword.mock.calls[0][0]).toEqual(data.email);
+    expect(userProxy.resetPassword.mock.calls[0][1]).toEqual('password1');
+  });
 });
