@@ -42,9 +42,9 @@ const NavBar = ({ onLoggedOut, isOpened, toggle }:Props) => {
   const [aboutVisible, setAboutVisibility] = useState(false);
   const [offline, setOffline] = useState(syncService.isOfflineModeActivated());
 
-  const onUserChanged = (newUser: UserModel | undefined) => {
+  const onUserChanged = useCallback((newUser: UserModel | undefined) => {
     setUser(newUser);
-  };
+  }, []);
 
   const onUserImageFolderSizeChanged = (newUserImageFolderSize: number) => {
     setUserImageFolderSize(newUserImageFolderSize);
@@ -57,21 +57,21 @@ const NavBar = ({ onLoggedOut, isOpened, toggle }:Props) => {
       userContext.unregisterOnUserChanged(onUserChanged);
       userContext.unregisterOnUserStorageSizeChanged(onUserImageFolderSizeChanged);
     };
-  }, []);
+  }, [onUserChanged]);
 
   const logout = useCallback(() => {
     userProxy.logout();
     onLoggedOut();
   }, [onLoggedOut]);
 
-  const offlineSwitch = (isOffline: boolean):void => {
+  const offlineSwitch = useCallback((isOffline: boolean):void => {
     setOffline(isOffline);
     syncService.setOfflineMode(isOffline);
-  };
+  }, []);
 
-  const toggleAbout = () => {
-    setAboutVisibility(!aboutVisible);
-  };
+  const toggleAbout = useCallback(() => {
+    setAboutVisibility((prevAboutVisibility) => !prevAboutVisibility);
+  }, []);
 
   const getTextMenu = useCallback(() => (user ? user.email : 'Login'), [user]);
 
