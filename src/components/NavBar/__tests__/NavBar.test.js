@@ -2,6 +2,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { IntlProvider } from 'react-intl';
+// eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
 
 import ignoredMessages from '../../../testHelpers/MockConsole';
@@ -11,13 +12,11 @@ import updateWrapper from '../../../testHelpers/EnzymeHelper';
 import actionManager from '../../../services/ActionManager';
 import syncService from '../../../services/SyncService';
 import timeService from '../../../services/TimeService';
-import userContext from '../../../services/UserContext';
 
 import NavBar from '../NavBar';
 
 jest.mock('localforage');
 jest.mock('../../../services/ActionManager');
-jest.mock('../../../services/UserContext');
 jest.mock('../../../services/TimeService');
 jest.mock('../../../services/SyncService');
 
@@ -37,22 +36,11 @@ describe('Component NavBar', () => {
     jest.spyOn(actionManager, 'registerOnActionManagerChanged');
     jest.spyOn(actionManager, 'unregisterOnActionManagerChanged');
 
-    jest.spyOn(userContext, 'unregisterOnUserStorageSizeChanged');
-    jest.spyOn(userContext, 'unregisterOnUserChanged');
-
     jest.spyOn(timeService, 'getUTCDateTime').mockImplementation(() => new Date(2019, 10, 27, 7, 54));
   });
 
   afterEach(() => {
     timeService.getUTCDateTime.mockRestore();
-
-    userContext.getCurrentUser.mockRestore();
-
-    userContext.registerOnUserChanged.mockRestore();
-    userContext.unregisterOnUserChanged.mockRestore();
-
-    userContext.registerOnUserStorageSizeChanged.mockRestore();
-    userContext.unregisterOnUserStorageSizeChanged.mockRestore();
 
     syncService.registerIsOnlineListener.mockRestore();
     syncService.unregisterIsOnlineListener.mockRestore();
@@ -72,14 +60,6 @@ describe('Component NavBar', () => {
     jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
     jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
 
-    jest.spyOn(userContext, 'getCurrentUser').mockImplementation(() => undefined);
-
-    let onUserChanged;
-    jest.spyOn(userContext, 'registerOnUserChanged').mockImplementation((onUserChangedFn) => { onUserChanged = onUserChangedFn; });
-
-    let onUserStorageSizeChanged;
-    jest.spyOn(userContext, 'registerOnUserStorageSizeChanged').mockImplementation((onUserStorageSizeChangedFn) => { onUserStorageSizeChanged = onUserStorageSizeChangedFn; });
-
     jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
 
     const onLoggedOut = jest.fn();
@@ -91,14 +71,8 @@ describe('Component NavBar', () => {
 
     // Assert
     expect(wrapper).toMatchSnapshot();
-    expect(userContext.registerOnUserChanged).toBeCalledTimes(1);
-    expect(userContext.registerOnUserStorageSizeChanged).toBeCalledTimes(1);
 
     wrapper.unmount();
-    expect(userContext.unregisterOnUserStorageSizeChanged).toBeCalledTimes(1);
-    expect(userContext.unregisterOnUserChanged.mock.calls[0][0]).toBe(onUserChanged);
-    expect(userContext.unregisterOnUserStorageSizeChanged).toBeCalledTimes(1);
-    expect(userContext.unregisterOnUserStorageSizeChanged.mock.calls[0][0]).toBe(onUserStorageSizeChanged);
 
     const modalAbout = wrapper.find('ModalAbout');
     expect(modalAbout.length).toBe(0);
@@ -108,12 +82,6 @@ describe('Component NavBar', () => {
     // Arrange
     jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
     jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
-
-    jest.spyOn(userContext, 'getCurrentUser').mockImplementation(() => undefined);
-
-    jest.spyOn(userContext, 'registerOnUserChanged');
-
-    jest.spyOn(userContext, 'registerOnUserStorageSizeChanged');
 
     jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
 
