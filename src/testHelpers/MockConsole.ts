@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /* eslint-env jest */
 /* eslint-disable no-console */
 const ignoredMessages:string[] = [
