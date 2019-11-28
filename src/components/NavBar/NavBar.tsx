@@ -60,7 +60,7 @@ const NavBar = ({ onLoggedOut }:Props) => {
       userContext.unregisterOnUserChanged(onUserChanged);
       userContext.unregisterOnUserStorageSizeChanged(onUserImageFolderSizeChanged);
     };
-  }, [onUserChanged]);
+  }, [onUserChanged, onUserImageFolderSizeChanged]);
 
   const logout = useCallback(() => {
     userProxy.logout();
