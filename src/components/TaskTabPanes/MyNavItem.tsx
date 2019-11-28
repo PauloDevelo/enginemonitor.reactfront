@@ -4,8 +4,8 @@ import { NavItem, NavLink } from 'reactstrap';
 import { FormattedMessage, MessageDescriptor } from 'react-intl';
 
 type Props = {
-    classNames: string,
-    activeFunc: () => void,
+    classNames?: string,
+    activeFunc?: () => void,
     label: MessageDescriptor
 };
 

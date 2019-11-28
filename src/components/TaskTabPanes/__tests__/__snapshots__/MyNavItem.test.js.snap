@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyNavItem should render a MyNavItem 1`] = `
+<Memo(MyNavItem)
+  label={
+    Object {
+      "defaultMessage": "hello world",
+      "description": "a tooltip",
+      "id": "tooltip",
+    }
+  }
+>
+  <NavItem
+    tag="li"
+  >
+    <li
+      className="nav-item"
+    >
+      <NavLink
+        tag="a"
+      >
+        <a
+          className="nav-link"
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="hello world"
+            description="a tooltip"
+            id="tooltip"
+            values={Object {}}
+          >
+            hello world
+          </FormattedMessage>
+        </a>
+      </NavLink>
+    </li>
+  </NavItem>
+</Memo(MyNavItem)>
+`;
