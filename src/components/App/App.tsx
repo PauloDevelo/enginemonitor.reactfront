@@ -154,10 +154,8 @@ export default function App() {
   }, [reloadTasksRef]);
 
   const [modalSignupVisible, setModalSignupVisible] = useState(false);
-  const [navBarVisible, setNavBarVisible] = useState(true);
 
-  const toggleNavBar = useCallback(() => setNavBarVisible(!navBarVisible), [navBarVisible]);
-  const toggleModalSignup = useCallback(() => setModalSignupVisible(!modalSignupVisible), [modalSignupVisible]);
+  const toggleModalSignup = useCallback(() => setModalSignupVisible((prevModalSignupVisible) => !prevModalSignupVisible), []);
   const logOut = useCallback(() => setUser(undefined), []);
 
   const panelClassNames = 'p-2 m-2 border border-secondary rounded shadow';
@@ -175,7 +173,7 @@ export default function App() {
           <>
             <CSSTransition in appear timeout={1000} classNames="fade">
               <>
-                <NavBar onLoggedOut={logOut} isOpened={navBarVisible} toggle={toggleNavBar} />
+                <NavBar onLoggedOut={logOut} />
                 <div className="appBody mb-2">
                   <div className="wrapperColumn">
                     <EquipmentsInfo

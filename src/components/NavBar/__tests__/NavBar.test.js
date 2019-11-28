@@ -12,6 +12,9 @@ import updateWrapper from '../../../testHelpers/EnzymeHelper';
 import actionManager from '../../../services/ActionManager';
 import syncService from '../../../services/SyncService';
 import timeService from '../../../services/TimeService';
+import userProxy from '../../../services/UserProxy';
+
+import userContext from '../../../services/UserContext';
 
 import NavBar from '../NavBar';
 
@@ -19,6 +22,7 @@ jest.mock('localforage');
 jest.mock('../../../services/ActionManager');
 jest.mock('../../../services/TimeService');
 jest.mock('../../../services/SyncService');
+jest.mock('../../../services/UserProxy');
 
 describe('Component NavBar', () => {
   beforeAll(() => {
@@ -53,6 +57,8 @@ describe('Component NavBar', () => {
     actionManager.unregisterOnActionManagerChanged.mockRestore();
 
     actionManager.countAction.mockRestore();
+
+    userProxy.logout.mockRestore();
   });
 
   it('should render the navbar even when the user is still undefined', async () => {
@@ -63,19 +69,21 @@ describe('Component NavBar', () => {
     jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
 
     const onLoggedOut = jest.fn();
-    const toggle = jest.fn();
 
     // Act
-    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} isOpened toggle={toggle} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
 
     // Assert
     expect(wrapper).toMatchSnapshot();
 
-    wrapper.unmount();
+    const collapse = wrapper.find('Collapse');
+    expect(collapse.props().isOpen).toBe(false);
 
     const modalAbout = wrapper.find('ModalAbout');
     expect(modalAbout.length).toBe(0);
+
+    wrapper.unmount();
   });
 
   it('should open the modal about when the user click on the about button', async () => {
@@ -86,9 +94,8 @@ describe('Component NavBar', () => {
     jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
 
     const onLoggedOut = jest.fn();
-    const toggle = jest.fn();
 
-    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} isOpened toggle={toggle} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
 
     const dropdownItemAbout = wrapper.find('DropdownItem').at(7);
@@ -100,5 +107,199 @@ describe('Component NavBar', () => {
     // Assert
     const modalAbout = wrapper.find('ModalAbout');
     expect(modalAbout.props().visible).toBe(true);
+  });
+
+  it('should toggle the navbar when the user click on the navbar button', async () => {
+    // Arrange
+    jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
+    jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
+
+    jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
+
+    const onLoggedOut = jest.fn();
+
+    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    await updateWrapper(wrapper);
+
+    const navBarButton = wrapper.find('NavbarToggler');
+
+    // Act
+    navBarButton.simulate('click');
+    await updateWrapper(wrapper);
+
+    // Assert
+    const collapse = wrapper.find('Collapse');
+    expect(collapse.props().isOpen).toBe(true);
+  });
+
+  it('should re-render the navbar when the user changed', async () => {
+    // Arrange
+    jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
+    jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
+
+    jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
+
+    const onLoggedOut = jest.fn();
+
+    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    await updateWrapper(wrapper);
+
+    const user = {
+      _uiId: 'user_01',
+      name: 'torruella',
+      email: 'test@axios',
+      firstname: 'paul',
+      imageFolderSizeInByte: 1000,
+      imageFolderSizeLimitInByte: 10000,
+    };
+
+
+    // Act
+    userContext.onUserChanged(user);
+    await updateWrapper(wrapper);
+
+    // Assert
+    const collapse = wrapper.find('Collapse');
+    expect(collapse.props().isOpen).toBe(false);
+
+    const modalAbout = wrapper.find('ModalAbout');
+    expect(modalAbout.length).toBe(0);
+
+    const dropdownToggle = wrapper.find('DropdownToggle').at(0);
+    expect(dropdownToggle.text()).toBe(user.email);
+
+    const imageFolderGauge = wrapper.find('Memo(ImageFolderGauge)');
+    expect(imageFolderGauge.props()).toEqual({ storageSizeInMB: (1000 / 1048576), storageSizeLimitInMB: (10000 / 1048576) });
+  });
+
+  it('should re-render the navbar when the user add an image', async () => {
+    // Arrange
+    jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
+    jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
+
+    jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
+
+    const onLoggedOut = jest.fn();
+
+    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    await updateWrapper(wrapper);
+
+    const user = {
+      _uiId: 'user_01',
+      name: 'torruella',
+      email: 'test@axios',
+      firstname: 'paul',
+      imageFolderSizeInByte: 1000,
+      imageFolderSizeLimitInByte: 10000,
+    };
+
+    userContext.onUserChanged(user);
+    await updateWrapper(wrapper);
+
+    // Act
+    userContext.onImageAdded(100);
+    await updateWrapper(wrapper);
+
+    // Assert
+    const collapse = wrapper.find('Collapse');
+    expect(collapse.props().isOpen).toBe(false);
+
+    const modalAbout = wrapper.find('ModalAbout');
+    expect(modalAbout.length).toBe(0);
+
+    const dropdownToggle = wrapper.find('DropdownToggle').at(0);
+    expect(dropdownToggle.text()).toBe(user.email);
+
+    const imageFolderGauge = wrapper.find('Memo(ImageFolderGauge)');
+    expect(imageFolderGauge.props()).toEqual({ storageSizeInMB: (1100 / 1048576), storageSizeLimitInMB: (10000 / 1048576) });
+  });
+
+  it('should re-render the navbar when the user removed an image', async () => {
+    // Arrange
+    jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
+    jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
+
+    jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
+
+    const onLoggedOut = jest.fn();
+
+    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    await updateWrapper(wrapper);
+
+    const user = {
+      _uiId: 'user_01',
+      name: 'torruella',
+      email: 'test@axios',
+      firstname: 'paul',
+      imageFolderSizeInByte: 1000,
+      imageFolderSizeLimitInByte: 10000,
+    };
+
+    userContext.onUserChanged(user);
+    await updateWrapper(wrapper);
+
+    // Act
+    userContext.onImageRemoved(100);
+    await updateWrapper(wrapper);
+
+    // Assert
+    const collapse = wrapper.find('Collapse');
+    expect(collapse.props().isOpen).toBe(false);
+
+    const modalAbout = wrapper.find('ModalAbout');
+    expect(modalAbout.length).toBe(0);
+
+    const dropdownToggle = wrapper.find('DropdownToggle').at(0);
+    expect(dropdownToggle.text()).toBe(user.email);
+
+    const imageFolderGauge = wrapper.find('Memo(ImageFolderGauge)');
+    expect(imageFolderGauge.props()).toEqual({ storageSizeInMB: (900 / 1048576), storageSizeLimitInMB: (10000 / 1048576) });
+  });
+
+  it('should logout when the user clicks on logout', async () => {
+    // Arrange
+    jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
+    jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
+
+    jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
+
+    const onLoggedOut = jest.fn();
+    jest.spyOn(userProxy, 'logout').mockImplementation(() => userContext.onUserChanged(undefined));
+
+    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    await updateWrapper(wrapper);
+
+    const user = {
+      _uiId: 'user_01',
+      name: 'torruella',
+      email: 'test@axios',
+      firstname: 'paul',
+      imageFolderSizeInByte: 1000,
+      imageFolderSizeLimitInByte: 10000,
+    };
+
+    userContext.onUserChanged(user);
+    await updateWrapper(wrapper);
+
+    // Act
+    const logoutButton = wrapper.find('DropdownItem').at(5);
+    logoutButton.simulate('click');
+    await updateWrapper(wrapper);
+
+    // Assert
+    const collapse = wrapper.find('Collapse');
+    expect(collapse.props().isOpen).toBe(false);
+
+    const modalAbout = wrapper.find('ModalAbout');
+    expect(modalAbout.length).toBe(0);
+
+    const dropdownToggle = wrapper.find('DropdownToggle').at(0);
+    expect(dropdownToggle.text()).toBe('Login');
+
+    const imageFolderGauge = wrapper.find('Memo(ImageFolderGauge)');
+    expect(imageFolderGauge.props()).toEqual({ storageSizeInMB: 0, storageSizeLimitInMB: 0 });
+
+    expect(userProxy.logout).toHaveBeenCalledTimes(1);
+    expect(onLoggedOut).toHaveBeenCalledTimes(1);
   });
 });

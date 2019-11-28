@@ -31,24 +31,27 @@ const navBarMsg = defineMessages(jsonMessages);
 type Props = {
     user?: UserModel,
     onLoggedOut: ()=>void,
-    isOpened: boolean,
-    toggle: ()=>void
 };
 
-const NavBar = ({ onLoggedOut, isOpened, toggle }:Props) => {
+const NavBar = ({ onLoggedOut }:Props) => {
   const currentUser = userContext.getCurrentUser();
   const [user, setUser] = useState<UserModel | undefined>(currentUser);
   const [userImageFolderSize, setUserImageFolderSize] = useState(currentUser !== undefined ? currentUser.imageFolderSizeInByte : 0);
   const [aboutVisible, setAboutVisibility] = useState(false);
   const [offline, setOffline] = useState(syncService.isOfflineModeActivated());
 
+  const [isOpened, setIsOpened] = useState(false);
+  const toggle = useCallback(() => {
+    setIsOpened((prevIsOpened) => !prevIsOpened);
+  }, []);
+
   const onUserChanged = useCallback((newUser: UserModel | undefined) => {
     setUser(newUser);
   }, []);
 
-  const onUserImageFolderSizeChanged = (newUserImageFolderSize: number) => {
+  const onUserImageFolderSizeChanged = useCallback((newUserImageFolderSize: number) => {
     setUserImageFolderSize(newUserImageFolderSize);
-  };
+  }, []);
 
   useEffect(() => {
     userContext.registerOnUserChanged(onUserChanged);

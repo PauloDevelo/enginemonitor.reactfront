@@ -11,9 +11,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
   textComponent={Symbol(react.fragment)}
 >
   <Memo(NavBar)
-    isOpened={true}
     onLoggedOut={[MockFunction]}
-    toggle={[MockFunction]}
   >
     <Navbar
       color="dark"
@@ -71,14 +69,14 @@ exports[`Component NavBar should render the navbar even when the user is still u
           </a>
         </NavbarBrand>
         <NavbarToggler
-          onClick={[MockFunction]}
+          onClick={[Function]}
           tag="button"
           type="button"
         >
           <button
             aria-label="Toggle navigation"
             className="navbar-toggler"
-            onClick={[MockFunction]}
+            onClick={[Function]}
             type="button"
           >
             <span
@@ -91,7 +89,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
           enter={true}
           exit={true}
           in={false}
-          isOpen={true}
+          isOpen={false}
           mountOnEnter={false}
           navbar={true}
           onEnter={[Function]}
@@ -108,7 +106,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
             appear={false}
             enter={true}
             exit={true}
-            in={true}
+            in={false}
             mountOnEnter={false}
             onEnter={[Function]}
             onEntered={[Function]}
@@ -120,8 +118,8 @@ exports[`Component NavBar should render the navbar even when the user is still u
             unmountOnExit={false}
           >
             <div
-              aria-expanded="true"
-              className="collapse show navbar-collapse"
+              aria-expanded="false"
+              className="collapse navbar-collapse"
               style={Object {}}
             >
               <Nav
