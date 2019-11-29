@@ -16,10 +16,7 @@ jest.mock('../../../services/ActionManager');
 jest.mock('localforage');
 
 describe('Test SyncService', () => {
-  let isOnlineGetter;
-
   beforeEach(() => {
-    isOnlineGetter = jest.spyOn(window.navigator, 'onLine', 'get');
   });
 
   beforeAll(() => {
@@ -29,7 +26,6 @@ describe('Test SyncService', () => {
   });
 
   afterEach(async () => {
-    isOnlineGetter.mockRestore();
     actionManager.getNextActionToPerform.mockRestore();
     actionManager.countAction.mockRestore();
     actionManager.performAction.mockRestore();
