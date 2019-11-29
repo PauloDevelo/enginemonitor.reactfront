@@ -5,7 +5,7 @@ import uuidv1 from 'uuid/v1';
 import moment from 'moment';
 import {
   // eslint-disable-next-line no-unused-vars
-  TaskModel, EquipmentModel, AgeAcquisitionType, EntryModel,
+  TaskModel, EquipmentModel, AgeAcquisitionType, EntryModel, TaskLevel,
 } from '../types/Types';
 
 import timeService from '../services/TimeService';
@@ -26,44 +26,44 @@ export function createDefaultTask(equipment: EquipmentModel): TaskModel {
     periodInMonth: 12,
     description: '',
     nextDueDate: timeService.getUTCDateTime(),
-    level: 0,
+    level: TaskLevel.todo,
     usageInHourLeft: undefined,
   };
 }
 
-export function getBadgeText(level: number):string {
-  if (level === 1) {
+export function getBadgeText(level: TaskLevel):string {
+  if (level === TaskLevel.done) {
     return 'Done';
   }
-  if (level === 2) {
+  if (level === TaskLevel.soon) {
     return 'Soon';
   }
 
   return 'ToDo';
 }
 
-export function getContext(level: number): string {
-  if (level === 1) {
+export function getContext(level: TaskLevel): string {
+  if (level === TaskLevel.done) {
     return 'success';
   }
-  if (level === 2) {
+  if (level === TaskLevel.soon) {
     return 'warning';
   }
-  if (level === 3) {
+  if (level === TaskLevel.todo) {
     return 'danger';
   }
 
   return 'primary';
 }
 
-export function getColor(level: number): string {
-  if (level === 1) {
+export function getColor(level: TaskLevel): string {
+  if (level === TaskLevel.done) {
     return '#C3E5CA';
   }
-  if (level === 2) {
+  if (level === TaskLevel.soon) {
     return '#FFEEBA';
   }
-  if (level === 3) {
+  if (level === TaskLevel.todo) {
     return '#F5C6CC';
   }
 
@@ -73,14 +73,14 @@ export function getColor(level: number): string {
 export type TaskTodo = {
     dueDate: Date,
     onlyDate: boolean,
-    level: number,
+    level: TaskLevel,
     usageInHourLeft: number | undefined
 }
 
 export function getTodoText(todo: TaskTodo): JSX.Element {
   let todoText;
   if (todo.onlyDate) {
-    if (todo.level === 3) {
+    if (todo.level === TaskLevel.todo) {
       todoText = (
         <span>
           <FormattedMessage {...tasktablemsg.shouldhavebeendone} />
@@ -95,7 +95,7 @@ export function getTodoText(todo: TaskTodo): JSX.Element {
         </span>
       );
     }
-  } else if (todo.level === 3) {
+  } else if (todo.level === TaskLevel.todo) {
     todoText = (
       <span>
         <FormattedMessage {...tasktablemsg.shouldhavebeendonein1} />
@@ -236,26 +236,26 @@ async function getLevel(equipment: EquipmentModel, task: TaskModel): Promise<num
   const { nextDueDate } = task;
   const now = new Date();
   const delayInMillisecond = nextDueDate.getTime() - now.getTime();
-  let level = 1;
+  let level = TaskLevel.done;
 
 
   if (equipment.ageAcquisitionType !== AgeAcquisitionType.time && task.usagePeriodInHour && task.usagePeriodInHour !== -1 && task.usageInHourLeft) {
     const usageHourLeft = task.usageInHourLeft;
 
     if (usageHourLeft <= 0 || nextDueDate <= now) {
-      level = 3;
+      level = TaskLevel.todo;
     } else if (usageHourLeft < Math.round(task.usagePeriodInHour / 10 + 0.5)
                    || Math.abs(delayInMillisecond) <= task.periodInMonth * 30.5 * 24 * 360000.5) {
-      level = 2;
+      level = TaskLevel.soon;
     } else {
-      level = 1;
+      level = TaskLevel.done;
     }
   } else if (nextDueDate <= now) {
-    level = 3;
+    level = TaskLevel.todo;
   } else if (Math.abs(delayInMillisecond) <= task.periodInMonth * 30.5 * 24 * 360000.5) {
-    level = 2;
+    level = TaskLevel.soon;
   } else {
-    level = 1;
+    level = TaskLevel.done;
   }
 
   return level;

@@ -21,13 +21,19 @@ export interface EquipmentModel extends EntityModel {
     ageUrl: string
 }
 
+export enum TaskLevel{
+done=1,
+soon=2,
+todo = 3,
+}
+
 export interface TaskModel extends EntityModel {
     periodInMonth: number,
     description: string,
     nextDueDate: Date,
     usagePeriodInHour: number | undefined,
     usageInHourLeft: number | undefined,
-    level: number
+    level: TaskLevel
 }
 
 export interface EntryModel extends EntityModel {

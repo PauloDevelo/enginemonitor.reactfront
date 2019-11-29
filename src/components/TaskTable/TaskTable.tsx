@@ -21,7 +21,7 @@ import {
 import { useEditModal } from '../../hooks/EditModalHook';
 
 // eslint-disable-next-line no-unused-vars
-import { EquipmentModel, TaskModel } from '../../types/Types';
+import { EquipmentModel, TaskModel, TaskLevel } from '../../types/Types';
 
 import '../../style/Table.scss';
 import './TaskTable.css';
@@ -45,7 +45,7 @@ type DisplayableTask = {
   name: string,
   todo: TaskTodo,
   shortenDescription: string,
-  level: number,
+  level: TaskLevel,
   initialIndex: number
 };
 
@@ -85,11 +85,14 @@ export const TaskTable = ({
           <FormattedMessage {...taskTableMsg.taskname} />
         </div>
       ),
-      cell: (content: any) => (
-        <ClickableCell data={content.data.task} onDisplayData={changeCurrentTask} classNames={`table-${getContext(content.data.level)}`}>
-          <span>{content.data.name}</span>
-        </ClickableCell>
-      ),
+      cell: (content: any) => {
+        const { data }: { data: DisplayableTask} = content;
+        return (
+          <ClickableCell data={data.task} onDisplayData={changeCurrentTask} classNames={`table-${getContext(data.level)}`}>
+            <span>{data.name}</span>
+          </ClickableCell>
+        );
+      },
       sortable: true,
     },
     {
@@ -99,14 +102,17 @@ export const TaskTable = ({
           <FormattedMessage {...taskTableMsg.status} />
         </div>
       ),
-      cell: (content: any) => (
-        <ClickableCell data={content.data.task} onDisplayData={changeCurrentTask} classNames={`table-${getContext(content.data.level)} d-flex`}>
-          <Badge color={getContext(content.data.level)} pill className="mx-auto my-auto">
-            {getBadgeText(content.data.level)}
-            {' '}
-          </Badge>
-        </ClickableCell>
-      ),
+      cell: (content: any) => {
+        const { data }: { data: DisplayableTask} = content;
+        return (
+          <ClickableCell data={data.task} onDisplayData={changeCurrentTask} classNames={`table-${getContext(data.level)} d-flex`}>
+            <Badge color={getContext(data.level)} pill className="mx-auto my-auto">
+              {getBadgeText(data.level)}
+              {' '}
+            </Badge>
+          </ClickableCell>
+        );
+      },
       sortable: true,
     },
     {
@@ -116,11 +122,14 @@ export const TaskTable = ({
           <FormattedMessage {...taskTableMsg.todo} />
         </div>
       ),
-      cell: (content: any) => (
-        <ClickableCell data={content.data.task} onDisplayData={changeCurrentTask} classNames={`table-${getContext(content.data.level)}`}>
-          {getTodoText(content.data.todo)}
-        </ClickableCell>
-      ),
+      cell: (content: any) => {
+        const { data }: { data: DisplayableTask} = content;
+        return (
+          <ClickableCell data={data.task} onDisplayData={changeCurrentTask} classNames={`table-${getContext(data.level)}`}>
+            {getTodoText(data.todo)}
+          </ClickableCell>
+        );
+      },
       sortable: false,
     },
   ]);
@@ -142,11 +151,14 @@ export const TaskTable = ({
                 <FormattedMessage {...taskTableMsg.taskdesc} />
               </div>
             ),
-            cell: (content: any) => (
-              <ClickableCell data={content.data.task} onDisplayData={changeCurrentTask} classNames={`table-${getContext(content.data.level)}`}>
-                <span>{content.data.shortenDescription}</span>
-              </ClickableCell>
-            ),
+            cell: (content: any) => {
+              const { data }: { data: DisplayableTask} = content;
+              return (
+                <ClickableCell data={data.task} onDisplayData={changeCurrentTask} classNames={`table-${getContext(data.level)}`}>
+                  <span>{data.shortenDescription}</span>
+                </ClickableCell>
+              );
+            },
             sortable: false,
           }]);
         }

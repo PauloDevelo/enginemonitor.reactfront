@@ -1,102 +1,109 @@
 import React from 'react';
-import { Button, Card, CardBody, CardTitle, CardSubtitle, CardFooter, CardText, Badge } from 'reactstrap';
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import {
+  Button, Card, CardBody, CardTitle, CardSubtitle, CardFooter, CardText, Badge,
+} from 'reactstrap';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 
-import { getContext, getScheduleText, getBadgeText } from '../../helpers/TaskHelper'; 
+import { getContext, getScheduleText, getBadgeText } from '../../helpers/TaskHelper';
 
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
 import Gallery from '../Gallery/Gallery';
 
 import './CardTaskDetails.css';
 import '../../style/transition.css';
+// eslint-disable-next-line no-unused-vars
 import { EquipmentModel, TaskModel } from '../../types/Types';
 
 type Props = {
     callBackRef: (t: any) => any,
     currentTaskIsChanging: boolean,
-    equipment?: EquipmentModel, 
-    tasks: TaskModel[], 
-    currentTask?: TaskModel, 
-    onTaskChanged: (task: TaskModel) => void, 
-    onTaskDeleted: (task: TaskModel) => void, 
-    changeCurrentTask: (task: TaskModel | undefined) => void, 
+    equipment?: EquipmentModel,
+    tasks: TaskModel[],
+    currentTask?: TaskModel,
+    onTaskChanged: (task: TaskModel) => void,
+    onTaskDeleted: (task: TaskModel) => void,
+    changeCurrentTask: (task: TaskModel | undefined) => void,
     classNames?: string
 }
 
-const CardTaskDetails = ({callBackRef, currentTaskIsChanging, equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames}: Props) => {
-    const modalHook = useEditModal(currentTask);
+const CardTaskDetails = ({
+  callBackRef, currentTaskIsChanging, equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames,
+}: Props) => {
+  const modalHook = useEditModal(currentTask);
 
-    const getTaskIndex = (task: TaskModel | undefined):number => {
-        return task === undefined ? -1 : tasks.findIndex(t => t._uiId === task._uiId);
-    }
+  const getTaskIndex = (task: TaskModel | undefined):number => (task === undefined ? -1 : tasks.findIndex((t) => t._uiId === task._uiId));
 
-    const taskIndex = getTaskIndex(currentTask);
+  const taskIndex = getTaskIndex(currentTask);
 
-    if (equipment === undefined || currentTask === undefined){
-        return <Card className={classNames}/>;
-    }
+  if (equipment === undefined || currentTask === undefined) {
+    return <Card className={classNames} />;
+  }
 
-    const isPrevButtonVisible = ():boolean => (taskIndex > 0);
-    const isNextButtonVisible = ():boolean => (taskIndex < tasks.length - 1);
+  const isPrevButtonVisible = ():boolean => (taskIndex > 0);
+  const isNextButtonVisible = ():boolean => (taskIndex < tasks.length - 1);
 
-    const nextTask = ():void => {
-        if(isNextButtonVisible())
-            changeCurrentTask(tasks[taskIndex + 1]);
-    };
-	const previousTask = ():void => {
-        if(isPrevButtonVisible())
-            changeCurrentTask(tasks[taskIndex - 1]);
-    }
+  const nextTask = ():void => {
+    if (isNextButtonVisible()) { changeCurrentTask(tasks[taskIndex + 1]); }
+  };
+  const previousTask = ():void => {
+    if (isPrevButtonVisible()) { changeCurrentTask(tasks[taskIndex - 1]); }
+  };
 
-    const cursorPointerStyle = { cursor: 'pointer' };
-    const badgeText = getBadgeText(currentTask.level);
-    const badgeContext = getContext(currentTask.level);
-    const title = getScheduleText(equipment, currentTask);
-    const descriptionFormatted = currentTask.description.replace(/\n/g,"<br />");
+  const cursorPointerStyle = { cursor: 'pointer' };
+  const badgeText = getBadgeText(currentTask.level);
+  const badgeContext = getContext(currentTask.level);
+  const title = getScheduleText(equipment, currentTask);
+  const descriptionFormatted = currentTask.description.replace(/\n/g, '<br />');
 
-    let prevClassNames = "card-control-prev-icon";
-    if(!isPrevButtonVisible())
-        prevClassNames += ' invisible';
+  let prevClassNames = 'card-control-prev-icon';
+  if (!isPrevButtonVisible()) { prevClassNames += ' invisible'; }
 
-    let nextClassNames = "card-control-next-icon";
-    if(!isNextButtonVisible())
-        nextClassNames += ' invisible';
+  let nextClassNames = 'card-control-next-icon';
+  if (!isNextButtonVisible()) { nextClassNames += ' invisible'; }
 
-    return(
-        <div ref={callBackRef} >
-            <Card className={classNames + (currentTaskIsChanging?" hover":"")} >        
-                <CardBody className="d-flex p-0">
-                        <div className="p-2 button-previous-task" onClick={previousTask} style={cursorPointerStyle}><div className={prevClassNames}></div></div>
-                        <TransitionGroup className="p-2 flex-grow-1">
-                            <CSSTransition key={currentTask._uiId} timeout={250} classNames="card" >
-                                <div >
-                                    <CardTitle>{currentTask.name} <Badge color={badgeContext} pill>{badgeText}</Badge></CardTitle>
-                                    <CardSubtitle>{title}</CardSubtitle>
-                                    <CardText dangerouslySetInnerHTML={{ __html: descriptionFormatted }}></CardText>
-                                    <Gallery parentUiId={currentTask._uiId} />
-                                </div>
-                            </CSSTransition>
-                        </TransitionGroup>
-                        <div className="p-2 button-next-task" onClick={nextTask} style={cursorPointerStyle}><div className={nextClassNames}></div></div>
-                </CardBody>
-                <CardFooter className='pl-5 pr-5'>
-                    <Button color='light' className='float-left' onClick={modalHook.toggleModal} aria-label="Edit"><FontAwesomeIcon icon={faEdit} /></Button>
-                </CardFooter>
-            </Card>
+  return (
+    <div ref={callBackRef}>
+      <Card className={classNames + (currentTaskIsChanging ? ' hover' : '')}>
+        <CardBody className="d-flex p-0">
+          <div className="p-2 button-previous-task" onClick={previousTask} style={cursorPointerStyle}><div className={prevClassNames} /></div>
+          <TransitionGroup className="p-2 flex-grow-1">
+            <CSSTransition key={currentTask._uiId} timeout={250} classNames="card">
+              <div>
+                <CardTitle>
+                  {currentTask.name}
+                  {' '}
+                  <Badge color={badgeContext} pill>{badgeText}</Badge>
+                </CardTitle>
+                <CardSubtitle>{title}</CardSubtitle>
+                <CardText dangerouslySetInnerHTML={{ __html: descriptionFormatted }} />
+                <Gallery parentUiId={currentTask._uiId} />
+              </div>
+            </CSSTransition>
+          </TransitionGroup>
+          <div className="p-2 button-next-task" onClick={nextTask} style={cursorPointerStyle}><div className={nextClassNames} /></div>
+        </CardBody>
+        <CardFooter className="pl-5 pr-5">
+          <Button color="light" className="float-left" onClick={modalHook.toggleModal} aria-label="Edit"><FontAwesomeIcon icon={faEdit} /></Button>
+        </CardFooter>
+      </Card>
 
-            {modalHook.editModalVisibility && <ModalEditTask  equipment={equipment}
-                            task={currentTask}
-                            onTaskSaved={onTaskChanged} 
-                            onTaskDeleted={onTaskDeleted}
-                            visible={modalHook.editModalVisibility} 
-                            toggle={modalHook.toggleModal} 
-                            className='modal-dialog-centered'/>}
-        </div>
-    );
-}
+      {modalHook.editModalVisibility && (
+      <ModalEditTask
+        equipment={equipment}
+        task={currentTask}
+        onTaskSaved={onTaskChanged}
+        onTaskDeleted={onTaskDeleted}
+        visible={modalHook.editModalVisibility}
+        toggle={modalHook.toggleModal}
+        className="modal-dialog-centered"
+      />
+      )}
+    </div>
+  );
+};
 
 export default React.memo(CardTaskDetails);
