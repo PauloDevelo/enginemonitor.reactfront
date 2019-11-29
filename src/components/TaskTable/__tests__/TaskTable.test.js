@@ -34,6 +34,12 @@ describe('TaskTable', () => {
     });
   }
 
+  const resizeWindow = (width, height) => {
+    window.innerWidth = width;
+    window.innerHeight = height;
+    window.dispatchEvent(new Event('resize'));
+  }
+
   const equipment = {
     _uiId: 'equipment_01',
     name: 'moteur',
@@ -127,6 +133,58 @@ describe('TaskTable', () => {
     expect(taskTable).toMatchSnapshot();
   });
 
+  it('Should render the table with te special class name', async () => {
+    // Arrange
+    const onTaskSaved = jest.fn();
+    const changeCurrentTask = jest.fn();
+
+    // Act
+    const taskTable = mount(
+      <IntlProvider locale={navigator.language}>
+        <TaskTable
+          equipment={equipment}
+          tasks={[]}
+          areTasksLoading
+          onTaskSaved={onTaskSaved}
+          changeCurrentTask={changeCurrentTask}
+          classNames="mySpecialClassName"
+        />
+      </IntlProvider>,
+    );
+
+    // Assert
+    const table = taskTable.find('div').at(0);
+    expect(table.props().className).toContain("mySpecialClassName");
+  });
+
+  it('Should render an empty table if the equipment is undefined', async () => {
+    // Arrange
+    const onTaskSaved = jest.fn();
+    const changeCurrentTask = jest.fn();
+
+    // Act
+    const taskTable = mount(
+      <IntlProvider locale={navigator.language}>
+        <TaskTable
+          equipment={undefined}
+          tasks={[]}
+          areTasksLoading={false}
+          onTaskSaved={onTaskSaved}
+          changeCurrentTask={changeCurrentTask}
+        />
+      </IntlProvider>,
+    );
+    await updateWrapper(taskTable);
+
+    // Assert
+    const sortedTasks = getSortedTasks(tasks);
+    const tbodyProps = taskTable.find('tbody').at(0).props();
+    expect(tbodyProps.children.length).toBe(0);
+    
+    expect(onTaskSaved).toBeCalledTimes(0);
+    expect(changeCurrentTask).toBeCalledTimes(0);
+  });
+
   it('Should render all the tasks sorted by due date', async () => {
     // Arrange
     const onTaskSaved = jest.fn();
@@ -156,7 +214,6 @@ describe('TaskTable', () => {
     expect(onTaskSaved).toBeCalledTimes(0);
     expect(changeCurrentTask).toBeCalledTimes(0);
   });
-
 
   it('Should call changeCurrentTask when clicking on any cell', async () => {
     // Arrange
@@ -230,93 +287,60 @@ describe('TaskTable', () => {
     expect(onTaskSaved).toBeCalledTimes(0);
   });
 
-  // it('Should add an entry and it should remain sorted by date', async () => {
-  //   // Arrange
-  //   const onHistoryChanged = jest.fn();
+  it('it should display only 3 columns since the inner width is lower than 1200px, but after a resize larger than 1200px, it should display 4 colums', async () => {
+    // Arrange
+    window.innerWidth = 1000;
+    const onTaskSaved = jest.fn();
+    const changeCurrentTask = jest.fn();
 
-  //   const historyTaskTable = mount(
-  //     <IntlProvider locale={navigator.language}>
-  //       <HistoryTaskTable
-  //         equipment={equipment}
-  //         task={task}
-  //         onHistoryChanged={onHistoryChanged}
-  //         taskHistoryRefreshId={0}
-  //       />
-  //     </IntlProvider>,
-  //   );
-  //   await updateWrapper(historyTaskTable);
+    // Act
+    const taskTable = mount(
+      <IntlProvider locale={navigator.language}>
+        <TaskTable
+          equipment={equipment}
+          tasks={tasks}
+          areTasksLoading={false}
+          onTaskSaved={onTaskSaved}
+          changeCurrentTask={changeCurrentTask}
+        />
+      </IntlProvider>,
+    );
+    await updateWrapper(taskTable);
 
-  //   const addButton = historyTaskTable.find('Button');
-  //   addButton.simulate('click');
-  //   await updateWrapper(historyTaskTable);
+    // Assert
+    let cells = taskTable.find('ClickableCell');
+    expect(cells.length).toBe(tasks.length * 3);
 
-  //   const editEntryModal = historyTaskTable.find('ModalEditEntry');
-  //   const { saveEntry } = editEntryModal.props();
+    // Act
+    resizeWindow(1600, 1024);
+    await updateWrapper(taskTable);
 
-  //   const newEntry = {
-  //     _uiId: 'entry_088',
-  //     name: 'remplacement silent bloc',
-  //     date: new Date('2019-09-08T00:11:18.112Z'),
-  //     age: 125894,
-  //     remarks: 'RAS',
-  //     taskUiId: task._uiId,
-  //     equipmentUiId: equipment._uiId,
-  //   };
-  //   // Act
-  //   saveEntry(newEntry);
-  //   await updateWrapper(historyTaskTable);
+    // Assert
+    cells = taskTable.find('ClickableCell');
+    expect(cells.length).toBe(tasks.length * 4);
 
-  //   // Assert
-  //   expect(editEntryModal.length).toBe(1);
-  //   expect(editEntryModal.props().visible).toBe(true);
-  //   expect(editEntryModal.props().equipment).toBe(equipment);
+    // Act
+    resizeWindow(1700, 1024);
+    await updateWrapper(taskTable);
 
-  //   expect(historyTaskTable.find('ClickableCell').length).toBe((entries.length + 1) * 3);
-  //   const newCells = historyTaskTable.find('ClickableCell').findWhere((n) => n.props().data === newEntry);
-  //   expect(newCells.length).toBe(3);
+    // Assert
+    cells = taskTable.find('ClickableCell');
+    expect(cells.length).toBe(tasks.length * 4);
 
-  //   assertTableSortedByDate(historyTaskTable);
-  //   expect(onHistoryChanged).toBeCalledTimes(1);
-  // });
+    // Act
+    resizeWindow(1024, 768);
+    await updateWrapper(taskTable);
 
-  // it('Should remove an entry', async () => {
-  //   // Arrange
-  //   const onHistoryChanged = jest.fn();
+    // Assert
+    cells = taskTable.find('ClickableCell');
+    expect(cells.length).toBe(tasks.length * 3);
 
-  //   const historyTaskTable = mount(
-  //     <IntlProvider locale={navigator.language}>
-  //       <HistoryTaskTable
-  //         equipment={equipment}
-  //         task={task}
-  //         onHistoryChanged={onHistoryChanged}
-  //         taskHistoryRefreshId={0}
-  //       />
-  //     </IntlProvider>,
-  //   );
-  //   await updateWrapper(historyTaskTable);
+    // Act
+    resizeWindow(1000, 768);
+    await updateWrapper(taskTable);
 
-  //   const cells = historyTaskTable.find('ClickableCell').at(5);
-  //   cells.simulate('click');
-  //   const entryToDelete = cells.props().data;
-  //   await updateWrapper(historyTaskTable);
-
-  //   const editEntryModal = historyTaskTable.find('ModalEditEntry');
-  //   const { deleteEntry } = editEntryModal.props();
-
-  //   // Act
-  //   deleteEntry(entryToDelete);
-  //   await updateWrapper(historyTaskTable);
-
-  //   // Assert
-  //   expect(editEntryModal.length).toBe(1);
-  //   expect(editEntryModal.props().visible).toBe(true);
-  //   expect(editEntryModal.props().equipment).toBe(equipment);
-  //   expect(editEntryModal.props().entry).toBe(entryToDelete);
-
-  //   expect(historyTaskTable.find('ClickableCell').length).toBe((entries.length - 1) * 3);
-  //   const newCells = historyTaskTable.find('ClickableCell').findWhere((n) => n.props().data === entryToDelete);
-  //   expect(newCells.length).toBe(0);
-
-  //   expect(onHistoryChanged).toBeCalledTimes(1);
-  // });
+    // Assert
+    cells = taskTable.find('ClickableCell');
+    expect(cells.length).toBe(tasks.length * 3);
+  });
 });
