@@ -243,7 +243,7 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                             </FormattedMessage>
                             <b>
                               200
-                               h
+                              h
                                
                             </b>
                             <FormattedMessage
@@ -1001,7 +1001,7 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                             </FormattedMessage>
                             <b>
                               400
-                               h
+                              h
                                
                             </b>
                             <FormattedMessage
