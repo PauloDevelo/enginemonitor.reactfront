@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, { useCallback } from 'react';
 
 type Props<T> = {
     data: T;
@@ -7,18 +7,20 @@ type Props<T> = {
     children?: JSX.Element[] | JSX.Element
 }
 
-function ClickableCell<T>({data, onDisplayData, classNames, children}: Props<T>){
-    const onClick = useCallback(() => {
-        onDisplayData(data);
-    }, [data, onDisplayData]);
+function ClickableCell<T>({
+  data, onDisplayData, classNames, children,
+}: Props<T>) {
+  const onClick = useCallback(() => {
+    onDisplayData(data);
+  }, [data, onDisplayData]);
 
-    classNames = classNames === undefined ? '' : classNames;
+  const classNamesStr = classNames === undefined ? '' : classNames;
 
-    return (
-        <div onClick={onClick} className={classNames + ' innerTd clickable'} >
-            {children}
-        </div>
-    );
+  return (
+    <div onClick={onClick} className={`${classNamesStr} innerTd clickable`}>
+      {children}
+    </div>
+  );
 }
 
 export default ClickableCell;
