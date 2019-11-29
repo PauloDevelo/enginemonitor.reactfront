@@ -7,6 +7,8 @@ import {
   // eslint-disable-next-line no-unused-vars
   TaskModel, EquipmentModel, AgeAcquisitionType, EntryModel,
 } from '../types/Types';
+
+import timeService from '../services/TimeService';
 import entryProxy from '../services/EntryProxy';
 import equipmentProxy from '../services/EquipmentProxy';
 
@@ -23,7 +25,7 @@ export function createDefaultTask(equipment: EquipmentModel): TaskModel {
     usagePeriodInHour: equipment.ageAcquisitionType !== AgeAcquisitionType.time ? 100 : -1,
     periodInMonth: 12,
     description: '',
-    nextDueDate: new Date(),
+    nextDueDate: timeService.getUTCDateTime(),
     level: 0,
     usageInHourLeft: undefined,
   };
