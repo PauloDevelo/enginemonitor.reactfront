@@ -175,18 +175,10 @@ export function shorten(longStr: string): string {
 }
 
 export function updateTask(task: TaskModel): TaskModel {
-  task.usagePeriodInHour = task.usagePeriodInHour === -1 ? undefined : task.usagePeriodInHour;
-  task.nextDueDate = new Date(task.nextDueDate);
-  return task;
-}
-
-export async function updateRealtimeFields(equipmentId:string, task: TaskModel): Promise<void> {
-  const equipment = (await equipmentProxy.getStoredEquipment()).find((equipment) => equipment._uiId === equipmentId);
-
-  // The order of these 3 function calls is important since they might rely on the result computed in the function called before.
-  await updateNextDueDate(equipment, task);
-  await updateTimeInHourLeft(equipment, task);
-  await updateLevel(equipment, task);
+  const updatedTask = { ...task };
+  updatedTask.usagePeriodInHour = task.usagePeriodInHour === -1 ? undefined : task.usagePeriodInHour;
+  updatedTask.nextDueDate = new Date(task.nextDueDate);
+  return updatedTask;
 }
 
 async function getLastEntry(equipmentId:string, taskId:string): Promise<EntryModel|undefined> {
@@ -207,27 +199,6 @@ async function getLastEntry(equipmentId:string, taskId:string): Promise<EntryMod
   return entries[0];
 }
 
-async function getLastEntryAge(equipmentId: string, taskId: string): Promise<number> {
-  const lastEntry = await await getLastEntry(equipmentId, taskId);
-  if (lastEntry != null) {
-    return lastEntry.age;
-  }
-  return 0;
-}
-
-async function updateTimeInHourLeft(equipment: EquipmentModel | undefined, task: TaskModel): Promise<void> {
-  if (task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0) {
-    task.usageInHourLeft = 0;
-    return;
-  }
-
-  if (equipment === undefined) {
-    return;
-  }
-
-  task.usageInHourLeft = task.usagePeriodInHour + await getLastEntryAge(equipment._uiId, task._uiId) - equipment.age;
-}
-
 async function getLastEntryDate(equipment: EquipmentModel, task:TaskModel): Promise<Date> {
   const lastEntry = await getLastEntry(equipment._uiId, task._uiId);
   if (lastEntry != null) {
@@ -236,23 +207,37 @@ async function getLastEntryDate(equipment: EquipmentModel, task:TaskModel): Prom
   return equipment.installation;
 }
 
-async function updateNextDueDate(equipment: EquipmentModel | undefined, task:TaskModel): Promise<void> {
-  if (equipment !== undefined) {
-    const nextDueDate = moment(await getLastEntryDate(equipment, task));
-    nextDueDate.add(task.periodInMonth, 'M');
+async function getNextDueDate(equipment: EquipmentModel, task:TaskModel): Promise<Date> {
+  const nextDueDate = moment(await getLastEntryDate(equipment, task));
+  nextDueDate.add(task.periodInMonth, 'M');
 
-    task.nextDueDate = nextDueDate.toDate();
-  }
+  return nextDueDate.toDate();
 }
 
-async function updateLevel(equipment: EquipmentModel| undefined, task: TaskModel): Promise<void> {
+async function getLastEntryAge(equipmentId: string, taskId: string): Promise<number> {
+  const lastEntry = await await getLastEntry(equipmentId, taskId);
+  if (lastEntry != null) {
+    return lastEntry.age;
+  }
+  return 0;
+}
+
+async function getTimeInHourLeft(equipment: EquipmentModel, task: TaskModel): Promise<number> {
+  if (task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0) {
+    return 0;
+  }
+
+  return task.usagePeriodInHour + await getLastEntryAge(equipment._uiId, task._uiId) - equipment.age;
+}
+
+async function getLevel(equipment: EquipmentModel, task: TaskModel): Promise<number> {
   const { nextDueDate } = task;
   const now = new Date();
   const delayInMillisecond = nextDueDate.getTime() - now.getTime();
   let level = 1;
 
 
-  if (equipment && equipment.ageAcquisitionType !== AgeAcquisitionType.time && task.usagePeriodInHour && task.usagePeriodInHour !== -1 && task.usageInHourLeft) {
+  if (equipment.ageAcquisitionType !== AgeAcquisitionType.time && task.usagePeriodInHour && task.usagePeriodInHour !== -1 && task.usageInHourLeft) {
     const usageHourLeft = task.usageInHourLeft;
 
     if (usageHourLeft <= 0 || nextDueDate <= now) {
@@ -271,5 +256,17 @@ async function updateLevel(equipment: EquipmentModel| undefined, task: TaskModel
     level = 1;
   }
 
-  task.level = level;
+  return level;
+}
+
+export async function updateRealtimeFields(equipmentId:string, task: TaskModel): Promise<void> {
+  const equipment = (await equipmentProxy.getStoredEquipment()).find((eq) => eq._uiId === equipmentId);
+
+  if (equipment !== undefined) {
+    // The order of these 3 function calls is important since they might rely on the result computed in the function called before.
+    const updatedTask = { ...task };
+    updatedTask.nextDueDate = await getNextDueDate(equipment, updatedTask);
+    updatedTask.usageInHourLeft = await getTimeInHourLeft(equipment, updatedTask);
+    updatedTask.level = await getLevel(equipment, updatedTask);
+  }
 }
