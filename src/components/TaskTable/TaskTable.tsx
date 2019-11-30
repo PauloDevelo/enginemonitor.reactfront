@@ -20,12 +20,14 @@ import {
 } from '../../helpers/TaskHelper';
 
 // eslint-disable-next-line no-unused-vars
-import ToDoText, { TaskTodo } from '../ToDoText/TodoText';
+import ToDoText from '../ToDoText/TodoText';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 
-// eslint-disable-next-line no-unused-vars
-import { EquipmentModel, TaskModel, TaskLevel } from '../../types/Types';
+import {
+  // eslint-disable-next-line no-unused-vars
+  EquipmentModel, TaskModel, TaskLevel, TaskTodo,
+} from '../../types/Types';
 
 import '../../style/Table.scss';
 import './TaskTable.css';
