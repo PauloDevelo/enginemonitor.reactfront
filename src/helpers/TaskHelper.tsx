@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage, FormattedDate, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 
 import uuidv1 from 'uuid/v1';
 import moment from 'moment';
@@ -11,7 +11,6 @@ import {
 import timeService from '../services/TimeService';
 import entryProxy from '../services/EntryProxy';
 import equipmentProxy from '../services/EquipmentProxy';
-
 
 import jsonMessages from '../components/TaskTable/TaskTable.messages.json';
 
@@ -68,60 +67,6 @@ export function getColor(level: TaskLevel): string {
   }
 
   return 'white';
-}
-
-export type TaskTodo = {
-    dueDate: Date,
-    onlyDate: boolean,
-    level: TaskLevel,
-    usageInHourLeft: number | undefined
-}
-
-export function getTodoText(todo: TaskTodo): JSX.Element {
-  let todoText;
-  if (todo.onlyDate) {
-    if (todo.level === TaskLevel.todo) {
-      todoText = (
-        <span>
-          <FormattedMessage {...tasktablemsg.shouldhavebeendone} />
-          <b><FormattedDate value={todo.dueDate} /></b>
-        </span>
-      );
-    } else {
-      todoText = (
-        <span>
-          <FormattedMessage {...tasktablemsg.shouldbedone} />
-          <b><FormattedDate value={todo.dueDate} /></b>
-        </span>
-      );
-    }
-  } else if (todo.level === TaskLevel.todo) {
-    todoText = (
-      <span>
-        <FormattedMessage {...tasktablemsg.shouldhavebeendonein1} />
-        <b>
-          {todo.usageInHourLeft}
-h
-        </b>
-        <FormattedMessage {...tasktablemsg.shouldhavebeendonein2} />
-        <b><FormattedDate value={todo.dueDate} /></b>
-      </span>
-    );
-  } else {
-    todoText = (
-      <span>
-        <FormattedMessage {...tasktablemsg.shouldbedonein1} />
-        <b>
-          {todo.usageInHourLeft}
-h
-        </b>
-        <FormattedMessage {...tasktablemsg.shouldbedonein2} />
-        <b><FormattedDate value={todo.dueDate} /></b>
-      </span>
-    );
-  }
-
-  return todoText;
 }
 
 export function getTodoValue(equipment: EquipmentModel, task: TaskModel): TaskTodo {

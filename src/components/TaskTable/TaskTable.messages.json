@@ -34,36 +34,6 @@
     "description": "Colum header",
     "id": "remarks"
   },
-  "shouldbedone": {
-    "defaultMessage": "Should be done the ",
-    "description": "Sentence",
-    "id": "shouldbedone"
-  },
-  "shouldbedonein1": {
-    "defaultMessage": "Should be done in ",
-    "description": "Sentence",
-    "id": "shouldbedonein1"
-  },
-  "shouldbedonein2": {
-    "defaultMessage": " equipment or ",
-    "description": "Sentence",
-    "id": "shouldbedonein2"
-  },
-  "shouldhavebeendone": {
-    "defaultMessage": "Should have been done the ",
-    "description": "Sentence",
-    "id": "shouldhavebeendone"
-  },
-  "shouldhavebeendonein1": {
-    "defaultMessage": "Should have been done ",
-    "description": "Sentence",
-    "id": "shouldhavebeendonein"
-  },
-  "shouldhavebeendonein2": {
-    "defaultMessage": " equipment ago or ",
-    "description": "Sentence",
-    "id": "shouldhavebeendonein2"
-  },
   "status": {
     "defaultMessage": "Status",
     "description": "Label",

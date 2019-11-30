@@ -16,8 +16,12 @@ import Loading from '../Loading/Loading';
 
 import {
   // eslint-disable-next-line no-unused-vars
-  getContext, getTodoText, shorten, getTodoValue, TaskTodo, createDefaultTask, getBadgeText,
+  getContext, shorten, getTodoValue, createDefaultTask, getBadgeText,
 } from '../../helpers/TaskHelper';
+
+// eslint-disable-next-line no-unused-vars
+import ToDoText, { TaskTodo } from '../ToDoText/TodoText';
+
 import { useEditModal } from '../../hooks/EditModalHook';
 
 // eslint-disable-next-line no-unused-vars
@@ -124,9 +128,10 @@ export const TaskTable = ({
       ),
       cell: (content: any) => {
         const { data }: { data: DisplayableTask} = content;
+        const { todo } = data;
         return (
           <ClickableCell data={data.task} onDisplayData={changeCurrentTask} classNames={`table-${getContext(data.level)}`}>
-            {getTodoText(data.todo)}
+            <ToDoText dueDate={todo.dueDate} level={todo.level} onlyDate={todo.onlyDate} usageInHourLeft={todo.usageInHourLeft} />
           </ClickableCell>
         );
       },
