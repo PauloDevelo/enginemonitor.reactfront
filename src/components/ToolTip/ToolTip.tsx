@@ -1,32 +1,31 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { UncontrolledTooltip } from 'reactstrap';
+
+// eslint-disable-next-line no-unused-vars
 import { FormattedMessage, MessageDescriptor } from 'react-intl';
 
-import { faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {UID} from 'react-uid';
-
-import PropTypes from 'prop-types';
+import { UID } from 'react-uid';
 
 type ToolTipProps = {
-	tooltip: MessageDescriptor
+tooltip: MessageDescriptor
 };
 
-export default function ToolTip({tooltip}: ToolTipProps) {
-	return (
-		<UID>
-			{id => (
-				<Fragment>
-					<span id={'tooltip' + id}>{' '}<FontAwesomeIcon icon={faQuestion} size="xs" color="grey"/></span>
-					<UncontrolledTooltip target={'tooltip' + id}>
-						<FormattedMessage {...tooltip} />
-					</UncontrolledTooltip>
-				</Fragment>
-			)}
-		</UID>
-	);
+export default function ToolTip({ tooltip }: ToolTipProps) {
+  return (
+    <UID>
+      {(id) => (
+        <>
+          <span id={`tooltip${id}`}>
+            {' '}
+            <FontAwesomeIcon icon={faQuestion} size="xs" color="grey" />
+          </span>
+          <UncontrolledTooltip target={`tooltip${id}`}>
+            <FormattedMessage {...tooltip} />
+          </UncontrolledTooltip>
+        </>
+      )}
+    </UID>
+  );
 }
-
-ToolTip.propTypes = {
-	tooltip: PropTypes.object.isRequired
-};
