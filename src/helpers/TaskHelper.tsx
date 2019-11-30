@@ -1,6 +1,3 @@
-import React from 'react';
-import { FormattedMessage, defineMessages } from 'react-intl';
-
 import uuidv1 from 'uuid/v1';
 import moment from 'moment';
 import {
@@ -11,10 +8,6 @@ import {
 import timeService from '../services/TimeService';
 import entryProxy from '../services/EntryProxy';
 import equipmentProxy from '../services/EquipmentProxy';
-
-import jsonMessages from '../components/TaskTable/TaskTable.messages.json';
-
-const tasktablemsg = defineMessages(jsonMessages);
 
 export function createDefaultTask(equipment: EquipmentModel): TaskModel {
   const uuid = uuidv1();
@@ -76,40 +69,6 @@ export function getTodoValue(equipment: EquipmentModel, task: TaskModel): TaskTo
     level: task.level,
     usageInHourLeft: task.usageInHourLeft,
   };
-}
-
-export function getScheduleText(equipment: EquipmentModel, task: TaskModel) {
-  let title;
-  const month = task.periodInMonth;
-  const pluralisedMonthPeriod = <FormattedMessage {... tasktablemsg.monthperiod} values={{ month }} />;
-
-  if (equipment.ageAcquisitionType === AgeAcquisitionType.time || task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0) {
-    title = (
-      <span>
-        <FormattedMessage {...tasktablemsg.tobedonemonth} />
-        <b>
-          {pluralisedMonthPeriod}
-        </b>
-      </span>
-    );
-  } else {
-    title = (
-      <span>
-        <FormattedMessage {...tasktablemsg.tobedonemonth} />
-        <b>
-          {task.usagePeriodInHour}
-     h
-          {' '}
-        </b>
-        <FormattedMessage {...tasktablemsg.orevery} />
-        <b>
-          {pluralisedMonthPeriod}
-        </b>
-      </span>
-    );
-  }
-
-  return title;
 }
 
 export function shorten(longStr: string): string {

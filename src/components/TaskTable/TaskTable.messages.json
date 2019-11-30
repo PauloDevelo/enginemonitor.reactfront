@@ -19,16 +19,6 @@
     "description": "Error message",
     "id": "errorFetching"
   },
-  "monthperiod": {
-    "defaultMessage": "{month, plural, one {month} other {# months}}",
-    "description": "Month period",
-    "id": "monthperiod"
-  },
-  "orevery": {
-    "defaultMessage": " or every ",
-    "description": "Sentence",
-    "id": "orevery"
-  },
   "remarks": {
     "defaultMessage": "Remarks",
     "description": "Colum header",
@@ -54,11 +44,7 @@
     "description": "Task name header",
     "id": "taskname"
   },
-  "tobedonemonth": {
-    "defaultMessage": "To do every ",
-    "description": "Sentence",
-    "id": "tobedonemonth"
-  },
+  
   "todo": {
     "defaultMessage": "To do",
     "description": "To do header",

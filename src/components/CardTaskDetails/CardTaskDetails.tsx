@@ -8,8 +8,9 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import { useEditModal } from '../../hooks/EditModalHook';
 
-import { getContext, getScheduleText, getBadgeText } from '../../helpers/TaskHelper';
+import { getContext, getBadgeText } from '../../helpers/TaskHelper';
 
+import TaskScheduleText from '../TaskScheduleText/TaskScheduleText';
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
 import Gallery from '../Gallery/Gallery';
 
@@ -56,7 +57,6 @@ const CardTaskDetails = ({
   const cursorPointerStyle = { cursor: 'pointer' };
   const badgeText = getBadgeText(currentTask.level);
   const badgeContext = getContext(currentTask.level);
-  const title = getScheduleText(equipment, currentTask);
   const descriptionFormatted = currentTask.description.replace(/\n/g, '<br />');
 
   let prevClassNames = 'card-control-prev-icon';
@@ -78,7 +78,9 @@ const CardTaskDetails = ({
                   {' '}
                   <Badge color={badgeContext} pill>{badgeText}</Badge>
                 </CardTitle>
-                <CardSubtitle>{title}</CardSubtitle>
+                <CardSubtitle>
+                  <TaskScheduleText equipment={equipment} task={currentTask} />
+                </CardSubtitle>
                 <CardText dangerouslySetInnerHTML={{ __html: descriptionFormatted }} />
                 <Gallery parentUiId={currentTask._uiId} />
               </div>

@@ -232,43 +232,68 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                         <div
                           className="card-subtitle"
                         >
-                          <span>
-                            <FormattedMessage
-                              defaultMessage="To do every "
-                              description="Sentence"
-                              id="tobedonemonth"
-                              values={Object {}}
-                            >
-                              To do every 
-                            </FormattedMessage>
-                            <b>
-                              200
-                              h
-                               
-                            </b>
-                            <FormattedMessage
-                              defaultMessage=" or every "
-                              description="Sentence"
-                              id="orevery"
-                              values={Object {}}
-                            >
-                               or every 
-                            </FormattedMessage>
-                            <b>
+                          <TaskScheduleText
+                            equipment={
+                              Object {
+                                "_uiId": "1234",
+                                "age": 2563,
+                                "brand": "nanni",
+                                "installation": 2011-02-22T16:00:00.000Z,
+                                "model": "N3.30",
+                                "name": "engine",
+                              }
+                            }
+                            task={
+                              Object {
+                                "_uiId": "task1",
+                                "description": "task1 description",
+                                "level": 1,
+                                "name": "taskname1",
+                                "nextDueDate": 2011-02-22T16:00:00.000Z,
+                                "periodInMonth": 12,
+                                "usageInHourLeft": 20,
+                                "usagePeriodInHour": 200,
+                              }
+                            }
+                          >
+                            <span>
                               <FormattedMessage
-                                defaultMessage="{month, plural, one {month} other {# months}}"
-                                description="Month period"
-                                id="monthperiod"
-                                values={
-                                  Object {
-                                    "month": 12,
-                                  }
-                                }
+                                defaultMessage="To do every "
+                                description="Sentence"
+                                id="tobedonemonth"
+                                values={Object {}}
                               >
-                                12 months
+                                To do every 
                               </FormattedMessage>
-                            </b>
-                          </span>
+                              <b>
+                                200
+                                h
+                                 
+                              </b>
+                              <FormattedMessage
+                                defaultMessage=" or every "
+                                description="Sentence"
+                                id="orevery"
+                                values={Object {}}
+                              >
+                                 or every 
+                              </FormattedMessage>
+                              <b>
+                                <FormattedMessage
+                                  defaultMessage="{month, plural, one {month} other {# months}}"
+                                  description="Month period"
+                                  id="monthperiod"
+                                  values={
+                                    Object {
+                                      "month": 12,
+                                    }
+                                  }
+                                >
+                                  12 months
+                                </FormattedMessage>
+                              </b>
+                            </span>
+                          </TaskScheduleText>
                         </div>
                       </CardSubtitle>
                       <CardText
@@ -990,43 +1015,68 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                         <div
                           className="card-subtitle"
                         >
-                          <span>
-                            <FormattedMessage
-                              defaultMessage="To do every "
-                              description="Sentence"
-                              id="tobedonemonth"
-                              values={Object {}}
-                            >
-                              To do every 
-                            </FormattedMessage>
-                            <b>
-                              400
-                              h
-                               
-                            </b>
-                            <FormattedMessage
-                              defaultMessage=" or every "
-                              description="Sentence"
-                              id="orevery"
-                              values={Object {}}
-                            >
-                               or every 
-                            </FormattedMessage>
-                            <b>
+                          <TaskScheduleText
+                            equipment={
+                              Object {
+                                "_uiId": "1234",
+                                "age": 2563,
+                                "brand": "nanni",
+                                "installation": 2011-02-22T16:00:00.000Z,
+                                "model": "N3.30",
+                                "name": "engine",
+                              }
+                            }
+                            task={
+                              Object {
+                                "_uiId": "task2",
+                                "description": "task2 description",
+                                "level": 3,
+                                "name": "taskname2",
+                                "nextDueDate": 2018-02-22T16:00:00.000Z,
+                                "periodInMonth": 24,
+                                "usageInHourLeft": 20,
+                                "usagePeriodInHour": 400,
+                              }
+                            }
+                          >
+                            <span>
                               <FormattedMessage
-                                defaultMessage="{month, plural, one {month} other {# months}}"
-                                description="Month period"
-                                id="monthperiod"
-                                values={
-                                  Object {
-                                    "month": 24,
-                                  }
-                                }
+                                defaultMessage="To do every "
+                                description="Sentence"
+                                id="tobedonemonth"
+                                values={Object {}}
                               >
-                                24 months
+                                To do every 
                               </FormattedMessage>
-                            </b>
-                          </span>
+                              <b>
+                                400
+                                h
+                                 
+                              </b>
+                              <FormattedMessage
+                                defaultMessage=" or every "
+                                description="Sentence"
+                                id="orevery"
+                                values={Object {}}
+                              >
+                                 or every 
+                              </FormattedMessage>
+                              <b>
+                                <FormattedMessage
+                                  defaultMessage="{month, plural, one {month} other {# months}}"
+                                  description="Month period"
+                                  id="monthperiod"
+                                  values={
+                                    Object {
+                                      "month": 24,
+                                    }
+                                  }
+                                >
+                                  24 months
+                                </FormattedMessage>
+                              </b>
+                            </span>
+                          </TaskScheduleText>
                         </div>
                       </CardSubtitle>
                       <CardText

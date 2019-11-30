@@ -1,0 +1,17 @@
+{
+  "monthperiod": {
+    "defaultMessage": "{month, plural, one {month} other {# months}}",
+    "description": "Month period",
+    "id": "monthperiod"
+  },
+  "tobedonemonth": {
+    "defaultMessage": "To do every ",
+    "description": "Sentence",
+    "id": "tobedonemonth"
+  },
+  "orevery": {
+    "defaultMessage": " or every ",
+    "description": "Sentence",
+    "id": "orevery"
+  }
+}
