@@ -5,18 +5,11 @@ import {
   FormattedMessage, FormattedDate, MessageDescriptor, defineMessages,
 } from 'react-intl';
 
-import { TaskLevel } from '../../types/Types';
+import { TaskLevel, TaskTodo } from '../../types/Types';
 
 import jsonMessages from './ToDoText.messages.json';
 
 const todotextmsg = defineMessages(jsonMessages);
-
-export type TaskTodo = {
-  dueDate: Date,
-  onlyDate: boolean,
-  level: TaskLevel,
-  usageInHourLeft: number | undefined
-}
 
 const ToDoText = ({
   dueDate, onlyDate, level, usageInHourLeft,

@@ -5,7 +5,7 @@ import uuidv1 from 'uuid/v1';
 import moment from 'moment';
 import {
   // eslint-disable-next-line no-unused-vars
-  TaskModel, EquipmentModel, AgeAcquisitionType, EntryModel, TaskLevel,
+  TaskModel, EquipmentModel, AgeAcquisitionType, EntryModel, TaskLevel, TaskTodo,
 } from '../types/Types';
 
 import timeService from '../services/TimeService';

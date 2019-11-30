@@ -7,6 +7,13 @@ export enum AgeAcquisitionType{
   tracker=2
 }
 
+export type TaskTodo = {
+    dueDate: Date,
+    onlyDate: boolean,
+    level: TaskLevel,
+    usageInHourLeft: number | undefined
+  }
+
 export interface EntityModel{
     _uiId:string,
     name: string
