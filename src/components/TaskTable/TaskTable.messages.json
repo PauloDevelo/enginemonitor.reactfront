@@ -44,7 +44,6 @@
     "description": "Task name header",
     "id": "taskname"
   },
-  
   "todo": {
     "defaultMessage": "To do",
     "description": "To do header",
