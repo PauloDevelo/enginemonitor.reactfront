@@ -104,4 +104,18 @@ describe('TaskHelper', () => {
       expect(todo.onlyDate).toEqual(expectedOnlyDate);
     });
   });
+
+  const shortenItems = [
+    { input: 'Bonjour comment allez-vous ce beau matin a Krabi in Thailande a bord du voilier Arbutus ?', output: 'Bonjour comment allez-vous ce beau matin a Krabi in Thailande a bord du voilier  ...' },
+    { input: 'Allo ?', output: 'Allo ?' },
+  ];
+  describe.each(shortenItems)('shorten', ({ input, output }) => {
+    it('should shorten a too long string', () => {
+      // Act
+      const result = TaskHelper.shorten(input);
+
+      // Assert
+      expect(result).toEqual(output);
+    });
+  });
 });
