@@ -1,10 +1,10 @@
 import React from 'react';
 
 import {
-  // eslint-disable-next-line no-unused-vars
-  FormattedMessage, FormattedDate, MessageDescriptor, defineMessages,
+  FormattedMessage, FormattedDate, defineMessages,
 } from 'react-intl';
 
+// eslint-disable-next-line no-unused-vars
 import { TaskLevel, TaskTodo } from '../../types/Types';
 
 import jsonMessages from './ToDoText.messages.json';

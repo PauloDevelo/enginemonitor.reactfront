@@ -1,8 +1,7 @@
 import React from 'react';
 
 import {
-  // eslint-disable-next-line no-unused-vars
-  FormattedMessage, MessageDescriptor, defineMessages,
+  FormattedMessage, defineMessages,
 } from 'react-intl';
 
 // eslint-disable-next-line no-unused-vars
