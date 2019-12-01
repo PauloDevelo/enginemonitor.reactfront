@@ -3,14 +3,17 @@ import httpProxy from '../HttpProxy';
 import syncService from '../SyncService';
 import storageService from '../StorageService';
 import taskProxy from '../TaskProxy';
+import entryProxy from '../EntryProxy';
+import imageProxy from '../ImageProxy';
 import actionManager from '../ActionManager';
 
 import { updateTask } from '../../helpers/TaskHelper';
 import { TaskLevel } from '../../types/Types';
 
-
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');
+jest.mock('../EntryProxy');
+jest.mock('../ImageProxy');
 
 describe('Test TaskProxy', () => {
   beforeAll(() => {
@@ -45,6 +48,9 @@ describe('Test TaskProxy', () => {
     await actionManager.clearActions();
     storageService.setItem(urlFetchTask, undefined);
     storageService.closeUserStorage();
+
+    entryProxy.onTaskDeleted.mockRestore();
+    imageProxy.onEntityDeleted.mockRestore();
   });
 
   const createOrSaveTaskParams = [
@@ -146,6 +152,66 @@ describe('Test TaskProxy', () => {
 
       // Assert
       expect(isTaskExist).toBe(arg.expectedResult);
+    });
+  });
+
+  describe('onEquipmentDeleted', () => {
+    it('should call removeItemInArray, onTaskDeleted for entry proxy and onEntityDeleted for the imageProxy', async () => {
+      // Arrange
+      const { getArray, removeItemInArray } = storageService;
+
+      const getArrayMock = jest.fn().mockImplementation(() => Promise.resolve([
+        {
+          _uiId: 'task_01',
+          name: 'Vidange',
+          usagePeriodInHour: 500,
+          periodInMonth: 12,
+          description: "Changer l'huile",
+          nextDueDate: new Date(),
+          level: TaskLevel.done,
+          usageInHourLeft: undefined,
+        },
+        {
+          _uiId: 'task_02',
+          name: 'Change the impeller',
+          usagePeriodInHour: 800,
+          periodInMonth: 24,
+          description: "Changer l'impeller de la pompe a eau de mer",
+          nextDueDate: new Date(),
+          level: TaskLevel.done,
+          usageInHourLeft: undefined,
+        },
+      ]));
+      const removeItemInArrayMock = jest.fn();
+
+      storageService.getArray = getArrayMock;
+      storageService.removeItemInArray = removeItemInArrayMock;
+
+      jest.spyOn(entryProxy, 'onTaskDeleted');
+      jest.spyOn(imageProxy, 'onEntityDeleted');
+
+      // Act
+      await taskProxy.onEquipmentDeleted(parentEquipmentId);
+
+      // Assert
+      expect(removeItemInArrayMock).toHaveBeenCalledTimes(2);
+      expect(removeItemInArrayMock.mock.calls[0][0]).toEqual(urlFetchTask);
+      expect(removeItemInArrayMock.mock.calls[0][1]).toEqual('task_01');
+      expect(removeItemInArrayMock.mock.calls[1][0]).toEqual(urlFetchTask);
+      expect(removeItemInArrayMock.mock.calls[1][1]).toEqual('task_02');
+
+      expect(entryProxy.onTaskDeleted).toHaveBeenCalledTimes(2);
+      expect(entryProxy.onTaskDeleted.mock.calls[0][0]).toEqual(parentEquipmentId);
+      expect(entryProxy.onTaskDeleted.mock.calls[0][1]).toEqual('task_01');
+      expect(entryProxy.onTaskDeleted.mock.calls[1][0]).toEqual(parentEquipmentId);
+      expect(entryProxy.onTaskDeleted.mock.calls[1][1]).toEqual('task_02');
+
+      expect(imageProxy.onEntityDeleted).toHaveBeenCalledTimes(2);
+      expect(imageProxy.onEntityDeleted.mock.calls[0][0]).toEqual('task_01');
+      expect(imageProxy.onEntityDeleted.mock.calls[1][0]).toEqual('task_02');
+
+      storageService.removeItemInArray = removeItemInArray;
+      storageService.getArray = getArray;
     });
   });
 });
