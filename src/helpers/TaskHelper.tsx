@@ -165,14 +165,18 @@ async function getLevel(equipment: EquipmentModel, task: TaskModel): Promise<num
   return level;
 }
 
-export async function updateRealtimeFields(equipmentId:string, task: TaskModel): Promise<void> {
+export async function updateRealtimeFields(equipmentId:string, task: TaskModel): Promise<TaskModel> {
   const equipment = (await equipmentProxy.getStoredEquipment()).find((eq) => eq._uiId === equipmentId);
 
-  if (equipment !== undefined) {
-    // The order of these 3 function calls is important since they might rely on the result computed in the function called before.
-    const updatedTask = { ...task };
-    updatedTask.nextDueDate = await getNextDueDate(equipment, updatedTask);
-    updatedTask.usageInHourLeft = await getTimeInHourLeft(equipment, updatedTask);
-    updatedTask.level = await getLevel(equipment, updatedTask);
+  if (equipment === undefined) {
+    return task;
   }
+
+  // The order of these 3 function calls is important since they might rely on the result computed in the function called before.
+  const updatedTask = { ...task };
+  updatedTask.nextDueDate = await getNextDueDate(equipment, updatedTask);
+  updatedTask.usageInHourLeft = await getTimeInHourLeft(equipment, updatedTask);
+  updatedTask.level = await getLevel(equipment, updatedTask);
+
+  return updatedTask;
 }

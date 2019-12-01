@@ -60,11 +60,7 @@ class TaskProxy implements ITaskProxy {
       }
 
       const tasks:TaskModel[] = await progressiveHttpProxy.getArrayOnlineFirst(this.baseUrl + equipmentId, 'tasks', updateTask, cancelToken);
-      await Promise.all(tasks.map(async (task) => {
-        await updateRealtimeFields(equipmentId, task);
-      }));
-
-      return tasks;
+      return Promise.all(tasks.map(async (task) => updateRealtimeFields(equipmentId, task)));
     }
 
     existTask = async (equipmentId: string | undefined, taskId: string | undefined):Promise<boolean> => {
