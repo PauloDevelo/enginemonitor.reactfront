@@ -128,9 +128,9 @@ async function getLastEntryAge(equipmentId: string, taskId: string): Promise<num
   return 0;
 }
 
-async function getTimeInHourLeft(equipment: EquipmentModel, task: TaskModel): Promise<number> {
+async function getTimeInHourLeft(equipment: EquipmentModel, task: TaskModel): Promise<number | undefined> {
   if (task.usagePeriodInHour === undefined || task.usagePeriodInHour <= 0) {
-    return 0;
+    return undefined;
   }
 
   return task.usagePeriodInHour + await getLastEntryAge(equipment._uiId, task._uiId) - equipment.age;
