@@ -107,7 +107,7 @@ async function getLastEntry(equipmentId:string, taskId:string): Promise<EntryMod
 
 async function getLastEntryDate(equipment: EquipmentModel, task:TaskModel): Promise<Date> {
   const lastEntry = await getLastEntry(equipment._uiId, task._uiId);
-  if (lastEntry != null) {
+  if (lastEntry !== undefined) {
     return lastEntry.date;
   }
   return equipment.installation;
@@ -138,12 +138,11 @@ async function getTimeInHourLeft(equipment: EquipmentModel, task: TaskModel): Pr
 
 async function getLevel(equipment: EquipmentModel, task: TaskModel): Promise<number> {
   const { nextDueDate } = task;
-  const now = new Date();
+  const now = timeService.getUTCDateTime();
   const delayInMillisecond = nextDueDate.getTime() - now.getTime();
   let level = TaskLevel.done;
 
-
-  if (equipment.ageAcquisitionType !== AgeAcquisitionType.time && task.usagePeriodInHour && task.usagePeriodInHour !== -1 && task.usageInHourLeft) {
+  if (equipment.ageAcquisitionType !== AgeAcquisitionType.time && task.usagePeriodInHour && task.usagePeriodInHour !== -1 && task.usageInHourLeft !== undefined) {
     const usageHourLeft = task.usageInHourLeft;
 
     if (usageHourLeft <= 0 || nextDueDate <= now) {
