@@ -4,16 +4,18 @@ import syncService from '../SyncService';
 import storageService from '../StorageService';
 import taskProxy from '../TaskProxy';
 import entryProxy from '../EntryProxy';
+import equipmentProxy from '../EquipmentProxy';
 import imageProxy from '../ImageProxy';
 import actionManager from '../ActionManager';
 
 import { updateTask } from '../../helpers/TaskHelper';
-import { TaskLevel } from '../../types/Types';
+import { TaskLevel, AgeAcquisitionType } from '../../types/Types';
 
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');
 jest.mock('../EntryProxy');
 jest.mock('../ImageProxy');
+jest.mock('../EquipmentProxy');
 
 describe('Test TaskProxy', () => {
   beforeAll(() => {
@@ -39,6 +41,7 @@ describe('Test TaskProxy', () => {
     httpProxy.setConfig.mockReset();
     httpProxy.post.mockReset();
     httpProxy.deleteReq.mockReset();
+    httpProxy.get.mockReset();
 
     const user = { email: 'test@gmail.com' };
     storageService.openUserStorage(user);
@@ -50,7 +53,71 @@ describe('Test TaskProxy', () => {
     storageService.closeUserStorage();
 
     entryProxy.onTaskDeleted.mockRestore();
+    entryProxy.getStoredEntries.mockRestore();
     imageProxy.onEntityDeleted.mockRestore();
+    equipmentProxy.getStoredEquipment.mockRestore();
+  });
+
+  describe('fetchTasks', () => {
+    it('should return an empty array if the equipment parent is undefined', async () => {
+      // Arrange
+
+      // Act
+      const tasks = await taskProxy.fetchTasks({ equipmentId: undefined, forceToLookUpInStorage: false });
+
+      // Assert
+      expect(tasks.length).toBe(0);
+    });
+
+    it('should return the expected tasks and it should update the realtime fields', async () => {
+      // Arrange
+      entryProxy.getStoredEntries.mockImplementation(async () => Promise.resolve([]));
+      equipmentProxy.getStoredEquipment.mockImplementation(async () => Promise.resolve([{
+        _uiId: parentEquipmentId,
+        name: 'engine',
+        brand: 'nanni',
+        model: 'N3.30',
+        age: 1234,
+        installation: new Date(2011, 7, 29, 18, 36),
+        ageAcquisitionType: AgeAcquisitionType.time,
+        ageUrl: '',
+      }]));
+
+      httpProxy.get.mockImplementation(() => (
+        {
+          tasks: [
+            {
+              _uiId: 'task_01',
+              name: 'Vidange',
+              usagePeriodInHour: 500,
+              periodInMonth: 12,
+              description: "Changer l'huile",
+            },
+            {
+              _uiId: 'task_02',
+              name: 'Change the impeller',
+              usagePeriodInHour: 800,
+              periodInMonth: 24,
+              description: "Changer l'impeller de la pompe a eau de mer",
+            },
+          ],
+        }
+      ));
+      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
+
+      // Act
+      const tasks = await taskProxy.fetchTasks({ equipmentId: parentEquipmentId, forceToLookUpInStorage: false });
+
+      // Assert
+      expect(tasks.length).toBe(2);
+      expect(tasks[0].nextDueDate).not.toBeUndefined();
+      expect(tasks[0].usageInHourLeft).not.toBeUndefined();
+      expect(tasks[0].level).not.toBeUndefined();
+
+      expect(tasks[1].nextDueDate).not.toBeUndefined();
+      expect(tasks[1].usageInHourLeft).not.toBeUndefined();
+      expect(tasks[1].level).not.toBeUndefined();
+    });
   });
 
   const createOrSaveTaskParams = [
