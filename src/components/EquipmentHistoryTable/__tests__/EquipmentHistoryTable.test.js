@@ -199,12 +199,14 @@ describe('EquipmentHistoryTable', () => {
     // Arrange
     const onEquipmentChanged = jest.fn();
 
-    const properties = { equipment, onTaskChanged: onEquipmentChanged, equipmentHistoryRefreshId: 0 };
+    let key = 0;
+    const properties = { equipment, onTaskChanged: onEquipmentChanged };
     const wrapper = mount(
       React.createElement(
         (props) => (
           <IntlProvider locale={navigator.language}>
             <EquipmentHistoryTable
+              key={key}
               {...props}
             />
           </IntlProvider>
@@ -215,7 +217,7 @@ describe('EquipmentHistoryTable', () => {
     await updateWrapper(wrapper);
 
     // Act
-    properties.equipmentHistoryRefreshId = 1;
+    key = 1;
 
     wrapper.setProps(properties);
     await updateWrapper(wrapper);

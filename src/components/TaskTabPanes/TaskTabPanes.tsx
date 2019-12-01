@@ -15,7 +15,7 @@ import jsonMessages from './TaskTabPanes.messages.json';
 const taskTabPanesMsg = defineMessages(jsonMessages);
 
 type Props = {
-    classNames: string,
+    classNames?: string,
     currentEquipment: EquipmentModel | undefined,
     taskList: TaskModel[],
     areTasksLoading: boolean,
@@ -63,8 +63,8 @@ const TaskTabPanes = ({
       )}
       {activeTab === 'equipmentHistory' && (
       <EquipmentHistoryTable
+        key={equipmentHistoryRefreshId}
         equipment={currentEquipment}
-        equipmentHistoryRefreshId={equipmentHistoryRefreshId}
         onTaskChanged={onTaskChangedByTaskId}
       />
       )}

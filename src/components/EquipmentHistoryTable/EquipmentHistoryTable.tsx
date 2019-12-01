@@ -38,7 +38,6 @@ const messages = defineMessages(jsonMessages);
 type Props = {
     equipment: EquipmentModel | undefined,
     onTaskChanged: (taskId: string) => void,
-    equipmentHistoryRefreshId: number,
     classNames?: string
 }
 
@@ -49,23 +48,17 @@ const Table = composeDecorators(
 )();
 
 const EquipmentHistoryTable = ({
-  equipment, onTaskChanged, equipmentHistoryRefreshId, classNames,
+  equipment, onTaskChanged, classNames,
 }: Props) => {
-  classNames = classNames ? `${classNames} historytasktable` : 'historytasktable';
+  const classNamesStr = classNames ? `${classNames} historytasktable` : 'historytasktable';
 
   const equipmentId = equipment ? equipment._uiId : undefined;
 
   const modalHook = useEditModal<EntryModel | undefined>(undefined);
   const [entries, setEntries] = useState<EntryModel[]>([]);
   const {
-    data: fetchedEntries, error, isLoading, reloadRef,
+    data: fetchedEntries, error, isLoading,
   } = useFetcher({ fetchPromise: entryProxy.fetchAllEntries, fetchProps: { equipmentId }, cancellationMsg: 'Cancellation of equipment history fetching' });
-
-  useEffect(() => {
-    if (equipmentHistoryRefreshId !== 0) {
-      reloadRef.current();
-    }
-  }, [equipmentHistoryRefreshId, reloadRef]);
 
   useEffect(() => {
     setEntries(fetchedEntries || []);
@@ -195,7 +188,7 @@ const EquipmentHistoryTable = ({
   ];
 
   return (
-    <div className={classNames}>
+    <div className={classNamesStr}>
       <span className="mb-2">
         <b><FormattedMessage {...messages.equipmentHistoryTitle} /></b>
         {equipment && (
