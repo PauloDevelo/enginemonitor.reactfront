@@ -1,6 +1,6 @@
 import * as log from 'loglevel';
 import { useState, useEffect } from 'react';
-import appVersion from '../../global';
+import global from '../../global';
 
 // version from response - first param, local version second param
 const semverGreaterThan = (versionA: string, versionB: string): boolean => {
@@ -49,7 +49,7 @@ const CacheBuster = (props: any) => {
       .then((response) => response.json())
       .then((meta) => {
         const latestVersion = meta.version;
-        const currentVersion = appVersion;
+        const currentVersion = global.getAppVersion();
 
         const shouldForceRefresh = semverGreaterThan(latestVersion, currentVersion);
         if (shouldForceRefresh) {
