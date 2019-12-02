@@ -6,7 +6,7 @@ import {
 import { FormattedMessage, defineMessages } from 'react-intl';
 import { CSSTransition } from 'react-transition-group';
 
-import appVersion from '../../global';
+import global from '../../global';
 
 import jsonMessages from './ModalAbout.messages.json';
 
@@ -29,7 +29,7 @@ const ModalAbout = ({ visible, className, toggle }: Props) => (
           <Media heading>
             <FormattedMessage {...aboutMsg.title} />
 &nbsp;v
-            {appVersion}
+            {global.getAppVersion()}
           </Media>
           <FormattedMessage {...aboutMsg.about} />
         </Media>

@@ -2,12 +2,15 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-// eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
+import global from '../../../global';
+
+// eslint-disable-next-line no-unused-vars
 import ignoredMessages from '../../../testHelpers/MockConsole';
 import ModalAbout from '../ModalAbout';
 
 jest.mock('localforage');
+jest.mock('../../../global');
 
 describe('Modal About', () => {
   beforeAll(() => {
@@ -27,6 +30,7 @@ describe('Modal About', () => {
 
   it('should render a modal about', async () => {
     // Arrange
+    global.getAppVersion.mockImplementation(() => '2.9.12');
     const toggle = jest.fn();
 
     // Act
