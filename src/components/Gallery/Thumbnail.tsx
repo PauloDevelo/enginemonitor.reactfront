@@ -1,5 +1,5 @@
 import React from 'react';
-import { Media } from 'reactstrap';
+import Img from 'react-image';
 
 // eslint-disable-next-line no-unused-vars
 import { ImageModel } from '../../types/Types';
@@ -18,7 +18,7 @@ function Thumbnail({ image, onClickImage }: Props) {
 
   const alt = `${image.title} - ${image.description}`;
 
-  return <Media object src={image.thumbnailUrl} alt={alt} onClick={displayImage} className="thumbnail grow" />;
+  return <Img src={image.thumbnailUrl} alt={alt} onClick={displayImage} className="thumbnail grow" />;
 }
 
 export default React.memo(Thumbnail);
