@@ -24,7 +24,7 @@
     "react-async": "^9.0.0",
     "react-dom": "^16.11.0",
     "react-html5-camera-photo": "^1.5.2",
-    "react-image": "^2.2.1",
+    "react-image": "github:PauloDevelo/react-image#feat/cache-images",
     "react-image-file-resizer": "^0.2.1",
     "react-image-lightbox": "github:PauloDevelo/react-image-lightbox#feat/cache-image",
     "react-intl": "^3.4.0",
