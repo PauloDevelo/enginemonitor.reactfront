@@ -14,19 +14,49 @@ exports[`Component Thumbnail should render an image using the thumbnail url 1`] 
   }
   onClickImage={[MockFunction]}
 >
-  <Media
+  <Img
     alt="a title - a desc"
     className="thumbnail grow"
-    object={true}
+    container={[Function]}
+    decode={true}
+    loader={
+      <span
+        className="spinnerContainer"
+      >
+        <Loading
+          onClick={[Function]}
+        />
+      </span>
+    }
     onClick={[Function]}
     src="http://localhost:3000/thumbnail.jpeg"
+    unloader={false}
   >
-    <img
-      alt="a title - a desc"
-      className="thumbnail grow media-object"
-      onClick={[Function]}
-      src="http://localhost:3000/thumbnail.jpeg"
-    />
-  </Media>
+    <span
+      className="spinnerContainer"
+    >
+      <Loading
+        onClick={[Function]}
+      >
+        <div
+          className="lds-spinner"
+          onClick={[Function]}
+        >
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
+      </Loading>
+    </span>
+  </Img>
 </Memo(Thumbnail)>
 `;

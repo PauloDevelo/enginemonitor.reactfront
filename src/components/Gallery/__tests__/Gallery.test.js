@@ -101,7 +101,7 @@ describe('Component Gallery', () => {
     const galleryComponent = gallery.find('Memo(GalleryComponent)');
     const firstThumbnail = galleryComponent.find('Memo(Thumbnail)').at(0);
 
-    firstThumbnail.find('img').simulate('click');
+    firstThumbnail.find('Loading').simulate('click');
 
     // Assert
     expect(imageProxy.fetchImages).toHaveBeenCalledTimes(1);
@@ -118,7 +118,7 @@ describe('Component Gallery', () => {
 
     const galleryComponent = gallery.find('Memo(GalleryComponent)');
     const firstThumbnail = galleryComponent.find('Memo(Thumbnail)').at(0);
-    firstThumbnail.find('img').simulate('click');
+    firstThumbnail.find('Loading').simulate('click');
 
     const imageLightbox = gallery.find('ReactImageLightbox');
 
@@ -142,7 +142,7 @@ describe('Component Gallery', () => {
 
     const galleryComponent = gallery.find('Memo(GalleryComponent)');
     const firstThumbnail = galleryComponent.find('Memo(Thumbnail)').at(0);
-    firstThumbnail.find('img').simulate('click');
+    firstThumbnail.find('Loading').simulate('click');
 
     const imageLightbox = gallery.find('ReactImageLightbox');
 

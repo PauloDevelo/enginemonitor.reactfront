@@ -814,20 +814,50 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
         key="dfc66510-f5f3-11e9-b3b1-f7086d79fbca"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
       <Memo(Thumbnail)
         image={
@@ -843,20 +873,50 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
         key="eb074110-f5f3-11e9-b3b1-f7086d79fbca"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
       <Memo(Thumbnail)
         image={
@@ -872,20 +932,50 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
         key="0ff4fd50-f5f4-11e9-b3b1-f7086d79fbca"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
       <Memo(Thumbnail)
         image={
@@ -901,20 +991,50 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
         key="dfc66510-f5f3-11e9-b3b1-f7086d79fbcb"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
     </div>
   </Memo(GalleryComponent)>
@@ -2188,20 +2308,50 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
         key="dfc66510-f5f3-11e9-b3b1-f7086d79fbca"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
       <Memo(Thumbnail)
         image={
@@ -2217,20 +2367,50 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
         key="eb074110-f5f3-11e9-b3b1-f7086d79fbca"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
       <Memo(Thumbnail)
         image={
@@ -2246,20 +2426,50 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
         key="0ff4fd50-f5f4-11e9-b3b1-f7086d79fbca"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
     </div>
   </Memo(GalleryComponent)>
@@ -4298,20 +4508,50 @@ exports[`Component Gallery should render a list of image using the thumbnail url
         key="dfc66510-f5f3-11e9-b3b1-f7086d79fbca"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
       <Memo(Thumbnail)
         image={
@@ -4327,20 +4567,50 @@ exports[`Component Gallery should render a list of image using the thumbnail url
         key="eb074110-f5f3-11e9-b3b1-f7086d79fbca"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
       <Memo(Thumbnail)
         image={
@@ -4356,20 +4626,50 @@ exports[`Component Gallery should render a list of image using the thumbnail url
         key="0ff4fd50-f5f4-11e9-b3b1-f7086d79fbca"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
     </div>
   </Memo(GalleryComponent)>
@@ -5330,20 +5630,50 @@ exports[`Component Gallery should render the Html5Camera when clicking on the ca
         key="dfc66510-f5f3-11e9-b3b1-f7086d79fbca"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
       <Memo(Thumbnail)
         image={
@@ -5359,20 +5689,50 @@ exports[`Component Gallery should render the Html5Camera when clicking on the ca
         key="eb074110-f5f3-11e9-b3b1-f7086d79fbca"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
       <Memo(Thumbnail)
         image={
@@ -5388,20 +5748,50 @@ exports[`Component Gallery should render the Html5Camera when clicking on the ca
         key="0ff4fd50-f5f4-11e9-b3b1-f7086d79fbca"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
     </div>
   </Memo(GalleryComponent)>
@@ -5974,20 +6364,50 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
         key="eb074110-f5f3-11e9-b3b1-f7086d79fbca"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
       <Memo(Thumbnail)
         image={
@@ -6003,20 +6423,50 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
         key="0ff4fd50-f5f4-11e9-b3b1-f7086d79fbca"
         onClickImage={[Function]}
       >
-        <Media
+        <Img
           alt="undefined - undefined"
           className="thumbnail grow"
-          object={true}
+          container={[Function]}
+          decode={true}
+          loader={
+            <span
+              className="spinnerContainer"
+            >
+              <Loading
+                onClick={[Function]}
+              />
+            </span>
+          }
           onClick={[Function]}
           src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
+          unloader={false}
         >
-          <img
-            alt="undefined - undefined"
-            className="thumbnail grow media-object"
-            onClick={[Function]}
-            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
-          />
-        </Media>
+          <span
+            className="spinnerContainer"
+          >
+            <Loading
+              onClick={[Function]}
+            >
+              <div
+                className="lds-spinner"
+                onClick={[Function]}
+              >
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </Loading>
+          </span>
+        </Img>
       </Memo(Thumbnail)>
     </div>
   </Memo(GalleryComponent)>
