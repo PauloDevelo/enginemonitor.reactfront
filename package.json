@@ -26,7 +26,7 @@
     "react-html5-camera-photo": "^1.5.2",
     "react-image": "^2.2.1",
     "react-image-file-resizer": "^0.2.1",
-    "react-image-lightbox": "^5.1.1",
+    "react-image-lightbox": "github:PauloDevelo/react-image-lightbox#feat/cache-image",
     "react-intl": "^3.4.0",
     "react-scripts": "^3.2.0",
     "react-switch": "^5.0.1",
