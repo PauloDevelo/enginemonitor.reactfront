@@ -1,0 +1,97 @@
+// eslint-disable-next-line no-unused-vars
+import React, {
+  useRef, useState, useEffect, useCallback,
+} from 'react';
+
+type Props = {
+  loader: any,
+  src: string,
+  storage: LocalForage,
+  alt?: string,
+  onClick?:()=>void,
+  className?: string,
+}
+
+const getBase64Image = (img: CanvasImageSource) => {
+  const canvas = document.createElement('canvas');
+  canvas.width = img.width as number;
+  canvas.height = img.height as number;
+
+  const ctx = canvas.getContext('2d');
+  if (ctx !== null) {
+    ctx.drawImage(img, 0, 0, img.width as number, img.height as number);
+    return canvas.toDataURL('image/png');
+  }
+};
+
+const Img = ({
+  storage, loader, src, alt, ...rest
+}:Props) => {
+  const image = useRef<HTMLImageElement | undefined>(undefined);
+  const [state, setState] = useState({ isLoading: true, isLoaded: false });
+  const [source, setSource] = useState(src);
+
+  const onLoad = useCallback(async () => {
+    /* istanbul ignore else */
+    if (image.current) {
+      const base64Image = getBase64Image(image.current);
+      if (base64Image !== undefined) {
+        await storage.setItem(src, base64Image);
+        setSource(base64Image);
+      } else {
+        setSource(src);
+      }
+
+      setState({ isLoaded: true, isLoading: false });
+    }
+  }, [src, storage]);
+
+  const loadImg = useCallback(async () => {
+    const keys = await storage.keys();
+    if (keys.includes(src)) {
+      const base64Image = await storage.getItem<string>(src);
+      setSource(base64Image);
+      setState({ isLoaded: true, isLoading: false });
+    } else {
+      image.current = new Image();
+      image.current.crossOrigin = 'anonymous';
+      image.current.src = src;
+      image.current.onload = onLoad;
+    }
+  }, [storage, src, onLoad]);
+
+  const unloadImg = useCallback(() => {
+    if (image.current) {
+      image.current.onload = null;
+
+      // abort any current downloads https://github.com/mbrevda/react-image/pull/223
+      image.current.src = '';
+
+      try {
+        delete image.current.src;
+      } catch (e) {
+        // On Safari in Strict mode this will throw an exception,
+        //  - https://github.com/mbrevda/react-image/issues/187
+        // We don't need to do anything about it.
+      }
+      image.current = undefined;
+    }
+  }, []);
+
+  useEffect(() => {
+    loadImg();
+    return (() => unloadImg());
+  }, [loadImg, unloadImg]);
+
+  if (state.isLoaded) {
+    return <img src={source} alt={alt} {...rest} />;
+  }
+
+  if (!state.isLoaded && state.isLoading) {
+    return loader || <div />;
+  }
+
+  return <div />;
+};
+
+export default Img;

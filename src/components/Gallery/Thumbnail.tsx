@@ -1,5 +1,6 @@
 import React from 'react';
-import Img from 'react-image';
+import Img from '../ImageComponent/Img';
+import storageService from '../../services/StorageService';
 
 import Loading from '../Loading/Loading';
 
@@ -20,7 +21,7 @@ function Thumbnail({ image, onClickImage }: Props) {
 
   const alt = `${image.title} - ${image.description}`;
 
-  return <Img src={image.thumbnailUrl} alt={alt} onClick={displayImage} className="thumbnail grow" loader={<span className="spinnerContainer"><Loading onClick={displayImage} /></span>} />;
+  return <Img storage={storageService.getUserStorage()} src={image.thumbnailUrl} alt={alt} onClick={displayImage} className="thumbnail grow" loader={<span className="spinnerContainer"><Loading onClick={displayImage} /></span>} />;
 }
 
 export default React.memo(Thumbnail);
