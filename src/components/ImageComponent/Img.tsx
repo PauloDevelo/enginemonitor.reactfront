@@ -12,16 +12,18 @@ type Props = {
   className?: string,
 }
 
-const getBase64Image = (img: CanvasImageSource) => {
+export const getBase64Image = (img: CanvasImageSource) => {
   const canvas = document.createElement('canvas');
   canvas.width = img.width as number;
   canvas.height = img.height as number;
 
   const ctx = canvas.getContext('2d');
-  if (ctx !== null) {
-    ctx.drawImage(img, 0, 0, img.width as number, img.height as number);
-    return canvas.toDataURL('image/png');
+  if (ctx === null) {
+    throw new Error('Error when creating a context 2d');
   }
+
+  ctx.drawImage(img, 0, 0, img.width as number, img.height as number);
+  return canvas.toDataURL('image/jpeg', 0.75);
 };
 
 const Img = ({

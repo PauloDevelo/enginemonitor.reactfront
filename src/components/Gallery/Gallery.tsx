@@ -3,11 +3,11 @@ import React, {
 } from 'react';
 import { Button } from 'reactstrap';
 
-import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css';
+import '../React-image-lightbox/style.css';
 
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Lightbox from '../React-image-lightbox/index';
 import Html5Camera from './Html5Camera';
 
 // eslint-disable-next-line no-unused-vars
@@ -20,7 +20,7 @@ import errorService from '../../services/ErrorService';
 import imageProxy from '../../services/ImageProxy';
 
 import useFetcher from '../../hooks/Fetcher';
-
+import storageService from '../../services/StorageService';
 import './Gallery.css';
 
 type Props = {
@@ -140,6 +140,8 @@ function Gallery({ parentUiId }: Props) {
       />
       {isOpen && images[index] !== undefined && (
         <Lightbox
+          imageCrossOrigin="anonymous"
+          storage={storageService.getUserStorage()}
           mainSrc={images[index].url}
           nextSrc={images[(index + 1) % images.length].url}
           prevSrc={images[(index + images.length - 1) % images.length].url}
