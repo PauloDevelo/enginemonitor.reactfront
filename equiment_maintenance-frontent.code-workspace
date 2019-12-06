@@ -12,6 +12,7 @@
 			"titleBar.inactiveForeground": "#030F40cc",
 			"statusBar.background": "#1d99cae1",
 			"statusBar.foreground": "#ffffffff",
-		}
+		},
+		"files.eol": "\n"
 	}
 }
