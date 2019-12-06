@@ -1,20 +1,22 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Label, Button } from 'reactstrap';
+import { FormattedMessage, defineMessages } from 'react-intl';
+import { faCamera, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Loading from '../Loading/Loading';
-import { FormattedMessage } from 'react-intl';
 
 import Thumbnail from './Thumbnail';
 
+// eslint-disable-next-line no-unused-vars
 import { ImageModel } from '../../types/Types';
 import AddImageFileButton from './AddImageFileButton';
 
-import { faCamera, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import "./Gallery.css";
+import './Gallery.css';
 
-import {defineMessages} from "react-intl";
-import jsonMessages from "./Gallery.messages.json";
+
+import jsonMessages from './Gallery.messages.json';
+
 const galleryMsg = defineMessages(jsonMessages);
 
 type Props = {
@@ -26,30 +28,30 @@ type Props = {
     turnOnCamera: () => void
 };
 
-function GalleryComponent({ parentUiId, images, isLoading, onClickThumbnail, addImage, turnOnCamera }: Props){
-    const thumbnails = images.map((image, index) => {
-        return <Thumbnail key={image._uiId} image={image} onClickImage={() => onClickThumbnail(index)} />;
-    });
+function GalleryComponent({
+  parentUiId, images, isLoading, onClickThumbnail, addImage, turnOnCamera,
+}: Props) {
+  const thumbnails = images.map((image, index) => <Thumbnail key={image._uiId} image={image} onClickImage={() => onClickThumbnail(index)} />);
 
-	return(
-        <Fragment>
-            <div className="flex-row top-padding-4px">
-                <Label className="font-weight-bold"><FormattedMessage {...galleryMsg.gallerytitle}/></Label>
-                <div>
-                    <AddImageFileButton parentUiId={parentUiId} addImage={addImage} className="float-right"/>
-                    <Button color="light" onClick={turnOnCamera} className="float-right">
-                        <span className="fa-layers fa-fw">
-                            <FontAwesomeIcon icon={faCamera} size="lg"/>
-                            <FontAwesomeIcon icon={faPlus} size="xs" transform="down-13 left-16"/>
-                        </span>
-                    </Button>
-                </div>
-            </div>
-            <div className="p-1 border border-secondary rounded shadow gallery">
-                {isLoading ? <Loading/>: thumbnails}
-            </div>
-        </Fragment>
-	);
+  return (
+    <>
+      <div className="flex-row top-padding-4px">
+        <Label className="font-weight-bold"><FormattedMessage {...galleryMsg.gallerytitle} /></Label>
+        <div>
+          <AddImageFileButton parentUiId={parentUiId} addImage={addImage} className="float-right" />
+          <Button color="light" onClick={turnOnCamera} className="float-right">
+            <span className="fa-layers fa-fw">
+              <FontAwesomeIcon icon={faCamera} size="lg" />
+              <FontAwesomeIcon icon={faPlus} size="xs" transform="down-13 left-16" />
+            </span>
+          </Button>
+        </div>
+      </div>
+      <div className="p-1 border border-secondary rounded shadow gallery">
+        {isLoading ? <Loading /> : thumbnails}
+      </div>
+    </>
+  );
 }
 
 export default React.memo(GalleryComponent);
