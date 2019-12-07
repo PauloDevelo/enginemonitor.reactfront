@@ -17,8 +17,6 @@ exports[`Component Thumbnail should render an image using the thumbnail url 1`] 
   <Img
     alt="a title - a desc"
     className="thumbnail grow"
-    container={[Function]}
-    decode={true}
     loader={
       <span
         className="spinnerContainer"
@@ -30,7 +28,22 @@ exports[`Component Thumbnail should render an image using the thumbnail url 1`] 
     }
     onClick={[Function]}
     src="http://localhost:3000/thumbnail.jpeg"
-    unloader={false}
+    storage={
+      Object {
+        "getItem": [MockFunction],
+        "keys": [MockFunction] {
+          "calls": Array [
+            Array [],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": Promise {},
+            },
+          ],
+        },
+      }
+    }
   >
     <span
       className="spinnerContainer"
