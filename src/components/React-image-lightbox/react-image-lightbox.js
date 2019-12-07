@@ -73,8 +73,8 @@ class ReactImageLightbox extends Component {
 
   // Request to transition to the previous image
   static getTransform({
- x = 0, y = 0, zoom = 1, width, targetWidth 
-}) {
+    x = 0, y = 0, zoom = 1, width, targetWidth,
+  }) {
     let nextX = x;
     const windowWidth = getWindowWidth();
     if (width > windowWidth) {
@@ -358,8 +358,8 @@ class ReactImageLightbox extends Component {
     const currentImageInfo = this.getBestImageForType('mainSrc');
     if (currentImageInfo === null) {
       return {
- maxX: 0, minX: 0, maxY: 0, minY: 0 
-};
+        maxX: 0, minX: 0, maxY: 0, minY: 0,
+      };
     }
 
     const boxSize = this.getLightboxRect();
@@ -488,27 +488,27 @@ class ReactImageLightbox extends Component {
 
     // Default to the center of the image to zoom when no mouse position specified
     const boxRect = this.getLightboxRect();
-    const pointerX =      typeof clientX !== 'undefined'
-        ? clientX - boxRect.left
-        : boxRect.width / 2;
-    const pointerY =      typeof clientY !== 'undefined'
-        ? clientY - boxRect.top
-        : boxRect.height / 2;
+    const pointerX = typeof clientX !== 'undefined'
+      ? clientX - boxRect.left
+      : boxRect.width / 2;
+    const pointerY = typeof clientY !== 'undefined'
+      ? clientY - boxRect.top
+      : boxRect.height / 2;
 
-    const currentImageOffsetX =      (boxRect.width - imageBaseSize.width * currentZoomMultiplier) / 2;
-    const currentImageOffsetY =      (boxRect.height - imageBaseSize.height * currentZoomMultiplier) / 2;
+    const currentImageOffsetX = (boxRect.width - imageBaseSize.width * currentZoomMultiplier) / 2;
+    const currentImageOffsetY = (boxRect.height - imageBaseSize.height * currentZoomMultiplier) / 2;
 
     const currentImageRealOffsetX = currentImageOffsetX - this.state.offsetX;
     const currentImageRealOffsetY = currentImageOffsetY - this.state.offsetY;
 
-    const currentPointerXRelativeToImage =      (pointerX - currentImageRealOffsetX) / currentZoomMultiplier;
-    const currentPointerYRelativeToImage =      (pointerY - currentImageRealOffsetY) / currentZoomMultiplier;
+    const currentPointerXRelativeToImage = (pointerX - currentImageRealOffsetX) / currentZoomMultiplier;
+    const currentPointerYRelativeToImage = (pointerY - currentImageRealOffsetY) / currentZoomMultiplier;
 
-    const nextImageRealOffsetX =      pointerX - currentPointerXRelativeToImage * nextZoomMultiplier;
-    const nextImageRealOffsetY =      pointerY - currentPointerYRelativeToImage * nextZoomMultiplier;
+    const nextImageRealOffsetX = pointerX - currentPointerXRelativeToImage * nextZoomMultiplier;
+    const nextImageRealOffsetY = pointerY - currentPointerYRelativeToImage * nextZoomMultiplier;
 
-    const nextImageOffsetX =      (boxRect.width - imageBaseSize.width * nextZoomMultiplier) / 2;
-    const nextImageOffsetY =      (boxRect.height - imageBaseSize.height * nextZoomMultiplier) / 2;
+    const nextImageOffsetX = (boxRect.width - imageBaseSize.width * nextZoomMultiplier) / 2;
+    const nextImageOffsetY = (boxRect.height - imageBaseSize.height * nextZoomMultiplier) / 2;
 
     let nextOffsetX = nextImageOffsetX - nextImageRealOffsetX;
     let nextOffsetY = nextImageOffsetY - nextImageRealOffsetY;
@@ -1130,7 +1130,7 @@ class ReactImageLightbox extends Component {
       done(errorEvent);
     };
 
-    inMemoryImage.onload = async () => {
+    inMemoryImage.onload = () => {
       this.props.onImageLoad(imageSrc, srcType, inMemoryImage);
 
       imageCache[imageSrc] = {
@@ -1141,10 +1141,10 @@ class ReactImageLightbox extends Component {
 
       if (this.props.storage && inMemoryImage.src === imageSrc) {
         const base64Image = getBase64Image(inMemoryImage);
-        await this.props.storage.setItem(imageSrc, base64Image);
+        this.props.storage.setItem(imageSrc, base64Image).then(done);
+      } else {
+        done();
       }
-
-      done();
     };
 
     if (this.props.storage) {
