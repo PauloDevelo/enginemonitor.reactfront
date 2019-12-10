@@ -42,12 +42,8 @@ export default function App() {
 
   useEffect(() => {
     const refreshCurrentUser = async () => {
-      try {
-        const currentUser = await userProxy.fetchCurrentUser();
-        setUser(currentUser);
-      } catch (reason) {
-        setUser(undefined);
-      }
+      const currentUser = await userProxy.tryGetAndSetMemorizedUser();
+      setUser(currentUser);
     };
 
     refreshCurrentUser();

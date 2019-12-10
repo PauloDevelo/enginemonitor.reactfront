@@ -58,7 +58,7 @@ const getOrientationInDegrees = async (file: File): Promise<number> => {
   }
 };
 
-const resizeImageIntoBlob = (imageFile: File, maxWidth: number, maxHeight: number, orientationInDegrees: number):Promise<string> => new Promise((resolve) => {
+const resizeImageIntoBlob = (imageFile: File, maxWidth: number, maxHeight: number, orientationInDegrees: number):Promise<Blob> => new Promise((resolve) => {
   Resizer.imageFileResizer(
     imageFile,
     maxWidth,
@@ -116,18 +116,24 @@ const resizeBase64ImageIntoBlob = (base64Str: string, maxWidth = 400, maxHeight 
   img.src = base64Str;
 });
 
+export const createImageModel = (parentUiId: string):ImageModel => ({
+  _uiId: uuidv1(),
+  name: `${parentUiId}.jpeg`,
+  parentUiId,
+  title: '',
+  description: '',
+  sizeInByte: 0,
+  thumbnailUrl: '',
+  url: '',
+});
+
 export const resizeAndSaveBase64Image = async (imageBase64: string, parentUiId: string):Promise<ImageModel> => {
   const resizedBlob = await resizeBase64ImageIntoBlob(imageBase64, 1024, 1024);
   const thumbnailBlob = await resizeBase64ImageIntoBlob(imageBase64, 100, 100);
 
-  const imgFormObj = new FormData();
-  imgFormObj.append('name', `${parentUiId}.jpeg`);
-  imgFormObj.append('imageData', resizedBlob, `${parentUiId}.jpeg`);
-  imgFormObj.append('thumbnail', thumbnailBlob, `thumbnail_${parentUiId}.jpeg`);
-  imgFormObj.append('parentUiId', parentUiId);
-  imgFormObj.append('_uiId', uuidv1());
+  const imageToSave = createImageModel(parentUiId);
 
-  return imageProxy.createImage(imgFormObj);
+  return imageProxy.createImage(imageToSave, resizedBlob, thumbnailBlob);
 };
 
 export const resizeAndSaveImage = async (file: File, parentUiId: string):Promise<ImageModel> => {
@@ -135,14 +141,9 @@ export const resizeAndSaveImage = async (file: File, parentUiId: string):Promise
   const resizedBlob = await resizeImageIntoBlob(file, 1024, 1024, orientationInDegrees);
   const thumbnailBlob = await resizeImageIntoBlob(file, 100, 100, orientationInDegrees);
 
-  const imgFormObj = new FormData();
-  imgFormObj.append('name', file.name);
-  imgFormObj.append('imageData', resizedBlob, `${file.name}.jpeg`);
-  imgFormObj.append('thumbnail', thumbnailBlob, `thumbnail_${file.name}.jpeg`);
-  imgFormObj.append('parentUiId', parentUiId);
-  imgFormObj.append('_uiId', uuidv1());
+  const imageToSave = createImageModel(parentUiId);
 
-  return imageProxy.createImage(imgFormObj);
+  return imageProxy.createImage(imageToSave, resizedBlob, thumbnailBlob);
 };
 
 export default resizeAndSaveImage;

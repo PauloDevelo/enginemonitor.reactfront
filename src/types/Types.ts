@@ -56,7 +56,9 @@ export interface UserModel extends EntityModel {
     password: string,
     firstname: string,
     imageFolderSizeInByte: number,
-    imageFolderSizeLimitInByte: number
+    imageFolderSizeLimitInByte: number,
+    imageFolder: string,
+    token: string,
 }
 
 export type AuthInfo = {

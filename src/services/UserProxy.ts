@@ -1,5 +1,6 @@
 import httpProxy from './HttpProxy';
 import HttpError from '../http/HttpError';
+import syncService from './SyncService';
 
 import storageService from './StorageService';
 
@@ -19,7 +20,12 @@ export interface IUserProxy{
     resetPassword(email: string, password: string): Promise<void>;
     authenticate (authInfo: AuthInfo):Promise<UserModel>;
     logout(): Promise<void>;
-    fetchCurrentUser():Promise<UserModel | undefined>;
+
+    /**
+     * This function tries to get a user stored in the global storage due to the remember me feature.
+     * If it can read a user, it will set the token for the http authentication, it will open the user storage, and it will signal a user has been set thanks to the user context.
+     */
+    tryGetAndSetMemorizedUser():Promise<UserModel | undefined>;
 }
 
 class UserProxy implements IUserProxy {
@@ -41,15 +47,12 @@ class UserProxy implements IUserProxy {
     authenticate = async (authInfo: AuthInfo):Promise<UserModel> => {
       this.logout();
 
-      const data = await httpProxy.post(`${this.baseUrl}users/login`, { user: authInfo });
+      const { user }: { user: UserModel | undefined } = await httpProxy.post(`${this.baseUrl}users/login`, { user: authInfo });
 
-      if (data.user) {
-        const user = data.user as UserModel;
-        const config:Config = { headers: { Authorization: `Token ${data.user.token}` } };
-        httpProxy.setConfig(config);
+      if (user) {
+        this.setHttpProxyAuthentication(user);
 
         if (authInfo.remember) {
-          storageService.setGlobalItem('EquipmentMonitorServiceProxy.config', config);
           storageService.setGlobalItem('currentUser', user);
         }
 
@@ -63,28 +66,41 @@ class UserProxy implements IUserProxy {
     }
 
     logout = async (): Promise<void> => {
-      storageService.removeGlobalItem('EquipmentMonitorServiceProxy.config');
       storageService.removeGlobalItem('currentUser');
       httpProxy.setConfig(undefined);
       storageService.closeUserStorage();
       userContext.onUserChanged(undefined);
     }
 
-    fetchCurrentUser = async ():Promise<UserModel | undefined> => {
-      const config = await storageService.getGlobalItem<Config>('EquipmentMonitorServiceProxy.config');
-      httpProxy.setConfig(config);
+    tryGetAndSetMemorizedUser = async ():Promise<UserModel | undefined> => {
+      try {
+        const rememberedUser = await storageService.getGlobalItem<UserModel>('currentUser');
+        this.setHttpProxyAuthentication(rememberedUser);
 
-      if (config) {
-        const user = await storageService.getGlobalItem<UserModel>('currentUser');
-        if (user) {
-          await storageService.openUserStorage(user);
-          userContext.onUserChanged(user);
-          return user;
+        if (await syncService.isOnline()) {
+          const { user: currentUser }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}users/current`);
+          if (currentUser) {
+            storageService.setGlobalItem('currentUser', currentUser);
+            this.setHttpProxyAuthentication(currentUser);
+            await storageService.openUserStorage(currentUser);
+            userContext.onUserChanged(currentUser);
+            return currentUser;
+          }
         }
-      }
 
-      userContext.onUserChanged(undefined);
-      return undefined;
+        await storageService.openUserStorage(rememberedUser);
+        userContext.onUserChanged(rememberedUser);
+        return rememberedUser;
+      } catch (reason) {
+        await this.logout();
+
+        return undefined;
+      }
+    }
+
+    setHttpProxyAuthentication = ({ token }: UserModel) => {
+      const config:Config = { headers: { Authorization: `Token ${token}` } };
+      httpProxy.setConfig(config);
     }
 }
 

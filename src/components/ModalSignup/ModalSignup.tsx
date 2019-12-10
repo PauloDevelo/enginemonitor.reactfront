@@ -6,7 +6,6 @@ import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
 import { FormattedMessage, defineMessages } from 'react-intl';
-import uuidv1 from 'uuid/v1';
 
 import MyForm from '../Form/MyForm';
 import MyInput from '../Form/MyInput';
@@ -18,6 +17,7 @@ import HttpError from '../../http/HttpError';
 
 // eslint-disable-next-line no-unused-vars
 import { UserModel } from '../../types/Types';
+import { createDefaultUser } from '../../helpers/UserHelper';
 
 import jsonMessages from '../ModalLogin/Login.messages.json';
 
@@ -32,16 +32,7 @@ toggle: () => void
 }
 
 const ModalSignup = ({ visible, className, toggle }: Props) => {
-  const uid = uuidv1();
-  const data:UserModel = {
-    _uiId: uid,
-    firstname: '',
-    name: '',
-    email: '',
-    password: '',
-    imageFolderSizeInByte: 0,
-    imageFolderSizeLimitInByte: 0,
-  };
+  const data:UserModel = createDefaultUser();
 
   const [infoMsg, setInfoMsg] = useState<string | undefined>(undefined);
   const [signupErrors, setSignupErrors] = useState<any>(undefined);

@@ -40,6 +40,15 @@ export interface ISyncHttpProxy{
      * @param init The function init to call on each item before returning the array to the callee
      */
     getArrayOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T, cancelToken?: CancelToken | undefined): Promise<T[]>;
+
+    /**
+     * This function returns a T element and update it in the user storage if online.
+     * If in offline mode, we will get the array from the user storage.
+     * @param url the get query url
+     * @param keyName The field name that contain the array
+     * @param init The function init to call on each item before returning the array to the callee
+     */
+    getOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T, cancelToken?: CancelToken | undefined): Promise<T>;
 }
 
 class ProgressiveHttpProxy implements ISyncHttpProxy {
@@ -79,6 +88,19 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
     }
 
     return storageService.getArray<T>(url);
+  }
+
+  async getOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T> {
+    if (await syncService.isOnlineAndSynced()) {
+      const item = (await httpProxy.get(url, cancelToken))[keyName] as T;
+      const updatedItem = init(item);
+
+      storageService.setItem<T>(url, updatedItem);
+
+      return updatedItem;
+    }
+
+    return storageService.getItem<T>(url);
   }
 }
 

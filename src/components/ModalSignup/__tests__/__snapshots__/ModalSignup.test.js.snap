@@ -546,10 +546,12 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                   "_uiId": "user_01",
                                   "email": "",
                                   "firstname": "",
+                                  "imageFolder": "",
                                   "imageFolderSizeInByte": 0,
                                   "imageFolderSizeLimitInByte": 0,
                                   "name": "",
                                   "password": "",
+                                  "token": "",
                                 }
                               }
                               submit={[Function]}

@@ -36,6 +36,8 @@ describe('ModalSignup', () => {
     firstname: 'paul',
     imageFolderSizeInByte: 0,
     imageFolderSizeLimitInByte: 0,
+    imageFolder: '',
+    token: '',
   };
 
   it('should render the ModalSignup', async () => {

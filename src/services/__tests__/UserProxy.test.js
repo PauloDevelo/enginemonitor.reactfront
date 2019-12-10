@@ -1,12 +1,14 @@
 import httpProxy from '../HttpProxy';
 import storageService from '../StorageService';
 import userProxy from '../UserProxy';
+import syncService from '../SyncService';
 
 jest.mock('../HttpProxy');
 jest.mock('../StorageService');
+jest.mock('../SyncService');
 
 describe('Test UserProxy', () => {
-  beforeEach(() => {
+  afterEach(() => {
     storageService.setGlobalItem.mockReset();
     storageService.removeGlobalItem.mockReset();
     storageService.getGlobalItem.mockReset();
@@ -15,13 +17,14 @@ describe('Test UserProxy', () => {
 
     httpProxy.setConfig.mockReset();
     httpProxy.post.mockReset();
+    httpProxy.get.mockReset();
+
+    syncService.isOnline.mockReset();
   });
 
-  describe('fetchCurrentUser', () => {
-    it('when the user is already authenticated in the storage service, it should set the config into the httpProxy for later request, open the user storage and return the user', async () => {
+  describe('tryGetAndSetMemorizedUser', () => {
+    it('when offline and when the user is already authenticated in the storage service, it should set the config into the httpProxy for later request, open the user storage and return the user', async () => {
       // arrange
-      const config = { headers: { Authorization: 'Token jwttoken' } };
-
       const user = {
         email: 'test@axios',
         firstname: 'jest',
@@ -29,10 +32,9 @@ describe('Test UserProxy', () => {
         token: 'jwt',
       };
 
+      syncService.isOnline.mockImplementation(async () => Promise.resolve(false));
+
       storageService.getGlobalItem.mockImplementation((key) => {
-        if (key === 'EquipmentMonitorServiceProxy.config') {
-          return Promise.resolve(config);
-        }
         if (key === 'currentUser') {
           return Promise.resolve(user);
         }
@@ -41,28 +43,51 @@ describe('Test UserProxy', () => {
       });
 
       // act
-      const fetchedUser = await userProxy.fetchCurrentUser();
+      const fetchedUser = await userProxy.tryGetAndSetMemorizedUser();
 
       // assert
       expect(fetchedUser).toEqual(user);
+      expect(httpProxy.get).toHaveBeenCalledTimes(0);
       expect(httpProxy.setConfig).toHaveBeenCalledTimes(1);
       expect(storageService.openUserStorage).toHaveBeenCalledTimes(1);
     });
 
-    it('when there the user is not authenticated, it should return undefined and it should remove the config into the httpProxy', async () => {
+    it('when online and when the user is already authenticated in the storage service, it should get an update of the user, set the config into the httpProxy for later request, open the user storage and return the user', async () => {
       // arrange
-      const config = undefined;
+      const user = {
+        email: 'test@axios',
+        firstname: 'jest',
+        name: 'react',
+        token: 'jwt',
+      };
+
+      syncService.isOnline.mockImplementation(async () => Promise.resolve(true));
+      httpProxy.get.mockImplementation(async () => Promise.resolve({ user }));
 
       storageService.getGlobalItem.mockImplementation((key) => {
-        if (key === 'EquipmentMonitorServiceProxy.config') {
-          return Promise.resolve(config);
+        if (key === 'currentUser') {
+          return Promise.resolve(user);
         }
 
         return Promise.resolve(null);
       });
 
       // act
-      const fetchedUser = await userProxy.fetchCurrentUser();
+      const fetchedUser = await userProxy.tryGetAndSetMemorizedUser();
+
+      // assert
+      expect(fetchedUser).toEqual(user);
+      expect(httpProxy.get).toHaveBeenCalledTimes(1);
+      expect(httpProxy.setConfig).toHaveBeenCalledTimes(2);
+      expect(storageService.openUserStorage).toHaveBeenCalledTimes(1);
+    });
+
+    it('when there the user is not authenticated, it should return undefined and it should remove the config into the httpProxy', async () => {
+      // arrange
+      storageService.getGlobalItem.mockImplementation(() => Promise.resolve(null));
+
+      // act
+      const fetchedUser = await userProxy.tryGetAndSetMemorizedUser();
 
       // assert
       expect(fetchedUser).toEqual(undefined);
@@ -81,7 +106,7 @@ describe('Test UserProxy', () => {
       // assert
       expect(httpProxy.setConfig).toHaveBeenCalledTimes(1);
       expect(storageService.closeUserStorage).toHaveBeenCalledTimes(1);
-      expect(storageService.removeGlobalItem).toHaveBeenCalledTimes(2);
+      expect(storageService.removeGlobalItem).toHaveBeenCalledTimes(1);
     });
 
     it('should post the authentification, update the local storage and set the httpProxy config because of the remember flag it true', async () => {
@@ -111,7 +136,7 @@ describe('Test UserProxy', () => {
       expect(authUser).toEqual(user);
       expect(currentConfig).toEqual({ headers: { Authorization: `Token ${user.token}` } });
       expect(storageService.openUserStorage).toHaveBeenCalledTimes(1);
-      expect(storageService.setGlobalItem).toHaveBeenCalledTimes(2);
+      expect(storageService.setGlobalItem).toHaveBeenCalledTimes(1);
     });
 
     it('should not update the local storage because of the remember flag at false but should configure the http proxy and open the user storage.', async () => {

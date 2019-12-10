@@ -18,7 +18,7 @@ export interface FetchImagesProps{
 
 export interface IImageProxy{
     fetchImages(props: FetchImagesProps): Promise<ImageModel[]>;
-    createImage(imgFormObj: FormData):Promise<ImageModel>;
+    createImage(imgToSave: ImageModel, image: Blob, thumbnail: Blob):Promise<ImageModel>;
     updateImage(imageToSave: ImageModel):Promise<ImageModel>;
     deleteImage(image: ImageModel): Promise<ImageModel>;
 
@@ -37,7 +37,14 @@ class ImageProxy implements IImageProxy {
       return progressiveHttpProxy.getArrayOnlineFirst<ImageModel>(this.baseUrl + parentUiId, 'images', (image) => image, cancelToken);
     }
 
-    createImage = async (imgFormObj: FormData):Promise<ImageModel> => {
+    createImage = async (imgToSave: ImageModel, blobImage: Blob, thumbnail: Blob):Promise<ImageModel> => {
+      const imgFormObj = new FormData();
+      imgFormObj.append('name', imgToSave.name);
+      imgFormObj.append('imageData', blobImage, `${imgToSave._uiId}.jpeg`);
+      imgFormObj.append('thumbnail', thumbnail, `thumbnail_${imgToSave._uiId}.jpeg`);
+      imgFormObj.append('parentUiId', imgToSave.parentUiId);
+      imgFormObj.append('_uiId', imgToSave._uiId);
+
       const { image } = await httpProxy.post(this.baseUrl + imgFormObj.get('parentUiId'), imgFormObj);
       await storageService.updateArray(this.baseUrl + image.parentUiId, image);
       userContext.onImageAdded(image.sizeInByte);
