@@ -29,25 +29,25 @@ export interface IUserProxy{
 }
 
 class UserProxy implements IUserProxy {
-    baseUrl = process.env.REACT_APP_URL_BASE;
+    baseUrl = `${process.env.REACT_APP_URL_BASE}users/`;
 
     // ///////////////////User/////////////////////////
     signup = async (newUser: UserModel): Promise<void> => {
-      await httpProxy.post(`${this.baseUrl}users/`, { user: newUser });
+      await httpProxy.post(this.baseUrl, { user: newUser });
     }
 
     sendVerificationEmail = async (email: string): Promise<void> => {
-      await httpProxy.post(`${this.baseUrl}users/verificationemail`, { email });
+      await httpProxy.post(`${this.baseUrl}verificationemail`, { email });
     }
 
     resetPassword = async (email: string, password: string): Promise<void> => {
-      await httpProxy.post(`${this.baseUrl}users/resetpassword`, { email, newPassword: password });
+      await httpProxy.post(`${this.baseUrl}resetpassword`, { email, newPassword: password });
     }
 
     authenticate = async (authInfo: AuthInfo):Promise<UserModel> => {
       this.logout();
 
-      const { user }: { user: UserModel | undefined } = await httpProxy.post(`${this.baseUrl}users/login`, { user: authInfo });
+      const { user }: { user: UserModel | undefined } = await httpProxy.post(`${this.baseUrl}login`, { user: authInfo });
 
       if (user) {
         this.setHttpProxyAuthentication(user);
@@ -78,7 +78,7 @@ class UserProxy implements IUserProxy {
         this.setHttpProxyAuthentication(rememberedUser);
 
         if (await syncService.isOnline()) {
-          const { user: currentUser }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}users/current`);
+          const { user: currentUser }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}current`);
           if (currentUser) {
             storageService.setGlobalItem('currentUser', currentUser);
             this.setHttpProxyAuthentication(currentUser);
