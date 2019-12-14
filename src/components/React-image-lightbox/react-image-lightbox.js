@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import Img, { getBase64Image } from '../ImageComponent/Img';
+import Img, { canvasImageSourceToDataURL } from '../ImageComponent/Img';
 import {
   translate,
   getWindowWidth,
@@ -1140,7 +1140,7 @@ class ReactImageLightbox extends Component {
       };
 
       if (this.props.storage && inMemoryImage.src === imageSrc) {
-        const base64Image = getBase64Image(inMemoryImage);
+        const base64Image = canvasImageSourceToDataURL(inMemoryImage);
         this.props.storage.setItem(imageSrc, base64Image).then(done);
       } else {
         done();

@@ -12,7 +12,7 @@ type Props = {
   className?: string,
 }
 
-export const getBase64Image = (img: CanvasImageSource) => {
+export const canvasImageSourceToDataURL = (img: CanvasImageSource) => {
   const canvas = document.createElement('canvas');
   canvas.width = img.width as number;
   canvas.height = img.height as number;
@@ -36,7 +36,7 @@ const Img = ({
   const onLoad = useCallback(async () => {
     /* istanbul ignore else */
     if (image.current) {
-      const base64Image = getBase64Image(image.current);
+      const base64Image = canvasImageSourceToDataURL(image.current);
       if (base64Image !== undefined) {
         await storage.setItem(src, base64Image);
         setSource(base64Image);
