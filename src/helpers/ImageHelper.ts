@@ -7,6 +7,7 @@ import imageProxy from '../services/ImageProxy';
 
 // eslint-disable-next-line no-unused-vars
 import { ImageModel } from '../types/Types';
+import userContext from '../services/UserContext';
 
 const compressionQuality = 95;
 
@@ -116,16 +117,19 @@ const resizeBase64ImageIntoBlob = (base64Str: string, maxWidth = 400, maxHeight 
   img.src = base64Str;
 });
 
-export const createImageModel = (parentUiId: string):ImageModel => ({
-  _uiId: uuidv1(),
-  name: `${parentUiId}.jpeg`,
-  parentUiId,
-  title: '',
-  description: '',
-  sizeInByte: 0,
-  thumbnailUrl: '',
-  url: '',
-});
+export const createImageModel = (parentUiId: string):ImageModel => {
+  const uiid = uuidv1();
+  return ({
+    _uiId: uiid,
+    name: `${parentUiId}.jpeg`,
+    parentUiId,
+    title: '',
+    description: '',
+    sizeInByte: 0,
+    thumbnailUrl: `${process.env.REACT_APP_URL_BASE}${userContext.getCurrentUser()!.imageFolder}/thumbnail_${uiid}.jpeg`,
+    url: `${process.env.REACT_APP_URL_BASE}${userContext.getCurrentUser()!.imageFolder}/${uiid}.jpeg`,
+  });
+};
 
 export const resizeAndSaveBase64Image = async (imageBase64: string, parentUiId: string):Promise<ImageModel> => {
   const resizedBlob = await resizeBase64ImageIntoBlob(imageBase64, 1024, 1024);
@@ -145,5 +149,38 @@ export const resizeAndSaveImage = async (file: File, parentUiId: string):Promise
 
   return imageProxy.createImage(imageToSave, resizedBlob, thumbnailBlob);
 };
+
+export const base64ToBlob = (b64Data: string, contentType = '', sliceSize = 512):Blob => {
+  const byteCharacters = atob(b64Data);
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+
+  const blob = new Blob(byteArrays, { type: contentType });
+  return blob;
+};
+
+export const blobToDataURL = async (blob: Blob): Promise<string> => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.onerror = reject;
+  reader.onload = () => resolve(reader.result as string);
+  reader.readAsDataURL(blob);
+});
+
+export function dataURItoBlob(dataURI: string): Blob {
+  const base64Image = dataURI.split(',')[1];
+  const contentType = dataURI.split(',')[0].split(':')[1].split(';')[0];
+  return base64ToBlob(base64Image, contentType);
+}
 
 export default resizeAndSaveImage;
