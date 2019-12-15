@@ -30,6 +30,7 @@ export interface IStorageService{
     unregisterUserStorageListener(listener: IUserStorageListener): void;
     getUserStorage(): LocalForage;
 
+    removeItem<T>(key: string): Promise<void>;
     setItem<T>(key: string, value: T): Promise<T>;
     getItem<T>(key: string): Promise<T>;
     getArray<T>(key: string): Promise<T[]>;
@@ -136,6 +137,10 @@ class StorageService implements IStorageService {
 
     async getItem<T>(key: string): Promise<T> {
       return this.getUserStorage().getItem<T>(key);
+    }
+
+    async removeItem<T>(key: string): Promise<void> {
+      return this.getUserStorage().removeItem(key);
     }
 
     async getArray<T>(key: string):Promise<T[]> {
