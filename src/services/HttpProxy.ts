@@ -6,6 +6,9 @@ import axiosRetry from 'axios-retry';
 
 import HttpError from '../http/HttpError';
 
+// eslint-disable-next-line no-unused-vars
+import { ImageModel } from '../types/Types';
+
 export type Config = {
     headers: {
         Authorization: string
@@ -13,6 +16,7 @@ export type Config = {
 };
 
 export interface IHttpProxy{
+    postImage(url: string, image:ImageModel, imageData:Blob, thumbnailData: Blob): Promise<{ image:ImageModel }>;
     post(url: string, data: any): Promise<any>;
     deleteReq(url: string): Promise<any>;
     get(url: string, cancelToken?: CancelToken | undefined): Promise<any>;
@@ -46,6 +50,17 @@ class HttpProxy implements IHttpProxy {
 
     setConfig(config: Config) {
       this.config = config;
+    }
+
+    postImage = async (url: string, image:ImageModel, imageData:Blob, thumbnailData: Blob):Promise<{ image: ImageModel }> => {
+      const imgFormObj = new FormData();
+      imgFormObj.append('name', image.name);
+      imgFormObj.append('imageData', imageData, `${image._uiId}.jpeg`);
+      imgFormObj.append('thumbnail', thumbnailData, `thumbnail_${image._uiId}.jpeg`);
+      imgFormObj.append('parentUiId', image.parentUiId);
+      imgFormObj.append('_uiId', image._uiId);
+
+      return this.post(url, imgFormObj);
     }
 
     // eslint-disable-next-line consistent-return
