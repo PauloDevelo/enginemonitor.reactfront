@@ -2,11 +2,14 @@
 import { CancelToken } from 'axios';
 import progressiveHttpProxy from './ProgressiveHttpProxy';
 import httpProxy from './HttpProxy';
-
+import syncService from './SyncService';
+// eslint-disable-next-line no-unused-vars
+import actionManager, { Action, ActionType } from './ActionManager';
 import storageService from './StorageService';
 
 // eslint-disable-next-line no-unused-vars
 import { ImageModel } from '../types/Types';
+import { blobToDataURL } from '../helpers/ImageHelper';
 
 import userContext from './UserContext';
 
@@ -38,17 +41,25 @@ class ImageProxy implements IImageProxy {
     }
 
     createImage = async (imgToSave: ImageModel, blobImage: Blob, thumbnail: Blob):Promise<ImageModel> => {
-      const imgFormObj = new FormData();
-      imgFormObj.append('name', imgToSave.name);
-      imgFormObj.append('imageData', blobImage, `${imgToSave._uiId}.jpeg`);
-      imgFormObj.append('thumbnail', thumbnail, `thumbnail_${imgToSave._uiId}.jpeg`);
-      imgFormObj.append('parentUiId', imgToSave.parentUiId);
-      imgFormObj.append('_uiId', imgToSave._uiId);
+      await storageService.setItem(imgToSave.url, await blobToDataURL(blobImage));
+      await storageService.setItem(imgToSave.thumbnailUrl, await blobToDataURL(thumbnail));
 
-      const { image } = await httpProxy.post(this.baseUrl + imgFormObj.get('parentUiId'), imgFormObj);
-      await storageService.updateArray(this.baseUrl + image.parentUiId, image);
-      userContext.onImageAdded(image.sizeInByte);
-      return image;
+      let savedImage: ImageModel;
+      const createImageUrl = this.baseUrl + imgToSave.parentUiId;
+
+      if (await syncService.isOnlineAndSynced()) {
+        const { image } = await httpProxy.postImage(createImageUrl, imgToSave, blobImage, thumbnail);
+        savedImage = image;
+      } else {
+        const action: Action = { key: createImageUrl, type: ActionType.CreateImage, data: imgToSave };
+        await actionManager.addAction(action);
+        savedImage = imgToSave;
+        savedImage.sizeInByte = 450 * 1024;
+      }
+
+      await storageService.updateArray(createImageUrl, savedImage);
+      userContext.onImageAdded(savedImage.sizeInByte);
+      return savedImage;
     }
 
     updateImage = async (imageToSave: ImageModel):Promise<ImageModel> => {
@@ -59,7 +70,7 @@ class ImageProxy implements IImageProxy {
 
     deleteImage = async (image: ImageModel): Promise<ImageModel> => {
       await progressiveHttpProxy.deleteAndUpdate<ImageModel>(`${this.baseUrl + image.parentUiId}/${image._uiId}`, 'image', (anImage) => anImage);
-      const deletedImage = await storageService.removeItemInArray<ImageModel>(this.baseUrl + image.parentUiId, image._uiId);
+      const deletedImage = await this.removeImageFromStorage(image);
       userContext.onImageRemoved(deletedImage.sizeInByte);
 
       return deletedImage;
@@ -70,9 +81,17 @@ class ImageProxy implements IImageProxy {
 
       await images.reduce(async (previousPromise, image) => {
         await previousPromise;
-        const deletedImage = await storageService.removeItemInArray<ImageModel>(this.baseUrl + image.parentUiId, image._uiId);
+        const deletedImage = await this.removeImageFromStorage(image);
         userContext.onImageRemoved(deletedImage.sizeInByte);
       }, Promise.resolve());
+    }
+
+    private async removeImageFromStorage(image: ImageModel) {
+      const deletedImage = await storageService.removeItemInArray<ImageModel>(this.baseUrl + image.parentUiId, image._uiId);
+      await storageService.removeItem<ImageModel>(image.url);
+      await storageService.removeItem<ImageModel>(image.thumbnailUrl);
+
+      return deletedImage;
     }
 }
 
