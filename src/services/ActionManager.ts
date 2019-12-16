@@ -1,15 +1,20 @@
 /* eslint-disable max-classes-per-file */
-
 import httpProxy from './HttpProxy';
 
 // eslint-disable-next-line no-unused-vars
 import storageService, { IUserStorageListener } from './StorageService';
+// eslint-disable-next-line no-unused-vars
+import { ImageModel } from '../types/Types';
+
+import { dataURItoBlob } from '../helpers/ImageHelper';
 
 export enum ActionType{
     // eslint-disable-next-line no-unused-vars
     Post,
     // eslint-disable-next-line no-unused-vars
-    Delete
+    Delete,
+    // eslint-disable-next-line no-unused-vars
+    CreateImage,
 }
 
 export interface Action{
@@ -109,6 +114,12 @@ class ActionManager implements IActionManager, IUserStorageListener {
         await httpProxy.post(action.key, action.data);
       } else if (action.type === ActionType.Delete) {
         await httpProxy.deleteReq(action.key);
+      } else if (action.type === ActionType.CreateImage) {
+        const imgToSave:ImageModel = action.data as ImageModel;
+        const blobImage = dataURItoBlob(await storageService.getItem(imgToSave.url));
+        const thumbnail = dataURItoBlob(await storageService.getItem(imgToSave.thumbnailUrl));
+
+        await httpProxy.postImage(action.key, imgToSave, blobImage, thumbnail);
       } else {
         throw new Error(`The action type ${action.type} is not recognized.`);
       }

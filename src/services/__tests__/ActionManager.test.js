@@ -262,7 +262,7 @@ describe('Test ActionManager', () => {
       });
 
       const actionToAdd1 = {
-        type: 2,
+        type: 99,
         key: 'my_action_test_01',
         data: { name: 'data1' },
       };
@@ -275,7 +275,7 @@ describe('Test ActionManager', () => {
         // Assert
         expect(urls.length).toBe(0);
         expect(deleteUrls.length).toBe(0);
-        expect(error.message).toBe('The action type 2 is not recognized.');
+        expect(error.message).toBe('The action type 99 is not recognized.');
       }
     });
   });
