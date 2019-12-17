@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+// eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
 import ignoredMessages from '../../../testHelpers/MockConsole';
 
