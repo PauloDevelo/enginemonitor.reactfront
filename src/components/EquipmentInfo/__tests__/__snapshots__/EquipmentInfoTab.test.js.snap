@@ -44,7 +44,9 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
               className="font-weight-bold"
             >
               2563
-               h 
+               
+              h
+               
             </span>
             <FormattedMessage
               defaultMessage="installed on "

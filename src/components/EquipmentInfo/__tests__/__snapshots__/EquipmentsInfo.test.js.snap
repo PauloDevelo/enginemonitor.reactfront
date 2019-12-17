@@ -275,7 +275,9 @@ exports[`EquipmentsInfo Should render a equipment tabs with hte first equipment 
                       className="font-weight-bold"
                     >
                       2563
-                       h 
+                       
+                      h
+                       
                     </span>
                     <FormattedMessage
                       defaultMessage="installed on "
@@ -840,7 +842,9 @@ exports[`EquipmentsInfo Should render a equipment tabs with hte first equipment 
                       className="font-weight-bold"
                     >
                       2563000
-                       h 
+                       
+                      h
+                       
                     </span>
                     <FormattedMessage
                       defaultMessage="installed on "
@@ -1405,7 +1409,9 @@ exports[`EquipmentsInfo Should render a equipment tabs with hte first equipment 
                       className="font-weight-bold"
                     >
                       120
-                       h 
+                       
+                      h
+                       
                     </span>
                     <FormattedMessage
                       defaultMessage="installed on "
