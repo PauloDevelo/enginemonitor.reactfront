@@ -10,6 +10,7 @@ type Props = {
   alt?: string,
   onClick?:()=>void,
   className?: string,
+  style?: any,
 }
 
 export const canvasImageSourceToDataURL = (img: CanvasImageSource) => {
