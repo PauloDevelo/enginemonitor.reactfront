@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import {
   Button, Card, CardBody, CardTitle, CardSubtitle, CardFooter, CardText, Badge,
 } from 'reactstrap';
@@ -36,23 +36,25 @@ const CardTaskDetails = ({
 }: Props) => {
   const modalHook = useEditModal(currentTask);
 
-  const getTaskIndex = (task: TaskModel | undefined):number => (task === undefined ? -1 : tasks.findIndex((t) => t._uiId === task._uiId));
+  const [taskIndex, setTaskIndex] = useState(currentTask === undefined ? -1 : tasks.findIndex((t) => t._uiId === currentTask._uiId));
+  useEffect(() => {
+    setTaskIndex(currentTask === undefined ? -1 : tasks.findIndex((t) => t._uiId === currentTask._uiId));
+  }, [currentTask, tasks]);
 
-  const taskIndex = getTaskIndex(currentTask);
+  const isPrevButtonVisible = useCallback(():boolean => (taskIndex > 0), [taskIndex]);
+  const isNextButtonVisible = useCallback(():boolean => (taskIndex < tasks.length - 1), [taskIndex, tasks]);
+
+  const nextTask = useCallback(():void => {
+    if (isNextButtonVisible()) { changeCurrentTask(tasks[taskIndex + 1]); }
+  }, [changeCurrentTask, isNextButtonVisible]);
+
+  const previousTask = useCallback(():void => {
+    if (isPrevButtonVisible()) { changeCurrentTask(tasks[taskIndex - 1]); }
+  }, [isPrevButtonVisible, changeCurrentTask, tasks, taskIndex]);
 
   if (equipment === undefined || currentTask === undefined) {
     return <Card className={classNames} />;
   }
-
-  const isPrevButtonVisible = ():boolean => (taskIndex > 0);
-  const isNextButtonVisible = ():boolean => (taskIndex < tasks.length - 1);
-
-  const nextTask = ():void => {
-    if (isNextButtonVisible()) { changeCurrentTask(tasks[taskIndex + 1]); }
-  };
-  const previousTask = ():void => {
-    if (isPrevButtonVisible()) { changeCurrentTask(tasks[taskIndex - 1]); }
-  };
 
   const cursorPointerStyle = { cursor: 'pointer' };
   const badgeText = getBadgeText(currentTask.level);
