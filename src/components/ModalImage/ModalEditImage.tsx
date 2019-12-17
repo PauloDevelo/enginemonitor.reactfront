@@ -8,6 +8,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage, defineMessages } from 'react-intl';
 import { CSSTransition } from 'react-transition-group';
 
+import storageService from '../../services/StorageService';
+
+import Img from '../ImageComponent/Img';
+import Loading from '../Loading/Loading';
+
 import useEditModalLogic from '../../hooks/EditModalLogicHook';
 
 import imageProxy from '../../services/ImageProxy';
@@ -52,7 +57,7 @@ const ModalEditImage = ({
             <FormattedMessage {...editImageMsg.modalImageEditTitle} />
           </ModalHeader>
           <ModalBody>
-            {image !== undefined && <img src={image.url} style={{ width: '100%' }} alt={`${image.title} - ${image.description}`} />}
+            {image !== undefined && <Img storage={storageService.getUserStorage()} src={image.url} style={{ width: '100%' }} alt={`${image.title} - ${image.description}`} loader={<span className="spinnerContainer"><Loading /></span>} />}
             {visible
                         && (
                         <MyForm id="imageEditForm" submit={modalLogic.handleSubmit} initialData={image}>

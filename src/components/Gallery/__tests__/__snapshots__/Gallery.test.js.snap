@@ -1186,11 +1186,26 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                         <div
                           class="modal-body"
                         >
-                          <img
-                            alt="undefined - undefined"
-                            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339188DJI_1645.JPG.jpeg"
-                            style="width: 100%;"
-                          />
+                          <span
+                            class="spinnerContainer"
+                          >
+                            <div
+                              class="lds-spinner"
+                            >
+                              <div />
+                              <div />
+                              <div />
+                              <div />
+                              <div />
+                              <div />
+                              <div />
+                              <div />
+                              <div />
+                              <div />
+                              <div />
+                              <div />
+                            </div>
+                          </span>
                           <form
                             class=""
                             id="imageEditForm"
@@ -1324,11 +1339,26 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                           <div
                             class="modal-body"
                           >
-                            <img
-                              alt="undefined - undefined"
-                              src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339188DJI_1645.JPG.jpeg"
-                              style="width: 100%;"
-                            />
+                            <span
+                              class="spinnerContainer"
+                            >
+                              <div
+                                class="lds-spinner"
+                              >
+                                <div />
+                                <div />
+                                <div />
+                                <div />
+                                <div />
+                                <div />
+                                <div />
+                                <div />
+                                <div />
+                                <div />
+                                <div />
+                                <div />
+                              </div>
+                            </span>
                             <form
                               class=""
                               id="imageEditForm"
@@ -1562,15 +1592,61 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                             <div
                               className="modal-body"
                             >
-                              <img
+                              <Img
                                 alt="undefined - undefined"
+                                loader={
+                                  <span
+                                    className="spinnerContainer"
+                                  >
+                                    <Loading />
+                                  </span>
+                                }
                                 src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339188DJI_1645.JPG.jpeg"
+                                storage={
+                                  Object {
+                                    "getItem": [MockFunction],
+                                    "keys": [MockFunction] {
+                                      "calls": Array [
+                                        Array [],
+                                      ],
+                                      "results": Array [
+                                        Object {
+                                          "type": "return",
+                                          "value": Promise {},
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
                                 style={
                                   Object {
                                     "width": "100%",
                                   }
                                 }
-                              />
+                              >
+                                <span
+                                  className="spinnerContainer"
+                                >
+                                  <Loading>
+                                    <div
+                                      className="lds-spinner"
+                                    >
+                                      <div />
+                                      <div />
+                                      <div />
+                                      <div />
+                                      <div />
+                                      <div />
+                                      <div />
+                                      <div />
+                                      <div />
+                                      <div />
+                                      <div />
+                                      <div />
+                                    </div>
+                                  </Loading>
+                                </span>
+                              </Img>
                               <Memo(MyForm)
                                 id="imageEditForm"
                                 initialData={
