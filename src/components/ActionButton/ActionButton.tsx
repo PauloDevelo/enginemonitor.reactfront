@@ -1,5 +1,7 @@
-import React, { Fragment } from "react";
+import React from 'react';
 import { Button, Spinner } from 'reactstrap';
+
+// eslint-disable-next-line no-unused-vars
 import { FormattedMessage, MessageDescriptor } from 'react-intl';
 
 type Props = {
@@ -8,19 +10,22 @@ type Props = {
     message: MessageDescriptor,
     action?: () => void,
     className?: string,
-    type?: "submit" | "button" | "reset",
+    type?: 'submit' | 'button' | 'reset',
     form?: string
 };
 
-const ActionButton = ({color, isActing, message, action, className, type, ...props}:Props) => {
-    if (type === undefined){
-        type = 'button';
-    }
-
-    return <Button type={type} color={color} onClick={action} className={className} disabled={isActing} {...props}>
-        <FormattedMessage {...message} />
-        {isActing && <Fragment>{' '}<Spinner size="sm" color="secondary" /></Fragment>}
-    </Button>;
-};
+const ActionButton = ({
+  color, isActing, message, action, className, type, ...props
+}:Props) => (
+  <Button type={type || 'button'} color={color} onClick={action} className={className} disabled={isActing} {...props}>
+    <FormattedMessage {...message} />
+    {isActing && (
+      <>
+          {' '}
+        <Spinner size="sm" color="secondary" />
+      </>
+    )}
+  </Button>
+);
 
 export default ActionButton;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {  mount } from 'enzyme';
+import { mount } from 'enzyme';
 import ignoredMessages from '../../../testHelpers/MockConsole';
 
 import ActionButton from '../ActionButton';
