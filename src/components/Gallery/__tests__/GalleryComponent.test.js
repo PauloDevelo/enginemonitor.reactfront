@@ -66,10 +66,9 @@ describe('Component GalleryComponent', () => {
     // Arrange
     const onClickThumbnail = jest.fn();
     const addImage = jest.fn();
-    const turnOnCamera = jest.fn();
 
     // Act
-    const galleryComponent = mount(<GalleryComponent parentUiId={parentUiId} isLoading images={[]} onClickThumbnail={onClickThumbnail} addImage={addImage} turnOnCamera={turnOnCamera} />);
+    const galleryComponent = mount(<GalleryComponent parentUiId={parentUiId} isLoading images={[]} onClickThumbnail={onClickThumbnail} addImage={addImage} />);
 
     // Assert
     const loading = galleryComponent.find('Loading');
@@ -77,7 +76,6 @@ describe('Component GalleryComponent', () => {
 
     expect(onClickThumbnail).toHaveBeenCalledTimes(0);
     expect(addImage).toHaveBeenCalledTimes(0);
-    expect(turnOnCamera).toHaveBeenCalledTimes(0);
 
     expect(galleryComponent).toMatchSnapshot();
   });
@@ -86,10 +84,9 @@ describe('Component GalleryComponent', () => {
     // Arrange
     const onClickThumbnail = jest.fn();
     const addImage = jest.fn();
-    const turnOnCamera = jest.fn();
 
     // Act
-    const galleryComponent = mount(<GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} turnOnCamera={turnOnCamera} />);
+    const galleryComponent = mount(<GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} />);
 
     // Assert
     const thumbnails = galleryComponent.find('Memo(Thumbnail)');
@@ -100,7 +97,6 @@ describe('Component GalleryComponent', () => {
 
     expect(onClickThumbnail).toHaveBeenCalledTimes(0);
     expect(addImage).toHaveBeenCalledTimes(0);
-    expect(turnOnCamera).toHaveBeenCalledTimes(0);
 
     expect(galleryComponent).toMatchSnapshot();
   });
@@ -109,9 +105,8 @@ describe('Component GalleryComponent', () => {
     // Arrange
     const onClickThumbnail = jest.fn();
     const addImage = jest.fn();
-    const turnOnCamera = jest.fn();
 
-    const galleryComponent = mount(<GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} turnOnCamera={turnOnCamera} />);
+    const galleryComponent = mount(<GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} />);
 
     const thumbnails = galleryComponent.find('Memo(Thumbnail)');
 
@@ -125,23 +120,5 @@ describe('Component GalleryComponent', () => {
 
     expect(onClickThumbnail).toHaveBeenCalledTimes(3);
     expect(addImage).toHaveBeenCalledTimes(0);
-    expect(turnOnCamera).toHaveBeenCalledTimes(0);
-  });
-
-  it('should call turnOnCamera function when we click on the camera button', async () => {
-    // Arrange
-    const onClickThumbnail = jest.fn();
-    const addImage = jest.fn();
-    const turnOnCamera = jest.fn();
-
-    const galleryComponent = mount(<GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} turnOnCamera={turnOnCamera} />);
-
-    const cameraButton = galleryComponent.find('Button').at(1);
-
-    cameraButton.simulate('click');
-
-    expect(onClickThumbnail).toHaveBeenCalledTimes(0);
-    expect(addImage).toHaveBeenCalledTimes(0);
-    expect(turnOnCamera).toHaveBeenCalledTimes(1);
   });
 });

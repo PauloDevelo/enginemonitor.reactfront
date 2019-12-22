@@ -201,20 +201,4 @@ describe('Component Gallery', () => {
     expect(gallery.find('ModalEditImage').props().visible).toBe(true);
     expect(gallery).toMatchSnapshot();
   });
-
-  it('should render the Html5Camera when clicking on the camera button in the GalleryComponent', async () => {
-    // Arrange
-    const gallery = mount(<Gallery parentUiId={parentUiId} />);
-    await updateWrapper(gallery);
-
-    const galleryComponent = gallery.find('Memo(GalleryComponent)');
-    const cameraButton = galleryComponent.find('Button');
-
-    // Act
-    cameraButton.at(1).simulate('click');
-
-    // Assert
-    expect(gallery.find('Memo(Html5Camera)').length).toBe(1);
-    expect(gallery).toMatchSnapshot();
-  });
 });

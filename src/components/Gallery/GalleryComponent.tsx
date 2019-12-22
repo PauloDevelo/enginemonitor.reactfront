@@ -1,8 +1,7 @@
 import React from 'react';
-import { Label, Button } from 'reactstrap';
+import { Label } from 'reactstrap';
 import { FormattedMessage, defineMessages } from 'react-intl';
-import { faCamera, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import Loading from '../Loading/Loading';
 
 import Thumbnail from './Thumbnail';
@@ -24,12 +23,11 @@ type Props = {
     images: ImageModel[],
     isLoading: boolean
     onClickThumbnail: (index: number) => void,
-    addImage: (image: ImageModel) => void,
-    turnOnCamera: () => void
+    addImage: (image: ImageModel) => void
 };
 
 function GalleryComponent({
-  parentUiId, images, isLoading, onClickThumbnail, addImage, turnOnCamera,
+  parentUiId, images, isLoading, onClickThumbnail, addImage,
 }: Props) {
   const thumbnails = images.map((image, index) => <Thumbnail key={image._uiId} image={image} onClickImage={() => onClickThumbnail(index)} />);
 
@@ -39,12 +37,6 @@ function GalleryComponent({
         <Label className="font-weight-bold"><FormattedMessage {...galleryMsg.gallerytitle} /></Label>
         <div>
           <AddImageFileButton parentUiId={parentUiId} addImage={addImage} className="float-right" />
-          <Button color="light" onClick={turnOnCamera} className="float-right">
-            <span className="fa-layers fa-fw">
-              <FontAwesomeIcon icon={faCamera} size="lg" />
-              <FontAwesomeIcon icon={faPlus} size="xs" transform="down-13 left-16" />
-            </span>
-          </Button>
         </div>
       </div>
       <div className="p-1 border border-secondary rounded shadow gallery">

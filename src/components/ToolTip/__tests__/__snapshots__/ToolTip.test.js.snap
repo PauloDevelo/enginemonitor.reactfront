@@ -77,7 +77,7 @@ exports[`Component ToolTip should be the same as the previous snapshot 1`] = `
         placementPrefix="bs-tooltip"
         target="tooltip2"
         toggle={[Function]}
-        trigger="click hover focus"
+        trigger="hover focus"
       >
         <TooltipPopoverWrapper
           autohide={true}
@@ -96,7 +96,7 @@ exports[`Component ToolTip should be the same as the previous snapshot 1`] = `
           popperClassName="tooltip show"
           target="tooltip2"
           toggle={[Function]}
-          trigger="click hover focus"
+          trigger="hover focus"
         />
       </Tooltip>
     </UncontrolledTooltip>

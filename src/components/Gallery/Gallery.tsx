@@ -8,7 +8,6 @@ import '../React-image-lightbox/style.css';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Lightbox from '../React-image-lightbox/index';
-import Html5Camera from './Html5Camera';
 
 // eslint-disable-next-line no-unused-vars
 import { ImageModel } from '../../types/Types';
@@ -31,7 +30,6 @@ function Gallery({ parentUiId }: Props) {
   const [editImage, setEditImage] = useState<ImageModel | undefined>(undefined);
   const [images, setImages] = useState<ImageModel[]>([]);
   const [isOpen, setOpen] = useState(false);
-  const [isCameraOn, setCamera] = useState(false);
   const [index, setIndex] = useState(-1);
 
   const { data: fetchedImages, error: errorFetchingImages, isLoading } = useFetcher({ fetchPromise: imageProxy.fetchImages, fetchProps: { parentUiId }, cancellationMsg: 'Cancellation of images fetching' });
@@ -45,14 +43,6 @@ function Gallery({ parentUiId }: Props) {
       errorService.addError(errorFetchingImages);
     }
   }, [errorFetchingImages]);
-
-  const turnOnCamera = useCallback(() => {
-    setCamera(true);
-  }, []);
-
-  const turnOffCamera = useCallback(() => {
-    setCamera(false);
-  }, []);
 
   const addImage = useCallback((newImage:ImageModel) => {
     setImages((previousImages) => previousImages.concat(newImage));
@@ -136,7 +126,6 @@ function Gallery({ parentUiId }: Props) {
         isLoading={isLoading}
         onClickThumbnail={onClickThumbnail}
         addImage={addImage}
-        turnOnCamera={turnOnCamera}
       />
       {isOpen && images[index] !== undefined && (
         <Lightbox
@@ -155,13 +144,6 @@ function Gallery({ parentUiId }: Props) {
           imageCaption={images[index].description}
           imageTitle={images[index].title}
           reactModalStyle={galleryStyles}
-        />
-      )}
-      {isCameraOn && (
-        <Html5Camera
-          imageParentUiId={parentUiId}
-          close={turnOffCamera}
-          addImage={addImage}
         />
       )}
       <ModalEditImage
