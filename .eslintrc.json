@@ -29,7 +29,12 @@
         "react/prop-types": "off",
         "no-plusplus": "off",
         "react/jsx-props-no-spreading": "off",
-        "max-len": "off"
+        "max-len": "off",
+        "import/extensions": ["error", "ignorePackages", { 
+            "ts": "never",
+            "tsx": "never"
+            }
+        ]
     },
     "settings": {
         "import/resolver": {
