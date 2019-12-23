@@ -46,7 +46,7 @@ const CardTaskDetails = ({
 
   const nextTask = useCallback(():void => {
     if (isNextButtonVisible()) { changeCurrentTask(tasks[taskIndex + 1]); }
-  }, [changeCurrentTask, isNextButtonVisible]);
+  }, [changeCurrentTask, isNextButtonVisible, taskIndex, tasks]);
 
   const previousTask = useCallback(():void => {
     if (isPrevButtonVisible()) { changeCurrentTask(tasks[taskIndex - 1]); }
