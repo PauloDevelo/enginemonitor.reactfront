@@ -20,7 +20,7 @@ import Gallery from '../Gallery/Gallery';
 
 import {
   // eslint-disable-next-line no-unused-vars
-  EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType,
+  EntityModel, EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType,
 } from '../../types/Types';
 
 import jsonMessages from './ModalEditEntry.messages.json';
@@ -38,6 +38,8 @@ deleteEntry?: (entry: EntryModel) => void;
 toggle: ()=>void;
 }
 
+const getEntityId = (entity: EntityModel | undefined) => (entity === undefined ? undefined : entity._uiId);
+
 const ModalTitle = ({ isNewEntry }:{isNewEntry: boolean}) => {
   if (isNewEntry) {
     return <FormattedMessage {...editEntryMsg.modalAckTitle} />;
@@ -49,12 +51,20 @@ const ModalTitle = ({ isNewEntry }:{isNewEntry: boolean}) => {
 const ModalEditEntry = ({
   equipment, task, entry, visible, className, saveEntry, deleteEntry, toggle,
 }: Props) => {
-  const equipmentId = equipment === undefined ? undefined : equipment._uiId;
-  const taskId = task === undefined ? undefined : task._uiId;
-  const entryId = entry === undefined ? undefined : entry._uiId;
+  const [equipmentId, setEquipmentId] = useState(getEntityId(equipment));
+  useEffect(() => {
+    setEquipmentId(getEntityId(equipment));
+  }, [equipment]);
 
-  const modalLogic = useEditModalLogic<EntryModel>(toggle, entryProxy.createOrSaveEntry, [equipmentId, taskId], undefined, saveEntry,
-    entryProxy.deleteEntry, [equipmentId, taskId, entryId], deleteEntry);
+  const [taskId, setTaskId] = useState(getEntityId(task));
+  useEffect(() => {
+    setTaskId(getEntityId(task));
+  }, [task]);
+
+  const [entryId, setEntryId] = useState(getEntityId(entry));
+  useEffect(() => {
+    setEntryId(getEntityId(entry));
+  }, [entry]);
 
   const [isNewEntry, setIsNewEntry] = useState(false);
 
@@ -65,6 +75,14 @@ const ModalEditEntry = ({
       });
     }
   }, [equipmentId, entryId]);
+
+  const onSavedEntryCb = (entrySaved: EntryModel) => {
+    setIsNewEntry(false);
+    saveEntry(entrySaved);
+  };
+
+  const modalLogic = useEditModalLogic<EntryModel>(toggle, entryProxy.createOrSaveEntry, [equipmentId, taskId], undefined, onSavedEntryCb,
+    entryProxy.deleteEntry, [equipmentId, taskId, entryId], deleteEntry);
 
   return (
     <>

@@ -99,6 +99,37 @@ describe('ModalEditEntry', () => {
     expect(modalEditEntry.find('ModalFooter').find('Button').length).toBe(2);
   });
 
+  it('Should display the button delete after saving the entry', async () => {
+    // Arrange
+    let isEntryExist = false;
+    entryProxy.existEntry.mockImplementation(async () => Promise.resolve(isEntryExist));
+    jest.spyOn(entryProxy, 'createOrSaveEntry').mockImplementation(async (equipmentId, taskId, newEntry) => {
+      isEntryExist = true;
+      return Promise.resolve(newEntry);
+    });
+
+    const onSavedEntry = jest.fn();
+
+    const onDeletedEntry = jest.fn();
+    let isVisible = true;
+    const toggleFn = jest.fn().mockImplementation(() => {
+      isVisible = !isVisible;
+    });
+
+    const modalEditEntry = mount(<ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />);
+    const myForm = modalEditEntry.find('Memo(MyForm)');
+
+    // Act
+    myForm.simulate('submit');
+    await updateWrapper(modalEditEntry);
+
+    // Assert
+    expect(entryProxy.createOrSaveEntry).toBeCalledTimes(1);
+    expect(onSavedEntry).toBeCalledTimes(1);
+    expect(isEntryExist).toBe(true);
+    expect(modalEditEntry.find('ModalFooter').find('Button').length).toBe(3);
+  });
+
   it('Should save the entry using the entry proxy when clicking on Save', async () => {
     // Arrange
     entryProxy.existEntry.mockImplementation(async () => Promise.resolve(true));
