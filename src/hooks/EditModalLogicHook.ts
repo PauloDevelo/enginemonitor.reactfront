@@ -4,9 +4,24 @@ import { useState } from 'react';
 
 import HttpError from '../http/HttpError';
 
-export default function useEditModalLogic<T>(toggleEditModal: ()=> void,
-  save: any, saveParams: any[], onSaveCb: ((data: T) => void) | undefined, onSavedCb: (data: T) => void,
-  deleteFunc: any, deleteParams: any[], onDeleteCallBack: ((data: T) => void) | undefined) {
+type ModalLogicProps<T> = {
+  toggleEditModal: ()=> void;
+
+  saveFunc: (...params:any) => Promise<T>;
+  saveParams: (any|undefined)[];
+  onSaveCb?: ((data: T) => void);
+  onSavedCb: (data: T) => void;
+
+  deleteFunc: (...params:any) => Promise<T>;
+  deleteParams: (any|undefined)[];
+  onDeleteCallBack?: (data: T) => void;
+}
+
+export default function useEditModalLogic<T>({
+  toggleEditModal,
+  saveFunc, saveParams, onSaveCb, onSavedCb,
+  deleteFunc, deleteParams, onDeleteCallBack,
+}: ModalLogicProps<T>) {
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [alerts, setAlerts] = useState<any>(undefined);
@@ -26,7 +41,8 @@ export default function useEditModalLogic<T>(toggleEditModal: ()=> void,
     if (onSaveCb) { onSaveCb(data); }
 
     try {
-      const savedData = await save(...saveParams.concat(data));
+      const paramsValues = saveParams.concat(data);
+      const savedData = await saveFunc(...paramsValues);
       onSavedCb(savedData);
       setAlerts(undefined);
       toggleEditModal();

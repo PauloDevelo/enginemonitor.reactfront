@@ -45,9 +45,16 @@ const ModalEditTask = ({
   equipment, task, onTaskSaved, toggle, onTaskDeleted, visible, className,
 }: Props) => {
   const modalLogic = useEditModalLogic(
-    toggle,
-    taskProxy.createOrSaveTask, [equipment._uiId], onSaveTask, onTaskSaved,
-    taskProxy.deleteTask, [equipment._uiId, task._uiId], onTaskDeleted,
+    {
+      toggleEditModal: toggle,
+      saveFunc: taskProxy.createOrSaveTask,
+      saveParams: [equipment._uiId],
+      onSaveCb: onSaveTask,
+      onSavedCb: onTaskSaved,
+      deleteFunc: taskProxy.deleteTask,
+      deleteParams: [equipment._uiId, task._uiId],
+      onDeleteCallBack: onTaskDeleted,
+    },
   );
   const [isCreation, setIsCreation] = useState(false);
 

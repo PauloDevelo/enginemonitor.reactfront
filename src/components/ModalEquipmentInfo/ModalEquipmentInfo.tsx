@@ -40,9 +40,19 @@ const ModalEquipmentInfo = ({
   equipment, onEquipmentInfoSaved, onEquipmentDeleted, visible, toggle, className,
 }: Props) => {
   const [ageAcquisitionType, setAgeAcquisitionType] = useState(equipment.ageAcquisitionType);
-  const modalLogic = useEditModalLogic(toggle,
-    equipmentProxy.createOrSaveEquipment, [], undefined, onEquipmentInfoSaved,
-    equipmentProxy.deleteEquipment, [equipment._uiId], onEquipmentDeleted);
+  const modalLogic = useEditModalLogic(
+    {
+      toggleEditModal: toggle,
+      saveFunc: equipmentProxy.createOrSaveEquipment,
+      saveParams: [],
+      onSavedCb: onEquipmentInfoSaved,
+      deleteFunc: equipmentProxy.deleteEquipment,
+      deleteParams: [equipment._uiId],
+      onDeleteCallBack: onEquipmentDeleted,
+    },
+  );
+
+
   const [isCreation, setIsCreation] = useState(false);
 
   const onAgeAcquisitionTypeChanged = useCallback((ageAcquisitionTypeFromInput: string) => {

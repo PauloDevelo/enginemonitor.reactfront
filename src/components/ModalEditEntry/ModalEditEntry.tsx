@@ -81,8 +81,17 @@ const ModalEditEntry = ({
     saveEntry(entrySaved);
   };
 
-  const modalLogic = useEditModalLogic<EntryModel>(toggle, entryProxy.createOrSaveEntry, [equipmentId, taskId], undefined, onSavedEntryCb,
-    entryProxy.deleteEntry, [equipmentId, taskId, entryId], deleteEntry);
+  const modalLogic = useEditModalLogic<EntryModel>(
+    {
+      toggleEditModal: toggle,
+      saveFunc: entryProxy.createOrSaveEntry,
+      saveParams: [equipmentId, taskId],
+      onSavedCb: onSavedEntryCb,
+      deleteFunc: entryProxy.deleteEntry,
+      deleteParams: [equipmentId, taskId, entryId],
+      onDeleteCallBack: deleteEntry,
+    },
+  );
 
   return (
     <>

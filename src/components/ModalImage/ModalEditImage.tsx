@@ -43,9 +43,17 @@ className?: string
 const ModalEditImage = ({
   image, visible, onImageSaved, toggle, onImageDeleted, className,
 }: Props) => {
-  const modalLogic = useEditModalLogic(toggle,
-    imageProxy.updateImage, [], () => {}, onImageSaved,
-    imageProxy.deleteImage, [image], onImageDeleted);
+  const modalLogic = useEditModalLogic(
+    {
+      toggleEditModal: toggle,
+      saveFunc: imageProxy.updateImage,
+      saveParams: [],
+      onSavedCb: onImageSaved,
+      deleteFunc: imageProxy.deleteImage,
+      deleteParams: [image],
+      onDeleteCallBack: onImageDeleted,
+    },
+  );
 
   return (
     <>
