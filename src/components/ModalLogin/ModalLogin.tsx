@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition } from 'react-transition-group';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
-import { useEditModal } from '../../hooks/EditModalHook';
+import useEditModal from '../../hooks/EditModalHook';
 
 import ModalPasswordReset from '../ModalPasswordReset/ModalPasswordReset';
 import MyForm from '../Form/MyForm';

@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAsync } from 'react-async';
 import equipmentProxy from '../../services/EquipmentProxy';
 
-import { useEditModal } from '../../hooks/EditModalHook';
+import useEditModal from '../../hooks/EditModalHook';
 
 import EquipmentInfoTab from './EquipmentInfoTab';
 import EquipmentInfoNavItem from './EquipmentInfoNavItem';

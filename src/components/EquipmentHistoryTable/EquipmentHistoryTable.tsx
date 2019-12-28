@@ -7,10 +7,10 @@ import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
 import { faPlusSquare, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as moment from 'moment';
-import { composeDecorators } from '../react-table-factory/table';
-import { withInMemorySortingContext } from '../react-table-factory/withSortingContext';
-import { withHeaderControl } from '../react-table-factory/withHeaderControl';
-import { withFixedHeader } from '../react-table-factory/withFixedHeader';
+import { composeDecorators } from '../react-table-factory/table.js';
+import { withInMemorySortingContext } from '../react-table-factory/withSortingContext.js';
+import { withHeaderControl } from '../react-table-factory/withHeaderControl.js';
+import { withFixedHeader } from '../react-table-factory/withFixedHeader.js';
 
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
@@ -21,7 +21,7 @@ import useFetcher from '../../hooks/Fetcher';
 
 import entryProxy from '../../services/EntryProxy';
 
-import { useEditModal } from '../../hooks/EditModalHook';
+import useEditModal from '../../hooks/EditModalHook';
 
 import { shorten } from '../../helpers/TaskHelper';
 import { createDefaultEntry } from '../../helpers/EntryHelper';

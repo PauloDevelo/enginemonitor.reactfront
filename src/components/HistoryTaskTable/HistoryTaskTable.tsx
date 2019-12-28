@@ -13,14 +13,14 @@ import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
 import ClickableCell from '../Table/ClickableCell';
 
-import { composeDecorators } from '../react-table-factory/table';
-import { withInMemorySortingContext } from '../react-table-factory/withSortingContext';
-import { withHeaderControl } from '../react-table-factory/withHeaderControl';
-import { withFixedHeader } from '../react-table-factory/withFixedHeader';
+import { composeDecorators } from '../react-table-factory/table.js';
+import { withInMemorySortingContext } from '../react-table-factory/withSortingContext.js';
+import { withHeaderControl } from '../react-table-factory/withHeaderControl.js';
+import { withFixedHeader } from '../react-table-factory/withFixedHeader.js';
 
 import entryProxy from '../../services/EntryProxy';
 
-import { useEditModal } from '../../hooks/EditModalHook';
+import useEditModal from '../../hooks/EditModalHook';
 
 import { shorten } from '../../helpers/TaskHelper';
 import { createDefaultEntry } from '../../helpers/EntryHelper';

@@ -6,7 +6,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-import { useEditModal } from '../../hooks/EditModalHook';
+import useEditModal from '../../hooks/EditModalHook';
 
 import { getContext, getBadgeText } from '../../helpers/TaskHelper';
 

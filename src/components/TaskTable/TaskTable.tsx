@@ -6,10 +6,10 @@ import { Button, Badge } from 'reactstrap';
 import { FormattedMessage, defineMessages } from 'react-intl';
 import { faTasks, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { composeDecorators } from '../react-table-factory/table';
-import { withInMemorySortingContext } from '../react-table-factory/withSortingContext';
-import { withHeaderControl } from '../react-table-factory/withHeaderControl';
-import { withFixedHeader } from '../react-table-factory/withFixedHeader';
+import { composeDecorators } from '../react-table-factory/table.js';
+import { withInMemorySortingContext } from '../react-table-factory/withSortingContext.js';
+import { withHeaderControl } from '../react-table-factory/withHeaderControl.js';
+import { withFixedHeader } from '../react-table-factory/withFixedHeader.js';
 
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
 import Loading from '../Loading/Loading';
@@ -22,7 +22,7 @@ import {
 // eslint-disable-next-line no-unused-vars
 import ToDoText from '../ToDoText/TodoText';
 
-import { useEditModal } from '../../hooks/EditModalHook';
+import useEditModal from '../../hooks/EditModalHook';
 
 import {
   // eslint-disable-next-line no-unused-vars
