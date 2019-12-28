@@ -10,9 +10,10 @@ import HttpError from '../http/HttpError';
 import { ImageModel } from '../types/Types';
 
 export type Config = {
-    headers: {
-        Authorization: string
-    }
+  headers: {
+      Authorization: string
+  };
+  timeout?: number;
 };
 
 export interface IHttpProxy{
@@ -38,7 +39,7 @@ function processError(error: any) {
     }
   }
 
-  throw new HttpError(data);
+  throw new HttpError(data, error);
 }
 
 class HttpProxy implements IHttpProxy {
@@ -49,7 +50,8 @@ class HttpProxy implements IHttpProxy {
     }
 
     setConfig(config: Config) {
-      this.config = config;
+      this.config = { ...config };
+      this.config.timeout = 2000;
     }
 
     postImage = async (url: string, image:ImageModel, imageData:Blob, thumbnailData: Blob):Promise<{ image: ImageModel }> => {
