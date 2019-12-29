@@ -1,3 +1,4 @@
+import * as log from 'loglevel';
 import httpProxy from './HttpProxy';
 import HttpError from '../http/HttpError';
 import syncService from './SyncService';
@@ -73,29 +74,29 @@ class UserProxy implements IUserProxy {
     }
 
     tryGetAndSetMemorizedUser = async ():Promise<UserModel | undefined> => {
-      try {
-        const rememberedUser = await storageService.getGlobalItem<UserModel>('currentUser');
+      if (await storageService.existGlobalItem('currentUser')) {
+        let rememberedUser = await storageService.getGlobalItem<UserModel>('currentUser');
         this.setHttpProxyAuthentication(rememberedUser);
 
         if (await syncService.isOnline()) {
-          const { user: currentUser }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}current`);
-          if (currentUser) {
-            storageService.setGlobalItem('currentUser', currentUser);
-            this.setHttpProxyAuthentication(currentUser);
-            await storageService.openUserStorage(currentUser);
-            userContext.onUserChanged(currentUser);
-            return currentUser;
+          try {
+            const { user: currentUser }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}current`);
+            if (currentUser) {
+              storageService.setGlobalItem('currentUser', currentUser);
+              this.setHttpProxyAuthentication(currentUser);
+              rememberedUser = currentUser;
+            }
+          } catch (error) {
+            log.error(error.message);
           }
         }
 
         await storageService.openUserStorage(rememberedUser);
         userContext.onUserChanged(rememberedUser);
         return rememberedUser;
-      } catch (reason) {
-        await this.logout();
-
-        return undefined;
       }
+
+      return undefined;
     }
 
     setHttpProxyAuthentication = ({ token }: UserModel) => {
