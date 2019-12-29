@@ -19,6 +19,7 @@ export interface IUserStorageListener{
 }
 
 export interface IStorageService{
+    existGlobalItem(key: string): Promise<boolean>;
     setGlobalItem<T>(key: string, value: T): Promise<T>;
     removeGlobalItem(key: string): Promise<void>;
     getGlobalItem<T>(key: string): Promise<T>;
@@ -43,6 +44,17 @@ class StorageService implements IStorageService {
     private userStorageListeners:IUserStorageListener[] = [];
 
     private userStorage: LocalForage | undefined;
+
+    // eslint-disable-next-line class-methods-use-this
+    async existGlobalItem(key: string): Promise<boolean> {
+      try {
+        const keys = await localforage.keys();
+        return keys.includes(key);
+      } catch (error) {
+        log.error(error);
+        throw error;
+      }
+    }
 
     // eslint-disable-next-line class-methods-use-this
     async setGlobalItem<T>(key: string, value: T): Promise<T> {
