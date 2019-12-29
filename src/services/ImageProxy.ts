@@ -1,10 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import { CancelToken } from 'axios';
 import progressiveHttpProxy from './ProgressiveHttpProxy';
-import httpProxy from './HttpProxy';
-import syncService from './SyncService';
+
 // eslint-disable-next-line no-unused-vars
-import actionManager, { Action, ActionType } from './ActionManager';
 import storageService from './StorageService';
 
 // eslint-disable-next-line no-unused-vars
@@ -44,18 +42,9 @@ class ImageProxy implements IImageProxy {
       await storageService.setItem(imgToSave.url, await blobToDataURL(blobImage));
       await storageService.setItem(imgToSave.thumbnailUrl, await blobToDataURL(thumbnail));
 
-      let savedImage: ImageModel;
       const createImageUrl = this.baseUrl + imgToSave.parentUiId;
 
-      if (await syncService.isOnlineAndSynced()) {
-        const { image } = await httpProxy.postImage(createImageUrl, imgToSave, blobImage, thumbnail);
-        savedImage = image;
-      } else {
-        const action: Action = { key: createImageUrl, type: ActionType.CreateImage, data: imgToSave };
-        await actionManager.addAction(action);
-        savedImage = imgToSave;
-        savedImage.sizeInByte = 450 * 1024;
-      }
+      const savedImage: ImageModel = await progressiveHttpProxy.postNewImage(createImageUrl, imgToSave, blobImage, thumbnail);
 
       await storageService.updateArray(createImageUrl, savedImage);
       userContext.onImageAdded(savedImage.sizeInByte);

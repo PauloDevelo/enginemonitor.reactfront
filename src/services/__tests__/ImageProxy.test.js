@@ -1,5 +1,7 @@
+// eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
 import httpProxy from '../HttpProxy';
+import HttpError from '../../http/HttpError';
 
 import storageService from '../StorageService';
 import userContext from '../UserContext';
@@ -77,25 +79,37 @@ describe('Test ImageProxy', () => {
 
   const createImageDataItems = [
     {
-      isOnlineAndSync: true, postImageNbCall: 1, addActionNbCall: 0, imageSizeInByte: 1024,
+      postImageThrowException: false, isOnlineAndSync: true, postImageNbCall: 1, addActionNbCall: 0, imageSizeInByte: 1024,
     },
     {
-      isOnlineAndSync: false, postImageNbCall: 0, addActionNbCall: 1, imageSizeInByte: 450 * 1024,
+      postImageThrowException: false, isOnlineAndSync: false, postImageNbCall: 0, addActionNbCall: 1, imageSizeInByte: 450 * 1024,
+    },
+    {
+      postImageThrowException: true, isOnlineAndSync: true, postImageNbCall: 1, addActionNbCall: 1, imageSizeInByte: 450 * 1024,
     },
   ];
   describe.each(createImageDataItems)('createImage', ({
-    isOnlineAndSync, postImageNbCall, addActionNbCall, imageSizeInByte,
+    postImageThrowException, isOnlineAndSync, postImageNbCall, addActionNbCall, imageSizeInByte,
   }) => {
-    it(`shoud call http proxy ${postImageNbCall} with the expected url and notify the change in the user storage size since we added an image when the app is ${isOnlineAndSync ? '' : 'not'} sync and online`, async () => {
+    it(`shoud call http proxy ${postImageNbCall} times with the expected url and notify the change in the user storage size since we added an image when the app is ${isOnlineAndSync ? '' : 'not'} sync and online`, async () => {
       // Arrange
       const thumbnailDataUrl = await blobToDataURL(thumbnail);
       const imageDataUrl = await blobToDataURL(imageData);
 
       const newImage = { ...imageToSave, sizeInByte: imageSizeInByte };
 
-      jest.spyOn(httpProxy, 'postImage').mockImplementation(() => ({
-        image: newImage,
-      }));
+      jest.spyOn(httpProxy, 'postImage').mockImplementation(async () => {
+        if (postImageThrowException) {
+          const axiosError = new Error('timeout');
+          axiosError.code = 'ECONNABORTED';
+
+          throw new HttpError(axiosError.message, axiosError);
+        }
+
+        return Promise.resolve({
+          image: newImage,
+        });
+      });
 
       syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
 
