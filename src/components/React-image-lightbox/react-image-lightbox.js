@@ -1,4 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
+import * as log from 'loglevel';
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
@@ -1104,68 +1106,67 @@ class ReactImageLightbox extends Component {
   }
 
   // Load image from src and call callback with image width and height on load
-  async loadImage(srcType, imageSrc, done) {
-    // Return the image info if it is already cached
-    if (isImageLoaded(imageSrc)) {
-      this.setTimeout(() => {
-        done();
-      }, 1);
-      return;
-    }
-
-    const inMemoryImage = new global.Image();
-
-    if (this.props.imageCrossOrigin) {
-      inMemoryImage.crossOrigin = this.props.imageCrossOrigin;
-    }
-
-    inMemoryImage.onerror = (errorEvent) => {
-      this.props.onImageLoadError(imageSrc, srcType, errorEvent);
-
-      // failed to load so set the state loadErrorStatus
-      this.setState((prevState) => ({
-        loadErrorStatus: { ...prevState.loadErrorStatus, [srcType]: true },
-      }));
-
-      done(errorEvent);
-    };
-
-    inMemoryImage.onload = () => {
-      this.props.onImageLoad(imageSrc, srcType, inMemoryImage);
-
-      imageCache[imageSrc] = {
-        loaded: true,
-        width: inMemoryImage.width,
-        height: inMemoryImage.height,
-      };
-
-      if (this.props.storage && inMemoryImage.src === imageSrc) {
-        const base64Image = canvasImageSourceToDataURL(inMemoryImage);
-        this.props.storage.setItem(imageSrc, base64Image).then(done);
-      } else {
-        done();
-      }
-    };
-
-    if (this.props.storage) {
-      const keys = await this.props.storage.keys();
-      if (keys.includes(imageSrc)) {
-        inMemoryImage.src = await this.props.storage.getItem(imageSrc);
+  async loadImage(srcType, imageSrc) {
+    return new Promise((resolve, reject) => {
+      // Return the image info if it is already cached
+      if (isImageLoaded(imageSrc)) {
+        resolve();
         return;
       }
-    }
 
-    inMemoryImage.src = imageSrc;
+      const inMemoryImage = new global.Image();
+
+      if (this.props.imageCrossOrigin) {
+        inMemoryImage.crossOrigin = this.props.imageCrossOrigin;
+      }
+
+      inMemoryImage.onerror = (errorEvent) => {
+        this.props.onImageLoadError(imageSrc, srcType, errorEvent);
+
+        // failed to load so set the state loadErrorStatus
+        this.setState((prevState) => ({
+          loadErrorStatus: { ...prevState.loadErrorStatus, [srcType]: true },
+        }));
+
+        reject(errorEvent);
+      };
+
+      inMemoryImage.onload = () => {
+        this.props.onImageLoad(imageSrc, srcType, inMemoryImage);
+
+        imageCache[imageSrc] = {
+          loaded: true,
+          width: inMemoryImage.width,
+          height: inMemoryImage.height,
+        };
+
+        if (this.props.storage && inMemoryImage.src === imageSrc) {
+          const base64Image = canvasImageSourceToDataURL(inMemoryImage);
+          this.props.storage.setItem(imageSrc, base64Image);
+        }
+
+        resolve();
+      };
+
+      if (this.props.storage) {
+        this.props.storage.keys().then((keys) => {
+          if (keys.includes(imageSrc)) {
+            this.props.storage.getItem(imageSrc).then((base64Image) => {
+              inMemoryImage.src = base64Image;
+            });
+          } else {
+            inMemoryImage.src = imageSrc;
+          }
+        });
+      } else {
+        inMemoryImage.src = imageSrc;
+      }
+    });
   }
 
   // Load all images and their thumbnails
-  async loadAllImages(props = this.props) {
-    const generateLoadDoneCallback = (srcType, imageSrc) => (err) => {
-      // Give up showing image on error
-      if (err) {
-        return;
-      }
-
+  async loadAllImages() {
+    const reRenderImage = (srcType, imageSrc) => {
       // Don't rerender if the src is not the same as when the load started
       // or if the component has unmounted
       if (this.props[srcType] !== imageSrc || this.didUnmount) {
@@ -1188,18 +1189,17 @@ class ReactImageLightbox extends Component {
       }
 
       // Load unloaded images
-      if (this.props[type] && !isImageLoaded(props[type])) {
-        return this.loadImage(
-          type,
-          this.props[type],
-          generateLoadDoneCallback(type, props[type]),
-        );
+      if (this.props[type] && !isImageLoaded(this.props[type])) {
+        try {
+          await this.loadImage(type, this.props[type]);
+          reRenderImage(type, this.props[type]);
+        } catch (error) {
+          log.error(error);
+        }
       }
-
-      return Promise.resolve();
     });
 
-    Promise.all(promises);
+    await Promise.all(promises);
   }
 
   // Request that the lightbox be closed

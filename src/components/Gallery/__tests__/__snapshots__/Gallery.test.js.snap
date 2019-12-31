@@ -2211,10 +2211,10 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
     keyRepeatKeyupBonus={40}
     keyRepeatLimit={180}
     mainSrc="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339188DJI_1645.JPG.jpeg"
-    mainSrcThumbnail="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg"
+    mainSrcThumbnail={null}
     nextLabel="Next image"
     nextSrc="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358061DSC_0016.JPG.jpeg"
-    nextSrcThumbnail="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg"
+    nextSrcThumbnail={null}
     onAfterOpen={[Function]}
     onCloseRequest={[Function]}
     onImageLoad={[Function]}
@@ -2223,7 +2223,7 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
     onMovePrevRequest={[Function]}
     prevLabel="Previous image"
     prevSrc="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420020DSC_0005.JPG.jpeg"
-    prevSrcThumbnail="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
+    prevSrcThumbnail={null}
     reactModalProps={Object {}}
     reactModalStyle={
       Object {
@@ -2240,23 +2240,8 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
             Array [],
             Array [],
             Array [],
-            Array [],
-            Array [],
-            Array [],
           ],
           "results": Array [
-            Object {
-              "type": "return",
-              "value": Promise {},
-            },
-            Object {
-              "type": "return",
-              "value": Promise {},
-            },
-            Object {
-              "type": "return",
-              "value": Promise {},
-            },
             Object {
               "type": "return",
               "value": Promise {},
@@ -5141,10 +5126,10 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
     keyRepeatKeyupBonus={40}
     keyRepeatLimit={180}
     mainSrc="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358061DSC_0016.JPG.jpeg"
-    mainSrcThumbnail="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg"
+    mainSrcThumbnail={null}
     nextLabel="Next image"
     nextSrc="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420020DSC_0005.JPG.jpeg"
-    nextSrcThumbnail="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
+    nextSrcThumbnail={null}
     onAfterOpen={[Function]}
     onCloseRequest={[Function]}
     onImageLoad={[Function]}
@@ -5153,7 +5138,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
     onMovePrevRequest={[Function]}
     prevLabel="Previous image"
     prevSrc="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420020DSC_0005.JPG.jpeg"
-    prevSrcThumbnail="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg"
+    prevSrcThumbnail={null}
     reactModalProps={Object {}}
     reactModalStyle={
       Object {
@@ -5164,54 +5149,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
     }
     storage={
       Object {
-        "getItem": [MockFunction] {
-          "calls": Array [
-            Array [
-              "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg",
-            ],
-            Array [
-              "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg",
-            ],
-            Array [
-              "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg",
-            ],
-            Array [
-              "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg",
-            ],
-            Array [
-              "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876358072thumbnail_DSC_0016.JPG.jpeg",
-            ],
-            Array [
-              "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876420022thumbnail_DSC_0005.JPG.jpeg",
-            ],
-          ],
-          "results": Array [
-            Object {
-              "type": "return",
-              "value": Promise {},
-            },
-            Object {
-              "type": "return",
-              "value": Promise {},
-            },
-            Object {
-              "type": "return",
-              "value": Promise {},
-            },
-            Object {
-              "type": "return",
-              "value": Promise {},
-            },
-            Object {
-              "type": "return",
-              "value": Promise {},
-            },
-            Object {
-              "type": "return",
-              "value": Promise {},
-            },
-          ],
-        },
+        "getItem": [MockFunction],
         "keys": [MockFunction],
       }
     }

@@ -9,6 +9,8 @@ import {
   ZOOM_BUTTON_INCREMENT_SIZE,
 } from '../constant';
 
+import updateWrapper from '../../../testHelpers/EnzymeHelper';
+
 // Mock the loadStyles static function to avoid
 // issues with a lack of styles._insertCss
 Lightbox.loadStyles = jest.fn();
@@ -170,10 +172,10 @@ describe('Events', () => {
 
   //   expect(mockFns.onImageLoad).toHaveBeenCalledTimes(0);
   //   wrapper.setProps({ mainSrc: LOAD_SUCCESS_SRC });
-  //   wrapper.update();
+  //   await updateWrapper(wrapper);
   // });
 
-  // it('Calls onImageLoadError when image loaded', (done) => {
+  // it('Calls onImageLoadError when image loaded', async (done) => {
   //   mockFns.onImageLoadError.mockImplementationOnce(
   //     (imageSrc, srcType, image) => {
   //       expect(imageSrc).toEqual(LOAD_FAILURE_SRC);
@@ -185,7 +187,7 @@ describe('Events', () => {
 
   //   expect(mockFns.onImageLoadError).toHaveBeenCalledTimes(0);
   //   wrapper.setProps({ mainSrc: LOAD_FAILURE_SRC });
-  //   wrapper.update();
+  //   await updateWrapper(wrapper);
   // });
 
   it('Calls the the ZoomIn Focus when ZoomOut is disabled', () => {
