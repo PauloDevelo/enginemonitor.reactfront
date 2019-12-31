@@ -8,7 +8,7 @@ export function translate(str, replaceStrings = null) {
 
   let translated = str;
   if (replaceStrings) {
-    Object.keys(replaceStrings).forEach(placeholder => {
+    Object.keys(replaceStrings).forEach((placeholder) => {
       translated = translated.replace(placeholder, replaceStrings[placeholder]);
     });
   }
@@ -33,7 +33,7 @@ export function getHighestSafeWindowContext(self = global.window.self) {
     return self;
   }
 
-  const getOrigin = href => href.match(/(.*\/\/.*?)(\/|$)/)[1];
+  const getOrigin = (href) => href.match(/(.*\/\/.*?)(\/|$)/)[1];
 
   // If parent is the same origin, we can move up one context
   // Reference: https://stackoverflow.com/a/21965342/1601953
