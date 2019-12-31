@@ -1,7 +1,6 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import Modal from 'react-modal';
-import updateWrapper from '../../../testHelpers/EnzymeHelper';
 import Lightbox from '../index';
 import { translate, getHighestSafeWindowContext } from '../util';
 import {
