@@ -6,7 +6,7 @@
   }
 
 .appBody{
-	height: 100%;
+	height: calc(100% - 64px);
 	width: 100%;
 
 	display: flex;
@@ -31,10 +31,10 @@
 }
 
 .columnBody{
-    flex: 1;
+  flex: 1;
 	overflow: auto;
 	display: flex;
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .lastBlock{
