@@ -1,4 +1,5 @@
 /* eslint-disable max-classes-per-file */
+import * as log from 'loglevel';
 import httpProxy from './HttpProxy';
 
 // eslint-disable-next-line no-unused-vars
@@ -116,10 +117,14 @@ class ActionManager implements IActionManager, IUserStorageListener {
         await httpProxy.deleteReq(action.key);
       } else if (action.type === ActionType.CreateImage) {
         const imgToSave:ImageModel = action.data as ImageModel;
-        const blobImage = dataURItoBlob(await storageService.getItem(imgToSave.url));
-        const thumbnail = dataURItoBlob(await storageService.getItem(imgToSave.thumbnailUrl));
+        if (await storageService.existItem(imgToSave.url) && await storageService.existItem(imgToSave.thumbnailUrl)) {
+          const blobImage = dataURItoBlob(await storageService.getItem(imgToSave.url));
+          const thumbnail = dataURItoBlob(await storageService.getItem(imgToSave.thumbnailUrl));
 
-        await httpProxy.postImage(action.key, imgToSave, blobImage, thumbnail);
+          await httpProxy.postImage(action.key, imgToSave, blobImage, thumbnail);
+        } else {
+          log.warn('The urls are not found in the storage. It seems like they have been deleted in a further delete action ...');
+        }
       } else {
         throw new Error(`The action type ${action.type} is not recognized.`);
       }
