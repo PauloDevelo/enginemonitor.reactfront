@@ -1,4 +1,4 @@
-import uuidv1 from 'uuid/v1';
+import uuidv1 from 'uuid/v1.js';
 import moment from 'moment';
 import {
   // eslint-disable-next-line no-unused-vars
@@ -87,8 +87,8 @@ export function updateTask(task: TaskModel): TaskModel {
   return updatedTask;
 }
 
-async function getLastEntry(equipmentId:string, taskId:string): Promise<EntryModel|undefined> {
-  const query = (e:EntryModel) => e.equipmentUiId === equipmentId && e.taskUiId === taskId;
+async function getLastAckEntry(equipmentId:string, taskId:string): Promise<EntryModel|undefined> {
+  const query = (e:EntryModel) => e.equipmentUiId === equipmentId && e.taskUiId === taskId && e.ack;
   let entries = (await entryProxy.getStoredEntries(equipmentId, taskId)).filter(query);
   entries = entries.sort((a, b) => {
     if (a.date > b.date) {
@@ -105,8 +105,8 @@ async function getLastEntry(equipmentId:string, taskId:string): Promise<EntryMod
   return entries[0];
 }
 
-async function getLastEntryDate(equipment: EquipmentModel, task:TaskModel): Promise<Date> {
-  const lastEntry = await getLastEntry(equipment._uiId, task._uiId);
+async function getLastAckEntryDate(equipment: EquipmentModel, task:TaskModel): Promise<Date> {
+  const lastEntry = await getLastAckEntry(equipment._uiId, task._uiId);
   if (lastEntry !== undefined) {
     return lastEntry.date;
   }
@@ -114,14 +114,14 @@ async function getLastEntryDate(equipment: EquipmentModel, task:TaskModel): Prom
 }
 
 async function getNextDueDate(equipment: EquipmentModel, task:TaskModel): Promise<Date> {
-  const nextDueDate = moment(await getLastEntryDate(equipment, task));
+  const nextDueDate = moment(await getLastAckEntryDate(equipment, task));
   nextDueDate.add(task.periodInMonth, 'M');
 
   return nextDueDate.toDate();
 }
 
-async function getLastEntryAge(equipmentId: string, taskId: string): Promise<number> {
-  const lastEntry = await await getLastEntry(equipmentId, taskId);
+async function getLastAckEntryAge(equipmentId: string, taskId: string): Promise<number> {
+  const lastEntry = await await getLastAckEntry(equipmentId, taskId);
   if (lastEntry != null) {
     return lastEntry.age;
   }
@@ -133,7 +133,7 @@ async function getTimeInHourLeft(equipment: EquipmentModel, task: TaskModel): Pr
     return undefined;
   }
 
-  return task.usagePeriodInHour + await getLastEntryAge(equipment._uiId, task._uiId) - equipment.age;
+  return task.usagePeriodInHour + await getLastAckEntryAge(equipment._uiId, task._uiId) - equipment.age;
 }
 
 async function getLevel(equipment: EquipmentModel, task: TaskModel): Promise<number> {
