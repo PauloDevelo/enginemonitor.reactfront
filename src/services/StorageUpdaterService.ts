@@ -37,7 +37,7 @@ class StorageUpdaterService implements IStorageUpdaterService {
         }
       });
 
-      Promise.all(updateEntryPromises);
+      await Promise.all(updateEntryPromises);
 
       currentStorageVersion = await storageService.setItem<number>(storageVersionKey, 1);
       log.info(`Storage updated to the release ${currentStorageVersion}`);
