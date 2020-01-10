@@ -37,7 +37,7 @@ export interface IStorageService{
     getArray<T>(key: string): Promise<T[]>;
     existItem(key: string): Promise<boolean>;
 
-    updateArray<T extends EntityModel>(key: string, item:T):Promise<void>;
+    updateArray<T extends EntityModel>(key: string, item:T):Promise<T[]>;
     removeItemInArray<T extends EntityModel>(key: string, itemId: string): Promise<T>;
 }
 
@@ -111,7 +111,7 @@ class StorageService implements IStorageService {
       return this.triggerOnUserStorageClosed();
     }
 
-    async updateArray<T extends EntityModel>(key: string, item:T):Promise<void> {
+    async updateArray<T extends EntityModel>(key: string, item:T):Promise<T[]> {
       let items = await this.getUserStorage().getItem<T[]>(key);
 
       if (items) {
@@ -122,7 +122,7 @@ class StorageService implements IStorageService {
 
       items.push(item);
 
-      this.getUserStorage().setItem<T[]>(key, items);
+      return this.getUserStorage().setItem<T[]>(key, items);
     }
 
     async removeItemInArray<T extends EntityModel>(key: string, itemId: string): Promise<T> {
