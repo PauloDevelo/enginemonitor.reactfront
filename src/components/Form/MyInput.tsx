@@ -54,7 +54,7 @@ const MyInput = React.memo(({
     validate();
 
     const target:HTMLInputElement = event.target as HTMLInputElement;
-    const newValue = target.type === 'checkbox' ? target.checked : target.value;
+    const newValue = props.type === 'checkbox' ? target.checked : target.value;
 
     if (typeof handleChange === 'function') {
       handleChange(props.name, newValue);
@@ -63,17 +63,17 @@ const MyInput = React.memo(({
     if (typeof onChanged === 'function') {
       onChanged(newValue);
     }
-  }, [handleChange, onChanged, props.name]);
+  }, [handleChange, onChanged, props.name, props.type]);
 
   if (props.type === 'checkbox') {
-    const inlineValue = 'true' as never;
     return (
       <FormGroup className="form-group" check inline>
-        <Label check inline={inlineValue}>
+        <Label check>
           <FormattedMessage {...label} />
           {tooltipElement}
           {' '}
-          <Input ref={inputElemRef} onChange={onChangeHandler} invalid={!validity.isValid} {...props} />
+          <Input innerRef={inputElemRef} onChange={onChangeHandler} invalid={!validity.isValid} {...props} />
+          {!validity.isValid && <FormFeedback>{validity.errorMessage}</FormFeedback>}
         </Label>
       </FormGroup>
     );

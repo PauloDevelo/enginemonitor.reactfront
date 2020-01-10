@@ -59,7 +59,7 @@ const MyForm = ({
 
   const validate = () => {
     triggerValidation(validationTrigger + 1);
-    return formEl.current.checkValidity() === true;
+    return formEl.current.checkValidity();
   };
 
   const submitHandler = (event:React.FormEvent<HTMLFormElement>) => {
@@ -93,10 +93,23 @@ const MyForm = ({
   const elementChildren = children.filter((child) => isJSXElement(child)) as JSX.Element[];
 
   const childrenWithProps = React.Children.map(elementChildren, (child) => {
+    let value: string | undefined;
+    let checked: boolean | undefined;
+    if (data.data[child.props.name] !== undefined && typeof data.data[child.props.name] === 'number') {
+      value = data.data[child.props.name].toString();
+    }
+    if (data.data[child.props.name] !== undefined && typeof data.data[child.props.name] === 'boolean') {
+      // value = data.data[child.props.name] ? 'true' : 'false';
+      checked = data.data[child.props.name];
+    } else {
+      value = data.data[child.props.name];
+    }
+
     const newProps = {
-      value: data.data[child.props.name],
       handleChange: handleInputChange,
       validationTrigger,
+      value,
+      checked,
     };
 
     Object.assign(newProps, child.props);
