@@ -108,7 +108,7 @@ const HistoryTaskTable = ({
       cell: (content: any) => {
         const entry : EntryModel = content.data;
         return (
-          <ClickableCell data={entry} onDisplayData={displayEntry}>
+          <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.ack === false ? 'warning' : 'white'}`}>
             <FormattedDate value={entry.date} />
           </ClickableCell>
         );
@@ -129,7 +129,7 @@ const HistoryTaskTable = ({
 
         if (equipment.ageAcquisitionType !== AgeAcquisitionType.time) {
           return (
-            <ClickableCell data={entry} onDisplayData={displayEntry}>
+            <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.ack === false ? 'warning' : 'white'}`}>
               <>{entry.age === -1 ? '' : `${entry.age}h`}</>
             </ClickableCell>
           );
@@ -141,7 +141,7 @@ const HistoryTaskTable = ({
         const day = diff.days();
 
         return (
-          <ClickableCell data={entry} onDisplayData={displayEntry}>
+          <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.ack === false ? 'warning' : 'white'}`}>
             <>
               {diff.years() > 0 && <FormattedMessage {... messages.yearperiod} values={{ year }} />}
               {' '}
@@ -166,7 +166,7 @@ const HistoryTaskTable = ({
         const shortenRemarks = shorten(remarks);
 
         return (
-          <ClickableCell data={entry} onDisplayData={displayEntry}>
+          <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.ack === false ? 'warning' : 'white'}`}>
             <div dangerouslySetInnerHTML={{ __html: shortenRemarks }} />
           </ClickableCell>
         );
