@@ -109,5 +109,6 @@
   "usagePeriodInHour": "Period in usage hour",
   "userExceedStorageLimit": "User exceeded the storage limit. Remove some images before adding new images.",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
-  "yes": "Yes"
+  "yes": "Yes",
+  "ackOption": "Acknowledge the task"
 }

@@ -53,5 +53,10 @@
     "defaultMessage": "Save",
     "description": "Button",
     "id": "save"
+  },
+  "ackOption": {
+    "defaultMessage": "Acknowledge the task",
+    "description": "Checkbox label",
+    "id": "ackOption"
   }
 }
