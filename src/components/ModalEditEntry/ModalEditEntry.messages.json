@@ -30,7 +30,7 @@
     "id": "entryDeleteTitle"
   },
   "modalAckTitle": {
-    "defaultMessage": "Acknowledgment",
+    "defaultMessage": "Add an entry",
     "description": "Panel title",
     "id": "modalAckTitle"
   },
