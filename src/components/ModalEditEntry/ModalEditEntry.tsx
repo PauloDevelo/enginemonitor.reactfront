@@ -105,6 +105,7 @@ const ModalEditEntry = ({
           <ModalBody>
             {visible && (
             <MyForm id="editEntryForm" submit={modalLogic.handleSubmit} initialData={entry}>
+              {task !== undefined && <MyInput name="ack" label={editEntryMsg.ackOption} type="checkbox" />}
               <MyInput name="name" label={editEntryMsg.name} type="text" required />
               <MyInput name="date" label={editEntryMsg.date} type="date" required />
               {equipment.ageAcquisitionType !== AgeAcquisitionType.time && <MyInput name="age" label={editEntryMsg.age} type="number" min={0} required />}
