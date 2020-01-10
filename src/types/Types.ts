@@ -48,7 +48,8 @@ export interface EntryModel extends EntityModel {
     age: number,
     remarks: string,
     equipmentUiId: string,
-    taskUiId: string | undefined
+    taskUiId: string | undefined,
+    ack: boolean
 }
 
 export interface UserModel extends EntityModel {
