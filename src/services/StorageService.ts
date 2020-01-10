@@ -1,6 +1,8 @@
 import * as log from 'loglevel';
 import localforage from 'localforage';
 
+import storageUpdaterService from './StorageUpdaterService';
+
 // eslint-disable-next-line no-unused-vars
 import { UserModel, EntityModel } from '../types/Types';
 
@@ -103,6 +105,9 @@ class StorageService implements IStorageService {
       this.userStorage = localforage.createInstance({
         name: email,
       });
+
+      storageUpdaterService.onUserStorageOpened();
+
       return this.triggerOnUserStorageOpened();
     }
 

@@ -19,9 +19,10 @@ export interface FetchAllEntriesProps{
     forceToLookUpInStorage?: boolean;
 }
 export interface IEntryProxy{
+    getBaseEntryUrl(equipmentId?: string): string;
+
     createOrSaveEntry(equipmentId: string, taskId: string | undefined, newEntry: EntryModel): Promise<EntryModel>;
     deleteEntry(equipmentId: string, taskId: string | undefined, entryId: string): Promise<EntryModel>;
-
 
     fetchEntries(props: FetchEntriesProps):Promise<EntryModel[]>;
     fetchAllEntries(props: FetchAllEntriesProps):Promise<EntryModel[]>;
@@ -36,6 +37,14 @@ export interface IEntryProxy{
 
 class EntryProxy implements IEntryProxy {
     baseUrl = `${process.env.REACT_APP_URL_BASE}entries/`;
+
+    getBaseEntryUrl = (equipmentId: string | undefined): string => {
+      if (equipmentId === undefined) {
+        return this.baseUrl;
+      }
+
+      return this.baseUrl + equipmentId;
+    }
 
     // /////////////////////////Entry////////////////////////
     createOrSaveEntry = async (equipmentId: string, taskId: string | undefined, newEntry: EntryModel): Promise<EntryModel> => {
