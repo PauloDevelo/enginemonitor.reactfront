@@ -18,7 +18,7 @@ import ClickableCell from '../Table/ClickableCell';
 
 import useFetcher from '../../hooks/Fetcher';
 
-
+import taskProxy from '../../services/TaskProxy';
 import entryProxy from '../../services/EntryProxy';
 
 import useEditModal from '../../hooks/EditModalHook';
@@ -29,7 +29,7 @@ import { createDefaultEntry } from '../../helpers/EntryHelper';
 import './EquipmentHistoryTable.css';
 
 // eslint-disable-next-line no-unused-vars
-import { EquipmentModel, EntryModel, AgeAcquisitionType } from '../../types/Types';
+import { EquipmentModel, EntryModel, AgeAcquisitionType, TaskModel } from '../../types/Types';
 
 import jsonMessages from './EquipmentHistoryTable.messages.json';
 
@@ -53,7 +53,7 @@ const EquipmentHistoryTable = ({
   const classNamesStr = classNames ? `${classNames} historytasktable` : 'historytasktable';
 
   const equipmentId = equipment ? equipment._uiId : undefined;
-
+  const [parentTask, setParentTask] = useState<TaskModel | undefined>(undefined);
   const modalHook = useEditModal<EntryModel | undefined>(undefined);
   const [entries, setEntries] = useState<EntryModel[]>([]);
   const {
@@ -84,7 +84,14 @@ const EquipmentHistoryTable = ({
     }
   };
 
-  const displayEntry = useCallback((entry:EntryModel) => {
+  const displayEntry = useCallback(async (entry:EntryModel) => {
+    if (entry.taskUiId !== undefined) {
+      const newParentTask = (await taskProxy.fetchTasks({ equipmentId: entry.equipmentUiId, forceToLookUpInStorage: true })).filter((task) => task._uiId === entry.taskUiId)[0];
+      setParentTask(newParentTask);
+    } else {
+      setParentTask(undefined);
+    }
+
     modalHook.displayData(entry);
   }, [modalHook]);
 
@@ -219,6 +226,7 @@ const EquipmentHistoryTable = ({
       <ModalEditEntry
         equipment={equipment}
         entry={modalHook.data}
+        task={parentTask}
         saveEntry={onSavedEntry}
         deleteEntry={onDeleteEntry}
         visible={modalHook.editModalVisibility}
