@@ -46,7 +46,7 @@ describe('EquipmentInfoTab', () => {
 
     // Act
     const equipmentInfoTab = mount(
-      <IntlProvider locale={navigator.language}>
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
         <EquipmentInfoTab equipment={equipment} displayEquipment={displayEquipment} />
       </IntlProvider>,
     );
@@ -66,7 +66,7 @@ describe('EquipmentInfoTab', () => {
     // Arrange
     const displayEquipment = jest.fn();
     const equipmentInfoTab = mount(
-      <IntlProvider locale={navigator.language}>
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
         <EquipmentInfoTab equipment={equipment} displayEquipment={displayEquipment} />
       </IntlProvider>,
     );
