@@ -106,7 +106,7 @@ class StorageService implements IStorageService {
         name: email,
       });
 
-      storageUpdaterService.onUserStorageOpened();
+      await storageUpdaterService.onUserStorageOpened();
 
       return this.triggerOnUserStorageOpened();
     }
