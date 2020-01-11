@@ -32,7 +32,7 @@ describe('ModalEditTask', () => {
     brand: 'Nanni',
     model: 'N3.30',
     age: 2563,
-    installation: new Date(2019, 6, 10),
+    installation: new Date('2019-07-09T16:00:00.000Z'),
     ageAcquisitionType: 1,
     ageUrl: '',
   };
@@ -43,7 +43,7 @@ describe('ModalEditTask', () => {
     usagePeriodInHour: 500,
     periodInMonth: 12,
     description: "Changer l'huile",
-    nextDueDate: new Date(2020, 6, 10),
+    nextDueDate: new Date('2020-07-09T16:00:00.000Z'),
     level: 0,
     usageInHourLeft: undefined,
   };
