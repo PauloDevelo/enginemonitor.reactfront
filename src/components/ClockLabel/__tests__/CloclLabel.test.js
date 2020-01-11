@@ -26,11 +26,20 @@ describe('ClocLabel', () => {
   });
 
   it('should Render the clock as expected', async (done) => {
-    // Arrange
-    jest.spyOn(timeService, 'getUTCDateTime').mockImplementation(() => new Date(2019, 10, 24, 20, 51));
+    // Arrange utc: 2019-11-24T12:51:00.000Z
+    const utcDate = new Date();
+    utcDate.setUTCFullYear(2019);
+    utcDate.setUTCMonth(10);
+    utcDate.setUTCDate(24);
+    utcDate.setUTCHours(12);
+    utcDate.setUTCMinutes(51);
+    utcDate.setUTCSeconds(0);
+    utcDate.setUTCMilliseconds(0);
+
+    jest.spyOn(timeService, 'getUTCDateTime').mockImplementation(() => utcDate);
 
     // Act
-    const clockLabelWrapper = mount(<IntlProvider locale={navigator.language}><ClockLabel /></IntlProvider>);
+    const clockLabelWrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ClockLabel /></IntlProvider>);
     await updateWrapper(clockLabelWrapper);
 
     // Assert

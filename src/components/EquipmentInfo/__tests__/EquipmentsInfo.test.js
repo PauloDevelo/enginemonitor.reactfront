@@ -68,7 +68,7 @@ describe('EquipmentsInfo', () => {
 
     // Act
     const equipmentsInfo = mount(
-      <IntlProvider locale={navigator.language}>
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
         <EquipmentsInfo userId="paul" changeCurrentEquipment={changeCurrentEquipment} extraClassNames="" />
       </IntlProvider>,
     );
@@ -93,7 +93,7 @@ describe('EquipmentsInfo', () => {
     const changeCurrentEquipment = jest.fn();
 
     const equipmentsInfo = mount(
-      <IntlProvider locale={navigator.language}>
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
         <EquipmentsInfo userId="paul" changeCurrentEquipment={changeCurrentEquipment} extraClassNames="" />
       </IntlProvider>,
     );
@@ -123,7 +123,7 @@ describe('EquipmentsInfo', () => {
     const changeCurrentEquipment = jest.fn();
 
     const equipmentsInfo = mount(
-      <IntlProvider locale={navigator.language}>
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
         <EquipmentsInfo userId="paul" changeCurrentEquipment={changeCurrentEquipment} extraClassNames="" />
       </IntlProvider>,
     );
@@ -171,7 +171,7 @@ describe('EquipmentsInfo', () => {
 
 
     const equipmentsInfo = mount(
-      <IntlProvider locale={navigator.language}>
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
         <EquipmentsInfo userId="paul" changeCurrentEquipment={changeCurrentEquipment} extraClassNames="" />
       </IntlProvider>,
     );

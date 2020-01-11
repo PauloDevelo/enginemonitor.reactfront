@@ -9,6 +9,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with hte first equipment 
   messages={Object {}}
   onError={[Function]}
   textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
   <Memo(EquipmentsInfo)
     changeCurrentEquipment={

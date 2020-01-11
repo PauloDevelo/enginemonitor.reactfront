@@ -9,6 +9,7 @@ exports[`ClocLabel should Render the clock as expected 1`] = `
   messages={Object {}}
   onError={[Function]}
   textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
   <ClockLabel>
     <span>

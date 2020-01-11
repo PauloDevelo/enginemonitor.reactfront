@@ -9,6 +9,7 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
   messages={Object {}}
   onError={[Function]}
   textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
   <Memo(EquipmentInfoTab)
     displayEquipment={[MockFunction]}

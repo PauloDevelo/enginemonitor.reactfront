@@ -32,7 +32,7 @@ describe('ModalEditEntry', () => {
     brand: 'Nanni',
     model: 'N3.30',
     age: 2563,
-    installation: new Date(2019, 6, 10),
+    installation: new Date('2019-07-09T16:00:00.000Z'),
     ageAcquisitionType: 1,
     ageUrl: '',
   };
@@ -43,7 +43,7 @@ describe('ModalEditEntry', () => {
     usagePeriodInHour: 500,
     periodInMonth: 12,
     description: "Changer l'huile",
-    nextDueDate: new Date(2020, 6, 10),
+    nextDueDate: new Date('2020-07-09T16:00:00.000Z'),
     level: 0,
     usageInHourLeft: undefined,
   };
@@ -51,7 +51,7 @@ describe('ModalEditEntry', () => {
   const entry = {
     _uiId: 'an_entry_id',
     name: 'vidange',
-    date: new Date(2019, 9, 25),
+    date: new Date('2019-10-24T16:00:00.000Z'),
     age: 400,
     remarks: 'oil was clean',
     taskUiId: 'an_id_created_by_the_front_end_and_for_the_front_end',

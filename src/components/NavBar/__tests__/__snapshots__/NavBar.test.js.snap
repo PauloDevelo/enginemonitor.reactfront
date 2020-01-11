@@ -9,6 +9,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
   messages={Object {}}
   onError={[Function]}
   textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
   <Memo(NavBar)
     onLoggedOut={[MockFunction]}
