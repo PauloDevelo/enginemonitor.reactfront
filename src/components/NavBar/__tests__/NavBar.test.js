@@ -40,7 +40,7 @@ describe('Component NavBar', () => {
     jest.spyOn(actionManager, 'registerOnActionManagerChanged');
     jest.spyOn(actionManager, 'unregisterOnActionManagerChanged');
 
-    jest.spyOn(timeService, 'getUTCDateTime').mockImplementation(() => new Date(2019, 10, 27, 7, 54));
+    jest.spyOn(timeService, 'getUTCDateTime').mockImplementation(() => new Date('2019-11-26T23:54:00.000Z'));
   });
 
   afterEach(() => {
@@ -71,7 +71,7 @@ describe('Component NavBar', () => {
     const onLoggedOut = jest.fn();
 
     // Act
-    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
 
     // Assert
@@ -95,7 +95,7 @@ describe('Component NavBar', () => {
 
     const onLoggedOut = jest.fn();
 
-    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
 
     const dropdownItemAbout = wrapper.find('DropdownItem').at(7);
@@ -118,7 +118,7 @@ describe('Component NavBar', () => {
 
     const onLoggedOut = jest.fn();
 
-    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
 
     const navBarButton = wrapper.find('NavbarToggler');
@@ -141,7 +141,7 @@ describe('Component NavBar', () => {
 
     const onLoggedOut = jest.fn();
 
-    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
 
     const user = {
@@ -181,7 +181,7 @@ describe('Component NavBar', () => {
 
     const onLoggedOut = jest.fn();
 
-    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
 
     const user = {
@@ -223,7 +223,7 @@ describe('Component NavBar', () => {
 
     const onLoggedOut = jest.fn();
 
-    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
 
     const user = {
@@ -266,7 +266,7 @@ describe('Component NavBar', () => {
     const onLoggedOut = jest.fn();
     jest.spyOn(userProxy, 'logout').mockImplementation(() => userContext.onUserChanged(undefined));
 
-    const wrapper = mount(<IntlProvider locale={navigator.language}><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
 
     const user = {
