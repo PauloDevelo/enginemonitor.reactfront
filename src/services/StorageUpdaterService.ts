@@ -1,9 +1,5 @@
 import * as log from 'loglevel';
 
-import storageService from './StorageService';
-import equipmentProxy from './EquipmentProxy';
-import entryProxy from './EntryProxy';
-
 // eslint-disable-next-line no-unused-vars
 import { EntryModel, EntityModel } from '../types/Types';
 
@@ -15,6 +11,10 @@ export interface IStorageUpdaterService{
 
 class StorageUpdaterService implements IStorageUpdaterService {
   onUserStorageOpened = async (): Promise<void> => {
+    const { default: storageService } = await import('./StorageService');
+    const { default: equipmentProxy } = await import('./EquipmentProxy');
+    const { default: entryProxy } = await import('./EntryProxy');
+
     let currentStorageVersion = 0;
     if (await storageService.existItem(storageVersionKey)) {
       currentStorageVersion = await storageService.getItem<number>(storageVersionKey);
