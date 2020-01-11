@@ -9,6 +9,7 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
   messages={Object {}}
   onError={[Function]}
   textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
   <Memo(TaskTabPanes)
     areTasksLoading={false}

@@ -18,7 +18,7 @@ describe('TaskTabPanes', () => {
     brand: 'Nanni',
     model: 'N3.30',
     age: 2563,
-    installation: new Date(2019, 6, 10),
+    installation: new Date('2019-07-09T16:00:00.000Z'),
     ageAcquisitionType: 1,
     ageUrl: '',
   };
@@ -30,7 +30,7 @@ describe('TaskTabPanes', () => {
       usagePeriodInHour: 500,
       periodInMonth: 12,
       description: "Changer l'huile",
-      nextDueDate: new Date(2020, 6, 10),
+      nextDueDate: new Date('2020-07-09T16:00:00.000Z'),
       level: TaskLevel.done,
       usageInHourLeft: undefined,
     },
@@ -40,7 +40,7 @@ describe('TaskTabPanes', () => {
       usagePeriodInHour: 800,
       periodInMonth: 24,
       description: "Changer l'impeller de la pompe a eau de mer",
-      nextDueDate: new Date(2021, 6, 10),
+      nextDueDate: new Date('2021-07-09T16:00:00.000Z'),
       level: TaskLevel.done,
       usageInHourLeft: undefined,
     },
@@ -67,7 +67,7 @@ describe('TaskTabPanes', () => {
 
     // Act
     const wrapper = mount(
-      <IntlProvider locale={navigator.language}>
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
         <TaskTabPanes currentEquipment={currentEquipment} taskList={taskList} areTasksLoading={false} changeCurrentTask={changeCurrentTask} equipmentHistoryRefreshId={0} onTaskChanged={onTaskChangedFn} />
       </IntlProvider>,
     );
@@ -84,7 +84,7 @@ describe('TaskTabPanes', () => {
     const onTaskChangedFn = jest.fn();
 
     const wrapper = mount(
-      <IntlProvider locale={navigator.language}>
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
         <TaskTabPanes currentEquipment={currentEquipment} taskList={taskList} areTasksLoading={false} changeCurrentTask={changeCurrentTask} equipmentHistoryRefreshId={0} onTaskChanged={onTaskChangedFn} />
       </IntlProvider>,
     );
