@@ -28,8 +28,10 @@ import { createDefaultEntry } from '../../helpers/EntryHelper';
 
 import './EquipmentHistoryTable.css';
 
-// eslint-disable-next-line no-unused-vars
-import { EquipmentModel, EntryModel, AgeAcquisitionType, TaskModel } from '../../types/Types';
+import {
+  // eslint-disable-next-line no-unused-vars
+  EquipmentModel, EntryModel, AgeAcquisitionType, TaskModel,
+} from '../../types/Types';
 
 import jsonMessages from './EquipmentHistoryTable.messages.json';
 
