@@ -79,6 +79,98 @@ exports[`MyInput of type checkox should render as expected 1`] = `
 </Memo()>
 `;
 
+exports[`MyInput of type checkox with an error should render as expected 1`] = `
+<Memo()
+  checked={false}
+  label={
+    Object {
+      "defaultMessage": "Default message",
+      "description": "Label",
+      "id": "defaultId",
+    }
+  }
+  name="name"
+  required={true}
+  type="checkbox"
+  validationTrigger={1}
+>
+  <FormGroup
+    check={true}
+    className="form-group"
+    inline={true}
+    tag="div"
+  >
+    <div
+      className="form-group form-check form-check-inline"
+    >
+      <Label
+        check={true}
+        tag="label"
+        widths={
+          Array [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+          ]
+        }
+      >
+        <label
+          className="form-check-label"
+        >
+          <FormattedMessage
+            defaultMessage="Default message"
+            description="Label"
+            id="defaultId"
+            values={Object {}}
+          >
+            Default message
+          </FormattedMessage>
+           
+          <Input
+            checked={false}
+            innerRef={
+              Object {
+                "current": <input
+                  class="is-invalid form-check-input"
+                  name="name"
+                  required=""
+                  type="checkbox"
+                />,
+              }
+            }
+            invalid={true}
+            name="name"
+            onChange={[Function]}
+            required={true}
+            type="checkbox"
+          >
+            <input
+              checked={false}
+              className="is-invalid form-check-input"
+              name="name"
+              onChange={[Function]}
+              required={true}
+              type="checkbox"
+            />
+          </Input>
+          <FormFeedback
+            tag="div"
+          >
+            <div
+              className="invalid-feedback"
+            >
+              Constraints not satisfied
+            </div>
+          </FormFeedback>
+        </label>
+      </Label>
+    </div>
+  </FormGroup>
+</Memo()>
+`;
+
 exports[`MyInput of type text should render as expected 1`] = `
 <Memo()
   label={
@@ -152,6 +244,94 @@ exports[`MyInput of type text should render as expected 1`] = `
           type="text"
         />
       </Input>
+    </div>
+  </FormGroup>
+</Memo()>
+`;
+
+exports[`MyInput of type text with an error should render as expected 1`] = `
+<Memo()
+  label={
+    Object {
+      "defaultMessage": "Default message",
+      "description": "Label",
+      "id": "defaultId",
+    }
+  }
+  name="name"
+  required={true}
+  type="text"
+  validationTrigger={1}
+>
+  <FormGroup
+    className="form-group"
+    tag="div"
+  >
+    <div
+      className="form-group form-group"
+    >
+      <Label
+        for="name"
+        tag="label"
+        widths={
+          Array [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+          ]
+        }
+      >
+        <label
+          className=""
+          htmlFor="name"
+        >
+          <FormattedMessage
+            defaultMessage="Default message"
+            description="Label"
+            id="defaultId"
+            values={Object {}}
+          >
+            Default message
+          </FormattedMessage>
+        </label>
+      </Label>
+      <Input
+        className="form-control"
+        innerRef={
+          Object {
+            "current": <input
+              class="form-control is-invalid form-control"
+              name="name"
+              required=""
+              type="text"
+            />,
+          }
+        }
+        invalid={true}
+        name="name"
+        onChange={[Function]}
+        required={true}
+        type="text"
+      >
+        <input
+          className="form-control is-invalid form-control"
+          name="name"
+          onChange={[Function]}
+          required={true}
+          type="text"
+        />
+      </Input>
+      <FormFeedback
+        tag="div"
+      >
+        <div
+          className="invalid-feedback"
+        >
+          Constraints not satisfied
+        </div>
+      </FormFeedback>
     </div>
   </FormGroup>
 </Memo()>
