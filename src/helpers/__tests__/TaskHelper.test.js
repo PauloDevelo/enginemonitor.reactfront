@@ -196,7 +196,18 @@ describe('TaskHelper', () => {
         task.periodInMonth = 3;
 
         jest.spyOn(proxyEquipment, 'getStoredEquipment').mockImplementation(() => [equipment]);
-        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => []);
+        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => [
+          {
+            _uiId: 'entry_01',
+            name: 'vidange',
+            date: timeService.getUTCDateTime(),
+            age: 1234,
+            remarks: 'RAS',
+            taskUiId: task._uiId,
+            equipmentUiId: 'equipment_01',
+            ack: false,
+          },
+        ]);
 
         // Act
         const updatedTask = await TaskHelper.updateRealtimeFields('equipment_01', task);
@@ -205,7 +216,7 @@ describe('TaskHelper', () => {
         expect(updatedTask.nextDueDate).toEqual(new Date(2011, 10, 29, 18, 36));
       });
 
-      it('should be using the last entry date when there is several entries', async () => {
+      it('should be using the last acknowledge entry date when there is several entries', async () => {
         // Arrange
         timeService.getUTCDateTime.mockReturnValue(new Date());
 
@@ -255,6 +266,16 @@ describe('TaskHelper', () => {
             equipmentUiId: 'equipment_01',
             ack: true,
           },
+          {
+            _uiId: 'entry_05',
+            name: 'vidange inverseur',
+            date: new Date('2019-12-09T00:11:00.0000Z'),
+            age: 1215,
+            remarks: 'RAS',
+            taskUiId: 'task_01',
+            equipmentUiId: 'equipment_01',
+            ack: false,
+          },
         ]);
 
         // Act
@@ -274,7 +295,18 @@ describe('TaskHelper', () => {
         task.usagePeriodInHour = -1;
 
         jest.spyOn(proxyEquipment, 'getStoredEquipment').mockImplementation(() => [equipment]);
-        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => []);
+        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => [
+          {
+            _uiId: 'entry_01',
+            name: 'vidange',
+            date: timeService.getUTCDateTime(),
+            age: 1234,
+            remarks: 'RAS',
+            taskUiId: task._uiId,
+            equipmentUiId: 'equipment_01',
+            ack: false,
+          },
+        ]);
 
         // Act
         const updatedTask = await TaskHelper.updateRealtimeFields('equipment_01', task);
@@ -291,7 +323,18 @@ describe('TaskHelper', () => {
         task.usagePeriodInHour = 100;
 
         jest.spyOn(proxyEquipment, 'getStoredEquipment').mockImplementation(() => [equipment]);
-        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => []);
+        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => [
+          {
+            _uiId: 'entry_01',
+            name: 'vidange',
+            date: timeService.getUTCDateTime(),
+            age: 1234,
+            remarks: 'RAS',
+            taskUiId: task._uiId,
+            equipmentUiId: 'equipment_01',
+            ack: false,
+          },
+        ]);
 
         // Act
         const updatedTask = await TaskHelper.updateRealtimeFields('equipment_01', task);
@@ -350,6 +393,16 @@ describe('TaskHelper', () => {
             equipmentUiId: 'equipment_01',
             ack: true,
           },
+          {
+            _uiId: 'entry_05',
+            name: 'vidange inverseur',
+            date: new Date('2019-12-09T00:11:00.0000Z'),
+            age: 1219,
+            remarks: 'RAS',
+            taskUiId: 'task_01',
+            equipmentUiId: 'equipment_01',
+            ack: false,
+          },
         ]);
 
         // Act
@@ -369,7 +422,18 @@ describe('TaskHelper', () => {
         task.periodInMonth = 3;
 
         jest.spyOn(proxyEquipment, 'getStoredEquipment').mockImplementation(() => [equipment]);
-        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => []);
+        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => [
+          {
+            _uiId: 'entry_01',
+            name: 'vidange',
+            date: timeService.getUTCDateTime(),
+            age: 1234,
+            remarks: 'RAS',
+            taskUiId: task._uiId,
+            equipmentUiId: 'equipment_01',
+            ack: false,
+          },
+        ]);
 
         // Act
         const updatedTask = await TaskHelper.updateRealtimeFields('equipment_01', task);
@@ -387,7 +451,18 @@ describe('TaskHelper', () => {
         task.periodInMonth = 3;
 
         jest.spyOn(proxyEquipment, 'getStoredEquipment').mockImplementation(() => [equipment]);
-        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => []);
+        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => [
+          {
+            _uiId: 'entry_01',
+            name: 'vidange',
+            date: timeService.getUTCDateTime(),
+            age: 1234,
+            remarks: 'RAS',
+            taskUiId: task._uiId,
+            equipmentUiId: 'equipment_01',
+            ack: false,
+          },
+        ]);
 
         // Act
         const updatedTask = await TaskHelper.updateRealtimeFields('equipment_01', task);
@@ -405,7 +480,18 @@ describe('TaskHelper', () => {
         task.periodInMonth = 3;
 
         jest.spyOn(proxyEquipment, 'getStoredEquipment').mockImplementation(() => [equipment]);
-        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => []);
+        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => [
+          {
+            _uiId: 'entry_01',
+            name: 'vidange',
+            date: timeService.getUTCDateTime(),
+            age: 1234,
+            remarks: 'RAS',
+            taskUiId: task._uiId,
+            equipmentUiId: 'equipment_01',
+            ack: false,
+          },
+        ]);
 
         // Act
         const updatedTask = await TaskHelper.updateRealtimeFields('equipment_01', task);
@@ -435,7 +521,18 @@ describe('TaskHelper', () => {
         task.usagePeriodInHour = 100;
 
         jest.spyOn(proxyEquipment, 'getStoredEquipment').mockImplementation(() => [equipmentWithManualEntry]);
-        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => []);
+        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => [
+          {
+            _uiId: 'entry_01',
+            name: 'vidange',
+            date: timeService.getUTCDateTime(),
+            age: 1234,
+            remarks: 'RAS',
+            taskUiId: task._uiId,
+            equipmentUiId: 'equipment_01',
+            ack: false,
+          },
+        ]);
 
         // Act
         const updatedTask = await TaskHelper.updateRealtimeFields('equipment_01', task);
@@ -466,7 +563,18 @@ describe('TaskHelper', () => {
         task.usagePeriodInHour = 100;
 
         jest.spyOn(proxyEquipment, 'getStoredEquipment').mockImplementation(() => [equipmentWithManualEntry]);
-        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => []);
+        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => [
+          {
+            _uiId: 'entry_01',
+            name: 'vidange',
+            date: timeService.getUTCDateTime(),
+            age: 1234,
+            remarks: 'RAS',
+            taskUiId: task._uiId,
+            equipmentUiId: 'equipment_01',
+            ack: false,
+          },
+        ]);
 
         // Act
         const updatedTask = await TaskHelper.updateRealtimeFields('equipment_01', task);
@@ -497,7 +605,18 @@ describe('TaskHelper', () => {
         task.usagePeriodInHour = 100;
 
         jest.spyOn(proxyEquipment, 'getStoredEquipment').mockImplementation(() => [equipmentWithManualEntry]);
-        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => []);
+        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => [
+          {
+            _uiId: 'entry_01',
+            name: 'vidange',
+            date: timeService.getUTCDateTime(),
+            age: 1234,
+            remarks: 'RAS',
+            taskUiId: task._uiId,
+            equipmentUiId: 'equipment_01',
+            ack: false,
+          },
+        ]);
 
         // Act
         const updatedTask = await TaskHelper.updateRealtimeFields('equipment_01', task);
@@ -528,7 +647,18 @@ describe('TaskHelper', () => {
         task.usagePeriodInHour = 100;
 
         jest.spyOn(proxyEquipment, 'getStoredEquipment').mockImplementation(() => [equipmentWithManualEntry]);
-        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => []);
+        jest.spyOn(proxyEntry, 'getStoredEntries').mockImplementation(() => [
+          {
+            _uiId: 'entry_01',
+            name: 'vidange',
+            date: timeService.getUTCDateTime(),
+            age: 1234,
+            remarks: 'RAS',
+            taskUiId: task._uiId,
+            equipmentUiId: 'equipment_01',
+            ack: false,
+          },
+        ]);
 
         // Act
         const updatedTask = await TaskHelper.updateRealtimeFields('equipment_01', task);
