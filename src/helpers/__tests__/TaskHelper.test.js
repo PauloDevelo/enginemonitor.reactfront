@@ -217,6 +217,7 @@ describe('TaskHelper', () => {
             remarks: 'RAS',
             taskUiId: 'task_01',
             equipmentUiId: 'equipment_01',
+            ack: true,
           },
           {
             _uiId: 'entry_02',
@@ -226,6 +227,7 @@ describe('TaskHelper', () => {
             remarks: 'RAS',
             taskUiId: 'task_01',
             equipmentUiId: 'equipment_01',
+            ack: true,
           },
           {
             _uiId: 'entry_03',
@@ -235,6 +237,7 @@ describe('TaskHelper', () => {
             remarks: 'RAS',
             taskUiId: 'task_01',
             equipmentUiId: 'equipment_01',
+            ack: true,
           },
           {
             _uiId: 'entry_04',
@@ -244,6 +247,7 @@ describe('TaskHelper', () => {
             remarks: 'RAS',
             taskUiId: 'task_01',
             equipmentUiId: 'equipment_01',
+            ack: true,
           },
         ]);
 
@@ -308,6 +312,7 @@ describe('TaskHelper', () => {
             remarks: 'RAS',
             taskUiId: 'task_01',
             equipmentUiId: 'equipment_01',
+            ack: true,
           },
           {
             _uiId: 'entry_02',
@@ -317,6 +322,7 @@ describe('TaskHelper', () => {
             remarks: 'RAS',
             taskUiId: 'task_01',
             equipmentUiId: 'equipment_01',
+            ack: true,
           },
           {
             _uiId: 'entry_03',
@@ -326,6 +332,7 @@ describe('TaskHelper', () => {
             remarks: 'RAS',
             taskUiId: 'task_01',
             equipmentUiId: 'equipment_01',
+            ack: true,
           },
           {
             _uiId: 'entry_04',
@@ -335,6 +342,7 @@ describe('TaskHelper', () => {
             remarks: 'RAS',
             taskUiId: 'task_01',
             equipmentUiId: 'equipment_01',
+            ack: true,
           },
         ]);
 
