@@ -10,6 +10,7 @@ import localforage from 'localforage';
 import ignoredMessages from '../../../testHelpers/MockConsole';
 import imageProxy from '../../../services/ImageProxy';
 import entryProxy from '../../../services/EntryProxy';
+import taskProxy from '../../../services/TaskProxy';
 
 import { AgeAcquisitionType } from '../../../types/Types';
 import EquipmentHistoryTable from '../EquipmentHistoryTable';
@@ -17,6 +18,7 @@ import updateWrapper from '../../../testHelpers/EnzymeHelper';
 
 jest.mock('../../../services/ImageProxy');
 jest.mock('../../../services/EntryProxy');
+jest.mock('../../../services/TaskProxy');
 jest.mock('localforage');
 
 chai.use(require('chai-datetime'));
@@ -33,6 +35,29 @@ describe('EquipmentHistoryTable', () => {
     ageUrl: '',
   };
 
+  const tasks = [
+    {
+      _uiId: 'task_01',
+      name: 'vidange',
+      usagePeriodInHour: 200,
+      periodInMonth: 6,
+      description: 'Change the oil',
+      nextDueDate: new Date('2019-11-07T23:39:36.288Z'),
+      level: 0,
+      usageInHourLeft: 100,
+    },
+    {
+      _uiId: 'task_02',
+      name: 'change filtre a huile',
+      usagePeriodInHour: 400,
+      periodInMonth: 12,
+      description: 'Change le filtre a huile',
+      nextDueDate: new Date('2019-12-07T23:39:36.288Z'),
+      level: 0,
+      usageInHourLeft: 300,
+    },
+  ];
+
   const entries = [
     {
       _uiId: 'entry_01',
@@ -42,6 +67,7 @@ describe('EquipmentHistoryTable', () => {
       remarks: 'RAS',
       taskUiId: 'task_01',
       equipmentUiId: 'equipment_01',
+      ack: true,
     },
     {
       _uiId: 'entry_02',
@@ -51,6 +77,7 @@ describe('EquipmentHistoryTable', () => {
       remarks: 'RAS',
       taskUiId: 'task_02',
       equipmentUiId: 'equipment_01',
+      ack: true,
     },
     {
       _uiId: 'entry_03',
@@ -60,6 +87,7 @@ describe('EquipmentHistoryTable', () => {
       remarks: 'RAS',
       taskUiId: 'task_02',
       equipmentUiId: 'equipment_01',
+      ack: true,
     },
     {
       _uiId: 'entry_04',
@@ -69,6 +97,7 @@ describe('EquipmentHistoryTable', () => {
       remarks: 'RAS',
       taskUiId: 'task_02',
       equipmentUiId: 'equipment_01',
+      ack: true,
     },
   ];
 
@@ -85,6 +114,8 @@ describe('EquipmentHistoryTable', () => {
       }
       return Promise.resolve([]);
     });
+
+    jest.spyOn(taskProxy, 'fetchTasks').mockImplementation(async () => Promise.resolve(tasks));
 
     jest.spyOn(entryProxy, 'existEntry').mockImplementation(async (equipmentId, entryId) => {
       if (entries.findIndex((e) => e._uiId === entryId) !== -1) {
@@ -115,6 +146,7 @@ describe('EquipmentHistoryTable', () => {
 
   afterEach(() => {
     entryProxy.fetchAllEntries.mockRestore();
+    taskProxy.fetchTasks.mockRestore();
     entryProxy.existEntry.mockRestore();
     imageProxy.fetchImages.mockRestore();
   });
