@@ -99,6 +99,16 @@ describe('EquipmentHistoryTable', () => {
       equipmentUiId: 'equipment_01',
       ack: true,
     },
+    {
+      _uiId: 'entry_05',
+      name: 'vidange inverseur',
+      date: new Date('2019-12-09T00:11:19.112Z'),
+      age: 1225,
+      remarks: 'RAS',
+      taskUiId: 'task_02',
+      equipmentUiId: 'equipment_01',
+      ack: false,
+    },
   ];
 
   beforeAll(() => {
@@ -288,6 +298,12 @@ describe('EquipmentHistoryTable', () => {
         expect(editEntryModal.props().visible).toBe(true);
         expect(editEntryModal.props().equipment).toBe(equipment);
         expect(editEntryModal.props().entry).toBe(entries[i]);
+
+        if (entries[i].taskUiId !== undefined) {
+          expect(editEntryModal.props().task).not.toBeUndefined();
+        } else {
+          expect(editEntryModal.props().task).toBeUndefined();
+        }
       }
     }
   });
@@ -342,6 +358,7 @@ describe('EquipmentHistoryTable', () => {
       remarks: 'RAS',
       taskUiId: 'task_08',
       equipmentUiId: 'equipment_01',
+      ack: true,
     };
     // Act
     saveEntry(newEntry);

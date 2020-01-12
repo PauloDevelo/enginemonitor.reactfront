@@ -153,6 +153,16 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
         data={
           Array [
             Object {
+              "_uiId": "entry_05",
+              "ack": false,
+              "age": 1225,
+              "date": 2019-12-09T00:11:19.112Z,
+              "equipmentUiId": "equipment_01",
+              "name": "vidange inverseur",
+              "remarks": "RAS",
+              "taskUiId": "task_02",
+            },
+            Object {
               "_uiId": "entry_04",
               "ack": true,
               "age": 1214,
@@ -241,6 +251,16 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
           }
           data={
             Array [
+              Object {
+                "_uiId": "entry_05",
+                "ack": false,
+                "age": 1225,
+                "date": 2019-12-09T00:11:19.112Z,
+                "equipmentUiId": "equipment_01",
+                "name": "vidange inverseur",
+                "remarks": "RAS",
+                "taskUiId": "task_02",
+              },
               Object {
                 "_uiId": "entry_04",
                 "ack": true,
@@ -332,6 +352,16 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
             data={
               Array [
                 Object {
+                  "_uiId": "entry_05",
+                  "ack": false,
+                  "age": 1225,
+                  "date": 2019-12-09T00:11:19.112Z,
+                  "equipmentUiId": "equipment_01",
+                  "name": "vidange inverseur",
+                  "remarks": "RAS",
+                  "taskUiId": "task_02",
+                },
+                Object {
                   "_uiId": "entry_04",
                   "ack": true,
                   "age": 1214,
@@ -418,6 +448,16 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
               }
               data={
                 Array [
+                  Object {
+                    "_uiId": "entry_05",
+                    "ack": false,
+                    "age": 1225,
+                    "date": 2019-12-09T00:11:19.112Z,
+                    "equipmentUiId": "equipment_01",
+                    "name": "vidange inverseur",
+                    "remarks": "RAS",
+                    "taskUiId": "task_02",
+                  },
                   Object {
                     "_uiId": "entry_04",
                     "ack": true,
@@ -522,6 +562,16 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                         }
                         data={
                           Array [
+                            Object {
+                              "_uiId": "entry_05",
+                              "ack": false,
+                              "age": 1225,
+                              "date": 2019-12-09T00:11:19.112Z,
+                              "equipmentUiId": "equipment_01",
+                              "name": "vidange inverseur",
+                              "remarks": "RAS",
+                              "taskUiId": "task_02",
+                            },
                             Object {
                               "_uiId": "entry_04",
                               "ack": true,
@@ -1274,10 +1324,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                               }
                               data={
                                 Object {
-                                  "_uiId": "entry_04",
-                                  "ack": true,
-                                  "age": 1214,
-                                  "date": 2019-11-09T00:11:19.112Z,
+                                  "_uiId": "entry_05",
+                                  "ack": false,
+                                  "age": 1225,
+                                  "date": 2019-12-09T00:11:19.112Z,
                                   "equipmentUiId": "equipment_01",
                                   "name": "vidange inverseur",
                                   "remarks": "RAS",
@@ -1396,10 +1446,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_04",
-                                              "ack": true,
-                                              "age": 1214,
-                                              "date": 2019-11-09T00:11:19.112Z,
+                                              "_uiId": "entry_05",
+                                              "ack": false,
+                                              "age": 1225,
+                                              "date": 2019-12-09T00:11:19.112Z,
                                               "equipmentUiId": "equipment_01",
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
@@ -1420,10 +1470,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_04",
-                                                "ack": true,
-                                                "age": 1214,
-                                                "date": 2019-11-09T00:11:19.112Z,
+                                                "_uiId": "entry_05",
+                                                "ack": false,
+                                                "age": 1225,
+                                                "date": 2019-12-09T00:11:19.112Z,
                                                 "equipmentUiId": "equipment_01",
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
@@ -1443,10 +1493,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_04",
-                                                  "ack": true,
-                                                  "age": 1214,
-                                                  "date": 2019-11-09T00:11:19.112Z,
+                                                  "_uiId": "entry_05",
+                                                  "ack": false,
+                                                  "age": 1225,
+                                                  "date": 2019-12-09T00:11:19.112Z,
                                                   "equipmentUiId": "equipment_01",
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
@@ -1460,9 +1510,9 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                 onClick={[Function]}
                                               >
                                                 <FormattedDate
-                                                  value={2019-11-09T00:11:19.112Z}
+                                                  value={2019-12-09T00:11:19.112Z}
                                                 >
-                                                  11/9/2019
+                                                  12/9/2019
                                                 </FormattedDate>
                                               </div>
                                             </ClickableCell>
@@ -1565,10 +1615,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_04",
-                                              "ack": true,
-                                              "age": 1214,
-                                              "date": 2019-11-09T00:11:19.112Z,
+                                              "_uiId": "entry_05",
+                                              "ack": false,
+                                              "age": 1225,
+                                              "date": 2019-12-09T00:11:19.112Z,
                                               "equipmentUiId": "equipment_01",
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
@@ -1589,10 +1639,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_04",
-                                                "ack": true,
-                                                "age": 1214,
-                                                "date": 2019-11-09T00:11:19.112Z,
+                                                "_uiId": "entry_05",
+                                                "ack": false,
+                                                "age": 1225,
+                                                "date": 2019-12-09T00:11:19.112Z,
                                                 "equipmentUiId": "equipment_01",
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
@@ -1612,10 +1662,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_04",
-                                                  "ack": true,
-                                                  "age": 1214,
-                                                  "date": 2019-11-09T00:11:19.112Z,
+                                                  "_uiId": "entry_05",
+                                                  "ack": false,
+                                                  "age": 1225,
+                                                  "date": 2019-12-09T00:11:19.112Z,
                                                   "equipmentUiId": "equipment_01",
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
@@ -1730,10 +1780,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_04",
-                                              "ack": true,
-                                              "age": 1214,
-                                              "date": 2019-11-09T00:11:19.112Z,
+                                              "_uiId": "entry_05",
+                                              "ack": false,
+                                              "age": 1225,
+                                              "date": 2019-12-09T00:11:19.112Z,
                                               "equipmentUiId": "equipment_01",
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
@@ -1754,10 +1804,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_04",
-                                                "ack": true,
-                                                "age": 1214,
-                                                "date": 2019-11-09T00:11:19.112Z,
+                                                "_uiId": "entry_05",
+                                                "ack": false,
+                                                "age": 1225,
+                                                "date": 2019-12-09T00:11:19.112Z,
                                                 "equipmentUiId": "equipment_01",
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
@@ -1777,10 +1827,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_04",
-                                                  "ack": true,
-                                                  "age": 1214,
-                                                  "date": 2019-11-09T00:11:19.112Z,
+                                                  "_uiId": "entry_05",
+                                                  "ack": false,
+                                                  "age": 1225,
+                                                  "date": 2019-12-09T00:11:19.112Z,
                                                   "equipmentUiId": "equipment_01",
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
@@ -1793,7 +1843,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                 className="table-white innerTd clickable"
                                                 onClick={[Function]}
                                               >
-                                                1214h
+                                                1225h
                                               </div>
                                             </ClickableCell>
                                           </cell>
@@ -1895,10 +1945,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_04",
-                                              "ack": true,
-                                              "age": 1214,
-                                              "date": 2019-11-09T00:11:19.112Z,
+                                              "_uiId": "entry_05",
+                                              "ack": false,
+                                              "age": 1225,
+                                              "date": 2019-12-09T00:11:19.112Z,
                                               "equipmentUiId": "equipment_01",
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
@@ -1919,10 +1969,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_04",
-                                                "ack": true,
-                                                "age": 1214,
-                                                "date": 2019-11-09T00:11:19.112Z,
+                                                "_uiId": "entry_05",
+                                                "ack": false,
+                                                "age": 1225,
+                                                "date": 2019-12-09T00:11:19.112Z,
                                                 "equipmentUiId": "equipment_01",
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
@@ -1942,10 +1992,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_04",
-                                                  "ack": true,
-                                                  "age": 1214,
-                                                  "date": 2019-11-09T00:11:19.112Z,
+                                                  "_uiId": "entry_05",
+                                                  "ack": false,
+                                                  "age": 1225,
+                                                  "date": 2019-12-09T00:11:19.112Z,
                                                   "equipmentUiId": "equipment_01",
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
@@ -2024,10 +2074,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                               }
                               data={
                                 Object {
-                                  "_uiId": "entry_03",
+                                  "_uiId": "entry_04",
                                   "ack": true,
                                   "age": 1214,
-                                  "date": 2019-11-09T00:11:18.112Z,
+                                  "date": 2019-11-09T00:11:19.112Z,
                                   "equipmentUiId": "equipment_01",
                                   "name": "vidange inverseur",
                                   "remarks": "RAS",
@@ -2146,10 +2196,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_03",
+                                              "_uiId": "entry_04",
                                               "ack": true,
                                               "age": 1214,
-                                              "date": 2019-11-09T00:11:18.112Z,
+                                              "date": 2019-11-09T00:11:19.112Z,
                                               "equipmentUiId": "equipment_01",
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
@@ -2170,10 +2220,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_03",
+                                                "_uiId": "entry_04",
                                                 "ack": true,
                                                 "age": 1214,
-                                                "date": 2019-11-09T00:11:18.112Z,
+                                                "date": 2019-11-09T00:11:19.112Z,
                                                 "equipmentUiId": "equipment_01",
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
@@ -2193,10 +2243,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_03",
+                                                  "_uiId": "entry_04",
                                                   "ack": true,
                                                   "age": 1214,
-                                                  "date": 2019-11-09T00:11:18.112Z,
+                                                  "date": 2019-11-09T00:11:19.112Z,
                                                   "equipmentUiId": "equipment_01",
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
@@ -2210,7 +2260,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                 onClick={[Function]}
                                               >
                                                 <FormattedDate
-                                                  value={2019-11-09T00:11:18.112Z}
+                                                  value={2019-11-09T00:11:19.112Z}
                                                 >
                                                   11/9/2019
                                                 </FormattedDate>
@@ -2315,10 +2365,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_03",
+                                              "_uiId": "entry_04",
                                               "ack": true,
                                               "age": 1214,
-                                              "date": 2019-11-09T00:11:18.112Z,
+                                              "date": 2019-11-09T00:11:19.112Z,
                                               "equipmentUiId": "equipment_01",
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
@@ -2339,10 +2389,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_03",
+                                                "_uiId": "entry_04",
                                                 "ack": true,
                                                 "age": 1214,
-                                                "date": 2019-11-09T00:11:18.112Z,
+                                                "date": 2019-11-09T00:11:19.112Z,
                                                 "equipmentUiId": "equipment_01",
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
@@ -2362,10 +2412,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_03",
+                                                  "_uiId": "entry_04",
                                                   "ack": true,
                                                   "age": 1214,
-                                                  "date": 2019-11-09T00:11:18.112Z,
+                                                  "date": 2019-11-09T00:11:19.112Z,
                                                   "equipmentUiId": "equipment_01",
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
@@ -2480,10 +2530,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_03",
+                                              "_uiId": "entry_04",
                                               "ack": true,
                                               "age": 1214,
-                                              "date": 2019-11-09T00:11:18.112Z,
+                                              "date": 2019-11-09T00:11:19.112Z,
                                               "equipmentUiId": "equipment_01",
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
@@ -2504,10 +2554,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_03",
+                                                "_uiId": "entry_04",
                                                 "ack": true,
                                                 "age": 1214,
-                                                "date": 2019-11-09T00:11:18.112Z,
+                                                "date": 2019-11-09T00:11:19.112Z,
                                                 "equipmentUiId": "equipment_01",
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
@@ -2527,10 +2577,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_03",
+                                                  "_uiId": "entry_04",
                                                   "ack": true,
                                                   "age": 1214,
-                                                  "date": 2019-11-09T00:11:18.112Z,
+                                                  "date": 2019-11-09T00:11:19.112Z,
                                                   "equipmentUiId": "equipment_01",
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
@@ -2645,10 +2695,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_03",
+                                              "_uiId": "entry_04",
                                               "ack": true,
                                               "age": 1214,
-                                              "date": 2019-11-09T00:11:18.112Z,
+                                              "date": 2019-11-09T00:11:19.112Z,
                                               "equipmentUiId": "equipment_01",
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
@@ -2669,10 +2719,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_03",
+                                                "_uiId": "entry_04",
                                                 "ack": true,
                                                 "age": 1214,
-                                                "date": 2019-11-09T00:11:18.112Z,
+                                                "date": 2019-11-09T00:11:19.112Z,
                                                 "equipmentUiId": "equipment_01",
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
@@ -2692,10 +2742,10 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_03",
+                                                  "_uiId": "entry_04",
                                                   "ack": true,
                                                   "age": 1214,
-                                                  "date": 2019-11-09T00:11:18.112Z,
+                                                  "date": 2019-11-09T00:11:19.112Z,
                                                   "equipmentUiId": "equipment_01",
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
@@ -2774,14 +2824,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                               }
                               data={
                                 Object {
-                                  "_uiId": "entry_01",
+                                  "_uiId": "entry_03",
                                   "ack": true,
-                                  "age": 1234,
-                                  "date": 2019-11-08T00:11:18.112Z,
+                                  "age": 1214,
+                                  "date": 2019-11-09T00:11:18.112Z,
                                   "equipmentUiId": "equipment_01",
-                                  "name": "vidange",
+                                  "name": "vidange inverseur",
                                   "remarks": "RAS",
-                                  "taskUiId": "task_01",
+                                  "taskUiId": "task_02",
                                 }
                               }
                               dataCellRenderer={
@@ -2896,14 +2946,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_01",
+                                              "_uiId": "entry_03",
                                               "ack": true,
-                                              "age": 1234,
-                                              "date": 2019-11-08T00:11:18.112Z,
+                                              "age": 1214,
+                                              "date": 2019-11-09T00:11:18.112Z,
                                               "equipmentUiId": "equipment_01",
-                                              "name": "vidange",
+                                              "name": "vidange inverseur",
                                               "remarks": "RAS",
-                                              "taskUiId": "task_01",
+                                              "taskUiId": "task_02",
                                             }
                                           }
                                           header={[Function]}
@@ -2920,14 +2970,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_01",
+                                                "_uiId": "entry_03",
                                                 "ack": true,
-                                                "age": 1234,
-                                                "date": 2019-11-08T00:11:18.112Z,
+                                                "age": 1214,
+                                                "date": 2019-11-09T00:11:18.112Z,
                                                 "equipmentUiId": "equipment_01",
-                                                "name": "vidange",
+                                                "name": "vidange inverseur",
                                                 "remarks": "RAS",
-                                                "taskUiId": "task_01",
+                                                "taskUiId": "task_02",
                                               }
                                             }
                                             index={0}
@@ -2943,14 +2993,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_01",
+                                                  "_uiId": "entry_03",
                                                   "ack": true,
-                                                  "age": 1234,
-                                                  "date": 2019-11-08T00:11:18.112Z,
+                                                  "age": 1214,
+                                                  "date": 2019-11-09T00:11:18.112Z,
                                                   "equipmentUiId": "equipment_01",
-                                                  "name": "vidange",
+                                                  "name": "vidange inverseur",
                                                   "remarks": "RAS",
-                                                  "taskUiId": "task_01",
+                                                  "taskUiId": "task_02",
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -2960,9 +3010,9 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                 onClick={[Function]}
                                               >
                                                 <FormattedDate
-                                                  value={2019-11-08T00:11:18.112Z}
+                                                  value={2019-11-09T00:11:18.112Z}
                                                 >
-                                                  11/8/2019
+                                                  11/9/2019
                                                 </FormattedDate>
                                               </div>
                                             </ClickableCell>
@@ -3065,14 +3115,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_01",
+                                              "_uiId": "entry_03",
                                               "ack": true,
-                                              "age": 1234,
-                                              "date": 2019-11-08T00:11:18.112Z,
+                                              "age": 1214,
+                                              "date": 2019-11-09T00:11:18.112Z,
                                               "equipmentUiId": "equipment_01",
-                                              "name": "vidange",
+                                              "name": "vidange inverseur",
                                               "remarks": "RAS",
-                                              "taskUiId": "task_01",
+                                              "taskUiId": "task_02",
                                             }
                                           }
                                           header={[Function]}
@@ -3089,14 +3139,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_01",
+                                                "_uiId": "entry_03",
                                                 "ack": true,
-                                                "age": 1234,
-                                                "date": 2019-11-08T00:11:18.112Z,
+                                                "age": 1214,
+                                                "date": 2019-11-09T00:11:18.112Z,
                                                 "equipmentUiId": "equipment_01",
-                                                "name": "vidange",
+                                                "name": "vidange inverseur",
                                                 "remarks": "RAS",
-                                                "taskUiId": "task_01",
+                                                "taskUiId": "task_02",
                                               }
                                             }
                                             index={1}
@@ -3112,14 +3162,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_01",
+                                                  "_uiId": "entry_03",
                                                   "ack": true,
-                                                  "age": 1234,
-                                                  "date": 2019-11-08T00:11:18.112Z,
+                                                  "age": 1214,
+                                                  "date": 2019-11-09T00:11:18.112Z,
                                                   "equipmentUiId": "equipment_01",
-                                                  "name": "vidange",
+                                                  "name": "vidange inverseur",
                                                   "remarks": "RAS",
-                                                  "taskUiId": "task_01",
+                                                  "taskUiId": "task_02",
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -3128,7 +3178,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                 className="table-white innerTd clickable"
                                                 onClick={[Function]}
                                               >
-                                                vidange
+                                                vidange inverseur
                                               </div>
                                             </ClickableCell>
                                           </cell>
@@ -3230,14 +3280,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_01",
+                                              "_uiId": "entry_03",
                                               "ack": true,
-                                              "age": 1234,
-                                              "date": 2019-11-08T00:11:18.112Z,
+                                              "age": 1214,
+                                              "date": 2019-11-09T00:11:18.112Z,
                                               "equipmentUiId": "equipment_01",
-                                              "name": "vidange",
+                                              "name": "vidange inverseur",
                                               "remarks": "RAS",
-                                              "taskUiId": "task_01",
+                                              "taskUiId": "task_02",
                                             }
                                           }
                                           header={[Function]}
@@ -3254,14 +3304,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_01",
+                                                "_uiId": "entry_03",
                                                 "ack": true,
-                                                "age": 1234,
-                                                "date": 2019-11-08T00:11:18.112Z,
+                                                "age": 1214,
+                                                "date": 2019-11-09T00:11:18.112Z,
                                                 "equipmentUiId": "equipment_01",
-                                                "name": "vidange",
+                                                "name": "vidange inverseur",
                                                 "remarks": "RAS",
-                                                "taskUiId": "task_01",
+                                                "taskUiId": "task_02",
                                               }
                                             }
                                             index={2}
@@ -3277,14 +3327,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_01",
+                                                  "_uiId": "entry_03",
                                                   "ack": true,
-                                                  "age": 1234,
-                                                  "date": 2019-11-08T00:11:18.112Z,
+                                                  "age": 1214,
+                                                  "date": 2019-11-09T00:11:18.112Z,
                                                   "equipmentUiId": "equipment_01",
-                                                  "name": "vidange",
+                                                  "name": "vidange inverseur",
                                                   "remarks": "RAS",
-                                                  "taskUiId": "task_01",
+                                                  "taskUiId": "task_02",
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -3293,7 +3343,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                 className="table-white innerTd clickable"
                                                 onClick={[Function]}
                                               >
-                                                1234h
+                                                1214h
                                               </div>
                                             </ClickableCell>
                                           </cell>
@@ -3395,14 +3445,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_01",
+                                              "_uiId": "entry_03",
                                               "ack": true,
-                                              "age": 1234,
-                                              "date": 2019-11-08T00:11:18.112Z,
+                                              "age": 1214,
+                                              "date": 2019-11-09T00:11:18.112Z,
                                               "equipmentUiId": "equipment_01",
-                                              "name": "vidange",
+                                              "name": "vidange inverseur",
                                               "remarks": "RAS",
-                                              "taskUiId": "task_01",
+                                              "taskUiId": "task_02",
                                             }
                                           }
                                           header={[Function]}
@@ -3419,14 +3469,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_01",
+                                                "_uiId": "entry_03",
                                                 "ack": true,
-                                                "age": 1234,
-                                                "date": 2019-11-08T00:11:18.112Z,
+                                                "age": 1214,
+                                                "date": 2019-11-09T00:11:18.112Z,
                                                 "equipmentUiId": "equipment_01",
-                                                "name": "vidange",
+                                                "name": "vidange inverseur",
                                                 "remarks": "RAS",
-                                                "taskUiId": "task_01",
+                                                "taskUiId": "task_02",
                                               }
                                             }
                                             index={3}
@@ -3442,14 +3492,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_01",
+                                                  "_uiId": "entry_03",
                                                   "ack": true,
-                                                  "age": 1234,
-                                                  "date": 2019-11-08T00:11:18.112Z,
+                                                  "age": 1214,
+                                                  "date": 2019-11-09T00:11:18.112Z,
                                                   "equipmentUiId": "equipment_01",
-                                                  "name": "vidange",
+                                                  "name": "vidange inverseur",
                                                   "remarks": "RAS",
-                                                  "taskUiId": "task_01",
+                                                  "taskUiId": "task_02",
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -3524,14 +3574,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                               }
                               data={
                                 Object {
-                                  "_uiId": "entry_02",
+                                  "_uiId": "entry_01",
                                   "ack": true,
-                                  "age": 1214,
-                                  "date": 2019-11-06T00:11:18.112Z,
+                                  "age": 1234,
+                                  "date": 2019-11-08T00:11:18.112Z,
                                   "equipmentUiId": "equipment_01",
-                                  "name": "vidange inverseur",
+                                  "name": "vidange",
                                   "remarks": "RAS",
-                                  "taskUiId": "task_02",
+                                  "taskUiId": "task_01",
                                 }
                               }
                               dataCellRenderer={
@@ -3646,14 +3696,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_02",
+                                              "_uiId": "entry_01",
                                               "ack": true,
-                                              "age": 1214,
-                                              "date": 2019-11-06T00:11:18.112Z,
+                                              "age": 1234,
+                                              "date": 2019-11-08T00:11:18.112Z,
                                               "equipmentUiId": "equipment_01",
-                                              "name": "vidange inverseur",
+                                              "name": "vidange",
                                               "remarks": "RAS",
-                                              "taskUiId": "task_02",
+                                              "taskUiId": "task_01",
                                             }
                                           }
                                           header={[Function]}
@@ -3670,14 +3720,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_02",
+                                                "_uiId": "entry_01",
                                                 "ack": true,
-                                                "age": 1214,
-                                                "date": 2019-11-06T00:11:18.112Z,
+                                                "age": 1234,
+                                                "date": 2019-11-08T00:11:18.112Z,
                                                 "equipmentUiId": "equipment_01",
-                                                "name": "vidange inverseur",
+                                                "name": "vidange",
                                                 "remarks": "RAS",
-                                                "taskUiId": "task_02",
+                                                "taskUiId": "task_01",
                                               }
                                             }
                                             index={0}
@@ -3693,14 +3743,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_02",
+                                                  "_uiId": "entry_01",
                                                   "ack": true,
-                                                  "age": 1214,
-                                                  "date": 2019-11-06T00:11:18.112Z,
+                                                  "age": 1234,
+                                                  "date": 2019-11-08T00:11:18.112Z,
                                                   "equipmentUiId": "equipment_01",
-                                                  "name": "vidange inverseur",
+                                                  "name": "vidange",
                                                   "remarks": "RAS",
-                                                  "taskUiId": "task_02",
+                                                  "taskUiId": "task_01",
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -3710,9 +3760,9 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                 onClick={[Function]}
                                               >
                                                 <FormattedDate
-                                                  value={2019-11-06T00:11:18.112Z}
+                                                  value={2019-11-08T00:11:18.112Z}
                                                 >
-                                                  11/6/2019
+                                                  11/8/2019
                                                 </FormattedDate>
                                               </div>
                                             </ClickableCell>
@@ -3815,14 +3865,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_02",
+                                              "_uiId": "entry_01",
                                               "ack": true,
-                                              "age": 1214,
-                                              "date": 2019-11-06T00:11:18.112Z,
+                                              "age": 1234,
+                                              "date": 2019-11-08T00:11:18.112Z,
                                               "equipmentUiId": "equipment_01",
-                                              "name": "vidange inverseur",
+                                              "name": "vidange",
                                               "remarks": "RAS",
-                                              "taskUiId": "task_02",
+                                              "taskUiId": "task_01",
                                             }
                                           }
                                           header={[Function]}
@@ -3839,14 +3889,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_02",
+                                                "_uiId": "entry_01",
                                                 "ack": true,
-                                                "age": 1214,
-                                                "date": 2019-11-06T00:11:18.112Z,
+                                                "age": 1234,
+                                                "date": 2019-11-08T00:11:18.112Z,
                                                 "equipmentUiId": "equipment_01",
-                                                "name": "vidange inverseur",
+                                                "name": "vidange",
                                                 "remarks": "RAS",
-                                                "taskUiId": "task_02",
+                                                "taskUiId": "task_01",
                                               }
                                             }
                                             index={1}
@@ -3862,14 +3912,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_02",
+                                                  "_uiId": "entry_01",
                                                   "ack": true,
-                                                  "age": 1214,
-                                                  "date": 2019-11-06T00:11:18.112Z,
+                                                  "age": 1234,
+                                                  "date": 2019-11-08T00:11:18.112Z,
                                                   "equipmentUiId": "equipment_01",
-                                                  "name": "vidange inverseur",
+                                                  "name": "vidange",
                                                   "remarks": "RAS",
-                                                  "taskUiId": "task_02",
+                                                  "taskUiId": "task_01",
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -3878,7 +3928,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                 className="table-white innerTd clickable"
                                                 onClick={[Function]}
                                               >
-                                                vidange inverseur
+                                                vidange
                                               </div>
                                             </ClickableCell>
                                           </cell>
@@ -3980,14 +4030,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
-                                              "_uiId": "entry_02",
+                                              "_uiId": "entry_01",
                                               "ack": true,
-                                              "age": 1214,
-                                              "date": 2019-11-06T00:11:18.112Z,
+                                              "age": 1234,
+                                              "date": 2019-11-08T00:11:18.112Z,
                                               "equipmentUiId": "equipment_01",
-                                              "name": "vidange inverseur",
+                                              "name": "vidange",
                                               "remarks": "RAS",
-                                              "taskUiId": "task_02",
+                                              "taskUiId": "task_01",
                                             }
                                           }
                                           header={[Function]}
@@ -4004,14 +4054,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           <cell
                                             data={
                                               Object {
-                                                "_uiId": "entry_02",
+                                                "_uiId": "entry_01",
                                                 "ack": true,
-                                                "age": 1214,
-                                                "date": 2019-11-06T00:11:18.112Z,
+                                                "age": 1234,
+                                                "date": 2019-11-08T00:11:18.112Z,
                                                 "equipmentUiId": "equipment_01",
-                                                "name": "vidange inverseur",
+                                                "name": "vidange",
                                                 "remarks": "RAS",
-                                                "taskUiId": "task_02",
+                                                "taskUiId": "task_01",
                                               }
                                             }
                                             index={2}
@@ -4027,14 +4077,14 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               classNames="table-white"
                                               data={
                                                 Object {
-                                                  "_uiId": "entry_02",
+                                                  "_uiId": "entry_01",
                                                   "ack": true,
-                                                  "age": 1214,
-                                                  "date": 2019-11-06T00:11:18.112Z,
+                                                  "age": 1234,
+                                                  "date": 2019-11-08T00:11:18.112Z,
                                                   "equipmentUiId": "equipment_01",
-                                                  "name": "vidange inverseur",
+                                                  "name": "vidange",
                                                   "remarks": "RAS",
-                                                  "taskUiId": "task_02",
+                                                  "taskUiId": "task_01",
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -4043,7 +4093,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                 className="table-white innerTd clickable"
                                                 onClick={[Function]}
                                               >
-                                                1214h
+                                                1234h
                                               </div>
                                             </ClickableCell>
                                           </cell>
@@ -4145,6 +4195,756 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           cell={[Function]}
                                           data={
                                             Object {
+                                              "_uiId": "entry_01",
+                                              "ack": true,
+                                              "age": 1234,
+                                              "date": 2019-11-08T00:11:18.112Z,
+                                              "equipmentUiId": "equipment_01",
+                                              "name": "vidange",
+                                              "remarks": "RAS",
+                                              "taskUiId": "task_01",
+                                            }
+                                          }
+                                          header={[Function]}
+                                          index={3}
+                                          name="remarks"
+                                          rowIndex={3}
+                                          sortable={false}
+                                          style={
+                                            Object {
+                                              "width": "45%",
+                                            }
+                                          }
+                                        >
+                                          <cell
+                                            data={
+                                              Object {
+                                                "_uiId": "entry_01",
+                                                "ack": true,
+                                                "age": 1234,
+                                                "date": 2019-11-08T00:11:18.112Z,
+                                                "equipmentUiId": "equipment_01",
+                                                "name": "vidange",
+                                                "remarks": "RAS",
+                                                "taskUiId": "task_01",
+                                              }
+                                            }
+                                            index={3}
+                                            rowIndex={3}
+                                            sortable={false}
+                                            style={
+                                              Object {
+                                                "width": "45%",
+                                              }
+                                            }
+                                          >
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_01",
+                                                  "ack": true,
+                                                  "age": 1234,
+                                                  "date": 2019-11-08T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_01",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
+                                            >
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                <div
+                                                  dangerouslySetInnerHTML={
+                                                    Object {
+                                                      "__html": "RAS",
+                                                    }
+                                                  }
+                                                />
+                                              </div>
+                                            </ClickableCell>
+                                          </cell>
+                                        </ForwardRef>
+                                      </td>
+                                    </ForwardRef>
+                                  </ForwardRef>
+                                </tr>
+                              </ForwardRef>
+                            </ForwardRef>
+                            <ForwardRef
+                              cellRenderer={
+                                Object {
+                                  "$$typeof": Symbol(react.forward_ref),
+                                  "render": [Function],
+                                }
+                              }
+                              columns={
+                                Array [
+                                  Object {
+                                    "cell": [Function],
+                                    "header": [Function],
+                                    "name": "date",
+                                    "sortable": true,
+                                    "style": Object {
+                                      "width": "20%",
+                                    },
+                                  },
+                                  Object {
+                                    "cell": [Function],
+                                    "header": [Function],
+                                    "name": "name",
+                                    "sortable": true,
+                                    "style": Object {
+                                      "width": "20%",
+                                    },
+                                  },
+                                  Object {
+                                    "cell": [Function],
+                                    "header": [Function],
+                                    "name": "age",
+                                    "sortable": true,
+                                    "style": Object {
+                                      "width": "15%",
+                                    },
+                                  },
+                                  Object {
+                                    "cell": [Function],
+                                    "header": [Function],
+                                    "name": "remarks",
+                                    "sortable": false,
+                                    "style": Object {
+                                      "width": "45%",
+                                    },
+                                  },
+                                ]
+                              }
+                              data={
+                                Object {
+                                  "_uiId": "entry_02",
+                                  "ack": true,
+                                  "age": 1214,
+                                  "date": 2019-11-06T00:11:18.112Z,
+                                  "equipmentUiId": "equipment_01",
+                                  "name": "vidange inverseur",
+                                  "remarks": "RAS",
+                                  "taskUiId": "task_02",
+                                }
+                              }
+                              dataCellRenderer={
+                                Object {
+                                  "$$typeof": Symbol(react.forward_ref),
+                                  "render": [Function],
+                                }
+                              }
+                              index={4}
+                              key="4"
+                              rowRenderer={
+                                Object {
+                                  "$$typeof": Symbol(react.forward_ref),
+                                  "render": [Function],
+                                }
+                              }
+                              tableProps={Object {}}
+                            >
+                              <ForwardRef>
+                                <tr>
+                                  <ForwardRef
+                                    columns={
+                                      Array [
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "date",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "name",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "age",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "15%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "remarks",
+                                          "sortable": false,
+                                          "style": Object {
+                                            "width": "45%",
+                                          },
+                                        },
+                                      ]
+                                    }
+                                    index={0}
+                                    key="0"
+                                    rowIndex={4}
+                                  >
+                                    <ForwardRef
+                                      columns={
+                                        Array [
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "date",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "name",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "age",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "15%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "remarks",
+                                            "sortable": false,
+                                            "style": Object {
+                                              "width": "45%",
+                                            },
+                                          },
+                                        ]
+                                      }
+                                      index={0}
+                                      rowIndex={4}
+                                    >
+                                      <td>
+                                        <ForwardRef
+                                          cell={[Function]}
+                                          data={
+                                            Object {
+                                              "_uiId": "entry_02",
+                                              "ack": true,
+                                              "age": 1214,
+                                              "date": 2019-11-06T00:11:18.112Z,
+                                              "equipmentUiId": "equipment_01",
+                                              "name": "vidange inverseur",
+                                              "remarks": "RAS",
+                                              "taskUiId": "task_02",
+                                            }
+                                          }
+                                          header={[Function]}
+                                          index={0}
+                                          name="date"
+                                          rowIndex={4}
+                                          sortable={true}
+                                          style={
+                                            Object {
+                                              "width": "20%",
+                                            }
+                                          }
+                                        >
+                                          <cell
+                                            data={
+                                              Object {
+                                                "_uiId": "entry_02",
+                                                "ack": true,
+                                                "age": 1214,
+                                                "date": 2019-11-06T00:11:18.112Z,
+                                                "equipmentUiId": "equipment_01",
+                                                "name": "vidange inverseur",
+                                                "remarks": "RAS",
+                                                "taskUiId": "task_02",
+                                              }
+                                            }
+                                            index={0}
+                                            rowIndex={4}
+                                            sortable={true}
+                                            style={
+                                              Object {
+                                                "width": "20%",
+                                              }
+                                            }
+                                          >
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_02",
+                                                  "ack": true,
+                                                  "age": 1214,
+                                                  "date": 2019-11-06T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
+                                            >
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                <FormattedDate
+                                                  value={2019-11-06T00:11:18.112Z}
+                                                >
+                                                  11/6/2019
+                                                </FormattedDate>
+                                              </div>
+                                            </ClickableCell>
+                                          </cell>
+                                        </ForwardRef>
+                                      </td>
+                                    </ForwardRef>
+                                  </ForwardRef>
+                                  <ForwardRef
+                                    columns={
+                                      Array [
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "date",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "name",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "age",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "15%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "remarks",
+                                          "sortable": false,
+                                          "style": Object {
+                                            "width": "45%",
+                                          },
+                                        },
+                                      ]
+                                    }
+                                    index={1}
+                                    key="1"
+                                    rowIndex={4}
+                                  >
+                                    <ForwardRef
+                                      columns={
+                                        Array [
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "date",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "name",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "age",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "15%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "remarks",
+                                            "sortable": false,
+                                            "style": Object {
+                                              "width": "45%",
+                                            },
+                                          },
+                                        ]
+                                      }
+                                      index={1}
+                                      rowIndex={4}
+                                    >
+                                      <td>
+                                        <ForwardRef
+                                          cell={[Function]}
+                                          data={
+                                            Object {
+                                              "_uiId": "entry_02",
+                                              "ack": true,
+                                              "age": 1214,
+                                              "date": 2019-11-06T00:11:18.112Z,
+                                              "equipmentUiId": "equipment_01",
+                                              "name": "vidange inverseur",
+                                              "remarks": "RAS",
+                                              "taskUiId": "task_02",
+                                            }
+                                          }
+                                          header={[Function]}
+                                          index={1}
+                                          name="name"
+                                          rowIndex={4}
+                                          sortable={true}
+                                          style={
+                                            Object {
+                                              "width": "20%",
+                                            }
+                                          }
+                                        >
+                                          <cell
+                                            data={
+                                              Object {
+                                                "_uiId": "entry_02",
+                                                "ack": true,
+                                                "age": 1214,
+                                                "date": 2019-11-06T00:11:18.112Z,
+                                                "equipmentUiId": "equipment_01",
+                                                "name": "vidange inverseur",
+                                                "remarks": "RAS",
+                                                "taskUiId": "task_02",
+                                              }
+                                            }
+                                            index={1}
+                                            rowIndex={4}
+                                            sortable={true}
+                                            style={
+                                              Object {
+                                                "width": "20%",
+                                              }
+                                            }
+                                          >
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_02",
+                                                  "ack": true,
+                                                  "age": 1214,
+                                                  "date": 2019-11-06T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
+                                            >
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                vidange inverseur
+                                              </div>
+                                            </ClickableCell>
+                                          </cell>
+                                        </ForwardRef>
+                                      </td>
+                                    </ForwardRef>
+                                  </ForwardRef>
+                                  <ForwardRef
+                                    columns={
+                                      Array [
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "date",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "name",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "age",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "15%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "remarks",
+                                          "sortable": false,
+                                          "style": Object {
+                                            "width": "45%",
+                                          },
+                                        },
+                                      ]
+                                    }
+                                    index={2}
+                                    key="2"
+                                    rowIndex={4}
+                                  >
+                                    <ForwardRef
+                                      columns={
+                                        Array [
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "date",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "name",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "age",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "15%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "remarks",
+                                            "sortable": false,
+                                            "style": Object {
+                                              "width": "45%",
+                                            },
+                                          },
+                                        ]
+                                      }
+                                      index={2}
+                                      rowIndex={4}
+                                    >
+                                      <td>
+                                        <ForwardRef
+                                          cell={[Function]}
+                                          data={
+                                            Object {
+                                              "_uiId": "entry_02",
+                                              "ack": true,
+                                              "age": 1214,
+                                              "date": 2019-11-06T00:11:18.112Z,
+                                              "equipmentUiId": "equipment_01",
+                                              "name": "vidange inverseur",
+                                              "remarks": "RAS",
+                                              "taskUiId": "task_02",
+                                            }
+                                          }
+                                          header={[Function]}
+                                          index={2}
+                                          name="age"
+                                          rowIndex={4}
+                                          sortable={true}
+                                          style={
+                                            Object {
+                                              "width": "15%",
+                                            }
+                                          }
+                                        >
+                                          <cell
+                                            data={
+                                              Object {
+                                                "_uiId": "entry_02",
+                                                "ack": true,
+                                                "age": 1214,
+                                                "date": 2019-11-06T00:11:18.112Z,
+                                                "equipmentUiId": "equipment_01",
+                                                "name": "vidange inverseur",
+                                                "remarks": "RAS",
+                                                "taskUiId": "task_02",
+                                              }
+                                            }
+                                            index={2}
+                                            rowIndex={4}
+                                            sortable={true}
+                                            style={
+                                              Object {
+                                                "width": "15%",
+                                              }
+                                            }
+                                          >
+                                            <ClickableCell
+                                              classNames="table-white"
+                                              data={
+                                                Object {
+                                                  "_uiId": "entry_02",
+                                                  "ack": true,
+                                                  "age": 1214,
+                                                  "date": 2019-11-06T00:11:18.112Z,
+                                                  "equipmentUiId": "equipment_01",
+                                                  "name": "vidange inverseur",
+                                                  "remarks": "RAS",
+                                                  "taskUiId": "task_02",
+                                                }
+                                              }
+                                              onDisplayData={[Function]}
+                                            >
+                                              <div
+                                                className="table-white innerTd clickable"
+                                                onClick={[Function]}
+                                              >
+                                                1214h
+                                              </div>
+                                            </ClickableCell>
+                                          </cell>
+                                        </ForwardRef>
+                                      </td>
+                                    </ForwardRef>
+                                  </ForwardRef>
+                                  <ForwardRef
+                                    columns={
+                                      Array [
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "date",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "name",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "20%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "age",
+                                          "sortable": true,
+                                          "style": Object {
+                                            "width": "15%",
+                                          },
+                                        },
+                                        Object {
+                                          "cell": [Function],
+                                          "header": [Function],
+                                          "name": "remarks",
+                                          "sortable": false,
+                                          "style": Object {
+                                            "width": "45%",
+                                          },
+                                        },
+                                      ]
+                                    }
+                                    index={3}
+                                    key="3"
+                                    rowIndex={4}
+                                  >
+                                    <ForwardRef
+                                      columns={
+                                        Array [
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "date",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "name",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "20%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "age",
+                                            "sortable": true,
+                                            "style": Object {
+                                              "width": "15%",
+                                            },
+                                          },
+                                          Object {
+                                            "cell": [Function],
+                                            "header": [Function],
+                                            "name": "remarks",
+                                            "sortable": false,
+                                            "style": Object {
+                                              "width": "45%",
+                                            },
+                                          },
+                                        ]
+                                      }
+                                      index={3}
+                                      rowIndex={4}
+                                    >
+                                      <td>
+                                        <ForwardRef
+                                          cell={[Function]}
+                                          data={
+                                            Object {
                                               "_uiId": "entry_02",
                                               "ack": true,
                                               "age": 1214,
@@ -4158,7 +4958,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                           header={[Function]}
                                           index={3}
                                           name="remarks"
-                                          rowIndex={3}
+                                          rowIndex={4}
                                           sortable={false}
                                           style={
                                             Object {
@@ -4180,7 +4980,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                               }
                                             }
                                             index={3}
-                                            rowIndex={3}
+                                            rowIndex={4}
                                             sortable={false}
                                             style={
                                               Object {
