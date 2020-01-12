@@ -21,6 +21,7 @@ describe('Test TaskProxy', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('The function TaskProxy.existTask expects a non null and non undefined task id.');
+    ignoredMessages.push('read property');
   });
 
   const parentEquipmentId = 'an_parent_equipment';
