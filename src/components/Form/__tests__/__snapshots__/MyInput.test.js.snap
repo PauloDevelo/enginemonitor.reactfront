@@ -24,7 +24,6 @@ exports[`MyInput of type checkox should render as expected 1`] = `
     >
       <Label
         check={true}
-        inline="true"
         tag="label"
         widths={
           Array [
@@ -38,7 +37,6 @@ exports[`MyInput of type checkox should render as expected 1`] = `
       >
         <label
           className="form-check-label"
-          inline="true"
         >
           <FormattedMessage
             defaultMessage="Default message"
@@ -50,6 +48,16 @@ exports[`MyInput of type checkox should render as expected 1`] = `
           </FormattedMessage>
            
           <Input
+            innerRef={
+              Object {
+                "current": <input
+                  class="form-check-input"
+                  name="name"
+                  required=""
+                  type="checkbox"
+                />,
+              }
+            }
             invalid={false}
             name="name"
             onChange={[Function]}

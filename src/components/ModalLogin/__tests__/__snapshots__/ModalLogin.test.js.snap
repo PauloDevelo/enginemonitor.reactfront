@@ -148,7 +148,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                           >
                             <label
                               class="form-check-label"
-                              inline="true"
                             >
                               Remember me
                                
@@ -156,7 +155,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                 class="form-check-input"
                                 name="remember"
                                 type="checkbox"
-                                value="false"
+                                value=""
                               />
                             </label>
                           </div>
@@ -283,7 +282,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                             >
                               <label
                                 class="form-check-label"
-                                inline="true"
                               >
                                 Remember me
                                  
@@ -291,7 +289,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                   class="form-check-input"
                                   name="remember"
                                   type="checkbox"
-                                  value="false"
+                                  value=""
                                 />
                               </label>
                             </div>
@@ -531,7 +529,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                       >
                                         <label
                                           class="form-check-label"
-                                          inline="true"
                                         >
                                           Remember me
                                            
@@ -539,7 +536,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                             class="form-check-input"
                                             name="remember"
                                             type="checkbox"
-                                            value="false"
+                                            value=""
                                           />
                                         </label>
                                       </div>
@@ -721,6 +718,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                     </FormGroup>
                                   </Memo()>
                                   <Memo()
+                                    checked={false}
                                     handleChange={[Function]}
                                     key=".2"
                                     label={
@@ -733,7 +731,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                     name="remember"
                                     type="checkbox"
                                     validationTrigger={0}
-                                    value={false}
                                   >
                                     <FormGroup
                                       check={true}
@@ -746,7 +743,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                       >
                                         <Label
                                           check={true}
-                                          inline="true"
                                           tag="label"
                                           widths={
                                             Array [
@@ -760,7 +756,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                         >
                                           <label
                                             className="form-check-label"
-                                            inline="true"
                                           >
                                             <FormattedMessage
                                               defaultMessage="Remember me"
@@ -772,18 +767,28 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                             </FormattedMessage>
                                              
                                             <Input
+                                              checked={false}
+                                              innerRef={
+                                                Object {
+                                                  "current": <input
+                                                    class="form-check-input"
+                                                    name="remember"
+                                                    type="checkbox"
+                                                    value=""
+                                                  />,
+                                                }
+                                              }
                                               invalid={false}
                                               name="remember"
                                               onChange={[Function]}
                                               type="checkbox"
-                                              value={false}
                                             >
                                               <input
+                                                checked={false}
                                                 className="form-check-input"
                                                 name="remember"
                                                 onChange={[Function]}
                                                 type="checkbox"
-                                                value={false}
                                               />
                                             </Input>
                                           </label>

@@ -156,6 +156,22 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                           novalidate=""
                         >
                           <div
+                            class="form-group form-check form-check-inline"
+                          >
+                            <label
+                              class="form-check-label"
+                            >
+                              Acknowledge the task
+                               
+                              <input
+                                class="form-check-input"
+                                name="ack"
+                                type="checkbox"
+                                value=""
+                              />
+                            </label>
+                          </div>
+                          <div
                             class="form-group form-group"
                           >
                             <label
@@ -406,6 +422,22 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                             id="editEntryForm"
                             novalidate=""
                           >
+                            <div
+                              class="form-group form-check form-check-inline"
+                            >
+                              <label
+                                class="form-check-label"
+                              >
+                                Acknowledge the task
+                                 
+                                <input
+                                  class="form-check-input"
+                                  name="ack"
+                                  type="checkbox"
+                                  value=""
+                                />
+                              </label>
+                            </div>
                             <div
                               class="form-group form-group"
                             >
@@ -781,6 +813,22 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       novalidate=""
                                     >
                                       <div
+                                        class="form-group form-check form-check-inline"
+                                      >
+                                        <label
+                                          class="form-check-label"
+                                        >
+                                          Acknowledge the task
+                                           
+                                          <input
+                                            class="form-check-input"
+                                            name="ack"
+                                            type="checkbox"
+                                            value=""
+                                          />
+                                        </label>
+                                      </div>
+                                      <div
                                         class="form-group form-group"
                                       >
                                         <label
@@ -867,6 +915,82 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                     key=".0"
                                     label={
                                       Object {
+                                        "defaultMessage": "Acknowledge the task",
+                                        "description": "Checkbox label",
+                                        "id": "ackOption",
+                                      }
+                                    }
+                                    name="ack"
+                                    type="checkbox"
+                                    validationTrigger={0}
+                                  >
+                                    <FormGroup
+                                      check={true}
+                                      className="form-group"
+                                      inline={true}
+                                      tag="div"
+                                    >
+                                      <div
+                                        className="form-group form-check form-check-inline"
+                                      >
+                                        <Label
+                                          check={true}
+                                          tag="label"
+                                          widths={
+                                            Array [
+                                              "xs",
+                                              "sm",
+                                              "md",
+                                              "lg",
+                                              "xl",
+                                            ]
+                                          }
+                                        >
+                                          <label
+                                            className="form-check-label"
+                                          >
+                                            <FormattedMessage
+                                              defaultMessage="Acknowledge the task"
+                                              description="Checkbox label"
+                                              id="ackOption"
+                                              values={Object {}}
+                                            >
+                                              Acknowledge the task
+                                            </FormattedMessage>
+                                             
+                                            <Input
+                                              innerRef={
+                                                Object {
+                                                  "current": <input
+                                                    class="form-check-input"
+                                                    name="ack"
+                                                    type="checkbox"
+                                                    value=""
+                                                  />,
+                                                }
+                                              }
+                                              invalid={false}
+                                              name="ack"
+                                              onChange={[Function]}
+                                              type="checkbox"
+                                            >
+                                              <input
+                                                className="form-check-input"
+                                                name="ack"
+                                                onChange={[Function]}
+                                                type="checkbox"
+                                              />
+                                            </Input>
+                                          </label>
+                                        </Label>
+                                      </div>
+                                    </FormGroup>
+                                  </Memo()>
+                                  <Memo()
+                                    handleChange={[Function]}
+                                    key=".1"
+                                    label={
+                                      Object {
                                         "defaultMessage": "Name",
                                         "description": "Label",
                                         "id": "entryname",
@@ -946,7 +1070,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                   </Memo()>
                                   <Memo()
                                     handleChange={[Function]}
-                                    key=".1"
+                                    key=".2"
                                     label={
                                       Object {
                                         "defaultMessage": "Date",
@@ -1028,7 +1152,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                   </Memo()>
                                   <Memo()
                                     handleChange={[Function]}
-                                    key=".2"
+                                    key=".3"
                                     label={
                                       Object {
                                         "defaultMessage": "Equipment Age",
@@ -1114,7 +1238,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                   </Memo()>
                                   <Memo()
                                     handleChange={[Function]}
-                                    key=".3"
+                                    key=".4"
                                     label={
                                       Object {
                                         "defaultMessage": "Remarks",
