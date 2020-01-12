@@ -1,11 +1,14 @@
 import ignoredMessages from '../../testHelpers/MockConsole';
 import storageService from '../StorageService';
+import storageUpdaterService from '../StorageUpdaterService';
 
+jest.mock('../StorageUpdaterService');
 
 describe('Test StorageService', () => {
   const key = 'a_key';
 
   function initStorage() {
+    jest.spyOn(storageUpdaterService, 'onUserStorageOpened');
     const user = { email: 'test@gmail.com' };
     storageService.openUserStorage(user);
   }
@@ -20,6 +23,7 @@ describe('Test StorageService', () => {
   });
 
   afterEach(async () => {
+    storageUpdaterService.onUserStorageOpened.mockReset();
   });
 
   // describe('setGlobalItem', () => {
@@ -86,13 +90,25 @@ describe('Test StorageService', () => {
   //     });
   // });
 
-  describe('getItem', () => {
-    it('When we try to get an item from an undefined|null key, it should retunr undefined', async () => {
+  describe('openUserStorage', () => {
+    it('should call the storageUpdaterService once', () => {
+      // Arrange
+
       // Act
-      const item = await storageService.getItem(undefined);
 
       // Assert
-      expect(item).toBeUndefined();
+      expect(storageUpdaterService.onUserStorageOpened).toBeCalledTimes(1);
+    });
+  });
+
+  describe('getItem', () => {
+    it('When we try to get an item from an undefined|null key, it should throw an exception', async (done) => {
+      try {
+        // Act
+        await storageService.getItem(undefined);
+      } catch (error) {
+        done();
+      }
     });
 
     it('When we get an unknwon item, it should return undefined', async () => {
@@ -117,13 +133,12 @@ describe('Test StorageService', () => {
   });
 
   describe('setItem', () => {
-    it('When we try to set an item from an undefined|null key, it should throw an exception', async () => {
+    it('When we try to set an item from an undefined|null key, it should throw an exception', async (done) => {
       try {
         // Act
         await storageService.setItem(undefined, 'hello');
-        expect(true).toBe(false);
       } catch (error) {
-        expect(true).toBe(true);
+        done();
       }
     });
 
@@ -170,17 +185,17 @@ describe('Test StorageService', () => {
   });
 
   describe('getArray', () => {
-    it('When we try to get an array from an undefined|null key, it should throw an exception', async () => {
+    it('When we try to get an array from an undefined|null key, it should throw an exception', async (done) => {
       try {
         // Act
-        await storageService.getArray(undefined, 'hello');
-        expect(true).toBe(false);
+        await storageService.getArray(undefined);
       } catch (error) {
-        expect(true).toBe(true);
+        // Assert
+        done();
       }
     });
 
-    it('When we get an existing array, it should get it', async () => {
+    it('When we get an existing array, it should get it', async (done) => {
       // Arrange
       const data1 = { value: 'Ni Hao from Shenzhen' };
       const data2 = { value: 'Bonjour de Paris' };
@@ -194,9 +209,10 @@ describe('Test StorageService', () => {
 
       // Assert
       expect(storedArray).toEqual(array);
+      done();
     });
 
-    it('When we get an non existing array, it should returned undefined', async () => {
+    it('When we get an non existing array, it should returned undefined', async (done) => {
       // Arrange
       await storageService.setItem(key, undefined);
 
@@ -205,37 +221,38 @@ describe('Test StorageService', () => {
 
       // Assert
       expect(storedArray).toEqual([]);
+      done();
     });
   });
 
   describe('updateArray', () => {
-    it('When we try to update an array from an undefined|null key, it should throw an exception', async () => {
+    it('When we try to update an array from an undefined|null key, it should throw an exception', async (done) => {
       try {
         // Arrange
         const newData = { _uiId: 'uid_data2', name: 'data2', value: 'Good morning from London' };
 
         // Act
         await storageService.updateArray(undefined, newData);
-        expect(true).toBe(false);
       } catch (error) {
-        expect(true).toBe(true);
+        // Assert
+        done();
       }
     });
 
-    it('When we try to update an array with an undefined element, it should throw an exception', async () => {
+    it('When we try to update an array with an undefined element, it should throw an exception', async (done) => {
       try {
         // Arrange
         const newData = undefined;
 
         // Act
         await storageService.updateArray(key, newData);
-        expect(true).toBe(false);
       } catch (error) {
-        expect(true).toBe(true);
+        // Assert
+        done();
       }
     });
 
-    it('When updating an array of entity, the element passed in parameter should replace the stored item based on its _uiId', async () => {
+    it('When updating an array of entity, the element passed in parameter should replace the stored item based on its _uiId', async (done) => {
       // Arrange
       const data1 = { _uiId: 'uid_data1', name: 'data1', value: 'Ni Hao from Shenzhen' };
       const data2 = { _uiId: 'uid_data2', name: 'data2', value: 'Bonjour de Paris' };
@@ -254,9 +271,10 @@ describe('Test StorageService', () => {
 
       const storedData2 = storedArray.find((i) => i._uiId === newData2._uiId);
       expect(storedData2).toEqual(newData2);
+      done();
     });
 
-    it('When updating an non existing array of entity, the element passed in parameter should become the first element of this new array', async () => {
+    it('When updating an non existing array of entity, the element passed in parameter should become the first element of this new array', async (done) => {
       // Arrange
       await storageService.setItem(key, undefined);
 
@@ -271,9 +289,10 @@ describe('Test StorageService', () => {
 
       const storedData = storedArray.find((i) => i._uiId === newData._uiId);
       expect(storedData).toEqual(newData);
+      done();
     });
 
-    it('When updating an array of entity, with a new element passed in parameter, it should be added in the array', async () => {
+    it('When updating an array of entity, with a new element passed in parameter, it should be added in the array', async (done) => {
       // Arrange
       const data1 = { _uiId: 'uid_data1', name: 'data1', value: 'Ni Hao from Shenzhen' };
       const data2 = { _uiId: 'uid_data2', name: 'data2', value: 'Bonjour de Paris' };
@@ -292,6 +311,71 @@ describe('Test StorageService', () => {
 
       const storedData = storedArray.find((i) => i._uiId === newData._uiId);
       expect(storedData).toEqual(newData);
+      done();
+    });
+  });
+
+  describe('removeItemInArray', () => {
+    it('When we try to remove an item in an array from an undefined|null key, it should throw an exception', async (done) => {
+      try {
+        // Arrange
+
+        // Act
+        await storageService.removeItemInArray(undefined, 'uid_data2');
+      } catch (error) {
+        // Assert
+        done();
+      }
+    });
+
+    it('When we try to remove an item in an array with an undefined element, it should throw an exception', async (done) => {
+      try {
+        // Arrange
+
+        // Act
+        await storageService.removeItemInArray(key, undefined);
+      } catch (error) {
+        // Assert
+        done();
+      }
+    });
+
+    it('When removing an item from an array, it should remove this item in the array', async (done) => {
+      // Arrange
+      const data1 = { _uiId: 'uid_data1', name: 'data1', value: 'Ni Hao from Shenzhen' };
+      const data2 = { _uiId: 'uid_data2', name: 'data2', value: 'Bonjour de Paris' };
+      const data3 = { _uiId: 'uid_data3', name: 'data3', value: 'Hello from Auckland' };
+
+      const array = [data1, data2, data3];
+      await storageService.setItem(key, array);
+
+      // Act
+      await storageService.removeItemInArray(key, data2._uiId);
+
+      // Assert
+      const storedArray = await storageService.getArray(key);
+
+      const storedData2 = storedArray.find((i) => i._uiId === data2._uiId);
+      expect(storedData2).toBeUndefined();
+      done();
+    });
+
+    it('When removing an non existing item in an array of entity, it should throw an exception', async (done) => {
+      // Arrange
+      const data1 = { _uiId: 'uid_data1', name: 'data1', value: 'Ni Hao from Shenzhen' };
+      const data2 = { _uiId: 'uid_data2', name: 'data2', value: 'Bonjour de Paris' };
+      const data3 = { _uiId: 'uid_data3', name: 'data3', value: 'Hello from Auckland' };
+
+      const array = [data1, data2, data3];
+      await storageService.setItem(key, array);
+
+      try {
+        // Act
+        await storageService.removeItemInArray(key, 'uid_data4');
+      } catch (error) {
+        // Assert
+        done();
+      }
     });
   });
 });

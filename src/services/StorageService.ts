@@ -50,6 +50,10 @@ class StorageService implements IStorageService {
 
     // eslint-disable-next-line class-methods-use-this
     async existGlobalItem(key: string): Promise<boolean> {
+      if (!key) {
+        throw new Error('The key should be truthy');
+      }
+
       try {
         const keys = await localforage.keys();
         return keys.includes(key);
@@ -61,6 +65,10 @@ class StorageService implements IStorageService {
 
     // eslint-disable-next-line class-methods-use-this
     async setGlobalItem<T>(key: string, value: T): Promise<T> {
+      if (!key) {
+        throw new Error('The key should be truthy');
+      }
+
       try {
         return localforage.setItem<T>(key, value);
       } catch (error) {
@@ -71,6 +79,10 @@ class StorageService implements IStorageService {
 
     // eslint-disable-next-line class-methods-use-this
     async removeGlobalItem(key: string): Promise<void> {
+      if (!key) {
+        throw new Error('The key should be truthy');
+      }
+
       try {
         localforage.removeItem(key);
       } catch (error) {
@@ -81,6 +93,10 @@ class StorageService implements IStorageService {
 
     // eslint-disable-next-line class-methods-use-this
     async getGlobalItem<T>(key: string): Promise<T> {
+      if (!key) {
+        throw new Error('The key should be truthy');
+      }
+
       try {
         return localforage.getItem(key);
       } catch (error) {
@@ -117,6 +133,14 @@ class StorageService implements IStorageService {
     }
 
     async updateArray<T extends EntityModel>(key: string, item:T):Promise<T[]> {
+      if (!key) {
+        throw new Error('The key should be truthy');
+      }
+
+      if (!item) {
+        throw new Error('The item to update in the array should be truthy');
+      }
+
       let items = await this.getUserStorage().getItem<T[]>(key);
 
       if (items) {
@@ -131,6 +155,14 @@ class StorageService implements IStorageService {
     }
 
     async removeItemInArray<T extends EntityModel>(key: string, itemId: string): Promise<T> {
+      if (!key) {
+        throw new Error('The key should be truthy');
+      }
+
+      if (!itemId) {
+        throw new Error('The item id should be truthy');
+      }
+
       const items = await this.getUserStorage().getItem<T[]>(key);
 
       const newItems = items.filter((i) => i._uiId !== itemId);
@@ -145,6 +177,10 @@ class StorageService implements IStorageService {
     }
 
     async setItem<T>(key: string, value: T): Promise<T> {
+      if (!key) {
+        throw new Error('The key should be truthy');
+      }
+
       if (value === undefined || value === null) {
         await this.getUserStorage().removeItem(key);
         return value;
@@ -154,19 +190,35 @@ class StorageService implements IStorageService {
     }
 
     async getItem<T>(key: string): Promise<T> {
+      if (!key) {
+        throw new Error('The key should be truthy');
+      }
+
       return this.getUserStorage().getItem<T>(key);
     }
 
     async existItem(key: string): Promise<boolean> {
+      if (!key) {
+        throw new Error('The key should be truthy');
+      }
+
       const keys = await this.getUserStorage().keys();
       return keys.includes(key);
     }
 
     async removeItem<T>(key: string): Promise<void> {
+      if (!key) {
+        throw new Error('The key should be truthy');
+      }
+
       return this.getUserStorage().removeItem(key);
     }
 
     async getArray<T>(key: string):Promise<T[]> {
+      if (!key) {
+        throw new Error('The key should be truthy');
+      }
+
       const array = await this.getUserStorage().getItem<T[]>(key);
       if (array) {
         return array;
