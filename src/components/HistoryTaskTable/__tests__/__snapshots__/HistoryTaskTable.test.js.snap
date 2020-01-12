@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`HistoryTaskTable Should render all the entries for a task 1`] = `[MockFunction]`;
+exports[`HistoryTaskTable Should render all the entries with the correct classnames for a task 1`] = `[MockFunction]`;
 
 exports[`HistoryTaskTable Should render an empty table even when the task is undefined 1`] = `[MockFunction]`;
 

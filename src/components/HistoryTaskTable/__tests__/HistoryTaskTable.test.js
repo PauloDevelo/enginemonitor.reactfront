@@ -53,6 +53,7 @@ describe('HistoryTaskTable', () => {
       remarks: 'RAS',
       taskUiId: 'task_01',
       equipmentUiId: 'equipment_01',
+      ack: true,
     },
     {
       _uiId: 'entry_02',
@@ -62,6 +63,7 @@ describe('HistoryTaskTable', () => {
       remarks: 'RAS',
       taskUiId: 'task_01',
       equipmentUiId: 'equipment_01',
+      ack: true,
     },
     {
       _uiId: 'entry_03',
@@ -71,6 +73,7 @@ describe('HistoryTaskTable', () => {
       remarks: 'RAS',
       taskUiId: 'task_01',
       equipmentUiId: 'equipment_01',
+      ack: false,
     },
     {
       _uiId: 'entry_04',
@@ -80,6 +83,7 @@ describe('HistoryTaskTable', () => {
       remarks: 'RAS',
       taskUiId: 'task_01',
       equipmentUiId: 'equipment_01',
+      ack: true,
     },
   ];
 
@@ -155,7 +159,7 @@ describe('HistoryTaskTable', () => {
     expect(historyTaskTable).toMatchSnapshot();
   });
 
-  it('Should render all the entries for a task', async () => {
+  it('Should render all the entries with the correct classnames for a task', async () => {
     // Arrange
     const onHistoryChanged = jest.fn();
 
@@ -177,9 +181,16 @@ describe('HistoryTaskTable', () => {
     for (let i = 0; i < entries.length; i++) {
       expect(tbodyProps.children[i].props.data).toBe(entries[i]);
     }
+
+    const clickableCells = historyTaskTable.find('ClickableCell');
+    clickableCells.forEach((clickableCell) => {
+      const cellProps = clickableCell.props();
+      const entry = cellProps.data;
+      expect(cellProps.classNames.includes(entry.ack ? 'table-white' : 'table-warning')).toBe(true);
+    });
+
     expect(entryProxy.fetchEntries).toBeCalledTimes(1);
     expect(onHistoryChanged).toBeCalledTimes(0);
-
     expect(onHistoryChanged).toMatchSnapshot();
   });
 
