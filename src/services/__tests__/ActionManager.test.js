@@ -1,3 +1,4 @@
+import ignoredMessages from '../../testHelpers/MockConsole';
 import httpProxy from '../HttpProxy';
 import storageService from '../StorageService';
 import actionManager, { NoActionPendingError, ActionType } from '../ActionManager';
@@ -19,6 +20,11 @@ describe('Test ActionManager', () => {
     storageService.setItem.mockReset();
     storageService.getItem.mockReset();
   }
+
+  beforeAll(() => {
+    ignoredMessages.length = 0;
+    ignoredMessages.push('It seems like they have been deleted in a further delete action');
+  });
 
   beforeEach(() => {
 

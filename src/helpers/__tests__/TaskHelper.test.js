@@ -1,3 +1,4 @@
+import ignoredMessages from '../../testHelpers/MockConsole';
 import * as TaskHelper from '../TaskHelper';
 import timeService from '../../services/TimeService';
 import proxyEquipment from '../../services/EquipmentProxy';
@@ -20,6 +21,11 @@ describe('TaskHelper', () => {
     ageAcquisitionType: AgeAcquisitionType.time,
     ageUrl: '',
   };
+
+  beforeAll(() => {
+    ignoredMessages.length = 0;
+    ignoredMessages.push('It seems like they have been deleted in a further delete action');
+  });
 
   afterEach(() => {
     proxyEquipment.getStoredEquipment.mockRestore();
