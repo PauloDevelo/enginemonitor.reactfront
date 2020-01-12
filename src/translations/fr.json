@@ -4,6 +4,7 @@
   "aboutTitle": "Equipment Maintenance",
   "ack": "Acquitter",
   "ackDate": "Date de réalisation",
+  "ackOption": "Acquitter la tache",
   "age": "Age de l'équipement en heure",
   "ageAcquisitionType": "Comment voulez-vous mesurez l'usage de cet équipement ?",
   "ageAcquisitionTypeTooltip": "L'application <b>Equipment maintenance</b> a besoin de connaître le temps d'utilisation de l'équipement afin de pouvoir alerter lorsqu'une tache doit être executée.\nIl y a 3 façons de définir le temps d'utilisation de l'equipement.\nLa façon la plus simple est d'utiliser le temps courant.\nUne autre facon est de la saisir manuellement.\nLa dernière façon est d'utiliser un traqueur d'usage qui publie le temps d'utilisation en ligne.",
@@ -109,6 +110,5 @@
   "usagePeriodInHour": "Période en heure à l'usage",
   "userExceedStorageLimit": "Vous avez dépassé la limite du stockage qui vous a été attribué. Veuillez supprimer des images avant d'en rajouter.",
   "yearperiod": "{year, plural, one {# année} other {# années}}",
-  "yes": "Oui",
-  "ackOption": "Acquitter la tache"
+  "yes": "Oui"
 }

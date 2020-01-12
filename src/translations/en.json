@@ -4,6 +4,7 @@
   "aboutTitle": "Equipment Maintenance",
   "ack": "Acknowledge",
   "ackDate": "Realisation date",
+  "ackOption": "Acknowledge the task",
   "age": "Equipment Age in hour",
   "ageAcquisitionType": "How do you want to measure the equipment usage time ?",
   "ageAcquisitionTypeTooltip": "<b>Equipment maintenance</b> application needs to know the equipment usage time to alert you when a task has to be performed.\n3 different ways exist to define the equipment usage time.\nThe most straightforward is to use the current time.\nAnother one is to input manually this time in the application.\nThe last method, the most accurate and automatic is to use a usage time tracker that will publish the usage time online.",
@@ -109,6 +110,5 @@
   "usagePeriodInHour": "Period in usage hour",
   "userExceedStorageLimit": "User exceeded the storage limit. Remove some images before adding new images.",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
-  "yes": "Yes",
-  "ackOption": "Acknowledge the task"
+  "yes": "Yes"
 }
