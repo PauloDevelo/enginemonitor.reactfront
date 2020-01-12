@@ -95,14 +95,19 @@ const MyForm = ({
   const childrenWithProps = React.Children.map(elementChildren, (child) => {
     let value: string | undefined;
     let checked: boolean | undefined;
-    if (data.data[child.props.name] !== undefined && typeof data.data[child.props.name] === 'number') {
-      value = data.data[child.props.name].toString();
-    }
-    if (data.data[child.props.name] !== undefined && typeof data.data[child.props.name] === 'boolean') {
-      // value = data.data[child.props.name] ? 'true' : 'false';
-      checked = data.data[child.props.name];
-    } else {
-      value = data.data[child.props.name];
+
+    if (data.data[child.props.name] !== undefined) {
+      switch (typeof data.data[child.props.name]) {
+        case 'number':
+          value = data.data[child.props.name].toString();
+          break;
+        case 'boolean':
+          checked = data.data[child.props.name];
+          break;
+        default:
+          value = data.data[child.props.name];
+          break;
+      }
     }
 
     const newProps = {

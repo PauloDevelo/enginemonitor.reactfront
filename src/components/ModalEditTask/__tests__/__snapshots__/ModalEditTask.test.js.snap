@@ -782,7 +782,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                     name="usagePeriodInHour"
                                     type="number"
                                     validationTrigger={0}
-                                    value={500}
+                                    value="500"
                                   >
                                     <FormGroup
                                       className="form-group"
@@ -836,7 +836,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                           name="usagePeriodInHour"
                                           onChange={[Function]}
                                           type="number"
-                                          value={500}
+                                          value="500"
                                         >
                                           <input
                                             className="form-control form-control"
@@ -844,7 +844,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                             name="usagePeriodInHour"
                                             onChange={[Function]}
                                             type="number"
-                                            value={500}
+                                            value="500"
                                           />
                                         </Input>
                                       </div>
@@ -865,7 +865,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                     required={true}
                                     type="number"
                                     validationTrigger={0}
-                                    value={12}
+                                    value="12"
                                   >
                                     <FormGroup
                                       className="form-group"
@@ -921,7 +921,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                           onChange={[Function]}
                                           required={true}
                                           type="number"
-                                          value={12}
+                                          value="12"
                                         >
                                           <input
                                             className="form-control form-control"
@@ -930,7 +930,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                             onChange={[Function]}
                                             required={true}
                                             type="number"
-                                            value={12}
+                                            value="12"
                                           />
                                         </Input>
                                       </div>

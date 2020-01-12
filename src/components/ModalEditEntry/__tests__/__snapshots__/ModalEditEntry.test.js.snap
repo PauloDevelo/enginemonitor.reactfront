@@ -1174,7 +1174,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                     required={true}
                                     type="number"
                                     validationTrigger={0}
-                                    value={400}
+                                    value="400"
                                   >
                                     <FormGroup
                                       className="form-group"
@@ -1230,7 +1230,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                           onChange={[Function]}
                                           required={true}
                                           type="number"
-                                          value={400}
+                                          value="400"
                                         >
                                           <input
                                             className="form-control form-control"
@@ -1239,7 +1239,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                             onChange={[Function]}
                                             required={true}
                                             type="number"
-                                            value={400}
+                                            value="400"
                                           />
                                         </Input>
                                       </div>
