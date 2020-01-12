@@ -1,4 +1,5 @@
 import uuidv1 from 'uuid/v1.js';
+import timeService from '../services/TimeService';
 
 import {
   // eslint-disable-next-line no-unused-vars
@@ -15,7 +16,7 @@ export function createDefaultEntry(equipment:EquipmentModel, task: TaskModel | u
   return {
     _uiId: uuid,
     name: task ? task.name : '',
-    date: new Date(),
+    date: timeService.getUTCDateTime(),
     age: defaultAge,
     remarks: '',
     taskUiId: task ? task._uiId : undefined,
