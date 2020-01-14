@@ -1,8 +1,5 @@
 import * as log from 'loglevel';
 
-// eslint-disable-next-line no-unused-vars
-import { EntryModel, EntityModel } from '../types/Types';
-
 const storageVersionKey = 'storageVersion';
 
 export interface IStorageUpdaterService{
