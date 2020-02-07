@@ -52,6 +52,12 @@ export interface EntryModel extends EntityModel {
     ack: boolean
 }
 
+export interface AssetModel extends EntityModel {
+    brand: string;
+    manufactureDate: Date;
+    modelBrand: string;
+}
+
 export interface UserModel extends EntityModel {
     email: string,
     password: string,

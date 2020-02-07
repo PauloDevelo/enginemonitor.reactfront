@@ -19,6 +19,8 @@ export interface IEquipmentProxy{
     getStoredEquipment():Promise<EquipmentModel[]>;
 
     existEquipment(equipmentId: string | undefined):Promise<boolean>;
+
+    onAssetDeleted(idAsset: string): Promise<void>;
 }
 
 class EquipmentProxy implements IEquipmentProxy {
@@ -60,6 +62,20 @@ class EquipmentProxy implements IEquipmentProxy {
 
       const allEquipments = await this.fetchEquipments(true);
       return allEquipments.findIndex((equipment) => equipment._uiId === equipmentId) !== -1;
+    }
+
+    onAssetDeleted = async (assetId: string): Promise<void> => {
+      const equipments = await this.fetchEquipments(true);
+
+      await equipments.reduce(async (previousPromise, equipment) => {
+        await previousPromise;
+
+        await entryProxy.onEquipmentDeleted(equipment._uiId);
+        await taskProxy.onEquipmentDeleted(equipment._uiId);
+        await imageProxy.onEntityDeleted(equipment._uiId);
+
+        await storageService.removeItemInArray<EquipmentModel>(this.baseUrl, equipment._uiId);
+      }, Promise.resolve());
     }
 }
 
