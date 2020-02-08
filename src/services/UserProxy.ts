@@ -58,7 +58,7 @@ class UserProxy implements IUserProxy {
         }
 
         await storageService.openUserStorage(user);
-        userContext.onUserChanged(user);
+        await userContext.onUserChanged(user);
 
         return user;
       }
@@ -67,10 +67,10 @@ class UserProxy implements IUserProxy {
     }
 
     logout = async (): Promise<void> => {
-      storageService.removeGlobalItem('currentUser');
+      await storageService.removeGlobalItem('currentUser');
       httpProxy.setConfig(undefined);
-      storageService.closeUserStorage();
-      userContext.onUserChanged(undefined);
+      await storageService.closeUserStorage();
+      await userContext.onUserChanged(undefined);
     }
 
     tryGetAndSetMemorizedUser = async ():Promise<UserModel | undefined> => {
@@ -92,7 +92,7 @@ class UserProxy implements IUserProxy {
         }
 
         await storageService.openUserStorage(rememberedUser);
-        userContext.onUserChanged(rememberedUser);
+        await userContext.onUserChanged(rememberedUser);
         return rememberedUser;
       }
 
