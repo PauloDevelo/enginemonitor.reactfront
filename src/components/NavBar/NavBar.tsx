@@ -45,8 +45,9 @@ const NavBar = ({ onLoggedOut }:Props) => {
     setIsOpened((prevIsOpened) => !prevIsOpened);
   }, []);
 
-  const onUserChanged = useCallback((newUser: UserModel | undefined) => {
+  const onUserChanged = useCallback(async (newUser: UserModel | undefined):Promise<void> => {
     setUser(newUser);
+    return Promise.resolve();
   }, []);
 
   const onUserImageFolderSizeChanged = useCallback((newUserImageFolderSize: number) => {
