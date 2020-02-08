@@ -9,8 +9,8 @@ export interface IAssetManager{
     getCurrentAsset(): AssetModel | undefined;
     setCurrentAsset(asset: AssetModel): void;
 
-    registerOnCurrentAssetChanged(listener: (asset: AssetModel) => void):void;
-    unregisterOnCurrentAssetChanged(listenerToRemove: (asset: AssetModel) => void):void;
+    registerOnCurrentAssetChanged(listener: (asset: AssetModel|undefined) => void):void;
+    unregisterOnCurrentAssetChanged(listenerToRemove: (asset: AssetModel|undefined) => void):void;
 }
 
 class AssetManager implements IAssetManager {
@@ -39,11 +39,11 @@ class AssetManager implements IAssetManager {
       this.listeners.map((listener) => listener(this.currentAsset));
     }
 
-    registerOnCurrentAssetChanged(listener: (asset: AssetModel) => void):void{
+    registerOnCurrentAssetChanged(listener: (asset: AssetModel|undefined) => void):void{
       this.listeners.push(listener);
     }
 
-    unregisterOnCurrentAssetChanged(listenerToRemove: (asset: AssetModel) => void):void{
+    unregisterOnCurrentAssetChanged(listenerToRemove: (asset: AssetModel|undefined) => void):void{
       this.listeners = this.listeners.filter((listener) => listener !== listenerToRemove);
     }
 }
