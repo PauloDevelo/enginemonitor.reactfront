@@ -14,7 +14,7 @@ export interface IAssetManager{
 }
 
 class AssetManager implements IAssetManager {
-    private listeners: ((asset: AssetModel) => void)[] = [];
+    private listeners: ((asset: AssetModel | undefined) => void)[] = [];
 
     private assets: AssetModel[] = [];
 
@@ -25,7 +25,7 @@ class AssetManager implements IAssetManager {
     }
 
     // eslint-disable-next-line no-unused-vars
-    onCurrentUserChanged = async (_user: UserModel) => {
+    onCurrentUserChanged = async (_user: UserModel | undefined) => {
       this.assets = await assetProxy.fetchAssets();
       this.setCurrentAsset(this.assets.length > 0 ? this.assets[0] : undefined);
     }
@@ -34,7 +34,7 @@ class AssetManager implements IAssetManager {
       return this.currentAsset;
     }
 
-    setCurrentAsset(asset: AssetModel) {
+    setCurrentAsset(asset: AssetModel | undefined) {
       this.currentAsset = asset;
       this.listeners.map((listener) => listener(this.currentAsset));
     }
