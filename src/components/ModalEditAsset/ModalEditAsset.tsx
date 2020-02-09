@@ -34,11 +34,12 @@ type Props = {
 asset: AssetModel,
 visible: boolean,
 toggle?: () => void,
-className: string
+className: string,
+hideDeleteButton?: boolean
 }
 
 const ModalEditAsset = ({
-  asset, visible, toggle, className,
+  asset, visible, toggle, className, hideDeleteButton,
 }: Props) => {
   const modalLogic = useEditModalLogic(
     {
@@ -63,7 +64,7 @@ const ModalEditAsset = ({
   return (
     <>
       <CSSTransition in={visible} timeout={300} classNames="modal">
-        <Modal isOpen={visible} toggle={!toggle ? undefined : modalLogic.cancel} className={className} fade={false}>
+        <Modal isOpen={visible} toggle={!toggle ? undefined : modalLogic.cancel} className={className} fade>
           <ModalHeader toggle={!toggle ? undefined : modalLogic.cancel}>
             <FontAwesomeIcon icon={isCreation ? faPlusSquare : faEdit} />
             {' '}
@@ -84,7 +85,7 @@ const ModalEditAsset = ({
           <ModalFooter>
             <ActionButton type="submit" isActing={modalLogic.isSaving} form="formAsset" color="success" message={message} />
             {toggle && <Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...assetMsg.cancel} /></Button>}
-            {!isCreation && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...assetMsg.delete} /></Button>}
+            {!isCreation && hideDeleteButton !== true && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...assetMsg.delete} /></Button>}
           </ModalFooter>
         </Modal>
       </CSSTransition>
