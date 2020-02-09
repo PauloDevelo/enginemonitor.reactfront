@@ -13,6 +13,7 @@ import actionManager from '../../../services/ActionManager';
 import syncService from '../../../services/SyncService';
 import timeService from '../../../services/TimeService';
 import userProxy from '../../../services/UserProxy';
+import assetProxy from '../../../services/AssetProxy';
 
 import userContext from '../../../services/UserContext';
 
@@ -23,6 +24,7 @@ jest.mock('../../../services/ActionManager');
 jest.mock('../../../services/TimeService');
 jest.mock('../../../services/SyncService');
 jest.mock('../../../services/UserProxy');
+jest.mock('../../../services/AssetProxy');
 
 describe('Component NavBar', () => {
   beforeAll(() => {
@@ -41,6 +43,12 @@ describe('Component NavBar', () => {
     jest.spyOn(actionManager, 'unregisterOnActionManagerChanged');
 
     jest.spyOn(timeService, 'getUTCDateTime').mockImplementation(() => new Date('2019-11-26T23:54:00.000Z'));
+
+    assetProxy.fetchAssets.mockImplementation(async () => Promise.resolve([{
+      _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrope', manufactureDate: new Date(1979, 1, 1),
+    }]));
+
+    assetProxy.existAsset.mockImplementation(async (assetId) => Promise.resolve(assetId === 'asset_01'));
   });
 
   afterEach(() => {
@@ -59,6 +67,9 @@ describe('Component NavBar', () => {
     actionManager.countAction.mockRestore();
 
     userProxy.logout.mockRestore();
+
+    assetProxy.fetchAssets.mockRestore();
+    assetProxy.existAsset.mockRestore();
   });
 
   it('should render the navbar even when the user is still undefined', async () => {
@@ -136,7 +147,6 @@ describe('Component NavBar', () => {
     // Arrange
     jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
     jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
-
     jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
 
     const onLoggedOut = jest.fn();

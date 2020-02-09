@@ -24,18 +24,17 @@ exports[`Component NavBar should render the navbar even when the user is still u
         className="navbar navbar-expand-md navbar-dark bg-dark"
       >
         <NavbarBrand
-          href="/"
+          className="clickable"
+          onClick={[Function]}
           tag="a"
         >
           <a
-            className="navbar-brand"
-            href="/"
+            className="clickable navbar-brand"
+            onClick={[Function]}
           >
             <div
               className="mr-2"
-            >
-              Equipment maintenance
-            </div>
+            />
             <div
               className="clock"
             >
