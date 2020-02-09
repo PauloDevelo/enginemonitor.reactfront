@@ -2,6 +2,7 @@ import * as log from 'loglevel';
 import progressiveHttpProxy from './ProgressiveHttpProxy';
 
 import storageService from './StorageService';
+import assetManager from './AssetManager';
 
 import equipmentProxy from './EquipmentProxy';
 
@@ -34,7 +35,8 @@ class AssetProxy implements IAssetProxy {
 
     createOrSaveAsset = async (assetToSave: AssetModel):Promise<AssetModel> => {
       const updatedAsset = await progressiveHttpProxy.postAndUpdate<AssetModel>(this.baseUrl + assetToSave._uiId, 'asset', assetToSave, updateAsset);
-      await storageService.updateArray(this.baseUrl, updatedAsset);
+      const updatedAssets = await storageService.updateArray(this.baseUrl, updatedAsset);
+      assetManager.onAssetsChanged(updatedAssets);
       return updatedAsset;
     }
 
@@ -45,6 +47,9 @@ class AssetProxy implements IAssetProxy {
       await imageProxy.onEntityDeleted(idAsset);
 
       const deletedAsset = await storageService.removeItemInArray<AssetModel>(this.baseUrl, idAsset);
+
+      assetManager.onAssetsChanged(await this.getStoredAsset());
+
       return updateAsset(deletedAsset);
     }
 

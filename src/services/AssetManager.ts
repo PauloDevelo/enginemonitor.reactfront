@@ -1,5 +1,3 @@
-import assetProxy from './AssetProxy';
-
 import userContext from './UserContext';
 
 // eslint-disable-next-line no-unused-vars
@@ -8,6 +6,8 @@ import { AssetModel, UserModel } from '../types/Types';
 export interface IAssetManager{
     getCurrentAsset(): AssetModel | undefined;
     setCurrentAsset(asset: AssetModel): void;
+
+    onAssetsChanged(assets: AssetModel[]): void;
 
     registerOnCurrentAssetChanged(listener: (asset: AssetModel|undefined) => void):void;
     unregisterOnCurrentAssetChanged(listenerToRemove: (asset: AssetModel|undefined) => void):void;
@@ -26,8 +26,8 @@ class AssetManager implements IAssetManager {
 
     // eslint-disable-next-line no-unused-vars
     onCurrentUserChanged = async (_user: UserModel | undefined) => {
-      this.assets = await assetProxy.fetchAssets();
-      this.setCurrentAsset(this.assets.length > 0 ? this.assets[0] : undefined);
+      const { default: assetProxy } = await import('./AssetProxy');
+      this.onAssetsChanged(await assetProxy.fetchAssets());
     }
 
     getCurrentAsset(): AssetModel | undefined {
@@ -37,6 +37,11 @@ class AssetManager implements IAssetManager {
     setCurrentAsset(asset: AssetModel | undefined) {
       this.currentAsset = asset;
       this.listeners.map((listener) => listener(this.currentAsset));
+    }
+
+    onAssetsChanged(assets: AssetModel[]): void{
+      this.assets = assets;
+      this.setCurrentAsset(this.assets.length > 0 ? this.assets[0] : undefined);
     }
 
     registerOnCurrentAssetChanged(listener: (asset: AssetModel|undefined) => void):void{
