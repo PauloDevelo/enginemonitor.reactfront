@@ -1,13 +1,11 @@
 /* eslint-disable max-len */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap';
 
 import { faEdit, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { CSSTransition } from 'react-transition-group';
 
 import { FormattedMessage, defineMessages } from 'react-intl';
 
@@ -63,32 +61,30 @@ const ModalEditAsset = ({
 
   return (
     <>
-      <CSSTransition in={visible} timeout={300} classNames="modal">
-        <Modal isOpen={visible} toggle={!toggle ? undefined : modalLogic.cancel} className={className} fade>
-          <ModalHeader toggle={!toggle ? undefined : modalLogic.cancel}>
-            <FontAwesomeIcon icon={isCreation ? faPlusSquare : faEdit} />
-            {' '}
-            {!isCreation && <FormattedMessage {...assetMsg.assetModalEditionTitle} />}
-            {isCreation && <FormattedMessage {...assetMsg.assetModalCreationTitle} />}
-          </ModalHeader>
-          <ModalBody>
-            {visible && (
-            <MyForm submit={modalLogic.handleSubmit} id="formAsset" initialData={asset}>
-              <MyInput name="name" label={assetMsg.name} type="text" required />
-              <MyInput name="brand" label={assetMsg.brand} type="text" required />
-              <MyInput name="modelBrand" label={assetMsg.model} type="text" required />
-              <MyInput name="manufactureDate" label={assetMsg.manufactureDateLabel} type="date" required />
-            </MyForm>
-            )}
-            <Alerts errors={modalLogic.alerts} />
-          </ModalBody>
-          <ModalFooter>
-            <ActionButton type="submit" isActing={modalLogic.isSaving} form="formAsset" color="success" message={message} />
-            {toggle && <Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...assetMsg.cancel} /></Button>}
-            {!isCreation && hideDeleteButton !== true && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...assetMsg.delete} /></Button>}
-          </ModalFooter>
-        </Modal>
-      </CSSTransition>
+      <Modal isOpen={visible} toggle={!toggle ? undefined : modalLogic.cancel} className={className} fade>
+        <ModalHeader toggle={!toggle ? undefined : modalLogic.cancel}>
+          <FontAwesomeIcon icon={isCreation ? faPlusSquare : faEdit} />
+          {' '}
+          {!isCreation && <FormattedMessage {...assetMsg.assetModalEditionTitle} />}
+          {isCreation && <FormattedMessage {...assetMsg.assetModalCreationTitle} />}
+        </ModalHeader>
+        <ModalBody>
+          {visible && (
+          <MyForm submit={modalLogic.handleSubmit} id="formAsset" initialData={asset}>
+            <MyInput name="name" label={assetMsg.name} type="text" required />
+            <MyInput name="brand" label={assetMsg.brand} type="text" required />
+            <MyInput name="modelBrand" label={assetMsg.model} type="text" required />
+            <MyInput name="manufactureDate" label={assetMsg.manufactureDateLabel} type="date" required />
+          </MyForm>
+          )}
+          <Alerts errors={modalLogic.alerts} />
+        </ModalBody>
+        <ModalFooter>
+          <ActionButton type="submit" isActing={modalLogic.isSaving} form="formAsset" color="success" message={message} />
+          {toggle && <Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...assetMsg.cancel} /></Button>}
+          {!isCreation && hideDeleteButton !== true && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...assetMsg.delete} /></Button>}
+        </ModalFooter>
+      </Modal>
       <ModalYesNoConfirmation
         visible={modalLogic.yesNoModalVisibility}
         toggle={modalLogic.toggleModalYesNoConfirmation}

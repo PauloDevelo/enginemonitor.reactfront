@@ -4,7 +4,6 @@ import {
 } from 'reactstrap';
 import { faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CSSTransition } from 'react-transition-group';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
 import MyForm from '../Form/MyForm';
@@ -91,31 +90,29 @@ const ModalPasswordReset = ({
   const submitButtonLabel = state.state === ResetPasswordState.Succeed ? changePasswordMsg.close : changePasswordMsg.changePassword;
 
   return (
-    <CSSTransition in={visible} timeout={300} classNames="modal">
-      <Modal isOpen={visible} toggle={cancel} className={className} fade={false}>
-        <ModalHeader toggle={cancel}>
-          <FontAwesomeIcon icon={faUnlockAlt} />
-          {' '}
-          <FormattedMessage {...changePasswordMsg.modalResetPasswordTitle} />
-        </ModalHeader>
-        <ModalBody>
-          {visible && (
-          <MyForm submit={handleSubmit} id="formChangePassword" initialData={data}>
-            <MyInput name="email" label={changePasswordMsg.email} type="email" required readOnly />
-            <MyInput name="newPassword1" label={changePasswordMsg.newPassword} type="password" required />
-            <MyInput name="newPassword2" label={changePasswordMsg.retypeNewPassword} type="password" required />
-          </MyForm>
-          )}
-          {state.state === ResetPasswordState.InError && <Alerts errors={state.resetPasswordErrors} />}
-          {state.state === ResetPasswordState.IsChanging && <Alerts error="changingPassword" color="success"><Spinner size="sm" color="secondary" /></Alerts>}
-          {state.state === ResetPasswordState.Succeed && <Alerts error={state.infoMsg} color="success" />}
-        </ModalBody>
-        <ModalFooter>
-          <ActionButton type="submit" form="formChangePassword" color="success" message={submitButtonLabel} isActing={state.state === ResetPasswordState.IsChanging} />
-          {state.state !== ResetPasswordState.Succeed && <Button color="secondary" onClick={cancel}><FormattedMessage {...changePasswordMsg.cancel} /></Button>}
-        </ModalFooter>
-      </Modal>
-    </CSSTransition>
+    <Modal isOpen={visible} toggle={cancel} className={className} fade>
+      <ModalHeader toggle={cancel}>
+        <FontAwesomeIcon icon={faUnlockAlt} />
+        {' '}
+        <FormattedMessage {...changePasswordMsg.modalResetPasswordTitle} />
+      </ModalHeader>
+      <ModalBody>
+        {visible && (
+        <MyForm submit={handleSubmit} id="formChangePassword" initialData={data}>
+          <MyInput name="email" label={changePasswordMsg.email} type="email" required readOnly />
+          <MyInput name="newPassword1" label={changePasswordMsg.newPassword} type="password" required />
+          <MyInput name="newPassword2" label={changePasswordMsg.retypeNewPassword} type="password" required />
+        </MyForm>
+        )}
+        {state.state === ResetPasswordState.InError && <Alerts errors={state.resetPasswordErrors} />}
+        {state.state === ResetPasswordState.IsChanging && <Alerts error="changingPassword" color="success"><Spinner size="sm" color="secondary" /></Alerts>}
+        {state.state === ResetPasswordState.Succeed && <Alerts error={state.infoMsg} color="success" />}
+      </ModalBody>
+      <ModalFooter>
+        <ActionButton type="submit" form="formChangePassword" color="success" message={submitButtonLabel} isActing={state.state === ResetPasswordState.IsChanging} />
+        {state.state !== ResetPasswordState.Succeed && <Button color="secondary" onClick={cancel}><FormattedMessage {...changePasswordMsg.cancel} /></Button>}
+      </ModalFooter>
+    </Modal>
   );
 };
 
