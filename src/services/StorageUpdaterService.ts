@@ -45,6 +45,15 @@ class StorageUpdaterService implements IStorageUpdaterService {
       log.info(`Storage updated to the release ${currentStorageVersion}`);
     }
 
+    if (currentStorageVersion < 2) {
+      log.info('Update the storage to the release 2: clear the storage since the url have been changed');
+
+      await storageService.getUserStorage().clear();
+
+      currentStorageVersion = await storageService.setItem<number>(storageVersionKey, 2);
+      log.info(`Storage updated to the release ${currentStorageVersion}`);
+    }
+
     log.info(`The storage is up-to-dated with the version ${currentStorageVersion}`);
   }
 }
