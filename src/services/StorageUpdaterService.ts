@@ -8,6 +8,11 @@ export interface IStorageUpdaterService{
 
 class StorageUpdaterService implements IStorageUpdaterService {
   onUserStorageOpened = async (): Promise<void> => {
+    if (process.env.NODE_ENV === 'test') {
+      log.info('We do not perform any storage update in test mode.');
+      return;
+    }
+
     const { default: storageService } = await import('./StorageService');
     const { default: equipmentProxy } = await import('./EquipmentProxy');
     const { default: entryProxy } = await import('./EntryProxy');
