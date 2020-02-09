@@ -5,6 +5,7 @@ import storageService from '../StorageService';
 import taskProxy from '../TaskProxy';
 import entryProxy from '../EntryProxy';
 import equipmentProxy from '../EquipmentProxy';
+import assetManager from '../AssetManager';
 import imageProxy from '../ImageProxy';
 import actionManager from '../ActionManager';
 
@@ -25,7 +26,7 @@ describe('Test TaskProxy', () => {
   });
 
   const parentEquipmentId = 'an_parent_equipment';
-  const urlFetchTask = `${process.env.REACT_APP_URL_BASE}tasks/${parentEquipmentId}`;
+  const urlFetchTask = `${process.env.REACT_APP_URL_BASE}tasks/asset_01/${parentEquipmentId}`;
 
   const taskToSave = {
     _uiId: 'an_id_created_by_the_front_end_and_for_the_front_end',
@@ -38,20 +39,25 @@ describe('Test TaskProxy', () => {
     usageInHourLeft: undefined,
   };
 
-  beforeEach(() => {
-    httpProxy.setConfig.mockReset();
-    httpProxy.post.mockReset();
-    httpProxy.deleteReq.mockReset();
-    httpProxy.get.mockReset();
-
+  beforeEach(async () => {
     const user = { email: 'test@gmail.com' };
-    storageService.openUserStorage(user);
+
+    await storageService.openUserStorage(user);
+
+    assetManager.setCurrentAsset({
+      _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrope', manufactureDate: new Date(1979, 1, 1),
+    });
   });
 
   afterEach(async () => {
     await actionManager.clearActions();
     storageService.setItem(urlFetchTask, undefined);
     storageService.closeUserStorage();
+
+    httpProxy.setConfig.mockReset();
+    httpProxy.post.mockReset();
+    httpProxy.deleteReq.mockReset();
+    httpProxy.get.mockReset();
 
     entryProxy.onTaskDeleted.mockRestore();
     entryProxy.getStoredEntries.mockRestore();

@@ -6,13 +6,14 @@ import storageService from './StorageService';
 
 import { updateEntry } from '../helpers/EntryHelper';
 // eslint-disable-next-line no-unused-vars
-import { EntryModel } from '../types/Types';
+import { EntryModel, AssetModel } from '../types/Types';
 import imageProxy from './ImageProxy';
+
+import assetManager from './AssetManager';
 
 export interface FetchEntriesProps extends FetchAllEntriesProps{
     taskId: string|undefined;
 }
-
 export interface FetchAllEntriesProps{
     equipmentId: string|undefined;
     cancelToken?: CancelToken;
@@ -36,7 +37,15 @@ export interface IEntryProxy{
 }
 
 class EntryProxy implements IEntryProxy {
-    baseUrl = `${process.env.REACT_APP_URL_BASE}entries/`;
+    private baseUrl = `${process.env.REACT_APP_URL_BASE}entries/`;
+
+    constructor() {
+      assetManager.registerOnCurrentAssetChanged(this.updateBaseUrl);
+    }
+
+    updateBaseUrl = (asset: AssetModel | undefined) => {
+      this.baseUrl = `${process.env.REACT_APP_URL_BASE}entries/${asset?._uiId}/`;
+    }
 
     getBaseEntryUrl = (equipmentId: string | undefined): string => {
       if (equipmentId === undefined) {

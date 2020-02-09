@@ -3,6 +3,7 @@ import syncService from '../SyncService';
 import storageService from '../StorageService';
 import entryProxy from '../EntryProxy';
 import actionManager from '../ActionManager';
+import assetManager from '../AssetManager';
 
 import { updateEntry } from '../../helpers/EntryHelper';
 
@@ -12,7 +13,7 @@ jest.mock('../SyncService');
 describe('Test EntryProxy', () => {
   const parentEquipmentId = 'an_parent_equipment';
   const parentTaskId = 'a_parent_task_id';
-  const urlFetchEntry = `${process.env.REACT_APP_URL_BASE}entries/${parentEquipmentId}`;
+  const urlFetchEntry = `${process.env.REACT_APP_URL_BASE}entries/asset_01/${parentEquipmentId}`;
 
   const entryToSave = {
     _uiId: 'an_entry_id',
@@ -44,6 +45,10 @@ describe('Test EntryProxy', () => {
   beforeEach(() => {
     mockHttpProxy();
     initStorage();
+
+    assetManager.setCurrentAsset({
+      _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrope', manufactureDate: new Date(1979, 1, 1),
+    });
   });
 
   afterEach(async () => {

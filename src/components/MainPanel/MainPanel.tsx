@@ -22,16 +22,24 @@ import userProxy from '../../services/UserProxy';
 import taskProxy from '../../services/TaskProxy';
 import errorService from '../../services/ErrorService';
 
+import assetManager from '../../services/AssetManager';
+import { createDefaultAsset } from '../../helpers/AssetHelper';
+
 import '../../style/transition.css';
 import './MainPanel.css';
 
-// eslint-disable-next-line no-unused-vars
-import { UserModel, EquipmentModel, TaskModel } from '../../types/Types';
+import
+{
+  // eslint-disable-next-line no-unused-vars
+  UserModel, EquipmentModel, TaskModel, AssetModel,
+} from '../../types/Types';
 
 import useFetcher from '../../hooks/Fetcher';
+import ModalEditAsset from '../ModalEditAsset/ModalEditAsset';
 
 export default function MainPanel() {
   const [user, setUser] = useState<UserModel | undefined>(undefined);
+  const [currentAsset, setCurrentAsset] = useState<AssetModel | undefined>(undefined);
   const [error, setError] = useState<Error | undefined>(undefined);
   const { niceKey } = useParams();
 
@@ -42,6 +50,18 @@ export default function MainPanel() {
       setError(undefined);
     }
   };
+
+  useEffect(() => {
+    const onCurrentAssetChanged = (asset: AssetModel|undefined) => {
+      setCurrentAsset(asset);
+    };
+
+    assetManager.registerOnCurrentAssetChanged(onCurrentAssetChanged);
+
+    return () => {
+      assetManager.unregisterOnCurrentAssetChanged(onCurrentAssetChanged);
+    };
+  }, []);
 
   useEffect(() => {
     const refreshCurrentUser = async () => {
@@ -215,12 +235,21 @@ export default function MainPanel() {
                 <ErrorAlert error={error} onDismiss={dismissError} className="bottomright" />
               </>
             </CSSTransition>
+
             {!user && (
             <ModalLogin
               visible={!user}
               onLoggedIn={setUser}
               className="modal-dialog-centered"
               toggleModalSignup={toggleModalSignup}
+            />
+            )}
+
+            {user && !currentAsset && (
+            <ModalEditAsset
+              asset={createDefaultAsset()}
+              visible={user && !currentAsset}
+              className="modal-dialog-centered"
             />
             )}
 

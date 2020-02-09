@@ -8,8 +8,10 @@ import entryProxy from './EntryProxy';
 
 import { updateEquipment } from '../helpers/EquipmentHelper';
 // eslint-disable-next-line no-unused-vars
-import { EquipmentModel } from '../types/Types';
+import { EquipmentModel, AssetModel } from '../types/Types';
 import imageProxy from './ImageProxy';
+
+import assetManager from './AssetManager';
 
 export interface IEquipmentProxy{
     fetchEquipments(): Promise<EquipmentModel[]>;
@@ -24,7 +26,15 @@ export interface IEquipmentProxy{
 }
 
 class EquipmentProxy implements IEquipmentProxy {
-    private baseUrl:string = `${process.env.REACT_APP_URL_BASE}equipments/`;
+    private baseUrl:string = `${process.env.REACT_APP_URL_BASE}equipments/${undefined}`;
+
+    constructor() {
+      assetManager.registerOnCurrentAssetChanged(this.updateBaseUrl);
+    }
+
+    updateBaseUrl = (asset: AssetModel | undefined) => {
+      this.baseUrl = `${process.env.REACT_APP_URL_BASE}equipments/${asset?._uiId}/`;
+    }
 
     // //////////////Equipment////////////////////////
     fetchEquipments = async (forceToLookUpInStorage: boolean = false): Promise<EquipmentModel[]> => {

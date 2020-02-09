@@ -10,7 +10,9 @@ import storageService from './StorageService';
 
 import { updateTask, updateRealtimeFields } from '../helpers/TaskHelper';
 // eslint-disable-next-line no-unused-vars
-import { TaskModel } from '../types/Types';
+import { TaskModel, AssetModel } from '../types/Types';
+
+import assetManager from './AssetManager';
 
 export interface FetchTaskProps{
     equipmentId: string | undefined;
@@ -29,7 +31,15 @@ export interface ITaskProxy{
 }
 
 class TaskProxy implements ITaskProxy {
-    baseUrl = `${process.env.REACT_APP_URL_BASE}tasks/`;
+    private baseUrl:string = `${process.env.REACT_APP_URL_BASE}tasks/${undefined}`;
+
+    constructor() {
+      assetManager.registerOnCurrentAssetChanged(this.updateBaseUrl);
+    }
+
+    updateBaseUrl = (asset: AssetModel | undefined) => {
+      this.baseUrl = `${process.env.REACT_APP_URL_BASE}tasks/${asset?._uiId}/`;
+    }
 
     // ///////////////Task////////////////////////////
     createOrSaveTask = async (equipmentId: string, newTask: TaskModel):Promise<TaskModel> => {
