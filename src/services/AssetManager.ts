@@ -25,9 +25,13 @@ class AssetManager implements IAssetManager {
     }
 
     // eslint-disable-next-line no-unused-vars
-    onCurrentUserChanged = async (_user: UserModel | undefined) => {
-      const { default: assetProxy } = await import('./AssetProxy');
-      this.onAssetsChanged(await assetProxy.fetchAssets());
+    onCurrentUserChanged = async (user: UserModel | undefined) => {
+      if (user !== undefined) {
+        const { default: assetProxy } = await import('./AssetProxy');
+        this.onAssetsChanged(await assetProxy.fetchAssets());
+      } else {
+        this.onAssetsChanged([]);
+      }
     }
 
     getCurrentAsset(): AssetModel | undefined {

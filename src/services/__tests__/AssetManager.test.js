@@ -73,5 +73,32 @@ describe('Test ActionManager', () => {
       expect(assetProxy.fetchAssets).toBeCalledTimes(1);
       expect(currentAsset).toEqual(asset1);
     });
+
+    it('Should return undefined after the user logged out.', async () => {
+      // Arrange
+      const asset1 = {
+        _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrop', manufactureDate: new Date(2019, 6, 10),
+      };
+      const asset2 = {
+        _uiId: 'asset_02', name: 'Voiture', brand: 'Tesla', modelBrand: 'S', manufactureDate: new Date(2019, 9, 10),
+      };
+      assetProxy.fetchAssets.mockImplementation(async () => Promise.resolve([asset1, asset2]));
+
+      await userContext.onUserChanged({
+        email: 'test@axios',
+        firstname: 'jest',
+        name: 'react',
+        token: 'jwt',
+      });
+
+      await userContext.onUserChanged(undefined);
+
+      // Act
+      const currentAsset = assetManager.getCurrentAsset();
+
+      // Assert
+      expect(assetProxy.fetchAssets).toBeCalledTimes(1);
+      expect(currentAsset).toBeUndefined();
+    });
   });
 });
