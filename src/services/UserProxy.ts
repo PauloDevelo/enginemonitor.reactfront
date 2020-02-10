@@ -30,7 +30,7 @@ export interface IUserProxy{
 }
 
 class UserProxy implements IUserProxy {
-    baseUrl = `${process.env.REACT_APP_URL_BASE}users/`;
+    baseUrl = `${process.env.REACT_APP_API_URL_BASE}users/`;
 
     // ///////////////////User/////////////////////////
     signup = async (newUser: UserModel): Promise<void> => {

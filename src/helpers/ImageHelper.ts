@@ -126,8 +126,8 @@ export const createImageModel = (parentUiId: string):ImageModel => {
     title: '',
     description: '',
     sizeInByte: 0,
-    thumbnailUrl: `${process.env.REACT_APP_URL_BASE}${userContext.getCurrentUser()!.imageFolder}/thumbnail_${uiid}.jpeg`,
-    url: `${process.env.REACT_APP_URL_BASE}${userContext.getCurrentUser()!.imageFolder}/${uiid}.jpeg`,
+    thumbnailUrl: `${process.env.REACT_APP_API_URL_BASE}${userContext.getCurrentUser()!.imageFolder}/thumbnail_${uiid}.jpeg`,
+    url: `${process.env.REACT_APP_API_URL_BASE}${userContext.getCurrentUser()!.imageFolder}/${uiid}.jpeg`,
   });
 };
 

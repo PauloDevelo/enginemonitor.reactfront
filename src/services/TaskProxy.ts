@@ -31,14 +31,14 @@ export interface ITaskProxy{
 }
 
 class TaskProxy implements ITaskProxy {
-    private baseUrl:string = `${process.env.REACT_APP_URL_BASE}tasks/${undefined}`;
+    private baseUrl:string = `${process.env.REACT_APP_API_URL_BASE}tasks/${undefined}`;
 
     constructor() {
       assetManager.registerOnCurrentAssetChanged(this.updateBaseUrl);
     }
 
     updateBaseUrl = (asset: AssetModel | undefined) => {
-      this.baseUrl = `${process.env.REACT_APP_URL_BASE}tasks/${asset?._uiId}/`;
+      this.baseUrl = `${process.env.REACT_APP_API_URL_BASE}tasks/${asset?._uiId}/`;
     }
 
     // ///////////////Task////////////////////////////

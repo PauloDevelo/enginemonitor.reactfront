@@ -26,14 +26,14 @@ export interface IEquipmentProxy{
 }
 
 class EquipmentProxy implements IEquipmentProxy {
-    private baseUrl:string = `${process.env.REACT_APP_URL_BASE}equipments/${undefined}`;
+    private baseUrl:string = `${process.env.REACT_APP_API_URL_BASE}equipments/${undefined}`;
 
     constructor() {
       assetManager.registerOnCurrentAssetChanged(this.updateBaseUrl);
     }
 
     updateBaseUrl = (asset: AssetModel | undefined) => {
-      this.baseUrl = `${process.env.REACT_APP_URL_BASE}equipments/${asset?._uiId}/`;
+      this.baseUrl = `${process.env.REACT_APP_API_URL_BASE}equipments/${asset?._uiId}/`;
     }
 
     // //////////////Equipment////////////////////////

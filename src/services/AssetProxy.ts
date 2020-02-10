@@ -22,7 +22,7 @@ export interface IAssetProxy{
 }
 
 class AssetProxy implements IAssetProxy {
-    private baseUrl:string = `${process.env.REACT_APP_URL_BASE}assets/`;
+    private baseUrl:string = `${process.env.REACT_APP_API_URL_BASE}assets/`;
 
     // //////////////Equipment////////////////////////
     fetchAssets = async (forceToLookUpInStorage: boolean = false): Promise<AssetModel[]> => {

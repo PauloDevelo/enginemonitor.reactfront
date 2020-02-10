@@ -27,7 +27,7 @@ export interface IImageProxy{
 }
 
 class ImageProxy implements IImageProxy {
-    private baseUrl:string = `${process.env.REACT_APP_URL_BASE}images/`;
+    private baseUrl:string = `${process.env.REACT_APP_API_URL_BASE}images/`;
 
     // //////////////Equipment////////////////////////
     fetchImages = async ({ parentUiId, forceToLookUpInStorage = false, cancelToken = undefined }: FetchImagesProps): Promise<ImageModel[]> => {

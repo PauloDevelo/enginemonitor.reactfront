@@ -13,7 +13,7 @@ jest.mock('../SyncService');
 describe('Test EntryProxy', () => {
   const parentEquipmentId = 'an_parent_equipment';
   const parentTaskId = 'a_parent_task_id';
-  const urlFetchEntry = `${process.env.REACT_APP_URL_BASE}entries/asset_01/${parentEquipmentId}`;
+  const urlFetchEntry = `${process.env.REACT_APP_API_URL_BASE}entries/asset_01/${parentEquipmentId}`;
 
   const entryToSave = {
     _uiId: 'an_entry_id',

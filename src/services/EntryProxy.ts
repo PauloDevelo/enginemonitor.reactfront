@@ -37,14 +37,14 @@ export interface IEntryProxy{
 }
 
 class EntryProxy implements IEntryProxy {
-    private baseUrl = `${process.env.REACT_APP_URL_BASE}entries/`;
+    private baseUrl = `${process.env.REACT_APP_API_URL_BASE}entries/`;
 
     constructor() {
       assetManager.registerOnCurrentAssetChanged(this.updateBaseUrl);
     }
 
     updateBaseUrl = (asset: AssetModel | undefined) => {
-      this.baseUrl = `${process.env.REACT_APP_URL_BASE}entries/${asset?._uiId}/`;
+      this.baseUrl = `${process.env.REACT_APP_API_URL_BASE}entries/${asset?._uiId}/`;
     }
 
     getBaseEntryUrl = (equipmentId: string | undefined): string => {

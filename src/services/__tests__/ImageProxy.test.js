@@ -21,7 +21,7 @@ jest.mock('../ActionManager');
 
 describe('Test ImageProxy', () => {
   const parentId = 'an_entity_id';
-  const urlFetchImage = `${process.env.REACT_APP_URL_BASE}images/${parentId}`;
+  const urlFetchImage = `${process.env.REACT_APP_API_URL_BASE}images/${parentId}`;
 
   const user = createDefaultUser();
   user.email = 'test@gmail.com';

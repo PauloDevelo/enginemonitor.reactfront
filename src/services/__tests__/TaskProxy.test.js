@@ -26,7 +26,7 @@ describe('Test TaskProxy', () => {
   });
 
   const parentEquipmentId = 'an_parent_equipment';
-  const urlFetchTask = `${process.env.REACT_APP_URL_BASE}tasks/asset_01/${parentEquipmentId}`;
+  const urlFetchTask = `${process.env.REACT_APP_API_URL_BASE}tasks/asset_01/${parentEquipmentId}`;
 
   const taskToSave = {
     _uiId: 'an_id_created_by_the_front_end_and_for_the_front_end',
