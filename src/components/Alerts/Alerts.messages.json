@@ -115,7 +115,7 @@
     "id": "usagePeriodInHour"
   },
   "credentialError": {
-    "defaultMessage": "You don't have the correct credentials to perform this action.",
+    "defaultMessage": "You don't have enough credentials to perform this action.",
     "description": "Error message",
     "id": "credentialError"
   }
