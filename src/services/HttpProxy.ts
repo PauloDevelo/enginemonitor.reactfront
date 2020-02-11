@@ -51,7 +51,6 @@ class HttpProxy implements IHttpProxy {
 
     setConfig(config: Config) {
       this.config = { ...config };
-      this.config.timeout = 2000;
     }
 
     postImage = async (url: string, image:ImageModel, imageData:Blob, thumbnailData: Blob):Promise<{ image: ImageModel }> => {
