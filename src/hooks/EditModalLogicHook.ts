@@ -71,6 +71,7 @@ export default function useEditModalLogic<T>({
       toggleModalYesNoConfirmation();
       if (toggleEditModal) toggleEditModal();
     } catch (error) {
+      toggleModalYesNoConfirmation();
       if (error instanceof HttpError) {
         setAlerts(error.data);
       } else {
