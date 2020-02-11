@@ -1,12 +1,13 @@
 import * as log from 'loglevel';
 import httpProxy from './HttpProxy';
+import progressiveHttpProxy from './ProgressiveHttpProxy';
 import HttpError from '../http/HttpError';
 import syncService from './SyncService';
 
 import storageService from './StorageService';
 
 // eslint-disable-next-line no-unused-vars
-import { UserModel, AuthInfo } from '../types/Types';
+import { UserModel, AuthInfo, UserCredentials } from '../types/Types';
 import userContext from './UserContext';
 
 type Config = {
@@ -21,6 +22,7 @@ export interface IUserProxy{
     resetPassword(email: string, password: string): Promise<void>;
     authenticate (authInfo: AuthInfo):Promise<UserModel>;
     logout(): Promise<void>;
+    getCredentials({ assetUiId }: {assetUiId: string}): Promise<UserCredentials>;
 
     /**
      * This function tries to get a user stored in the global storage due to the remember me feature.
@@ -72,6 +74,8 @@ class UserProxy implements IUserProxy {
       await storageService.closeUserStorage();
       await userContext.onUserChanged(undefined);
     }
+
+    getCredentials = async ({ assetUiId }: {assetUiId: string}): Promise<UserCredentials> => progressiveHttpProxy.getOnlineFirst<UserCredentials>(`${this.baseUrl}credentials/${assetUiId}`, 'credentials')
 
     tryGetAndSetMemorizedUser = async ():Promise<UserModel | undefined> => {
       if (await storageService.existGlobalItem('currentUser')) {

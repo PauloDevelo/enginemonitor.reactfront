@@ -1,9 +1,10 @@
 import userContext from './UserContext';
 
 // eslint-disable-next-line no-unused-vars
-import { AssetModel, UserModel } from '../types/Types';
+import { AssetModel, UserModel, UserCredentials } from '../types/Types';
 
 export interface IAssetManager{
+    getUserCredentials(): UserCredentials | undefined;
     getCurrentAsset(): AssetModel | undefined;
     setCurrentAsset(asset: AssetModel): void;
 
@@ -19,6 +20,8 @@ class AssetManager implements IAssetManager {
     private assets: AssetModel[] = [];
 
     private currentAsset: AssetModel|undefined = undefined;
+
+    private credentials:UserCredentials | undefined = undefined;
 
     constructor() {
       userContext.registerOnUserChanged(this.onCurrentUserChanged);
@@ -38,8 +41,13 @@ class AssetManager implements IAssetManager {
       return this.currentAsset;
     }
 
+    getUserCredentials(): UserCredentials | undefined {
+      return this.credentials;
+    }
+
     setCurrentAsset(asset: AssetModel | undefined) {
       this.currentAsset = asset;
+      this.updateUserCredentials(this.currentAsset);
       this.listeners.map((listener) => listener(this.currentAsset));
     }
 
@@ -54,6 +62,16 @@ class AssetManager implements IAssetManager {
 
     unregisterOnCurrentAssetChanged(listenerToRemove: (asset: AssetModel|undefined) => void):void{
       this.listeners = this.listeners.filter((listener) => listener !== listenerToRemove);
+    }
+
+    private updateUserCredentials = async (newCurrentAsset: AssetModel | undefined) => {
+      if (newCurrentAsset === undefined) {
+        this.credentials = undefined;
+        return;
+      }
+
+      const { default: userProxy } = await import('./UserProxy');
+      this.credentials = await userProxy.getCredentials({ assetUiId: newCurrentAsset._uiId });
     }
 }
 

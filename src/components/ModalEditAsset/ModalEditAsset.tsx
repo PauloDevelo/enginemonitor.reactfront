@@ -1,15 +1,19 @@
 /* eslint-disable max-len */
-import React, { useState, useEffect } from 'react';
+import * as log from 'loglevel';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
-  Button, Modal, ModalHeader, ModalBody, ModalFooter,
+  Button, Modal, ModalHeader, ModalBody, ModalFooter, Input,
 } from 'reactstrap';
 
-import { faEdit, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEdit, faPlusSquare, faShareAlt, faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { FormattedMessage, defineMessages } from 'react-intl';
 
 import assetProxy from '../../services/AssetProxy';
+import guestLinkProxy from '../../services/GuestLinkProxy';
 
 import useEditModalLogic from '../../hooks/EditModalLogicHook';
 
@@ -22,7 +26,7 @@ import ActionButton from '../ActionButton/ActionButton';
 import '../../style/transition.css';
 
 // eslint-disable-next-line no-unused-vars
-import { AssetModel } from '../../types/Types';
+import { AssetModel, GuestLink } from '../../types/Types';
 
 import jsonMessages from './ModalEditAsset.messages.json';
 
@@ -48,14 +52,40 @@ const ModalEditAsset = ({
       deleteParams: [asset._uiId],
     },
   );
-
   const [isCreation, setIsCreation] = useState(false);
+
+  const [guestLink, setGuestLink] = useState<GuestLink | undefined>(undefined);
 
   useEffect(() => {
     assetProxy.existAsset(asset._uiId).then((assetExist) => {
       setIsCreation(assetExist === false);
     });
+
+    guestLinkProxy.getGuestLinks(asset._uiId)
+      .then((guestLinks) => setGuestLink(guestLinks.length === 0 ? undefined : guestLinks[0]))
+      .catch(() => setGuestLink(undefined));
   }, [asset]);
+
+  const unshareCallBack = useCallback(async () => {
+    if (guestLink !== undefined) {
+      try {
+        await guestLinkProxy.removeGuestLink(guestLink._uiId);
+        setGuestLink(undefined);
+      } catch (reason) {
+        log.error(reason);
+      }
+    }
+  }, [guestLink]);
+
+  const shareCallBack = useCallback(async () => {
+    try {
+      setGuestLink(await guestLinkProxy.createGuestLink(asset._uiId, 'Read only'));
+    } catch (reason) {
+      log.error(reason);
+    }
+  }, [asset]);
+
+  const getUrl = useCallback(() => (guestLink ? `${process.env.REACT_APP_URL}${guestLink.niceKey}` : ''), [guestLink]);
 
   const message = isCreation ? assetMsg.create : assetMsg.save;
 
@@ -78,6 +108,13 @@ const ModalEditAsset = ({
           </MyForm>
           )}
           <Alerts errors={modalLogic.alerts} />
+          <div className="p-1 border border-secondary rounded shadow">
+            <div className="flex-row">
+              {guestLink && <Button color="light" size="sm" onClick={unshareCallBack} aria-label="Share"><FontAwesomeIcon icon={faTrash} /></Button>}
+              {!guestLink && <Button color="light" size="sm" onClick={shareCallBack} aria-label="Share"><FontAwesomeIcon icon={faShareAlt} /></Button>}
+              <Input type="url" disable="true" value={getUrl()} inline="true" readOnly />
+            </div>
+          </div>
         </ModalBody>
         <ModalFooter>
           <ActionButton type="submit" isActing={modalLogic.isSaving} form="formAsset" color="success" message={message} />

@@ -99,7 +99,12 @@ const NavBar = ({ onLoggedOut }:Props) => {
     setAssetEditionModalVisibility((prevVisibility) => !prevVisibility);
   }, []);
 
-  const getTextMenu = useCallback(() => (user ? user.email : 'Login'), [user]);
+  const getTextMenu = useCallback(() => {
+    if (user) {
+      return user.email === '' ? user.firstname : user.email;
+    }
+    return 'Login';
+  }, [user]);
 
   return (
     <>
@@ -125,10 +130,14 @@ const NavBar = ({ onLoggedOut }:Props) => {
                 </DropdownItem>
                 <DropDownConnectionStateItem />
                 <DropdownItem divider />
+                {!user?.forbidUploadingImage && (
                 <DropdownItem header>
                   <ImageFolderGauge storageSizeInMB={userImageFolderSize / 1048576} storageSizeLimitInMB={user ? user.imageFolderSizeLimitInByte / 1048576 : 0} />
                 </DropdownItem>
+                )}
+                {!user?.forbidUploadingImage && (
                 <DropdownItem divider />
+                )}
                 <DropdownItem onClick={logout}>
                   <FontAwesomeIcon icon={faSignOutAlt} />
                   {' '}

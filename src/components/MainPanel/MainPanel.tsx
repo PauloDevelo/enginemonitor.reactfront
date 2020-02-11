@@ -17,6 +17,7 @@ import SyncAlert from '../SyncAlert/SyncAlert';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import CacheBuster from '../CacheBuster/CacheBuster';
 
+import guestLinkProxy from '../../services/GuestLinkProxy';
 import userProxy from '../../services/UserProxy';
 import taskProxy from '../../services/TaskProxy';
 import errorService from '../../services/ErrorService';
@@ -64,7 +65,7 @@ export default function MainPanel() {
 
   useEffect(() => {
     const refreshCurrentUser = async () => {
-      const currentUser = await userProxy.tryGetAndSetMemorizedUser();
+      const currentUser = niceKey ? await guestLinkProxy.tryGetAndSetUserFromNiceKey(niceKey) : await userProxy.tryGetAndSetMemorizedUser();
       setUser(currentUser);
     };
 
@@ -230,7 +231,7 @@ export default function MainPanel() {
                 </div>
               </div>
               <SyncAlert className="bottomright" />
-              <ErrorAlert error={error} onDismiss={dismissError} className="bottomright" />
+              <ErrorAlert error={error} onDismiss={dismissError} className="verytop bottomright" />
             </>
 
             {!user && (
