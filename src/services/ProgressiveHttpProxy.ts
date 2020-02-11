@@ -140,9 +140,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
   async getArrayOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T[]> {
     if (await syncService.isOnlineAndSynced()) {
       try {
-        const cancelTokenConsideringStorageContent = await this.getCancelTokenConsideringStorageContent(url, cancelToken);
-
-        const array = (await httpProxy.get(url, cancelTokenConsideringStorageContent))[keyName] as T[];
+        const array = (await httpProxy.get(url, cancelToken))[keyName] as T[];
         const initArray = array.map(init);
 
         storageService.setItem<T[]>(url, initArray);
@@ -162,8 +160,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
   async getOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T> {
     if (await syncService.isOnlineAndSynced()) {
       try {
-        const cancelTokenConsideringStorageContent = await this.getCancelTokenConsideringStorageContent(url, cancelToken);
-        const item = (await httpProxy.get(url, cancelTokenConsideringStorageContent))[keyName] as T;
+        const item = (await httpProxy.get(url, cancelToken))[keyName] as T;
         const updatedItem = init(item);
 
         storageService.setItem<T>(url, updatedItem);
@@ -178,14 +175,6 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
     }
 
     return storageService.getItem<T>(url);
-  }
-
-  async getCancelTokenConsideringStorageContent(url: string, cancelToken: CancelToken | undefined): Promise<CancelToken | undefined> {
-    if (cancelToken === undefined || storageService.isUserStorageOpened() === false) {
-      return cancelToken;
-    }
-
-    return (await storageService.existItem(url)) === false ? undefined : cancelToken;
   }
 }
 
