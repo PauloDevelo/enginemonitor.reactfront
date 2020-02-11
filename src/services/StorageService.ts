@@ -117,9 +117,9 @@ class StorageService implements IStorageService {
       return this.userStorage !== undefined;
     }
 
-    async openUserStorage({ email }: UserModel): Promise<void> {
+    async openUserStorage({ _uiId }: UserModel): Promise<void> {
       this.userStorage = localforage.createInstance({
-        name: email,
+        name: _uiId,
       });
 
       await storageUpdaterService.onUserStorageOpened();
