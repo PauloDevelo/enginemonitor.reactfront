@@ -28,7 +28,7 @@ const ErrorAlert = ({ error, onDismiss, className }:Props) => {
   let message:string = '';
   if (error !== undefined) {
     if (error instanceof HttpError) {
-      message = error.data.message;
+      message = error.data.message ? error.data.message : error.data;
     } else {
       message = error.message;
     }

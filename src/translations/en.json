@@ -116,5 +116,6 @@
   "usagePeriodInHour": "Period in usage hour",
   "userExceedStorageLimit": "User exceeded the storage limit. Remove some images before adding new images.",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
-  "yes": "Yes"
+  "yes": "Yes",
+  "credentialError": "You don't have the correct credentials to perform this action."
 }

@@ -113,5 +113,10 @@
     "defaultMessage": "Usage Period in hour",
     "description": "Label",
     "id": "usagePeriodInHour"
+  },
+  "credentialError": {
+    "defaultMessage": "You don't have the correct credentials to perform this action.",
+    "description": "Error message",
+    "id": "credentialError"
   }
 }
