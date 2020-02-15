@@ -81,24 +81,26 @@ class UserProxy implements IUserProxy {
     tryGetAndSetMemorizedUser = async ():Promise<UserModel | undefined> => {
       if (await storageService.existGlobalItem('currentUser')) {
         let rememberedUser = await storageService.getGlobalItem<UserModel>('currentUser');
-        this.setHttpProxyAuthentication(rememberedUser);
+        if (rememberedUser) {
+          this.setHttpProxyAuthentication(rememberedUser);
 
-        if (await syncService.isOnline()) {
-          try {
-            const { user: currentUser }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}current`);
-            if (currentUser) {
-              storageService.setGlobalItem('currentUser', currentUser);
-              this.setHttpProxyAuthentication(currentUser);
-              rememberedUser = currentUser;
+          if (await syncService.isOnline()) {
+            try {
+              const { user: currentUser }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}current`);
+              if (currentUser) {
+                storageService.setGlobalItem('currentUser', currentUser);
+                this.setHttpProxyAuthentication(currentUser);
+                rememberedUser = currentUser;
+              }
+            } catch (error) {
+              log.error(error.message);
             }
-          } catch (error) {
-            log.error(error.message);
           }
-        }
 
-        await storageService.openUserStorage(rememberedUser);
-        await userContext.onUserChanged(rememberedUser);
-        return rememberedUser;
+          await storageService.openUserStorage(rememberedUser);
+          await userContext.onUserChanged(rememberedUser);
+          return rememberedUser;
+        }
       }
 
       return undefined;
