@@ -91,7 +91,11 @@ class HttpProxy implements IHttpProxy {
         const response = await axios.get(url, config);
         return response.data;
       } catch (error) {
-        processError(error);
+        if (error instanceof axios.Cancel) {
+          log.info(error.message);
+        } else {
+          processError(error);
+        }
       }
     }
 
