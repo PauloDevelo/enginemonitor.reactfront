@@ -195,7 +195,6 @@ export default function MainPanel() {
               <div className="appBody mb-2">
                 <div className="wrapperColumn">
                   <EquipmentsInfo
-                    userId={user ? user._uiId : undefined}
                     changeCurrentEquipment={setCurrentEquipment}
                     extraClassNames={`${panelClassNames} columnHeader`}
                   />
