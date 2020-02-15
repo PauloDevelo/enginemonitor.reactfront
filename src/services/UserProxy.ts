@@ -69,7 +69,8 @@ class UserProxy implements IUserProxy {
     }
 
     logout = async (): Promise<void> => {
-      await storageService.removeGlobalItem('currentUser');
+      await storageService.setGlobalItem('currentUser', undefined);
+
       httpProxy.setConfig(undefined);
       await storageService.closeUserStorage();
       await userContext.onUserChanged(undefined);
