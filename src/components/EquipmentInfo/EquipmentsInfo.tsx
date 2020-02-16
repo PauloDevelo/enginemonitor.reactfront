@@ -27,7 +27,7 @@ extraClassNames: string
 }
 
 function EquipmentsInfo({ changeCurrentEquipment, extraClassNames }: Props) {
-  const [currentAsset, setCurrentAsset] = useState<AssetModel | undefined>(undefined);
+  const [currentAsset, setCurrentAsset] = useState<AssetModel | undefined>(assetManager.getCurrentAsset());
   const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
   const modalHook = useEditModal<EquipmentModel | undefined>(undefined);
 
