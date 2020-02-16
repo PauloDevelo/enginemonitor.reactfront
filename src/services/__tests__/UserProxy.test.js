@@ -3,10 +3,12 @@ import httpProxy from '../HttpProxy';
 import storageService from '../StorageService';
 import userProxy from '../UserProxy';
 import syncService from '../SyncService';
+import assetProxy from '../AssetProxy';
 
 jest.mock('../HttpProxy');
 jest.mock('../StorageService');
 jest.mock('../SyncService');
+jest.mock('../AssetProxy');
 
 describe('Test UserProxy', () => {
   beforeAll(() => {
@@ -26,7 +28,13 @@ describe('Test UserProxy', () => {
     httpProxy.post.mockReset();
     httpProxy.get.mockReset();
 
+    assetProxy.fetchAssets.mockReset();
+
     syncService.isOnline.mockReset();
+  });
+
+  beforeEach(() => {
+    assetProxy.fetchAssets.mockImplementation(async () => Promise.resolve([]));
   });
 
   describe('tryGetAndSetMemorizedUser', () => {
@@ -132,7 +140,7 @@ describe('Test UserProxy', () => {
       // assert
       expect(httpProxy.setConfig).toHaveBeenCalledTimes(1);
       expect(storageService.closeUserStorage).toHaveBeenCalledTimes(1);
-      expect(storageService.removeGlobalItem).toHaveBeenCalledTimes(1);
+      expect(storageService.setGlobalItem).toHaveBeenCalledTimes(1);
     });
 
     it('should post the authentification, update the local storage and set the httpProxy config because of the remember flag it true', async () => {
@@ -162,7 +170,7 @@ describe('Test UserProxy', () => {
       expect(authUser).toEqual(user);
       expect(currentConfig).toEqual({ headers: { Authorization: `Token ${user.token}` } });
       expect(storageService.openUserStorage).toHaveBeenCalledTimes(1);
-      expect(storageService.setGlobalItem).toHaveBeenCalledTimes(1);
+      expect(storageService.setGlobalItem).toHaveBeenCalledTimes(2);
     });
 
     it('should not update the local storage because of the remember flag at false but should configure the http proxy and open the user storage.', async () => {
@@ -192,7 +200,7 @@ describe('Test UserProxy', () => {
       expect(authUser).toEqual(user);
       expect(currentConfig).toEqual({ headers: { Authorization: `Token ${user.token}` } });
       expect(storageService.openUserStorage).toHaveBeenCalledTimes(1);
-      expect(storageService.setGlobalItem).toHaveBeenCalledTimes(0);
+      expect(storageService.setGlobalItem).toHaveBeenCalledTimes(1);
     });
   });
 });

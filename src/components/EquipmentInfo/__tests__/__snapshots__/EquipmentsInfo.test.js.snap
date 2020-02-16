@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EquipmentsInfo Should render a equipment tabs with hte first equipment selected 1`] = `
+exports[`EquipmentsInfo Should render a equipment tabs with the first equipment selected 1`] = `
 <IntlProvider
   defaultFormats={Object {}}
   defaultLocale="en"
@@ -42,7 +42,6 @@ exports[`EquipmentsInfo Should render a equipment tabs with hte first equipment 
       }
     }
     extraClassNames=""
-    userId="paul"
   >
     <div
       className=""

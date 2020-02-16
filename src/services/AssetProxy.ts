@@ -61,7 +61,7 @@ class AssetProxy implements IAssetProxy {
         return false;
       }
 
-      const allAssets = await this.fetchAssets(true);
+      const allAssets = await this.getStoredAsset();
       return allAssets.findIndex((asset) => asset._uiId === assetId) !== -1;
     }
 }

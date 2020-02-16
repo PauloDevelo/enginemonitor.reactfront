@@ -131,7 +131,7 @@ describe('Test AsseProxy', () => {
     { isOnline: false, assetId: 'an_id', expectedResult: false },
     { isOnline: false, assetId: undefined, expectedResult: false },
   ];
-  describe.each(existAssetParams)('existEquipment', ({
+  describe.each(existAssetParams)('existAsset', ({
     isOnline, assetId, expectedResult,
   }) => {
     it(`when ${JSON.stringify({
@@ -141,8 +141,11 @@ describe('Test AsseProxy', () => {
       syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
 
       let getCounter = 0;
-      httpProxy.get.mockImplementation(() => {
-        getCounter++;
+      httpProxy.get.mockImplementation((url) => {
+        if (url === urlFetchAssets) {
+          getCounter++;
+        }
+
         return Promise.resolve({ name: 'arbutus' });
       });
 

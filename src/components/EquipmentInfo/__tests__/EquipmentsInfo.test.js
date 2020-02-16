@@ -13,7 +13,10 @@ import imageProxy from '../../../services/ImageProxy';
 import equipmentProxy from '../../../services/EquipmentProxy';
 import updateWrapper from '../../../testHelpers/EnzymeHelper';
 
+import assetManager from '../../../services/AssetManager';
+
 jest.mock('../../../services/ImageProxy');
+jest.mock('../../../services/EquipmentProxy');
 jest.mock('localforage');
 
 describe('EquipmentsInfo', () => {
@@ -49,27 +52,32 @@ describe('EquipmentsInfo', () => {
     ignoredMessages.push('test was not wrapped in act(...)');
     ignoredMessages.push('[React Intl] Could not find required `intl` object.');
     ignoredMessages.push('[React Intl] Missing message');
+
+    assetManager.setCurrentAsset({
+      _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrope', manufactureDate: new Date(1979, 1, 1),
+    });
   });
 
   beforeEach(() => {
     imageProxy.fetchImages.mockResolvedValue([]);
-
-    jest.spyOn(equipmentProxy, 'fetchEquipments').mockImplementation(async (props) => Promise.resolve(equipments));
+    equipmentProxy.fetchEquipments.mockImplementation(async () => Promise.resolve(equipments));
+    equipmentProxy.existEquipment.mockImplementation(async (equipmentUiId) => Promise.resolve(equipments.findIndex((eq) => eq._uiId === equipmentUiId) !== -1));
   });
 
   afterEach(() => {
     imageProxy.fetchImages.mockRestore();
     equipmentProxy.fetchEquipments.mockRestore();
+    equipmentProxy.existEquipment.mockRestore();
   });
 
-  it('Should render a equipment tabs with hte first equipment selected', async () => {
+  it('Should render a equipment tabs with the first equipment selected', async () => {
     // Arrange
     const changeCurrentEquipment = jest.fn();
 
     // Act
     const equipmentsInfo = mount(
       <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
-        <EquipmentsInfo userId="paul" changeCurrentEquipment={changeCurrentEquipment} extraClassNames="" />
+        <EquipmentsInfo changeCurrentEquipment={changeCurrentEquipment} extraClassNames="" />
       </IntlProvider>,
     );
     await updateWrapper(equipmentsInfo);
@@ -94,7 +102,7 @@ describe('EquipmentsInfo', () => {
 
     const equipmentsInfo = mount(
       <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
-        <EquipmentsInfo userId="paul" changeCurrentEquipment={changeCurrentEquipment} extraClassNames="" />
+        <EquipmentsInfo changeCurrentEquipment={changeCurrentEquipment} extraClassNames="" />
       </IntlProvider>,
     );
     await updateWrapper(equipmentsInfo);
@@ -124,7 +132,7 @@ describe('EquipmentsInfo', () => {
 
     const equipmentsInfo = mount(
       <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
-        <EquipmentsInfo userId="paul" changeCurrentEquipment={changeCurrentEquipment} extraClassNames="" />
+        <EquipmentsInfo changeCurrentEquipment={changeCurrentEquipment} extraClassNames="" />
       </IntlProvider>,
     );
     await updateWrapper(equipmentsInfo);
@@ -151,8 +159,8 @@ describe('EquipmentsInfo', () => {
 
     // Assert
     expect(changeCurrentEquipment).toHaveBeenCalledTimes(3);
-    expect(equipmentProxy.fetchEquipments).toHaveBeenCalledTimes(2);
-    expect(equipmentProxy.fetchEquipments).toHaveBeenNthCalledWith(2, true);
+    expect(equipmentProxy.fetchEquipments).toHaveBeenCalledTimes(1);
+    // expect(equipmentProxy.fetchEquipments).toHaveBeenNthCalledWith(2, true);
 
     expect(equipmentsInfo.find('Memo(EquipmentInfoTab)').length).toBe(equipments.length + 1);
     expect(equipmentsInfo.find('TabContent').props().activeTab).toBe(newEquipment._uiId);
@@ -163,7 +171,7 @@ describe('EquipmentsInfo', () => {
     expect(navItems.at(1).props().active).toBe(false);
     expect(navItems.at(2).props().active).toBe(false);
     expect(navItems.at(3).props().active).toBe(true);
-  });
+  }, 10000);
 
   it('Should render only 2 equipment tabs because we removed an equipment', async () => {
     // Arrange
@@ -172,7 +180,7 @@ describe('EquipmentsInfo', () => {
 
     const equipmentsInfo = mount(
       <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
-        <EquipmentsInfo userId="paul" changeCurrentEquipment={changeCurrentEquipment} extraClassNames="" />
+        <EquipmentsInfo changeCurrentEquipment={changeCurrentEquipment} extraClassNames="" />
       </IntlProvider>,
     );
     await updateWrapper(equipmentsInfo);
@@ -194,8 +202,8 @@ describe('EquipmentsInfo', () => {
 
     // Assert
     expect(changeCurrentEquipment).toHaveBeenCalledTimes(2 + 1 + 1);
-    expect(equipmentProxy.fetchEquipments).toHaveBeenCalledTimes(2);
-    expect(equipmentProxy.fetchEquipments).toHaveBeenNthCalledWith(2, true);
+    expect(equipmentProxy.fetchEquipments).toHaveBeenCalledTimes(1);
+    // expect(equipmentProxy.fetchEquipments).toHaveBeenNthCalledWith(2, true);
 
     expect(equipmentsInfo.find('Memo(EquipmentInfoTab)').length).toBe(equipments.length - 1);
     expect(equipmentsInfo.find('TabContent').props().activeTab).toBe(equipments[0]._uiId);
