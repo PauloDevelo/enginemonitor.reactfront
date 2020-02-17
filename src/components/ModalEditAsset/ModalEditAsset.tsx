@@ -113,7 +113,6 @@ const ModalEditAsset = ({
             <MyInput name="manufactureDate" label={assetMsg.manufactureDateLabel} type="date" required />
           </MyForm>
           )}
-          <Alerts errors={modalLogic.alerts || alerts} />
           <div className="p-1 border border-secondary rounded shadow">
             <div className="flex-row">
               {guestLink && <Button color="light" size="sm" onClick={unshareCallBack} aria-label="Share"><FontAwesomeIcon icon={faTrash} /></Button>}
@@ -121,6 +120,7 @@ const ModalEditAsset = ({
               <Input type="url" disable="true" value={getUrl()} inline="true" readOnly />
             </div>
           </div>
+          <Alerts errors={modalLogic.alerts || alerts} />
         </ModalBody>
         <ModalFooter>
           <ActionButton type="submit" isActing={modalLogic.isSaving} form="formAsset" color="success" message={message} />
