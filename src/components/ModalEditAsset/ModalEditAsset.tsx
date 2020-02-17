@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-import * as log from 'loglevel';
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter, Input,
@@ -55,6 +54,11 @@ const ModalEditAsset = ({
   const [isCreation, setIsCreation] = useState(false);
 
   const [guestLink, setGuestLink] = useState<GuestLink | undefined>(undefined);
+  const [alerts, setAlerts] = useState<any>(undefined);
+
+  useEffect(() => {
+    setAlerts(undefined);
+  }, [visible]);
 
   useEffect(() => {
     assetProxy.existAsset(asset._uiId).then((assetExist) => {
@@ -69,10 +73,11 @@ const ModalEditAsset = ({
   const unshareCallBack = useCallback(async () => {
     if (guestLink !== undefined) {
       try {
-        await guestLinkProxy.removeGuestLink(guestLink._uiId);
+        await guestLinkProxy.removeGuestLink(guestLink._uiId, asset._uiId);
         setGuestLink(undefined);
+        setAlerts(undefined);
       } catch (reason) {
-        log.error(reason);
+        setAlerts(reason.data);
       }
     }
   }, [guestLink]);
@@ -80,8 +85,9 @@ const ModalEditAsset = ({
   const shareCallBack = useCallback(async () => {
     try {
       setGuestLink(await guestLinkProxy.createGuestLink(asset._uiId, 'Read only'));
+      setAlerts(undefined);
     } catch (reason) {
-      log.error(reason);
+      setAlerts(reason.data);
     }
   }, [asset]);
 
@@ -107,7 +113,7 @@ const ModalEditAsset = ({
             <MyInput name="manufactureDate" label={assetMsg.manufactureDateLabel} type="date" required />
           </MyForm>
           )}
-          <Alerts errors={modalLogic.alerts} />
+          <Alerts errors={modalLogic.alerts || alerts} />
           <div className="p-1 border border-secondary rounded shadow">
             <div className="flex-row">
               {guestLink && <Button color="light" size="sm" onClick={unshareCallBack} aria-label="Share"><FontAwesomeIcon icon={faTrash} /></Button>}

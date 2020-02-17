@@ -117,5 +117,7 @@
   "userExceedStorageLimit": "User exceeded the storage limit. Remove some images before adding new images.",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
   "yes": "Yes",
-  "credentialError": "You don't have enough credentials to perform this action."
+  "credentialError": "You don't have enough credentials to perform this action.",
+  "mustBeOnlineForSharedLinkCreation": "You must be online to remove a shared link",
+  "mustBeOnlineForSharedLinkDeletion": "You must be online to remove a shared link"
 }

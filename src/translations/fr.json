@@ -117,5 +117,7 @@
   "userExceedStorageLimit": "Vous avez dépassé la limite du stockage qui vous a été attribué. Veuillez supprimer des images avant d'en rajouter.",
   "yearperiod": "{year, plural, one {# année} other {# années}}",
   "yes": "Oui",
-  "credentialError": "Vous n'avez pas assez de privilèges pour effectuer cette action."
+  "credentialError": "Vous n'avez pas assez de privilèges pour effectuer cette action.",
+  "mustBeOnlineForSharedLinkCreation": "Vous devez être en ligne pour créer un lien partagé",
+  "mustBeOnlineForSharedLinkDeletion": "Vous devez être en ligne pour supprimer un lien partagé"
 }
