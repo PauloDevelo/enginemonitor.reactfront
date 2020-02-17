@@ -32,7 +32,7 @@ function Gallery({ parentUiId }: Props) {
   const [isOpen, setOpen] = useState(false);
   const [index, setIndex] = useState(-1);
 
-  const { data: fetchedImages, error: errorFetchingImages, isLoading } = useFetcher({ fetchPromise: imageProxy.fetchImages, fetchProps: { parentUiId }, cancellationMsg: 'Cancellation of images fetching' });
+  const { data: fetchedImages, error: errorFetchingImages, isLoading } = useFetcher({ fetchPromise: imageProxy.fetchImages, fetchProps: { parentUiId }, cancellationMsg: `Cancellation of images fetching for ${parentUiId}` });
 
   useEffect(() => {
     setImages(fetchedImages || []);

@@ -94,7 +94,7 @@ export default function MainPanel() {
   const [taskHistoryRefreshId, setTaskHistoryRefreshId] = useState(0);
   const [equipmentHistoryRefreshId, setEquipmentHistoryRefreshId] = useState(0);
 
-  const { data: fetchedTasks, isLoading, reloadRef: reloadTasksRef } = useFetcher({ fetchPromise: taskProxy.fetchTasks, fetchProps: { equipmentId: currentEquipmentId }, cancellationMsg: 'Cancellation of tasks fetching' });
+  const { data: fetchedTasks, isLoading, reloadRef: reloadTasksRef } = useFetcher({ fetchPromise: taskProxy.fetchTasks, fetchProps: { equipmentId: currentEquipmentId }, cancellationMsg: `Cancellation of ${currentEquipment?.name} tasks fetching` });
 
   useEffect(() => {
     setCurrentTaskIsChanging(true);
