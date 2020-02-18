@@ -1,6 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import * as log from 'loglevel';
-import { CancelTokenSource, CancelToken } from 'axios';
+// eslint-disable-next-line no-unused-vars
+import { CancelTokenSource } from 'axios';
 import httpProxy from './HttpProxy';
 
 // eslint-disable-next-line no-unused-vars

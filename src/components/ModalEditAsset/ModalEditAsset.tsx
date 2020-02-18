@@ -80,7 +80,7 @@ const ModalEditAsset = ({
         setAlerts(reason.data);
       }
     }
-  }, [guestLink]);
+  }, [guestLink, asset]);
 
   const shareCallBack = useCallback(async () => {
     try {
