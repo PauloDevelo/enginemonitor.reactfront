@@ -38,7 +38,7 @@ class GuestLinkProxy implements IGuestLinkProxy {
     baseUrl = `${process.env.REACT_APP_API_URL_BASE}guestlinks/`;
 
     createGuestLink = async (assetUiId: string, nameGuestLink: string): Promise<GuestLink> => {
-      if (syncService.isOnline() === false) {
+      if (await syncService.isOnline() === false) {
         throw new HttpError('mustBeOnlineForSharedLinkCreation');
       }
 
@@ -57,7 +57,7 @@ class GuestLinkProxy implements IGuestLinkProxy {
     getGuestLinks = async (assetUiId: string): Promise<GuestLink[]> => progressiveHttpProxy.getArrayOnlineFirst(`${this.baseUrl}asset/${assetUiId}`, 'guestlinks')
 
     removeGuestLink = async (guestLinkUiId: string, assetUiId: string): Promise<GuestLink> => {
-      if (syncService.isOnline() === false) {
+      if (await syncService.isOnline() === false) {
         throw new HttpError('mustBeOnlineForSharedLinkDeletion');
       }
 

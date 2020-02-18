@@ -1,5 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import * as log from 'loglevel';
+import { CancelTokenSource, CancelToken } from 'axios';
 import httpProxy from './HttpProxy';
 
 // eslint-disable-next-line no-unused-vars
@@ -31,6 +32,7 @@ export interface IActionManager{
     countAction(): Promise<number>;
     performAction (action: Action):Promise<void>;
     clearActions(): Promise<void>;
+    cancelAction(): void;
 
     registerOnActionManagerChanged(listener: (actionCounter: number) => void):void;
     unregisterOnActionManagerChanged(listenerToRemove: (actionCounter: number) => void):void;
@@ -39,6 +41,8 @@ export interface IActionManager{
 export class NoActionPendingError extends Error {}
 
 class ActionManager implements IActionManager, IUserStorageListener {
+    private cancelTokenSource: CancelTokenSource | undefined;
+
     private listeners: ((actionCounter: number) => void)[] = [];
 
     constructor() {
@@ -111,22 +115,31 @@ class ActionManager implements IActionManager, IUserStorageListener {
     }
 
     performAction = async (action: Action):Promise<void> => {
+      this.cancelTokenSource = httpProxy.createCancelTokenSource();
+      const requestConfig = { timeout: 10000, cancelToken: this.cancelTokenSource.token };
+
       if (action.type === ActionType.Post) {
-        await httpProxy.post(action.key, action.data);
+        await httpProxy.post(action.key, action.data, requestConfig);
       } else if (action.type === ActionType.Delete) {
-        await httpProxy.deleteReq(action.key);
+        await httpProxy.deleteReq(action.key, requestConfig);
       } else if (action.type === ActionType.CreateImage) {
         const imgToSave:ImageModel = action.data as ImageModel;
         if (await storageService.existItem(imgToSave.url) && await storageService.existItem(imgToSave.thumbnailUrl)) {
           const blobImage = dataURItoBlob(await storageService.getItem(imgToSave.url));
           const thumbnail = dataURItoBlob(await storageService.getItem(imgToSave.thumbnailUrl));
 
-          await httpProxy.postImage(action.key, imgToSave, blobImage, thumbnail);
+          await httpProxy.postImage(action.key, imgToSave, blobImage, thumbnail, requestConfig);
         } else {
           log.warn('The urls are not found in the storage. It seems like they have been deleted in a further delete action ...');
         }
       } else {
         throw new Error(`The action type ${action.type} is not recognized.`);
+      }
+    }
+
+    cancelAction = () => {
+      if (this.cancelTokenSource) {
+        this.cancelTokenSource.cancel();
       }
     }
 

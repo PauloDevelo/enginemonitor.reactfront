@@ -33,7 +33,7 @@ const DropDownConnectionStateItem = () => {
 
   useEffect(() => {
     syncService.registerIsOnlineListener(onIsOnlineChanged);
-    onIsOnlineChanged(syncService.isOnline());
+    syncService.isOnline().then((online) => onIsOnlineChanged(online));
 
     actionManager.registerOnActionManagerChanged(onActionManagerChanged);
     actionManager.countAction().then((nbAction: number) => {

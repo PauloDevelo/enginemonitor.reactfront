@@ -150,7 +150,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
   async getArrayOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T[]> {
     if (await syncService.isOnlineAndSynced()) {
       try {
-        const array = (await httpProxy.get(url, cancelToken))[keyName] as T[];
+        const array = (await httpProxy.get(url, { cancelToken }))[keyName] as T[];
 
         const initArray = init ? array.map(init) : array;
 
@@ -171,7 +171,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
   async getOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T> {
     if (await syncService.isOnlineAndSynced()) {
       try {
-        const item = (await httpProxy.get(url, cancelToken))[keyName] as T;
+        const item = (await httpProxy.get(url, { cancelToken }))[keyName] as T;
         const updatedItem = init ? init(item) : item;
 
         storageService.setItem<T>(url, updatedItem);

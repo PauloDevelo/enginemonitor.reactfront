@@ -3,15 +3,17 @@ import log from 'loglevel';
 import actionManager, { Action, NoActionPendingError } from './ActionManager';
 // eslint-disable-next-line no-unused-vars
 import storageService, { IUserStorageListener } from './StorageService';
+import httpProxy from './HttpProxy';
 
 export interface ISyncService {
     isOnlineAndSynced(): Promise<boolean>;
-    isOnline(): boolean;
+    isOnline(): Promise<boolean>;
     isSynced():Promise<boolean>;
     isOfflineModeActivated():boolean;
 
     setOfflineMode(offlineMode: boolean):void;
     synchronize(): Promise<boolean>;
+    cancelSync(): void;
 
     registerIsOnlineListener(listener: (isOnline: boolean) => void):void;
     unregisterIsOnlineListener(listenerToRemove: (isOnline: boolean) => void):void;
@@ -31,16 +33,16 @@ let syncService: ISyncService;
 class SyncService implements ISyncService, IUserStorageListener {
     private offlineModeActivated:boolean = false;
 
+    private listeners: ((isOnline: boolean) => void)[] = [];
+
+    private syncListeners: ((context: SyncContext) => void)[] = [];
+
     constructor() {
       window.addEventListener('offline', async () => (syncService as SyncService).setIsOnline(false && this.isOfflineModeActivated() === false));
       window.addEventListener('online', async () => (syncService as SyncService).setIsOnline(true && this.isOfflineModeActivated() === false));
 
       storageService.registerUserStorageListener(this);
     }
-
-    private listeners: ((isOnline: boolean) => void)[] = [];
-
-    private syncListeners: ((context: SyncContext) => void)[] = [];
 
     registerSyncListener(listener: (context: SyncContext) => void):void{
       this.syncListeners.push(listener);
@@ -58,6 +60,31 @@ class SyncService implements ISyncService, IUserStorageListener {
       this.listeners = this.listeners.filter((listener) => listener !== listenerToRemove);
     }
 
+    isOnline = async (): Promise<boolean> => window.navigator.onLine === true && this.isOfflineModeActivated() === false && this.isBackEndReachable()
+
+    isSynced = async ():Promise<boolean> => (await actionManager.countAction()) === 0
+
+    isOnlineAndSynced = async (): Promise<boolean> => await this.isOnline() && this.isSynced();
+
+    isOfflineModeActivated = ():boolean => this.offlineModeActivated
+
+    setOfflineMode(offlineMode: boolean): void {
+      this.offlineModeActivated = offlineMode;
+      this.setIsOnline(this.isOfflineModeActivated() && window.navigator.onLine);
+    }
+
+    synchronize = async (): Promise<boolean> => this.syncStorage()
+
+    cancelSync = () => {
+      actionManager.cancelAction();
+    }
+
+    async onUserStorageOpened(): Promise<void> {
+      return this.setIsOnline(this.isOfflineModeActivated() === false && window.navigator.onLine);
+    }
+
+    onUserStorageClosed = async (): Promise<void> => {}
+
     private async triggerIsOnlineChanged(): Promise<void> {
       const isOnline = await this.isOnline();
       this.listeners.map((listener) => listener(isOnline));
@@ -67,28 +94,22 @@ class SyncService implements ISyncService, IUserStorageListener {
       this.syncListeners.map((listener) => listener({ ...context }));
     }
 
-    isOnlineAndSynced = async (): Promise<boolean> => this.isOnline() && this.isSynced();
-
-    isOnline = (): boolean => window.navigator.onLine === true && this.isOfflineModeActivated() === false;
-
-    isSynced = async ():Promise<boolean> => (await actionManager.countAction()) === 0
-
-    isOfflineModeActivated = ():boolean => this.offlineModeActivated
-
-    setOfflineMode(offlineMode: boolean): void {
-      this.offlineModeActivated = offlineMode;
-      this.setIsOnline(this.isOfflineModeActivated() && window.navigator.onLine);
+    private isBackEndReachable = async (): Promise<boolean> => {
+      try {
+        const { pong } = await httpProxy.get(`${process.env.REACT_APP_API_URL_BASE}server/ping`, { timeout: 1000 });
+        return pong;
+      } catch (error) {
+        return Promise.resolve(false);
+      }
     }
 
-    setIsOnline = async (isOnline: boolean): Promise<void> => {
+    private setIsOnline = async (isOnline: boolean): Promise<void> => {
       if (isOnline) {
         await this.syncStorage();
       }
 
       await this.triggerIsOnlineChanged();
     }
-
-    synchronize = async (): Promise<boolean> => this.syncStorage()
 
     private syncStorage = async (): Promise<boolean> => {
       const nbActionToSync = await actionManager.countAction();
@@ -140,12 +161,6 @@ class SyncService implements ISyncService, IUserStorageListener {
       newContext.isSyncing = false;
       this.triggerSyncContextChanged(newContext);
     }
-
-    async onUserStorageOpened(): Promise<void> {
-      return this.setIsOnline(this.isOfflineModeActivated() === false && window.navigator.onLine);
-    }
-
-    onUserStorageClosed = async (): Promise<void> => {}
 }
 
 syncService = new SyncService();

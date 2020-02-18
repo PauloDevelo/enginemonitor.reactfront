@@ -27,6 +27,8 @@ jest.mock('../../../services/UserProxy');
 jest.mock('../../../services/AssetProxy');
 
 describe('Component NavBar', () => {
+  const onLoggedOut = jest.fn();
+
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('test was not wrapped in act(...)');
@@ -49,6 +51,10 @@ describe('Component NavBar', () => {
     }]));
 
     assetProxy.existAsset.mockImplementation(async (assetId) => Promise.resolve(assetId === 'asset_01'));
+
+    jest.spyOn(syncService, 'isOnline').mockImplementation(() => Promise.resolve(true));
+    jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
+    jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
   });
 
   afterEach(() => {
@@ -70,17 +76,12 @@ describe('Component NavBar', () => {
 
     assetProxy.fetchAssets.mockRestore();
     assetProxy.existAsset.mockRestore();
+
+    onLoggedOut.mockReset();
   });
 
   it('should render the navbar even when the user is still undefined', async () => {
     // Arrange
-    jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
-    jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
-
-    jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
-
-    const onLoggedOut = jest.fn();
-
     // Act
     const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
@@ -99,13 +100,6 @@ describe('Component NavBar', () => {
 
   it('should open the modal about when the user click on the about button', async () => {
     // Arrange
-    jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
-    jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
-
-    jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
-
-    const onLoggedOut = jest.fn();
-
     const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
 
@@ -122,13 +116,6 @@ describe('Component NavBar', () => {
 
   it('should toggle the navbar when the user click on the navbar button', async () => {
     // Arrange
-    jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
-    jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
-
-    jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
-
-    const onLoggedOut = jest.fn();
-
     const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
 
@@ -145,12 +132,6 @@ describe('Component NavBar', () => {
 
   it('should re-render the navbar when the user changed', async () => {
     // Arrange
-    jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
-    jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
-    jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
-
-    const onLoggedOut = jest.fn();
-
     const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
 
@@ -184,13 +165,6 @@ describe('Component NavBar', () => {
 
   it('should re-render the navbar when the user add an image', async () => {
     // Arrange
-    jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
-    jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
-
-    jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
-
-    const onLoggedOut = jest.fn();
-
     const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
 
@@ -226,13 +200,6 @@ describe('Component NavBar', () => {
 
   it('should re-render the navbar when the user removed an image', async () => {
     // Arrange
-    jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
-    jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
-
-    jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
-
-    const onLoggedOut = jest.fn();
-
     const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
 
@@ -268,12 +235,6 @@ describe('Component NavBar', () => {
 
   it('should logout when the user clicks on logout', async () => {
     // Arrange
-    jest.spyOn(syncService, 'isOnline').mockImplementation(() => true);
-    jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
-
-    jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
-
-    const onLoggedOut = jest.fn();
     jest.spyOn(userProxy, 'logout').mockImplementation(() => userContext.onUserChanged(undefined));
 
     const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);

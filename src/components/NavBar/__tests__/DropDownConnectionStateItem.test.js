@@ -50,7 +50,7 @@ describe('DropDownConnectionStateItem', () => {
   describe.each(states)('Render', ({ isOnline, nbAction }) => {
     it(`Should render when the app is online ${isOnline} and nb action is ${nbAction} as expected `, async (done) => {
       // Arrange
-      jest.spyOn(syncService, 'isOnline').mockImplementation(() => isOnline);
+      jest.spyOn(syncService, 'isOnline').mockImplementation(async () => Promise.resolve(isOnline));
       jest.spyOn(syncService, 'synchronize');
       jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(nbAction));
 

@@ -137,7 +137,7 @@ describe('Test EquipmentProxy', () => {
       syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
       let getCounter = 0;
-      httpProxy.get.mockImplementation((url) => {
+      httpProxy.get.mockImplementation(async (url) => {
         if (url === urlFetchEquipment) {
           getCounter++;
         }

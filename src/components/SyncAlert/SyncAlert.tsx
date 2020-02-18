@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
-import { UncontrolledAlert, Progress } from 'reactstrap';
+import { Alert, Progress } from 'reactstrap';
 
 import { FormattedMessage, defineMessages } from 'react-intl';
 
@@ -29,19 +29,17 @@ const SyncAlert = ({ className }:Type) => {
     return () => syncService.unregisterSyncListener(setSyncContext);
   }, []);
 
+  const onDismiss = useCallback(() => syncService.cancelSync(), []);
+
   return (
-    <>
-      {syncContext.isSyncing && (
-        <UncontrolledAlert color="warning" className={className}>
-          <div className="text-center"><FormattedMessage {...syncAlertMsg.syncInProgress} /></div>
-          <Progress animated color="warning" value={(syncContext.remainingActionToSync * 100) / syncContext.totalActionToSync}>
-            {syncContext.remainingActionToSync}
+    <Alert color="warning" className={className} isOpen={syncContext.isSyncing} toggle={onDismiss}>
+      <div className="text-center"><FormattedMessage {...syncAlertMsg.syncInProgress} /></div>
+      <Progress animated color="warning" value={(syncContext.remainingActionToSync * 100) / syncContext.totalActionToSync}>
+        {syncContext.remainingActionToSync}
 /
-            {syncContext.totalActionToSync}
-          </Progress>
-        </UncontrolledAlert>
-      )}
-    </>
+        {syncContext.totalActionToSync}
+      </Progress>
+    </Alert>
   );
 };
 
