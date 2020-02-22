@@ -10,6 +10,7 @@ import storageService, { IUserStorageListener } from './StorageService';
 import { ImageModel } from '../types/Types';
 
 import { dataURItoBlob } from '../helpers/ImageHelper';
+import HttpError from '../http/HttpError';
 
 export enum ActionType{
     // eslint-disable-next-line no-unused-vars
@@ -122,7 +123,15 @@ class ActionManager implements IActionManager, IUserStorageListener {
       if (action.type === ActionType.Post) {
         await httpProxy.post(action.key, action.data, requestConfig);
       } else if (action.type === ActionType.Delete) {
-        await httpProxy.deleteReq(action.key, requestConfig);
+        try {
+          await httpProxy.deleteReq(action.key, requestConfig);
+        } catch (error) {
+          if (error instanceof HttpError && error.data.entity === 'notfound') {
+            log.warn(`[${action.key}]: The entity was already deleted`);
+          } else {
+            throw error;
+          }
+        }
       } else if (action.type === ActionType.CreateImage) {
         const imgToSave:ImageModel = action.data as ImageModel;
         if (await storageService.existItem(imgToSave.url) && await storageService.existItem(imgToSave.thumbnailUrl)) {
