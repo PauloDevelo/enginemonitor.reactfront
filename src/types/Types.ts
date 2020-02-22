@@ -23,7 +23,7 @@ export interface EntityModel{
     name: string
 }
 
-export interface GuestLink extends EntityModel {
+export interface GuestLinkModel extends EntityModel {
     niceKey: string
 }
 

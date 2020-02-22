@@ -7,7 +7,6 @@ import { FormattedMessage, defineMessages } from 'react-intl';
 import { Alert } from 'reactstrap';
 import HttpError from '../../http/HttpError';
 
-
 import jsonMessages from './ErrorAlert.messages.json';
 
 const alertMsg = defineMessages(jsonMessages);

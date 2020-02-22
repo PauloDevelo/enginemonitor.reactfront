@@ -119,5 +119,6 @@
   "yes": "Yes",
   "credentialError": "You don't have enough credentials to perform this action.",
   "mustBeOnlineForSharedLinkCreation": "You must be online to remove a shared link",
-  "mustBeOnlineForSharedLinkDeletion": "You must be online to remove a shared link"
+  "mustBeOnlineForSharedLinkDeletion": "You must be online to remove a shared link",
+  "copiedMessage": "Copied in the clipboard!"
 }

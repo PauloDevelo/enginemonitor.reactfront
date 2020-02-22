@@ -119,5 +119,6 @@
   "yes": "Oui",
   "credentialError": "Vous n'avez pas assez de privilèges pour effectuer cette action.",
   "mustBeOnlineForSharedLinkCreation": "Vous devez être en ligne pour créer un lien partagé",
-  "mustBeOnlineForSharedLinkDeletion": "Vous devez être en ligne pour supprimer un lien partagé"
+  "mustBeOnlineForSharedLinkDeletion": "Vous devez être en ligne pour supprimer un lien partagé",
+  "copiedMessage": "Copié dans le presse papier !"
 }

@@ -8,7 +8,7 @@ import syncService from './SyncService';
 import storageService from './StorageService';
 
 // eslint-disable-next-line no-unused-vars
-import { UserModel, GuestLink } from '../types/Types';
+import { UserModel, GuestLinkModel } from '../types/Types';
 import userContext from './UserContext';
 import assetManager from './AssetManager';
 import HttpError from '../http/HttpError';
@@ -27,17 +27,17 @@ export interface IGuestLinkProxy{
      */
     tryGetAndSetUserFromNiceKey(niceKey: string):Promise<UserModel | undefined>;
 
-    createGuestLink(assetUiId: string, nameGuestLink: string): Promise<GuestLink>;
+    createGuestLink(assetUiId: string, nameGuestLink: string): Promise<GuestLinkModel>;
 
-    getGuestLinks(assetUiId: string): Promise<GuestLink[]>;
+    getGuestLinks(assetUiId: string): Promise<GuestLinkModel[]>;
 
-    removeGuestLink(guestLinkUiId: string, assetUiId: string): Promise<GuestLink>;
+    removeGuestLink(guestLinkUiId: string, assetUiId: string): Promise<GuestLinkModel>;
 }
 
 class GuestLinkProxy implements IGuestLinkProxy {
     baseUrl = `${process.env.REACT_APP_API_URL_BASE}guestlinks/`;
 
-    createGuestLink = async (assetUiId: string, nameGuestLink: string): Promise<GuestLink> => {
+    createGuestLink = async (assetUiId: string, nameGuestLink: string): Promise<GuestLinkModel> => {
       if (await syncService.isOnline() === false) {
         throw new HttpError('mustBeOnlineForSharedLinkCreation');
       }
@@ -54,16 +54,16 @@ class GuestLinkProxy implements IGuestLinkProxy {
       return guestlink;
     }
 
-    getGuestLinks = async (assetUiId: string): Promise<GuestLink[]> => progressiveHttpProxy.getArrayOnlineFirst(`${this.baseUrl}asset/${assetUiId}`, 'guestlinks')
+    getGuestLinks = async (assetUiId: string): Promise<GuestLinkModel[]> => progressiveHttpProxy.getArrayOnlineFirst(`${this.baseUrl}asset/${assetUiId}`, 'guestlinks')
 
-    removeGuestLink = async (guestLinkUiId: string, assetUiId: string): Promise<GuestLink> => {
+    removeGuestLink = async (guestLinkUiId: string, assetUiId: string): Promise<GuestLinkModel> => {
       if (await syncService.isOnline() === false) {
         throw new HttpError('mustBeOnlineForSharedLinkDeletion');
       }
 
       this.checkUserCredentialForPostingOrDeleting();
 
-      const { guestlink }:{ guestlink:GuestLink } = await httpProxy.deleteReq(`${this.baseUrl}${guestLinkUiId}`);
+      const { guestlink }:{ guestlink:GuestLinkModel } = await httpProxy.deleteReq(`${this.baseUrl}${guestLinkUiId}`);
       await storageService.removeItemInArray(`${this.baseUrl}asset/${assetUiId}`, guestlink._uiId);
 
       return guestlink;
