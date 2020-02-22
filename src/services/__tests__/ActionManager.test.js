@@ -1,6 +1,11 @@
+import axios from 'axios';
 import ignoredMessages from '../../testHelpers/MockConsole';
+
+// eslint-disable-next-line no-unused-vars
+
 import httpProxy from '../HttpProxy';
 import storageService from '../StorageService';
+
 import actionManager, { NoActionPendingError, ActionType } from '../ActionManager';
 
 jest.mock('../HttpProxy');
@@ -8,14 +13,29 @@ jest.mock('../SyncService');
 jest.mock('../StorageService');
 
 describe('Test ActionManager', () => {
+  let history = [];
+
+  const actionToAdd1 = {
+    type: ActionType.Post,
+    key: 'my_action_test_01',
+    data: { name: 'data1' },
+  };
+
+  const actionToAdd2 = {
+    type: ActionType.Post,
+    key: 'my_action_test_02',
+    data: undefined,
+  };
+
   function clearMockHttpProxy() {
     httpProxy.setConfig.mockReset();
     httpProxy.post.mockReset();
     httpProxy.postImage.mockReset();
     httpProxy.deleteReq.mockReset();
+    httpProxy.createCancelTokenSource.mockReset();
   }
 
-  async function clearMockStorage() {
+  function clearMockStorage() {
     storageService.isUserStorageOpened.mockReset();
     storageService.setItem.mockReset();
     storageService.getItem.mockReset();
@@ -27,10 +47,35 @@ describe('Test ActionManager', () => {
   });
 
   beforeEach(() => {
+    jest.spyOn(httpProxy, 'createCancelTokenSource').mockImplementation(() => axios.CancelToken.source());
 
+    storageService.isUserStorageOpened.mockImplementation(() => true);
+
+    storageService.setItem.mockImplementation(async (key, data) => {
+      if (key === 'history') {
+        history = data;
+        return history;
+      }
+      throw new Error(`Unexpected setItem key: ${key}`);
+    });
+
+    storageService.getItem.mockImplementation(async (key) => {
+      if (key === 'history') {
+        return history;
+      }
+      throw new Error(`Unexpected getItem key: ${key}`);
+    });
+
+    storageService.getArray.mockImplementation(async (key) => {
+      if (key === 'history') {
+        return history;
+      }
+      throw new Error(`Unexpected getArray key: ${key}`);
+    });
   });
 
   afterEach(async () => {
+    await actionManager.clearActions();
     clearMockStorage();
     clearMockHttpProxy();
   });
@@ -38,41 +83,6 @@ describe('Test ActionManager', () => {
   describe('addAction', () => {
     it('when adding 2 actions, we should get 2 actions in the action list.', async () => {
       // Arrange
-      let history = [];
-      storageService.isUserStorageOpened.mockImplementation(() => true);
-      storageService.setItem.mockImplementation(async (key, data) => {
-        if (key === 'history') {
-          history = data;
-          return history;
-        }
-        throw new Error(`Unexpected setItem key: ${key}`);
-      });
-
-      storageService.getItem.mockImplementation(async (key) => {
-        if (key === 'history') {
-          return history;
-        }
-        throw new Error(`Unexpected getItem key: ${key}`);
-      });
-
-      storageService.getArray.mockImplementation(async (key) => {
-        if (key === 'history') {
-          return history;
-        }
-        throw new Error(`Unexpected getArray key: ${key}`);
-      });
-
-      const actionToAdd1 = {
-        type: 0,
-        key: 'my_action_test_01',
-        data: undefined,
-      };
-
-      const actionToAdd2 = {
-        type: 0,
-        key: 'my_action_test_02',
-        data: undefined,
-      };
 
       // Act
       await actionManager.addAction(actionToAdd1);
@@ -88,41 +98,6 @@ describe('Test ActionManager', () => {
   describe('getNextActionToPerform', () => {
     it('When adding 2 actions, getNextActionToPerform should return the first added action. Only the last action should remain in the action list.', async () => {
       // Arrange
-      let history = [];
-      storageService.isUserStorageOpened.mockImplementation(() => true);
-      storageService.setItem.mockImplementation(async (key, data) => {
-        if (key === 'history') {
-          history = data;
-          return history;
-        }
-        throw new Error(`Unexpected setItem key: ${key}`);
-      });
-
-      storageService.getItem.mockImplementation(async (key) => {
-        if (key === 'history') {
-          return history;
-        }
-        throw new Error(`Unexpected getItem key: ${key}`);
-      });
-
-      storageService.getArray.mockImplementation(async (key) => {
-        if (key === 'history') {
-          return history;
-        }
-        throw new Error(`Unexpected getArray key: ${key}`);
-      });
-
-      const actionToAdd1 = {
-        type: 0,
-        key: 'my_action_test_01',
-        data: undefined,
-      };
-
-      const actionToAdd2 = {
-        type: 0,
-        key: 'my_action_test_02',
-        data: undefined,
-      };
       await actionManager.addAction(actionToAdd1);
       await actionManager.addAction(actionToAdd2);
 
@@ -140,23 +115,6 @@ describe('Test ActionManager', () => {
     it('When there is no action to perform, getNextActionToPerform should throw an exception.', async (done) => {
       try {
         // Arrange
-        const history = [];
-        storageService.isUserStorageOpened.mockImplementation(() => true);
-
-        storageService.getItem.mockImplementation(async (key) => {
-          if (key === 'history') {
-            return history;
-          }
-          throw new Error(`Unexpected getItem key: ${key}`);
-        });
-
-        storageService.getArray.mockImplementation(async (key) => {
-          if (key === 'history') {
-            return history;
-          }
-          throw new Error(`Unexpected getArray key: ${key}`);
-        });
-
         // Act
         await actionManager.getNextActionToPerform();
       } catch (ex) {
@@ -170,41 +128,6 @@ describe('Test ActionManager', () => {
   describe('putBackAction', () => {
     it('Should put an action in the back of the array', async () => {
       // Arrange
-      let history = [];
-      storageService.isUserStorageOpened.mockImplementation(() => true);
-      storageService.setItem.mockImplementation(async (key, data) => {
-        if (key === 'history') {
-          history = data;
-          return history;
-        }
-        throw new Error(`Unexpected setItem key: ${key}`);
-      });
-
-      storageService.getItem.mockImplementation(async (key) => {
-        if (key === 'history') {
-          return history;
-        }
-        throw new Error(`Unexpected getItem key: ${key}`);
-      });
-
-      storageService.getArray.mockImplementation(async (key) => {
-        if (key === 'history') {
-          return history;
-        }
-        throw new Error(`Unexpected getArray key: ${key}`);
-      });
-
-      const actionToAdd1 = {
-        type: 0,
-        key: 'my_action_test_01',
-        data: undefined,
-      };
-
-      const actionToAdd2 = {
-        type: 0,
-        key: 'my_action_test_02',
-        data: undefined,
-      };
       await actionManager.addAction(actionToAdd1);
       await actionManager.addAction(actionToAdd2);
       const nextAction = await actionManager.getNextActionToPerform();
@@ -221,36 +144,6 @@ describe('Test ActionManager', () => {
 
     it('Should put an action in the back of the array', async () => {
       // Arrange
-      let history = [];
-      storageService.isUserStorageOpened.mockImplementation(() => true);
-      storageService.setItem.mockImplementation(async (key, data) => {
-        if (key === 'history') {
-          history = data;
-          return history;
-        }
-        throw new Error(`Unexpected setItem key: ${key}`);
-      });
-
-      storageService.getItem.mockImplementation(async (key) => {
-        if (key === 'history') {
-          return history;
-        }
-        throw new Error(`Unexpected getItem key: ${key}`);
-      });
-
-      storageService.getArray.mockImplementation(async (key) => {
-        if (key === 'history') {
-          return history;
-        }
-        throw new Error(`Unexpected getArray key: ${key}`);
-      });
-
-      const actionToAdd1 = {
-        type: 0,
-        key: 'my_action_test_01',
-        data: undefined,
-      };
-
       await actionManager.addAction(actionToAdd1);
       const nextAction = await actionManager.getNextActionToPerform();
 
@@ -267,23 +160,6 @@ describe('Test ActionManager', () => {
   describe('countAction', () => {
     it('when there is no action should return 0', async () => {
       // Arrange
-      const history = [];
-      storageService.isUserStorageOpened.mockImplementation(() => true);
-
-      storageService.getItem.mockImplementation(async (key) => {
-        if (key === 'history') {
-          return history;
-        }
-        throw new Error(`Unexpected getItem key: ${key}`);
-      });
-
-      storageService.getArray.mockImplementation(async (key) => {
-        if (key === 'history') {
-          return history;
-        }
-        throw new Error(`Unexpected getArray key: ${key}`);
-      });
-
       // Act
       const nbAction = await actionManager.countAction();
 
@@ -293,42 +169,6 @@ describe('Test ActionManager', () => {
 
     it('when there are 2 actions should return 2', async () => {
       // Arrange
-      let history = [];
-      storageService.isUserStorageOpened.mockImplementation(() => true);
-      storageService.setItem.mockImplementation(async (key, data) => {
-        if (key === 'history') {
-          history = data;
-          return history;
-        }
-        throw new Error(`Unexpected setItem key: ${key}`);
-      });
-
-      storageService.getItem.mockImplementation(async (key) => {
-        if (key === 'history') {
-          return history;
-        }
-        throw new Error(`Unexpected getItem key: ${key}`);
-      });
-
-      storageService.getArray.mockImplementation(async (key) => {
-        if (key === 'history') {
-          return history;
-        }
-        throw new Error(`Unexpected getArray key: ${key}`);
-      });
-
-      const actionToAdd1 = {
-        type: 0,
-        key: 'my_action_test_01',
-        data: undefined,
-      };
-
-      const actionToAdd2 = {
-        type: 0,
-        key: 'my_action_test_02',
-        data: undefined,
-      };
-
       await actionManager.addAction(actionToAdd1);
       await actionManager.addAction(actionToAdd2);
 
@@ -356,12 +196,6 @@ describe('Test ActionManager', () => {
         deleteUrls.push(url);
         return Promise.resolve({ entry: { name: 'an entry name' } });
       });
-
-      const actionToAdd1 = {
-        type: ActionType.Post,
-        key: 'my_action_test_01',
-        data: { name: 'data1' },
-      };
 
       // Act
       await actionManager.performAction(actionToAdd1);
@@ -481,7 +315,7 @@ describe('Test ActionManager', () => {
       jest.spyOn(httpProxy, 'deleteReq');
       jest.spyOn(httpProxy, 'postImage');
 
-      const actionToAdd1 = {
+      const unknownActionToAdd = {
         type: 99,
         key: 'my_action_test_01',
         data: { name: 'data1' },
@@ -489,7 +323,7 @@ describe('Test ActionManager', () => {
 
       // Act
       try {
-        await actionManager.performAction(actionToAdd1);
+        await actionManager.performAction(unknownActionToAdd);
       } catch (error) {
         // Assert
         expect(httpProxy.post).toHaveBeenCalledTimes(0);
