@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert } from 'reactstrap';
 import { FormattedMessage, defineMessages } from 'react-intl';
+import TemporalAlert from '../TemporalAlert/TemporalAlert';
 
 import jsonMessages from './Alerts.messages.json';
 
@@ -34,10 +34,10 @@ const Alerts = ({
       value = strError;
     }
     return (
-      <Alert className="sm" color={strColor}>
+      <TemporalAlert className="sm" color={strColor} delayInMs={3000}>
         {value}
         {children}
-      </Alert>
+      </TemporalAlert>
     );
   }
 
@@ -67,14 +67,14 @@ const Alerts = ({
       }
 
       return (
-        <Alert className="sm" key={key} color={strColor}>
+        <TemporalAlert className="sm" key={key} color={strColor} delayInMs={3000}>
           { fieldElement }
           <span>
             {' '}
             {valueElement}
           </span>
           {children}
-        </Alert>
+        </TemporalAlert>
       );
     });
   }
