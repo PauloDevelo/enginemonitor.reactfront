@@ -38,8 +38,8 @@ class SyncService implements ISyncService, IUserStorageListener {
     private syncListeners: ((context: SyncContext) => void)[] = [];
 
     constructor() {
-      window.addEventListener('offline', async () => (syncService as SyncService).setIsOnline(false && this.isOfflineModeActivated() === false));
-      window.addEventListener('online', async () => (syncService as SyncService).setIsOnline(true && this.isOfflineModeActivated() === false));
+      window.addEventListener('offline', async () => (syncService as SyncService).setIsOnline(await syncService.isOnline()));
+      window.addEventListener('online', async () => (syncService as SyncService).setIsOnline(await syncService.isOnline()));
 
       storageService.registerUserStorageListener(this);
     }
@@ -70,7 +70,7 @@ class SyncService implements ISyncService, IUserStorageListener {
 
     setOfflineMode(offlineMode: boolean): void {
       this.offlineModeActivated = offlineMode;
-      this.setIsOnline(this.isOfflineModeActivated() && window.navigator.onLine);
+      this.isOnline().then((isOnline) => this.setIsOnline(isOnline));
     }
 
     synchronize = async (): Promise<boolean> => this.syncStorage()
@@ -80,13 +80,12 @@ class SyncService implements ISyncService, IUserStorageListener {
     }
 
     async onUserStorageOpened(): Promise<void> {
-      return this.setIsOnline(this.isOfflineModeActivated() === false && window.navigator.onLine);
+      return this.setIsOnline(await this.isOnline());
     }
 
     onUserStorageClosed = async (): Promise<void> => {}
 
-    private async triggerIsOnlineChanged(): Promise<void> {
-      const isOnline = await this.isOnline();
+    private async triggerIsOnlineChanged(isOnline: boolean): Promise<void> {
       this.listeners.map((listener) => listener(isOnline));
     }
 
@@ -103,12 +102,17 @@ class SyncService implements ISyncService, IUserStorageListener {
       }
     }
 
+    private prevIsOnline: boolean | undefined;
+
     private setIsOnline = async (isOnline: boolean): Promise<void> => {
-      if (isOnline) {
+      if (isOnline && isOnline !== this.prevIsOnline) {
         await this.syncStorage();
       }
 
-      await this.triggerIsOnlineChanged();
+      if (isOnline !== this.prevIsOnline) {
+        await this.triggerIsOnlineChanged(isOnline);
+        this.prevIsOnline = isOnline;
+      }
     }
 
     private syncStorage = async (): Promise<boolean> => {
