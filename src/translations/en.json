@@ -24,8 +24,10 @@
   "changingPassword": "Changing password ...",
   "close": "Close",
   "confirmPasswordChange": "An email has been sent. Please, confirm your password change by clicking the link.",
+  "copiedMessage": "Copied in the clipboard!",
   "createbutton": "Create",
   "creatingUser": "Creating the user ...",
+  "credentialError": "You don't have enough credentials to perform this action.",
   "date": "Date",
   "dayperiod": "{day, plural, one {# day} other {# days}}",
   "delete": "Delete",
@@ -72,6 +74,8 @@
   "model": "Model",
   "month": "Period in month",
   "monthperiod": "{month, plural, one {# month} other {# months}}",
+  "mustBeOnlineForSharedLinkCreation": "You must be online to remove a shared link",
+  "mustBeOnlineForSharedLinkDeletion": "You must be online to remove a shared link",
   "name": "Last Name",
   "nbAction": "{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}",
   "needVerification": "needs to be checked. Please check your emails.",
@@ -116,9 +120,5 @@
   "usagePeriodInHour": "Period in usage hour",
   "userExceedStorageLimit": "User exceeded the storage limit. Remove some images before adding new images.",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
-  "yes": "Yes",
-  "credentialError": "You don't have enough credentials to perform this action.",
-  "mustBeOnlineForSharedLinkCreation": "You must be online to remove a shared link",
-  "mustBeOnlineForSharedLinkDeletion": "You must be online to remove a shared link",
-  "copiedMessage": "Copied in the clipboard!"
+  "yes": "Yes"
 }

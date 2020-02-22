@@ -29,6 +29,11 @@
     "description": "information message",
     "id": "creatingUser"
   },
+  "credentialError": {
+    "defaultMessage": "You don't have enough credentials to perform this action.",
+    "description": "Error message",
+    "id": "credentialError"
+  },
   "date": {
     "defaultMessage": "Date",
     "description": "Label",
@@ -84,6 +89,16 @@
     "description": "Label",
     "id": "model"
   },
+  "mustBeOnlineForSharedLinkCreation": {
+    "defaultMessage": "You must be online to create a shared link",
+    "description": "Error message",
+    "id": "mustBeOnlineForSharedLinkCreation"
+  },
+  "mustBeOnlineForSharedLinkDeletion": {
+    "defaultMessage": "You must be online to remove a shared link",
+    "description": "Error message",
+    "id": "mustBeOnlineForSharedLinkDeletion"
+  },
   "name": {
     "defaultMessage": "Name",
     "description": "Label",
@@ -113,20 +128,5 @@
     "defaultMessage": "Usage Period in hour",
     "description": "Label",
     "id": "usagePeriodInHour"
-  },
-  "credentialError": {
-    "defaultMessage": "You don't have enough credentials to perform this action.",
-    "description": "Error message",
-    "id": "credentialError"
-  },
-  "mustBeOnlineForSharedLinkCreation": {
-    "defaultMessage": "You must be online to create a shared link",
-    "description": "Error message",
-    "id": "mustBeOnlineForSharedLinkCreation"
-  },
-  "mustBeOnlineForSharedLinkDeletion": {
-    "defaultMessage": "You must be online to remove a shared link",
-    "description": "Error message",
-    "id": "mustBeOnlineForSharedLinkDeletion"
   }
 }

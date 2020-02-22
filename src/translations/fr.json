@@ -24,8 +24,10 @@
   "changingPassword": "Changement du mot de passe ...",
   "close": "Fermer",
   "confirmPasswordChange": "Un email a été envoyé. Cliquer sur le lien pour confirmer le changement.",
+  "copiedMessage": "Copié dans le presse papier !",
   "createbutton": "Créer",
   "creatingUser": "Création de l'utilisateur ...",
+  "credentialError": "Vous n'avez pas assez de privilèges pour effectuer cette action.",
   "date": "Date",
   "dayperiod": "{day, plural, one {# jour} other {# jours}}",
   "delete": "Supprimer",
@@ -72,6 +74,8 @@
   "model": "Modèle",
   "month": "Période en mois",
   "monthperiod": "{month, plural, one {# mois} other {# mois}}",
+  "mustBeOnlineForSharedLinkCreation": "Vous devez être en ligne pour créer un lien partagé",
+  "mustBeOnlineForSharedLinkDeletion": "Vous devez être en ligne pour supprimer un lien partagé",
   "name": "Nom",
   "nbAction": "{nbAction, plural, =0 {synchronisé} one {# action à synchroniser} other {# actions à synchroniser}}",
   "needVerification": "doit être verifié. Vérifier vos emails.",
@@ -116,9 +120,5 @@
   "usagePeriodInHour": "Période en heure à l'usage",
   "userExceedStorageLimit": "Vous avez dépassé la limite du stockage qui vous a été attribué. Veuillez supprimer des images avant d'en rajouter.",
   "yearperiod": "{year, plural, one {# année} other {# années}}",
-  "yes": "Oui",
-  "credentialError": "Vous n'avez pas assez de privilèges pour effectuer cette action.",
-  "mustBeOnlineForSharedLinkCreation": "Vous devez être en ligne pour créer un lien partagé",
-  "mustBeOnlineForSharedLinkDeletion": "Vous devez être en ligne pour supprimer un lien partagé",
-  "copiedMessage": "Copié dans le presse papier !"
+  "yes": "Oui"
 }
