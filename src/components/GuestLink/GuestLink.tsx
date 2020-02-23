@@ -2,7 +2,9 @@ import React, {
   useEffect, useState, useCallback, useRef,
 } from 'react';
 
-import { Button, Input, FormFeedback } from 'reactstrap';
+import {
+  Button, Input, Fade,
+} from 'reactstrap';
 
 import { FormattedMessage, defineMessages } from 'react-intl';
 
@@ -22,7 +24,7 @@ const guestLinkMsg = defineMessages(jsonMessages);
 type Type = {
     className?: string
     asset: AssetModel,
-    onError: (error:any) => void
+    onError?: (error:any) => void
 }
 
 const GuestLink = ({ asset, onError, className }:Type) => {
@@ -46,9 +48,13 @@ const GuestLink = ({ asset, onError, className }:Type) => {
       try {
         await guestLinkProxy.removeGuestLink(guestLink._uiId, asset._uiId);
         setGuestLink(undefined);
-        onError(undefined);
+        if (onError) {
+          onError(undefined);
+        }
       } catch (reason) {
-        onError(reason.data);
+        if (onError) {
+          onError(reason.data);
+        }
       }
     }
   }, [guestLink, asset, onError]);
@@ -56,9 +62,13 @@ const GuestLink = ({ asset, onError, className }:Type) => {
   const shareCallBack = useCallback(async () => {
     try {
       setGuestLink(await guestLinkProxy.createGuestLink(asset._uiId, 'Read only'));
-      onError(undefined);
+      if (onError) {
+        onError(undefined);
+      }
     } catch (reason) {
-      onError(reason.data);
+      if (onError) {
+        onError(reason.data);
+      }
     }
   }, [asset, onError]);
 
@@ -84,7 +94,9 @@ const GuestLink = ({ asset, onError, className }:Type) => {
       {!guestLink && <Button color="light" size="sm" onClick={shareCallBack} aria-label="Share" style={{ alignSelf: 'flex-start' }}><FontAwesomeIcon icon={faShareAlt} /></Button>}
       <div className="flex-column" style={{ flex: 'auto' }}>
         <Input type="url" disable="true" value={getUrl()} inline="true" readOnly onFocus={handleFocus} valid={copied} />
-        <FormFeedback valid><FormattedMessage {...guestLinkMsg.copiedMessage} /></FormFeedback>
+        <Fade in={copied} tag="div" className="valid-feedback">
+          <FormattedMessage {...guestLinkMsg.copiedMessage} />
+        </Fade>
       </div>
     </div>
   );
