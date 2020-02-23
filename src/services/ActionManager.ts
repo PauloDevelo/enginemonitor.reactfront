@@ -118,7 +118,7 @@ class ActionManager implements IActionManager, IUserStorageListener {
 
     performAction = async (action: Action):Promise<void> => {
       this.cancelTokenSource = httpProxy.createCancelTokenSource();
-      const requestConfig = { timeout: 10000, cancelToken: this.cancelTokenSource.token };
+      const requestConfig = { cancelToken: this.cancelTokenSource.token };
 
       if (action.type === ActionType.Post) {
         await httpProxy.post(action.key, action.data, requestConfig);

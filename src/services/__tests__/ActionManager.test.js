@@ -221,6 +221,7 @@ describe('Test ActionManager', () => {
       expect(urls[0]).toBe(actionToAdd1.key);
       expect(datas[0]).toEqual(actionToAdd1.data);
       expect(deleteUrls.length).toBe(0);
+      expect(httpProxy.post.mock.calls[0][2].timeout).toBeUndefined();
     });
 
     it('when performing a failing post action it should bubble up', async (done) => {
@@ -267,6 +268,7 @@ describe('Test ActionManager', () => {
       expect(urls.length).toBe(0);
       expect(deleteUrls.length).toBe(1);
       expect(deleteUrls[0]).toBe(actionToDelete.key);
+      expect(httpProxy.deleteReq.mock.calls[0][1].timeout).toBeUndefined();
     });
 
     it('when performing a delete action that fails with a HTTPError notfound, it should catch the error and keep proceeding with the synchronisation', async () => {
@@ -356,6 +358,7 @@ describe('Test ActionManager', () => {
       expect(httpProxy.postImage).toBeCalledTimes(1);
       expect(httpProxy.postImage.mock.calls[0][0]).toEqual(actionToCreateImage.key);
       expect(httpProxy.postImage.mock.calls[0][1]).toEqual(actionToCreateImage.data);
+      expect(httpProxy.postImage.mock.calls[0][4].timeout).toBeUndefined();
     });
 
     it('when performing a failing create image action, the exception should bubble up', async (done) => {
