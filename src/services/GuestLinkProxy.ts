@@ -21,17 +21,17 @@ type Config = {
 };
 
 export interface IGuestLinkProxy{
-    /**
-     * This function tries to get a user from the back end using the niceKey .
-     * If it can get a user, it will set the token for the http authentication, it will open the user storage, and it will signal a user has been set thanks to the user context.
-     */
-    tryGetAndSetUserFromNiceKey(niceKey: string):Promise<UserModel | undefined>;
-
     createGuestLink(assetUiId: string, nameGuestLink: string): Promise<GuestLinkModel>;
 
     getGuestLinks(assetUiId: string): Promise<GuestLinkModel[]>;
 
     removeGuestLink(guestLinkUiId: string, assetUiId: string): Promise<GuestLinkModel>;
+
+    /**
+     * This function tries to get a user from the back end using the niceKey .
+     * If it can get a user, it will set the token for the http authentication, it will open the user storage, and it will signal a user has been set thanks to the user context.
+     */
+    tryGetAndSetUserFromNiceKey(niceKey: string):Promise<UserModel | undefined>;
 }
 
 class GuestLinkProxy implements IGuestLinkProxy {
@@ -49,12 +49,12 @@ class GuestLinkProxy implements IGuestLinkProxy {
       };
       const { guestlink } = await httpProxy.post(this.baseUrl, data);
 
-      await storageService.updateArray(`${this.baseUrl}asset/${assetUiId}`, guestlink);
+      await storageService.updateArray(this.getGuestLinksUrl(assetUiId), guestlink);
 
       return guestlink;
     }
 
-    getGuestLinks = async (assetUiId: string): Promise<GuestLinkModel[]> => progressiveHttpProxy.getArrayOnlineFirst(`${this.baseUrl}asset/${assetUiId}`, 'guestlinks')
+    getGuestLinks = async (assetUiId: string): Promise<GuestLinkModel[]> => progressiveHttpProxy.getArrayOnlineFirst(this.getGuestLinksUrl(assetUiId), 'guestlinks')
 
     removeGuestLink = async (guestLinkUiId: string, assetUiId: string): Promise<GuestLinkModel> => {
       if (await syncService.isOnline() === false) {
@@ -64,7 +64,7 @@ class GuestLinkProxy implements IGuestLinkProxy {
       this.checkUserCredentialForPostingOrDeleting();
 
       const { guestlink }:{ guestlink:GuestLinkModel } = await httpProxy.deleteReq(`${this.baseUrl}${guestLinkUiId}`);
-      await storageService.removeItemInArray(`${this.baseUrl}asset/${assetUiId}`, guestlink._uiId);
+      await storageService.removeItemInArray(this.getGuestLinksUrl(assetUiId), guestlink._uiId);
 
       return guestlink;
     }
@@ -89,6 +89,8 @@ class GuestLinkProxy implements IGuestLinkProxy {
 
       return undefined;
     }
+
+    private getGuestLinksUrl = (assetUiId: string) => `${this.baseUrl}asset/${assetUiId}`;
 
     private checkUserCredentialForPostingOrDeleting = () => {
       if (assetManager.getUserCredentials()?.readonly) {
