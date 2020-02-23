@@ -1,7 +1,7 @@
 import axios from 'axios';
+import localforage from 'localforage';
 import ignoredMessages from '../../testHelpers/MockConsole';
 
-// eslint-disable-next-line no-unused-vars
 
 import httpProxy from '../HttpProxy';
 import storageService from '../StorageService';
@@ -12,6 +12,7 @@ import HttpError from '../../http/HttpError';
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');
 jest.mock('../StorageService');
+jest.mock('localforage');
 
 describe('Test ActionManager', () => {
   let history = [];
@@ -178,6 +179,20 @@ describe('Test ActionManager', () => {
 
       // Assert
       expect(nbAction).toBe(2);
+    });
+
+    it('when the user storage is not opened yet, it shoudl return 0', async () => {
+      // Arrange
+      await actionManager.addAction(actionToAdd1);
+      await actionManager.addAction(actionToAdd2);
+
+      storageService.isUserStorageOpened.mockImplementation(() => false);
+
+      // Act
+      const nbAction = await actionManager.countAction();
+
+      // Assert
+      expect(nbAction).toBe(0);
     });
   });
 
@@ -440,6 +455,35 @@ describe('Test ActionManager', () => {
         expect(httpProxy.postImage).toHaveBeenCalledTimes(0);
         done();
       }
+    });
+  });
+
+  describe('Cancel action', () => {
+    it('should be without consequence to cancel although no action performed', async (done) => {
+      // Arrange
+
+      // Act
+      actionManager.cancelAction();
+
+      // Assert
+      done();
+    });
+
+    it('should be without consequence to cancel the action after the action performed', async (done) => {
+      // Arrange
+      const action = {
+        type: ActionType.Post,
+        key: 'https://postman-echo.com/post',
+        data: { name: 'data1' },
+      };
+
+      await actionManager.performAction(action);
+
+      // Act
+      actionManager.cancelAction();
+
+      // Assert
+      done();
     });
   });
 });
