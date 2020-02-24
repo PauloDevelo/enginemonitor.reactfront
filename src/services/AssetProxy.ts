@@ -27,7 +27,7 @@ class AssetProxy implements IAssetProxy {
     // //////////////Equipment////////////////////////
     fetchAssets = async (forceToLookUpInStorage: boolean = false): Promise<AssetModel[]> => {
       if (forceToLookUpInStorage) {
-        return storageService.getArray<AssetModel>(this.baseUrl);
+        return progressiveHttpProxy.getArrayFromStorage(this.baseUrl, updateAsset);
       }
 
       return progressiveHttpProxy.getArrayOnlineFirst<AssetModel>(this.baseUrl, 'assets', updateAsset);

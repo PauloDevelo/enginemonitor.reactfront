@@ -1,14 +1,19 @@
 import ignoredMessages from '../../testHelpers/MockConsole';
+
 import httpProxy from '../HttpProxy';
 import syncService from '../SyncService';
 import storageService from '../StorageService';
 import assetProxy from '../AssetProxy';
 import actionManager from '../ActionManager';
+import assetManager from '../AssetManager';
+
+import HttpError from '../../http/HttpError';
 
 import { updateAsset } from '../../helpers/AssetHelper';
 
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');
+jest.mock('../AssetManager');
 
 describe('Test AsseProxy', () => {
   beforeAll(() => {
@@ -27,17 +32,94 @@ describe('Test AsseProxy', () => {
   };
 
   beforeEach(() => {
-    httpProxy.setConfig.mockReset();
-    httpProxy.post.mockReset();
-
     const user = { email: 'test@gmail.com' };
     storageService.openUserStorage(user);
+
+    assetManager.onAssetsChanged.mockImplementation(() => {});
   });
 
   afterEach(async () => {
     await actionManager.clearActions();
     storageService.setItem(urlFetchAssets, undefined);
     storageService.closeUserStorage();
+
+    httpProxy.setConfig.mockRestore();
+    httpProxy.post.mockRestore();
+    httpProxy.get.mockRestore();
+
+    assetManager.onAssetsChanged.mockRestore();
+  });
+
+  describe('fetchAsset', () => {
+    it('should try to get the asset from the backend when online', async (done) => {
+      // Arrange
+      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
+      httpProxy.get.mockImplementation((url) => {
+        if (url === urlFetchAssets) {
+          return Promise.resolve({ assets: [assetToSave] });
+        }
+
+        throw new Error(`Unexpected url ${url}`);
+      });
+
+      // Act
+      const assets = await assetProxy.fetchAssets();
+
+      // Assert
+      expect(httpProxy.get).toHaveBeenCalledTimes(1);
+      expect(assets[0]).toEqual(assetToSave);
+      done();
+    });
+
+    it('should try to get the asset from the storage when the back end fails to return something', async (done) => {
+      // Arrange
+      httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
+      await assetProxy.createOrSaveAsset(assetToSave);
+
+      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
+      httpProxy.get.mockImplementation((url) => {
+        console.log(url);
+        throw new HttpError('Unexpected error', { code: 'ECONNABORTED' });
+      });
+
+      // Act
+      const assets = await assetProxy.fetchAssets();
+
+      // Assert
+      expect(httpProxy.get).toHaveBeenCalledTimes(1);
+      expect(assets[0]).toEqual(assetToSave);
+      done();
+    });
+
+    it('should try to get the asset from the local storage when offline', async (done) => {
+      // Arrange
+      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
+
+      httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
+      await assetProxy.createOrSaveAsset(assetToSave);
+
+      // Act
+      const assets = await assetProxy.fetchAssets();
+
+      // Assert
+      expect(assets[0]).toEqual(assetToSave);
+      done();
+    });
+
+    it('should try to get the asset from the local storage when force to', async (done) => {
+      // Arrange
+      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
+
+      httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
+      await assetProxy.createOrSaveAsset(assetToSave);
+
+      // Act
+      const assets = await assetProxy.fetchAssets(true);
+
+      // Assert
+      expect(assets[0]).toEqual(assetToSave);
+      done();
+    });
   });
 
   const createOrSaveAssetParams = [
