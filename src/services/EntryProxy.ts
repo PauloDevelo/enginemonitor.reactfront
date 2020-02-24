@@ -71,10 +71,7 @@ class EntryProxy implements IEntryProxy {
 
       await progressiveHttpProxy.deleteAndUpdate(`${this.baseUrl + equipmentId}/${taskIdStr}/${entryId}`, 'entry', updateEntry);
 
-      const deletedEntry = updateEntry(await storageService.removeItemInArray<EntryModel>(this.baseUrl + equipmentId, entryId));
-      imageProxy.onEntityDeleted(deletedEntry._uiId);
-
-      return deletedEntry;
+      return this.removeEntryInStorage(equipmentId, entryId);
     }
 
     fetchEntries = async ({
@@ -91,7 +88,7 @@ class EntryProxy implements IEntryProxy {
       if (equipmentId === undefined) { return []; }
 
       if (forceToLookUpInStorage) {
-        return storageService.getArray(this.baseUrl + equipmentId);
+        return progressiveHttpProxy.getArrayFromStorage(this.baseUrl + equipmentId, updateEntry);
       }
 
       return progressiveHttpProxy.getArrayOnlineFirst<EntryModel>(this.baseUrl + equipmentId, 'entries', updateEntry, cancelToken);
@@ -120,20 +117,24 @@ class EntryProxy implements IEntryProxy {
 
       await entries.reduce(async (previousPromise, entry) => {
         await previousPromise;
-        await storageService.removeItemInArray<EntryModel>(this.baseUrl + equipmentId, entry._uiId);
-        await imageProxy.onEntityDeleted(entry._uiId);
+        await this.removeEntryInStorage(equipmentId, entry._uiId);
       }, Promise.resolve());
     }
 
     onEquipmentDeleted = async (equipmentId: string): Promise<void> => {
       const entries = await this.getStoredEntries(equipmentId);
 
-
       await entries.reduce(async (previousPromise, entry) => {
         await previousPromise;
-        await storageService.removeItemInArray<EntryModel>(this.baseUrl + equipmentId, entry._uiId);
-        await imageProxy.onEntityDeleted(entry._uiId);
+        await this.removeEntryInStorage(equipmentId, entry._uiId);
       }, Promise.resolve());
+    }
+
+    private removeEntryInStorage = async (equipmentUiId: string, entryUiId: string): Promise<EntryModel> => {
+      const entryDeleted = updateEntry(await storageService.removeItemInArray<EntryModel>(this.baseUrl + equipmentUiId, entryUiId));
+      await imageProxy.onEntityDeleted(entryUiId);
+
+      return entryDeleted;
     }
 }
 
