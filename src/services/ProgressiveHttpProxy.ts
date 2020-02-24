@@ -55,6 +55,8 @@ export interface ISyncHttpProxy{
      */
     getArrayOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken?: CancelToken | undefined): Promise<T[]>;
 
+    getArrayFromStorage<T>(key: string, init?:(model:T) => T): Promise<T[]>;
+
     /**
      * This function returns a T element and update it in the user storage if online.
      * If in offline mode, we will get the array from the user storage.
@@ -63,6 +65,8 @@ export interface ISyncHttpProxy{
      * @param init The function init to call on each item before returning the array to the callee
      */
     getOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken?: CancelToken | undefined): Promise<T>;
+
+    getFromStorage<T>(key: string, init?:(model:T) => T): Promise<T>
 }
 
 class ProgressiveHttpProxy implements ISyncHttpProxy {
@@ -159,13 +163,18 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
         return initArray;
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
-          return storageService.getArray<T>(url);
+          return this.getArrayFromStorage<T>(url, init);
         }
         throw reason;
       }
     }
 
-    return storageService.getArray<T>(url);
+    return this.getArrayFromStorage<T>(url, init);
+  }
+
+  async getArrayFromStorage<T>(key: string, init?:(model:T) => T) {
+    const array = await storageService.getArray<T>(key);
+    return init ? array.map(init) : array;
   }
 
   async getOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T> {
@@ -179,13 +188,18 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
         return updatedItem;
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
-          return storageService.getItem<T>(url);
+          return this.getFromStorage<T>(url, init);
         }
         throw reason;
       }
     }
 
-    return storageService.getItem<T>(url);
+    return this.getFromStorage<T>(url, init);
+  }
+
+  async getFromStorage<T>(key: string, init?:(model:T) => T) {
+    const item = await storageService.getItem<T>(key);
+    return init ? init(item) : item;
   }
 
   private checkUserCredentialForUploadingImages() {
