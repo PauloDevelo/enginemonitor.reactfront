@@ -4,11 +4,13 @@ import storageService from '../StorageService';
 import entryProxy from '../EntryProxy';
 import actionManager from '../ActionManager';
 import assetManager from '../AssetManager';
+import imageProxy from '../ImageProxy';
 
 import { updateEntry } from '../../helpers/EntryHelper';
 
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');
+jest.mock('../ImageProxy');
 
 describe('Test EntryProxy', () => {
   const parentEquipmentId = 'an_parent_equipment';
@@ -53,6 +55,8 @@ describe('Test EntryProxy', () => {
 
   afterEach(async () => {
     clearStorage();
+
+    imageProxy.onEntityDeleted.mockRestore();
   });
 
   const createOrSaveEntryParams = [
@@ -188,6 +192,120 @@ describe('Test EntryProxy', () => {
 
       // Assert
       expect(isEntryExist).toBe(arg.expectedIsExist);
+    });
+  });
+
+  describe('onTaskDeleted', () => {
+    const entryToSave1 = {
+      _uiId: 'an_entry_id1',
+      name: 'vidange',
+      date: new Date(),
+      age: 400,
+      remarks: 'oil was clean',
+      taskUiId: 'another_parent1',
+      equipmentUiId: parentEquipmentId,
+    };
+
+    const entryToSave2 = {
+      _uiId: 'an_entry_id2',
+      name: 'vidange',
+      date: new Date(),
+      age: 400,
+      remarks: 'oil was clean',
+      taskUiId: 'another_parent2',
+      equipmentUiId: parentEquipmentId,
+    };
+
+    const entryToSaveOrphan = {
+      _uiId: 'an_entry_id3',
+      name: 'vidange',
+      date: new Date(),
+      age: 400,
+      remarks: 'oil was clean',
+      taskUiId: undefined,
+      equipmentUiId: parentEquipmentId,
+    };
+
+    it('should erase all the entries having this task for parent and the images attached to those entries', async (done) => {
+      // Arrange
+      const entryToDelete = entryToSave;
+      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
+      await entryProxy.createOrSaveEntry(parentEquipmentId, parentTaskId, entryToDelete);
+      await entryProxy.createOrSaveEntry(parentEquipmentId, 'another_parent1', entryToSave1);
+      await entryProxy.createOrSaveEntry(parentEquipmentId, 'another_parent2', entryToSave2);
+      await entryProxy.createOrSaveEntry(parentEquipmentId, undefined, entryToSaveOrphan);
+      jest.spyOn(imageProxy, 'onEntityDeleted');
+
+      // Act
+      await entryProxy.onTaskDeleted(parentEquipmentId, parentTaskId);
+
+      // Assert
+      const entries = await entryProxy.fetchAllEntries({ equipmentId: parentEquipmentId });
+      expect(entries.length).toBe(3);
+      expect(entries).toContainEqual(entryToSave1);
+      expect(entries).toContainEqual(entryToSave2);
+      expect(entries).toContainEqual(entryToSaveOrphan);
+      expect(imageProxy.onEntityDeleted).toHaveBeenCalledTimes(1);
+      expect(imageProxy.onEntityDeleted.mock.calls[0][0]).toEqual(entryToDelete._uiId);
+      done();
+    });
+  });
+
+  describe('onEquipmentDeleted', () => {
+    const entryToDelete1 = {
+      _uiId: 'an_entry_id1',
+      name: 'vidange',
+      date: new Date(),
+      age: 400,
+      remarks: 'oil was clean',
+      taskUiId: 'another_parent1',
+      equipmentUiId: parentEquipmentId,
+    };
+
+    const entryToDelete2 = {
+      _uiId: 'an_entry_id2',
+      name: 'vidange',
+      date: new Date(),
+      age: 400,
+      remarks: 'oil was clean',
+      taskUiId: 'another_parent2',
+      equipmentUiId: parentEquipmentId,
+    };
+
+    const orphanEntryToDelete = {
+      _uiId: 'an_entry_id3',
+      name: 'vidange',
+      date: new Date(),
+      age: 400,
+      remarks: 'oil was clean',
+      taskUiId: undefined,
+      equipmentUiId: parentEquipmentId,
+    };
+
+    it('should erase all the entries having this equipment for parent and the images attached to those entries', async (done) => {
+      // Arrange
+      const entryToDelete = entryToSave;
+      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
+      await entryProxy.createOrSaveEntry(parentEquipmentId, parentTaskId, entryToDelete);
+      await entryProxy.createOrSaveEntry(parentEquipmentId, 'another_parent1', entryToDelete1);
+      await entryProxy.createOrSaveEntry(parentEquipmentId, 'another_parent2', entryToDelete2);
+      await entryProxy.createOrSaveEntry(parentEquipmentId, undefined, orphanEntryToDelete);
+      jest.spyOn(imageProxy, 'onEntityDeleted');
+
+      // Act
+      await entryProxy.onEquipmentDeleted(parentEquipmentId);
+
+      // Assert
+      const entries = await entryProxy.fetchAllEntries({ equipmentId: parentEquipmentId });
+      expect(entries.length).toBe(0);
+      expect(imageProxy.onEntityDeleted).toHaveBeenCalledTimes(4);
+
+      const entryUiIdDeleted = imageProxy.onEntityDeleted.mock.calls.map((call) => call[0]);
+      expect(entryUiIdDeleted).toContainEqual(entryToDelete._uiId);
+      expect(entryUiIdDeleted).toContainEqual(entryToDelete._uiId);
+      expect(entryUiIdDeleted).toContainEqual(entryToDelete._uiId);
+      expect(entryUiIdDeleted).toContainEqual(entryToDelete._uiId);
+      done();
     });
   });
 });
