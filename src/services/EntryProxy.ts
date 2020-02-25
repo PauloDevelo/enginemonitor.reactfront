@@ -59,9 +59,9 @@ class EntryProxy implements IEntryProxy {
     createOrSaveEntry = async (equipmentId: string, taskId: string | undefined, newEntry: EntryModel): Promise<EntryModel> => {
       const taskIdStr = taskId === undefined ? '-' : taskId;
 
-      const updatedNewEntry = await progressiveHttpProxy.postAndUpdate(`${this.baseUrl + equipmentId}/${taskIdStr}/${newEntry._uiId}`, 'entry', newEntry, updateEntry);
+      const updatedNewEntry = await progressiveHttpProxy.postAndUpdate(`${this.getBaseEntryUrl(equipmentId)}/${taskIdStr}/${newEntry._uiId}`, 'entry', newEntry, updateEntry);
 
-      await storageService.updateArray(this.baseUrl + equipmentId, updatedNewEntry);
+      await storageService.updateArray(this.getBaseEntryUrl(equipmentId), updatedNewEntry);
 
       return updatedNewEntry;
     }
@@ -69,7 +69,7 @@ class EntryProxy implements IEntryProxy {
     deleteEntry = async (equipmentId: string, taskId: string | undefined, entryId: string): Promise<EntryModel> => {
       const taskIdStr = taskId === undefined ? '-' : taskId;
 
-      await progressiveHttpProxy.deleteAndUpdate(`${this.baseUrl + equipmentId}/${taskIdStr}/${entryId}`, 'entry', updateEntry);
+      await progressiveHttpProxy.deleteAndUpdate(`${this.getBaseEntryUrl(equipmentId)}/${taskIdStr}/${entryId}`, 'entry', updateEntry);
 
       return this.removeEntryInStorage(equipmentId, entryId);
     }
@@ -88,10 +88,10 @@ class EntryProxy implements IEntryProxy {
       if (equipmentId === undefined) { return []; }
 
       if (forceToLookUpInStorage) {
-        return progressiveHttpProxy.getArrayFromStorage(this.baseUrl + equipmentId, updateEntry);
+        return progressiveHttpProxy.getArrayFromStorage(this.getBaseEntryUrl(equipmentId), updateEntry);
       }
 
-      return progressiveHttpProxy.getArrayOnlineFirst<EntryModel>(this.baseUrl + equipmentId, 'entries', updateEntry, cancelToken);
+      return progressiveHttpProxy.getArrayOnlineFirst<EntryModel>(this.getBaseEntryUrl(equipmentId), 'entries', updateEntry, cancelToken);
     }
 
     getStoredEntries = async (equipmentId: string, taskId: string | undefined = undefined):Promise<EntryModel[]> => {
@@ -131,7 +131,7 @@ class EntryProxy implements IEntryProxy {
     }
 
     private removeEntryInStorage = async (equipmentUiId: string, entryUiId: string): Promise<EntryModel> => {
-      const entryDeleted = updateEntry(await storageService.removeItemInArray<EntryModel>(this.baseUrl + equipmentUiId, entryUiId));
+      const entryDeleted = updateEntry(await storageService.removeItemInArray<EntryModel>(this.getBaseEntryUrl(equipmentUiId), entryUiId));
       await imageProxy.onEntityDeleted(entryUiId);
 
       return entryDeleted;
