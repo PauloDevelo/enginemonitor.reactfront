@@ -62,12 +62,12 @@ class UserContext implements IUserContext {
       }
     }
 
-    triggerOnUserStorageSizeChanged(): void {
+    private triggerOnUserStorageSizeChanged(): void {
       const userImageFolderSize = this.user !== undefined ? this.user.imageFolderSizeInByte : 0;
       this.userStorageSizeListeners.map((listener) => listener(userImageFolderSize));
     }
 
-    async triggerOnUserChanged(): Promise<void> {
+    private async triggerOnUserChanged(): Promise<void> {
       const promises = this.userListeners.map((listener) => listener(this.user));
       await Promise.all(promises);
     }
