@@ -21,6 +21,9 @@ export interface IUserStorageListener{
 }
 
 export interface IStorageService{
+    getStorageVersion(): Promise<number>;
+    setStorageVersion(newVersion: number): Promise<number>;
+
     existGlobalItem(key: string): Promise<boolean>;
     setGlobalItem<T>(key: string, value: T): Promise<T>;
     removeGlobalItem(key: string): Promise<void>;
@@ -44,9 +47,23 @@ export interface IStorageService{
 }
 
 class StorageService implements IStorageService {
+    private static readonly storageVersionKey = 'storageVersion';
+
     private userStorageListeners:IUserStorageListener[] = [];
 
     private userStorage: LocalForage | undefined;
+
+    async getStorageVersion(): Promise<number> {
+      if (await this.existItem(StorageService.storageVersionKey)) {
+        return this.getItem<number>(StorageService.storageVersionKey);
+      }
+
+      return Promise.resolve(0);
+    }
+
+    async setStorageVersion(newVersion: number): Promise<number> {
+      return this.setItem<number>(StorageService.storageVersionKey, newVersion);
+    }
 
     // eslint-disable-next-line class-methods-use-this
     async existGlobalItem(key: string): Promise<boolean> {
