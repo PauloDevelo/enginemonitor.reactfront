@@ -16,6 +16,7 @@ jest.mock('localforage');
 
 describe('Test ActionManager', () => {
   let history = [];
+  const listener = jest.fn();
 
   const actionToAdd1 = {
     type: ActionType.Post,
@@ -74,9 +75,14 @@ describe('Test ActionManager', () => {
       }
       throw new Error(`Unexpected getArray key: ${key}`);
     });
+
+    actionManager.registerOnActionManagerChanged(listener);
   });
 
   afterEach(async () => {
+    actionManager.unregisterOnActionManagerChanged(listener);
+    listener.mockReset();
+
     await actionManager.clearActions();
     clearMockStorage();
     clearMockHttpProxy();
@@ -91,6 +97,10 @@ describe('Test ActionManager', () => {
       await actionManager.addAction(actionToAdd2);
 
       // Assert
+      expect(listener).toHaveBeenCalledTimes(2);
+      expect(listener.mock.calls[0][0]).toEqual(1);
+      expect(listener.mock.calls[1][0]).toEqual(2);
+
       expect(history.length).toBe(2);
       expect(history[0]).toEqual(actionToAdd1);
       expect(history[1]).toEqual(actionToAdd2);
@@ -102,11 +112,15 @@ describe('Test ActionManager', () => {
       // Arrange
       await actionManager.addAction(actionToAdd1);
       await actionManager.addAction(actionToAdd2);
+      listener.mockReset();
 
       // Act
       const nextAction = await actionManager.getNextActionToPerform();
 
       // Assert
+      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener.mock.calls[0][0]).toEqual(1);
+
       expect(nextAction).toEqual(actionToAdd1);
 
       const actions = await storageService.getArray('history');
@@ -117,9 +131,11 @@ describe('Test ActionManager', () => {
     it('When there is no action to perform, getNextActionToPerform should throw an exception.', async (done) => {
       try {
         // Arrange
+
         // Act
         await actionManager.getNextActionToPerform();
       } catch (ex) {
+        expect(listener).toHaveBeenCalledTimes(0);
         expect(ex).toBeInstanceOf(NoActionPendingError);
         expect(ex.message).toEqual("There isn't pending action anymore");
         done();
@@ -134,10 +150,14 @@ describe('Test ActionManager', () => {
       await actionManager.addAction(actionToAdd2);
       const nextAction = await actionManager.getNextActionToPerform();
 
+      listener.mockReset();
+
       // Act
       await actionManager.putBackAction(nextAction);
 
       // Assert
+      expect(listener).toHaveBeenCalledTimes(1);
+
       const actions = await storageService.getArray('history');
       expect(actions.length).toBe(2);
       expect(actions[0]).toEqual(actionToAdd1);
@@ -149,10 +169,13 @@ describe('Test ActionManager', () => {
       await actionManager.addAction(actionToAdd1);
       const nextAction = await actionManager.getNextActionToPerform();
 
+      listener.mockReset();
+
       // Act
       await actionManager.putBackAction(nextAction);
 
       // Assert
+      expect(listener).toHaveBeenCalledTimes(1);
       const actions = await storageService.getArray('history');
       expect(actions.length).toBe(1);
       expect(actions[0]).toEqual(actionToAdd1);
@@ -181,7 +204,7 @@ describe('Test ActionManager', () => {
       expect(nbAction).toBe(2);
     });
 
-    it('when the user storage is not opened yet, it shoudl return 0', async () => {
+    it('when the user storage is not opened yet, it should return 0', async () => {
       // Arrange
       await actionManager.addAction(actionToAdd1);
       await actionManager.addAction(actionToAdd2);
