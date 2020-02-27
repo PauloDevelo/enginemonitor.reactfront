@@ -39,7 +39,7 @@ class EquipmentProxy implements IEquipmentProxy {
     // //////////////Equipment////////////////////////
     fetchEquipments = async (forceToLookUpInStorage: boolean = false): Promise<EquipmentModel[]> => {
       if (forceToLookUpInStorage) {
-        return storageService.getArray<EquipmentModel>(this.baseUrl);
+        return progressiveHttpProxy.getArrayFromStorage<EquipmentModel>(this.baseUrl, updateEquipment);
       }
 
       return progressiveHttpProxy.getArrayOnlineFirst<EquipmentModel>(this.baseUrl, 'equipments', updateEquipment);

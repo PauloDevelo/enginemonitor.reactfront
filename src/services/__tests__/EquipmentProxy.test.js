@@ -6,12 +6,19 @@ import storageService from '../StorageService';
 import equipmentProxy from '../EquipmentProxy';
 import actionManager from '../ActionManager';
 import assetManager from '../AssetManager';
+import entryProxy from '../EntryProxy';
+import taskProxy from '../TaskProxy';
+import imageProxy from '../ImageProxy';
 
 import { updateEquipment } from '../../helpers/EquipmentHelper';
+import HttpError from '../../http/HttpError';
 
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');
 jest.mock('../UserProxy');
+jest.mock('../EntryProxy');
+jest.mock('../TaskProxy');
+jest.mock('../ImageProxy');
 
 describe('Test EquipmentProxy', () => {
   beforeAll(() => {
@@ -50,8 +57,56 @@ describe('Test EquipmentProxy', () => {
 
     httpProxy.setConfig.mockReset();
     httpProxy.post.mockReset();
+    httpProxy.deleteReq.mockReset();
+    httpProxy.get.mockReset();
 
     userProxy.getCredentials.mockRestore();
+
+    entryProxy.onEquipmentDeleted.mockRestore();
+    taskProxy.onEquipmentDeleted.mockRestore();
+    imageProxy.onEntityDeleted.mockRestore();
+  });
+
+  const onlineModes = [{ isOnline: false }, { isOnline: true }];
+  describe('fetchEquipments', () => {
+    it('should get the equipments online first and update the storage', async (done) => {
+      // Arrange
+      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
+      httpProxy.get.mockImplementation(async (url) => {
+        if (url === urlFetchEquipment) {
+          return (
+            {
+              equipments: [equipmentToSave],
+            }
+          );
+        }
+        throw new Error(`Unexpected url ${url}`);
+      });
+
+      // Act
+      const equipments = await equipmentProxy.fetchEquipments();
+
+      // Assert
+      expect(equipments.length).toEqual(1);
+      expect(equipments[0]).toEqual(equipmentToSave);
+
+      const storedEquipments = await equipmentProxy.getStoredEquipment();
+      expect(equipments).toEqual(storedEquipments);
+
+      done();
+    });
+
+    it('should get the equipments offline as well', async (done) => {
+      // Arrange
+      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
+
+      // Act
+      const equipments = await equipmentProxy.fetchEquipments();
+
+      // Assert
+      expect(equipments.length).toEqual(0);
+      done();
+    });
   });
 
   const createOrSaveEquipmentParams = [
@@ -109,9 +164,9 @@ describe('Test EquipmentProxy', () => {
       httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
       const savedEquipment = await equipmentProxy.createOrSaveEquipment(equipmentToSave);
 
-      let postCounter = 0;
+      let deleteCounter = 0;
       httpProxy.deleteReq.mockImplementation(() => {
-        postCounter++;
+        deleteCounter++;
         return Promise.resolve({ equipment: savedEquipment });
       });
 
@@ -119,7 +174,7 @@ describe('Test EquipmentProxy', () => {
       const equipmentDeleted = await equipmentProxy.deleteEquipment(equipmentToSave._uiId);
 
       // Assert
-      expect(postCounter).toBe(arg.expectedDeleteCounter);
+      expect(deleteCounter).toBe(arg.expectedDeleteCounter);
       expect(equipmentDeleted).toEqual(equipmentToSave);
 
       const equipments = await storageService.getItem(urlFetchEquipment);
@@ -161,6 +216,102 @@ describe('Test EquipmentProxy', () => {
       // Assert
       expect(isEquipmentExist).toBe(arg.expectedResult);
       expect(getCounter).toBe(0);
+    });
+  });
+
+  describe('When the user credentials are not enough', () => {
+    beforeEach(async () => {
+      userProxy.getCredentials.mockImplementation(async () => Promise.resolve({ readonly: true }));
+
+      const user = { email: 'test@gmail.com' };
+      await storageService.openUserStorage(user);
+
+      await assetManager.setCurrentAsset({
+        _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrope', manufactureDate: new Date(1979, 1, 1),
+      });
+    });
+
+    describe.each(onlineModes)('createOrSaveEquipment', ({ isOnline }) => {
+      it(`when ${JSON.stringify({ isOnline })}`, async (done) => {
+        // Arrange
+        syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
+
+        let postCounter = 0;
+        httpProxy.post.mockImplementation((url, data) => {
+          postCounter++;
+          return Promise.resolve(data);
+        });
+
+        // Act
+        try {
+          await equipmentProxy.createOrSaveEquipment(equipmentToSave);
+        } catch (error) {
+          // Assert
+          expect(error instanceof HttpError).toBe(true);
+          expect(error.data).toEqual({ message: 'credentialError' });
+
+          expect(postCounter).toBe(0);
+
+          const equipments = await storageService.getArray(urlFetchEquipment);
+          expect(equipments.length).toBe(0);
+          expect(await actionManager.countAction()).toBe(0);
+          done();
+        }
+      });
+    });
+
+    describe.each(onlineModes)('deleteEquipment', ({ isOnline }) => {
+      it(`when ${JSON.stringify({ isOnline })}`, async () => {
+        // Arrange
+        syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
+
+        httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
+
+        let deleteCounter = 0;
+        httpProxy.deleteReq.mockImplementation(() => {
+          deleteCounter++;
+          return Promise.resolve({ });
+        });
+
+        // Act
+        try {
+          await equipmentProxy.deleteEquipment(equipmentToSave._uiId);
+        } catch (error) {
+          // Assert
+          expect(error instanceof HttpError).toBe(true);
+          expect(error.data).toEqual({ message: 'credentialError' });
+
+          expect(deleteCounter).toBe(0);
+          expect(await actionManager.countAction()).toBe(0);
+        }
+      });
+    });
+  });
+
+  describe('OnAssetDeleted', () => {
+    it('Should delete all the equipments related to this asset', async (done) => {
+      // Arrange
+      httpProxy.deleteReq.mockImplementation(async () => Promise.resolve({}));
+      jest.spyOn(entryProxy, 'onEquipmentDeleted');
+      jest.spyOn(taskProxy, 'onEquipmentDeleted');
+      jest.spyOn(imageProxy, 'onEntityDeleted');
+
+      httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
+      await equipmentProxy.createOrSaveEquipment(equipmentToSave);
+      await equipmentProxy.createOrSaveEquipment({ ...equipmentToSave, _uiId: 'another id generated by the front' });
+
+      // Act
+      await equipmentProxy.onAssetDeleted('asset_01');
+
+      // Assert
+      expect(httpProxy.deleteReq).toHaveBeenCalledTimes(0);
+      expect(entryProxy.onEquipmentDeleted).toHaveBeenCalledTimes(2);
+      expect(taskProxy.onEquipmentDeleted).toHaveBeenCalledTimes(2);
+      expect(imageProxy.onEntityDeleted).toHaveBeenCalledTimes(2);
+
+      const equipments = await storageService.getArray(urlFetchEquipment);
+      expect(equipments.length).toEqual(0);
+      done();
     });
   });
 });
