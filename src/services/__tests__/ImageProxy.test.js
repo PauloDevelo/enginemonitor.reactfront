@@ -7,6 +7,7 @@ import storageService from '../StorageService';
 import userContext from '../UserContext';
 import syncService from '../SyncService';
 import actionManager, { ActionType } from '../ActionManager';
+import assetManager from '../AssetManager';
 
 import imageProxy from '../ImageProxy';
 import { createDefaultUser } from '../../helpers/UserHelper';
@@ -18,6 +19,7 @@ jest.mock('../StorageService');
 jest.mock('../UserContext');
 jest.mock('../SyncService');
 jest.mock('../ActionManager');
+jest.mock('../AssetManager');
 
 describe('Test ImageProxy', () => {
   const parentId = 'an_entity_id';
@@ -67,6 +69,7 @@ describe('Test ImageProxy', () => {
   }
 
   beforeEach(() => {
+    assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
   });
 
   afterEach(async () => {
@@ -75,6 +78,7 @@ describe('Test ImageProxy', () => {
     resetMockUserContext();
     resetMockSyncService();
     resetMockActionManager();
+    assetManager.getUserCredentials.mockRestore();
   });
 
   const createImageDataItems = [

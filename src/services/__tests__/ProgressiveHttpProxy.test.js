@@ -3,6 +3,7 @@ import httpProxy from '../HttpProxy';
 import storageService from '../StorageService';
 import syncService from '../SyncService';
 import actionManager, { ActionType } from '../ActionManager';
+import assetManager from '../AssetManager';
 
 import progressiveHttpProxy from '../ProgressiveHttpProxy';
 
@@ -10,6 +11,7 @@ jest.mock('../HttpProxy');
 jest.mock('../StorageService');
 jest.mock('../SyncService');
 jest.mock('../ActionManager');
+jest.mock('../AssetManager');
 
 describe('Test ProgressiveHttpProxy', () => {
   function resetMockHttpProxy() {
@@ -38,6 +40,7 @@ describe('Test ProgressiveHttpProxy', () => {
   }
 
   beforeEach(() => {
+    assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
   });
 
   afterEach(async () => {
@@ -45,6 +48,7 @@ describe('Test ProgressiveHttpProxy', () => {
     resetMockStorageService();
     resetMockSyncService();
     resetMockActionManager();
+    assetManager.getUserCredentials.mockRestore();
   });
 
   const postAndUpdateItems = [

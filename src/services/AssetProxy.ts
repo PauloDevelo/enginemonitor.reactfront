@@ -36,7 +36,7 @@ class AssetProxy implements IAssetProxy {
     createOrSaveAsset = async (assetToSave: AssetModel):Promise<AssetModel> => {
       const updatedAsset = await progressiveHttpProxy.postAndUpdate<AssetModel>(this.baseUrl + assetToSave._uiId, 'asset', assetToSave, updateAsset);
       const updatedAssets = await storageService.updateArray(this.baseUrl, updatedAsset);
-      assetManager.onAssetsChanged(updatedAssets);
+      await assetManager.onAssetsChanged(updatedAssets);
       return updatedAsset;
     }
 
@@ -48,7 +48,7 @@ class AssetProxy implements IAssetProxy {
 
       const deletedAsset = await storageService.removeItemInArray<AssetModel>(this.baseUrl, idAsset);
 
-      assetManager.onAssetsChanged(await this.getStoredAsset());
+      await assetManager.onAssetsChanged(await this.getStoredAsset());
 
       return updateAsset(deletedAsset);
     }

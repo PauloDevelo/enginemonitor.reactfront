@@ -38,7 +38,7 @@ describe('TaskTable', () => {
     window.innerWidth = width;
     window.innerHeight = height;
     window.dispatchEvent(new Event('resize'));
-  }
+  };
 
   const equipment = {
     _uiId: 'equipment_01',
@@ -154,7 +154,7 @@ describe('TaskTable', () => {
 
     // Assert
     const table = taskTable.find('div').at(0);
-    expect(table.props().className).toContain("mySpecialClassName");
+    expect(table.props().className).toContain('mySpecialClassName');
   });
 
   it('Should render an empty table if the equipment is undefined', async () => {
@@ -180,7 +180,7 @@ describe('TaskTable', () => {
     const sortedTasks = getSortedTasks(tasks);
     const tbodyProps = taskTable.find('tbody').at(0).props();
     expect(tbodyProps.children.length).toBe(0);
-    
+
     expect(onTaskSaved).toBeCalledTimes(0);
     expect(changeCurrentTask).toBeCalledTimes(0);
   });

@@ -51,13 +51,13 @@ describe('EquipmentsInfo', () => {
     },
   ];
 
-  beforeAll(() => {
+  beforeAll(async () => {
     ignoredMessages.length = 0;
     ignoredMessages.push('test was not wrapped in act(...)');
     ignoredMessages.push('[React Intl] Could not find required `intl` object.');
     ignoredMessages.push('[React Intl] Missing message');
 
-    assetManager.setCurrentAsset({
+    await assetManager.setCurrentAsset({
       _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrope', manufactureDate: new Date(1979, 1, 1),
     });
   });

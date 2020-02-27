@@ -1,5 +1,6 @@
 import ignoredMessages from '../../testHelpers/MockConsole';
 import httpProxy from '../HttpProxy';
+import userProxy from '../UserProxy';
 import syncService from '../SyncService';
 import storageService from '../StorageService';
 import equipmentProxy from '../EquipmentProxy';
@@ -10,6 +11,7 @@ import { updateEquipment } from '../../helpers/EquipmentHelper';
 
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');
+jest.mock('../UserProxy');
 
 describe('Test EquipmentProxy', () => {
   beforeAll(() => {
@@ -31,10 +33,12 @@ describe('Test EquipmentProxy', () => {
   };
 
   beforeEach(async () => {
+    userProxy.getCredentials.mockImplementation(async () => Promise.resolve({ readonly: false }));
+
     const user = { email: 'test@gmail.com' };
     await storageService.openUserStorage(user);
 
-    assetManager.setCurrentAsset({
+    await assetManager.setCurrentAsset({
       _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrope', manufactureDate: new Date(1979, 1, 1),
     });
   });
@@ -46,6 +50,8 @@ describe('Test EquipmentProxy', () => {
 
     httpProxy.setConfig.mockReset();
     httpProxy.post.mockReset();
+
+    userProxy.getCredentials.mockRestore();
   });
 
   const createOrSaveEquipmentParams = [

@@ -6,9 +6,9 @@ import { AssetModel, UserModel, UserCredentials } from '../types/Types';
 export interface IAssetManager{
     getUserCredentials(): UserCredentials | undefined;
     getCurrentAsset(): AssetModel | undefined;
-    setCurrentAsset(asset: AssetModel): void;
+    setCurrentAsset(asset: AssetModel): Promise<void>;
 
-    onAssetsChanged(assets: AssetModel[]): void;
+    onAssetsChanged(assets: AssetModel[]): Promise<void>;
 
     registerOnCurrentAssetChanged(listener: (asset: AssetModel|undefined) => void):void;
     unregisterOnCurrentAssetChanged(listenerToRemove: (asset: AssetModel|undefined) => void):void;
@@ -31,9 +31,9 @@ class AssetManager implements IAssetManager {
     onCurrentUserChanged = async (user: UserModel | undefined) => {
       if (user !== undefined) {
         const { default: assetProxy } = await import('./AssetProxy');
-        this.onAssetsChanged(await assetProxy.fetchAssets());
+        await this.onAssetsChanged(await assetProxy.fetchAssets());
       } else {
-        this.onAssetsChanged([]);
+        await this.onAssetsChanged([]);
       }
     }
 
@@ -45,15 +45,15 @@ class AssetManager implements IAssetManager {
       return this.credentials;
     }
 
-    setCurrentAsset(asset: AssetModel | undefined) {
+    async setCurrentAsset(asset: AssetModel | undefined) {
       this.currentAsset = asset;
-      this.updateUserCredentials(this.currentAsset);
+      await this.updateUserCredentials(this.currentAsset);
       this.listeners.map((listener) => listener(this.currentAsset));
     }
 
-    onAssetsChanged(assets: AssetModel[]): void{
+    async onAssetsChanged(assets: AssetModel[]): Promise<void> {
       this.assets = assets;
-      this.setCurrentAsset(this.assets.length > 0 ? this.assets[0] : undefined);
+      await this.setCurrentAsset(this.assets.length > 0 ? this.assets[0] : undefined);
     }
 
     registerOnCurrentAssetChanged(listener: (asset: AssetModel|undefined) => void):void{

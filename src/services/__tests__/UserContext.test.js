@@ -1,4 +1,3 @@
-import { doesNotReject } from 'assert';
 import ignoredMessages from '../../testHelpers/MockConsole';
 import userContext from '../UserContext';
 

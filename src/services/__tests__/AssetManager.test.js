@@ -1,23 +1,26 @@
 import ignoredMessages from '../../testHelpers/MockConsole';
-import { delayFewMilliseconds } from '../../testHelpers/EnzymeHelper';
 
+import userProxy from '../UserProxy';
 import assetProxy from '../AssetProxy';
 import userContext from '../UserContext';
 
 import assetManager from '../AssetManager';
 
 jest.mock('../AssetProxy');
+jest.mock('../UserProxy');
 
-describe('Test ActionManager', () => {
+describe('Test AssetManager', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
   });
 
   beforeEach(() => {
+    userProxy.getCredentials.mockImplementation(async () => ({ readonly: false }));
   });
 
   afterEach(async () => {
     assetProxy.fetchAssets.mockReset();
+    userProxy.getCredentials.mockRestore();
   });
 
   describe('getCurrentAsset', () => {
@@ -34,6 +37,7 @@ describe('Test ActionManager', () => {
     it('Should return undefined after logging in a user who does not have any asset yet', async () => {
       // Arrange
       assetProxy.fetchAssets.mockImplementation(() => Promise.resolve([]));
+
       await userContext.onUserChanged({
         email: 'test@axios',
         firstname: 'jest',

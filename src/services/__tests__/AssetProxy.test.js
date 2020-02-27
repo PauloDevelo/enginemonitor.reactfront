@@ -14,6 +14,7 @@ import { updateAsset } from '../../helpers/AssetHelper';
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');
 jest.mock('../AssetManager');
+jest.mock('../UserProxy');
 
 describe('Test AsseProxy', () => {
   beforeAll(() => {
@@ -31,11 +32,12 @@ describe('Test AsseProxy', () => {
     manufactureDate: new Date(1979, 6, 10),
   };
 
-  beforeEach(() => {
+  beforeEach(async () => {
     const user = { email: 'test@gmail.com' };
     storageService.openUserStorage(user);
 
-    assetManager.onAssetsChanged.mockImplementation(() => {});
+    assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
+    assetManager.onAssetsChanged.mockImplementation(async () => {});
   });
 
   afterEach(async () => {
@@ -48,6 +50,7 @@ describe('Test AsseProxy', () => {
     httpProxy.get.mockRestore();
 
     assetManager.onAssetsChanged.mockRestore();
+    assetManager.getUserCredentials.mockRestore();
   });
 
   describe('fetchAsset', () => {

@@ -209,7 +209,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
   }
 
   private checkUserCredentialForPostingOrDeleting() {
-    if (assetManager.getUserCredentials()?.readonly) {
+    if (assetManager.getUserCredentials() === undefined || assetManager.getUserCredentials()?.readonly) {
       throw new HttpError({ message: 'credentialError' });
     }
   }

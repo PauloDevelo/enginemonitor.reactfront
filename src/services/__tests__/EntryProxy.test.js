@@ -5,12 +5,14 @@ import entryProxy from '../EntryProxy';
 import actionManager from '../ActionManager';
 import assetManager from '../AssetManager';
 import imageProxy from '../ImageProxy';
+import userProxy from '../UserProxy';
 
 import { updateEntry } from '../../helpers/EntryHelper';
 
 jest.mock('../HttpProxy');
 jest.mock('../SyncService');
 jest.mock('../ImageProxy');
+jest.mock('../UserProxy');
 
 describe('Test EntryProxy', () => {
   const parentEquipmentId = 'an_parent_equipment';
@@ -44,18 +46,19 @@ describe('Test EntryProxy', () => {
     storageService.closeUserStorage();
   }
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    userProxy.getCredentials.mockImplementation(async () => ({ readonly: false }));
     mockHttpProxy();
     initStorage();
 
-    assetManager.setCurrentAsset({
+    await assetManager.setCurrentAsset({
       _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrope', manufactureDate: new Date(1979, 1, 1),
     });
   });
 
   afterEach(async () => {
     clearStorage();
-
+    userProxy.getCredentials.mockRestore();
     imageProxy.onEntityDeleted.mockRestore();
   });
 

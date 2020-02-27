@@ -25,7 +25,7 @@ describe('Test GuestLinkProxy', () => {
 
     await storageService.openUserStorage(user);
 
-    assetManager.setCurrentAsset({
+    await assetManager.setCurrentAsset({
       _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrope', manufactureDate: new Date(1979, 1, 1),
     });
   });

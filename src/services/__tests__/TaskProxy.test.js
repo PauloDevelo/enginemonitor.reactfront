@@ -8,6 +8,7 @@ import equipmentProxy from '../EquipmentProxy';
 import assetManager from '../AssetManager';
 import imageProxy from '../ImageProxy';
 import actionManager from '../ActionManager';
+import userProxy from '../UserProxy';
 
 import { updateTask } from '../../helpers/TaskHelper';
 import { TaskLevel, AgeAcquisitionType } from '../../types/Types';
@@ -17,6 +18,7 @@ jest.mock('../SyncService');
 jest.mock('../EntryProxy');
 jest.mock('../ImageProxy');
 jest.mock('../EquipmentProxy');
+jest.mock('../UserProxy');
 
 describe('Test TaskProxy', () => {
   beforeAll(() => {
@@ -40,11 +42,12 @@ describe('Test TaskProxy', () => {
   };
 
   beforeEach(async () => {
+    userProxy.getCredentials.mockImplementation(async () => ({ readonly: false }));
     const user = { email: 'test@gmail.com' };
 
     await storageService.openUserStorage(user);
 
-    assetManager.setCurrentAsset({
+    await assetManager.setCurrentAsset({
       _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrope', manufactureDate: new Date(1979, 1, 1),
     });
   });
@@ -63,6 +66,8 @@ describe('Test TaskProxy', () => {
     entryProxy.getStoredEntries.mockRestore();
     imageProxy.onEntityDeleted.mockRestore();
     equipmentProxy.getStoredEquipment.mockRestore();
+
+    userProxy.getCredentials.mockRestore();
   });
 
   describe('fetchTasks', () => {
