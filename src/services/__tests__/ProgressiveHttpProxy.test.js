@@ -161,177 +161,267 @@ describe('Test ProgressiveHttpProxy', () => {
   });
 
 
-  const postAndUpdateItems = [
-    {
-      throwAnHttpConnAborted: false, isOnlineAndSync: true, keyname: 'keyname', addActionNbCall: 0, expectedHttpPostCall: 1,
-    },
-    {
-      throwAnHttpConnAborted: false, isOnlineAndSync: false, keyname: 'keyname', addActionNbCall: 1, expectedHttpPostCall: 0,
-    },
-    {
-      throwAnHttpConnAborted: true, isOnlineAndSync: true, keyname: 'keyname', addActionNbCall: 1, expectedHttpPostCall: 1,
-    },
-  ];
-  describe.each(postAndUpdateItems)('postAndUpdate', ({
-    throwAnHttpConnAborted, isOnlineAndSync, keyname, addActionNbCall, expectedHttpPostCall,
-  }) => {
-    it('shoud call the http proxy or add the expected action in action manager', async () => {
+  describe('postAndUpdate', () => {
+    const postAndUpdateItems = [
+      {
+        throwAnHttpConnAborted: false, isOnlineAndSync: true, addActionNbCall: 0, expectedHttpPostCall: 1,
+      },
+      {
+        throwAnHttpConnAborted: false, isOnlineAndSync: false, addActionNbCall: 1, expectedHttpPostCall: 0,
+      },
+      {
+        throwAnHttpConnAborted: true, isOnlineAndSync: true, addActionNbCall: 1, expectedHttpPostCall: 1,
+      },
+    ];
+    describe.each(postAndUpdateItems)('postAndUpdate', ({
+      throwAnHttpConnAborted, isOnlineAndSync, addActionNbCall, expectedHttpPostCall,
+    }) => {
+      it('shoud call the http proxy or add the expected action in action manager', async (done) => {
+        // Arrange
+        const dataToPost = { data: 'some data' };
+        const urlToPost = 'an_url';
+        const updateFn = jest.fn((data) => data);
+
+        jest.spyOn(httpProxy, 'post').mockImplementation(async (url, data) => {
+          if (throwAnHttpConnAborted) {
+            const axiosError = new Error('timeout');
+            axiosError.code = 'ECONNABORTED';
+
+            throw new HttpError(axiosError.message, axiosError);
+          }
+
+          return Promise.resolve(data);
+        });
+
+        syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
+
+        jest.spyOn(actionManager, 'addAction');
+
+        // Act
+        const dataPosted = await progressiveHttpProxy.postAndUpdate(urlToPost, 'keyname', dataToPost, updateFn);
+
+        // Assert
+        expect(dataPosted).toStrictEqual(dataToPost);
+
+        expect(httpProxy.post).toBeCalledTimes(expectedHttpPostCall);
+        if (expectedHttpPostCall > 0) {
+          expect(httpProxy.post.mock.calls[0][0]).toStrictEqual(urlToPost);
+          expect(httpProxy.post.mock.calls[0][1].keyname).toStrictEqual(dataToPost);
+        }
+
+        expect(actionManager.addAction).toBeCalledTimes(addActionNbCall);
+        if (addActionNbCall > 0) {
+          expect(actionManager.addAction.mock.calls[0][0].key).toStrictEqual(urlToPost);
+          expect(actionManager.addAction.mock.calls[0][0].type).toStrictEqual(ActionType.Post);
+          expect(actionManager.addAction.mock.calls[0][0].data.keyname).toStrictEqual(dataToPost);
+        }
+        done();
+      });
+    });
+
+    it('shoud bubble up unexpected exception from httpProxy', async (done) => {
       // Arrange
       const dataToPost = { data: 'some data' };
       const urlToPost = 'an_url';
       const updateFn = jest.fn((data) => data);
 
-      jest.spyOn(httpProxy, 'post').mockImplementation(async (url, data) => {
-        if (throwAnHttpConnAborted) {
-          const axiosError = new Error('timeout');
-          axiosError.code = 'ECONNABORTED';
-
-          throw new HttpError(axiosError.message, axiosError);
-        }
-
-        return Promise.resolve(data);
+      jest.spyOn(httpProxy, 'post').mockImplementation(async () => {
+        throw new Error('unexpected error');
       });
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
+      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
 
       jest.spyOn(actionManager, 'addAction');
 
-      // Act
-      const dataPosted = await progressiveHttpProxy.postAndUpdate(urlToPost, keyname, dataToPost, updateFn);
-
-      // Assert
-      expect(dataPosted).toStrictEqual(dataToPost);
-
-      expect(httpProxy.post).toBeCalledTimes(expectedHttpPostCall);
-      if (expectedHttpPostCall > 0) {
-        expect(httpProxy.post.mock.calls[0][0]).toStrictEqual(urlToPost);
-        expect(httpProxy.post.mock.calls[0][1][keyname]).toStrictEqual(dataToPost);
-      }
-
-      expect(actionManager.addAction).toBeCalledTimes(addActionNbCall);
-      if (addActionNbCall > 0) {
-        expect(actionManager.addAction.mock.calls[0][0].key).toStrictEqual(urlToPost);
-        expect(actionManager.addAction.mock.calls[0][0].type).toStrictEqual(ActionType.Post);
-        expect(actionManager.addAction.mock.calls[0][0].data[keyname]).toStrictEqual(dataToPost);
+      try {
+        // Act
+        await progressiveHttpProxy.postAndUpdate(urlToPost, 'keyname', dataToPost, updateFn);
+      } catch (error) {
+        // Assert
+        expect(error.message).toBe('unexpected error');
+        expect(httpProxy.post).toBeCalledTimes(1);
+        expect(actionManager.addAction).toBeCalledTimes(0);
+        done();
       }
     });
   });
 
-  const deleteAndUpdateItems = [
-    {
-      throwAnHttpConnAborted: false, isOnlineAndSync: true, keyname: 'keyname', addActionNbCall: 0, expectedHttpDeleteCall: 1,
-    },
-    {
-      throwAnHttpConnAborted: false, isOnlineAndSync: false, keyname: 'keyname', addActionNbCall: 1, expectedHttpDeleteCall: 0,
-    },
-    {
-      throwAnHttpConnAborted: true, isOnlineAndSync: true, keyname: 'keyname', addActionNbCall: 1, expectedHttpDeleteCall: 1,
-    },
-  ];
-  describe.each(deleteAndUpdateItems)('deleteAndUpdate', ({
-    throwAnHttpConnAborted, isOnlineAndSync, keyname, addActionNbCall, expectedHttpDeleteCall,
-  }) => {
-    it('shoud call the http proxy or add the expected action in action manager', async () => {
+  describe('deleteAndUpdate', () => {
+    const deleteAndUpdateItems = [
+      {
+        throwAnHttpConnAborted: false, isOnlineAndSync: true, addActionNbCall: 0, expectedHttpDeleteCall: 1,
+      },
+      {
+        throwAnHttpConnAborted: false, isOnlineAndSync: false, addActionNbCall: 1, expectedHttpDeleteCall: 0,
+      },
+      {
+        throwAnHttpConnAborted: true, isOnlineAndSync: true, addActionNbCall: 1, expectedHttpDeleteCall: 1,
+      },
+    ];
+    describe.each(deleteAndUpdateItems)('deleteAndUpdate', ({
+      throwAnHttpConnAborted, isOnlineAndSync, addActionNbCall, expectedHttpDeleteCall,
+    }) => {
+      it('shoud call the http proxy or add the expected action in action manager', async (done) => {
+        // Arrange
+        const dataToDelete = { data: 'some data' };
+        const urlToDelete = 'an_url';
+        const updateFn = jest.fn((data) => data);
+
+        jest.spyOn(httpProxy, 'deleteReq').mockImplementation(async () => {
+          if (throwAnHttpConnAborted) {
+            const axiosError = new Error('timeout');
+            axiosError.code = 'ECONNABORTED';
+
+            throw new HttpError(axiosError.message, axiosError);
+          }
+
+          const dataToReturn = {};
+          dataToReturn.keyname = dataToDelete;
+          return Promise.resolve(dataToReturn);
+        });
+
+        syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
+
+        jest.spyOn(actionManager, 'addAction');
+
+        // Act
+        await progressiveHttpProxy.deleteAndUpdate(urlToDelete, 'keyname', updateFn);
+
+        // Assert
+        expect(httpProxy.deleteReq).toBeCalledTimes(expectedHttpDeleteCall);
+        if (expectedHttpDeleteCall > 0) {
+          expect(httpProxy.deleteReq.mock.calls[0][0]).toStrictEqual(urlToDelete);
+        }
+
+        expect(actionManager.addAction).toBeCalledTimes(addActionNbCall);
+        if (addActionNbCall > 0) {
+          expect(actionManager.addAction.mock.calls[0][0].key).toStrictEqual(urlToDelete);
+          expect(actionManager.addAction.mock.calls[0][0].type).toStrictEqual(ActionType.Delete);
+        }
+        done();
+      });
+    });
+
+    it('should bubble up unexpected exception', async (done) => {
       // Arrange
-      const dataToDelete = { data: 'some data' };
       const urlToDelete = 'an_url';
       const updateFn = jest.fn((data) => data);
 
       jest.spyOn(httpProxy, 'deleteReq').mockImplementation(async () => {
-        if (throwAnHttpConnAborted) {
-          const axiosError = new Error('timeout');
-          axiosError.code = 'ECONNABORTED';
-
-          throw new HttpError(axiosError.message, axiosError);
-        }
-
-        const dataToReturn = {};
-        dataToReturn[keyname] = dataToDelete;
-        return Promise.resolve(dataToReturn);
+        throw new Error('Unexpected exception');
       });
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
+      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
 
       jest.spyOn(actionManager, 'addAction');
 
-      // Act
-      await progressiveHttpProxy.deleteAndUpdate(urlToDelete, keyname, updateFn);
-
-      // Assert
-      expect(httpProxy.deleteReq).toBeCalledTimes(expectedHttpDeleteCall);
-      if (expectedHttpDeleteCall > 0) {
-        expect(httpProxy.deleteReq.mock.calls[0][0]).toStrictEqual(urlToDelete);
-      }
-
-      expect(actionManager.addAction).toBeCalledTimes(addActionNbCall);
-      if (addActionNbCall > 0) {
-        expect(actionManager.addAction.mock.calls[0][0].key).toStrictEqual(urlToDelete);
-        expect(actionManager.addAction.mock.calls[0][0].type).toStrictEqual(ActionType.Delete);
+      try {
+        // Act
+        await progressiveHttpProxy.deleteAndUpdate(urlToDelete, 'keyname', updateFn);
+      } catch (error) {
+        // Assert
+        expect(error.message).toBe('Unexpected exception');
+        expect(httpProxy.deleteReq).toBeCalledTimes(1);
+        expect(actionManager.addAction).toBeCalledTimes(0);
+        done();
       }
     });
   });
 
-  const getItemOnlineFirstItems = [
-    {
-      throwAnHttpConnAborted: false, isOnlineAndSync: true, keyname: 'keyname', expectedGetItemCall: 0, expectedHttpGetCall: 1, expectedSetItemCall: 1,
-    },
-    {
-      throwAnHttpConnAborted: false, isOnlineAndSync: false, keyname: 'keyname', expectedGetItemCall: 1, expectedHttpGetCall: 0, expectedSetItemCall: 0,
-    },
-    {
-      throwAnHttpConnAborted: true, isOnlineAndSync: true, keyname: 'keyname', expectedGetItemCall: 1, expectedHttpGetCall: 1, expectedSetItemCall: 0,
-    },
-  ];
-  describe.each(getItemOnlineFirstItems)('getOnlineFirst', ({
-    throwAnHttpConnAborted, isOnlineAndSync, keyname, expectedGetItemCall, expectedHttpGetCall, expectedSetItemCall,
-  }) => {
-    it('shoud call the http proxy or call the storageService', async () => {
+
+  describe('getOnlineFirst', () => {
+    const getItemOnlineFirstItems = [
+      {
+        throwAnHttpConnAborted: false, isOnlineAndSync: true, keyname: 'keyname', expectedGetItemCall: 0, expectedHttpGetCall: 1, expectedSetItemCall: 1,
+      },
+      {
+        throwAnHttpConnAborted: false, isOnlineAndSync: false, keyname: 'keyname', expectedGetItemCall: 1, expectedHttpGetCall: 0, expectedSetItemCall: 0,
+      },
+      {
+        throwAnHttpConnAborted: true, isOnlineAndSync: true, keyname: 'keyname', expectedGetItemCall: 1, expectedHttpGetCall: 1, expectedSetItemCall: 0,
+      },
+    ];
+    describe.each(getItemOnlineFirstItems)('getOnlineFirst', ({
+      throwAnHttpConnAborted, isOnlineAndSync, keyname, expectedGetItemCall, expectedHttpGetCall, expectedSetItemCall,
+    }) => {
+      it('shoud call the http proxy or call the storageService', async (done) => {
+        // Arrange
+        const dataToGet = { data: 'some data' };
+        const urlToGet = 'an_url';
+        const updateFn = jest.fn((data) => data);
+
+        jest.spyOn(httpProxy, 'get').mockImplementation(async () => {
+          if (throwAnHttpConnAborted) {
+            const axiosError = new Error('timeout');
+            axiosError.code = 'ECONNABORTED';
+
+            throw new HttpError(axiosError.message, axiosError);
+          }
+
+          const dataToReturn = {};
+          dataToReturn[keyname] = dataToGet;
+          return Promise.resolve(dataToReturn);
+        });
+
+        syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
+
+        jest.spyOn(storageService, 'getItem').mockImplementation(async () => Promise.resolve(dataToGet));
+        jest.spyOn(storageService, 'setItem');
+
+        // Act
+        const data = await progressiveHttpProxy.getOnlineFirst(urlToGet, keyname, updateFn);
+
+        // Assert
+        expect(data).toStrictEqual(dataToGet);
+
+        expect(httpProxy.get).toBeCalledTimes(expectedHttpGetCall);
+        if (expectedHttpGetCall > 0) {
+          expect(httpProxy.get.mock.calls[0][0]).toStrictEqual(urlToGet);
+        }
+
+        expect(storageService.setItem).toBeCalledTimes(expectedSetItemCall);
+        if (expectedSetItemCall > 0) {
+          expect(storageService.setItem.mock.calls[0][0]).toStrictEqual(urlToGet);
+          expect(storageService.setItem.mock.calls[0][1]).toStrictEqual(dataToGet);
+        }
+
+        expect(storageService.getItem).toBeCalledTimes(expectedGetItemCall);
+        if (expectedGetItemCall > 0) {
+          expect(storageService.getItem.mock.calls[0][0]).toStrictEqual(urlToGet);
+        }
+        done();
+      });
+    });
+
+    it('shoud bubble up unexpected exception', async (done) => {
       // Arrange
       const dataToGet = { data: 'some data' };
       const urlToGet = 'an_url';
       const updateFn = jest.fn((data) => data);
 
       jest.spyOn(httpProxy, 'get').mockImplementation(async () => {
-        if (throwAnHttpConnAborted) {
-          const axiosError = new Error('timeout');
-          axiosError.code = 'ECONNABORTED';
-
-          throw new HttpError(axiosError.message, axiosError);
-        }
-
-        const dataToReturn = {};
-        dataToReturn[keyname] = dataToGet;
-        return Promise.resolve(dataToReturn);
+        throw new Error('Unexpected exception');
       });
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
+      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
 
       jest.spyOn(storageService, 'getItem').mockImplementation(async () => Promise.resolve(dataToGet));
       jest.spyOn(storageService, 'setItem');
 
-      // Act
-      const data = await progressiveHttpProxy.getOnlineFirst(urlToGet, keyname, updateFn);
-
-      // Assert
-      expect(data).toStrictEqual(dataToGet);
-
-      expect(httpProxy.get).toBeCalledTimes(expectedHttpGetCall);
-      if (expectedHttpGetCall > 0) {
-        expect(httpProxy.get.mock.calls[0][0]).toStrictEqual(urlToGet);
-      }
-
-      expect(storageService.setItem).toBeCalledTimes(expectedSetItemCall);
-      if (expectedSetItemCall > 0) {
-        expect(storageService.setItem.mock.calls[0][0]).toStrictEqual(urlToGet);
-        expect(storageService.setItem.mock.calls[0][1]).toStrictEqual(dataToGet);
-      }
-
-      expect(storageService.getItem).toBeCalledTimes(expectedGetItemCall);
-      if (expectedGetItemCall > 0) {
-        expect(storageService.getItem.mock.calls[0][0]).toStrictEqual(urlToGet);
+      try {
+        // Act
+        await progressiveHttpProxy.getOnlineFirst(urlToGet, 'keyname', updateFn);
+      } catch (error) {
+        // Assert
+        expect(error.message).toBe('Unexpected exception');
+        expect(httpProxy.get).toBeCalledTimes(1);
+        expect(storageService.setItem).toBeCalledTimes(0);
+        expect(storageService.getItem).toBeCalledTimes(0);
+        done();
       }
     });
   });
+
 
   describe('getArrayOnlineFirst', () => {
     const getArrayOnlineFirstItems = [
