@@ -230,7 +230,7 @@ export default function MainPanel() {
                 </div>
               </div>
               <SyncAlert className="bottomright" />
-              <ErrorAlert error={error} onDismiss={dismissError} className="verytop bottomright" />
+              <ErrorAlert error={error} onDismiss={dismissError} className="verytop bottomright" timeoutInMs={5000} />
             </>
 
             {!user && (

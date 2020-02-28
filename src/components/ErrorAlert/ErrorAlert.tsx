@@ -1,10 +1,10 @@
 import React, {
   // eslint-disable-next-line no-unused-vars
-  useState, useEffect, ReactElement,
+  useState, useEffect, ReactElement, useRef,
 } from 'react';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
-import { Alert } from 'reactstrap';
+import { Alert, Fade } from 'reactstrap';
 import HttpError from '../../http/HttpError';
 
 import jsonMessages from './ErrorAlert.messages.json';
@@ -15,14 +15,39 @@ type Props = {
     error: Error | undefined;
     className?: string;
     onDismiss: () => void;
+    timeoutInMs: number;
 }
 
-const ErrorAlert = ({ error, onDismiss, className }:Props) => {
+const ErrorAlert = ({
+  error, onDismiss, className, timeoutInMs,
+}:Props) => {
   const [isVisible, setVisible] = useState(error !== undefined);
+  const timer = useRef<NodeJS.Timeout | undefined>(undefined);
+
+  const clearTimer = () => {
+    if (timer.current) {
+      clearTimeout(timer.current);
+    }
+  };
+
+  useEffect(() => () => {
+    clearTimer();
+  }, []);
 
   useEffect(() => {
-    setVisible(error !== undefined);
-  }, [error]);
+    setVisible((wasVisible) => {
+      if (error !== undefined) {
+        clearTimer();
+        timer.current = setTimeout(() => onDismiss(), timeoutInMs);
+      }
+
+      if (error === undefined && wasVisible) {
+        clearTimer();
+      }
+
+      return error !== undefined;
+    });
+  }, [error, timeoutInMs]);
 
   let message:string = '';
   if (error !== undefined) {
@@ -44,11 +69,9 @@ const ErrorAlert = ({ error, onDismiss, className }:Props) => {
   }
 
   return (
-    <>
-      <Alert color="danger" className={className} isOpen={isVisible} toggle={onDismiss}>
-        <div className="text-center">{msgElement}</div>
-      </Alert>
-    </>
+    <Alert color="danger" className={className} isOpen={isVisible} toggle={onDismiss} fade>
+      <div className="text-center">{msgElement}</div>
+    </Alert>
   );
 };
 
