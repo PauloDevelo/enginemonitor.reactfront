@@ -203,7 +203,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
   }
 
   private checkUserCredentialForUploadingImages() {
-    if (userContext.getCurrentUser()?.forbidUploadingImage) {
+    if (userContext.getCurrentUser() === undefined || userContext.getCurrentUser()?.forbidUploadingImage) {
       throw new HttpError({ message: 'credentialError' });
     }
   }
