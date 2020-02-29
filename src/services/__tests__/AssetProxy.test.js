@@ -138,7 +138,7 @@ describe('Test AsseProxy', () => {
     },
   ];
 
-  describe.only.each(createOrSaveAssetParams)('createOrSaveAsset', ({
+  describe.each(createOrSaveAssetParams)('createOrSaveAsset', ({
     isOnline, expectedPostCounter, expectedNbAsset, expectedNbAction,
   }) => {
     it(`when ${JSON.stringify({
