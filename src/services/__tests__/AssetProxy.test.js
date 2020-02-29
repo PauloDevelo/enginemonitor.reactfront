@@ -1,3 +1,4 @@
+// import localforage from 'localforage';
 import ignoredMessages from '../../testHelpers/MockConsole';
 
 import httpProxy from '../HttpProxy';
@@ -16,8 +17,11 @@ jest.mock('../SyncService');
 jest.mock('../AssetManager');
 jest.mock('../UserProxy');
 jest.mock('../UserContext');
+// jest.mock('localforage');
 
 describe('Test AsseProxy', () => {
+  const user = { email: 'test@gmail.com', forbidCreatingAsset: false };
+
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('The function AssetProxy.existAsset expects a non null and non undefined asset id.');
@@ -34,8 +38,8 @@ describe('Test AsseProxy', () => {
   };
 
   beforeEach(async () => {
-    const user = { email: 'test@gmail.com', forbidCreatingAsset: false };
-    storageService.openUserStorage(user);
+    user.forbidCreatingAsset = false;
+    await storageService.openUserStorage(user);
 
     assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
     assetManager.onAssetsChanged.mockImplementation(async () => {});
@@ -129,46 +133,70 @@ describe('Test AsseProxy', () => {
     });
   });
 
-  const createOrSaveAssetParams = [
-    {
-      isOnline: false, expectedPostCounter: 0, expectedNbAsset: 1, expectedNbAction: 1,
-    },
-    {
-      isOnline: true, expectedPostCounter: 1, expectedNbAsset: 1, expectedNbAction: 0,
-    },
-  ];
-
-  describe.each(createOrSaveAssetParams)('createOrSaveAsset', ({
-    isOnline, expectedPostCounter, expectedNbAsset, expectedNbAction,
-  }) => {
-    it(`when ${JSON.stringify({
+  describe('createOrSaveAsset', () => {
+    const createOrSaveAssetParams = [
+      {
+        isOnline: false, expectedPostCounter: 0, expectedNbAsset: 1, expectedNbAction: 1,
+      },
+      {
+        isOnline: true, expectedPostCounter: 1, expectedNbAsset: 1, expectedNbAction: 0,
+      },
+    ];
+    describe.each(createOrSaveAssetParams)('createOrSaveAsset', ({
       isOnline, expectedPostCounter, expectedNbAsset, expectedNbAction,
-    })}`, async () => {
-      // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
+    }) => {
+      it(`when ${JSON.stringify({
+        isOnline, expectedPostCounter, expectedNbAsset, expectedNbAction,
+      })}`, async () => {
+        // Arrange
+        syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
 
-      let postCounter = 0;
-      httpProxy.post.mockImplementation((url, data) => {
-        postCounter++;
-        return Promise.resolve(data);
+        let postCounter = 0;
+        httpProxy.post.mockImplementation((url, data) => {
+          postCounter++;
+          return Promise.resolve(data);
+        });
+
+        // Act
+        const assetSaved = await assetProxy.createOrSaveAsset(assetToSave);
+
+        // Assert
+        expect(postCounter).toBe(expectedPostCounter);
+        expect(assetSaved).toEqual(assetToSave);
+
+        const assets = await storageService.getItem(urlFetchAssets);
+        expect(assets.length).toBe(expectedNbAsset);
+
+        if (expectedNbAsset > 0) {
+          const storedAsset = updateAsset(assets[0]);
+          expect(storedAsset).toEqual(assetToSave);
+        }
+
+        expect(await actionManager.countAction()).toBe(expectedNbAction);
       });
+    });
 
-      // Act
-      const assetSaved = await assetProxy.createOrSaveAsset(assetToSave);
+    it('should throw an httperror exception with credential error when the user is forbid to create an asset', async (done) => {
+      // Arrange
+      user.forbidCreatingAsset = true;
+      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
+      jest.spyOn(httpProxy, 'post');
 
-      // Assert
-      expect(postCounter).toBe(expectedPostCounter);
-      expect(assetSaved).toEqual(assetToSave);
+      try {
+        // Act
+        await assetProxy.createOrSaveAsset(assetToSave);
+      } catch (error) {
+        // Assert
+        expect(error instanceof HttpError).toBe(true);
+        expect(error.data).toEqual({ message: 'credentialError' });
 
-      const assets = await storageService.getItem(urlFetchAssets);
-      expect(assets.length).toBe(expectedNbAsset);
+        expect(httpProxy.post).toBeCalledTimes(0);
 
-      if (expectedNbAsset > 0) {
-        const storedAsset = updateAsset(assets[0]);
-        expect(storedAsset).toEqual(assetToSave);
+        const assets = await storageService.getArray(urlFetchAssets);
+        expect(assets.length).toBe(0);
+        expect(await actionManager.countAction()).toBe(0);
+        done();
       }
-
-      expect(await actionManager.countAction()).toBe(expectedNbAction);
     });
   });
 

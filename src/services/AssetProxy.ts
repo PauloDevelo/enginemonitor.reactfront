@@ -11,6 +11,7 @@ import { updateAsset } from '../helpers/AssetHelper';
 import { AssetModel } from '../types/Types';
 import imageProxy from './ImageProxy';
 import userContext from './UserContext';
+import HttpError from '../http/HttpError';
 
 export interface IAssetProxy{
     fetchAssets(): Promise<AssetModel[]>;
