@@ -80,8 +80,7 @@ describe('Test AsseProxy', () => {
       await assetProxy.createOrSaveAsset(assetToSave);
 
       syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
-      httpProxy.get.mockImplementation((url) => {
-        console.log(url);
+      httpProxy.get.mockImplementation(() => {
         throw new HttpError('Unexpected error', { code: 'ECONNABORTED' });
       });
 
