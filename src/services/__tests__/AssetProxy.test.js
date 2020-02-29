@@ -6,7 +6,7 @@ import storageService from '../StorageService';
 import assetProxy from '../AssetProxy';
 import actionManager from '../ActionManager';
 import assetManager from '../AssetManager';
-
+import userContext from '../UserContext';
 import HttpError from '../../http/HttpError';
 
 import { updateAsset } from '../../helpers/AssetHelper';
@@ -15,6 +15,7 @@ jest.mock('../HttpProxy');
 jest.mock('../SyncService');
 jest.mock('../AssetManager');
 jest.mock('../UserProxy');
+jest.mock('../UserContext');
 
 describe('Test AsseProxy', () => {
   beforeAll(() => {
@@ -33,11 +34,13 @@ describe('Test AsseProxy', () => {
   };
 
   beforeEach(async () => {
-    const user = { email: 'test@gmail.com' };
+    const user = { email: 'test@gmail.com', forbidCreatingAsset: false };
     storageService.openUserStorage(user);
 
     assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
     assetManager.onAssetsChanged.mockImplementation(async () => {});
+
+    userContext.getCurrentUser.mockImplementation(() => user);
   });
 
   afterEach(async () => {
@@ -51,6 +54,8 @@ describe('Test AsseProxy', () => {
 
     assetManager.onAssetsChanged.mockRestore();
     assetManager.getUserCredentials.mockRestore();
+
+    userContext.getCurrentUser.mockRestore();
   });
 
   describe('fetchAsset', () => {
@@ -133,7 +138,7 @@ describe('Test AsseProxy', () => {
     },
   ];
 
-  describe.each(createOrSaveAssetParams)('createOrSaveAsset', ({
+  describe.only.each(createOrSaveAssetParams)('createOrSaveAsset', ({
     isOnline, expectedPostCounter, expectedNbAsset, expectedNbAction,
   }) => {
     it(`when ${JSON.stringify({

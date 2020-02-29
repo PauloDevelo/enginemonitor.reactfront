@@ -10,6 +10,7 @@ import { updateAsset } from '../helpers/AssetHelper';
 // eslint-disable-next-line no-unused-vars
 import { AssetModel } from '../types/Types';
 import imageProxy from './ImageProxy';
+import userContext from './UserContext';
 
 export interface IAssetProxy{
     fetchAssets(): Promise<AssetModel[]>;
@@ -34,7 +35,8 @@ class AssetProxy implements IAssetProxy {
     }
 
     createOrSaveAsset = async (assetToSave: AssetModel):Promise<AssetModel> => {
-      const updatedAsset = await progressiveHttpProxy.postAndUpdate<AssetModel>(this.baseUrl + assetToSave._uiId, 'asset', assetToSave, updateAsset);
+      this.checkAssetCreationCredential();
+      const updatedAsset = await progressiveHttpProxy.postAndUpdate<AssetModel>(this.baseUrl + assetToSave._uiId, 'asset', assetToSave, updateAsset, false);
       const updatedAssets = await storageService.updateArray(this.baseUrl, updatedAsset);
       await assetManager.onAssetsChanged(updatedAssets);
       return updatedAsset;
@@ -63,6 +65,13 @@ class AssetProxy implements IAssetProxy {
 
       const allAssets = await this.getStoredAsset();
       return allAssets.findIndex((asset) => asset._uiId === assetId) !== -1;
+    }
+
+    private checkAssetCreationCredential = () => {
+      const user = userContext.getCurrentUser();
+      if (user === undefined || user.forbidCreatingAsset === undefined || user.forbidCreatingAsset) {
+        throw new HttpError({ message: 'credentialError' });
+      }
     }
 }
 

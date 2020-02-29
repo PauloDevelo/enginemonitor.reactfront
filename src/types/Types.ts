@@ -73,7 +73,8 @@ export interface UserModel extends EntityModel {
     imageFolderSizeInByte: number,
     imageFolderSizeLimitInByte: number,
     imageFolder: string,
-    forbidUploadingImage?: boolean,
+    forbidUploadingImage: boolean,
+    forbidCreatingAsset: boolean,
     token: string,
 }
 

@@ -35,7 +35,7 @@ export interface ISyncHttpProxy{
      * @param dataToPost The data to send. The data will be in the field keyname of a container.
      * @param update Function that will update the returned data before sending it back the the callee.
      */
-    postAndUpdate<T>(url: string, keyName:string, dataToPost:T, update?:(date:T)=>T):Promise<T>;
+    postAndUpdate<T>(url: string, keyName:string, dataToPost:T, update?:(date:T)=>T, checkReadOnlyCredentials?: boolean):Promise<T>;
 
     /**
      * This function excute the http delete query and call the update function in the returned data.
@@ -96,10 +96,12 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
     return { ...imgToSave, sizeInByte: 450 * 1024 };
   }
 
-  async postAndUpdate<T>(url: string, keyName:string, dataToPost:T, update?:(data:T)=>T):Promise<T> {
-    const data:any = { [keyName]: dataToPost };
+  async postAndUpdate<T>(url: string, keyName:string, dataToPost:T, update?:(data:T)=>T, checkReadOnlyCredentials = true):Promise<T> {
+    if (checkReadOnlyCredentials) {
+      this.checkUserCredentialForPostingOrDeleting();
+    }
 
-    this.checkUserCredentialForPostingOrDeleting();
+    const data:any = { [keyName]: dataToPost };
 
     const addPostAction = async () => {
       const action: Action = { key: url, type: ActionType.Post, data };
@@ -203,13 +205,13 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
   }
 
   private checkUserCredentialForUploadingImages() {
-    if (userContext.getCurrentUser() === undefined || userContext.getCurrentUser()?.forbidUploadingImage) {
+    if (userContext.getCurrentUser() === undefined || userContext.getCurrentUser()?.forbidUploadingImage === undefined || userContext.getCurrentUser()?.forbidUploadingImage) {
       throw new HttpError({ message: 'credentialError' });
     }
   }
 
   private checkUserCredentialForPostingOrDeleting() {
-    if (assetManager.getUserCredentials() === undefined || assetManager.getUserCredentials()?.readonly) {
+    if (assetManager.getUserCredentials() === undefined || assetManager.getUserCredentials()?.readonly === undefined || assetManager.getUserCredentials()?.readonly) {
       throw new HttpError({ message: 'credentialError' });
     }
   }
