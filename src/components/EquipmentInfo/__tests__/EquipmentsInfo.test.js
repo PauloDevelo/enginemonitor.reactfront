@@ -88,7 +88,7 @@ describe('EquipmentsInfo', () => {
     storageService.getArray.mockRestore();
   });
 
-  it('Should render a equipment tabs with the first equipment selected', async () => {
+  it('Should render a equipment tabs with the first equipment selected', async (done) => {
     // Arrange
     const changeCurrentEquipment = jest.fn();
 
@@ -112,9 +112,10 @@ describe('EquipmentsInfo', () => {
     expect(navItems.at(0).props().active).toBe(true);
 
     expect(equipmentsInfo).toMatchSnapshot();
+    done();
   });
 
-  it('Should render a equipment tabs with the second equipment selected because we clicked on it', async () => {
+  it('Should render a equipment tabs with the second equipment selected because we clicked on it', async (done) => {
     // Arrange
     const changeCurrentEquipment = jest.fn();
 
@@ -142,9 +143,10 @@ describe('EquipmentsInfo', () => {
     expect(navItems.at(0).props().active).toBe(false);
     expect(navItems.at(1).props().active).toBe(true);
     expect(navItems.at(2).props().active).toBe(false);
+    done();
   });
 
-  it('Should render a new equipment tab because we created a new equipment', async () => {
+  it('Should render a new equipment tab because we created a new equipment', async (done) => {
     // Arrange
     const changeCurrentEquipment = jest.fn();
 
@@ -189,9 +191,10 @@ describe('EquipmentsInfo', () => {
     expect(navItems.at(1).props().active).toBe(false);
     expect(navItems.at(2).props().active).toBe(false);
     expect(navItems.at(3).props().active).toBe(true);
+    done();
   }, 10000);
 
-  it('Should render only 2 equipment tabs because we removed an equipment', async () => {
+  it('Should render only 2 equipment tabs because we removed an equipment', async (done) => {
     // Arrange
     const changeCurrentEquipment = jest.fn();
 
@@ -230,5 +233,6 @@ describe('EquipmentsInfo', () => {
     expect(navItems.length).toBe(equipments.length - 1);
     expect(navItems.at(0).props().active).toBe(true);
     expect(navItems.at(1).props().active).toBe(false);
+    done();
   });
 });
