@@ -23,15 +23,7 @@ chai.use(require('chai-datetime'));
 describe('TaskTable', () => {
   function getSortedTasks(taskArray) {
     const copyTaskArray = taskArray.concat([]);
-    return copyTaskArray.sort((a, b) => {
-      if (a.nextDueDate > b.nextDueDate) {
-        return -1;
-      }
-      if (a.nextDueDate < b.nextDueDate) {
-        return 1;
-      }
-      return 0;
-    });
+    return copyTaskArray.sort((a, b) => a.nextDueDate - b.nextDueDate);
   }
 
   const resizeWindow = (width, height) => {
@@ -179,7 +171,6 @@ describe('TaskTable', () => {
     await updateWrapper(taskTable);
 
     // Assert
-    const sortedTasks = getSortedTasks(tasks);
     const tbodyProps = taskTable.find('tbody').at(0).props();
     expect(tbodyProps.children.length).toBe(0);
 
