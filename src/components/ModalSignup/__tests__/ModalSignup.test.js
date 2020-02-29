@@ -37,6 +37,8 @@ describe('ModalSignup', () => {
     imageFolderSizeInByte: 0,
     imageFolderSizeLimitInByte: 0,
     imageFolder: '',
+    forbidCreatingAsset: false,
+    forbidUploadingImage: false,
     token: '',
   };
 

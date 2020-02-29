@@ -526,6 +526,8 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                               "_uiId": "user_01",
                               "email": "",
                               "firstname": "",
+                              "forbidCreatingAsset": false,
+                              "forbidUploadingImage": false,
                               "imageFolder": "",
                               "imageFolderSizeInByte": 0,
                               "imageFolderSizeLimitInByte": 0,
