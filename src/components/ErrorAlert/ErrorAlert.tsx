@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
-import { Alert, Fade } from 'reactstrap';
+import { Alert } from 'reactstrap';
 import HttpError from '../../http/HttpError';
 
 import jsonMessages from './ErrorAlert.messages.json';
@@ -47,7 +47,7 @@ const ErrorAlert = ({
 
       return error !== undefined;
     });
-  }, [error, timeoutInMs]);
+  }, [error, timeoutInMs, onDismiss]);
 
   let message:string = '';
   if (error !== undefined) {
