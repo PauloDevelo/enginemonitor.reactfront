@@ -21,6 +21,10 @@ export interface IOnlineManager {
 let onlineManager: IOnlineManager;
 
 class OnlineManager implements IOnlineManager {
+    private firstCheckBackendReachability: Promise<void>;
+
+    private backendReachable: boolean|undefined = undefined;
+
     private offlineModeActivated:boolean = false;
 
     private listeners: ((isOnline: boolean) => void)[] = [];
@@ -28,6 +32,19 @@ class OnlineManager implements IOnlineManager {
     constructor() {
       window.addEventListener('offline', async () => (onlineManager as OnlineManager).setIsOnline(await onlineManager.isOnline()));
       window.addEventListener('online', async () => (onlineManager as OnlineManager).setIsOnline(await onlineManager.isOnline()));
+
+      this.firstCheckBackendReachability = this.checkBackendReachability();
+      setInterval(this.checkBackendReachability, 15000);
+    }
+
+    // Function for the unit test. Since we cannot un load a module with import, I simulate a rebuild of onlineManager....
+    rebuild() {
+      this.backendReachable = undefined;
+      this.offlineModeActivated = false;
+      this.listeners = [];
+
+      this.firstCheckBackendReachability = this.checkBackendReachability();
+      setInterval(this.checkBackendReachability, 15000);
     }
 
     registerIsOnlineListener(listener: (isOnline: boolean) => void):void{
@@ -38,7 +55,7 @@ class OnlineManager implements IOnlineManager {
       this.listeners = this.listeners.filter((listener) => listener !== listenerToRemove);
     }
 
-    isOnline = async (): Promise<boolean> => window.navigator.onLine === true && this.isOfflineModeActivated() === false && this.isBackEndReachable()
+    isOnline = async (): Promise<boolean> => window.navigator.onLine === true && this.isOfflineModeActivated() === false && this.isBackendReachable()
 
     isSynced = async ():Promise<boolean> => (await actionManager.countAction()) === 0
 
@@ -57,13 +74,28 @@ class OnlineManager implements IOnlineManager {
       this.listeners.map((listener) => listener(isOnline));
     }
 
-    private isBackEndReachable = async (): Promise<boolean> => {
+    private checkBackendReachability = async (): Promise<void> => {
       try {
-        const { pong } = await httpProxy.get(`${process.env.REACT_APP_API_URL_BASE}server/ping`, { timeout: 1000 });
-        return pong;
+        const { pong } = await httpProxy.get(`${process.env.REACT_APP_API_URL_BASE}server/ping`, { timeout: 8000 });
+        this.setBackendReachable(pong);
       } catch (error) {
-        return Promise.resolve(false);
+        this.setBackendReachable(false);
       }
+    }
+
+    private setBackendReachable = (backendReachable: boolean) => {
+      if (this.backendReachable !== backendReachable) {
+        this.backendReachable = backendReachable;
+        this.isOnline().then((isOnline) => this.setIsOnline(isOnline));
+      }
+    }
+
+    private isBackendReachable = async (): Promise<boolean> => {
+      if (this.backendReachable === undefined) {
+        await this.firstCheckBackendReachability;
+      }
+
+      return this.backendReachable!;
     }
 
     private prevIsOnline: boolean | undefined;
