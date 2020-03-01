@@ -111,7 +111,7 @@ const ModalLogin = ({
 
   return (
     <>
-      <Modal isOpen={visible} className={className} fade>
+      <Modal isOpen={visible && state.state !== LoginState.LoggedIn} className={className} fade>
         <ModalHeader>
           <FontAwesomeIcon icon={faSignInAlt} />
           {' '}

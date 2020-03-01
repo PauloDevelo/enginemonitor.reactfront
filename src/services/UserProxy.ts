@@ -59,8 +59,8 @@ class UserProxy implements IUserProxy {
           storageService.setGlobalItem('currentUser', user);
         }
 
-        await storageService.openUserStorage(user);
-        await userContext.onUserChanged(user);
+        storageService.openUserStorage(user);
+        userContext.onUserChanged(user);
 
         return user;
       }
