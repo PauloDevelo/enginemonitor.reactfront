@@ -14,6 +14,13 @@ import storageService from './StorageService';
 import userContext from './UserContext';
 import assetManager from './AssetManager';
 
+const timeout = {
+  postImage: 5000,
+  post: 2000,
+  delete: 2000,
+  getArray: 2000,
+  getItem: 2000,
+};
 /**
  * This interface is an enhanced http proxy that manages offline mode.
  */
@@ -80,7 +87,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
 
     if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const { image } = await httpProxy.postImage(createImageUrl, imgToSave, blobImage, thumbnail);
+        const { image } = await httpProxy.postImage(createImageUrl, imgToSave, blobImage, thumbnail, { timeout: timeout.postImage });
         return image;
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
@@ -110,7 +117,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
 
     if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const savedData = (await httpProxy.post(url, data))[keyName];
+        const savedData = (await httpProxy.post(url, data, { timeout: timeout.post }))[keyName];
 
         return update ? update(savedData) : savedData;
       } catch (reason) {
@@ -137,7 +144,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
 
     if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const deletedEntity = (await httpProxy.deleteReq(url))[keyName];
+        const deletedEntity = (await httpProxy.deleteReq(url, { timeout: timeout.delete }))[keyName];
         if (update) {
           update(deletedEntity);
         }
@@ -156,7 +163,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
   async getArrayOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T[]> {
     if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const array = (await httpProxy.get(url, { cancelToken }))[keyName] as T[];
+        const array = (await httpProxy.get(url, { cancelToken, timeout: timeout.getArray }))[keyName] as T[];
 
         const initArray = init ? array.map(init) : array;
 
@@ -182,7 +189,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
   async getOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T> {
     if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const item = (await httpProxy.get(url, { cancelToken }))[keyName] as T;
+        const item = (await httpProxy.get(url, { cancelToken, timeout: timeout.getItem }))[keyName] as T;
         const updatedItem = init ? init(item) : item;
 
         storageService.setItem<T>(url, updatedItem);
