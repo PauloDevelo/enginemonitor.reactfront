@@ -1,7 +1,7 @@
 import HttpError from '../../http/HttpError';
 import httpProxy from '../HttpProxy';
 import storageService from '../StorageService';
-import syncService from '../SyncService';
+import onlineManager from '../OnlineManager';
 import actionManager, { ActionType } from '../ActionManager';
 import assetManager from '../AssetManager';
 import userContext from '../UserContext';
@@ -12,7 +12,7 @@ import progressiveHttpProxy from '../ProgressiveHttpProxy';
 
 jest.mock('../HttpProxy');
 jest.mock('../StorageService');
-jest.mock('../SyncService');
+jest.mock('../OnlineManager');
 jest.mock('../ActionManager');
 jest.mock('../AssetManager');
 jest.mock('../UserContext');
@@ -36,7 +36,7 @@ describe('Test ProgressiveHttpProxy', () => {
   }
 
   function resetMockSyncService() {
-    syncService.isOnlineAndSynced.mockReset();
+    onlineManager.isOnlineAndSynced.mockReset();
   }
 
   function resetMockActionManager() {
@@ -100,7 +100,7 @@ describe('Test ProgressiveHttpProxy', () => {
           return Promise.resolve({ image: imageMetaData });
         });
 
-        syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
+        onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
 
         jest.spyOn(actionManager, 'addAction');
 
@@ -143,7 +143,7 @@ describe('Test ProgressiveHttpProxy', () => {
         throw new Error('An unexpected exception');
       });
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
 
       jest.spyOn(actionManager, 'addAction');
 
@@ -193,7 +193,7 @@ describe('Test ProgressiveHttpProxy', () => {
           return Promise.resolve(data);
         });
 
-        syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
+        onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
 
         jest.spyOn(actionManager, 'addAction');
 
@@ -229,7 +229,7 @@ describe('Test ProgressiveHttpProxy', () => {
         throw new Error('unexpected error');
       });
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
 
       jest.spyOn(actionManager, 'addAction');
 
@@ -280,7 +280,7 @@ describe('Test ProgressiveHttpProxy', () => {
           return Promise.resolve(dataToReturn);
         });
 
-        syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
+        onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
 
         jest.spyOn(actionManager, 'addAction');
 
@@ -311,7 +311,7 @@ describe('Test ProgressiveHttpProxy', () => {
         throw new Error('Unexpected exception');
       });
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
 
       jest.spyOn(actionManager, 'addAction');
 
@@ -363,7 +363,7 @@ describe('Test ProgressiveHttpProxy', () => {
           return Promise.resolve(dataToReturn);
         });
 
-        syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
+        onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
 
         jest.spyOn(storageService, 'getItem').mockImplementation(async () => Promise.resolve(dataToGet));
         jest.spyOn(storageService, 'setItem');
@@ -403,7 +403,7 @@ describe('Test ProgressiveHttpProxy', () => {
         throw new Error('Unexpected exception');
       });
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
 
       jest.spyOn(storageService, 'getItem').mockImplementation(async () => Promise.resolve(dataToGet));
       jest.spyOn(storageService, 'setItem');
@@ -457,7 +457,7 @@ describe('Test ProgressiveHttpProxy', () => {
           return Promise.resolve(dataToReturn);
         });
 
-        syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
+        onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
 
         jest.spyOn(storageService, 'getArray').mockImplementation(async () => Promise.resolve(dataToGet));
         jest.spyOn(storageService, 'setItem');
@@ -494,7 +494,7 @@ describe('Test ProgressiveHttpProxy', () => {
         throw new Error('An unexpected error');
       });
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
 
       try {
         // Act
@@ -522,7 +522,7 @@ describe('Test ProgressiveHttpProxy', () => {
 
       jest.spyOn(httpProxy, 'post').mockImplementation(async (url, data) => Promise.resolve(data));
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnline));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnline));
 
       jest.spyOn(actionManager, 'addAction');
 
@@ -552,7 +552,7 @@ describe('Test ProgressiveHttpProxy', () => {
         return Promise.resolve(dataToReturn);
       });
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnline));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnline));
 
       jest.spyOn(actionManager, 'addAction');
 
@@ -582,7 +582,7 @@ describe('Test ProgressiveHttpProxy', () => {
 
       jest.spyOn(httpProxy, 'postImage').mockImplementation(async (url, imageMetaData) => Promise.resolve({ image: imageMetaData }));
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnline));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnline));
 
       jest.spyOn(actionManager, 'addAction');
 

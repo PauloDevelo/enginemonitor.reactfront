@@ -3,7 +3,7 @@ import uuidv1 from 'uuid/v1.js';
 
 import httpProxy from './HttpProxy';
 import progressiveHttpProxy from './ProgressiveHttpProxy';
-import syncService from './SyncService';
+import onlineManager from './OnlineManager';
 
 import storageService from './StorageService';
 
@@ -38,7 +38,7 @@ class GuestLinkProxy implements IGuestLinkProxy {
     baseUrl = `${process.env.REACT_APP_API_URL_BASE}guestlinks/`;
 
     createGuestLink = async (assetUiId: string, nameGuestLink: string): Promise<GuestLinkModel> => {
-      if (await syncService.isOnline() === false) {
+      if (await onlineManager.isOnline() === false) {
         throw new HttpError('mustBeOnlineForSharedLinkCreation');
       }
 
@@ -57,7 +57,7 @@ class GuestLinkProxy implements IGuestLinkProxy {
     getGuestLinks = async (assetUiId: string): Promise<GuestLinkModel[]> => progressiveHttpProxy.getArrayOnlineFirst(this.getGuestLinksUrl(assetUiId), 'guestlinks')
 
     removeGuestLink = async (guestLinkUiId: string, assetUiId: string): Promise<GuestLinkModel> => {
-      if (await syncService.isOnline() === false) {
+      if (await onlineManager.isOnline() === false) {
         throw new HttpError('mustBeOnlineForSharedLinkDeletion');
       }
 
@@ -70,7 +70,7 @@ class GuestLinkProxy implements IGuestLinkProxy {
     }
 
     tryGetAndSetUserFromNiceKey = async (niceKey: string):Promise<UserModel | undefined> => {
-      if (await syncService.isOnline()) {
+      if (await onlineManager.isOnline()) {
         try {
           const { user }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}nicekey/${niceKey}`);
           if (user) {

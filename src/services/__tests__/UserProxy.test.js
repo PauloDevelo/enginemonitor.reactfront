@@ -2,18 +2,22 @@ import ignoredMessages from '../../testHelpers/MockConsole';
 import httpProxy from '../HttpProxy';
 import storageService from '../StorageService';
 import userProxy from '../UserProxy';
-import syncService from '../SyncService';
+import onlineManager from '../OnlineManager';
 import assetProxy from '../AssetProxy';
 
 jest.mock('../HttpProxy');
 jest.mock('../StorageService');
-jest.mock('../SyncService');
+jest.mock('../OnlineManager');
 jest.mock('../AssetProxy');
 
 describe('Test UserProxy', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('an error happened');
+  });
+
+  beforeEach(() => {
+    assetProxy.fetchAssets.mockImplementation(async () => Promise.resolve([]));
   });
 
   afterEach(() => {
@@ -30,11 +34,7 @@ describe('Test UserProxy', () => {
 
     assetProxy.fetchAssets.mockReset();
 
-    syncService.isOnline.mockReset();
-  });
-
-  beforeEach(() => {
-    assetProxy.fetchAssets.mockImplementation(async () => Promise.resolve([]));
+    onlineManager.isOnline.mockReset();
   });
 
   describe('tryGetAndSetMemorizedUser', () => {
@@ -47,7 +47,7 @@ describe('Test UserProxy', () => {
         token: 'jwt',
       };
 
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(false));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(false));
 
       storageService.getGlobalItem.mockImplementation((key) => Promise.resolve(key === 'currentUser' ? user : null));
       storageService.existGlobalItem.mockImplementation(async (key) => Promise.resolve(key === 'currentUser'));
@@ -71,7 +71,7 @@ describe('Test UserProxy', () => {
         token: 'jwt',
       };
 
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       httpProxy.get.mockImplementation(async () => Promise.resolve({ user }));
 
       storageService.getGlobalItem.mockImplementation((key) => Promise.resolve(key === 'currentUser' ? user : null));
@@ -96,7 +96,7 @@ describe('Test UserProxy', () => {
         token: 'jwt',
       };
 
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       httpProxy.get.mockImplementation(async () => {
         throw new Error('an error happened');
       });

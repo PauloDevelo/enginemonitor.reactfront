@@ -2,7 +2,7 @@ import * as log from 'loglevel';
 import httpProxy from './HttpProxy';
 import progressiveHttpProxy from './ProgressiveHttpProxy';
 import HttpError from '../http/HttpError';
-import syncService from './SyncService';
+import onlineManager from './OnlineManager';
 
 import storageService from './StorageService';
 
@@ -84,7 +84,7 @@ class UserProxy implements IUserProxy {
         if (rememberedUser) {
           this.setHttpProxyAuthentication(rememberedUser);
 
-          if (await syncService.isOnline()) {
+          if (await onlineManager.isOnline()) {
             try {
               const { user: currentUser }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}current`);
               if (currentUser) {

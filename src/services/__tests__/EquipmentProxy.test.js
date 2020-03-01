@@ -1,7 +1,7 @@
 import ignoredMessages from '../../testHelpers/MockConsole';
 import httpProxy from '../HttpProxy';
 import userProxy from '../UserProxy';
-import syncService from '../SyncService';
+import onlineManager from '../OnlineManager';
 import storageService from '../StorageService';
 import equipmentProxy from '../EquipmentProxy';
 import actionManager from '../ActionManager';
@@ -14,7 +14,7 @@ import { updateEquipment } from '../../helpers/EquipmentHelper';
 import HttpError from '../../http/HttpError';
 
 jest.mock('../HttpProxy');
-jest.mock('../SyncService');
+jest.mock('../OnlineManager');
 jest.mock('../UserProxy');
 jest.mock('../EntryProxy');
 jest.mock('../TaskProxy');
@@ -65,13 +65,14 @@ describe('Test EquipmentProxy', () => {
     entryProxy.onEquipmentDeleted.mockRestore();
     taskProxy.onEquipmentDeleted.mockRestore();
     imageProxy.onEntityDeleted.mockRestore();
+    onlineManager.isOnlineAndSynced.mockRestore();
   });
 
   const onlineModes = [{ isOnline: false }, { isOnline: true }];
   describe('fetchEquipments', () => {
     it('should get the equipments online first and update the storage', async (done) => {
       // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
       httpProxy.get.mockImplementation(async (url) => {
         if (url === urlFetchEquipment) {
           return (
@@ -98,7 +99,7 @@ describe('Test EquipmentProxy', () => {
 
     it('should get the equipments offline as well', async (done) => {
       // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
 
       // Act
       const equipments = await equipmentProxy.fetchEquipments();
@@ -121,7 +122,7 @@ describe('Test EquipmentProxy', () => {
   describe.each(createOrSaveEquipmentParams)('createOrSaveEquipment', (arg) => {
     it(`when ${JSON.stringify(arg)}`, async () => {
       // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
       let postCounter = 0;
       httpProxy.post.mockImplementation((url, data) => {
@@ -159,7 +160,7 @@ describe('Test EquipmentProxy', () => {
   describe.each(deleteEquipmentParams)('deleteEquipment', (arg) => {
     it(`when ${JSON.stringify(arg)}`, async () => {
       // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
       httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
       const savedEquipment = await equipmentProxy.createOrSaveEquipment(equipmentToSave);
@@ -195,7 +196,7 @@ describe('Test EquipmentProxy', () => {
   describe.each(existEquipmentParams)('existEquipment', (arg) => {
     it(`when ${JSON.stringify(arg)}`, async () => {
       // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
       let getCounter = 0;
       httpProxy.get.mockImplementation(async (url) => {
@@ -234,7 +235,7 @@ describe('Test EquipmentProxy', () => {
     describe.each(onlineModes)('createOrSaveEquipment', ({ isOnline }) => {
       it(`when ${JSON.stringify({ isOnline })}`, async (done) => {
         // Arrange
-        syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
+        onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
 
         let postCounter = 0;
         httpProxy.post.mockImplementation((url, data) => {
@@ -263,7 +264,7 @@ describe('Test EquipmentProxy', () => {
     describe.each(onlineModes)('deleteEquipment', ({ isOnline }) => {
       it(`when ${JSON.stringify({ isOnline })}`, async () => {
         // Arrange
-        syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
+        onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
 
         httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
 

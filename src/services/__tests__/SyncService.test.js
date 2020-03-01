@@ -1,146 +1,39 @@
 import ignoredMessages from '../../testHelpers/MockConsole';
 // eslint-disable-next-line no-unused-vars
 import syncService, { SyncContext } from '../SyncService';
+import onlineManager from '../OnlineManager';
+import storageService from '../StorageService';
 import actionManager, { NoActionPendingError, ActionType } from '../ActionManager';
 import httpProxy from '../HttpProxy';
 
 jest.mock('../ActionManager');
 jest.mock('../HttpProxy');
+jest.mock('../OnlineManager');
+jest.mock('../StorageService');
 
 describe('Test SyncService', () => {
-  let isOnlineGetter;
-
-  beforeEach(() => {
-    isOnlineGetter = jest.spyOn(window.navigator, 'onLine', 'get');
-  });
-
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('undefined used as a key, but it is not a string.');
     ignoredMessages.push('something wrong happened');
   });
 
+  beforeEach(() => {
+    onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
+    storageService.isUserStorageOpened.mockImplementation(() => true);
+  });
+
   afterEach(async () => {
-    isOnlineGetter.mockRestore();
     actionManager.getNextActionToPerform.mockRestore();
     actionManager.countAction.mockRestore();
     actionManager.performAction.mockRestore();
     actionManager.putBackAction.mockRestore();
 
+    onlineManager.isOnline.mockRestore();
+
+    storageService.isUserStorageOpened.mockRestore();
+
     httpProxy.get.mockRestore();
-  });
-
-  const isOnlineParams = [
-    {
-      isOnline: true, offlineMode: false, pong: true, expectedIsOnLineResult: true,
-    },
-    {
-      isOnline: true, offlineMode: true, pong: true, expectedIsOnLineResult: false,
-    },
-    {
-      isOnline: false, offlineMode: false, pong: true, expectedIsOnLineResult: false,
-    },
-    {
-      isOnline: false, offlineMode: true, pong: true, expectedIsOnLineResult: false,
-    },
-    {
-      isOnline: true, offlineMode: false, pong: false, expectedIsOnLineResult: false,
-    },
-    {
-      isOnline: true, offlineMode: true, pong: false, expectedIsOnLineResult: false,
-    },
-    {
-      isOnline: false, offlineMode: false, pong: false, expectedIsOnLineResult: false,
-    },
-    {
-      isOnline: false, offlineMode: true, pong: false, expectedIsOnLineResult: false,
-    },
-  ];
-  describe.each(isOnlineParams)('isOnline', ({
-    isOnline, offlineMode, pong, expectedIsOnLineResult,
-  }) => {
-    it(`When the browser detects internet is ${isOnline}, and offline mode is ${offlineMode} the sync service should return isOnline ${expectedIsOnLineResult}`, async () => {
-      // Arrange
-      actionManager.getNextActionToPerform.mockImplementation(() => {
-        throw new NoActionPendingError();
-      });
-
-      isOnlineGetter.mockReturnValue(isOnline);
-      syncService.setOfflineMode(offlineMode);
-      jest.spyOn(httpProxy, 'get').mockImplementation(async () => Promise.resolve({ pong }));
-
-      // Act
-      const isOnlineReturned = await syncService.isOnline();
-
-      // Assert
-      expect(isOnlineReturned).toBe(expectedIsOnLineResult);
-    });
-  });
-
-  const isSyncedParams = [
-    { nbAction: 0, expectedIsSynced: true },
-    { nbAction: 15, expectedIsSynced: false },
-  ];
-  describe.each(isSyncedParams)('isSynced', ({ nbAction, expectedIsSynced }) => {
-    it(`When the action manager has ${nbAction} to sync, isSynced should be ${expectedIsSynced}`, async () => {
-      // Arrange
-      jest.spyOn(actionManager, 'countAction').mockImplementation(() => Promise.resolve(nbAction));
-
-      // Act
-      const isSyncedReturned = await syncService.isSynced();
-
-      // Assert
-      expect(isSyncedReturned).toBe(expectedIsSynced);
-    });
-  });
-
-  const isOnlineAndSyncedParams = [
-    {
-      isOnline: true, offlineMode: false, nbAction: 0, expectedIsOnLineAndSyncedResult: true,
-    },
-    {
-      isOnline: true, offlineMode: true, nbAction: 0, expectedIsOnLineAndSyncedResult: false,
-    },
-    {
-      isOnline: false, offlineMode: false, nbAction: 0, expectedIsOnLineAndSyncedResult: false,
-    },
-    {
-      isOnline: false, offlineMode: true, nbAction: 0, expectedIsOnLineAndSyncedResult: false,
-    },
-    {
-      isOnline: true, offlineMode: false, nbAction: 15, expectedIsOnLineAndSyncedResult: false,
-    },
-    {
-      isOnline: true, offlineMode: true, nbAction: 15, expectedIsOnLineAndSyncedResult: false,
-    },
-    {
-      isOnline: false, offlineMode: false, nbAction: 15, expectedIsOnLineAndSyncedResult: false,
-    },
-    {
-      isOnline: false, offlineMode: true, nbAction: 15, expectedIsOnLineAndSyncedResult: false,
-    },
-  ];
-  describe.each(isOnlineAndSyncedParams)('isOnlineAndSynced', ({
-    isOnline, offlineMode, nbAction, expectedIsOnLineAndSyncedResult,
-  }) => {
-    it(`When the browser detects internet is ${isOnline}, and offline mode is ${offlineMode} and the action manager has ${nbAction} to sync, the sync service should return isOnlineAndSync to be ${expectedIsOnLineAndSyncedResult}`, async () => {
-      // Arrange
-      jest.spyOn(actionManager, 'getNextActionToPerform').mockImplementation(() => {
-        throw new NoActionPendingError();
-      });
-      jest.spyOn(actionManager, 'countAction').mockImplementation(() => Promise.resolve(nbAction));
-
-      isOnlineGetter.mockReturnValue(isOnline);
-      syncService.setOfflineMode(offlineMode);
-
-      jest.spyOn(httpProxy, 'get').mockImplementation(async () => Promise.resolve({ pong: true }));
-
-      // Act
-      const isOnlineAndSyncedReturned = await syncService.isOnlineAndSynced();
-
-      // Assert
-      expect(isOnlineAndSyncedReturned).toBe(expectedIsOnLineAndSyncedResult);
-    });
   });
 
   describe('synchronize', () => {
@@ -161,11 +54,56 @@ describe('Test SyncService', () => {
 
       // Assert
       expect(syncListener).toHaveBeenCalledTimes(2);
-
       expect(syncContext).not.toBeUndefined();
       expect(syncContext.isSyncing).toBe(false);
       expect(syncContext.totalActionToSync).toBe(0);
       expect(syncContext.remainingActionToSync).toBe(0);
+
+      syncService.unregisterSyncListener(syncListener);
+      done();
+    });
+
+    it('should do nothing if not online', async (done) => {
+      // Arrange
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(false));
+      actionManager.countAction.mockImplementation(() => Promise.resolve(2));
+
+      const action1 = {
+        type: ActionType.Post,
+        key: 'http://localhost/post/something',
+        data: 'anything',
+      };
+
+      const action2 = {
+        type: ActionType.Delete,
+        key: 'http://localhost/delete/something',
+        data: 'anything',
+      };
+
+      const getNextActionToPerform = jest.spyOn(actionManager, 'getNextActionToPerform');
+      getNextActionToPerform.mockImplementationOnce(() => Promise.resolve(action1));
+      getNextActionToPerform.mockImplementationOnce(() => Promise.resolve(action2));
+      getNextActionToPerform.mockImplementationOnce(() => { throw new NoActionPendingError(); });
+
+      const performedActions = [];
+      const performAction = jest.spyOn(actionManager, 'performAction');
+      performAction.mockImplementation((action) => performedActions.push(action));
+
+      const contexts = [];
+      const syncListener = jest.fn();
+      syncListener.mockImplementation((context) => {
+        contexts.push(context);
+      });
+
+      syncService.registerSyncListener(syncListener);
+
+      // Act
+      await syncService.synchronize();
+
+      // Assert
+      expect(syncListener).toHaveBeenCalledTimes(0);
+      expect(getNextActionToPerform).toBeCalledTimes(0);
+      expect(performAction).toBeCalledTimes(0);
 
       syncService.unregisterSyncListener(syncListener);
       done();

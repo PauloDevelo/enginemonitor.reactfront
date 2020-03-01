@@ -2,7 +2,7 @@
 import ignoredMessages from '../../testHelpers/MockConsole';
 
 import httpProxy from '../HttpProxy';
-import syncService from '../SyncService';
+import onlineManager from '../OnlineManager';
 import storageService from '../StorageService';
 import assetProxy from '../AssetProxy';
 import actionManager from '../ActionManager';
@@ -13,7 +13,7 @@ import HttpError from '../../http/HttpError';
 import { updateAsset } from '../../helpers/AssetHelper';
 
 jest.mock('../HttpProxy');
-jest.mock('../SyncService');
+jest.mock('../OnlineManager');
 jest.mock('../AssetManager');
 jest.mock('../UserProxy');
 jest.mock('../UserContext');
@@ -60,12 +60,14 @@ describe('Test AsseProxy', () => {
     assetManager.getUserCredentials.mockRestore();
 
     userContext.getCurrentUser.mockRestore();
+
+    onlineManager.isOnlineAndSynced.mockRestore();
   });
 
   describe('fetchAsset', () => {
     it('should try to get the asset from the backend when online', async (done) => {
       // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
       httpProxy.get.mockImplementation((url) => {
         if (url === urlFetchAssets) {
           return Promise.resolve({ assets: [assetToSave] });
@@ -88,7 +90,7 @@ describe('Test AsseProxy', () => {
       httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
       await assetProxy.createOrSaveAsset(assetToSave);
 
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
       httpProxy.get.mockImplementation(() => {
         throw new HttpError('Unexpected error', { code: 'ECONNABORTED' });
       });
@@ -104,7 +106,7 @@ describe('Test AsseProxy', () => {
 
     it('should try to get the asset from the local storage when offline', async (done) => {
       // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
 
       httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
       await assetProxy.createOrSaveAsset(assetToSave);
@@ -119,7 +121,7 @@ describe('Test AsseProxy', () => {
 
     it('should try to get the asset from the local storage when force to', async (done) => {
       // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
 
       httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
       await assetProxy.createOrSaveAsset(assetToSave);
@@ -149,7 +151,7 @@ describe('Test AsseProxy', () => {
         isOnline, expectedPostCounter, expectedNbAsset, expectedNbAction,
       })}`, async () => {
         // Arrange
-        syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
+        onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
 
         let postCounter = 0;
         httpProxy.post.mockImplementation((url, data) => {
@@ -179,7 +181,7 @@ describe('Test AsseProxy', () => {
     it('should throw an httperror exception with credential error when the user is forbid to create an asset', async (done) => {
       // Arrange
       user.forbidCreatingAsset = true;
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
       jest.spyOn(httpProxy, 'post');
 
       try {
@@ -215,7 +217,7 @@ describe('Test AsseProxy', () => {
       isOnline, expectedDeleteCounter, expectedNbAsset, expectedNbAction,
     })}`, async () => {
       // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
 
       httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
       const savedAsset = await assetProxy.createOrSaveAsset(assetToSave);
@@ -255,7 +257,7 @@ describe('Test AsseProxy', () => {
       isOnline, assetId, expectedResult,
     })}`, async () => {
       // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
 
       let getCounter = 0;
       httpProxy.get.mockImplementation((url) => {

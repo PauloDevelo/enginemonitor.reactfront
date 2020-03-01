@@ -2,7 +2,7 @@ import { AssertionError } from 'assert';
 import ignoredMessages from '../../testHelpers/MockConsole';
 
 import httpProxy from '../HttpProxy';
-import syncService from '../SyncService';
+import onlineManager from '../OnlineManager';
 import storageService from '../StorageService';
 import assetManager from '../AssetManager';
 import guestLinkProxy from '../GuestLinkProxy';
@@ -10,7 +10,7 @@ import HttpError from '../../http/HttpError';
 import userContext from '../UserContext';
 
 jest.mock('../HttpProxy');
-jest.mock('../SyncService');
+jest.mock('../OnlineManager');
 jest.mock('../AssetManager');
 jest.mock('../StorageService');
 
@@ -42,7 +42,7 @@ describe('Test GuestLinkProxy', () => {
     httpProxy.deleteReq.mockRestore();
     httpProxy.get.mockRestore();
 
-    syncService.isOnline.mockRestore();
+    onlineManager.isOnline.mockRestore();
 
     assetManager.getUserCredentials.mockRestore();
   });
@@ -50,7 +50,7 @@ describe('Test GuestLinkProxy', () => {
   describe('createGuestLink', () => {
     it('it should throw an exception if not online', async (done) => {
       // Arrange
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(false));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(false));
 
       // Act
       try {
@@ -65,7 +65,7 @@ describe('Test GuestLinkProxy', () => {
 
     it('it should throw an exception if the user does not enough credentials', async (done) => {
       // Arrange
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       assetManager.getUserCredentials.mockImplementation(() => ({ readonly: true }));
 
       // Act
@@ -81,7 +81,7 @@ describe('Test GuestLinkProxy', () => {
 
     it('it should post the expected data to the correct url', async (done) => {
       // Arrange
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
       httpProxy.post.mockImplementation(async (url, data) => {
         if (url === `${process.env.REACT_APP_API_URL_BASE}guestlinks/`) {
@@ -107,7 +107,7 @@ describe('Test GuestLinkProxy', () => {
     it('it should add the new guestlink into the asset guestlink array in the storage', async (done) => {
       // Arrange
       const newGuestLink = { data: 'somedata' };
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
       httpProxy.post.mockImplementation(async () => ({ guestlink: newGuestLink }));
       storageService.updateArray.mockImplementation((key, data) => {
@@ -133,7 +133,7 @@ describe('Test GuestLinkProxy', () => {
       // Arrange
       const guestLink = { data: 'somedata' };
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
       storageService.setItem.mockImplementation(async () => {});
       httpProxy.get.mockImplementation(async (url) => {
         if (url === `${process.env.REACT_APP_API_URL_BASE}guestlinks/asset/an_asset_ui_id`) {
@@ -158,7 +158,7 @@ describe('Test GuestLinkProxy', () => {
       // Arrange
       const guestLink = { data: 'somedata' };
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(false));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(false));
       storageService.getArray.mockImplementation(async () => [guestLink]);
 
       // Act
@@ -175,7 +175,7 @@ describe('Test GuestLinkProxy', () => {
   describe('removeGuestLink', () => {
     it('it should throw an exception if not online', async (done) => {
       // Arrange
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(false));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(false));
 
       // Act
       try {
@@ -190,7 +190,7 @@ describe('Test GuestLinkProxy', () => {
 
     it('it should throw an exception if the user does not have enough credentials', async (done) => {
       // Arrange
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       assetManager.getUserCredentials.mockImplementation(() => ({ readonly: true }));
 
       // Act
@@ -206,7 +206,7 @@ describe('Test GuestLinkProxy', () => {
 
     it('it should post the expected data to the correct url', async (done) => {
       // Arrange
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
       httpProxy.deleteReq.mockImplementation(async (url) => {
         if (url === `${process.env.REACT_APP_API_URL_BASE}guestlinks/a_guestlink_uiid`) {
@@ -228,7 +228,7 @@ describe('Test GuestLinkProxy', () => {
 
     it('it should remove the guestlink into the asset guestlink array in the storage', async (done) => {
       // Arrange
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
       httpProxy.deleteReq.mockImplementation(async (url) => {
         if (url === `${process.env.REACT_APP_API_URL_BASE}guestlinks/a_guestlink_uiid`) {
@@ -260,7 +260,7 @@ describe('Test GuestLinkProxy', () => {
   describe('tryGetAndSetUserFromNiceKey', () => {
     it('should return undefined when offline', async (done) => {
       // Arrange
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(false));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(false));
 
       // Act
       const guest = await guestLinkProxy.tryGetAndSetUserFromNiceKey('a_nice_key');
@@ -279,7 +279,7 @@ describe('Test GuestLinkProxy', () => {
         token: 'jwt',
       };
 
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       httpProxy.get.mockImplementation(async (url) => {
         if (url === `${process.env.REACT_APP_API_URL_BASE}guestlinks/nicekey/a_nice_key`) {
           return Promise.resolve(

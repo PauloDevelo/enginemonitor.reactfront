@@ -17,7 +17,7 @@ import ModalEditAsset from '../ModalEditAsset/ModalEditAsset';
 import ImageFolderGauge from './ImageFolderGauge';
 
 import userProxy from '../../services/UserProxy';
-import syncService from '../../services/SyncService';
+import onlineManager from '../../services/OnlineManager';
 
 // eslint-disable-next-line no-unused-vars
 import { UserModel, AssetModel } from '../../types/Types';
@@ -42,7 +42,7 @@ const NavBar = ({ onLoggedOut }:Props) => {
   const [userImageFolderSize, setUserImageFolderSize] = useState(currentUser !== undefined ? currentUser.imageFolderSizeInByte : 0);
   const [aboutVisible, setAboutVisibility] = useState(false);
   const [assetEditionModalVisibility, setAssetEditionModalVisibility] = useState(false);
-  const [offline, setOffline] = useState(syncService.isOfflineModeActivated());
+  const [offline, setOffline] = useState(onlineManager.isOfflineModeActivated());
 
   const [currentAsset, setCurrentAsset] = useState<AssetModel | undefined>(undefined);
   const [titleNavBar, setTitleNavBar] = useState('');
@@ -88,7 +88,7 @@ const NavBar = ({ onLoggedOut }:Props) => {
 
   const offlineSwitch = useCallback((isOffline: boolean):void => {
     setOffline(isOffline);
-    syncService.setOfflineMode(isOffline);
+    onlineManager.setOfflineMode(isOffline);
   }, []);
 
   const toggleAbout = useCallback(() => {

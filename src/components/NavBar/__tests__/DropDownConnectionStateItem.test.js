@@ -5,6 +5,7 @@ import { mount } from 'enzyme';
 import localforage from 'localforage';
 import actionManager from '../../../services/ActionManager';
 import syncService from '../../../services/SyncService';
+import onlineManager from '../../../services/OnlineManager';
 
 import DropDownConnectionStateItem from '../DropDownConnectionStateItem';
 
@@ -14,6 +15,7 @@ import updateWrapper from '../../../testHelpers/EnzymeHelper';
 jest.mock('localforage');
 jest.mock('../../../services/ActionManager');
 jest.mock('../../../services/SyncService');
+jest.mock('../../../services/OnlineManager');
 
 describe('DropDownConnectionStateItem', () => {
   beforeAll(() => {
@@ -23,17 +25,17 @@ describe('DropDownConnectionStateItem', () => {
   });
 
   beforeEach(() => {
-    jest.spyOn(syncService, 'registerIsOnlineListener');
-    jest.spyOn(syncService, 'unregisterIsOnlineListener');
+    jest.spyOn(onlineManager, 'registerIsOnlineListener');
+    jest.spyOn(onlineManager, 'unregisterIsOnlineListener');
 
     jest.spyOn(actionManager, 'registerOnActionManagerChanged');
     jest.spyOn(actionManager, 'unregisterOnActionManagerChanged');
   });
 
   afterEach(async () => {
-    syncService.registerIsOnlineListener.mockRestore();
-    syncService.unregisterIsOnlineListener.mockRestore();
-    syncService.isOnline.mockRestore();
+    onlineManager.registerIsOnlineListener.mockRestore();
+    onlineManager.unregisterIsOnlineListener.mockRestore();
+    onlineManager.isOnline.mockRestore();
     syncService.synchronize.mockRestore();
 
     actionManager.registerOnActionManagerChanged.mockRestore();
@@ -50,7 +52,7 @@ describe('DropDownConnectionStateItem', () => {
   describe.each(states)('Render', ({ isOnline, nbAction }) => {
     it(`Should render when the app is online ${isOnline} and nb action is ${nbAction} as expected `, async (done) => {
       // Arrange
-      jest.spyOn(syncService, 'isOnline').mockImplementation(async () => Promise.resolve(isOnline));
+      jest.spyOn(onlineManager, 'isOnline').mockImplementation(async () => Promise.resolve(isOnline));
       jest.spyOn(syncService, 'synchronize');
       jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(nbAction));
 
@@ -60,11 +62,11 @@ describe('DropDownConnectionStateItem', () => {
 
       // Assert
       expect(dropDownConnectionStateItemWrapper).toMatchSnapshot();
-      expect(syncService.registerIsOnlineListener).toBeCalledTimes(1);
+      expect(onlineManager.registerIsOnlineListener).toBeCalledTimes(1);
       expect(actionManager.registerOnActionManagerChanged).toBeCalledTimes(2);
 
       dropDownConnectionStateItemWrapper.unmount();
-      expect(syncService.unregisterIsOnlineListener).toBeCalledTimes(1);
+      expect(onlineManager.unregisterIsOnlineListener).toBeCalledTimes(1);
       expect(actionManager.unregisterOnActionManagerChanged).toBeCalledTimes(2);
       done();
     });

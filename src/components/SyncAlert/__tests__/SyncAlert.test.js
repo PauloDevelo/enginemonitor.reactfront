@@ -9,20 +9,26 @@ import SyncAlert from '../SyncAlert';
 import ignoredMessages from '../../../testHelpers/MockConsole';
 // eslint-disable-next-line no-unused-vars
 import syncService, { SyncContext } from '../../../services/SyncService';
+import onlineManager from '../../../services/OnlineManager';
+import storageService from '../../../services/StorageService';
 import actionManager, { NoActionPendingError, ActionType } from '../../../services/ActionManager';
 import updateWrapper from '../../../testHelpers/EnzymeHelper';
 
 jest.mock('../../../services/ActionManager');
+jest.mock('../../../services/OnlineManager');
+jest.mock('../../../services/StorageService');
 jest.mock('localforage');
 
-describe('Test SyncService', () => {
-  beforeEach(() => {
-  });
-
+describe('Test SyncAlert', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('a test was not wrapped in act');
     ignoredMessages.push('Could not find required `intl` object.');
+  });
+
+  beforeEach(() => {
+    storageService.isUserStorageOpened.mockImplementation(() => true);
+    onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
   });
 
   afterEach(async () => {
@@ -30,12 +36,15 @@ describe('Test SyncService', () => {
     actionManager.countAction.mockRestore();
     actionManager.performAction.mockRestore();
     actionManager.putBackAction.mockRestore();
+
+    onlineManager.isOnline.mockRestore();
+    storageService.isUserStorageOpened.mockRestore();
   });
 
-  describe('synchronize', () => {
+  describe('When synchronizing', () => {
     it('should display the SyncAlert when the synchronisation starts', async (done) => {
       // Arrange
-      jest.spyOn(actionManager, 'countAction').mockImplementation(() => Promise.resolve(2));
+      actionManager.countAction.mockImplementation(() => Promise.resolve(2));
 
       const action1 = {
         type: ActionType.Post,
@@ -49,10 +58,9 @@ describe('Test SyncService', () => {
         data: 'anything',
       };
 
-      const getNextActionToPerform = jest.spyOn(actionManager, 'getNextActionToPerform');
-      getNextActionToPerform.mockImplementationOnce(() => Promise.resolve(action1));
-      getNextActionToPerform.mockImplementationOnce(() => Promise.resolve(action2));
-      getNextActionToPerform.mockImplementationOnce(() => { throw new NoActionPendingError(); });
+      actionManager.getNextActionToPerform.mockImplementationOnce(() => Promise.resolve(action1));
+      actionManager.getNextActionToPerform.mockImplementationOnce(() => Promise.resolve(action2));
+      actionManager.getNextActionToPerform.mockImplementationOnce(() => { throw new NoActionPendingError(); });
 
       const syncAlertWrapper = mount(<SyncAlert />);
       await updateWrapper(syncAlertWrapper);

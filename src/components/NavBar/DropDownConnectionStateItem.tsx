@@ -7,6 +7,7 @@ import ConnectionStateMessage from './ConnectionStateMessage';
 import NbActionPending from './NbActionPending';
 
 
+import onlineManager from '../../services/OnlineManager';
 import syncService from '../../services/SyncService';
 import actionManager from '../../services/ActionManager';
 
@@ -15,6 +16,7 @@ type ConnectionState = {
     isSynced: boolean
 };
 
+// eslint-disable-next-line no-unused-vars
 const ConnectionStateIcon = ({ isOnline, isSynced }:ConnectionState) => {
   if (isOnline) {
     return <FontAwesomeIcon icon={faPlug} />;
@@ -32,8 +34,8 @@ const DropDownConnectionStateItem = () => {
   };
 
   useEffect(() => {
-    syncService.registerIsOnlineListener(onIsOnlineChanged);
-    syncService.isOnline().then((online) => onIsOnlineChanged(online));
+    onlineManager.registerIsOnlineListener(onIsOnlineChanged);
+    onlineManager.isOnline().then((online) => onIsOnlineChanged(online));
 
     actionManager.registerOnActionManagerChanged(onActionManagerChanged);
     actionManager.countAction().then((nbAction: number) => {
@@ -41,7 +43,7 @@ const DropDownConnectionStateItem = () => {
     });
 
     return () => {
-      syncService.unregisterIsOnlineListener(onIsOnlineChanged);
+      onlineManager.unregisterIsOnlineListener(onIsOnlineChanged);
       actionManager.unregisterOnActionManagerChanged(onActionManagerChanged);
     };
   }, []);

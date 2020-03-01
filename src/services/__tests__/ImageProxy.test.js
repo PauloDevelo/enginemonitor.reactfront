@@ -5,7 +5,7 @@ import HttpError from '../../http/HttpError';
 
 import storageService from '../StorageService';
 import userContext from '../UserContext';
-import syncService from '../SyncService';
+import onlineManager from '../OnlineManager';
 import actionManager, { ActionType } from '../ActionManager';
 import assetManager from '../AssetManager';
 
@@ -17,7 +17,7 @@ jest.mock('localforage');
 jest.mock('../HttpProxy');
 jest.mock('../StorageService');
 jest.mock('../UserContext');
-jest.mock('../SyncService');
+jest.mock('../OnlineManager');
 jest.mock('../ActionManager');
 jest.mock('../AssetManager');
 
@@ -61,7 +61,7 @@ describe('Test ImageProxy', () => {
   }
 
   function resetMockSyncService() {
-    syncService.isOnlineAndSynced.mockReset();
+    onlineManager.isOnlineAndSynced.mockReset();
   }
 
   function resetMockActionManager() {
@@ -115,7 +115,7 @@ describe('Test ImageProxy', () => {
         });
       });
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
 
       jest.spyOn(userContext, 'onImageAdded');
       jest.spyOn(actionManager, 'addAction');
@@ -184,7 +184,7 @@ describe('Test ImageProxy', () => {
       // Arrange
       const images = [];
       jest.spyOn(httpProxy, 'get').mockImplementation(() => ({ images }));
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
       jest.spyOn(storageService, 'setItem');
       storageService.getArray.mockImplementation(async () => Promise.resolve(images));
 
@@ -219,7 +219,7 @@ describe('Test ImageProxy', () => {
         ...imageToSave, title: 'new image title', description: 'new image description', sizeInByte: 1024,
       };
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSynced));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSynced));
       httpProxy.post.mockImplementation((url, data) => data);
 
       jest.spyOn(actionManager, 'addAction');
@@ -258,7 +258,7 @@ describe('Test ImageProxy', () => {
 
       httpProxy.deleteReq.mockImplementationOnce(async (image) => (Promise.resolve({ image })));
 
-      syncService.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
 
       jest.spyOn(userContext, 'onImageRemoved');
       jest.spyOn(actionManager, 'addAction');

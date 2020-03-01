@@ -11,6 +11,7 @@ import updateWrapper from '../../../testHelpers/EnzymeHelper';
 
 import actionManager from '../../../services/ActionManager';
 import syncService from '../../../services/SyncService';
+import onlineManager from '../../../services/OnlineManager';
 import timeService from '../../../services/TimeService';
 import userProxy from '../../../services/UserProxy';
 import assetProxy from '../../../services/AssetProxy';
@@ -25,6 +26,7 @@ jest.mock('../../../services/TimeService');
 jest.mock('../../../services/SyncService');
 jest.mock('../../../services/UserProxy');
 jest.mock('../../../services/AssetProxy');
+jest.mock('../../../services/OnlineManager');
 
 describe('Component NavBar', () => {
   const onLoggedOut = jest.fn();
@@ -37,39 +39,38 @@ describe('Component NavBar', () => {
   });
 
   beforeEach(() => {
-    jest.spyOn(syncService, 'synchronize');
-    jest.spyOn(syncService, 'registerIsOnlineListener');
-    jest.spyOn(syncService, 'unregisterIsOnlineListener');
+    timeService.getUTCDateTime.mockImplementation(() => new Date('2019-11-26T23:54:00.000Z'));
 
-    jest.spyOn(actionManager, 'registerOnActionManagerChanged');
-    jest.spyOn(actionManager, 'unregisterOnActionManagerChanged');
+    syncService.synchronize.mockImplementation(async () => Promise.resolve(true));
 
-    jest.spyOn(timeService, 'getUTCDateTime').mockImplementation(() => new Date('2019-11-26T23:54:00.000Z'));
+    onlineManager.registerIsOnlineListener.mockImplementation(() => {});
+    onlineManager.unregisterIsOnlineListener.mockImplementation(() => {});
+    onlineManager.isOnline.mockImplementation(() => Promise.resolve(true));
+    onlineManager.isOfflineModeActivated.mockImplementation(() => false);
+
+    actionManager.registerOnActionManagerChanged.mockImplementation(() => {});
+    actionManager.unregisterOnActionManagerChanged.mockImplementation(() => {});
+    actionManager.countAction.mockImplementation(async () => Promise.resolve(0));
 
     assetProxy.fetchAssets.mockImplementation(async () => Promise.resolve([{
       _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrope', manufactureDate: new Date(1979, 1, 1),
     }]));
 
     assetProxy.existAsset.mockImplementation(async (assetId) => Promise.resolve(assetId === 'asset_01'));
-
-    jest.spyOn(syncService, 'isOnline').mockImplementation(() => Promise.resolve(true));
-    jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(0));
-    jest.spyOn(syncService, 'isOfflineModeActivated').mockImplementation(() => false);
   });
 
   afterEach(() => {
     timeService.getUTCDateTime.mockRestore();
 
-    syncService.registerIsOnlineListener.mockRestore();
-    syncService.unregisterIsOnlineListener.mockRestore();
-
-    syncService.isOnline.mockRestore();
     syncService.synchronize.mockRestore();
-    syncService.isOfflineModeActivated.mockRestore();
+
+    onlineManager.registerIsOnlineListener.mockRestore();
+    onlineManager.unregisterIsOnlineListener.mockRestore();
+    onlineManager.isOnline.mockRestore();
+    onlineManager.isOfflineModeActivated.mockRestore();
 
     actionManager.registerOnActionManagerChanged.mockRestore();
     actionManager.unregisterOnActionManagerChanged.mockRestore();
-
     actionManager.countAction.mockRestore();
 
     userProxy.logout.mockRestore();

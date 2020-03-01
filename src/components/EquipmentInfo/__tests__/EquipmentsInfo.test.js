@@ -10,14 +10,14 @@ import ignoredMessages from '../../../testHelpers/MockConsole';
 import EquipmentsInfo from '../EquipmentsInfo';
 
 import storageService from '../../../services/StorageService';
-import syncService from '../../../services/SyncService';
+import onlineManager from '../../../services/OnlineManager';
 import imageProxy from '../../../services/ImageProxy';
 import equipmentProxy from '../../../services/EquipmentProxy';
 import updateWrapper from '../../../testHelpers/EnzymeHelper';
 
 import assetManager from '../../../services/AssetManager';
 
-jest.mock('../../../services/SyncService');
+jest.mock('../../../services/OnlineManager');
 jest.mock('../../../services/ImageProxy');
 jest.mock('../../../services/EquipmentProxy');
 jest.mock('../../../services/StorageService');
@@ -67,7 +67,7 @@ describe('EquipmentsInfo', () => {
     equipmentProxy.fetchEquipments.mockImplementation(async () => Promise.resolve(equipments));
     equipmentProxy.existEquipment.mockImplementation(async (equipmentUiId) => Promise.resolve(equipments.findIndex((eq) => eq._uiId === equipmentUiId) !== -1));
 
-    syncService.isOnline.mockImplementation(async () => Promise.resolve(true));
+    onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
 
     storageService.isUserStorageOpened.mockImplementation(() => true);
     storageService.setItem.mockImplementation(async (key, data) => data);
@@ -80,7 +80,7 @@ describe('EquipmentsInfo', () => {
     equipmentProxy.fetchEquipments.mockRestore();
     equipmentProxy.existEquipment.mockRestore();
 
-    syncService.isOnline.mockRestore();
+    onlineManager.isOnline.mockRestore();
 
     storageService.isUserStorageOpened.mockRestore();
     storageService.setItem.mockRestore();

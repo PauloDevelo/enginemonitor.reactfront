@@ -6,7 +6,7 @@ import HttpError from '../http/HttpError';
 // eslint-disable-next-line no-unused-vars
 import { ImageModel } from '../types/Types';
 
-import syncService from './SyncService';
+import onlineManager from './OnlineManager';
 import httpProxy from './HttpProxy';
 // eslint-disable-next-line no-unused-vars
 import actionManager, { Action, ActionType } from './ActionManager';
@@ -78,7 +78,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
       await actionManager.addAction(action);
     };
 
-    if (await syncService.isOnlineAndSynced()) {
+    if (await onlineManager.isOnlineAndSynced()) {
       try {
         const { image } = await httpProxy.postImage(createImageUrl, imgToSave, blobImage, thumbnail);
         return image;
@@ -108,7 +108,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
       await actionManager.addAction(action);
     };
 
-    if (await syncService.isOnlineAndSynced()) {
+    if (await onlineManager.isOnlineAndSynced()) {
       try {
         const savedData = (await httpProxy.post(url, data))[keyName];
 
@@ -135,7 +135,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
       actionManager.addAction(action);
     };
 
-    if (await syncService.isOnlineAndSynced()) {
+    if (await onlineManager.isOnlineAndSynced()) {
       try {
         const deletedEntity = (await httpProxy.deleteReq(url))[keyName];
         if (update) {
@@ -154,7 +154,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
   }
 
   async getArrayOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T[]> {
-    if (await syncService.isOnlineAndSynced()) {
+    if (await onlineManager.isOnlineAndSynced()) {
       try {
         const array = (await httpProxy.get(url, { cancelToken }))[keyName] as T[];
 
@@ -180,7 +180,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
   }
 
   async getOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T> {
-    if (await syncService.isOnlineAndSynced()) {
+    if (await onlineManager.isOnlineAndSynced()) {
       try {
         const item = (await httpProxy.get(url, { cancelToken }))[keyName] as T;
         const updatedItem = init ? init(item) : item;
