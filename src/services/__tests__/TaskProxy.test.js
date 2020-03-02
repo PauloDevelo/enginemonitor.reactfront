@@ -1,3 +1,4 @@
+import { uid } from 'react-uid';
 import ignoredMessages from '../../testHelpers/MockConsole';
 import httpProxy from '../HttpProxy';
 import onlineManager from '../OnlineManager';
@@ -12,6 +13,7 @@ import userProxy from '../UserProxy';
 
 import { updateTask } from '../../helpers/TaskHelper';
 import { TaskLevel, AgeAcquisitionType } from '../../types/Types';
+import HttpError from '../../http/HttpError';
 
 jest.mock('../HttpProxy');
 jest.mock('../OnlineManager');
@@ -137,44 +139,63 @@ describe('Test TaskProxy', () => {
     });
   });
 
-  const createOrSaveTaskParams = [
-    {
-      isOnline: false, expectedPostCounter: 0, equipmentId: parentEquipmentId, expectedNbTask: 1, expectedNbAction: 1,
-    },
-    {
-      isOnline: true, expectedPostCounter: 1, equipmentId: parentEquipmentId, expectedNbTask: 1, expectedNbAction: 0,
-    },
-  ];
-  describe.each(createOrSaveTaskParams)('createOrSaveTask', (arg) => {
-    it(`When ${JSON.stringify(arg)}`, async (done) => {
-      // Arrange
-      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
+  describe('createOrSaveTask', () => {
+    const createOrSaveTaskParams = [
+      {
+        isOnline: false, expectedPostCounter: 0, equipmentId: parentEquipmentId, expectedNbTask: 1, expectedNbAction: 1,
+      },
+      {
+        isOnline: true, expectedPostCounter: 1, equipmentId: parentEquipmentId, expectedNbTask: 1, expectedNbAction: 0,
+      },
+    ];
+    describe.each(createOrSaveTaskParams)('createOrSaveTask', (arg) => {
+      it(`When ${JSON.stringify(arg)}`, async (done) => {
+        // Arrange
+        onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
-      let postCounter = 0;
-      httpProxy.post.mockImplementation((url, data) => {
-        postCounter++;
-        return Promise.resolve(data);
+        let postCounter = 0;
+        httpProxy.post.mockImplementation((url, data) => {
+          postCounter++;
+          return Promise.resolve(data);
+        });
+
+        // Act
+        const taskSaved = await taskProxy.createOrSaveTask(parentEquipmentId, taskToSave);
+
+        // Assert
+        expect(postCounter).toBe(arg.expectedPostCounter);
+        expect(taskSaved).toEqual(taskToSave);
+
+        const tasks = await storageService.getItem(urlFetchTask);
+        expect(tasks.length).toBe(arg.expectedNbTask);
+
+        if (arg.expectedNbTask > 0) {
+          const storedTask = updateTask(tasks[0]);
+          expect(storedTask).toEqual(taskToSave);
+        }
+
+        expect(actionManager.countAction()).toBe(arg.expectedNbAction);
+        done();
       });
+    });
 
-      // Act
-      const taskSaved = await taskProxy.createOrSaveTask(parentEquipmentId, taskToSave);
+    it('should throw an httpError if the new task uses an existing name', async (done) => {
+      // Arrange
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
+      await taskProxy.createOrSaveTask(parentEquipmentId, taskToSave);
 
-      // Assert
-      expect(postCounter).toBe(arg.expectedPostCounter);
-      expect(taskSaved).toEqual(taskToSave);
-
-      const tasks = await storageService.getItem(urlFetchTask);
-      expect(tasks.length).toBe(arg.expectedNbTask);
-
-      if (arg.expectedNbTask > 0) {
-        const storedTask = updateTask(tasks[0]);
-        expect(storedTask).toEqual(taskToSave);
+      try {
+        // Act
+        await taskProxy.createOrSaveTask(parentEquipmentId, { ...taskToSave, _uiId: 'asdgasdf' });
+      } catch (error) {
+        // Assert
+        expect(error).toBeInstanceOf(HttpError);
+        expect(error.data).toEqual({ name: 'alreadyexisting' });
+        done();
       }
-
-      expect(actionManager.countAction()).toBe(arg.expectedNbAction);
-      done();
     });
   });
+
 
   const deleteTaskParams = [
     {

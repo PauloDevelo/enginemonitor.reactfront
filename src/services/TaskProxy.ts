@@ -13,6 +13,7 @@ import { updateTask, updateRealtimeFields } from '../helpers/TaskHelper';
 import { TaskModel, AssetModel } from '../types/Types';
 
 import assetManager from './AssetManager';
+import HttpError from '../http/HttpError';
 
 export interface FetchTaskProps{
     equipmentId: string | undefined;
@@ -43,6 +44,13 @@ class TaskProxy implements ITaskProxy {
 
     // ///////////////Task////////////////////////////
     createOrSaveTask = async (equipmentId: string, newTask: TaskModel):Promise<TaskModel> => {
+      if (await this.existTask(equipmentId, newTask._uiId) === false) {
+        const tasks = await this.fetchTasks({ equipmentId, forceToLookUpInStorage: true });
+        if (tasks.findIndex((task) => task.name === newTask.name) !== -1) {
+          throw new HttpError({ name: 'alreadyexisting' });
+        }
+      }
+
       const updatedTask = await progressiveHttpProxy.postAndUpdate<TaskModel>(`${this.baseUrl + equipmentId}/${newTask._uiId}`, 'task', newTask, updateTask);
 
       await storageService.updateArray(this.baseUrl + equipmentId, updatedTask);
