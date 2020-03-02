@@ -53,8 +53,8 @@ const getOrientationInDegrees = async (file: File): Promise<number> => {
     const tags = await readExifTags(file);
     return convertExifOrientationIntoDegree(tags.Orientation);
   } catch (error) {
-    log.error('Impossible to get the image orientation in the Exif data.');
-    log.error(error);
+    log.warn('Impossible to get the image orientation in the Exif data.');
+    log.warn(error.message);
     return 0;
   }
 };
