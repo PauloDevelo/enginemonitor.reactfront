@@ -93,8 +93,6 @@ const CardTaskDetails = ({
           <Button color="light" className="float-left" onClick={modalHook.toggleModal} aria-label="Edit"><FontAwesomeIcon icon={faEdit} /></Button>
         </CardFooter>
       </Card>
-
-      {modalHook.editModalVisibility && (
       <ModalEditTask
         equipment={equipment}
         task={currentTask}
@@ -104,7 +102,6 @@ const CardTaskDetails = ({
         toggle={modalHook.toggleModal}
         className="modal-dialog-centered"
       />
-      )}
     </div>
   );
 };
