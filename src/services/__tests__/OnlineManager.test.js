@@ -59,7 +59,7 @@ describe('Test OnlineManager', () => {
       // Arrange
       httpProxy.get.mockImplementation(async () => Promise.resolve({ pong }));
       onlineManager.rebuild();
-      actionManager.countAction.mockImplementation(async () => Promise.resolve(0));
+      actionManager.countAction.mockImplementation(() => 0);
       isOnlineGetter.mockReturnValue(isOnline);
       onlineManager.setOfflineMode(offlineMode);
 
@@ -81,10 +81,10 @@ describe('Test OnlineManager', () => {
       const pong = true;
       httpProxy.get.mockImplementation(async () => Promise.resolve({ pong }));
       onlineManager.rebuild();
-      actionManager.countAction.mockImplementation(async () => Promise.resolve(nbAction));
+      actionManager.countAction.mockImplementation(() => nbAction);
 
       // Act
-      const isSyncedReturned = await onlineManager.isSynced();
+      const isSyncedReturned = onlineManager.isSynced();
 
       // Assert
       expect(isSyncedReturned).toBe(expectedIsSynced);
@@ -124,7 +124,7 @@ describe('Test OnlineManager', () => {
       // Arrange
       httpProxy.get.mockImplementation(async () => Promise.resolve({ pong: true }));
       onlineManager.rebuild();
-      jest.spyOn(actionManager, 'countAction').mockImplementation(() => Promise.resolve(nbAction));
+      actionManager.countAction.mockImplementation(() => nbAction);
 
       isOnlineGetter.mockReturnValue(isOnline);
       onlineManager.setOfflineMode(offlineMode);

@@ -9,7 +9,7 @@ import httpProxy from './HttpProxy';
 export interface IOnlineManager {
     isOnlineAndSynced(): Promise<boolean>;
     isOnline(): Promise<boolean>;
-    isSynced():Promise<boolean>;
+    isSynced(): boolean;
     isOfflineModeActivated():boolean;
 
     setOfflineMode(offlineMode: boolean):void;
@@ -57,9 +57,9 @@ class OnlineManager implements IOnlineManager {
 
     isOnline = async (): Promise<boolean> => window.navigator.onLine === true && this.isOfflineModeActivated() === false && this.isBackendReachable()
 
-    isSynced = async ():Promise<boolean> => (await actionManager.countAction()) === 0
+    isSynced = ():boolean => actionManager.countAction() === 0
 
-    isOnlineAndSynced = async (): Promise<boolean> => await this.isOnline() && this.isSynced();
+    isOnlineAndSynced = async (): Promise<boolean> => this.isSynced() && this.isOnline();
 
     isOfflineModeActivated = ():boolean => this.offlineModeActivated
 

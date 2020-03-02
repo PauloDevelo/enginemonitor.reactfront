@@ -39,9 +39,9 @@ describe('Test SyncService', () => {
   describe('synchronize', () => {
     it('should do nothing if there is no action to sync', async (done) => {
       // Arrange
-      jest.spyOn(actionManager, 'countAction').mockImplementation(() => Promise.resolve(0));
+      actionManager.countAction.mockImplementation(() => 0);
 
-      jest.spyOn(actionManager, 'getNextActionToPerform').mockImplementation(() => {
+      actionManager.getNextActionToPerform.mockImplementation(() => {
         throw new NoActionPendingError();
       });
 
@@ -66,7 +66,7 @@ describe('Test SyncService', () => {
     it('should do nothing if not online', async (done) => {
       // Arrange
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(false));
-      actionManager.countAction.mockImplementation(() => Promise.resolve(2));
+      actionManager.countAction.mockImplementation(() => 2);
 
       const action1 = {
         type: ActionType.Post,
@@ -111,7 +111,7 @@ describe('Test SyncService', () => {
 
     it('should perform the action if there is action pending in the correct order', async (done) => {
       // Arrange
-      jest.spyOn(actionManager, 'countAction').mockImplementation(() => Promise.resolve(2));
+      actionManager.countAction.mockImplementation(() => 2);
 
       const action1 = {
         type: ActionType.Post,
@@ -165,7 +165,7 @@ describe('Test SyncService', () => {
 
     it('should perform the action if there is action pending in the correct order but it should stop when an action fails', async (done) => {
       // Arrange
-      jest.spyOn(actionManager, 'countAction').mockImplementation(() => Promise.resolve(3));
+      actionManager.countAction.mockImplementation(() => 3);
 
       let actionBack;
       const putBackAction = jest.spyOn(actionManager, 'putBackAction').mockImplementationOnce((action) => { actionBack = action; });

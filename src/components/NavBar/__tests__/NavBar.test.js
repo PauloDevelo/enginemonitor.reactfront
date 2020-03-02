@@ -50,7 +50,7 @@ describe('Component NavBar', () => {
 
     actionManager.registerOnActionManagerChanged.mockImplementation(() => {});
     actionManager.unregisterOnActionManagerChanged.mockImplementation(() => {});
-    actionManager.countAction.mockImplementation(async () => Promise.resolve(0));
+    actionManager.countAction.mockImplementation(() => 0);
 
     assetProxy.fetchAssets.mockImplementation(async () => Promise.resolve([{
       _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrope', manufactureDate: new Date(1979, 1, 1),

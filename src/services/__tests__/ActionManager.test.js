@@ -186,7 +186,7 @@ describe('Test ActionManager', () => {
     it('when there is no action should return 0', async () => {
       // Arrange
       // Act
-      const nbAction = await actionManager.countAction();
+      const nbAction = actionManager.countAction();
 
       // Assert
       expect(nbAction).toBe(0);
@@ -198,21 +198,21 @@ describe('Test ActionManager', () => {
       await actionManager.addAction(actionToAdd2);
 
       // Act
-      const nbAction = await actionManager.countAction();
+      const nbAction = actionManager.countAction();
 
       // Assert
       expect(nbAction).toBe(2);
     });
 
-    it('when the user storage is not opened yet, it should return 0', async () => {
+    it('when the user storage gets closed, it should return 0', async () => {
       // Arrange
       await actionManager.addAction(actionToAdd1);
       await actionManager.addAction(actionToAdd2);
 
-      storageService.isUserStorageOpened.mockImplementation(() => false);
+      actionManager.onUserStorageClosed();
 
       // Act
-      const nbAction = await actionManager.countAction();
+      const nbAction = actionManager.countAction();
 
       // Assert
       expect(nbAction).toBe(0);

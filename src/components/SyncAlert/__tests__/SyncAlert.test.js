@@ -44,7 +44,7 @@ describe('Test SyncAlert', () => {
   describe('When synchronizing', () => {
     it('should display the SyncAlert when the synchronisation starts', async (done) => {
       // Arrange
-      actionManager.countAction.mockImplementation(() => Promise.resolve(2));
+      actionManager.countAction.mockImplementation(() => 2);
 
       const action1 = {
         type: ActionType.Post,

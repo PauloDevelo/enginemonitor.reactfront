@@ -54,7 +54,7 @@ describe('DropDownConnectionStateItem', () => {
       // Arrange
       jest.spyOn(onlineManager, 'isOnline').mockImplementation(async () => Promise.resolve(isOnline));
       jest.spyOn(syncService, 'synchronize');
-      jest.spyOn(actionManager, 'countAction').mockImplementation(async () => Promise.resolve(nbAction));
+      jest.spyOn(actionManager, 'countAction').mockImplementation(() => nbAction);
 
       // Act
       const dropDownConnectionStateItemWrapper = mount(<DropDownConnectionStateItem />);

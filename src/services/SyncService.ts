@@ -72,7 +72,7 @@ class SyncService implements ISyncService, IUserStorageListener {
     }
 
     private syncStorage = async (): Promise<boolean> => {
-      const nbActionToSync = await actionManager.countAction();
+      const nbActionToSync = actionManager.countAction();
       const context: SyncContext = {
         isSyncing: true,
         totalActionToSync: nbActionToSync,

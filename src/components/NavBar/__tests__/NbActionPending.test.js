@@ -17,8 +17,7 @@ describe('Component NbActionPending', () => {
 
   it('should render a specific message when there is no action to sync', () => {
     // Arrange
-    const resp = 0;
-    actionManager.countAction.mockResolvedValue(resp);
+    actionManager.countAction.mockImplementation(() => 0);
 
     // Act
     const wrapper = mount(<NbActionPending />);
@@ -39,7 +38,7 @@ describe('Component NbActionPending', () => {
   it('should render a specific message when there is several action to sync', () => {
     // Arrange
     const resp = 3;
-    actionManager.countAction.mockResolvedValue(resp);
+    actionManager.countAction.mockImplementation(() => resp);
 
     // Act
     const wrapper = mount(<NbActionPending />);
@@ -60,7 +59,7 @@ describe('Component NbActionPending', () => {
   it('should render a specific message when there is one action to sync', () => {
     // Arrange
     const resp = 1;
-    actionManager.countAction.mockResolvedValue(resp);
+    actionManager.countAction.mockImplementation(() => resp);
 
     // Act
     const wrapper = mount(<NbActionPending />);

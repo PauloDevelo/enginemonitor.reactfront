@@ -171,7 +171,7 @@ describe('Test TaskProxy', () => {
         expect(storedTask).toEqual(taskToSave);
       }
 
-      expect(await actionManager.countAction()).toBe(arg.expectedNbAction);
+      expect(actionManager.countAction()).toBe(arg.expectedNbAction);
       done();
     });
   });
@@ -208,7 +208,7 @@ describe('Test TaskProxy', () => {
       const tasks = await storageService.getItem(urlFetchTask);
       expect(tasks.length).toBe(arg.expectedNbTask);
 
-      expect(await actionManager.countAction()).toBe(arg.expectedNbAction);
+      expect(actionManager.countAction()).toBe(arg.expectedNbAction);
       done();
     });
   });

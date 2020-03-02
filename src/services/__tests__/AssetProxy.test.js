@@ -174,7 +174,7 @@ describe('Test AsseProxy', () => {
           expect(storedAsset).toEqual(assetToSave);
         }
 
-        expect(await actionManager.countAction()).toBe(expectedNbAction);
+        expect(actionManager.countAction()).toBe(expectedNbAction);
       });
     });
 
@@ -196,7 +196,7 @@ describe('Test AsseProxy', () => {
 
         const assets = await storageService.getArray(urlFetchAssets);
         expect(assets.length).toBe(0);
-        expect(await actionManager.countAction()).toBe(0);
+        expect(actionManager.countAction()).toBe(0);
         done();
       }
     });
@@ -238,7 +238,7 @@ describe('Test AsseProxy', () => {
       const assets = await storageService.getItem(urlFetchAssets);
       expect(assets.length).toBe(expectedNbAsset);
 
-      expect(await actionManager.countAction()).toBe(expectedNbAction);
+      expect(actionManager.countAction()).toBe(expectedNbAction);
     });
   });
 

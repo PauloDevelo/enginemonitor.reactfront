@@ -89,17 +89,13 @@ describe('Test EntryProxy', () => {
 
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
-      let postCounter = 0;
-      httpProxy.post.mockImplementation((url, data) => {
-        postCounter++;
-        return Promise.resolve(data);
-      });
+      httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
 
       // Act
       const entrySaved = await entryProxy.createOrSaveEntry(parentEquipmentId, arg.taskId, entryToSave);
 
       // Assert
-      expect(postCounter).toBe(arg.expectedPostCounter);
+      expect(httpProxy.post).toHaveBeenCalledTimes(arg.expectedPostCounter);
       expect(entrySaved).toEqual(entryToSave);
 
       const entries = await storageService.getItem(urlFetchEntry);
@@ -110,7 +106,7 @@ describe('Test EntryProxy', () => {
         expect(storedEntry).toEqual(entryToSave);
       }
 
-      expect(await actionManager.countAction()).toBe(arg.expectedNumberOfAction);
+      expect(actionManager.countAction()).toEqual(arg.expectedNumberOfAction);
     });
   });
 
@@ -133,11 +129,7 @@ describe('Test EntryProxy', () => {
       // Arrange
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
-      let deleteCounter = 0;
-      httpProxy.deleteReq.mockImplementation((url) => {
-        deleteCounter++;
-        return Promise.resolve({ entry: { name: 'an entry name' } });
-      });
+      httpProxy.deleteReq.mockImplementation((url) => Promise.resolve({ entry: { name: 'an entry name' } }));
 
       httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
       await entryProxy.createOrSaveEntry(parentEquipmentId, arg.taskId, entryToSave);
@@ -146,13 +138,13 @@ describe('Test EntryProxy', () => {
       const entryDeleted = await entryProxy.deleteEntry(parentEquipmentId, arg.taskId, entryToSave._uiId);
 
       // Assert
-      expect(deleteCounter).toBe(arg.expectedDeleteCounter);
+      expect(httpProxy.deleteReq).toHaveBeenCalledTimes(arg.expectedDeleteCounter);
       expect(entryDeleted).toEqual(entryToSave);
 
       const entries = await storageService.getItem(urlFetchEntry);
       expect(entries.length).toBe(arg.expectedNumberOfEntriesInStorage);
 
-      expect(await actionManager.countAction()).toBe(arg.expectedNumberOfActions);
+      expect(actionManager.countAction()).toBe(arg.expectedNumberOfActions);
     });
   });
 

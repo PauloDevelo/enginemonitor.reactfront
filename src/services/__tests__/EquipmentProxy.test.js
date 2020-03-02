@@ -145,7 +145,7 @@ describe('Test EquipmentProxy', () => {
         expect(storedEquipment).toEqual(equipmentToSave);
       }
 
-      expect(await actionManager.countAction()).toBe(arg.expectedNbAction);
+      expect(actionManager.countAction()).toBe(arg.expectedNbAction);
     });
   });
 
@@ -181,7 +181,7 @@ describe('Test EquipmentProxy', () => {
       const equipments = await storageService.getItem(urlFetchEquipment);
       expect(equipments.length).toBe(arg.expectedNbEquipment);
 
-      expect(await actionManager.countAction()).toBe(arg.expectedNbAction);
+      expect(actionManager.countAction()).toBe(arg.expectedNbAction);
     });
   });
 
@@ -255,7 +255,7 @@ describe('Test EquipmentProxy', () => {
 
           const equipments = await storageService.getArray(urlFetchEquipment);
           expect(equipments.length).toBe(0);
-          expect(await actionManager.countAction()).toBe(0);
+          expect(actionManager.countAction()).toBe(0);
           done();
         }
       });
@@ -283,7 +283,7 @@ describe('Test EquipmentProxy', () => {
           expect(error.data).toEqual({ message: 'credentialError' });
 
           expect(deleteCounter).toBe(0);
-          expect(await actionManager.countAction()).toBe(0);
+          expect(actionManager.countAction()).toBe(0);
         }
       });
     });

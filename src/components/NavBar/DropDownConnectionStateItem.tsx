@@ -38,9 +38,7 @@ const DropDownConnectionStateItem = () => {
     onlineManager.isOnline().then((online) => onIsOnlineChanged(online));
 
     actionManager.registerOnActionManagerChanged(onActionManagerChanged);
-    actionManager.countAction().then((nbAction: number) => {
-      onActionManagerChanged(nbAction);
-    });
+    onActionManagerChanged(actionManager.countAction());
 
     return () => {
       onlineManager.unregisterIsOnlineListener(onIsOnlineChanged);
