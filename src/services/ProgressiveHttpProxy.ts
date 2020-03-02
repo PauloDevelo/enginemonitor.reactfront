@@ -18,8 +18,8 @@ const timeout = {
   postImage: 5000,
   post: 2000,
   delete: 2000,
-  getArray: 2000,
-  getItem: 2000,
+  get: 2000,
+  notStoredGet: 10000,
 };
 /**
  * This interface is an enhanced http proxy that manages offline mode.
@@ -163,7 +163,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
   async getArrayOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T[]> {
     if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const array = (await httpProxy.get(url, { cancelToken, timeout: timeout.getArray }))[keyName] as T[];
+        const array = (await httpProxy.get(url, { cancelToken, timeout: (await this.getGetTimeout(url)) }))[keyName] as T[];
 
         const initArray = init ? array.map(init) : array;
 
@@ -189,7 +189,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
   async getOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T> {
     if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const item = (await httpProxy.get(url, { cancelToken, timeout: timeout.getItem }))[keyName] as T;
+        const item = (await httpProxy.get(url, { cancelToken, timeout: (await this.getGetTimeout(url)) }))[keyName] as T;
         const updatedItem = init ? init(item) : item;
 
         storageService.setItem<T>(url, updatedItem);
@@ -221,6 +221,14 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
     if (assetManager.getUserCredentials() === undefined || assetManager.getUserCredentials()?.readonly === undefined || assetManager.getUserCredentials()?.readonly) {
       throw new HttpError({ message: 'credentialError' });
     }
+  }
+
+  private async getGetTimeout(url: string): Promise<number> {
+    if (await storageService.existItem(url) === false) {
+      return timeout.notStoredGet;
+    }
+
+    return timeout.get;
   }
 }
 
