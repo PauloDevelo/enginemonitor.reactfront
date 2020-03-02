@@ -12,6 +12,7 @@ import { EquipmentModel, AssetModel } from '../types/Types';
 import imageProxy from './ImageProxy';
 
 import assetManager from './AssetManager';
+import HttpError from '../http/HttpError';
 
 export interface IEquipmentProxy{
     fetchEquipments(): Promise<EquipmentModel[]>;
@@ -46,6 +47,13 @@ class EquipmentProxy implements IEquipmentProxy {
     }
 
     createOrSaveEquipment = async (equipmentToSave: EquipmentModel):Promise<EquipmentModel> => {
+      if (await this.existEquipment(equipmentToSave._uiId) === false) {
+        const equipments = await this.getStoredEquipment();
+        if (equipments.findIndex((equipment) => equipment.name === equipmentToSave.name) !== -1) {
+          throw new HttpError({ name: 'alreadyexisting' });
+        }
+      }
+
       const updatedEquipment = await progressiveHttpProxy.postAndUpdate<EquipmentModel>(this.baseUrl + equipmentToSave._uiId, 'equipment', equipmentToSave, updateEquipment);
       await storageService.updateArray(this.baseUrl, updatedEquipment);
       return updatedEquipment;
