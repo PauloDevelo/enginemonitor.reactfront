@@ -26,8 +26,6 @@ export interface IHttpProxy{
 }
 
 function processError(error: any) {
-  log.error(error);
-
   let data:any = { message: error.message };
   if (error.response) {
     if (error.response.data) {
