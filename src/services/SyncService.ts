@@ -9,8 +9,8 @@ export interface ISyncService {
     synchronize(): Promise<boolean>;
     cancelSync(): void;
 
-    registerSyncListener(listener: (context: SyncContext) => void):void;
-    unregisterSyncListener(listener: (context: SyncContext) => void):void;
+    registerSyncListener(listener: (context: SyncContext) => Promise<void>):void;
+    unregisterSyncListener(listener: (context: SyncContext) => Promise<void>):void;
 }
 
 export type SyncContext = {
@@ -26,7 +26,7 @@ class SyncService implements ISyncService, IUserStorageListener {
       remainingActionToSync: 0,
     };
 
-    private syncListeners: ((context: SyncContext) => void)[] = [];
+    private syncListeners: ((context: SyncContext) => Promise<void>)[] = [];
 
     constructor() {
       storageService.registerUserStorageListener(this);
@@ -36,11 +36,11 @@ class SyncService implements ISyncService, IUserStorageListener {
       this.synchronize();
     }
 
-    registerSyncListener(listener: (context: SyncContext) => void):void{
+    registerSyncListener(listener: (context: SyncContext) => Promise<void>):void{
       this.syncListeners.push(listener);
     }
 
-    unregisterSyncListener(listenerToRemove: (context: SyncContext) => void):void{
+    unregisterSyncListener(listenerToRemove: (context: SyncContext) => Promise<void>):void{
       this.syncListeners = this.syncListeners.filter((listener) => listener !== listenerToRemove);
     }
 
@@ -69,8 +69,9 @@ class SyncService implements ISyncService, IUserStorageListener {
       return this.triggerSyncContextChanged();
     }
 
-    private triggerSyncContextChanged(): void {
-      this.syncListeners.map((listener) => listener({ ...this.syncContext }));
+    private async triggerSyncContextChanged(): Promise<void> {
+      const promises = this.syncListeners.map((listener) => listener({ ...this.syncContext }));
+      await Promise.all(promises);
     }
 
     synchronize = async (): Promise<boolean> => {
@@ -93,7 +94,7 @@ class SyncService implements ISyncService, IUserStorageListener {
       this.syncContext.isSyncing = true;
       this.syncContext.totalActionToSync = actionManager.countAction();
       this.syncContext.remainingActionToSync = this.syncContext.totalActionToSync;
-      this.triggerSyncContextChanged();
+      await this.triggerSyncContextChanged();
 
       let success: boolean = true;
       try {
@@ -111,7 +112,7 @@ class SyncService implements ISyncService, IUserStorageListener {
       }
 
       this.syncContext.isSyncing = false;
-      this.triggerSyncContextChanged();
+      await this.triggerSyncContextChanged();
 
       return Promise.resolve(success);
     }

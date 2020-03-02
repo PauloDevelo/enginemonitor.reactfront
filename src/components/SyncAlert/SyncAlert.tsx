@@ -21,12 +21,16 @@ const SyncAlert = ({ className }:Type) => {
     totalActionToSync: 0,
     remainingActionToSync: 0,
   };
-  const [syncContext, setSyncContext] = useState(initialContext);
+  const [syncContext, setSyncContext] = useState<SyncContext>(initialContext);
+
+  const setSyncContextAsync = async (context: SyncContext) => {
+    setSyncContext(context);
+  };
 
   useEffect(() => {
-    syncService.registerSyncListener(setSyncContext);
+    syncService.registerSyncListener(setSyncContextAsync);
 
-    return () => syncService.unregisterSyncListener(setSyncContext);
+    return () => syncService.unregisterSyncListener(setSyncContextAsync);
   }, []);
 
   const onDismiss = useCallback(() => syncService.cancelSync(), []);
