@@ -2,8 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 // eslint-disable-next-line no-unused-vars
-import localforage from 'localforage';
-
 import SyncAlert from '../SyncAlert';
 
 import ignoredMessages from '../../../testHelpers/MockConsole';
@@ -11,13 +9,12 @@ import ignoredMessages from '../../../testHelpers/MockConsole';
 import syncService, { SyncContext } from '../../../services/SyncService';
 import onlineManager from '../../../services/OnlineManager';
 import storageService from '../../../services/StorageService';
-import actionManager, { NoActionPendingError, ActionType } from '../../../services/ActionManager';
+import actionManager, { ActionType } from '../../../services/ActionManager';
 import updateWrapper from '../../../testHelpers/EnzymeHelper';
+import httpProxy from '../../../services/HttpProxy';
 
-jest.mock('../../../services/ActionManager');
 jest.mock('../../../services/OnlineManager');
-jest.mock('../../../services/StorageService');
-jest.mock('localforage');
+jest.mock('../../../services/HttpProxy');
 
 describe('Test SyncAlert', () => {
   beforeAll(() => {
@@ -27,24 +24,31 @@ describe('Test SyncAlert', () => {
   });
 
   beforeEach(() => {
-    storageService.isUserStorageOpened.mockImplementation(() => true);
     onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
+    storageService.openUserStorage({ email: 'pt@something.fr' });
+
+    httpProxy.get.mockImplementation(() => {});
+    httpProxy.post.mockImplementation(() => {});
+    httpProxy.postImage.mockImplementation(() => {});
+    httpProxy.deleteReq.mockImplementation(() => {});
+    httpProxy.createCancelTokenSource.mockImplementation(() => ({ token: {} }));
   });
 
   afterEach(async () => {
-    actionManager.getNextActionToPerform.mockRestore();
-    actionManager.countAction.mockRestore();
-    actionManager.performAction.mockRestore();
-    actionManager.putBackAction.mockRestore();
+    httpProxy.get.mockRestore();
+    httpProxy.post.mockRestore();
+    httpProxy.postImage.mockRestore();
+    httpProxy.deleteReq.mockRestore();
+    httpProxy.createCancelTokenSource.mockRestore();
 
+    actionManager.clearActions();
     onlineManager.isOnline.mockRestore();
-    storageService.isUserStorageOpened.mockRestore();
+    storageService.closeUserStorage();
   });
 
   describe('When synchronizing', () => {
     it('should display the SyncAlert when the synchronisation starts', async (done) => {
       // Arrange
-      actionManager.countAction.mockImplementation(() => 2);
 
       const action1 = {
         type: ActionType.Post,
@@ -58,35 +62,32 @@ describe('Test SyncAlert', () => {
         data: 'anything',
       };
 
-      actionManager.getNextActionToPerform.mockImplementationOnce(() => Promise.resolve(action1));
-      actionManager.getNextActionToPerform.mockImplementationOnce(() => Promise.resolve(action2));
-      actionManager.getNextActionToPerform.mockImplementationOnce(() => { throw new NoActionPendingError(); });
+      await actionManager.addAction(action1);
+      await actionManager.addAction(action2);
 
       const syncAlertWrapper = mount(<SyncAlert />);
       await updateWrapper(syncAlertWrapper);
 
-      let nbActionPerformed = 0;
-      actionManager.performAction.mockImplementation(async () => {
-        nbActionPerformed++;
-        await updateWrapper(syncAlertWrapper);
-        const progress = syncAlertWrapper.find('Progress');
+      const onSyncContextChanged = jest.fn((syncContext) => {
+        updateWrapper(syncAlertWrapper).then(() => {
+          const progress = syncAlertWrapper.find('Progress');
 
-        if (progress.length === 1) {
-          expect(progress.props().value).toEqual(((2 - nbActionPerformed + 1) * 100) / 2);
-          return Promise.resolve();
-        }
+          expect(progress.length).toBe(1);
+          expect(progress.props().value).toEqual(((syncContext.remainingActionToSync) * 100) / syncContext.totalActionToSync);
 
-        return Promise.reject(new Error());
+          if (syncContext.isSyncing) {
+            syncService.unregisterSyncListener(onSyncContextChanged);
+            done();
+          }
+        });
       });
+      syncService.registerSyncListener(onSyncContextChanged);
 
       // Act
       await syncService.synchronize();
       await updateWrapper(syncAlertWrapper);
 
       // Assert
-      expect(nbActionPerformed).toEqual(2);
-      // expect(syncAlertWrapper.find('Progress').length).toBe(0);
-      done();
     });
   });
 });

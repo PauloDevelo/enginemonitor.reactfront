@@ -1,6 +1,6 @@
 import log from 'loglevel';
 // eslint-disable-next-line no-unused-vars
-import actionManager, { Action, NoActionPendingError } from './ActionManager';
+import actionManager, { Action } from './ActionManager';
 // eslint-disable-next-line no-unused-vars
 import storageService, { IUserStorageListener } from './StorageService';
 import onlineManager from './OnlineManager';
@@ -20,11 +20,20 @@ export type SyncContext = {
 }
 
 class SyncService implements ISyncService, IUserStorageListener {
+    private readonly syncContext: SyncContext = {
+      isSyncing: false,
+      totalActionToSync: 0,
+      remainingActionToSync: 0,
+    };
+
     private syncListeners: ((context: SyncContext) => void)[] = [];
 
     constructor() {
       storageService.registerUserStorageListener(this);
       onlineManager.registerIsOnlineListener(this.onIsOnlineChanged);
+      actionManager.registerOnActionManagerChanged(this.onActionManagerChanged);
+
+      this.synchronize();
     }
 
     registerSyncListener(listener: (context: SyncContext) => void):void{
@@ -51,8 +60,17 @@ class SyncService implements ISyncService, IUserStorageListener {
 
     onUserStorageClosed = async (): Promise<void> => {}
 
-    private async triggerSyncContextChanged(context: SyncContext): Promise<void> {
-      this.syncListeners.map((listener) => listener({ ...context }));
+    onActionManagerChanged = async (nbAction: number) => {
+      if (this.syncContext.isSyncing === false) {
+        this.syncContext.totalActionToSync = nbAction;
+      }
+
+      this.syncContext.remainingActionToSync = nbAction;
+      return this.triggerSyncContextChanged();
+    }
+
+    private triggerSyncContextChanged(): void {
+      this.syncListeners.map((listener) => listener({ ...this.syncContext }));
     }
 
     synchronize = async (): Promise<boolean> => {
@@ -72,54 +90,30 @@ class SyncService implements ISyncService, IUserStorageListener {
     }
 
     private syncStorage = async (): Promise<boolean> => {
-      const nbActionToSync = actionManager.countAction();
-      const context: SyncContext = {
-        isSyncing: true,
-        totalActionToSync: nbActionToSync,
-        remainingActionToSync: nbActionToSync,
-      };
-      this.triggerSyncContextChanged(context);
+      this.syncContext.isSyncing = true;
+      this.syncContext.totalActionToSync = actionManager.countAction();
+      this.syncContext.remainingActionToSync = this.syncContext.totalActionToSync;
+      this.triggerSyncContextChanged();
 
-      let success = false;
-      let stopCondition = false;
-      while (stopCondition === false) {
-        let action: Action;
-        try {
-          // eslint-disable-next-line no-await-in-loop
-          action = await actionManager.getNextActionToPerform();
-        } catch (error) {
-          if (error instanceof NoActionPendingError === false) {
-            log.error(error);
-          } else {
-            success = true;
-          }
+      let success: boolean = true;
+      try {
+        while (actionManager.countAction() > 0) {
+          const action: Action = actionManager.getNextActionToPerform();
 
-          stopCondition = true;
-          break;
-        }
-
-        try {
           // eslint-disable-next-line no-await-in-loop
           await actionManager.performAction(action);
-          context.remainingActionToSync--;
-          this.triggerSyncContextChanged(context);
-        } catch (error) {
           // eslint-disable-next-line no-await-in-loop
-          await actionManager.putBackAction(action);
-
-          log.error(error);
-          stopCondition = true;
+          await actionManager.shiftAction();
         }
+      } catch (error) {
+        log.error(error);
+        success = false;
       }
 
-      this.triggerEndSync(context);
-      return Promise.resolve(success);
-    }
+      this.syncContext.isSyncing = false;
+      this.triggerSyncContextChanged();
 
-    private triggerEndSync(context: SyncContext) {
-      const newContext = { ...context };
-      newContext.isSyncing = false;
-      this.triggerSyncContextChanged(newContext);
+      return Promise.resolve(success);
     }
 }
 

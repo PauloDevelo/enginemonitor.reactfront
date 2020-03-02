@@ -29,8 +29,8 @@ export interface Action{
 
 export interface IActionManager{
     addAction(action: Action): Promise<void>;
-    getNextActionToPerform(): Promise<Action>;
-    putBackAction(action: Action): Promise<void>;
+    getNextActionToPerform(): Action;
+    shiftAction(): Promise<void>;
     countAction(): number;
     performAction (action: Action):Promise<void>;
     clearActions(): Promise<void>;
@@ -85,23 +85,22 @@ class ActionManager implements IActionManager, IUserStorageListener {
       return this.triggerOnActionManagerChanged(this.actions.length);
     }
 
-    async getNextActionToPerform(): Promise<Action> {
-      const action = this.actions.shift();
-
-      if (!action) {
+    getNextActionToPerform(): Action {
+      if (this.actions.length === 0) {
         throw new NoActionPendingError("There isn't pending action anymore");
       }
 
-      await storageService.setItem<Action[]>('history', this.actions);
-      this.triggerOnActionManagerChanged(this.actions.length);
-
-      return action;
+      return this.actions[0];
     }
 
-    async putBackAction(action: Action): Promise<void> {
-      this.actions = [action].concat(this.actions);
+    async shiftAction(): Promise<void> {
+      if (this.actions.length === 0) {
+        throw new NoActionPendingError("There isn't pending action anymore");
+      }
+
+      this.actions.shift();
       this.actions = await storageService.setItem<Action[]>('history', this.actions);
-      this.triggerOnActionManagerChanged(this.actions.length);
+      return this.triggerOnActionManagerChanged(this.actions.length);
     }
 
     countAction = (): number => this.actions.length
@@ -111,7 +110,15 @@ class ActionManager implements IActionManager, IUserStorageListener {
       const requestConfig = { cancelToken: this.cancelTokenSource.token };
 
       if (action.type === ActionType.Post) {
-        await httpProxy.post(action.key, action.data, requestConfig);
+        try {
+          await httpProxy.post(action.key, action.data, requestConfig);
+        } catch (error) {
+          if (error instanceof HttpError && error.data.entity === 'notfound') {
+            log.warn(`[${action.key}]: The image was deleted in a further delete action`);
+          } else {
+            throw error;
+          }
+        }
       } else if (action.type === ActionType.Delete) {
         try {
           await httpProxy.deleteReq(action.key, requestConfig);
