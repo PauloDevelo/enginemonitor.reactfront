@@ -6,14 +6,29 @@ import storageUpdaterService from './StorageUpdaterService';
 // eslint-disable-next-line no-unused-vars
 import { UserModel, EntityModel } from '../types/Types';
 
-localforage.config({
-  driver: localforage.WEBSQL, // Force WebSQL; same as using setDriver()
-  name: 'maintenance reminder',
-  version: 1.0,
-  size: 4980736, // Size of database, in bytes. WebSQL-only for now.
-  storeName: 'keyvaluepairs', // Should be alphanumeric, with underscores.
-  description: 'Contains all the information contained in Maintenance monitor',
-});
+let initialisation: Promise<void>;
+
+if (process.env.NODE_ENV === 'test') {
+  const init = async () => {
+    const { default: memoryStorageDriver } = await import('localforage-memoryStorageDriver');
+    await localforage.defineDriver(memoryStorageDriver);
+    await localforage.setDriver(memoryStorageDriver._driver);
+  };
+
+  initialisation = init();
+} else {
+  localforage.config({
+    driver: localforage.WEBSQL, // Force WebSQL; same as using setDriver()
+    name: 'maintenance reminder',
+    version: 1.0,
+    size: 4980736, // Size of database, in bytes. WebSQL-only for now.
+    storeName: 'keyvaluepairs', // Should be alphanumeric, with underscores.
+    description: 'Contains all the information contained in Maintenance monitor',
+  });
+
+  initialisation = Promise.resolve();
+}
+
 
 export interface IUserStorageListener{
     onUserStorageOpened(): Promise<void>;
@@ -135,6 +150,8 @@ class StorageService implements IStorageService {
     }
 
     async openUserStorage({ _uiId }: UserModel): Promise<void> {
+      await initialisation;
+
       this.userStorage = localforage.createInstance({
         name: _uiId,
       });
@@ -220,7 +237,7 @@ class StorageService implements IStorageService {
       }
 
       const keys = await this.getUserStorage().keys();
-      return keys.includes(key);
+      return keys.includes(key) ? (await this.getUserStorage().getItem(key) !== undefined) : false;
     }
 
     async removeItem<T>(key: string): Promise<void> {
