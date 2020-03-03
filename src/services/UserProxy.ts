@@ -1,12 +1,13 @@
 import * as log from 'loglevel';
 import httpProxy from './HttpProxy';
+import progressiveHttpProxy from './ProgressiveHttpProxy';
 import HttpError from '../http/HttpError';
-import syncService from './SyncService';
+import onlineManager from './OnlineManager';
 
 import storageService from './StorageService';
 
 // eslint-disable-next-line no-unused-vars
-import { UserModel, AuthInfo } from '../types/Types';
+import { UserModel, AuthInfo, UserCredentials } from '../types/Types';
 import userContext from './UserContext';
 
 type Config = {
@@ -21,6 +22,7 @@ export interface IUserProxy{
     resetPassword(email: string, password: string): Promise<void>;
     authenticate (authInfo: AuthInfo):Promise<UserModel>;
     logout(): Promise<void>;
+    getCredentials({ assetUiId }: {assetUiId: string}): Promise<UserCredentials>;
 
     /**
      * This function tries to get a user stored in the global storage due to the remember me feature.
@@ -30,7 +32,7 @@ export interface IUserProxy{
 }
 
 class UserProxy implements IUserProxy {
-    baseUrl = `${process.env.REACT_APP_URL_BASE}users/`;
+    baseUrl = `${process.env.REACT_APP_API_URL_BASE}users/`;
 
     // ///////////////////User/////////////////////////
     signup = async (newUser: UserModel): Promise<void> => {
@@ -57,7 +59,7 @@ class UserProxy implements IUserProxy {
           storageService.setGlobalItem('currentUser', user);
         }
 
-        await storageService.openUserStorage(user);
+        storageService.openUserStorage(user);
         userContext.onUserChanged(user);
 
         return user;
@@ -67,33 +69,38 @@ class UserProxy implements IUserProxy {
     }
 
     logout = async (): Promise<void> => {
-      storageService.removeGlobalItem('currentUser');
+      await storageService.setGlobalItem('currentUser', undefined);
+
       httpProxy.setConfig(undefined);
-      storageService.closeUserStorage();
-      userContext.onUserChanged(undefined);
+      await storageService.closeUserStorage();
+      await userContext.onUserChanged(undefined);
     }
+
+    getCredentials = async ({ assetUiId }: {assetUiId: string}): Promise<UserCredentials> => progressiveHttpProxy.getOnlineFirst<UserCredentials>(`${this.baseUrl}credentials/${assetUiId}`, 'credentials')
 
     tryGetAndSetMemorizedUser = async ():Promise<UserModel | undefined> => {
       if (await storageService.existGlobalItem('currentUser')) {
         let rememberedUser = await storageService.getGlobalItem<UserModel>('currentUser');
-        this.setHttpProxyAuthentication(rememberedUser);
+        if (rememberedUser) {
+          this.setHttpProxyAuthentication(rememberedUser);
 
-        if (await syncService.isOnline()) {
-          try {
-            const { user: currentUser }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}current`);
-            if (currentUser) {
-              storageService.setGlobalItem('currentUser', currentUser);
-              this.setHttpProxyAuthentication(currentUser);
-              rememberedUser = currentUser;
+          if (await onlineManager.isOnline()) {
+            try {
+              const { user: currentUser }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}current`);
+              if (currentUser) {
+                storageService.setGlobalItem('currentUser', currentUser);
+                this.setHttpProxyAuthentication(currentUser);
+                rememberedUser = currentUser;
+              }
+            } catch (error) {
+              log.error(error.message);
             }
-          } catch (error) {
-            log.error(error.message);
           }
-        }
 
-        await storageService.openUserStorage(rememberedUser);
-        userContext.onUserChanged(rememberedUser);
-        return rememberedUser;
+          await storageService.openUserStorage(rememberedUser);
+          await userContext.onUserChanged(rememberedUser);
+          return rememberedUser;
+        }
       }
 
       return undefined;

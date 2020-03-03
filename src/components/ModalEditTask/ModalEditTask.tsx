@@ -5,7 +5,6 @@ import {
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage, defineMessages } from 'react-intl';
-import { CSSTransition } from 'react-transition-group';
 
 import useEditModalLogic from '../../hooks/EditModalLogicHook';
 
@@ -73,31 +72,29 @@ const ModalEditTask = ({
 
   return (
     <>
-      <CSSTransition in={visible} timeout={300} classNames="modal">
-        <Modal isOpen={visible} toggle={modalLogic.cancel} className={className} fade={false}>
-          <ModalHeader toggle={modalLogic.cancel}>
-            <FontAwesomeIcon icon={faEdit} />
-            {' '}
-            {title}
-          </ModalHeader>
-          <ModalBody>
-            {visible && (
-            <MyForm id="createTaskForm" submit={modalLogic.handleSubmit} initialData={task}>
-              <MyInput name="name" label={editTaskMsg.name} type="text" required />
-              {equipment.ageAcquisitionType !== AgeAcquisitionType.time && <MyInput name="usagePeriodInHour" label={editTaskMsg.usagePeriodInHour} type="number" min={0} />}
-              <MyInput name="periodInMonth" label={editTaskMsg.month} type="number" min={1} required />
-              <MyInput name="description" label={editTaskMsg.description} type="textarea" required />
-            </MyForm>
-            )}
-            <Alerts errors={modalLogic.alerts} />
-          </ModalBody>
-          <ModalFooter>
-            <ActionButton type="submit" isActing={modalLogic.isSaving} form="createTaskForm" color="success" message={editTaskMsg.save} />
-            <Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...editTaskMsg.cancel} /></Button>
-            {!isCreation && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editTaskMsg.delete} /></Button>}
-          </ModalFooter>
-        </Modal>
-      </CSSTransition>
+      <Modal isOpen={visible} toggle={modalLogic.cancel} className={className} fade>
+        <ModalHeader toggle={modalLogic.cancel}>
+          <FontAwesomeIcon icon={faEdit} />
+          {' '}
+          {title}
+        </ModalHeader>
+        <ModalBody>
+          {visible && (
+          <MyForm id="createTaskForm" submit={modalLogic.handleSubmit} initialData={task}>
+            <MyInput name="name" label={editTaskMsg.name} type="text" required />
+            {equipment.ageAcquisitionType !== AgeAcquisitionType.time && <MyInput name="usagePeriodInHour" label={editTaskMsg.usagePeriodInHour} type="number" min={0} />}
+            <MyInput name="periodInMonth" label={editTaskMsg.month} type="number" min={1} required />
+            <MyInput name="description" label={editTaskMsg.description} type="textarea" required />
+          </MyForm>
+          )}
+          <Alerts errors={modalLogic.alerts} />
+        </ModalBody>
+        <ModalFooter>
+          <ActionButton type="submit" isActing={modalLogic.isSaving} form="createTaskForm" color="success" message={editTaskMsg.save} />
+          <Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...editTaskMsg.cancel} /></Button>
+          {!isCreation && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editTaskMsg.delete} /></Button>}
+        </ModalFooter>
+      </Modal>
       <ModalYesNoConfirmation
         visible={modalLogic.yesNoModalVisibility}
         toggle={modalLogic.toggleModalYesNoConfirmation}

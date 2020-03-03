@@ -6,13 +6,14 @@ import storageService from './StorageService';
 
 import { updateEntry } from '../helpers/EntryHelper';
 // eslint-disable-next-line no-unused-vars
-import { EntryModel } from '../types/Types';
+import { EntryModel, AssetModel } from '../types/Types';
 import imageProxy from './ImageProxy';
+
+import assetManager from './AssetManager';
 
 export interface FetchEntriesProps extends FetchAllEntriesProps{
     taskId: string|undefined;
 }
-
 export interface FetchAllEntriesProps{
     equipmentId: string|undefined;
     cancelToken?: CancelToken;
@@ -36,7 +37,15 @@ export interface IEntryProxy{
 }
 
 class EntryProxy implements IEntryProxy {
-    baseUrl = `${process.env.REACT_APP_URL_BASE}entries/`;
+    private baseUrl = `${process.env.REACT_APP_API_URL_BASE}entries/`;
+
+    constructor() {
+      assetManager.registerOnCurrentAssetChanged(this.updateBaseUrl);
+    }
+
+    updateBaseUrl = (asset: AssetModel | undefined) => {
+      this.baseUrl = `${process.env.REACT_APP_API_URL_BASE}entries/${asset?._uiId}/`;
+    }
 
     getBaseEntryUrl = (equipmentId: string | undefined): string => {
       if (equipmentId === undefined) {
@@ -50,9 +59,9 @@ class EntryProxy implements IEntryProxy {
     createOrSaveEntry = async (equipmentId: string, taskId: string | undefined, newEntry: EntryModel): Promise<EntryModel> => {
       const taskIdStr = taskId === undefined ? '-' : taskId;
 
-      const updatedNewEntry = await progressiveHttpProxy.postAndUpdate(`${this.baseUrl + equipmentId}/${taskIdStr}/${newEntry._uiId}`, 'entry', newEntry, updateEntry);
+      const updatedNewEntry = await progressiveHttpProxy.postAndUpdate(`${this.getBaseEntryUrl(equipmentId)}/${taskIdStr}/${newEntry._uiId}`, 'entry', newEntry, updateEntry);
 
-      await storageService.updateArray(this.baseUrl + equipmentId, updatedNewEntry);
+      await storageService.updateArray(this.getBaseEntryUrl(equipmentId), updatedNewEntry);
 
       return updatedNewEntry;
     }
@@ -60,12 +69,9 @@ class EntryProxy implements IEntryProxy {
     deleteEntry = async (equipmentId: string, taskId: string | undefined, entryId: string): Promise<EntryModel> => {
       const taskIdStr = taskId === undefined ? '-' : taskId;
 
-      await progressiveHttpProxy.deleteAndUpdate(`${this.baseUrl + equipmentId}/${taskIdStr}/${entryId}`, 'entry', updateEntry);
+      await progressiveHttpProxy.deleteAndUpdate(`${this.getBaseEntryUrl(equipmentId)}/${taskIdStr}/${entryId}`, 'entry', updateEntry);
 
-      const deletedEntry = updateEntry(await storageService.removeItemInArray<EntryModel>(this.baseUrl + equipmentId, entryId));
-      imageProxy.onEntityDeleted(deletedEntry._uiId);
-
-      return deletedEntry;
+      return this.removeEntryInStorage(equipmentId, entryId);
     }
 
     fetchEntries = async ({
@@ -82,10 +88,10 @@ class EntryProxy implements IEntryProxy {
       if (equipmentId === undefined) { return []; }
 
       if (forceToLookUpInStorage) {
-        return storageService.getArray(this.baseUrl + equipmentId);
+        return progressiveHttpProxy.getArrayFromStorage(this.getBaseEntryUrl(equipmentId), updateEntry);
       }
 
-      return progressiveHttpProxy.getArrayOnlineFirst<EntryModel>(this.baseUrl + equipmentId, 'entries', updateEntry, cancelToken);
+      return progressiveHttpProxy.getArrayOnlineFirst<EntryModel>(this.getBaseEntryUrl(equipmentId), 'entries', updateEntry, cancelToken);
     }
 
     getStoredEntries = async (equipmentId: string, taskId: string | undefined = undefined):Promise<EntryModel[]> => {
@@ -111,20 +117,24 @@ class EntryProxy implements IEntryProxy {
 
       await entries.reduce(async (previousPromise, entry) => {
         await previousPromise;
-        await storageService.removeItemInArray<EntryModel>(this.baseUrl + equipmentId, entry._uiId);
-        await imageProxy.onEntityDeleted(entry._uiId);
+        await this.removeEntryInStorage(equipmentId, entry._uiId);
       }, Promise.resolve());
     }
 
     onEquipmentDeleted = async (equipmentId: string): Promise<void> => {
       const entries = await this.getStoredEntries(equipmentId);
 
-
       await entries.reduce(async (previousPromise, entry) => {
         await previousPromise;
-        await storageService.removeItemInArray<EntryModel>(this.baseUrl + equipmentId, entry._uiId);
-        await imageProxy.onEntityDeleted(entry._uiId);
+        await this.removeEntryInStorage(equipmentId, entry._uiId);
       }, Promise.resolve());
+    }
+
+    private removeEntryInStorage = async (equipmentUiId: string, entryUiId: string): Promise<EntryModel> => {
+      const entryDeleted = updateEntry(await storageService.removeItemInArray<EntryModel>(this.getBaseEntryUrl(equipmentUiId), entryUiId));
+      await imageProxy.onEntityDeleted(entryUiId);
+
+      return entryDeleted;
     }
 }
 

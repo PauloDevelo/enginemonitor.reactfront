@@ -1,19 +1,19 @@
-export const localStorageMock = (function() {
-  var store:any = {};
+export const localStorageMock = (function () {
+  let store:any = {};
   return {
-    getItem: function(key: string) {
+    getItem(key: string) {
       return store[key];
     },
-    setItem: function(key: string, value: string) {
+    setItem(key: string, value: string) {
       store[key] = value.toString();
     },
-    clear: function() {
+    clear() {
       store = {};
     },
-    removeItem: function(key: string) {
+    removeItem(key: string) {
       delete store[key];
-    }
+    },
   };
-})();
+}());
 
 Object.defineProperty(window, 'localStorage', { value: localStorageMock });

@@ -5,12 +5,12 @@ import { useState } from 'react';
 import HttpError from '../http/HttpError';
 
 type ModalLogicProps<T> = {
-  toggleEditModal: ()=> void;
+  toggleEditModal?: ()=> void;
 
   saveFunc: (...params:any) => Promise<T>;
   saveParams: (any|undefined)[];
   onSaveCb?: ((data: T) => void);
-  onSavedCb: (data: T) => void;
+  onSavedCb?: (data: T) => void;
 
   deleteFunc: (...params:any) => Promise<T>;
   deleteParams: (any|undefined)[];
@@ -33,7 +33,7 @@ export default function useEditModalLogic<T>({
 
   const cancel = () => {
     setAlerts(undefined);
-    toggleEditModal();
+    if (toggleEditModal) toggleEditModal();
   };
 
   const handleSubmit = async (data: T) => {
@@ -43,9 +43,9 @@ export default function useEditModalLogic<T>({
     try {
       const paramsValues = saveParams.concat(data);
       const savedData = await saveFunc(...paramsValues);
-      onSavedCb(savedData);
+      if (onSavedCb) onSavedCb(savedData);
       setAlerts(undefined);
-      toggleEditModal();
+      if (toggleEditModal) toggleEditModal();
     } catch (error) {
       if (error instanceof HttpError) {
         setAlerts(error.data);
@@ -69,8 +69,9 @@ export default function useEditModalLogic<T>({
       }
       setAlerts(undefined);
       toggleModalYesNoConfirmation();
-      toggleEditModal();
+      if (toggleEditModal) toggleEditModal();
     } catch (error) {
+      toggleModalYesNoConfirmation();
       if (error instanceof HttpError) {
         setAlerts(error.data);
       } else {

@@ -1,21 +1,26 @@
+import { uid } from 'react-uid';
 import ignoredMessages from '../../testHelpers/MockConsole';
 import httpProxy from '../HttpProxy';
-import syncService from '../SyncService';
+import onlineManager from '../OnlineManager';
 import storageService from '../StorageService';
 import taskProxy from '../TaskProxy';
 import entryProxy from '../EntryProxy';
 import equipmentProxy from '../EquipmentProxy';
+import assetManager from '../AssetManager';
 import imageProxy from '../ImageProxy';
 import actionManager from '../ActionManager';
+import userProxy from '../UserProxy';
 
 import { updateTask } from '../../helpers/TaskHelper';
 import { TaskLevel, AgeAcquisitionType } from '../../types/Types';
+import HttpError from '../../http/HttpError';
 
 jest.mock('../HttpProxy');
-jest.mock('../SyncService');
+jest.mock('../OnlineManager');
 jest.mock('../EntryProxy');
 jest.mock('../ImageProxy');
 jest.mock('../EquipmentProxy');
+jest.mock('../UserProxy');
 
 describe('Test TaskProxy', () => {
   beforeAll(() => {
@@ -25,7 +30,7 @@ describe('Test TaskProxy', () => {
   });
 
   const parentEquipmentId = 'an_parent_equipment';
-  const urlFetchTask = `${process.env.REACT_APP_URL_BASE}tasks/${parentEquipmentId}`;
+  const urlFetchTask = `${process.env.REACT_APP_API_URL_BASE}tasks/asset_01/${parentEquipmentId}`;
 
   const taskToSave = {
     _uiId: 'an_id_created_by_the_front_end_and_for_the_front_end',
@@ -38,29 +43,40 @@ describe('Test TaskProxy', () => {
     usageInHourLeft: undefined,
   };
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    userProxy.getCredentials.mockImplementation(async () => ({ readonly: false }));
+    const user = { email: 'test@gmail.com' };
+
+    await storageService.openUserStorage(user);
+
+    await assetManager.setCurrentAsset({
+      _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrope', manufactureDate: new Date(1979, 1, 1),
+    });
+  });
+
+  afterEach(async () => {
+    await actionManager.clearActions();
+
+    onlineManager.isOnlineAndSynced.mockRestore();
+
+    storageService.setItem(urlFetchTask, undefined);
+    storageService.closeUserStorage();
+
     httpProxy.setConfig.mockReset();
     httpProxy.post.mockReset();
     httpProxy.deleteReq.mockReset();
     httpProxy.get.mockReset();
 
-    const user = { email: 'test@gmail.com' };
-    storageService.openUserStorage(user);
-  });
-
-  afterEach(async () => {
-    await actionManager.clearActions();
-    storageService.setItem(urlFetchTask, undefined);
-    storageService.closeUserStorage();
-
     entryProxy.onTaskDeleted.mockRestore();
     entryProxy.getStoredEntries.mockRestore();
     imageProxy.onEntityDeleted.mockRestore();
     equipmentProxy.getStoredEquipment.mockRestore();
+
+    userProxy.getCredentials.mockRestore();
   });
 
   describe('fetchTasks', () => {
-    it('should return an empty array if the equipment parent is undefined', async () => {
+    it('should return an empty array if the equipment parent is undefined', async (done) => {
       // Arrange
 
       // Act
@@ -68,9 +84,10 @@ describe('Test TaskProxy', () => {
 
       // Assert
       expect(tasks.length).toBe(0);
+      done();
     });
 
-    it('should return the expected tasks and it should update the realtime fields', async () => {
+    it('should return the expected tasks and it should update the realtime fields', async (done) => {
       // Arrange
       entryProxy.getStoredEntries.mockImplementation(async () => Promise.resolve([]));
       equipmentProxy.getStoredEquipment.mockImplementation(async () => Promise.resolve([{
@@ -104,7 +121,7 @@ describe('Test TaskProxy', () => {
           ],
         }
       ));
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
 
       // Act
       const tasks = await taskProxy.fetchTasks({ equipmentId: parentEquipmentId, forceToLookUpInStorage: false });
@@ -118,46 +135,67 @@ describe('Test TaskProxy', () => {
       expect(tasks[1].nextDueDate).not.toBeUndefined();
       expect(tasks[1].usageInHourLeft).not.toBeUndefined();
       expect(tasks[1].level).not.toBeUndefined();
+      done();
     });
   });
 
-  const createOrSaveTaskParams = [
-    {
-      isOnline: false, expectedPostCounter: 0, equipmentId: parentEquipmentId, expectedNbTask: 1, expectedNbAction: 1,
-    },
-    {
-      isOnline: true, expectedPostCounter: 1, equipmentId: parentEquipmentId, expectedNbTask: 1, expectedNbAction: 0,
-    },
-  ];
-  describe.each(createOrSaveTaskParams)('createOrSaveTask', (arg) => {
-    it(`When ${JSON.stringify(arg)}`, async () => {
-      // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
+  describe('createOrSaveTask', () => {
+    const createOrSaveTaskParams = [
+      {
+        isOnline: false, expectedPostCounter: 0, equipmentId: parentEquipmentId, expectedNbTask: 1, expectedNbAction: 1,
+      },
+      {
+        isOnline: true, expectedPostCounter: 1, equipmentId: parentEquipmentId, expectedNbTask: 1, expectedNbAction: 0,
+      },
+    ];
+    describe.each(createOrSaveTaskParams)('createOrSaveTask', (arg) => {
+      it(`When ${JSON.stringify(arg)}`, async (done) => {
+        // Arrange
+        onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
-      let postCounter = 0;
-      httpProxy.post.mockImplementation((url, data) => {
-        postCounter++;
-        return Promise.resolve(data);
+        let postCounter = 0;
+        httpProxy.post.mockImplementation((url, data) => {
+          postCounter++;
+          return Promise.resolve(data);
+        });
+
+        // Act
+        const taskSaved = await taskProxy.createOrSaveTask(parentEquipmentId, taskToSave);
+
+        // Assert
+        expect(postCounter).toBe(arg.expectedPostCounter);
+        expect(taskSaved).toEqual(taskToSave);
+
+        const tasks = await storageService.getItem(urlFetchTask);
+        expect(tasks.length).toBe(arg.expectedNbTask);
+
+        if (arg.expectedNbTask > 0) {
+          const storedTask = updateTask(tasks[0]);
+          expect(storedTask).toEqual(taskToSave);
+        }
+
+        expect(actionManager.countAction()).toBe(arg.expectedNbAction);
+        done();
       });
+    });
 
-      // Act
-      const taskSaved = await taskProxy.createOrSaveTask(parentEquipmentId, taskToSave);
+    it('should throw an httpError if the new task uses an existing name', async (done) => {
+      // Arrange
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
+      await taskProxy.createOrSaveTask(parentEquipmentId, taskToSave);
 
-      // Assert
-      expect(postCounter).toBe(arg.expectedPostCounter);
-      expect(taskSaved).toEqual(taskToSave);
-
-      const tasks = await storageService.getItem(urlFetchTask);
-      expect(tasks.length).toBe(arg.expectedNbTask);
-
-      if (arg.expectedNbTask > 0) {
-        const storedTask = updateTask(tasks[0]);
-        expect(storedTask).toEqual(taskToSave);
+      try {
+        // Act
+        await taskProxy.createOrSaveTask(parentEquipmentId, { ...taskToSave, _uiId: 'asdgasdf' });
+      } catch (error) {
+        // Assert
+        expect(error).toBeInstanceOf(HttpError);
+        expect(error.data).toEqual({ name: 'alreadyexisting' });
+        done();
       }
-
-      expect(await actionManager.countAction()).toBe(arg.expectedNbAction);
     });
   });
+
 
   const deleteTaskParams = [
     {
@@ -168,9 +206,9 @@ describe('Test TaskProxy', () => {
     },
   ];
   describe.each(deleteTaskParams)('deleteTask', (arg) => {
-    it(`When ${JSON.stringify(arg)}`, async () => {
+    it(`When ${JSON.stringify(arg)}`, async (done) => {
       // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
       let deleteCounter = 0;
       httpProxy.deleteReq.mockImplementation(() => {
@@ -191,7 +229,8 @@ describe('Test TaskProxy', () => {
       const tasks = await storageService.getItem(urlFetchTask);
       expect(tasks.length).toBe(arg.expectedNbTask);
 
-      expect(await actionManager.countAction()).toBe(arg.expectedNbAction);
+      expect(actionManager.countAction()).toBe(arg.expectedNbAction);
+      done();
     });
   });
 
@@ -207,9 +246,9 @@ describe('Test TaskProxy', () => {
     },
   ];
   describe.each(existEquipmentParams)('existEquipment', (arg) => {
-    it(`When ${JSON.stringify(arg)}`, async () => {
+    it(`When ${JSON.stringify(arg)}`, async (done) => {
       // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
       httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
 
@@ -220,11 +259,12 @@ describe('Test TaskProxy', () => {
 
       // Assert
       expect(isTaskExist).toBe(arg.expectedResult);
+      done();
     });
   });
 
   describe('onEquipmentDeleted', () => {
-    it('should call removeItemInArray, onTaskDeleted for entry proxy and onEntityDeleted for the imageProxy', async () => {
+    it('should call removeItemInArray, onTaskDeleted for entry proxy and onEntityDeleted for the imageProxy', async (done) => {
       // Arrange
       const { getArray, removeItemInArray } = storageService;
 
@@ -280,6 +320,7 @@ describe('Test TaskProxy', () => {
 
       storageService.removeItemInArray = removeItemInArray;
       storageService.getArray = getArray;
+      done();
     });
   });
 });

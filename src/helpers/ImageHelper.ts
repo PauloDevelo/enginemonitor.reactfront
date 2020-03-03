@@ -53,8 +53,8 @@ const getOrientationInDegrees = async (file: File): Promise<number> => {
     const tags = await readExifTags(file);
     return convertExifOrientationIntoDegree(tags.Orientation);
   } catch (error) {
-    log.error('Impossible to get the image orientation in the Exif data.');
-    log.error(error);
+    log.warn('Impossible to get the image orientation in the Exif data.');
+    log.warn(error.message);
     return 0;
   }
 };
@@ -126,8 +126,8 @@ export const createImageModel = (parentUiId: string):ImageModel => {
     title: '',
     description: '',
     sizeInByte: 0,
-    thumbnailUrl: `${process.env.REACT_APP_URL_BASE}${userContext.getCurrentUser()!.imageFolder}/thumbnail_${uiid}.jpeg`,
-    url: `${process.env.REACT_APP_URL_BASE}${userContext.getCurrentUser()!.imageFolder}/${uiid}.jpeg`,
+    thumbnailUrl: `${process.env.REACT_APP_API_URL_BASE}${userContext.getCurrentUser()!.imageFolder}/thumbnail_${uiid}.jpeg`,
+    url: `${process.env.REACT_APP_API_URL_BASE}${userContext.getCurrentUser()!.imageFolder}/${uiid}.jpeg`,
   });
 };
 

@@ -13,14 +13,17 @@ import { FormattedMessage, defineMessages } from 'react-intl';
 import ClockLabel from '../ClockLabel/ClockLabel';
 import DropDownConnectionStateItem from './DropDownConnectionStateItem';
 import ModalAbout from '../ModalAbout/ModalAbout';
+import ModalEditAsset from '../ModalEditAsset/ModalEditAsset';
 import ImageFolderGauge from './ImageFolderGauge';
 
 import userProxy from '../../services/UserProxy';
-import syncService from '../../services/SyncService';
+import onlineManager from '../../services/OnlineManager';
 
 // eslint-disable-next-line no-unused-vars
-import { UserModel } from '../../types/Types';
+import { UserModel, AssetModel } from '../../types/Types';
 import userContext from '../../services/UserContext';
+
+import assetManager from '../../services/AssetManager';
 
 import './NavBar.css';
 
@@ -38,15 +41,31 @@ const NavBar = ({ onLoggedOut }:Props) => {
   const [user, setUser] = useState<UserModel | undefined>(currentUser);
   const [userImageFolderSize, setUserImageFolderSize] = useState(currentUser !== undefined ? currentUser.imageFolderSizeInByte : 0);
   const [aboutVisible, setAboutVisibility] = useState(false);
-  const [offline, setOffline] = useState(syncService.isOfflineModeActivated());
+  const [assetEditionModalVisibility, setAssetEditionModalVisibility] = useState(false);
+  const [offline, setOffline] = useState(onlineManager.isOfflineModeActivated());
+
+  const [currentAsset, setCurrentAsset] = useState<AssetModel | undefined>(undefined);
+  const [titleNavBar, setTitleNavBar] = useState('');
+
+  useEffect(() => {
+    const onCurrentAssetChanged = (asset: AssetModel | undefined) => {
+      setCurrentAsset(asset);
+      setTitleNavBar(asset === undefined ? '' : asset.name);
+    };
+
+    assetManager.registerOnCurrentAssetChanged(onCurrentAssetChanged);
+
+    return () => assetManager.unregisterOnCurrentAssetChanged(onCurrentAssetChanged);
+  });
 
   const [isOpened, setIsOpened] = useState(false);
   const toggle = useCallback(() => {
     setIsOpened((prevIsOpened) => !prevIsOpened);
   }, []);
 
-  const onUserChanged = useCallback((newUser: UserModel | undefined) => {
+  const onUserChanged = useCallback(async (newUser: UserModel | undefined):Promise<void> => {
     setUser(newUser);
+    return Promise.resolve();
   }, []);
 
   const onUserImageFolderSizeChanged = useCallback((newUserImageFolderSize: number) => {
@@ -69,20 +88,29 @@ const NavBar = ({ onLoggedOut }:Props) => {
 
   const offlineSwitch = useCallback((isOffline: boolean):void => {
     setOffline(isOffline);
-    syncService.setOfflineMode(isOffline);
+    onlineManager.setOfflineMode(isOffline);
   }, []);
 
   const toggleAbout = useCallback(() => {
     setAboutVisibility((prevAboutVisibility) => !prevAboutVisibility);
   }, []);
 
-  const getTextMenu = useCallback(() => (user ? user.email : 'Login'), [user]);
+  const toggleAssetEditionModal = useCallback(() => {
+    setAssetEditionModalVisibility((prevVisibility) => !prevVisibility);
+  }, []);
+
+  const getTextMenu = useCallback(() => {
+    if (user) {
+      return user.email === '' ? user.firstname : user.email;
+    }
+    return 'Login';
+  }, [user]);
 
   return (
     <>
       <Navbar color="dark" dark expand="md">
-        <NavbarBrand href="/">
-          <div className="mr-2">Equipment maintenance</div>
+        <NavbarBrand onClick={toggleAssetEditionModal} className="clickable">
+          <div className="mr-2">{titleNavBar}</div>
           <div className="clock">
             <FormattedMessage {...navBarMsg.today} />
             <ClockLabel />
@@ -102,10 +130,14 @@ const NavBar = ({ onLoggedOut }:Props) => {
                 </DropdownItem>
                 <DropDownConnectionStateItem />
                 <DropdownItem divider />
+                {!user?.forbidUploadingImage && (
                 <DropdownItem header>
                   <ImageFolderGauge storageSizeInMB={userImageFolderSize / 1048576} storageSizeLimitInMB={user ? user.imageFolderSizeLimitInByte / 1048576 : 0} />
                 </DropdownItem>
+                )}
+                {!user?.forbidUploadingImage && (
                 <DropdownItem divider />
+                )}
                 <DropdownItem onClick={logout}>
                   <FontAwesomeIcon icon={faSignOutAlt} />
                   {' '}
@@ -121,6 +153,16 @@ const NavBar = ({ onLoggedOut }:Props) => {
         </Collapse>
       </Navbar>
       {aboutVisible && <ModalAbout visible={aboutVisible} toggle={toggleAbout} className="modal-dialog-centered" />}
+
+      {currentAsset && (
+        <ModalEditAsset
+          asset={currentAsset}
+          visible={assetEditionModalVisibility}
+          className="modal-dialog-centered"
+          toggle={toggleAssetEditionModal}
+          hideDeleteButton
+        />
+      )}
     </>
   );
 };

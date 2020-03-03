@@ -17,17 +17,15 @@ export type Config = {
 };
 
 export interface IHttpProxy{
-    postImage(url: string, image:ImageModel, imageData:Blob, thumbnailData: Blob): Promise<{ image:ImageModel }>;
-    post(url: string, data: any): Promise<any>;
-    deleteReq(url: string): Promise<any>;
-    get(url: string, cancelToken?: CancelToken | undefined): Promise<any>;
+    postImage(url: string, image:ImageModel, imageData:Blob, thumbnailData: Blob, requestConfig?: { cancelToken?: CancelToken, timeout?: number }): Promise<{ image:ImageModel }>;
+    post(url: string, data: any, requestConfig?: { cancelToken?: CancelToken, timeout?: number }): Promise<any>;
+    deleteReq(url: string, requestConfig?: { cancelToken?: CancelToken, timeout?: number }): Promise<any>;
+    get(url: string, requestConfig?: { cancelToken?: CancelToken, timeout?: number }): Promise<any>;
     setConfig(config: Config | undefined): void;
     createCancelTokenSource(): CancelTokenSource;
 }
 
 function processError(error: any) {
-  log.error(error);
-
   let data:any = { message: error.message };
   if (error.response) {
     if (error.response.data) {
@@ -43,6 +41,8 @@ function processError(error: any) {
 }
 
 class HttpProxy implements IHttpProxy {
+    private defaultRequestConfig = { cancelToken: undefined, timeout: undefined };
+
     private config:Config | undefined;
 
     constructor() {
@@ -50,11 +50,10 @@ class HttpProxy implements IHttpProxy {
     }
 
     setConfig(config: Config) {
-      this.config = { ...config };
-      this.config.timeout = 2000;
+      this.config = config;
     }
 
-    postImage = async (url: string, image:ImageModel, imageData:Blob, thumbnailData: Blob):Promise<{ image: ImageModel }> => {
+    postImage = async (url: string, image:ImageModel, imageData:Blob, thumbnailData: Blob, requestConfig: { cancelToken?: CancelToken, timeout?: number } = this.defaultRequestConfig):Promise<{ image: ImageModel }> => {
       const imgFormObj = new FormData();
       imgFormObj.append('name', image.name);
       imgFormObj.append('imageData', imageData, `${image._uiId}.jpeg`);
@@ -62,13 +61,15 @@ class HttpProxy implements IHttpProxy {
       imgFormObj.append('parentUiId', image.parentUiId);
       imgFormObj.append('_uiId', image._uiId);
 
-      return this.post(url, imgFormObj);
+      return this.post(url, imgFormObj, requestConfig);
     }
 
     // eslint-disable-next-line consistent-return
-    post = async (url: string, data: any) => {
+    post = async (url: string, data: any, requestConfig: { cancelToken?: CancelToken, timeout?: number } = this.defaultRequestConfig) => {
+      const axiosRequestConfig = { ...requestConfig, ...this.config };
+
       try {
-        const response = await axios.post(url, data, this.config);
+        const response = await axios.post(url, data, axiosRequestConfig);
         return response.data;
       } catch (error) {
         processError(error);
@@ -76,9 +77,11 @@ class HttpProxy implements IHttpProxy {
     }
 
     // eslint-disable-next-line consistent-return
-    deleteReq = async (url: string) => {
+    deleteReq = async (url: string, requestConfig: { cancelToken?: CancelToken, timeout?: number } = this.defaultRequestConfig) => {
+      const axiosRequestConfig = { ...requestConfig, ...this.config };
+
       try {
-        const response = await axios.delete(url, this.config);
+        const response = await axios.delete(url, axiosRequestConfig);
         return response.data;
       } catch (error) {
         processError(error);
@@ -86,13 +89,18 @@ class HttpProxy implements IHttpProxy {
     }
 
     // eslint-disable-next-line consistent-return
-    get = async (url: string, cancelToken: CancelToken | undefined = undefined) => {
+    get = async (url: string, requestConfig: { cancelToken?: CancelToken, timeout?: number } = { cancelToken: undefined, timeout: undefined }) => {
+      const { cancelToken, timeout } = requestConfig;
       try {
-        const config = cancelToken ? ({ cancelToken, ...this.config }) : this.config;
+        const config = { cancelToken, timeout, ...this.config };
         const response = await axios.get(url, config);
         return response.data;
       } catch (error) {
-        processError(error);
+        if (error instanceof axios.Cancel) {
+          log.info(error.message);
+        } else {
+          processError(error);
+        }
       }
     }
 

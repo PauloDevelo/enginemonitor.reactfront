@@ -23,22 +23,14 @@ chai.use(require('chai-datetime'));
 describe('TaskTable', () => {
   function getSortedTasks(taskArray) {
     const copyTaskArray = taskArray.concat([]);
-    return copyTaskArray.sort((a, b) => {
-      if (a.nextDueDate > b.nextDueDate) {
-        return -1;
-      }
-      if (a.nextDueDate < b.nextDueDate) {
-        return 1;
-      }
-      return 0;
-    });
+    return copyTaskArray.sort((a, b) => a.nextDueDate - b.nextDueDate);
   }
 
   const resizeWindow = (width, height) => {
     window.innerWidth = width;
     window.innerHeight = height;
     window.dispatchEvent(new Event('resize'));
-  }
+  };
 
   const equipment = {
     _uiId: 'equipment_01',
@@ -105,7 +97,7 @@ describe('TaskTable', () => {
     taskProxy.existTask.mockReset();
   });
 
-  it('Should render render the loading spinner while loading the tasks', async () => {
+  it('Should render render the loading spinner while loading the tasks', async (done) => {
     // Arrange
     const onTaskSaved = jest.fn();
     const changeCurrentTask = jest.fn();
@@ -131,9 +123,10 @@ describe('TaskTable', () => {
     expect(changeCurrentTask).toBeCalledTimes(0);
 
     expect(taskTable).toMatchSnapshot();
+    done();
   });
 
-  it('Should render the table with te special class name', async () => {
+  it('Should render the table with te special class name', async (done) => {
     // Arrange
     const onTaskSaved = jest.fn();
     const changeCurrentTask = jest.fn();
@@ -154,10 +147,11 @@ describe('TaskTable', () => {
 
     // Assert
     const table = taskTable.find('div').at(0);
-    expect(table.props().className).toContain("mySpecialClassName");
+    expect(table.props().className).toContain('mySpecialClassName');
+    done();
   });
 
-  it('Should render an empty table if the equipment is undefined', async () => {
+  it('Should render an empty table if the equipment is undefined', async (done) => {
     // Arrange
     const onTaskSaved = jest.fn();
     const changeCurrentTask = jest.fn();
@@ -177,15 +171,15 @@ describe('TaskTable', () => {
     await updateWrapper(taskTable);
 
     // Assert
-    const sortedTasks = getSortedTasks(tasks);
     const tbodyProps = taskTable.find('tbody').at(0).props();
     expect(tbodyProps.children.length).toBe(0);
-    
+
     expect(onTaskSaved).toBeCalledTimes(0);
     expect(changeCurrentTask).toBeCalledTimes(0);
+    done();
   });
 
-  it('Should render all the tasks sorted by due date', async () => {
+  it('Should render all the tasks sorted by due date', async (done) => {
     // Arrange
     const onTaskSaved = jest.fn();
     const changeCurrentTask = jest.fn();
@@ -213,9 +207,10 @@ describe('TaskTable', () => {
 
     expect(onTaskSaved).toBeCalledTimes(0);
     expect(changeCurrentTask).toBeCalledTimes(0);
+    done();
   });
 
-  it('Should call changeCurrentTask when clicking on any cell', async () => {
+  it('Should call changeCurrentTask when clicking on any cell', async (done) => {
     // Arrange
     const onTaskSaved = jest.fn();
     const changeCurrentTask = jest.fn();
@@ -252,9 +247,10 @@ describe('TaskTable', () => {
         clickCounter++;
       }
     }
+    done();
   });
 
-  it('should display the task edition modal to add a new entry', async () => {
+  it('should display the task edition modal to add a new entry', async (done) => {
     // Arrange
     const onTaskSaved = jest.fn();
     const changeCurrentTask = jest.fn();
@@ -285,9 +281,10 @@ describe('TaskTable', () => {
     expect(editTaskModal.props().visible).toBe(true);
     expect(editTaskModal.props().onTaskSaved).toBe(onTaskSaved);
     expect(onTaskSaved).toBeCalledTimes(0);
+    done();
   });
 
-  it('it should display only 3 columns since the inner width is lower than 1200px, but after a resize larger than 1200px, it should display 4 colums', async () => {
+  it('it should display only 3 columns since the inner width is lower than 1200px, but after a resize larger than 1200px, it should display 4 colums', async (done) => {
     // Arrange
     window.innerWidth = 1000;
     const onTaskSaved = jest.fn();
@@ -342,5 +339,6 @@ describe('TaskTable', () => {
     // Assert
     cells = taskTable.find('ClickableCell');
     expect(cells.length).toBe(tasks.length * 3);
+    done();
   });
 });

@@ -4,7 +4,6 @@ import {
 } from 'reactstrap';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CSSTransition } from 'react-transition-group';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
 import MyForm from '../Form/MyForm';
@@ -66,32 +65,30 @@ const ModalSignup = ({ visible, className, toggle }: Props) => {
   }, []);
 
   return (
-    <CSSTransition in={visible} timeout={300} classNames="modal">
-      <Modal isOpen={visible} toggle={cancel} className={className} fade={false}>
-        <ModalHeader toggle={cancel}>
-          <FontAwesomeIcon icon={faUserPlus} />
-          {' '}
-          <FormattedMessage {...loginMsg.modalSignupTitle} />
-        </ModalHeader>
-        <ModalBody>
-          {visible && (
-          <MyForm submit={handleSubmit} id="formSignup" initialData={data}>
-            <MyInput name="name" label={loginMsg.name} type="text" required />
-            <MyInput name="firstname" label={loginMsg.firstname} type="text" required />
-            <MyInput name="email" label={loginMsg.email} type="email" required />
-            <MyInput name="password" label={loginMsg.password} type="password" required />
-          </MyForm>
-          )}
-          {isError && <Alerts errors={signupErrors} />}
-          {isLoading && <Alerts error="creatingUser" color="success" />}
-          {infoMsg && <Alerts error={infoMsg} color="success" />}
-        </ModalBody>
-        <ModalFooter>
-          <ActionButton type="submit" form="formSignup" color="success" message={loginMsg.signup} isActing={isLoading} />
-          <Button color="secondary" onClick={cancel}><FormattedMessage {...loginMsg.cancel} /></Button>
-        </ModalFooter>
-      </Modal>
-    </CSSTransition>
+    <Modal isOpen={visible} toggle={cancel} className={className} fade>
+      <ModalHeader toggle={cancel}>
+        <FontAwesomeIcon icon={faUserPlus} />
+        {' '}
+        <FormattedMessage {...loginMsg.modalSignupTitle} />
+      </ModalHeader>
+      <ModalBody>
+        {visible && (
+        <MyForm submit={handleSubmit} id="formSignup" initialData={data}>
+          <MyInput name="name" label={loginMsg.name} type="text" required />
+          <MyInput name="firstname" label={loginMsg.firstname} type="text" required />
+          <MyInput name="email" label={loginMsg.email} type="email" required />
+          <MyInput name="password" label={loginMsg.password} type="password" required />
+        </MyForm>
+        )}
+        {isError && <Alerts errors={signupErrors} />}
+        {isLoading && <Alerts error="creatingUser" color="success" />}
+        {infoMsg && <Alerts error={infoMsg} color="success" />}
+      </ModalBody>
+      <ModalFooter>
+        <ActionButton type="submit" form="formSignup" color="success" message={loginMsg.signup} isActing={isLoading} />
+        <Button color="secondary" onClick={cancel}><FormattedMessage {...loginMsg.cancel} /></Button>
+      </ModalFooter>
+    </Modal>
   );
 };
 

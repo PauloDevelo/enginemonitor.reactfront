@@ -1,0 +1,62 @@
+{
+  "assetDeleteMsg": {
+    "defaultMessage": "Are you sure you want to delete this asset and all its content (equipments, tasks, entries)?",
+    "description": "Confirmation question",
+    "id": "assetDeleteMsg"
+  },
+  "assetDeleteTitle": {
+    "defaultMessage": "Delete Asset",
+    "description": "Modal title",
+    "id": "assetDeleteTitle"
+  },
+  "assetModalCreationTitle": {
+    "defaultMessage": "Asset Creation",
+    "description": "Asset Edition Modal title",
+    "id": "assetModalCreationTitle"
+  },
+  "assetModalEditionTitle": {
+    "defaultMessage": "Asset Edition",
+    "description": "Asset Edition Modal title",
+    "id": "assetModalEditionTitle"
+  },
+  "brand": {
+    "defaultMessage": "Brand",
+    "description": "Label",
+    "id": "brand"
+  },
+  "cancel": {
+    "defaultMessage": "Cancel",
+    "description": "Button cancel",
+    "id": "cancel"
+  },
+  "create": {
+    "defaultMessage": "Create",
+    "description": "Button create",
+    "id": "createbutton"
+  },
+  "delete": {
+    "defaultMessage": "Delete",
+    "description": "delete button",
+    "id": "delete"
+  },
+  "manufactureDateLabel": {
+    "defaultMessage": "Manufacture Date",
+    "description": "Label",
+    "id": "manufactureDateLabel"
+  },
+  "model": {
+    "defaultMessage": "Model",
+    "description": "Label",
+    "id": "model"
+  },
+  "name": {
+    "defaultMessage": "Name",
+    "description": "Label",
+    "id": "assetName"
+  },
+  "save": {
+    "defaultMessage": "Save",
+    "description": "Button save",
+    "id": "save"
+  }
+}

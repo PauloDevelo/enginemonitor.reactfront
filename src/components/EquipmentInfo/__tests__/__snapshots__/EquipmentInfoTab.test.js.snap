@@ -318,55 +318,33 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
             toggle={[Function]}
             visible={false}
           >
-            <CSSTransition
-              classNames="modal"
-              in={false}
-              timeout={300}
-            >
-              <Transition
-                appear={false}
-                enter={true}
-                exit={true}
-                in={false}
-                mountOnEnter={false}
-                onEnter={[Function]}
-                onEntered={[Function]}
-                onEntering={[Function]}
-                onExit={[Function]}
-                onExited={[Function]}
-                onExiting={[Function]}
-                timeout={300}
-                unmountOnExit={false}
-              >
-                <Modal
-                  autoFocus={true}
-                  backdrop={true}
-                  backdropTransition={
-                    Object {
-                      "mountOnEnter": true,
-                      "timeout": 150,
-                    }
-                  }
-                  centered={false}
-                  fade={false}
-                  isOpen={false}
-                  keyboard={true}
-                  modalTransition={
-                    Object {
-                      "timeout": 300,
-                    }
-                  }
-                  onClosed={[Function]}
-                  onOpened={[Function]}
-                  returnFocusAfterClose={true}
-                  role="dialog"
-                  scrollable={false}
-                  toggle={[Function]}
-                  unmountOnClose={true}
-                  zIndex={1050}
-                />
-              </Transition>
-            </CSSTransition>
+            <Modal
+              autoFocus={true}
+              backdrop={true}
+              backdropTransition={
+                Object {
+                  "mountOnEnter": true,
+                  "timeout": 150,
+                }
+              }
+              centered={false}
+              fade={true}
+              isOpen={false}
+              keyboard={true}
+              modalTransition={
+                Object {
+                  "timeout": 300,
+                }
+              }
+              onClosed={[Function]}
+              onOpened={[Function]}
+              returnFocusAfterClose={true}
+              role="dialog"
+              scrollable={false}
+              toggle={[Function]}
+              unmountOnClose={true}
+              zIndex={1050}
+            />
             <ModalYesNoConfirmation
               className="modal-dialog-centered"
               isActing={false}
@@ -389,56 +367,34 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
               visible={false}
               yes={[Function]}
             >
-              <CSSTransition
-                classNames="modal"
-                in={false}
-                timeout={300}
-              >
-                <Transition
-                  appear={false}
-                  enter={true}
-                  exit={true}
-                  in={false}
-                  mountOnEnter={false}
-                  onEnter={[Function]}
-                  onEntered={[Function]}
-                  onEntering={[Function]}
-                  onExit={[Function]}
-                  onExited={[Function]}
-                  onExiting={[Function]}
-                  timeout={300}
-                  unmountOnExit={false}
-                >
-                  <Modal
-                    autoFocus={true}
-                    backdrop={true}
-                    backdropTransition={
-                      Object {
-                        "mountOnEnter": true,
-                        "timeout": 150,
-                      }
-                    }
-                    centered={false}
-                    className="modal-dialog-centered"
-                    fade={false}
-                    isOpen={false}
-                    keyboard={true}
-                    modalTransition={
-                      Object {
-                        "timeout": 300,
-                      }
-                    }
-                    onClosed={[Function]}
-                    onOpened={[Function]}
-                    returnFocusAfterClose={true}
-                    role="dialog"
-                    scrollable={false}
-                    toggle={[Function]}
-                    unmountOnClose={true}
-                    zIndex={1050}
-                  />
-                </Transition>
-              </CSSTransition>
+              <Modal
+                autoFocus={true}
+                backdrop={true}
+                backdropTransition={
+                  Object {
+                    "mountOnEnter": true,
+                    "timeout": 150,
+                  }
+                }
+                centered={false}
+                className="modal-dialog-centered"
+                fade={true}
+                isOpen={false}
+                keyboard={true}
+                modalTransition={
+                  Object {
+                    "timeout": 300,
+                  }
+                }
+                onClosed={[Function]}
+                onOpened={[Function]}
+                returnFocusAfterClose={true}
+                role="dialog"
+                scrollable={false}
+                toggle={[Function]}
+                unmountOnClose={true}
+                zIndex={1050}
+              />
             </ModalYesNoConfirmation>
           </ModalEditImage>
         </Memo(Gallery)>

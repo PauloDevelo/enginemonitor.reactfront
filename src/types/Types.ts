@@ -12,11 +12,19 @@ export type TaskTodo = {
     onlyDate: boolean,
     level: TaskLevel,
     usageInHourLeft: number | undefined
-  }
+}
+
+export interface UserCredentials{
+    readonly: boolean
+}
 
 export interface EntityModel{
     _uiId:string,
     name: string
+}
+
+export interface GuestLinkModel extends EntityModel {
+    niceKey: string
 }
 
 export interface EquipmentModel extends EntityModel {
@@ -52,6 +60,12 @@ export interface EntryModel extends EntityModel {
     ack: boolean
 }
 
+export interface AssetModel extends EntityModel {
+    brand: string;
+    manufactureDate: Date;
+    modelBrand: string;
+}
+
 export interface UserModel extends EntityModel {
     email: string,
     password: string,
@@ -59,6 +73,8 @@ export interface UserModel extends EntityModel {
     imageFolderSizeInByte: number,
     imageFolderSizeLimitInByte: number,
     imageFolder: string,
+    forbidUploadingImage: boolean,
+    forbidCreatingAsset: boolean,
     token: string,
 }
 

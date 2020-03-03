@@ -1,4 +1,9 @@
 {
+  "credentialError": {
+    "defaultMessage": "You don't have enough credentials to perform this action.",
+    "description": "Error message",
+    "id": "credentialError"
+  },
   "userExceedStorageLimit": {
     "defaultMessage": "User exceeded the storage limit. Remove some images before adding new images.",
     "description": "Error message",

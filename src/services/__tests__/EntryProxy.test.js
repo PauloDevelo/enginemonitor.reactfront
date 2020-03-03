@@ -1,18 +1,23 @@
 import httpProxy from '../HttpProxy';
-import syncService from '../SyncService';
+import onlineManager from '../OnlineManager';
 import storageService from '../StorageService';
 import entryProxy from '../EntryProxy';
 import actionManager from '../ActionManager';
+import assetManager from '../AssetManager';
+import imageProxy from '../ImageProxy';
+import userProxy from '../UserProxy';
 
 import { updateEntry } from '../../helpers/EntryHelper';
 
 jest.mock('../HttpProxy');
-jest.mock('../SyncService');
+jest.mock('../OnlineManager');
+jest.mock('../ImageProxy');
+jest.mock('../UserProxy');
 
 describe('Test EntryProxy', () => {
   const parentEquipmentId = 'an_parent_equipment';
   const parentTaskId = 'a_parent_task_id';
-  const urlFetchEntry = `${process.env.REACT_APP_URL_BASE}entries/${parentEquipmentId}`;
+  const urlFetchEntry = `${process.env.REACT_APP_API_URL_BASE}entries/asset_01/${parentEquipmentId}`;
 
   const entryToSave = {
     _uiId: 'an_entry_id',
@@ -41,13 +46,21 @@ describe('Test EntryProxy', () => {
     storageService.closeUserStorage();
   }
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    userProxy.getCredentials.mockImplementation(async () => ({ readonly: false }));
     mockHttpProxy();
     initStorage();
+
+    await assetManager.setCurrentAsset({
+      _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrope', manufactureDate: new Date(1979, 1, 1),
+    });
   });
 
   afterEach(async () => {
     clearStorage();
+    userProxy.getCredentials.mockRestore();
+    imageProxy.onEntityDeleted.mockRestore();
+    onlineManager.isOnlineAndSynced.mockRestore();
   });
 
   const createOrSaveEntryParams = [
@@ -74,19 +87,15 @@ describe('Test EntryProxy', () => {
         expect.assertions(4);
       }
 
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
-      let postCounter = 0;
-      httpProxy.post.mockImplementation((url, data) => {
-        postCounter++;
-        return Promise.resolve(data);
-      });
+      httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
 
       // Act
       const entrySaved = await entryProxy.createOrSaveEntry(parentEquipmentId, arg.taskId, entryToSave);
 
       // Assert
-      expect(postCounter).toBe(arg.expectedPostCounter);
+      expect(httpProxy.post).toHaveBeenCalledTimes(arg.expectedPostCounter);
       expect(entrySaved).toEqual(entryToSave);
 
       const entries = await storageService.getItem(urlFetchEntry);
@@ -97,7 +106,7 @@ describe('Test EntryProxy', () => {
         expect(storedEntry).toEqual(entryToSave);
       }
 
-      expect(await actionManager.countAction()).toBe(arg.expectedNumberOfAction);
+      expect(actionManager.countAction()).toEqual(arg.expectedNumberOfAction);
     });
   });
 
@@ -118,13 +127,9 @@ describe('Test EntryProxy', () => {
   describe.each(deleteEntryParams)('deleteEntries', (arg) => {
     it(`when ${JSON.stringify(arg)}`, async () => {
       // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
-      let deleteCounter = 0;
-      httpProxy.deleteReq.mockImplementation((url) => {
-        deleteCounter++;
-        return Promise.resolve({ entry: { name: 'an entry name' } });
-      });
+      httpProxy.deleteReq.mockImplementation((url) => Promise.resolve({ entry: { name: 'an entry name' } }));
 
       httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
       await entryProxy.createOrSaveEntry(parentEquipmentId, arg.taskId, entryToSave);
@@ -133,13 +138,13 @@ describe('Test EntryProxy', () => {
       const entryDeleted = await entryProxy.deleteEntry(parentEquipmentId, arg.taskId, entryToSave._uiId);
 
       // Assert
-      expect(deleteCounter).toBe(arg.expectedDeleteCounter);
+      expect(httpProxy.deleteReq).toHaveBeenCalledTimes(arg.expectedDeleteCounter);
       expect(entryDeleted).toEqual(entryToSave);
 
       const entries = await storageService.getItem(urlFetchEntry);
       expect(entries.length).toBe(arg.expectedNumberOfEntriesInStorage);
 
-      expect(await actionManager.countAction()).toBe(arg.expectedNumberOfActions);
+      expect(actionManager.countAction()).toBe(arg.expectedNumberOfActions);
     });
   });
 
@@ -172,7 +177,7 @@ describe('Test EntryProxy', () => {
   describe.each(existEntryParams)('existEntry', (arg) => {
     it(`when ${JSON.stringify(arg)}`, async () => {
       // Arrange
-      syncService.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
       httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
 
@@ -183,6 +188,120 @@ describe('Test EntryProxy', () => {
 
       // Assert
       expect(isEntryExist).toBe(arg.expectedIsExist);
+    });
+  });
+
+  describe('onTaskDeleted', () => {
+    const entryToSave1 = {
+      _uiId: 'an_entry_id1',
+      name: 'vidange',
+      date: new Date(),
+      age: 400,
+      remarks: 'oil was clean',
+      taskUiId: 'another_parent1',
+      equipmentUiId: parentEquipmentId,
+    };
+
+    const entryToSave2 = {
+      _uiId: 'an_entry_id2',
+      name: 'vidange',
+      date: new Date(),
+      age: 400,
+      remarks: 'oil was clean',
+      taskUiId: 'another_parent2',
+      equipmentUiId: parentEquipmentId,
+    };
+
+    const entryToSaveOrphan = {
+      _uiId: 'an_entry_id3',
+      name: 'vidange',
+      date: new Date(),
+      age: 400,
+      remarks: 'oil was clean',
+      taskUiId: undefined,
+      equipmentUiId: parentEquipmentId,
+    };
+
+    it('should erase all the entries having this task for parent and the images attached to those entries', async (done) => {
+      // Arrange
+      const entryToDelete = entryToSave;
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
+      await entryProxy.createOrSaveEntry(parentEquipmentId, parentTaskId, entryToDelete);
+      await entryProxy.createOrSaveEntry(parentEquipmentId, 'another_parent1', entryToSave1);
+      await entryProxy.createOrSaveEntry(parentEquipmentId, 'another_parent2', entryToSave2);
+      await entryProxy.createOrSaveEntry(parentEquipmentId, undefined, entryToSaveOrphan);
+      jest.spyOn(imageProxy, 'onEntityDeleted');
+
+      // Act
+      await entryProxy.onTaskDeleted(parentEquipmentId, parentTaskId);
+
+      // Assert
+      const entries = await entryProxy.fetchAllEntries({ equipmentId: parentEquipmentId });
+      expect(entries.length).toBe(3);
+      expect(entries).toContainEqual(entryToSave1);
+      expect(entries).toContainEqual(entryToSave2);
+      expect(entries).toContainEqual(entryToSaveOrphan);
+      expect(imageProxy.onEntityDeleted).toHaveBeenCalledTimes(1);
+      expect(imageProxy.onEntityDeleted.mock.calls[0][0]).toEqual(entryToDelete._uiId);
+      done();
+    });
+  });
+
+  describe('onEquipmentDeleted', () => {
+    const entryToDelete1 = {
+      _uiId: 'an_entry_id1',
+      name: 'vidange',
+      date: new Date(),
+      age: 400,
+      remarks: 'oil was clean',
+      taskUiId: 'another_parent1',
+      equipmentUiId: parentEquipmentId,
+    };
+
+    const entryToDelete2 = {
+      _uiId: 'an_entry_id2',
+      name: 'vidange',
+      date: new Date(),
+      age: 400,
+      remarks: 'oil was clean',
+      taskUiId: 'another_parent2',
+      equipmentUiId: parentEquipmentId,
+    };
+
+    const orphanEntryToDelete = {
+      _uiId: 'an_entry_id3',
+      name: 'vidange',
+      date: new Date(),
+      age: 400,
+      remarks: 'oil was clean',
+      taskUiId: undefined,
+      equipmentUiId: parentEquipmentId,
+    };
+
+    it('should erase all the entries having this equipment for parent and the images attached to those entries', async (done) => {
+      // Arrange
+      const entryToDelete = entryToSave;
+      onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
+      await entryProxy.createOrSaveEntry(parentEquipmentId, parentTaskId, entryToDelete);
+      await entryProxy.createOrSaveEntry(parentEquipmentId, 'another_parent1', entryToDelete1);
+      await entryProxy.createOrSaveEntry(parentEquipmentId, 'another_parent2', entryToDelete2);
+      await entryProxy.createOrSaveEntry(parentEquipmentId, undefined, orphanEntryToDelete);
+      jest.spyOn(imageProxy, 'onEntityDeleted');
+
+      // Act
+      await entryProxy.onEquipmentDeleted(parentEquipmentId);
+
+      // Assert
+      const entries = await entryProxy.fetchAllEntries({ equipmentId: parentEquipmentId });
+      expect(entries.length).toBe(0);
+      expect(imageProxy.onEntityDeleted).toHaveBeenCalledTimes(4);
+
+      const entryUiIdDeleted = imageProxy.onEntityDeleted.mock.calls.map((call) => call[0]);
+      expect(entryUiIdDeleted).toContainEqual(entryToDelete._uiId);
+      expect(entryUiIdDeleted).toContainEqual(entryToDelete._uiId);
+      expect(entryUiIdDeleted).toContainEqual(entryToDelete._uiId);
+      expect(entryUiIdDeleted).toContainEqual(entryToDelete._uiId);
+      done();
     });
   });
 });

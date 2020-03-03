@@ -6,14 +6,29 @@ import storageUpdaterService from './StorageUpdaterService';
 // eslint-disable-next-line no-unused-vars
 import { UserModel, EntityModel } from '../types/Types';
 
-localforage.config({
-  driver: localforage.WEBSQL, // Force WebSQL; same as using setDriver()
-  name: 'maintenance reminder',
-  version: 1.0,
-  size: 4980736, // Size of database, in bytes. WebSQL-only for now.
-  storeName: 'keyvaluepairs', // Should be alphanumeric, with underscores.
-  description: 'Contains all the information contained in Maintenance monitor',
-});
+let initialisation: Promise<void>;
+
+if (process.env.NODE_ENV === 'test') {
+  const init = async () => {
+    const { default: memoryStorageDriver } = await import('localforage-memoryStorageDriver');
+    await localforage.defineDriver(memoryStorageDriver);
+    await localforage.setDriver(memoryStorageDriver._driver);
+  };
+
+  initialisation = init();
+} else {
+  localforage.config({
+    driver: localforage.WEBSQL, // Force WebSQL; same as using setDriver()
+    name: 'maintenance reminder',
+    version: 1.0,
+    size: 4980736, // Size of database, in bytes. WebSQL-only for now.
+    storeName: 'keyvaluepairs', // Should be alphanumeric, with underscores.
+    description: 'Contains all the information contained in Maintenance monitor',
+  });
+
+  initialisation = Promise.resolve();
+}
+
 
 export interface IUserStorageListener{
     onUserStorageOpened(): Promise<void>;
@@ -21,6 +36,9 @@ export interface IUserStorageListener{
 }
 
 export interface IStorageService{
+    getStorageVersion(): Promise<number>;
+    setStorageVersion(newVersion: number): Promise<number>;
+
     existGlobalItem(key: string): Promise<boolean>;
     setGlobalItem<T>(key: string, value: T): Promise<T>;
     removeGlobalItem(key: string): Promise<void>;
@@ -44,9 +62,23 @@ export interface IStorageService{
 }
 
 class StorageService implements IStorageService {
+    private static readonly storageVersionKey = 'storageVersion';
+
     private userStorageListeners:IUserStorageListener[] = [];
 
     private userStorage: LocalForage | undefined;
+
+    async getStorageVersion(): Promise<number> {
+      if (await this.existItem(StorageService.storageVersionKey)) {
+        return this.getItem<number>(StorageService.storageVersionKey);
+      }
+
+      return Promise.resolve(0);
+    }
+
+    async setStorageVersion(newVersion: number): Promise<number> {
+      return this.setItem<number>(StorageService.storageVersionKey, newVersion);
+    }
 
     // eslint-disable-next-line class-methods-use-this
     async existGlobalItem(key: string): Promise<boolean> {
@@ -117,9 +149,11 @@ class StorageService implements IStorageService {
       return this.userStorage !== undefined;
     }
 
-    async openUserStorage({ email }: UserModel): Promise<void> {
+    async openUserStorage({ _uiId }: UserModel): Promise<void> {
+      await initialisation;
+
       this.userStorage = localforage.createInstance({
-        name: email,
+        name: _uiId,
       });
 
       await storageUpdaterService.onUserStorageOpened();
@@ -203,7 +237,7 @@ class StorageService implements IStorageService {
       }
 
       const keys = await this.getUserStorage().keys();
-      return keys.includes(key);
+      return keys.includes(key) ? (await this.getUserStorage().getItem(key) !== undefined) : false;
     }
 
     async removeItem<T>(key: string): Promise<void> {

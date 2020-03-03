@@ -5,7 +5,6 @@ import {
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage, defineMessages } from 'react-intl';
-import { CSSTransition } from 'react-transition-group';
 
 import useEditModalLogic from '../../hooks/EditModalLogicHook';
 
@@ -95,33 +94,31 @@ const ModalEditEntry = ({
 
   return (
     <>
-      <CSSTransition in={visible} timeout={300} classNames="modal">
-        <Modal isOpen={visible} toggle={modalLogic.cancel} className={className} fade={false}>
-          <ModalHeader toggle={modalLogic.cancel}>
-            <FontAwesomeIcon icon={faCheckSquare} size="lg" />
-            {' '}
-            <ModalTitle isNewEntry={isNewEntry} />
-          </ModalHeader>
-          <ModalBody>
-            {visible && (
-            <MyForm id="editEntryForm" submit={modalLogic.handleSubmit} initialData={entry}>
-              {task !== undefined && <MyInput name="ack" label={editEntryMsg.ackOption} type="checkbox" />}
-              <MyInput name="name" label={editEntryMsg.name} type="text" required />
-              <MyInput name="date" label={editEntryMsg.date} type="date" required />
-              {equipment.ageAcquisitionType !== AgeAcquisitionType.time && <MyInput name="age" label={editEntryMsg.age} type="number" min={0} required />}
-              <MyInput name="remarks" label={editEntryMsg.remarks} type="textarea" required />
-            </MyForm>
-            )}
-            <Gallery parentUiId={entry._uiId} />
-            <Alerts errors={modalLogic.alerts} />
-          </ModalBody>
-          <ModalFooter>
-            <ActionButton type="submit" form="editEntryForm" color="success" isActing={modalLogic.isSaving} message={editEntryMsg.save} />
-            <Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...editEntryMsg.cancel} /></Button>
-            {entry && !isNewEntry && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editEntryMsg.delete} /></Button>}
-          </ModalFooter>
-        </Modal>
-      </CSSTransition>
+      <Modal isOpen={visible} toggle={modalLogic.cancel} className={className} fade>
+        <ModalHeader toggle={modalLogic.cancel}>
+          <FontAwesomeIcon icon={faCheckSquare} size="lg" />
+          {' '}
+          <ModalTitle isNewEntry={isNewEntry} />
+        </ModalHeader>
+        <ModalBody>
+          {visible && (
+          <MyForm id="editEntryForm" submit={modalLogic.handleSubmit} initialData={entry}>
+            {task !== undefined && <MyInput name="ack" label={editEntryMsg.ackOption} type="checkbox" />}
+            <MyInput name="name" label={editEntryMsg.name} type="text" required />
+            <MyInput name="date" label={editEntryMsg.date} type="date" required />
+            {equipment.ageAcquisitionType !== AgeAcquisitionType.time && <MyInput name="age" label={editEntryMsg.age} type="number" min={0} required />}
+            <MyInput name="remarks" label={editEntryMsg.remarks} type="textarea" required />
+          </MyForm>
+          )}
+          <Gallery parentUiId={entry._uiId} />
+          <Alerts errors={modalLogic.alerts} />
+        </ModalBody>
+        <ModalFooter>
+          <ActionButton type="submit" form="editEntryForm" color="success" isActing={modalLogic.isSaving} message={editEntryMsg.save} />
+          <Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...editEntryMsg.cancel} /></Button>
+          {entry && !isNewEntry && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editEntryMsg.delete} /></Button>}
+        </ModalFooter>
+      </Modal>
       <ModalYesNoConfirmation
         visible={modalLogic.yesNoModalVisibility}
         toggle={modalLogic.toggleModalYesNoConfirmation}

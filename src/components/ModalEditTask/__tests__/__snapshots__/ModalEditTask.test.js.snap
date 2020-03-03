@@ -31,412 +31,424 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
   toggle={[MockFunction]}
   visible={true}
 >
-  <CSSTransition
-    classNames="modal"
-    in={true}
-    timeout={300}
+  <Modal
+    autoFocus={true}
+    backdrop={true}
+    backdropTransition={
+      Object {
+        "mountOnEnter": true,
+        "timeout": 150,
+      }
+    }
+    centered={false}
+    fade={true}
+    isOpen={true}
+    keyboard={true}
+    modalTransition={
+      Object {
+        "timeout": 300,
+      }
+    }
+    onClosed={[Function]}
+    onOpened={[Function]}
+    returnFocusAfterClose={true}
+    role="dialog"
+    scrollable={false}
+    toggle={[Function]}
+    unmountOnClose={true}
+    zIndex={1050}
   >
-    <Transition
-      appear={false}
-      enter={true}
-      exit={true}
-      in={true}
-      mountOnEnter={false}
-      onEnter={[Function]}
-      onEntered={[Function]}
-      onEntering={[Function]}
-      onExit={[Function]}
-      onExited={[Function]}
-      onExiting={[Function]}
-      timeout={300}
-      unmountOnExit={false}
-    >
-      <Modal
-        autoFocus={true}
-        backdrop={true}
-        backdropTransition={
-          Object {
-            "mountOnEnter": true,
-            "timeout": 150,
-          }
-        }
-        centered={false}
-        fade={false}
-        isOpen={true}
-        keyboard={true}
-        modalTransition={
-          Object {
-            "timeout": 300,
-          }
-        }
-        onClosed={[Function]}
-        onOpened={[Function]}
-        returnFocusAfterClose={true}
-        role="dialog"
-        scrollable={false}
-        toggle={[Function]}
-        unmountOnClose={true}
-        zIndex={1050}
-      >
-        <Portal
-          node={
+    <Portal
+      node={
+        <div
+          style="position: relative; z-index: 1050; display: block;"
+          tabindex="-1"
+        >
+          <div
+            class=""
+          >
             <div
-              style="position: relative; z-index: 1050; display: block;"
+              class="modal fade"
+              role="dialog"
+              style="display: block;"
               tabindex="-1"
             >
               <div
-                class=""
+                class="modal-dialog"
+                role="document"
               >
                 <div
-                  class="modal show"
-                  role="dialog"
-                  style="display: block;"
-                  tabindex="-1"
+                  class="modal-content"
                 >
                   <div
-                    class="modal-dialog"
-                    role="document"
+                    class="modal-header"
                   >
-                    <div
-                      class="modal-content"
+                    <h5
+                      class="modal-title"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="svg-inline--fa fa-edit fa-w-18 "
+                        data-icon="edit"
+                        data-prefix="fas"
+                        focusable="false"
+                        role="img"
+                        viewBox="0 0 576 512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                       
+                      Task edition
+                    </h5>
+                    <button
+                      aria-label="Close"
+                      class="close"
+                      type="button"
+                    >
+                      <span
+                        aria-hidden="true"
+                      >
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                  <div
+                    class="modal-body"
+                  >
+                    <form
+                      class=""
+                      id="createTaskForm"
+                      novalidate=""
                     >
                       <div
-                        class="modal-header"
+                        class="form-group form-group"
                       >
-                        <h5
-                          class="modal-title"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="svg-inline--fa fa-edit fa-w-18 "
-                            data-icon="edit"
-                            data-prefix="fas"
-                            focusable="false"
-                            role="img"
-                            viewBox="0 0 576 512"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                           
-                          Task edition
-                        </h5>
-                        <button
-                          aria-label="Close"
-                          class="close"
-                          type="button"
-                        >
-                          <span
-                            aria-hidden="true"
-                          >
-                            ×
-                          </span>
-                        </button>
-                      </div>
-                      <div
-                        class="modal-body"
-                      >
-                        <form
+                        <label
                           class=""
-                          id="createTaskForm"
-                          novalidate=""
+                          for="name"
                         >
-                          <div
-                            class="form-group form-group"
-                          >
-                            <label
-                              class=""
-                              for="name"
-                            >
-                              Name
-                            </label>
-                            <input
-                              class="form-control form-control"
-                              name="name"
-                              required=""
-                              type="text"
-                              value="Vidange"
-                            />
-                          </div>
-                          <div
-                            class="form-group form-group"
-                          >
-                            <label
-                              class=""
-                              for="usagePeriodInHour"
-                            >
-                              Period in usage hour
-                            </label>
-                            <input
-                              class="form-control form-control"
-                              min="0"
-                              name="usagePeriodInHour"
-                              type="number"
-                              value="500"
-                            />
-                          </div>
-                          <div
-                            class="form-group form-group"
-                          >
-                            <label
-                              class=""
-                              for="periodInMonth"
-                            >
-                              Period in month
-                            </label>
-                            <input
-                              class="form-control form-control"
-                              min="1"
-                              name="periodInMonth"
-                              required=""
-                              type="number"
-                              value="12"
-                            />
-                          </div>
-                          <div
-                            class="form-group form-group"
-                          >
-                            <label
-                              class=""
-                              for="description"
-                            >
-                              Description
-                            </label>
-                            <textarea
-                              class="form-control form-control"
-                              name="description"
-                              required=""
-                            >
-                              Changer l'huile
-                            </textarea>
-                          </div>
-                        </form>
+                          Name
+                        </label>
+                        <input
+                          class="form-control form-control"
+                          name="name"
+                          required=""
+                          type="text"
+                          value="Vidange"
+                        />
                       </div>
                       <div
-                        class="modal-footer"
+                        class="form-group form-group"
                       >
-                        <button
-                          class="btn btn-success"
-                          form="createTaskForm"
-                          type="submit"
+                        <label
+                          class=""
+                          for="usagePeriodInHour"
                         >
-                          Save
-                        </button>
-                        <button
-                          class="btn btn-secondary"
-                          type="button"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          class="btn btn-danger"
-                          type="button"
-                        >
-                          Delete
-                        </button>
+                          Period in usage hour
+                        </label>
+                        <input
+                          class="form-control form-control"
+                          min="0"
+                          name="usagePeriodInHour"
+                          type="number"
+                          value="500"
+                        />
                       </div>
-                    </div>
+                      <div
+                        class="form-group form-group"
+                      >
+                        <label
+                          class=""
+                          for="periodInMonth"
+                        >
+                          Period in month
+                        </label>
+                        <input
+                          class="form-control form-control"
+                          min="1"
+                          name="periodInMonth"
+                          required=""
+                          type="number"
+                          value="12"
+                        />
+                      </div>
+                      <div
+                        class="form-group form-group"
+                      >
+                        <label
+                          class=""
+                          for="description"
+                        >
+                          Description
+                        </label>
+                        <textarea
+                          class="form-control form-control"
+                          name="description"
+                          required=""
+                        >
+                          Changer l'huile
+                        </textarea>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="modal-footer"
+                  >
+                    <button
+                      class="btn btn-success"
+                      form="createTaskForm"
+                      type="submit"
+                    >
+                      Save
+                    </button>
+                    <button
+                      class="btn btn-secondary"
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="btn btn-danger"
+                      type="button"
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
-                <div
-                  class="modal-backdrop show"
-                />
               </div>
             </div>
-          }
-        >
-          <Portal
-            containerInfo={
+            <div
+              class="modal-backdrop fade"
+            />
+          </div>
+        </div>
+      }
+    >
+      <Portal
+        containerInfo={
+          <div
+            style="position: relative; z-index: 1050; display: block;"
+            tabindex="-1"
+          >
+            <div
+              class=""
+            >
               <div
-                style="position: relative; z-index: 1050; display: block;"
+                class="modal fade"
+                role="dialog"
+                style="display: block;"
                 tabindex="-1"
               >
                 <div
-                  class=""
+                  class="modal-dialog"
+                  role="document"
                 >
                   <div
-                    class="modal show"
-                    role="dialog"
-                    style="display: block;"
-                    tabindex="-1"
+                    class="modal-content"
                   >
                     <div
-                      class="modal-dialog"
-                      role="document"
+                      class="modal-header"
                     >
-                      <div
-                        class="modal-content"
+                      <h5
+                        class="modal-title"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="svg-inline--fa fa-edit fa-w-18 "
+                          data-icon="edit"
+                          data-prefix="fas"
+                          focusable="false"
+                          role="img"
+                          viewBox="0 0 576 512"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                         
+                        Task edition
+                      </h5>
+                      <button
+                        aria-label="Close"
+                        class="close"
+                        type="button"
+                      >
+                        <span
+                          aria-hidden="true"
+                        >
+                          ×
+                        </span>
+                      </button>
+                    </div>
+                    <div
+                      class="modal-body"
+                    >
+                      <form
+                        class=""
+                        id="createTaskForm"
+                        novalidate=""
                       >
                         <div
-                          class="modal-header"
+                          class="form-group form-group"
                         >
-                          <h5
-                            class="modal-title"
-                          >
-                            <svg
-                              aria-hidden="true"
-                              class="svg-inline--fa fa-edit fa-w-18 "
-                              data-icon="edit"
-                              data-prefix="fas"
-                              focusable="false"
-                              role="img"
-                              viewBox="0 0 576 512"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-                                fill="currentColor"
-                              />
-                            </svg>
-                             
-                            Task edition
-                          </h5>
-                          <button
-                            aria-label="Close"
-                            class="close"
-                            type="button"
-                          >
-                            <span
-                              aria-hidden="true"
-                            >
-                              ×
-                            </span>
-                          </button>
-                        </div>
-                        <div
-                          class="modal-body"
-                        >
-                          <form
+                          <label
                             class=""
-                            id="createTaskForm"
-                            novalidate=""
+                            for="name"
                           >
-                            <div
-                              class="form-group form-group"
-                            >
-                              <label
-                                class=""
-                                for="name"
-                              >
-                                Name
-                              </label>
-                              <input
-                                class="form-control form-control"
-                                name="name"
-                                required=""
-                                type="text"
-                                value="Vidange"
-                              />
-                            </div>
-                            <div
-                              class="form-group form-group"
-                            >
-                              <label
-                                class=""
-                                for="usagePeriodInHour"
-                              >
-                                Period in usage hour
-                              </label>
-                              <input
-                                class="form-control form-control"
-                                min="0"
-                                name="usagePeriodInHour"
-                                type="number"
-                                value="500"
-                              />
-                            </div>
-                            <div
-                              class="form-group form-group"
-                            >
-                              <label
-                                class=""
-                                for="periodInMonth"
-                              >
-                                Period in month
-                              </label>
-                              <input
-                                class="form-control form-control"
-                                min="1"
-                                name="periodInMonth"
-                                required=""
-                                type="number"
-                                value="12"
-                              />
-                            </div>
-                            <div
-                              class="form-group form-group"
-                            >
-                              <label
-                                class=""
-                                for="description"
-                              >
-                                Description
-                              </label>
-                              <textarea
-                                class="form-control form-control"
-                                name="description"
-                                required=""
-                              >
-                                Changer l'huile
-                              </textarea>
-                            </div>
-                          </form>
+                            Name
+                          </label>
+                          <input
+                            class="form-control form-control"
+                            name="name"
+                            required=""
+                            type="text"
+                            value="Vidange"
+                          />
                         </div>
                         <div
-                          class="modal-footer"
+                          class="form-group form-group"
                         >
-                          <button
-                            class="btn btn-success"
-                            form="createTaskForm"
-                            type="submit"
+                          <label
+                            class=""
+                            for="usagePeriodInHour"
                           >
-                            Save
-                          </button>
-                          <button
-                            class="btn btn-secondary"
-                            type="button"
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            class="btn btn-danger"
-                            type="button"
-                          >
-                            Delete
-                          </button>
+                            Period in usage hour
+                          </label>
+                          <input
+                            class="form-control form-control"
+                            min="0"
+                            name="usagePeriodInHour"
+                            type="number"
+                            value="500"
+                          />
                         </div>
-                      </div>
+                        <div
+                          class="form-group form-group"
+                        >
+                          <label
+                            class=""
+                            for="periodInMonth"
+                          >
+                            Period in month
+                          </label>
+                          <input
+                            class="form-control form-control"
+                            min="1"
+                            name="periodInMonth"
+                            required=""
+                            type="number"
+                            value="12"
+                          />
+                        </div>
+                        <div
+                          class="form-group form-group"
+                        >
+                          <label
+                            class=""
+                            for="description"
+                          >
+                            Description
+                          </label>
+                          <textarea
+                            class="form-control form-control"
+                            name="description"
+                            required=""
+                          >
+                            Changer l'huile
+                          </textarea>
+                        </div>
+                      </form>
+                    </div>
+                    <div
+                      class="modal-footer"
+                    >
+                      <button
+                        class="btn btn-success"
+                        form="createTaskForm"
+                        type="submit"
+                      >
+                        Save
+                      </button>
+                      <button
+                        class="btn btn-secondary"
+                        type="button"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        class="btn btn-danger"
+                        type="button"
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
-                  <div
-                    class="modal-backdrop show"
-                  />
                 </div>
               </div>
+              <div
+                class="modal-backdrop fade"
+              />
+            </div>
+          </div>
+        }
+      >
+        <div
+          className=""
+        >
+          <Fade
+            appear={true}
+            baseClass="fade"
+            baseClassActive="show"
+            className="modal"
+            enter={true}
+            exit={true}
+            in={true}
+            mountOnEnter={false}
+            onClick={[Function]}
+            onEnter={[Function]}
+            onEntered={[Function]}
+            onEntering={[Function]}
+            onExit={[Function]}
+            onExited={[Function]}
+            onExiting={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            role="dialog"
+            style={
+              Object {
+                "display": "block",
+              }
             }
+            tabIndex="-1"
+            tag="div"
+            timeout={300}
+            unmountOnExit={false}
           >
-            <div
-              className=""
+            <Transition
+              appear={true}
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={false}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              timeout={300}
+              unmountOnExit={false}
             >
-              <Fade
-                appear={true}
-                baseClass=""
-                baseClassActive="show"
-                className="modal"
-                enter={true}
-                exit={true}
-                in={true}
-                mountOnEnter={false}
+              <div
+                className="modal fade"
                 onClick={[Function]}
-                onEnter={[Function]}
-                onEntered={[Function]}
-                onEntering={[Function]}
-                onExit={[Function]}
-                onExited={[Function]}
-                onExiting={[Function]}
                 onKeyDown={[Function]}
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
@@ -447,685 +459,687 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                   }
                 }
                 tabIndex="-1"
-                tag="div"
-                timeout={0}
-                unmountOnExit={false}
               >
-                <Transition
-                  appear={true}
-                  enter={true}
-                  exit={true}
-                  in={true}
-                  mountOnEnter={false}
-                  onEnter={[Function]}
-                  onEntered={[Function]}
-                  onEntering={[Function]}
-                  onExit={[Function]}
-                  onExited={[Function]}
-                  onExiting={[Function]}
-                  timeout={0}
-                  unmountOnExit={false}
+                <div
+                  className="modal-dialog"
+                  role="document"
                 >
                   <div
-                    className="modal show"
-                    onClick={[Function]}
-                    onKeyDown={[Function]}
-                    onKeyUp={[Function]}
-                    onMouseDown={[Function]}
-                    role="dialog"
-                    style={
-                      Object {
-                        "display": "block",
-                      }
-                    }
-                    tabIndex="-1"
+                    className="modal-content"
                   >
-                    <div
-                      className="modal-dialog"
-                      role="document"
+                    <ModalHeader
+                      charCode={215}
+                      closeAriaLabel="Close"
+                      tag="h5"
+                      toggle={[Function]}
+                      wrapTag="div"
                     >
                       <div
-                        className="modal-content"
+                        className="modal-header"
                       >
-                        <ModalHeader
-                          charCode={215}
-                          closeAriaLabel="Close"
-                          tag="h5"
-                          toggle={[Function]}
-                          wrapTag="div"
+                        <h5
+                          className="modal-title"
                         >
-                          <div
-                            className="modal-header"
+                          <FontAwesomeIcon
+                            border={false}
+                            className=""
+                            fixedWidth={false}
+                            flip={null}
+                            icon={
+                              Object {
+                                "icon": Array [
+                                  576,
+                                  512,
+                                  Array [],
+                                  "f044",
+                                  "M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z",
+                                ],
+                                "iconName": "edit",
+                                "prefix": "fas",
+                              }
+                            }
+                            inverse={false}
+                            listItem={false}
+                            mask={null}
+                            pull={null}
+                            pulse={false}
+                            rotation={null}
+                            size={null}
+                            spin={false}
+                            swapOpacity={false}
+                            symbol={false}
+                            title=""
+                            transform={null}
                           >
-                            <h5
-                              className="modal-title"
+                            <svg
+                              aria-hidden="true"
+                              className="svg-inline--fa fa-edit fa-w-18 "
+                              data-icon="edit"
+                              data-prefix="fas"
+                              focusable="false"
+                              role="img"
+                              style={Object {}}
+                              viewBox="0 0 576 512"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <FontAwesomeIcon
-                                border={false}
-                                className=""
-                                fixedWidth={false}
-                                flip={null}
-                                icon={
+                              <path
+                                d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+                                fill="currentColor"
+                                style={Object {}}
+                              />
+                            </svg>
+                          </FontAwesomeIcon>
+                           
+                          <FormattedMessage
+                            defaultMessage="Task edition"
+                            description="Panel title"
+                            id="modalEditTaskTitle"
+                            values={Object {}}
+                          >
+                            Task edition
+                          </FormattedMessage>
+                        </h5>
+                        <button
+                          aria-label="Close"
+                          className="close"
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          <span
+                            aria-hidden="true"
+                          >
+                            ×
+                          </span>
+                        </button>
+                      </div>
+                    </ModalHeader>
+                    <ModalBody
+                      tag="div"
+                    >
+                      <div
+                        className="modal-body"
+                      >
+                        <Memo(MyForm)
+                          id="createTaskForm"
+                          initialData={
+                            Object {
+                              "_uiId": "an_id_created_by_the_front_end_and_for_the_front_end",
+                              "description": "Changer l'huile",
+                              "level": 0,
+                              "name": "Vidange",
+                              "nextDueDate": 2020-07-09T16:00:00.000Z,
+                              "periodInMonth": 12,
+                              "usageInHourLeft": undefined,
+                              "usagePeriodInHour": 500,
+                            }
+                          }
+                          submit={[Function]}
+                        >
+                          <Form
+                            id="createTaskForm"
+                            innerRef={
+                              Object {
+                                "current": <form
+                                  class=""
+                                  id="createTaskForm"
+                                  novalidate=""
+                                >
+                                  <div
+                                    class="form-group form-group"
+                                  >
+                                    <label
+                                      class=""
+                                      for="name"
+                                    >
+                                      Name
+                                    </label>
+                                    <input
+                                      class="form-control form-control"
+                                      name="name"
+                                      required=""
+                                      type="text"
+                                      value="Vidange"
+                                    />
+                                  </div>
+                                  <div
+                                    class="form-group form-group"
+                                  >
+                                    <label
+                                      class=""
+                                      for="usagePeriodInHour"
+                                    >
+                                      Period in usage hour
+                                    </label>
+                                    <input
+                                      class="form-control form-control"
+                                      min="0"
+                                      name="usagePeriodInHour"
+                                      type="number"
+                                      value="500"
+                                    />
+                                  </div>
+                                  <div
+                                    class="form-group form-group"
+                                  >
+                                    <label
+                                      class=""
+                                      for="periodInMonth"
+                                    >
+                                      Period in month
+                                    </label>
+                                    <input
+                                      class="form-control form-control"
+                                      min="1"
+                                      name="periodInMonth"
+                                      required=""
+                                      type="number"
+                                      value="12"
+                                    />
+                                  </div>
+                                  <div
+                                    class="form-group form-group"
+                                  >
+                                    <label
+                                      class=""
+                                      for="description"
+                                    >
+                                      Description
+                                    </label>
+                                    <textarea
+                                      class="form-control form-control"
+                                      name="description"
+                                      required=""
+                                    >
+                                      Changer l'huile
+                                    </textarea>
+                                  </div>
+                                </form>,
+                              }
+                            }
+                            noValidate={true}
+                            onSubmit={[Function]}
+                            tag="form"
+                          >
+                            <form
+                              className=""
+                              id="createTaskForm"
+                              noValidate={true}
+                              onSubmit={[Function]}
+                            >
+                              <Memo()
+                                handleChange={[Function]}
+                                key=".0"
+                                label={
                                   Object {
-                                    "icon": Array [
-                                      576,
-                                      512,
-                                      Array [],
-                                      "f044",
-                                      "M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z",
-                                    ],
-                                    "iconName": "edit",
-                                    "prefix": "fas",
+                                    "defaultMessage": "Name",
+                                    "description": "Label",
+                                    "id": "taskname",
                                   }
                                 }
-                                inverse={false}
-                                listItem={false}
-                                mask={null}
-                                pull={null}
-                                pulse={false}
-                                rotation={null}
-                                size={null}
-                                spin={false}
-                                swapOpacity={false}
-                                symbol={false}
-                                title=""
-                                transform={null}
+                                name="name"
+                                required={true}
+                                type="text"
+                                validationTrigger={0}
+                                value="Vidange"
                               >
-                                <svg
-                                  aria-hidden="true"
-                                  className="svg-inline--fa fa-edit fa-w-18 "
-                                  data-icon="edit"
-                                  data-prefix="fas"
-                                  focusable="false"
-                                  role="img"
-                                  style={Object {}}
-                                  viewBox="0 0 576 512"
-                                  xmlns="http://www.w3.org/2000/svg"
+                                <FormGroup
+                                  className="form-group"
+                                  tag="div"
                                 >
-                                  <path
-                                    d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-                                    fill="currentColor"
-                                    style={Object {}}
-                                  />
-                                </svg>
-                              </FontAwesomeIcon>
-                               
-                              <FormattedMessage
-                                defaultMessage="Task edition"
-                                description="Panel title"
-                                id="modalEditTaskTitle"
-                                values={Object {}}
-                              >
-                                Task edition
-                              </FormattedMessage>
-                            </h5>
-                            <button
-                              aria-label="Close"
-                              className="close"
-                              onClick={[Function]}
-                              type="button"
-                            >
-                              <span
-                                aria-hidden="true"
-                              >
-                                ×
-                              </span>
-                            </button>
-                          </div>
-                        </ModalHeader>
-                        <ModalBody
-                          tag="div"
-                        >
-                          <div
-                            className="modal-body"
-                          >
-                            <Memo(MyForm)
-                              id="createTaskForm"
-                              initialData={
-                                Object {
-                                  "_uiId": "an_id_created_by_the_front_end_and_for_the_front_end",
-                                  "description": "Changer l'huile",
-                                  "level": 0,
-                                  "name": "Vidange",
-                                  "nextDueDate": 2020-07-09T16:00:00.000Z,
-                                  "periodInMonth": 12,
-                                  "usageInHourLeft": undefined,
-                                  "usagePeriodInHour": 500,
-                                }
-                              }
-                              submit={[Function]}
-                            >
-                              <Form
-                                id="createTaskForm"
-                                innerRef={
-                                  Object {
-                                    "current": <form
-                                      class=""
-                                      id="createTaskForm"
-                                      novalidate=""
+                                  <div
+                                    className="form-group form-group"
+                                  >
+                                    <Label
+                                      for="name"
+                                      tag="label"
+                                      widths={
+                                        Array [
+                                          "xs",
+                                          "sm",
+                                          "md",
+                                          "lg",
+                                          "xl",
+                                        ]
+                                      }
                                     >
-                                      <div
-                                        class="form-group form-group"
+                                      <label
+                                        className=""
+                                        htmlFor="name"
                                       >
-                                        <label
-                                          class=""
-                                          for="name"
+                                        <FormattedMessage
+                                          defaultMessage="Name"
+                                          description="Label"
+                                          id="taskname"
+                                          values={Object {}}
                                         >
                                           Name
-                                        </label>
-                                        <input
-                                          class="form-control form-control"
-                                          name="name"
-                                          required=""
-                                          type="text"
-                                          value="Vidange"
-                                        />
-                                      </div>
-                                      <div
-                                        class="form-group form-group"
-                                      >
-                                        <label
-                                          class=""
-                                          for="usagePeriodInHour"
-                                        >
-                                          Period in usage hour
-                                        </label>
-                                        <input
-                                          class="form-control form-control"
-                                          min="0"
-                                          name="usagePeriodInHour"
-                                          type="number"
-                                          value="500"
-                                        />
-                                      </div>
-                                      <div
-                                        class="form-group form-group"
-                                      >
-                                        <label
-                                          class=""
-                                          for="periodInMonth"
-                                        >
-                                          Period in month
-                                        </label>
-                                        <input
-                                          class="form-control form-control"
-                                          min="1"
-                                          name="periodInMonth"
-                                          required=""
-                                          type="number"
-                                          value="12"
-                                        />
-                                      </div>
-                                      <div
-                                        class="form-group form-group"
-                                      >
-                                        <label
-                                          class=""
-                                          for="description"
-                                        >
-                                          Description
-                                        </label>
-                                        <textarea
-                                          class="form-control form-control"
-                                          name="description"
-                                          required=""
-                                        >
-                                          Changer l'huile
-                                        </textarea>
-                                      </div>
-                                    </form>,
-                                  }
-                                }
-                                noValidate={true}
-                                onSubmit={[Function]}
-                                tag="form"
-                              >
-                                <form
-                                  className=""
-                                  id="createTaskForm"
-                                  noValidate={true}
-                                  onSubmit={[Function]}
-                                >
-                                  <Memo()
-                                    handleChange={[Function]}
-                                    key=".0"
-                                    label={
-                                      Object {
-                                        "defaultMessage": "Name",
-                                        "description": "Label",
-                                        "id": "taskname",
-                                      }
-                                    }
-                                    name="name"
-                                    required={true}
-                                    type="text"
-                                    validationTrigger={0}
-                                    value="Vidange"
-                                  >
-                                    <FormGroup
-                                      className="form-group"
-                                      tag="div"
-                                    >
-                                      <div
-                                        className="form-group form-group"
-                                      >
-                                        <Label
-                                          for="name"
-                                          tag="label"
-                                          widths={
-                                            Array [
-                                              "xs",
-                                              "sm",
-                                              "md",
-                                              "lg",
-                                              "xl",
-                                            ]
-                                          }
-                                        >
-                                          <label
-                                            className=""
-                                            htmlFor="name"
-                                          >
-                                            <FormattedMessage
-                                              defaultMessage="Name"
-                                              description="Label"
-                                              id="taskname"
-                                              values={Object {}}
-                                            >
-                                              Name
-                                            </FormattedMessage>
-                                          </label>
-                                        </Label>
-                                        <Input
-                                          className="form-control"
-                                          innerRef={
-                                            Object {
-                                              "current": <input
-                                                class="form-control form-control"
-                                                name="name"
-                                                required=""
-                                                type="text"
-                                                value="Vidange"
-                                              />,
-                                            }
-                                          }
-                                          invalid={false}
-                                          name="name"
-                                          onChange={[Function]}
-                                          required={true}
-                                          type="text"
-                                          value="Vidange"
-                                        >
-                                          <input
-                                            className="form-control form-control"
+                                        </FormattedMessage>
+                                      </label>
+                                    </Label>
+                                    <Input
+                                      className="form-control"
+                                      innerRef={
+                                        Object {
+                                          "current": <input
+                                            class="form-control form-control"
                                             name="name"
-                                            onChange={[Function]}
-                                            required={true}
+                                            required=""
                                             type="text"
                                             value="Vidange"
-                                          />
-                                        </Input>
-                                      </div>
-                                    </FormGroup>
-                                  </Memo()>
-                                  <Memo()
-                                    handleChange={[Function]}
-                                    key=".1"
-                                    label={
-                                      Object {
-                                        "defaultMessage": "Period in usage hour",
-                                        "description": "Label",
-                                        "id": "usagePeriodInHour",
+                                          />,
+                                        }
                                       }
-                                    }
-                                    min={0}
-                                    name="usagePeriodInHour"
-                                    type="number"
-                                    validationTrigger={0}
-                                    value="500"
-                                  >
-                                    <FormGroup
-                                      className="form-group"
-                                      tag="div"
+                                      invalid={false}
+                                      name="name"
+                                      onChange={[Function]}
+                                      required={true}
+                                      type="text"
+                                      value="Vidange"
                                     >
-                                      <div
-                                        className="form-group form-group"
+                                      <input
+                                        className="form-control form-control"
+                                        name="name"
+                                        onChange={[Function]}
+                                        required={true}
+                                        type="text"
+                                        value="Vidange"
+                                      />
+                                    </Input>
+                                  </div>
+                                </FormGroup>
+                              </Memo()>
+                              <Memo()
+                                handleChange={[Function]}
+                                key=".1"
+                                label={
+                                  Object {
+                                    "defaultMessage": "Period in usage hour",
+                                    "description": "Label",
+                                    "id": "usagePeriodInHour",
+                                  }
+                                }
+                                min={0}
+                                name="usagePeriodInHour"
+                                type="number"
+                                validationTrigger={0}
+                                value="500"
+                              >
+                                <FormGroup
+                                  className="form-group"
+                                  tag="div"
+                                >
+                                  <div
+                                    className="form-group form-group"
+                                  >
+                                    <Label
+                                      for="usagePeriodInHour"
+                                      tag="label"
+                                      widths={
+                                        Array [
+                                          "xs",
+                                          "sm",
+                                          "md",
+                                          "lg",
+                                          "xl",
+                                        ]
+                                      }
+                                    >
+                                      <label
+                                        className=""
+                                        htmlFor="usagePeriodInHour"
                                       >
-                                        <Label
-                                          for="usagePeriodInHour"
-                                          tag="label"
-                                          widths={
-                                            Array [
-                                              "xs",
-                                              "sm",
-                                              "md",
-                                              "lg",
-                                              "xl",
-                                            ]
-                                          }
+                                        <FormattedMessage
+                                          defaultMessage="Period in usage hour"
+                                          description="Label"
+                                          id="usagePeriodInHour"
+                                          values={Object {}}
                                         >
-                                          <label
-                                            className=""
-                                            htmlFor="usagePeriodInHour"
-                                          >
-                                            <FormattedMessage
-                                              defaultMessage="Period in usage hour"
-                                              description="Label"
-                                              id="usagePeriodInHour"
-                                              values={Object {}}
-                                            >
-                                              Period in usage hour
-                                            </FormattedMessage>
-                                          </label>
-                                        </Label>
-                                        <Input
-                                          className="form-control"
-                                          innerRef={
-                                            Object {
-                                              "current": <input
-                                                class="form-control form-control"
-                                                min="0"
-                                                name="usagePeriodInHour"
-                                                type="number"
-                                                value="500"
-                                              />,
-                                            }
-                                          }
-                                          invalid={false}
-                                          min={0}
-                                          name="usagePeriodInHour"
-                                          onChange={[Function]}
-                                          type="number"
-                                          value="500"
-                                        >
-                                          <input
-                                            className="form-control form-control"
-                                            min={0}
+                                          Period in usage hour
+                                        </FormattedMessage>
+                                      </label>
+                                    </Label>
+                                    <Input
+                                      className="form-control"
+                                      innerRef={
+                                        Object {
+                                          "current": <input
+                                            class="form-control form-control"
+                                            min="0"
                                             name="usagePeriodInHour"
-                                            onChange={[Function]}
                                             type="number"
                                             value="500"
-                                          />
-                                        </Input>
-                                      </div>
-                                    </FormGroup>
-                                  </Memo()>
-                                  <Memo()
-                                    handleChange={[Function]}
-                                    key=".2"
-                                    label={
-                                      Object {
-                                        "defaultMessage": "Period in month",
-                                        "description": "Label",
-                                        "id": "month",
+                                          />,
+                                        }
                                       }
-                                    }
-                                    min={1}
-                                    name="periodInMonth"
-                                    required={true}
-                                    type="number"
-                                    validationTrigger={0}
-                                    value="12"
-                                  >
-                                    <FormGroup
-                                      className="form-group"
-                                      tag="div"
+                                      invalid={false}
+                                      min={0}
+                                      name="usagePeriodInHour"
+                                      onChange={[Function]}
+                                      type="number"
+                                      value="500"
                                     >
-                                      <div
-                                        className="form-group form-group"
+                                      <input
+                                        className="form-control form-control"
+                                        min={0}
+                                        name="usagePeriodInHour"
+                                        onChange={[Function]}
+                                        type="number"
+                                        value="500"
+                                      />
+                                    </Input>
+                                  </div>
+                                </FormGroup>
+                              </Memo()>
+                              <Memo()
+                                handleChange={[Function]}
+                                key=".2"
+                                label={
+                                  Object {
+                                    "defaultMessage": "Period in month",
+                                    "description": "Label",
+                                    "id": "month",
+                                  }
+                                }
+                                min={1}
+                                name="periodInMonth"
+                                required={true}
+                                type="number"
+                                validationTrigger={0}
+                                value="12"
+                              >
+                                <FormGroup
+                                  className="form-group"
+                                  tag="div"
+                                >
+                                  <div
+                                    className="form-group form-group"
+                                  >
+                                    <Label
+                                      for="periodInMonth"
+                                      tag="label"
+                                      widths={
+                                        Array [
+                                          "xs",
+                                          "sm",
+                                          "md",
+                                          "lg",
+                                          "xl",
+                                        ]
+                                      }
+                                    >
+                                      <label
+                                        className=""
+                                        htmlFor="periodInMonth"
                                       >
-                                        <Label
-                                          for="periodInMonth"
-                                          tag="label"
-                                          widths={
-                                            Array [
-                                              "xs",
-                                              "sm",
-                                              "md",
-                                              "lg",
-                                              "xl",
-                                            ]
-                                          }
+                                        <FormattedMessage
+                                          defaultMessage="Period in month"
+                                          description="Label"
+                                          id="month"
+                                          values={Object {}}
                                         >
-                                          <label
-                                            className=""
-                                            htmlFor="periodInMonth"
-                                          >
-                                            <FormattedMessage
-                                              defaultMessage="Period in month"
-                                              description="Label"
-                                              id="month"
-                                              values={Object {}}
-                                            >
-                                              Period in month
-                                            </FormattedMessage>
-                                          </label>
-                                        </Label>
-                                        <Input
-                                          className="form-control"
-                                          innerRef={
-                                            Object {
-                                              "current": <input
-                                                class="form-control form-control"
-                                                min="1"
-                                                name="periodInMonth"
-                                                required=""
-                                                type="number"
-                                                value="12"
-                                              />,
-                                            }
-                                          }
-                                          invalid={false}
-                                          min={1}
-                                          name="periodInMonth"
-                                          onChange={[Function]}
-                                          required={true}
-                                          type="number"
-                                          value="12"
-                                        >
-                                          <input
-                                            className="form-control form-control"
-                                            min={1}
+                                          Period in month
+                                        </FormattedMessage>
+                                      </label>
+                                    </Label>
+                                    <Input
+                                      className="form-control"
+                                      innerRef={
+                                        Object {
+                                          "current": <input
+                                            class="form-control form-control"
+                                            min="1"
                                             name="periodInMonth"
-                                            onChange={[Function]}
-                                            required={true}
+                                            required=""
                                             type="number"
                                             value="12"
-                                          />
-                                        </Input>
-                                      </div>
-                                    </FormGroup>
-                                  </Memo()>
-                                  <Memo()
-                                    handleChange={[Function]}
-                                    key=".3"
-                                    label={
-                                      Object {
-                                        "defaultMessage": "Description",
-                                        "description": "Label",
-                                        "id": "taskdesc",
+                                          />,
+                                        }
                                       }
-                                    }
-                                    name="description"
-                                    required={true}
-                                    type="textarea"
-                                    validationTrigger={0}
-                                    value="Changer l'huile"
-                                  >
-                                    <FormGroup
-                                      className="form-group"
-                                      tag="div"
+                                      invalid={false}
+                                      min={1}
+                                      name="periodInMonth"
+                                      onChange={[Function]}
+                                      required={true}
+                                      type="number"
+                                      value="12"
                                     >
-                                      <div
-                                        className="form-group form-group"
-                                      >
-                                        <Label
-                                          for="description"
-                                          tag="label"
-                                          widths={
-                                            Array [
-                                              "xs",
-                                              "sm",
-                                              "md",
-                                              "lg",
-                                              "xl",
-                                            ]
-                                          }
-                                        >
-                                          <label
-                                            className=""
-                                            htmlFor="description"
-                                          >
-                                            <FormattedMessage
-                                              defaultMessage="Description"
-                                              description="Label"
-                                              id="taskdesc"
-                                              values={Object {}}
-                                            >
-                                              Description
-                                            </FormattedMessage>
-                                          </label>
-                                        </Label>
-                                        <Input
-                                          className="form-control"
-                                          innerRef={
-                                            Object {
-                                              "current": <textarea
-                                                class="form-control form-control"
-                                                name="description"
-                                                required=""
-                                              >
-                                                Changer l'huile
-                                              </textarea>,
-                                            }
-                                          }
-                                          invalid={false}
-                                          name="description"
-                                          onChange={[Function]}
-                                          required={true}
-                                          type="textarea"
-                                          value="Changer l'huile"
-                                        >
-                                          <textarea
-                                            className="form-control form-control"
-                                            name="description"
-                                            onChange={[Function]}
-                                            required={true}
-                                            value="Changer l'huile"
-                                          />
-                                        </Input>
-                                      </div>
-                                    </FormGroup>
-                                  </Memo()>
-                                </form>
-                              </Form>
-                            </Memo(MyForm)>
-                            <Alerts />
-                          </div>
-                        </ModalBody>
-                        <ModalFooter
-                          tag="div"
-                        >
-                          <div
-                            className="modal-footer"
-                          >
-                            <ActionButton
-                              color="success"
-                              form="createTaskForm"
-                              isActing={false}
-                              message={
-                                Object {
-                                  "defaultMessage": "Save",
-                                  "description": "Button",
-                                  "id": "save",
+                                      <input
+                                        className="form-control form-control"
+                                        min={1}
+                                        name="periodInMonth"
+                                        onChange={[Function]}
+                                        required={true}
+                                        type="number"
+                                        value="12"
+                                      />
+                                    </Input>
+                                  </div>
+                                </FormGroup>
+                              </Memo()>
+                              <Memo()
+                                handleChange={[Function]}
+                                key=".3"
+                                label={
+                                  Object {
+                                    "defaultMessage": "Description",
+                                    "description": "Label",
+                                    "id": "taskdesc",
+                                  }
                                 }
-                              }
+                                name="description"
+                                required={true}
+                                type="textarea"
+                                validationTrigger={0}
+                                value="Changer l'huile"
+                              >
+                                <FormGroup
+                                  className="form-group"
+                                  tag="div"
+                                >
+                                  <div
+                                    className="form-group form-group"
+                                  >
+                                    <Label
+                                      for="description"
+                                      tag="label"
+                                      widths={
+                                        Array [
+                                          "xs",
+                                          "sm",
+                                          "md",
+                                          "lg",
+                                          "xl",
+                                        ]
+                                      }
+                                    >
+                                      <label
+                                        className=""
+                                        htmlFor="description"
+                                      >
+                                        <FormattedMessage
+                                          defaultMessage="Description"
+                                          description="Label"
+                                          id="taskdesc"
+                                          values={Object {}}
+                                        >
+                                          Description
+                                        </FormattedMessage>
+                                      </label>
+                                    </Label>
+                                    <Input
+                                      className="form-control"
+                                      innerRef={
+                                        Object {
+                                          "current": <textarea
+                                            class="form-control form-control"
+                                            name="description"
+                                            required=""
+                                          >
+                                            Changer l'huile
+                                          </textarea>,
+                                        }
+                                      }
+                                      invalid={false}
+                                      name="description"
+                                      onChange={[Function]}
+                                      required={true}
+                                      type="textarea"
+                                      value="Changer l'huile"
+                                    >
+                                      <textarea
+                                        className="form-control form-control"
+                                        name="description"
+                                        onChange={[Function]}
+                                        required={true}
+                                        value="Changer l'huile"
+                                      />
+                                    </Input>
+                                  </div>
+                                </FormGroup>
+                              </Memo()>
+                            </form>
+                          </Form>
+                        </Memo(MyForm)>
+                        <Alerts />
+                      </div>
+                    </ModalBody>
+                    <ModalFooter
+                      tag="div"
+                    >
+                      <div
+                        className="modal-footer"
+                      >
+                        <ActionButton
+                          color="success"
+                          form="createTaskForm"
+                          isActing={false}
+                          message={
+                            Object {
+                              "defaultMessage": "Save",
+                              "description": "Button",
+                              "id": "save",
+                            }
+                          }
+                          type="submit"
+                        >
+                          <Button
+                            color="success"
+                            disabled={false}
+                            form="createTaskForm"
+                            tag="button"
+                            type="submit"
+                          >
+                            <button
+                              aria-label={null}
+                              className="btn btn-success"
+                              disabled={false}
+                              form="createTaskForm"
+                              onClick={[Function]}
                               type="submit"
                             >
-                              <Button
-                                color="success"
-                                disabled={false}
-                                form="createTaskForm"
-                                tag="button"
-                                type="submit"
+                              <FormattedMessage
+                                defaultMessage="Save"
+                                description="Button"
+                                id="save"
+                                values={Object {}}
                               >
-                                <button
-                                  aria-label={null}
-                                  className="btn btn-success"
-                                  disabled={false}
-                                  form="createTaskForm"
-                                  onClick={[Function]}
-                                  type="submit"
-                                >
-                                  <FormattedMessage
-                                    defaultMessage="Save"
-                                    description="Button"
-                                    id="save"
-                                    values={Object {}}
-                                  >
-                                    Save
-                                  </FormattedMessage>
-                                </button>
-                              </Button>
-                            </ActionButton>
-                            <Button
-                              color="secondary"
-                              onClick={[Function]}
-                              tag="button"
+                                Save
+                              </FormattedMessage>
+                            </button>
+                          </Button>
+                        </ActionButton>
+                        <Button
+                          color="secondary"
+                          onClick={[Function]}
+                          tag="button"
+                        >
+                          <button
+                            aria-label={null}
+                            className="btn btn-secondary"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <FormattedMessage
+                              defaultMessage="Cancel"
+                              description="Button"
+                              id="cancel"
+                              values={Object {}}
                             >
-                              <button
-                                aria-label={null}
-                                className="btn btn-secondary"
-                                onClick={[Function]}
-                                type="button"
-                              >
-                                <FormattedMessage
-                                  defaultMessage="Cancel"
-                                  description="Button"
-                                  id="cancel"
-                                  values={Object {}}
-                                >
-                                  Cancel
-                                </FormattedMessage>
-                              </button>
-                            </Button>
-                            <Button
-                              color="danger"
-                              onClick={[Function]}
-                              tag="button"
+                              Cancel
+                            </FormattedMessage>
+                          </button>
+                        </Button>
+                        <Button
+                          color="danger"
+                          onClick={[Function]}
+                          tag="button"
+                        >
+                          <button
+                            aria-label={null}
+                            className="btn btn-danger"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <FormattedMessage
+                              defaultMessage="Delete"
+                              description="Button"
+                              id="delete"
+                              values={Object {}}
                             >
-                              <button
-                                aria-label={null}
-                                className="btn btn-danger"
-                                onClick={[Function]}
-                                type="button"
-                              >
-                                <FormattedMessage
-                                  defaultMessage="Delete"
-                                  description="Button"
-                                  id="delete"
-                                  values={Object {}}
-                                >
-                                  Delete
-                                </FormattedMessage>
-                              </button>
-                            </Button>
-                          </div>
-                        </ModalFooter>
+                              Delete
+                            </FormattedMessage>
+                          </button>
+                        </Button>
                       </div>
-                    </div>
+                    </ModalFooter>
                   </div>
-                </Transition>
-              </Fade>
+                </div>
+              </div>
+            </Transition>
+          </Fade>
+          <Fade
+            appear={true}
+            baseClass="fade"
+            baseClassActive="show"
+            className="modal-backdrop"
+            enter={true}
+            exit={true}
+            in={true}
+            mountOnEnter={true}
+            onEnter={[Function]}
+            onEntered={[Function]}
+            onEntering={[Function]}
+            onExit={[Function]}
+            onExited={[Function]}
+            onExiting={[Function]}
+            tag="div"
+            timeout={150}
+            unmountOnExit={false}
+          >
+            <Transition
+              appear={true}
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={true}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              timeout={150}
+              unmountOnExit={false}
+            >
               <div
-                className="modal-backdrop show"
+                className="modal-backdrop fade"
               />
-            </div>
-          </Portal>
-        </Portal>
-      </Modal>
-    </Transition>
-  </CSSTransition>
+            </Transition>
+          </Fade>
+        </div>
+      </Portal>
+    </Portal>
+  </Modal>
   <ModalYesNoConfirmation
     className="modal-dialog-centered"
     isActing={false}
@@ -1148,56 +1162,34 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
     visible={false}
     yes={[Function]}
   >
-    <CSSTransition
-      classNames="modal"
-      in={false}
-      timeout={300}
-    >
-      <Transition
-        appear={false}
-        enter={true}
-        exit={true}
-        in={false}
-        mountOnEnter={false}
-        onEnter={[Function]}
-        onEntered={[Function]}
-        onEntering={[Function]}
-        onExit={[Function]}
-        onExited={[Function]}
-        onExiting={[Function]}
-        timeout={300}
-        unmountOnExit={false}
-      >
-        <Modal
-          autoFocus={true}
-          backdrop={true}
-          backdropTransition={
-            Object {
-              "mountOnEnter": true,
-              "timeout": 150,
-            }
-          }
-          centered={false}
-          className="modal-dialog-centered"
-          fade={false}
-          isOpen={false}
-          keyboard={true}
-          modalTransition={
-            Object {
-              "timeout": 300,
-            }
-          }
-          onClosed={[Function]}
-          onOpened={[Function]}
-          returnFocusAfterClose={true}
-          role="dialog"
-          scrollable={false}
-          toggle={[Function]}
-          unmountOnClose={true}
-          zIndex={1050}
-        />
-      </Transition>
-    </CSSTransition>
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      className="modal-dialog-centered"
+      fade={true}
+      isOpen={false}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      returnFocusAfterClose={true}
+      role="dialog"
+      scrollable={false}
+      toggle={[Function]}
+      unmountOnClose={true}
+      zIndex={1050}
+    />
   </ModalYesNoConfirmation>
 </ModalEditTask>
 `;
