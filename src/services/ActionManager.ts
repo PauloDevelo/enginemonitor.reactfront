@@ -32,9 +32,13 @@ export interface IActionManager{
     getNextActionToPerform(): Action;
     shiftAction(): Promise<void>;
     countAction(): number;
+
     performAction (action: Action):Promise<void>;
-    clearActions(): Promise<void>;
     cancelAction(): void;
+
+    clearActions(): Promise<void>;
+
+    writeActionsInStorage(): Promise<void>;
 
     registerOnActionManagerChanged(listener: (actionCounter: number) => void):void;
     unregisterOnActionManagerChanged(listenerToRemove: (actionCounter: number) => void):void;
@@ -81,7 +85,7 @@ class ActionManager implements IActionManager, IUserStorageListener {
 
     async addAction(action: Action): Promise<void> {
       this.actions.push(action);
-      this.actions = await storageService.setItem<Action[]>('history', this.actions);
+      await this.writeActionsInStorage();
       return this.triggerOnActionManagerChanged(this.actions.length);
     }
 
@@ -99,7 +103,7 @@ class ActionManager implements IActionManager, IUserStorageListener {
       }
 
       this.actions.shift();
-      this.actions = await storageService.setItem<Action[]>('history', this.actions);
+      await this.writeActionsInStorage();
       return this.triggerOnActionManagerChanged(this.actions.length);
     }
 
@@ -151,8 +155,13 @@ class ActionManager implements IActionManager, IUserStorageListener {
     }
 
     async clearActions(): Promise<void> {
-      this.actions = await storageService.setItem<Action[]>('history', []);
+      this.actions.length = 0;
+      await this.writeActionsInStorage();
       this.triggerOnActionManagerChanged(this.actions.length);
+    }
+
+    writeActionsInStorage = async (): Promise<void> => {
+      this.actions = await storageService.setItem<Action[]>('history', this.actions);
     }
 
     private getHistoryFromStorage = async ():Promise<Action[]> => storageService.getArray<Action>('history')

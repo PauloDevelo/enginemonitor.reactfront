@@ -6,7 +6,7 @@ import {
 } from 'reactstrap';
 import Switch from 'react-switch';
 
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
@@ -18,6 +18,8 @@ import ImageFolderGauge from './ImageFolderGauge';
 
 import userProxy from '../../services/UserProxy';
 import onlineManager from '../../services/OnlineManager';
+import localStorageBuilder from '../../services/LocalStorageBuilder';
+import errorService from '../../services/ErrorService';
 
 // eslint-disable-next-line no-unused-vars
 import { UserModel, AssetModel } from '../../types/Types';
@@ -86,6 +88,12 @@ const NavBar = ({ onLoggedOut }:Props) => {
     onLoggedOut();
   }, [onLoggedOut]);
 
+  const rebuildStorage = useCallback(() => {
+    localStorageBuilder.rebuild().catch((error) => {
+      errorService.addError(error);
+    });
+  }, []);
+
   const offlineSwitch = useCallback((isOffline: boolean):void => {
     setOffline(isOffline);
     onlineManager.setOfflineMode(isOffline);
@@ -138,6 +146,12 @@ const NavBar = ({ onLoggedOut }:Props) => {
                 {!user?.forbidUploadingImage && (
                 <DropdownItem divider />
                 )}
+                <DropdownItem onClick={rebuildStorage}>
+                  <FontAwesomeIcon icon={faSyncAlt} />
+                  {' '}
+                  <FormattedMessage {...navBarMsg.rebuildLocalStorage} />
+                </DropdownItem>
+                <DropdownItem divider />
                 <DropdownItem onClick={logout}>
                   <FontAwesomeIcon icon={faSignOutAlt} />
                   {' '}
