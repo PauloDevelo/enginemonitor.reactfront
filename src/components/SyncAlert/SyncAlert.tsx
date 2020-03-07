@@ -24,9 +24,9 @@ const SyncAlert = ({ className }:Type) => {
   };
 
   useEffect(() => {
-    syncService.registerSyncListener(setSyncContextAsync);
+    syncService.registerListener(setSyncContextAsync);
 
-    return () => syncService.unregisterSyncListener(setSyncContextAsync);
+    return () => syncService.unregisterListener(setSyncContextAsync);
   }, []);
 
   const onDismiss = useCallback(() => syncService.cancel(), []);

@@ -50,7 +50,7 @@ describe('Test SyncService', () => {
       // Arrange
       let syncContext;
       const syncListener = jest.fn().mockImplementation((context) => { syncContext = context; });
-      syncService.registerSyncListener(syncListener);
+      syncService.registerListener(syncListener);
 
       // Act
       await syncService.run();
@@ -62,7 +62,7 @@ describe('Test SyncService', () => {
       expect(syncContext.total).toBe(0);
       expect(syncContext.remaining).toBe(0);
 
-      syncService.unregisterSyncListener(syncListener);
+      syncService.unregisterListener(syncListener);
       done();
     });
 
@@ -90,7 +90,7 @@ describe('Test SyncService', () => {
         contexts.push(context);
       });
 
-      syncService.registerSyncListener(syncListener);
+      syncService.registerListener(syncListener);
 
       // Act
       await syncService.run();
@@ -99,7 +99,7 @@ describe('Test SyncService', () => {
       expect(syncListener).toHaveBeenCalledTimes(0);
       expect(actionManager.countAction()).toBe(2);
 
-      syncService.unregisterSyncListener(syncListener);
+      syncService.unregisterListener(syncListener);
       done();
     });
 
@@ -125,7 +125,7 @@ describe('Test SyncService', () => {
         contexts.push(context);
       });
 
-      syncService.registerSyncListener(syncListener);
+      syncService.registerListener(syncListener);
 
       // Act
       await syncService.run();
@@ -140,7 +140,7 @@ describe('Test SyncService', () => {
 
       expect(actionManager.countAction()).toBe(0);
 
-      syncService.unregisterSyncListener(syncListener);
+      syncService.unregisterListener(syncListener);
       done();
     });
 
@@ -180,7 +180,7 @@ describe('Test SyncService', () => {
         contexts.push(context);
       });
 
-      syncService.registerSyncListener(syncListener);
+      syncService.registerListener(syncListener);
 
       // Act
       await syncService.run();
@@ -195,7 +195,7 @@ describe('Test SyncService', () => {
 
       expect(actionManager.countAction()).toBe(1);
 
-      syncService.unregisterSyncListener(syncListener);
+      syncService.unregisterListener(syncListener);
       done();
     });
   });

@@ -20,7 +20,7 @@ describe('Test SyncAlert', () => {
   it('should hide the SyncAlert when the synchronisation stops', async () => {
     // Arrange
     let syncAlertNotifier;
-    syncService.registerSyncListener.mockImplementation((listener) => {
+    syncService.registerListener.mockImplementation((listener) => {
       syncAlertNotifier = listener;
     });
 
@@ -49,7 +49,7 @@ describe('Test SyncAlert', () => {
   it('should display the SyncAlert when the synchronisation starts', async () => {
     // Arrange
     let syncAlertNotifier;
-    syncService.registerSyncListener.mockImplementation((listener) => {
+    syncService.registerListener.mockImplementation((listener) => {
       syncAlertNotifier = listener;
     });
 
@@ -78,7 +78,7 @@ describe('Test SyncAlert', () => {
   it('should display the progress when the synchronisation is running', async () => {
     // Arrange
     let syncAlertNotifier;
-    syncService.registerSyncListener.mockImplementation((listener) => {
+    syncService.registerListener.mockImplementation((listener) => {
       syncAlertNotifier = listener;
     });
 
