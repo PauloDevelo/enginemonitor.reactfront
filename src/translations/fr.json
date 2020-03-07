@@ -88,6 +88,7 @@
   "orevery": " ou tous les ",
   "password": "Mot de passe",
   "passwordsHaveToBeIdentical": "Les mots de passe sont différents. Veuillez les retapper.",
+  "rebuildInProgress": "Stockage local en reconstruction ...",
   "rebuildLocalStorage": "Reconstruit le stockage local",
   "remarks": "Remarques",
   "remember": "Se souvenir de moi",

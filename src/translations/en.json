@@ -88,6 +88,7 @@
   "orevery": " or every ",
   "password": "Password",
   "passwordsHaveToBeIdentical": "The passwords are different. Please re-type the passwords.",
+  "rebuildInProgress": "Local storage rebuild in progress...",
   "rebuildLocalStorage": "Rebuild local storage",
   "remarks": "Remarks",
   "remember": "Remember me",
