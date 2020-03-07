@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import SyncAlert from '../SyncAlert';
+import TaskProgressBar from '../TaskProgressBar';
 
 import ignoredMessages from '../../../testHelpers/MockConsole';
 // eslint-disable-next-line no-unused-vars
@@ -10,14 +10,14 @@ import updateWrapper from '../../../testHelpers/EnzymeHelper';
 
 jest.mock('../../../services/SyncService');
 
-describe('Test SyncAlert', () => {
+describe('Test TaskProgressBar', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('a test was not wrapped in act');
     ignoredMessages.push('Could not find required `intl` object.');
   });
 
-  it('should hide the SyncAlert when the synchronisation stops', async () => {
+  it('should hide the TaskProgressBar when the task is stopped', async () => {
     // Arrange
     let syncAlertNotifier;
     syncService.registerListener.mockImplementation((listener) => {
@@ -30,7 +30,7 @@ describe('Test SyncAlert', () => {
       remaining: 0,
     }));
 
-    const syncAlertWrapper = mount(<SyncAlert />);
+    const syncAlertWrapper = mount(<TaskProgressBar taskWithProgress={syncService} color="warning" title="syncInProgress" />);
     await updateWrapper(syncAlertWrapper);
 
     // Act
@@ -59,7 +59,7 @@ describe('Test SyncAlert', () => {
       remaining: 0,
     }));
 
-    const syncAlertWrapper = mount(<SyncAlert />);
+    const syncAlertWrapper = mount(<TaskProgressBar taskWithProgress={syncService} color="warning" title="syncInProgress" />);
     await updateWrapper(syncAlertWrapper);
 
     // Act
@@ -88,7 +88,7 @@ describe('Test SyncAlert', () => {
       remaining: 0,
     }));
 
-    const syncAlertWrapper = mount(<SyncAlert />);
+    const syncAlertWrapper = mount(<TaskProgressBar taskWithProgress={syncService} color="warning" title="syncInProgress" />);
     await updateWrapper(syncAlertWrapper);
 
     await syncAlertNotifier({

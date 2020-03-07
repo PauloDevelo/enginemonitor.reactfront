@@ -13,10 +13,12 @@ import CardTaskDetails from '../CardTaskDetails/CardTaskDetails';
 import ModalLogin from '../ModalLogin/ModalLogin';
 import ModalSignup from '../ModalSignup/ModalSignup';
 import NavBar from '../NavBar/NavBar';
-import SyncAlert from '../SyncAlert/SyncAlert';
+import TaskProgressBar from '../TaskProgressBar/TaskProgressBar';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import CacheBuster from '../CacheBuster/CacheBuster';
 
+import localStorageBuilder from '../../services/LocalStorageBuilder';
+import syncService from '../../services/SyncService';
 import guestLinkProxy from '../../services/GuestLinkProxy';
 import userProxy from '../../services/UserProxy';
 import taskProxy from '../../services/TaskProxy';
@@ -229,7 +231,8 @@ export default function MainPanel() {
                   />
                 </div>
               </div>
-              <SyncAlert className="bottomright" />
+              <TaskProgressBar taskWithProgress={syncService} title="syncInProgress" color="warning" className="bottomright" />
+              <TaskProgressBar taskWithProgress={localStorageBuilder} title="rebuildInProgress" color="success" className="bottomright" />
               <ErrorAlert error={error} onDismiss={dismissError} className="verytop bottomright" timeoutInMs={5000} />
             </>
 
