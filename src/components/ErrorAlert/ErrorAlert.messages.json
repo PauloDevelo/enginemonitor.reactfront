@@ -1,13 +1,13 @@
 {
-  "credentialError": {
-    "defaultMessage": "You don't have enough credentials to perform this action.",
-    "description": "Error message",
-    "id": "credentialError"
-  },
   "actionErrorBecauseOffline": {
     "defaultMessage": "Cannot perform this action you are offline or your connection seems too slow.",
     "description": "Error message",
     "id": "actionErrorBecauseOffline"
+  },
+  "credentialError": {
+    "defaultMessage": "You don't have enough credentials to perform this action.",
+    "description": "Error message",
+    "id": "credentialError"
   },
   "storageNotOpenedYet": {
     "defaultMessage": "The local storage is not opened yet.",
