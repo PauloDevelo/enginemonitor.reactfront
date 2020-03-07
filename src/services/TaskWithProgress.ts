@@ -1,21 +1,37 @@
-export type TaskWithProgressContext = {
+// eslint-disable-next-line max-classes-per-file
+export interface ITaskWithProgressContext{
   isRunning: boolean;
   total: number;
   remaining: number;
 }
 
-function getInitialProgress(): TaskWithProgressContext {
-  return {
-    isRunning: false,
-    total: 0,
-    remaining: 0,
-  };
+class TaskWithProgressContext implements ITaskWithProgressContext {
+  isRunning: boolean = false;
+
+  total: number = 0;
+
+  remaining: number = 0;
+
+  init(nbEntities: number) {
+    this.total = nbEntities;
+    this.remaining = nbEntities;
+    this.isRunning = true;
+  }
+
+  addEntities(nbEntities: number) {
+    this.total += nbEntities;
+    this.remaining += nbEntities;
+  }
+
+  decremente() {
+    this.remaining--;
+  }
 }
 
-type TaskWithProgressListener = (context: TaskWithProgressContext) => Promise<void>
+type TaskWithProgressListener = (context: ITaskWithProgressContext) => Promise<void>
 
 export abstract class TaskWithProgress {
-  protected readonly taskProgress = getInitialProgress();
+  protected readonly taskProgress = new TaskWithProgressContext();
 
   private listeners: (TaskWithProgressListener)[] = [];
 
@@ -23,11 +39,11 @@ export abstract class TaskWithProgress {
 
   abstract cancel(): void;
 
-  registerSyncListener(listener: TaskWithProgressListener):void{
+  registerListener(listener: TaskWithProgressListener):void{
     this.listeners.push(listener);
   }
 
-  unregisterSyncListener(listenerToRemove: TaskWithProgressListener):void{
+  unregisterListener(listenerToRemove: TaskWithProgressListener):void{
     this.listeners = this.listeners.filter((listener) => listener !== listenerToRemove);
   }
 

@@ -25,6 +25,12 @@ jest.mock('../UserProxy');
 jest.mock('../GuestLinkProxy');
 
 describe('Test LocalStorageBuilder', () => {
+  const progressListener = jest.fn();
+
+  beforeAll(() => {
+    localStorageBuilder.registerListener(progressListener);
+  });
+
   beforeEach(() => {
     storageService.isUserStorageOpened.mockImplementation(() => true);
     storageService.getStorageVersion.mockImplementation(async () => Promise.resolve(123));
@@ -46,6 +52,8 @@ describe('Test LocalStorageBuilder', () => {
   });
 
   afterEach(() => {
+    progressListener.mockReset();
+
     storageService.isUserStorageOpened.mockRestore();
     storageService.getStorageVersion.mockRestore();
     storageService.setStorageVersion.mockRestore();
@@ -70,11 +78,13 @@ describe('Test LocalStorageBuilder', () => {
 
     try {
       // Act
-      await localStorageBuilder.rebuild();
+      await localStorageBuilder.run();
     } catch (error) {
       // Assert
       expect(error).toBeInstanceOf(LocalStorageBuilderException);
       expect(error.message).toEqual('storageNotOpenedYet');
+
+      expect(progressListener).toHaveBeenCalledTimes(0);
       done();
     }
   });
@@ -85,11 +95,13 @@ describe('Test LocalStorageBuilder', () => {
 
     try {
       // Act
-      await localStorageBuilder.rebuild();
+      await localStorageBuilder.run();
     } catch (error) {
       // Assert
       expect(error).toBeInstanceOf(LocalStorageBuilderException);
       expect(error.message).toEqual('localStorageBuilderErrorOffline');
+
+      expect(progressListener).toHaveBeenCalledTimes(0);
       done();
     }
   });
@@ -103,7 +115,7 @@ describe('Test LocalStorageBuilder', () => {
     storageService.getUserStorage.mockImplementation(() => ({ clear: clearFn }));
 
     // Act
-    await localStorageBuilder.rebuild();
+    await localStorageBuilder.run();
 
     // Assert
     expect(clearFn).toHaveBeenCalledTimes(1);
@@ -112,6 +124,8 @@ describe('Test LocalStorageBuilder', () => {
     expect(storageService.setStorageVersion.mock.calls[0][0]).toEqual(storageVersion);
 
     expect(actionManager.writeActionsInStorage).toHaveBeenCalledTimes(1);
+
+    expect(progressListener).toHaveBeenCalledTimes(2);
 
     done();
   });
@@ -124,7 +138,7 @@ describe('Test LocalStorageBuilder', () => {
     assetProxy.fetchAssets.mockImplementation(async () => ([asset1, asset2]));
 
     // Act
-    await localStorageBuilder.rebuild();
+    await localStorageBuilder.run();
 
     // Assert
     expect(equipmentProxy.fetchEquipments).toHaveBeenCalledTimes(2);
@@ -142,6 +156,13 @@ describe('Test LocalStorageBuilder', () => {
     expect(guestLinkProxy.getGuestLinks).toHaveBeenCalledTimes(2);
     expect(guestLinkProxy.getGuestLinks.mock.calls[0][0]).toEqual(asset1._uiId);
     expect(guestLinkProxy.getGuestLinks.mock.calls[1][0]).toEqual(asset2._uiId);
+
+    expect(progressListener).toHaveBeenCalledTimes(1 + 2 + 1);
+    expect(progressListener.mock.calls[0][0]).toEqual({ isRunning: true, total: 2, remaining: 2 });
+    expect(progressListener.mock.calls[1][0]).toEqual({ isRunning: true, total: 2, remaining: 1 });
+    expect(progressListener.mock.calls[2][0]).toEqual({ isRunning: true, total: 2, remaining: 0 });
+    expect(progressListener.mock.calls[3][0]).toEqual({ isRunning: false, total: 2, remaining: 0 });
+
     done();
   });
 
@@ -156,7 +177,7 @@ describe('Test LocalStorageBuilder', () => {
     equipmentProxy.fetchEquipments.mockImplementation(async () => [equipment1, equipment2]);
 
     // Act
-    await localStorageBuilder.rebuild();
+    await localStorageBuilder.run();
 
     // Assert
     expect(taskProxy.fetchTasks).toHaveBeenCalledTimes(2);
@@ -168,9 +189,17 @@ describe('Test LocalStorageBuilder', () => {
     expect(entryProxy.fetchAllEntries.mock.calls[1][0]).toEqual({ equipmentId: equipment2._uiId });
 
     expect(imageProxy.fetchImages).toHaveBeenCalledTimes(3);
-    expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: asset1._uiId });
-    expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: equipment1._uiId });
-    expect(imageProxy.fetchImages.mock.calls[2][0]).toEqual({ parentUiId: equipment2._uiId });
+    expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: equipment1._uiId });
+    expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: equipment2._uiId });
+    expect(imageProxy.fetchImages.mock.calls[2][0]).toEqual({ parentUiId: asset1._uiId });
+
+    expect(progressListener).toHaveBeenCalledTimes(1 + 1 + 3 + 1);
+    expect(progressListener.mock.calls[0][0]).toEqual({ isRunning: true, total: 1, remaining: 1 });
+    expect(progressListener.mock.calls[1][0]).toEqual({ isRunning: true, total: 3, remaining: 3 });
+    expect(progressListener.mock.calls[2][0]).toEqual({ isRunning: true, total: 3, remaining: 2 });
+    expect(progressListener.mock.calls[3][0]).toEqual({ isRunning: true, total: 3, remaining: 1 });
+    expect(progressListener.mock.calls[4][0]).toEqual({ isRunning: true, total: 3, remaining: 0 });
+    expect(progressListener.mock.calls[5][0]).toEqual({ isRunning: false, total: 3, remaining: 0 });
   });
 
   it('For all the tasks, it should try to get all images', async () => {
@@ -186,14 +215,24 @@ describe('Test LocalStorageBuilder', () => {
     taskProxy.fetchTasks.mockImplementation(async () => [task1, task2]);
 
     // Act
-    await localStorageBuilder.rebuild();
+    await localStorageBuilder.run();
 
     // Assert
     expect(imageProxy.fetchImages).toHaveBeenCalledTimes(4);
-    expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: asset1._uiId });
-    expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: equipment1._uiId });
-    expect(imageProxy.fetchImages.mock.calls[2][0]).toEqual({ parentUiId: task1._uiId });
-    expect(imageProxy.fetchImages.mock.calls[3][0]).toEqual({ parentUiId: task2._uiId });
+    expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: task1._uiId });
+    expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: task2._uiId });
+    expect(imageProxy.fetchImages.mock.calls[2][0]).toEqual({ parentUiId: equipment1._uiId });
+    expect(imageProxy.fetchImages.mock.calls[3][0]).toEqual({ parentUiId: asset1._uiId });
+
+    expect(progressListener).toHaveBeenCalledTimes(1 + 1 + 1 + 4 + 1);
+    expect(progressListener.mock.calls[0][0]).toEqual({ isRunning: true, total: 1, remaining: 1 });
+    expect(progressListener.mock.calls[1][0]).toEqual({ isRunning: true, total: 2, remaining: 2 });
+    expect(progressListener.mock.calls[2][0]).toEqual({ isRunning: true, total: 4, remaining: 4 });
+    expect(progressListener.mock.calls[3][0]).toEqual({ isRunning: true, total: 4, remaining: 3 });
+    expect(progressListener.mock.calls[4][0]).toEqual({ isRunning: true, total: 4, remaining: 2 });
+    expect(progressListener.mock.calls[5][0]).toEqual({ isRunning: true, total: 4, remaining: 1 });
+    expect(progressListener.mock.calls[6][0]).toEqual({ isRunning: true, total: 4, remaining: 0 });
+    expect(progressListener.mock.calls[7][0]).toEqual({ isRunning: false, total: 4, remaining: 0 });
   });
 
   it('For all the entries, it should try to get all images', async () => {
@@ -209,13 +248,23 @@ describe('Test LocalStorageBuilder', () => {
     entryProxy.fetchAllEntries.mockImplementation(async () => [entry1, entry2]);
 
     // Act
-    await localStorageBuilder.rebuild();
+    await localStorageBuilder.run();
 
     // Assert
     expect(imageProxy.fetchImages).toHaveBeenCalledTimes(4);
-    expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: asset1._uiId });
-    expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: equipment1._uiId });
-    expect(imageProxy.fetchImages.mock.calls[2][0]).toEqual({ parentUiId: entry1._uiId });
-    expect(imageProxy.fetchImages.mock.calls[3][0]).toEqual({ parentUiId: entry2._uiId });
+    expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: entry1._uiId });
+    expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: entry2._uiId });
+    expect(imageProxy.fetchImages.mock.calls[2][0]).toEqual({ parentUiId: equipment1._uiId });
+    expect(imageProxy.fetchImages.mock.calls[3][0]).toEqual({ parentUiId: asset1._uiId });
+
+    expect(progressListener).toHaveBeenCalledTimes(1 + 1 + 1 + 4 + 1);
+    expect(progressListener.mock.calls[0][0]).toEqual({ isRunning: true, total: 1, remaining: 1 });
+    expect(progressListener.mock.calls[1][0]).toEqual({ isRunning: true, total: 2, remaining: 2 });
+    expect(progressListener.mock.calls[2][0]).toEqual({ isRunning: true, total: 4, remaining: 4 });
+    expect(progressListener.mock.calls[3][0]).toEqual({ isRunning: true, total: 4, remaining: 3 });
+    expect(progressListener.mock.calls[4][0]).toEqual({ isRunning: true, total: 4, remaining: 2 });
+    expect(progressListener.mock.calls[5][0]).toEqual({ isRunning: true, total: 4, remaining: 1 });
+    expect(progressListener.mock.calls[6][0]).toEqual({ isRunning: true, total: 4, remaining: 0 });
+    expect(progressListener.mock.calls[7][0]).toEqual({ isRunning: false, total: 4, remaining: 0 });
   });
 });

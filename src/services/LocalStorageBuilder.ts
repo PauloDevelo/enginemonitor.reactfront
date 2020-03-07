@@ -1,6 +1,7 @@
-/* eslint-disable  */
-
+/* eslint-disable max-classes-per-file */
 import log from 'loglevel';
+
+import { TaskWithProgress } from './TaskWithProgress';
 
 import storageService from './StorageService';
 import onlineManager from './OnlineManager';
@@ -19,42 +20,12 @@ import {
   AssetModel, ImageModel, EquipmentModel, EntityModel,
 } from '../types/Types';
 
-import {convertUrlImageIntoDataUrl} from '../helpers/ImageHelper';
-
-export type LocalStorageBuildingContext = {
-  isRebuilding: boolean;
-  totalAction: number;
-  remainingAction: number;
-}
-
+import { convertUrlImageIntoDataUrl } from '../helpers/ImageHelper';
 
 export class LocalStorageBuilderException extends Error {}
 
-export interface ILocalStorageBuilder {
-    rebuild(): Promise<void>;
-
-    registerLocalStorageBuilderListener(listener: (context: LocalStorageBuildingContext) => Promise<void>):void;
-    unregisterLocalStorageBuilderListener(listener: (context: LocalStorageBuildingContext) => Promise<void>):void;
-}
-
-class LocalStorageBuilder implements ILocalStorageBuilder {
-    private readonly localStorageRebuildingContext: LocalStorageBuildingContext = {
-      isRebuilding: false,
-      totalAction: 0,
-      remainingAction: 0,
-    };
-
-    private listeners: ((context: LocalStorageBuildingContext) => Promise<void>)[] = [];
-
-    registerLocalStorageBuilderListener(listener: (context: LocalStorageBuildingContext) => Promise<void>):void{
-      this.listeners.push(listener);
-    }
-
-    unregisterLocalStorageBuilderListener(listenerToRemove: (context: LocalStorageBuildingContext) => Promise<void>):void{
-      this.listeners = this.listeners.filter((listener) => listener !== listenerToRemove);
-    }
-
-    rebuild = async (): Promise<void> => {
+class LocalStorageBuilder extends TaskWithProgress {
+    run = async (): Promise<void> => {
       if (storageService.isUserStorageOpened() === false) {
         throw new LocalStorageBuilderException('storageNotOpenedYet');
       }
@@ -64,6 +35,10 @@ class LocalStorageBuilder implements ILocalStorageBuilder {
       }
 
       return this.rebuildLocalStorage();
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    cancel(): void{
     }
 
     private rebuildLocalStorage = async (): Promise<void> => {
@@ -76,10 +51,17 @@ class LocalStorageBuilder implements ILocalStorageBuilder {
         await storageService.setStorageVersion(storageVersion);
 
         const assets = await assetProxy.fetchAssets();
+
+        this.taskProgress.init(assets.length);
+        await this.triggerTaskProgressChanged();
+
         await Promise.all(assets.map((asset) => this.fetchAssetChildren(asset)));
       } catch (error) {
         log.error(error);
         throw new LocalStorageBuilderException('unexpectedError');
+      } finally {
+        this.taskProgress.isRunning = false;
+        await this.triggerTaskProgressChanged();
       }
     }
 
@@ -87,32 +69,59 @@ class LocalStorageBuilder implements ILocalStorageBuilder {
       await userProxy.getCredentials({ assetUiId: asset._uiId });
       await guestLinkProxy.getGuestLinks(asset._uiId);
 
-      await this.fetchEntityImages(asset);
-
       const equipments = await equipmentProxy.fetchEquipments(asset._uiId);
-      return Promise.all(equipments.map((equipment) => this.fetchEquipmentChildren(equipment)));
+
+      if (equipments.length > 0) {
+        this.taskProgress.addEntities(equipments.length);
+        await this.triggerTaskProgressChanged();
+      }
+
+      await Promise.all(equipments.map((equipment) => this.fetchEquipmentChildren(equipment)));
+
+      return this.fetchEntityImages(asset);
     }
 
     private fetchEquipmentChildren = async (equipment: EquipmentModel) => {
-      await this.fetchEntityImages(equipment);
-
       const tasks = await taskProxy.fetchTasks({ equipmentId: equipment._uiId });
+      if (tasks.length > 0) {
+        this.taskProgress.addEntities(tasks.length);
+        await this.triggerTaskProgressChanged();
+      }
+
       const entries = await entryProxy.fetchAllEntries({ equipmentId: equipment._uiId });
+      if (entries.length > 0) {
+        this.taskProgress.addEntities(entries.length);
+        await this.triggerTaskProgressChanged();
+      }
 
       const promises = [Promise.all(tasks.map((task) => this.fetchEntityImages(task))), Promise.all(entries.map((entry) => this.fetchEntityImages(entry)))];
-      return Promise.all(promises);
+      await Promise.all(promises);
+
+      return this.fetchEntityImages(equipment);
     }
 
     private fetchEntityImages = async (entity: EntityModel) => {
       const images = await imageProxy.fetchImages({ parentUiId: entity._uiId });
+
+      this.taskProgress.decremente();
+      this.taskProgress.addEntities(images.length);
+      await this.triggerTaskProgressChanged();
+
       return Promise.all(images.map((image) => this.fetchDataImage(image)));
     }
 
     private async fetchDataImage(image: ImageModel): Promise<void[]> {
+      let counter = 0;
       const storeImage = async (imageUrl: string) => {
-        const image = await convertUrlImageIntoDataUrl(imageUrl);
-        storageService.setItem(imageUrl, image);
-      }
+        const imageDataUrl = await convertUrlImageIntoDataUrl(imageUrl);
+        storageService.setItem(imageUrl, imageDataUrl);
+        counter++;
+
+        if (counter === 2) {
+          this.taskProgress.decremente();
+          await this.triggerTaskProgressChanged();
+        }
+      };
 
       const storeImagePromises = [storeImage(image.url), storeImage(image.thumbnailUrl)];
       return Promise.all(storeImagePromises);
@@ -121,4 +130,4 @@ class LocalStorageBuilder implements ILocalStorageBuilder {
 
 const localStorageBuilder = new LocalStorageBuilder();
 
-export default localStorageBuilder as ILocalStorageBuilder;
+export default localStorageBuilder as TaskWithProgress;

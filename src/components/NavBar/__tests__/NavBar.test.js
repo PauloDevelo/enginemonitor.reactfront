@@ -82,7 +82,7 @@ describe('Component NavBar', () => {
 
     onLoggedOut.mockReset();
 
-    localStorageBuilder.rebuild.mockRestore();
+    localStorageBuilder.run.mockRestore();
   });
 
   it('should render the navbar even when the user is still undefined', async () => {
@@ -105,7 +105,7 @@ describe('Component NavBar', () => {
 
   it('should trigger the local storage rebuild when we click on the rebuild dropdown item', async () => {
     // Arrange
-    localStorageBuilder.rebuild.mockImplementation(async () => {});
+    localStorageBuilder.run.mockImplementation(async () => {});
 
     const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
@@ -117,7 +117,7 @@ describe('Component NavBar', () => {
     await updateWrapper(wrapper);
 
     // Assert
-    expect(localStorageBuilder.rebuild).toBeCalledTimes(1);
+    expect(localStorageBuilder.run).toBeCalledTimes(1);
   });
 
   it('should open the modal about when the user click on the about button', async () => {

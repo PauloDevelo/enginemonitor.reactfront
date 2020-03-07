@@ -89,7 +89,7 @@ const NavBar = ({ onLoggedOut }:Props) => {
   }, [onLoggedOut]);
 
   const rebuildStorage = useCallback(() => {
-    localStorageBuilder.rebuild().catch((error) => {
+    localStorageBuilder.run().catch((error) => {
       errorService.addError(error);
     });
   }, []);
