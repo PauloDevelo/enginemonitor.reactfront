@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 import log from 'loglevel';
 import { TaskWithProgress } from './TaskWithProgress';
 
@@ -7,6 +9,8 @@ import actionManager, { Action } from './ActionManager';
 import storageService, { IUserStorageListener } from './StorageService';
 import onlineManager from './OnlineManager';
 
+export class SyncServiceException extends Error {}
+
 class SyncService extends TaskWithProgress implements IUserStorageListener {
   constructor() {
     super();
@@ -14,13 +18,13 @@ class SyncService extends TaskWithProgress implements IUserStorageListener {
     onlineManager.registerIsOnlineListener(this.onIsOnlineChanged);
     actionManager.registerOnActionManagerChanged(this.onActionManagerChanged);
 
-    this.run();
+    this.tryToRun();
   }
 
-  onIsOnlineChanged = async (online: boolean): Promise<void> => (online ? this.run() : Promise.resolve())
+  onIsOnlineChanged = async (online: boolean): Promise<void> => (online ? this.tryToRun() : Promise.resolve())
 
   async onUserStorageOpened(): Promise<void> {
-    return this.run();
+    return this.tryToRun();
   }
 
   onUserStorageClosed = async (): Promise<void> => {}
@@ -36,11 +40,11 @@ class SyncService extends TaskWithProgress implements IUserStorageListener {
 
   run = async (): Promise<void> => {
     if (storageService.isUserStorageOpened() === false) {
-      return Promise.resolve();
+      throw new SyncServiceException('storageNotOpenedYet');
     }
 
     if ((await onlineManager.isOnline()) === false) {
-      return Promise.resolve();
+      throw new SyncServiceException('actionErrorBecauseOffline');
     }
 
     return this.syncStorage();
@@ -51,9 +55,7 @@ class SyncService extends TaskWithProgress implements IUserStorageListener {
   }
 
   private syncStorage = async (): Promise<void> => {
-    this.taskProgress.isRunning = true;
-    this.taskProgress.total = actionManager.countAction();
-    this.taskProgress.remaining = this.taskProgress.total;
+    this.taskProgress.init(actionManager.countAction());
     await this.triggerTaskProgressChanged();
 
     try {
@@ -67,12 +69,11 @@ class SyncService extends TaskWithProgress implements IUserStorageListener {
       }
     } catch (error) {
       log.error(error);
+      throw new SyncServiceException('unexpectedError');
+    } finally {
+      this.taskProgress.isRunning = false;
+      await this.triggerTaskProgressChanged();
     }
-
-    this.taskProgress.isRunning = false;
-    await this.triggerTaskProgressChanged();
-
-    return Promise.resolve();
   }
 }
 

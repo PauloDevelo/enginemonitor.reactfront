@@ -31,7 +31,7 @@ class LocalStorageBuilder extends TaskWithProgress {
       }
 
       if ((await onlineManager.isOnline()) === false) {
-        throw new LocalStorageBuilderException('localStorageBuilderErrorOffline');
+        throw new LocalStorageBuilderException('actionErrorBecauseOffline');
       }
 
       return this.rebuildLocalStorage();

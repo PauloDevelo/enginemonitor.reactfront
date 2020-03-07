@@ -36,7 +36,7 @@ describe('DropDownConnectionStateItem', () => {
     onlineManager.registerIsOnlineListener.mockRestore();
     onlineManager.unregisterIsOnlineListener.mockRestore();
     onlineManager.isOnline.mockRestore();
-    syncService.run.mockRestore();
+    syncService.tryToRun.mockRestore();
 
     actionManager.registerOnActionManagerChanged.mockRestore();
     actionManager.unregisterOnActionManagerChanged.mockRestore();
@@ -53,7 +53,7 @@ describe('DropDownConnectionStateItem', () => {
     it(`Should render when the app is online ${isOnline} and nb action is ${nbAction} as expected `, async (done) => {
       // Arrange
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(isOnline));
-      jest.spyOn(syncService, 'run');
+      jest.spyOn(syncService, 'tryToRun');
       actionManager.countAction.mockImplementation(() => nbAction);
 
       // Act

@@ -4,10 +4,10 @@
     "description": "Error message",
     "id": "credentialError"
   },
-  "localStorageBuilderErrorOffline": {
-    "defaultMessage": "Cannot rebuild the local storage because you are offline or your connection seems too slow.",
+  "actionErrorBecauseOffline": {
+    "defaultMessage": "Cannot perform this action you are offline or your connection seems too slow.",
     "description": "Error message",
-    "id": "localStorageBuilderErrorOffline"
+    "id": "actionErrorBecauseOffline"
   },
   "storageNotOpenedYet": {
     "defaultMessage": "The local storage is not opened yet.",

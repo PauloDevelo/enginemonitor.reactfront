@@ -1,3 +1,7 @@
+/* eslint-disable max-classes-per-file */
+import log from 'loglevel';
+import errorService from './ErrorService';
+
 // eslint-disable-next-line max-classes-per-file
 export interface ITaskWithProgressContext{
   isRunning: boolean;
@@ -35,7 +39,17 @@ export abstract class TaskWithProgress {
 
   private listeners: (TaskWithProgressListener)[] = [];
 
-  abstract run(): Promise<void>;
+  async tryToRun(): Promise<void> {
+    try {
+      await this.run();
+    } catch (error) {
+      errorService.addError(error);
+    }
+
+    return Promise.resolve();
+  }
+
+  protected abstract run(): Promise<void>;
 
   abstract cancel(): void;
 

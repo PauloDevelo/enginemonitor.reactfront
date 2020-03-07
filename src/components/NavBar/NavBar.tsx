@@ -88,12 +88,6 @@ const NavBar = ({ onLoggedOut }:Props) => {
     onLoggedOut();
   }, [onLoggedOut]);
 
-  const rebuildStorage = useCallback(() => {
-    localStorageBuilder.run().catch((error) => {
-      errorService.addError(error);
-    });
-  }, []);
-
   const offlineSwitch = useCallback((isOffline: boolean):void => {
     setOffline(isOffline);
     onlineManager.setOfflineMode(isOffline);
@@ -146,7 +140,7 @@ const NavBar = ({ onLoggedOut }:Props) => {
                 {!user?.forbidUploadingImage && (
                 <DropdownItem divider />
                 )}
-                <DropdownItem onClick={rebuildStorage}>
+                <DropdownItem onClick={localStorageBuilder.tryToRun}>
                   <FontAwesomeIcon icon={faSyncAlt} />
                   {' '}
                   <FormattedMessage {...navBarMsg.rebuildLocalStorage} />

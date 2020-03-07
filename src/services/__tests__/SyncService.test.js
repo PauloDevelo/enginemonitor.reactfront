@@ -4,26 +4,28 @@ import localforage from 'localforage';
 
 import ignoredMessages from '../../testHelpers/MockConsole';
 
-import syncService from '../SyncService';
+import syncService, { SyncServiceException } from '../SyncService';
 import onlineManager from '../OnlineManager';
 import storageService from '../StorageService';
 import actionManager, { ActionType } from '../ActionManager';
 import httpProxy from '../HttpProxy';
+import errorService from '../ErrorService';
 
 jest.mock('../HttpProxy');
 jest.mock('../OnlineManager');
+jest.mock('../ErrorService');
 
 describe('Test SyncService', () => {
   beforeAll(async () => {
     ignoredMessages.length = 0;
     ignoredMessages.push('undefined used as a key, but it is not a string.');
     ignoredMessages.push('something happened');
-
-    const user = { email: 'test@gmail.com' };
-    await storageService.openUserStorage(user);
   });
 
   beforeEach(async () => {
+    const user = { email: 'test@gmail.com' };
+    await storageService.openUserStorage(user);
+
     onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
 
     httpProxy.get.mockImplementation(() => {});
@@ -31,6 +33,8 @@ describe('Test SyncService', () => {
     httpProxy.postImage.mockImplementation(() => {});
     httpProxy.deleteReq.mockImplementation(() => {});
     httpProxy.createCancelTokenSource.mockImplementation(() => ({ token: {} }));
+
+    errorService.addError.mockImplementation(() => {});
   });
 
   afterEach(async () => {
@@ -42,25 +46,28 @@ describe('Test SyncService', () => {
     httpProxy.deleteReq.mockRestore();
     httpProxy.createCancelTokenSource.mockRestore();
 
-    await actionManager.clearActions();
+    errorService.addError.mockRestore();
+
+    if (storageService.isUserStorageOpened()) {
+      await actionManager.clearActions();
+    }
+
+    await storageService.closeUserStorage();
   });
 
   describe('synchronize', () => {
     it('should do nothing if there is no action to sync', async (done) => {
       // Arrange
-      let syncContext;
-      const syncListener = jest.fn().mockImplementation((context) => { syncContext = context; });
+      const syncListener = jest.fn();
       syncService.registerListener(syncListener);
 
       // Act
-      await syncService.run();
+      await syncService.tryToRun();
 
       // Assert
       expect(syncListener).toHaveBeenCalledTimes(2);
-      expect(syncContext).not.toBeUndefined();
-      expect(syncContext.isRunning).toBe(false);
-      expect(syncContext.total).toBe(0);
-      expect(syncContext.remaining).toBe(0);
+      expect(syncListener.mock.calls[0][0]).toEqual({ isRunning: true, remaining: 0, total: 0 });
+      expect(syncListener.mock.calls[1][0]).toEqual({ isRunning: false, remaining: 0, total: 0 });
 
       syncService.unregisterListener(syncListener);
       done();
@@ -84,20 +91,41 @@ describe('Test SyncService', () => {
       await actionManager.addAction(action1);
       await actionManager.addAction(action2);
 
-      const contexts = [];
       const syncListener = jest.fn();
-      syncListener.mockImplementation((context) => {
-        contexts.push(context);
-      });
-
       syncService.registerListener(syncListener);
 
       // Act
-      await syncService.run();
+      await syncService.tryToRun();
 
       // Assert
       expect(syncListener).toHaveBeenCalledTimes(0);
       expect(actionManager.countAction()).toBe(2);
+
+      expect(errorService.addError).toHaveBeenCalledTimes(1);
+      expect(errorService.addError.mock.calls[0][0]).toBeInstanceOf(SyncServiceException);
+      expect(errorService.addError.mock.calls[0][0].message).toEqual('actionErrorBecauseOffline');
+
+      syncService.unregisterListener(syncListener);
+      done();
+    });
+
+    it('should do nothing if user storage not opened yet', async (done) => {
+      // Arrange
+      await storageService.closeUserStorage();
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
+
+      const syncListener = jest.fn();
+      syncService.registerListener(syncListener);
+
+      // Act
+      await syncService.tryToRun();
+
+      // Assert
+      expect(syncListener).toHaveBeenCalledTimes(0);
+
+      expect(errorService.addError).toHaveBeenCalledTimes(1);
+      expect(errorService.addError.mock.calls[0][0]).toBeInstanceOf(SyncServiceException);
+      expect(errorService.addError.mock.calls[0][0].message).toEqual('storageNotOpenedYet');
 
       syncService.unregisterListener(syncListener);
       done();
@@ -128,7 +156,7 @@ describe('Test SyncService', () => {
       syncService.registerListener(syncListener);
 
       // Act
-      await syncService.run();
+      await syncService.tryToRun();
 
       // Assert
       expect(syncListener).toHaveBeenCalledTimes(4);
@@ -183,7 +211,7 @@ describe('Test SyncService', () => {
       syncService.registerListener(syncListener);
 
       // Act
-      await syncService.run();
+      await syncService.tryToRun();
 
       // Assert
       expect(syncListener).toHaveBeenCalledTimes(4);

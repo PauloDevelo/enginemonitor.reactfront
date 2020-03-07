@@ -55,7 +55,7 @@
   "installedOn": "installé le ",
   "invalid": "est invalide.",
   "isrequired": "est requis",
-  "localStorageBuilderErrorOffline": "Impossible de reconstruire le stockage local parce vous êtes hors ligne ou bien votre connection est trops lente.",
+  "actionErrorBecauseOffline": "Ne peut pas executer cette action car vous êtes hors ligne ou bien votre connection est trops lente.",
   "login": "Login",
   "loginerror": "Erreur :",
   "loginfailed": "Le login a échoué",

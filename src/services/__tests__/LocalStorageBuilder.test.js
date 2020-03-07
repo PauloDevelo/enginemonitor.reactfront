@@ -99,7 +99,7 @@ describe('Test LocalStorageBuilder', () => {
     } catch (error) {
       // Assert
       expect(error).toBeInstanceOf(LocalStorageBuilderException);
-      expect(error.message).toEqual('localStorageBuilderErrorOffline');
+      expect(error.message).toEqual('actionErrorBecauseOffline');
 
       expect(progressListener).toHaveBeenCalledTimes(0);
       done();

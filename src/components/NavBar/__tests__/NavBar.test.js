@@ -43,7 +43,7 @@ describe('Component NavBar', () => {
   beforeEach(() => {
     timeService.getUTCDateTime.mockImplementation(() => new Date('2019-11-26T23:54:00.000Z'));
 
-    syncService.run.mockImplementation(async () => Promise.resolve());
+    syncService.tryToRun.mockImplementation(async () => Promise.resolve());
 
     onlineManager.registerIsOnlineListener.mockImplementation(() => {});
     onlineManager.unregisterIsOnlineListener.mockImplementation(() => {});
@@ -64,7 +64,7 @@ describe('Component NavBar', () => {
   afterEach(() => {
     timeService.getUTCDateTime.mockRestore();
 
-    syncService.run.mockRestore();
+    syncService.tryToRun.mockRestore();
 
     onlineManager.registerIsOnlineListener.mockRestore();
     onlineManager.unregisterIsOnlineListener.mockRestore();
@@ -82,7 +82,7 @@ describe('Component NavBar', () => {
 
     onLoggedOut.mockReset();
 
-    localStorageBuilder.run.mockRestore();
+    localStorageBuilder.tryToRun.mockRestore();
   });
 
   it('should render the navbar even when the user is still undefined', async () => {
@@ -105,7 +105,7 @@ describe('Component NavBar', () => {
 
   it('should trigger the local storage rebuild when we click on the rebuild dropdown item', async () => {
     // Arrange
-    localStorageBuilder.run.mockImplementation(async () => {});
+    localStorageBuilder.tryToRun.mockImplementation(async () => {});
 
     const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
     await updateWrapper(wrapper);
@@ -117,7 +117,7 @@ describe('Component NavBar', () => {
     await updateWrapper(wrapper);
 
     // Assert
-    expect(localStorageBuilder.run).toBeCalledTimes(1);
+    expect(localStorageBuilder.tryToRun).toBeCalledTimes(1);
   });
 
   it('should open the modal about when the user click on the about button', async () => {

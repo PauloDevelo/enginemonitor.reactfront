@@ -55,7 +55,7 @@
   "installedOn": "installed on ",
   "invalid": "is invalid",
   "isrequired": "is required",
-  "localStorageBuilderErrorOffline": "Cannot rebuild the local storage because you are offline or your connection seems too slow.",
+  "actionErrorBecauseOffline": "Cannot perform this action because you are offline or your connection seems too slow.",
   "login": "Login",
   "loginerror": "Error:",
   "loginfailed": "Login failed",
