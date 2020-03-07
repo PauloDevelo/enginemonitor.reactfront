@@ -38,7 +38,7 @@ const TaskProgressBar = ({
   return (
     <Alert color={color} className={className} isOpen={syncContext.isRunning} toggle={onDismiss}>
       <div className="text-center"><FormattedMessage {...titles[title]} /></div>
-      <Progress animated color="warning" value={(syncContext.remaining * 100) / syncContext.total}>
+      <Progress animated color={color} value={(syncContext.remaining * 100) / syncContext.total}>
         {syncContext.remaining}
 /
         {syncContext.total}
