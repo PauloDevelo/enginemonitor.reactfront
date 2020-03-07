@@ -17,13 +17,15 @@ class SyncService extends TaskWithProgress implements IUserStorageListener {
     storageService.registerUserStorageListener(this);
     onlineManager.registerIsOnlineListener(this.onIsOnlineChanged);
     actionManager.registerOnActionManagerChanged(this.onActionManagerChanged);
-
-    this.tryToRun();
   }
 
-  onIsOnlineChanged = async (online: boolean): Promise<void> => (online ? this.tryToRun() : Promise.resolve())
+  onIsOnlineChanged = async (online: boolean): Promise<void> => ((online && storageService.isUserStorageOpened() ? this.tryToRun() : Promise.resolve()))
 
   async onUserStorageOpened(): Promise<void> {
+    if ((await onlineManager.isOnline()) === false) {
+      return Promise.resolve();
+    }
+
     return this.tryToRun();
   }
 
