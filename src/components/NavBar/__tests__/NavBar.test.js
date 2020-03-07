@@ -43,7 +43,7 @@ describe('Component NavBar', () => {
   beforeEach(() => {
     timeService.getUTCDateTime.mockImplementation(() => new Date('2019-11-26T23:54:00.000Z'));
 
-    syncService.synchronize.mockImplementation(async () => Promise.resolve(true));
+    syncService.run.mockImplementation(async () => Promise.resolve());
 
     onlineManager.registerIsOnlineListener.mockImplementation(() => {});
     onlineManager.unregisterIsOnlineListener.mockImplementation(() => {});
@@ -64,7 +64,7 @@ describe('Component NavBar', () => {
   afterEach(() => {
     timeService.getUTCDateTime.mockRestore();
 
-    syncService.synchronize.mockRestore();
+    syncService.run.mockRestore();
 
     onlineManager.registerIsOnlineListener.mockRestore();
     onlineManager.unregisterIsOnlineListener.mockRestore();

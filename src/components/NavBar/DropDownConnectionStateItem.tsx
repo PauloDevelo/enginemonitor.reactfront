@@ -47,7 +47,7 @@ const DropDownConnectionStateItem = () => {
   }, []);
 
   return (
-    <DropdownItem disabled={isOnline === false || isSync === true} onClick={syncService.synchronize}>
+    <DropdownItem disabled={isOnline === false || isSync === true} onClick={syncService.run}>
       <ConnectionStateIcon isOnline={isOnline} isSynced={isSync} />
       {' '}
       <ConnectionStateMessage isOnline={isOnline} isSynced={isSync} />

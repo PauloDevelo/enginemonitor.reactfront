@@ -24,14 +24,20 @@ describe('Test SyncAlert', () => {
       syncAlertNotifier = listener;
     });
 
+    syncService.getContext.mockImplementation(() => ({
+      isRunning: false,
+      total: 0,
+      remaining: 0,
+    }));
+
     const syncAlertWrapper = mount(<SyncAlert />);
     await updateWrapper(syncAlertWrapper);
 
     // Act
     await syncAlertNotifier({
-      isSyncing: false,
-      totalActionToSync: 5,
-      remainingActionToSync: 5,
+      isRunning: false,
+      total: 5,
+      remaining: 5,
     });
     await updateWrapper(syncAlertWrapper);
 
@@ -47,14 +53,20 @@ describe('Test SyncAlert', () => {
       syncAlertNotifier = listener;
     });
 
+    syncService.getContext.mockImplementation(() => ({
+      isRunning: false,
+      total: 0,
+      remaining: 0,
+    }));
+
     const syncAlertWrapper = mount(<SyncAlert />);
     await updateWrapper(syncAlertWrapper);
 
     // Act
     await syncAlertNotifier({
-      isSyncing: true,
-      totalActionToSync: 5,
-      remainingActionToSync: 5,
+      isRunning: true,
+      total: 5,
+      remaining: 5,
     });
     await updateWrapper(syncAlertWrapper);
 
@@ -70,21 +82,27 @@ describe('Test SyncAlert', () => {
       syncAlertNotifier = listener;
     });
 
+    syncService.getContext.mockImplementation(() => ({
+      isRunning: false,
+      total: 0,
+      remaining: 0,
+    }));
+
     const syncAlertWrapper = mount(<SyncAlert />);
     await updateWrapper(syncAlertWrapper);
 
     await syncAlertNotifier({
-      isSyncing: true,
-      totalActionToSync: 5,
-      remainingActionToSync: 5,
+      isRunning: true,
+      total: 5,
+      remaining: 5,
     });
     await updateWrapper(syncAlertWrapper);
 
     // Act
     await syncAlertNotifier({
-      isSyncing: true,
-      totalActionToSync: 5,
-      remainingActionToSync: 3,
+      isRunning: true,
+      total: 5,
+      remaining: 3,
     });
     await updateWrapper(syncAlertWrapper);
 

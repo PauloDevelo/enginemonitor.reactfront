@@ -4,10 +4,10 @@ import localforage from 'localforage';
 
 import ignoredMessages from '../../testHelpers/MockConsole';
 
-import syncService, { SyncContext } from '../SyncService';
+import syncService from '../SyncService';
 import onlineManager from '../OnlineManager';
 import storageService from '../StorageService';
-import actionManager, { NoActionPendingError, ActionType } from '../ActionManager';
+import actionManager, { ActionType } from '../ActionManager';
 import httpProxy from '../HttpProxy';
 
 jest.mock('../HttpProxy');
@@ -53,14 +53,14 @@ describe('Test SyncService', () => {
       syncService.registerSyncListener(syncListener);
 
       // Act
-      await syncService.synchronize();
+      await syncService.run();
 
       // Assert
       expect(syncListener).toHaveBeenCalledTimes(2);
       expect(syncContext).not.toBeUndefined();
-      expect(syncContext.isSyncing).toBe(false);
-      expect(syncContext.totalActionToSync).toBe(0);
-      expect(syncContext.remainingActionToSync).toBe(0);
+      expect(syncContext.isRunning).toBe(false);
+      expect(syncContext.total).toBe(0);
+      expect(syncContext.remaining).toBe(0);
 
       syncService.unregisterSyncListener(syncListener);
       done();
@@ -93,7 +93,7 @@ describe('Test SyncService', () => {
       syncService.registerSyncListener(syncListener);
 
       // Act
-      await syncService.synchronize();
+      await syncService.run();
 
       // Assert
       expect(syncListener).toHaveBeenCalledTimes(0);
@@ -128,15 +128,15 @@ describe('Test SyncService', () => {
       syncService.registerSyncListener(syncListener);
 
       // Act
-      await syncService.synchronize();
+      await syncService.run();
 
       // Assert
       expect(syncListener).toHaveBeenCalledTimes(4);
 
-      expect(contexts[0]).toEqual({ isSyncing: true, totalActionToSync: 2, remainingActionToSync: 2 });
-      expect(contexts[1]).toEqual({ isSyncing: true, totalActionToSync: 2, remainingActionToSync: 1 });
-      expect(contexts[2]).toEqual({ isSyncing: true, totalActionToSync: 2, remainingActionToSync: 0 });
-      expect(contexts[3]).toEqual({ isSyncing: false, totalActionToSync: 2, remainingActionToSync: 0 });
+      expect(contexts[0]).toEqual({ isRunning: true, total: 2, remaining: 2 });
+      expect(contexts[1]).toEqual({ isRunning: true, total: 2, remaining: 1 });
+      expect(contexts[2]).toEqual({ isRunning: true, total: 2, remaining: 0 });
+      expect(contexts[3]).toEqual({ isRunning: false, total: 2, remaining: 0 });
 
       expect(actionManager.countAction()).toBe(0);
 
@@ -183,15 +183,15 @@ describe('Test SyncService', () => {
       syncService.registerSyncListener(syncListener);
 
       // Act
-      await syncService.synchronize();
+      await syncService.run();
 
       // Assert
       expect(syncListener).toHaveBeenCalledTimes(4);
 
-      expect(contexts[0]).toEqual({ isSyncing: true, totalActionToSync: 3, remainingActionToSync: 3 });
-      expect(contexts[1]).toEqual({ isSyncing: true, totalActionToSync: 3, remainingActionToSync: 2 });
-      expect(contexts[2]).toEqual({ isSyncing: true, totalActionToSync: 3, remainingActionToSync: 1 });
-      expect(contexts[3]).toEqual({ isSyncing: false, totalActionToSync: 3, remainingActionToSync: 1 });
+      expect(contexts[0]).toEqual({ isRunning: true, total: 3, remaining: 3 });
+      expect(contexts[1]).toEqual({ isRunning: true, total: 3, remaining: 2 });
+      expect(contexts[2]).toEqual({ isRunning: true, total: 3, remaining: 1 });
+      expect(contexts[3]).toEqual({ isRunning: false, total: 3, remaining: 1 });
 
       expect(actionManager.countAction()).toBe(1);
 
