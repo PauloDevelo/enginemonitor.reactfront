@@ -1,7 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import log from 'loglevel';
-
-// eslint-disable-next-line no-unused-vars
 import actionManager from './ActionManager';
 
 import httpProxy from './HttpProxy';

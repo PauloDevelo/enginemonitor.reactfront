@@ -19,7 +19,6 @@ import ImageFolderGauge from './ImageFolderGauge';
 import userProxy from '../../services/UserProxy';
 import onlineManager from '../../services/OnlineManager';
 import localStorageBuilder from '../../services/LocalStorageBuilder';
-import errorService from '../../services/ErrorService';
 
 // eslint-disable-next-line no-unused-vars
 import { UserModel, AssetModel } from '../../types/Types';

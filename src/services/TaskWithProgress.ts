@@ -1,5 +1,4 @@
 /* eslint-disable max-classes-per-file */
-import log from 'loglevel';
 import errorService from './ErrorService';
 
 // eslint-disable-next-line max-classes-per-file

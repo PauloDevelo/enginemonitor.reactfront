@@ -31,12 +31,10 @@ const TaskProgressBar = ({
     taskWithProgress.registerListener(setSyncContextAsync);
 
     return () => taskWithProgress.unregisterListener(setSyncContextAsync);
-  }, []);
-
-  const onDismiss = useCallback(() => taskWithProgress.cancel(), []);
+  }, [taskWithProgress]);
 
   return (
-    <Alert color={color} className={className} isOpen={syncContext.isRunning} toggle={onDismiss}>
+    <Alert color={color} className={className} isOpen={syncContext.isRunning} toggle={taskWithProgress.cancel}>
       <div className="text-center"><FormattedMessage {...titles[title]} /></div>
       <Progress animated color={color} value={(syncContext.remaining * 100) / syncContext.total}>
         {syncContext.remaining}
