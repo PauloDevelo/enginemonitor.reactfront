@@ -38,7 +38,7 @@ export abstract class TaskWithProgress {
 
   private listeners: (TaskWithProgressListener)[] = [];
 
-  async tryToRun(): Promise<void> {
+  tryToRun = async (): Promise<void> => {
     try {
       await this.run();
     } catch (error) {
@@ -52,20 +52,18 @@ export abstract class TaskWithProgress {
 
   abstract cancel(): void;
 
-  registerListener(listener: TaskWithProgressListener):void{
+  registerListener = (listener: TaskWithProgressListener):void => {
     this.listeners.push(listener);
   }
 
-  unregisterListener(listenerToRemove: TaskWithProgressListener):void{
+  unregisterListener = (listenerToRemove: TaskWithProgressListener):void => {
     this.listeners = this.listeners.filter((listener) => listener !== listenerToRemove);
   }
 
-  protected async triggerTaskProgressChanged(): Promise<void> {
+  protected triggerTaskProgressChanged = async (): Promise<void> => {
     const promises = this.listeners.map((listener) => listener({ ...this.taskProgress }));
     await Promise.all(promises);
   }
 
-  getContext() {
-    return { ...this.taskProgress };
-  }
+  getContext = () => ({ ...this.taskProgress })
 }
