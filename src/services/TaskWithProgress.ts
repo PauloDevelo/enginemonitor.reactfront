@@ -26,7 +26,7 @@ class TaskWithProgressContext implements ITaskWithProgressContext {
     this.remaining += nbEntities;
   }
 
-  decremente() {
+  decrement() {
     this.remaining--;
   }
 }

@@ -103,7 +103,7 @@ class LocalStorageBuilder extends TaskWithProgress {
     private fetchEntityImages = async (entity: EntityModel) => {
       const images = await imageProxy.fetchImages({ parentUiId: entity._uiId });
 
-      this.taskProgress.decremente();
+      this.taskProgress.decrement();
       this.taskProgress.addEntities(images.length);
       await this.triggerTaskProgressChanged();
 
@@ -118,7 +118,7 @@ class LocalStorageBuilder extends TaskWithProgress {
         counter++;
 
         if (counter === 2) {
-          this.taskProgress.decremente();
+          this.taskProgress.decrement();
           await this.triggerTaskProgressChanged();
         }
       };
