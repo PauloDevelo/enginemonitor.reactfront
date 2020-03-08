@@ -12,35 +12,6 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
   timeZone="Asia/Kuala_Lumpur"
 >
   <Memo(EquipmentsInfo)
-    changeCurrentEquipment={
-      [MockFunction] {
-        "calls": Array [
-          Array [
-            undefined,
-          ],
-          Array [
-            Object {
-              "_uiId": "1",
-              "age": 2563,
-              "brand": "nanni",
-              "installation": 2011-08-15T13:00:00.000Z,
-              "model": "N3.30",
-              "name": "engine",
-            },
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      }
-    }
     extraClassNames=""
   >
     <div

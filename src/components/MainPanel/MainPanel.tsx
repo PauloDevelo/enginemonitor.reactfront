@@ -38,6 +38,7 @@ import
 
 import useFetcher from '../../hooks/Fetcher';
 import ModalEditAsset from '../ModalEditAsset/ModalEditAsset';
+import equipmentManager from '../../services/EquipmentManager';
 
 export default function MainPanel() {
   const [user, setUser] = useState<UserModel | undefined>(undefined);
@@ -53,15 +54,24 @@ export default function MainPanel() {
     }
   };
 
+  const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
+  const currentEquipmentId = currentEquipment ? currentEquipment._uiId : undefined;
+
   useEffect(() => {
     const onCurrentAssetChanged = (asset: AssetModel|undefined) => {
       setCurrentAsset(asset);
     };
 
+    const onCurrentEquipmentChanged = (equipment: EquipmentModel | undefined) => {
+      setCurrentEquipment(equipment);
+    };
+
     assetManager.registerOnCurrentAssetChanged(onCurrentAssetChanged);
+    equipmentManager.registerOnCurrentEquipmentChanged(onCurrentEquipmentChanged);
 
     return () => {
       assetManager.unregisterOnCurrentAssetChanged(onCurrentAssetChanged);
+      equipmentManager.unregisterOnCurrentEquipmentChanged(onCurrentEquipmentChanged);
     };
   }, []);
 
@@ -86,8 +96,6 @@ export default function MainPanel() {
     }
   }, [error]);
 
-  const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
-  const currentEquipmentId = currentEquipment ? currentEquipment._uiId : undefined;
 
   const [taskList, setTaskList] = useState<TaskModel[]>([]);
   const [currentTask, setCurrentTask] = useState<TaskModel | undefined>(undefined);
@@ -196,10 +204,7 @@ export default function MainPanel() {
               <NavBar onLoggedOut={logOut} />
               <div className="appBody mb-2">
                 <div className="wrapperColumn">
-                  <EquipmentsInfo
-                    changeCurrentEquipment={setCurrentEquipment}
-                    extraClassNames={`${panelClassNames} columnHeader`}
-                  />
+                  <EquipmentsInfo extraClassNames={`${panelClassNames} columnHeader`} />
                   <TaskTabPanes
                     classNames={`${panelClassNames} columnBody`}
                     currentEquipment={currentEquipment}

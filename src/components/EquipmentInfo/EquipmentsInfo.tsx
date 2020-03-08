@@ -4,36 +4,44 @@ import React, {
 import { Button, Nav, TabContent } from 'reactstrap';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAsync } from 'react-async';
-import equipmentProxy from '../../services/EquipmentProxy';
 
 import useEditModal from '../../hooks/EditModalHook';
 
 import EquipmentInfoTab from './EquipmentInfoTab';
 import EquipmentInfoNavItem from './EquipmentInfoNavItem';
 import ModalEquipmentInfo from '../ModalEquipmentInfo/ModalEquipmentInfo';
-import Loading from '../Loading/Loading';
 
 import { createDefaultEquipment } from '../../helpers/EquipmentHelper';
 
 // eslint-disable-next-line no-unused-vars
-import { EquipmentModel, AssetModel } from '../../types/Types';
+import { EquipmentModel } from '../../types/Types';
 
-import assetManager from '../../services/AssetManager';
+import equipmentManager from '../../services/EquipmentManager';
 
 type Props = {
-changeCurrentEquipment: (equipment: EquipmentModel | undefined) => void,
-extraClassNames: string
+  extraClassNames: string
 }
 
-function EquipmentsInfo({ changeCurrentEquipment, extraClassNames }: Props) {
-  const [currentAsset, setCurrentAsset] = useState<AssetModel | undefined>(assetManager.getCurrentAsset());
-  const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
+function EquipmentsInfo({ extraClassNames }: Props) {
+  const [equipments, setEquipments] = useState<EquipmentModel[]>(equipmentManager.getEquipments());
+  const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(equipmentManager.getCurrentEquipment());
   const modalHook = useEditModal<EquipmentModel | undefined>(undefined);
 
+  const onCurrentEquipmentChanged = (newCurrentEquipmentChanged: EquipmentModel | undefined) => {
+    setCurrentEquipment(newCurrentEquipmentChanged);
+  };
+
+  const onEquipmentsChanged = (newEquipments: EquipmentModel[]) => {
+    setEquipments(newEquipments);
+  };
+
   useEffect(() => {
-    assetManager.registerOnCurrentAssetChanged(setCurrentAsset);
-    return () => assetManager.unregisterOnCurrentAssetChanged(setCurrentAsset);
+    equipmentManager.registerOnCurrentEquipmentChanged(onCurrentEquipmentChanged);
+    equipmentManager.registerOnEquipmentsChanged(onEquipmentsChanged);
+    return () => {
+      equipmentManager.unregisterOnCurrentEquipmentChanged(onCurrentEquipmentChanged);
+      equipmentManager.unregisterOnEquipmentsChanged(onEquipmentsChanged);
+    };
   }, []);
 
   const isCurrentEquipment = useCallback((equipment: EquipmentModel) => {
@@ -44,72 +52,9 @@ function EquipmentsInfo({ changeCurrentEquipment, extraClassNames }: Props) {
     return currentEquipment._uiId === equipment._uiId;
   }, [currentEquipment]);
 
-  useEffect(() => {
-    changeCurrentEquipment(currentEquipment);
-  }, [currentEquipment, changeCurrentEquipment]);
-
-  const [equipments, setEquipments] = useState<EquipmentModel[]>([]);
-
-  const fetchEquipments = useCallback(async () => {
-    if (currentAsset !== undefined) {
-      return equipmentProxy.fetchEquipments();
-    }
-
-    return Promise.resolve([]);
-  }, [currentAsset]);
-  const { data: fetchedEquipments, isLoading, isRejected } = useAsync({ promiseFn: fetchEquipments });
-
-  useEffect(() => {
-    setEquipments(fetchedEquipments || []);
-  }, [fetchedEquipments]);
-
-  useEffect(() => {
-    if (isRejected) {
-      setEquipments([]);
-    }
-  }, [isRejected]);
-
-  useEffect(() => {
-    if (equipments.length > 0) {
-      setCurrentEquipment((previousCurrentEquipment) => {
-        if (previousCurrentEquipment === undefined || equipments.findIndex((equipment: EquipmentModel) => previousCurrentEquipment._uiId === equipment._uiId) === -1) {
-          return equipments[0];
-        }
-        const newCurrentEquipmentIndex = equipments.findIndex((equipment: EquipmentModel) => previousCurrentEquipment._uiId === equipment._uiId);
-        return equipments[newCurrentEquipmentIndex];
-      });
-    } else {
-      setCurrentEquipment(undefined);
-    }
-  }, [equipments]);
-
-  const onEquipmentInfoSaved = useCallback(async (equipmentInfoSaved: EquipmentModel) => {
-    const newEquipmentList = equipments.concat([]);
-    const index = newEquipmentList.findIndex((equipmentInfo) => equipmentInfo._uiId === equipmentInfoSaved._uiId);
-
-    if (index === -1) {
-      newEquipmentList.push(equipmentInfoSaved);
-    } else {
-      newEquipmentList[index] = equipmentInfoSaved;
-    }
-
-    setEquipments(newEquipmentList);
-
-    if (index === -1) {
-      setCurrentEquipment(equipmentInfoSaved);
-    }
-  }, [equipments]);
-
-  const onEquipmentDeleted = useCallback((deletedEquipment: EquipmentModel) => {
-    const newEquipmentList = equipments.filter((equipmentInfo) => equipmentInfo._uiId !== deletedEquipment._uiId);
-    setEquipments(newEquipmentList);
-
-    setCurrentEquipment(newEquipmentList.length > 0 ? newEquipmentList[0] : undefined);
-  }, [equipments]);
-
   const tabPanes = equipments.map((equipment) => <EquipmentInfoTab key={equipment._uiId} equipment={equipment} displayEquipment={modalHook.displayData} />);
 
-  const tabNavItems = equipments.map((equipment) => <EquipmentInfoNavItem key={equipment._uiId} equipment={equipment} active={isCurrentEquipment(equipment)} setCurrentEquipment={setCurrentEquipment} />);
+  const tabNavItems = equipments.map((equipment) => <EquipmentInfoNavItem key={equipment._uiId} equipment={equipment} active={isCurrentEquipment(equipment)} setCurrentEquipment={equipmentManager.setCurrentEquipment} />);
 
   return (
     <>
@@ -119,23 +64,20 @@ function EquipmentsInfo({ changeCurrentEquipment, extraClassNames }: Props) {
             <FontAwesomeIcon icon={faPlusSquare} />
           </Button>
         </span>
-        {isLoading ? <Loading />
-          : (
-            <>
-              <Nav tabs>
-                {tabNavItems}
-              </Nav>
-              <TabContent activeTab={currentEquipment ? currentEquipment._uiId : undefined}>
-                {tabPanes}
-              </TabContent>
-            </>
-          )}
+        <>
+          <Nav tabs>
+            {tabNavItems}
+          </Nav>
+          <TabContent activeTab={currentEquipment ? currentEquipment._uiId : undefined}>
+            {tabPanes}
+          </TabContent>
+        </>
       </div>
       {modalHook.data !== undefined && (
       <ModalEquipmentInfo
         equipment={modalHook.data}
-        onEquipmentInfoSaved={onEquipmentInfoSaved}
-        onEquipmentDeleted={onEquipmentDeleted}
+        onEquipmentInfoSaved={equipmentManager.onEquipmentSaved}
+        onEquipmentDeleted={equipmentManager.onEquipmentDeleted}
         visible={modalHook.editModalVisibility}
         toggle={modalHook.toggleModal}
         className="modal-dialog-centered"
