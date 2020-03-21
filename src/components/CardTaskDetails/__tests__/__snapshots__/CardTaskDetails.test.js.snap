@@ -148,11 +148,10 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
 >
   <div>
     <Card
-      className="undefined"
       tag="div"
     >
       <div
-        className="undefined card"
+        className="card"
       >
         <CardBody
           className="d-flex p-0"
@@ -854,11 +853,10 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
 >
   <div>
     <Card
-      className="undefined"
       tag="div"
     >
       <div
-        className="undefined card"
+        className="card"
       >
         <CardBody
           className="d-flex p-0"

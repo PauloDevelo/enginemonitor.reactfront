@@ -21,7 +21,6 @@ import localStorageBuilder from '../../services/LocalStorageBuilder';
 import syncService from '../../services/SyncService';
 import guestLinkProxy from '../../services/GuestLinkProxy';
 import userProxy from '../../services/UserProxy';
-import taskProxy from '../../services/TaskProxy';
 import errorService from '../../services/ErrorService';
 
 import assetManager from '../../services/AssetManager';
@@ -36,9 +35,9 @@ import
   UserModel, EquipmentModel, TaskModel, AssetModel,
 } from '../../types/Types';
 
-import useFetcher from '../../hooks/Fetcher';
 import ModalEditAsset from '../ModalEditAsset/ModalEditAsset';
 import equipmentManager from '../../services/EquipmentManager';
+import taskManager from '../../services/TaskManager';
 
 export default function MainPanel() {
   const [user, setUser] = useState<UserModel | undefined>(undefined);
@@ -55,7 +54,12 @@ export default function MainPanel() {
   };
 
   const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
-  const currentEquipmentId = currentEquipment ? currentEquipment._uiId : undefined;
+
+  const [taskList, setTaskList] = useState<TaskModel[]>([]);
+  const [currentTask, setCurrentTask] = useState<TaskModel | undefined>(undefined);
+
+  const [equipmentHistoryRefreshId, setEquipmentHistoryRefreshId] = useState(0);
+  const [taskHistoryRefreshId, setTaskHistoryRefreshId] = useState(0);
 
   useEffect(() => {
     const onCurrentAssetChanged = (asset: AssetModel|undefined) => {
@@ -66,12 +70,26 @@ export default function MainPanel() {
       setCurrentEquipment(equipment);
     };
 
+    const onTasksChanged = (tasks: TaskModel[]) => {
+      setTaskList(tasks);
+      setEquipmentHistoryRefreshId((previousEquipmentHistoryRefreshId) => previousEquipmentHistoryRefreshId + 1);
+    };
+
+    const onCurrentTaskChanged = (task: TaskModel | undefined) => {
+      setCurrentTask(task);
+      setTaskHistoryRefreshId((previousTaskHistoryRefreshId) => previousTaskHistoryRefreshId + 1);
+    };
+
     assetManager.registerOnCurrentAssetChanged(onCurrentAssetChanged);
     equipmentManager.registerOnCurrentEquipmentChanged(onCurrentEquipmentChanged);
+    taskManager.registerOnCurrentTaskChanged(onCurrentTaskChanged);
+    taskManager.registerOnTasksChanged(onTasksChanged);
 
     return () => {
       assetManager.unregisterOnCurrentAssetChanged(onCurrentAssetChanged);
       equipmentManager.unregisterOnCurrentEquipmentChanged(onCurrentEquipmentChanged);
+      taskManager.unregisterOnCurrentTaskChanged(onCurrentTaskChanged);
+      taskManager.unregisterOnTasksChanged(onTasksChanged);
     };
   }, []);
 
@@ -97,59 +115,6 @@ export default function MainPanel() {
   }, [error]);
 
 
-  const [taskList, setTaskList] = useState<TaskModel[]>([]);
-  const [currentTask, setCurrentTask] = useState<TaskModel | undefined>(undefined);
-  const [currentTaskIsChanging, setCurrentTaskIsChanging] = useState(false);
-
-  const [taskHistoryRefreshId, setTaskHistoryRefreshId] = useState(0);
-  const [equipmentHistoryRefreshId, setEquipmentHistoryRefreshId] = useState(0);
-
-  const { data: fetchedTasks, isLoading, reloadRef: reloadTasksRef } = useFetcher({ fetchPromise: taskProxy.fetchTasks, fetchProps: { equipmentId: currentEquipmentId }, cancellationMsg: `Cancellation of ${currentEquipment?.name} tasks fetching` });
-
-  useEffect(() => {
-    setCurrentTaskIsChanging(true);
-  }, [currentEquipment]);
-
-  useEffect(() => {
-    if (fetchedTasks) {
-      fetchedTasks.sort((taskA, taskB) => {
-        if (taskB.level === taskA.level) {
-          return taskA.nextDueDate.getTime() - taskB.nextDueDate.getTime();
-        }
-
-        return taskB.level - taskA.level;
-      });
-    }
-
-    setTaskList(fetchedTasks || []);
-  }, [fetchedTasks]);
-
-  const setCurrentTaskIfRequired = useCallback(() => {
-    setCurrentTask((previousCurrentTask) => {
-      if (taskList.length === 0) {
-        return undefined;
-      }
-      let newCurrentTask;
-      const previousCurrentTaskId = previousCurrentTask !== undefined ? previousCurrentTask._uiId : undefined;
-      if (previousCurrentTaskId) {
-        newCurrentTask = taskList.find((t) => t._uiId === previousCurrentTaskId);
-      }
-
-      if (newCurrentTask === undefined) {
-        newCurrentTask = taskList[0];
-      }
-      return newCurrentTask;
-    });
-  }, [taskList]);
-
-  useEffect(() => {
-    setCurrentTaskIfRequired();
-  }, [setCurrentTaskIfRequired]);
-
-  useEffect(() => {
-    setCurrentTaskIsChanging(false);
-  }, [currentTask]);
-
   const cardTaskDetailDomRef = useRef(null);
   const cardTaskDetailDomCallBack = useCallback((node) => { cardTaskDetailDomRef.current = node; }, []);
   const onClickTaskTable = useCallback((task: TaskModel) => {
@@ -159,28 +124,6 @@ export default function MainPanel() {
       scrollTo((cardTaskDetailDomRef!.current! as any).offsetLeft, (cardTaskDetailDomRef!.current! as any).offsetTop, 250);
     }
   }, []);
-
-  // eslint-disable-next-line no-unused-vars
-  const onTaskDeleted = useCallback((task: TaskModel) => {
-    reloadTasksRef.current();
-    setEquipmentHistoryRefreshId((previousEquipmentHistoryRefreshId) => previousEquipmentHistoryRefreshId + 1);
-  }, [reloadTasksRef]);
-
-  const onTaskChanged = useCallback((task: TaskModel) => {
-    reloadTasksRef.current();
-
-    const currentTaskId = currentTask ? currentTask._uiId : undefined;
-    if (task._uiId === currentTaskId) {
-      setTaskHistoryRefreshId((previousTaskHistoryRefreshId) => previousTaskHistoryRefreshId + 1);
-    } else {
-      setCurrentTask(task);
-    }
-  }, [currentTask, reloadTasksRef]);
-
-  const onTaskHistoryChanged = useCallback(() => {
-    reloadTasksRef.current();
-    setEquipmentHistoryRefreshId((previousEquipmentHistoryRefreshId) => previousEquipmentHistoryRefreshId + 1);
-  }, [reloadTasksRef]);
 
   const [modalSignupVisible, setModalSignupVisible] = useState(false);
 
@@ -209,28 +152,26 @@ export default function MainPanel() {
                     classNames={`${panelClassNames} columnBody`}
                     currentEquipment={currentEquipment}
                     taskList={taskList}
-                    areTasksLoading={isLoading}
                     changeCurrentTask={onClickTaskTable}
                     equipmentHistoryRefreshId={equipmentHistoryRefreshId}
-                    onTaskChanged={onTaskChanged}
+                    onTaskChanged={taskManager.setCurrentTask}
                   />
                 </div>
                 <div className="wrapperColumn">
                   <CardTaskDetails
                     callBackRef={cardTaskDetailDomCallBack}
-                    currentTaskIsChanging={currentTaskIsChanging}
                     equipment={currentEquipment}
                     tasks={taskList}
                     currentTask={currentTask}
-                    onTaskChanged={onTaskChanged}
-                    onTaskDeleted={onTaskDeleted}
-                    changeCurrentTask={setCurrentTask}
+                    onTaskChanged={taskManager.onTaskSaved}
+                    onTaskDeleted={taskManager.onTaskDeleted}
+                    changeCurrentTask={taskManager.setCurrentTask}
                     classNames={`${panelClassNames} columnHeader`}
                   />
                   <HistoryTaskTable
                     equipment={currentEquipment}
                     task={currentTask}
-                    onHistoryChanged={onTaskHistoryChanged}
+                    onHistoryChanged={taskManager.refreshTasks}
                     taskHistoryRefreshId={taskHistoryRefreshId}
                     classNames={`${panelClassNames} columnBody lastBlock`}
                   />

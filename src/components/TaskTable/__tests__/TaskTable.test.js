@@ -97,35 +97,6 @@ describe('TaskTable', () => {
     taskProxy.existTask.mockReset();
   });
 
-  it('Should render render the loading spinner while loading the tasks', async (done) => {
-    // Arrange
-    const onTaskSaved = jest.fn();
-    const changeCurrentTask = jest.fn();
-
-    // Act
-    const taskTable = mount(
-      <IntlProvider locale={navigator.language}>
-        <TaskTable
-          equipment={equipment}
-          tasks={[]}
-          areTasksLoading
-          onTaskSaved={onTaskSaved}
-          changeCurrentTask={changeCurrentTask}
-        />
-      </IntlProvider>,
-    );
-
-    // Assert
-    expect(taskTable.find('tbody').length).toBe(0);
-    expect(taskTable.find('Loading').length).toBe(1);
-
-    expect(onTaskSaved).toBeCalledTimes(0);
-    expect(changeCurrentTask).toBeCalledTimes(0);
-
-    expect(taskTable).toMatchSnapshot();
-    done();
-  });
-
   it('Should render the table with te special class name', async (done) => {
     // Arrange
     const onTaskSaved = jest.fn();

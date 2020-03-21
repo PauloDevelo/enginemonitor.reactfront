@@ -21,7 +21,6 @@ import { EquipmentModel, TaskModel } from '../../types/Types';
 
 type Props = {
     callBackRef: (t: any) => any,
-    currentTaskIsChanging: boolean,
     equipment?: EquipmentModel,
     tasks: TaskModel[],
     currentTask?: TaskModel,
@@ -32,7 +31,7 @@ type Props = {
 }
 
 const CardTaskDetails = ({
-  callBackRef, currentTaskIsChanging, equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames,
+  callBackRef, equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames,
 }: Props) => {
   const modalHook = useEditModal(currentTask);
 
@@ -68,7 +67,7 @@ const CardTaskDetails = ({
 
   return (
     <div ref={callBackRef}>
-      <Card className={classNames + (currentTaskIsChanging ? ' hover' : '')}>
+      <Card className={classNames}>
         <CardBody className="d-flex p-0">
           <div className="p-2 button-previous-task clickable" onClick={previousTask}><div className={prevClassNames} /></div>
           <TransitionGroup className="p-2 flex-grow-1">
