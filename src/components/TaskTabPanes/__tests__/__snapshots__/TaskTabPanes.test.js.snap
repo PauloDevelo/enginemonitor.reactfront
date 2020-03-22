@@ -143,6 +143,7 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
         </ul>
       </Nav>
       <Memo(TaskTable)
+        areTasksLoading={false}
         changeCurrentTask={[MockFunction]}
         equipment={
           Object {

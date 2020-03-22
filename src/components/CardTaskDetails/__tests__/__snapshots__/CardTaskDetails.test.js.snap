@@ -148,6 +148,7 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
 >
   <div>
     <Card
+      className=""
       tag="div"
     >
       <div
@@ -853,6 +854,7 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
 >
   <div>
     <Card
+      className=""
       tag="div"
     >
       <div

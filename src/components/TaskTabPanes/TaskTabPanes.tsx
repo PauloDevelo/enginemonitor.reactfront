@@ -18,13 +18,14 @@ type Props = {
     classNames?: string,
     currentEquipment: EquipmentModel | undefined,
     taskList: TaskModel[],
+    areTasksLoading: boolean,
     changeCurrentTask: (task: TaskModel) => void,
     equipmentHistoryRefreshId: number,
     onTaskChanged: (task: TaskModel) => void
 };
 
 const TaskTabPanes = ({
-  classNames, currentEquipment, taskList, changeCurrentTask, equipmentHistoryRefreshId, onTaskChanged,
+  classNames, currentEquipment, taskList, areTasksLoading, changeCurrentTask, equipmentHistoryRefreshId, onTaskChanged,
 }: Props) => {
   const [activeTab, setActiveTab] = useState<'taskTable' | 'equipmentHistory'>('taskTable');
   const [equipmentHistoryClassNames, setEquipmentHistoryClassNames] = useState(classnames({ active: activeTab === 'equipmentHistory' }));
@@ -54,6 +55,7 @@ const TaskTabPanes = ({
       {activeTab === 'taskTable' && (
       <TaskTable
         equipment={currentEquipment}
+        areTasksLoading={areTasksLoading}
         tasks={taskList}
         onTaskSaved={onTaskChanged}
         changeCurrentTask={changeCurrentTask}

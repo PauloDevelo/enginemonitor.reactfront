@@ -152,6 +152,7 @@ export default function MainPanel() {
                     classNames={`${panelClassNames} columnBody`}
                     currentEquipment={currentEquipment}
                     taskList={taskList}
+                    areTasksLoading={taskManager.areTasksLoading()}
                     changeCurrentTask={onClickTaskTable}
                     equipmentHistoryRefreshId={equipmentHistoryRefreshId}
                     onTaskChanged={taskManager.setCurrentTask}
@@ -160,6 +161,7 @@ export default function MainPanel() {
                 <div className="wrapperColumn">
                   <CardTaskDetails
                     callBackRef={cardTaskDetailDomCallBack}
+                    currentTaskIsChanging={taskManager.isCurrentTaskChanging()}
                     equipment={currentEquipment}
                     tasks={taskList}
                     currentTask={currentTask}

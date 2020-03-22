@@ -12,6 +12,7 @@ import { withHeaderControl } from '../react-table-factory/withHeaderControl.js';
 import { withFixedHeader } from '../react-table-factory/withFixedHeader.js';
 
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
+import Loading from '../Loading/Loading';
 
 import {
   // eslint-disable-next-line no-unused-vars
@@ -39,6 +40,7 @@ const taskTableMsg = defineMessages(jsonMessages);
 type Props = {
   equipment?: EquipmentModel,
   tasks: TaskModel[],
+  areTasksLoading: boolean,
   onTaskSaved: (task: TaskModel) => void,
   changeCurrentTask: (task: TaskModel) => void,
   classNames?: string
@@ -60,7 +62,7 @@ const Table = composeDecorators(
 )();
 
 export const TaskTable = ({
-  equipment, tasks, onTaskSaved, changeCurrentTask, classNames,
+  equipment, tasks, areTasksLoading, onTaskSaved, changeCurrentTask, classNames,
 }: Props) => {
   const classNamesStr = classNames === undefined ? 'tasktable' : `${classNames} tasktable`;
   const modalHook = useEditModal<TaskModel | undefined>(undefined);
@@ -186,13 +188,16 @@ export const TaskTable = ({
           <b><FormattedMessage {...taskTableMsg.tasklistTitle} /></b>
           {equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultTask(equipment))} aria-label="Add"><FontAwesomeIcon icon={faPlusSquare} /></Button>}
         </span>
-        <Table
-          data={getTasksData()}
-          className="default-theme"
-          defaultSortParameter="status"
-          defaultSortDirection="desc"
-          columns={columns}
-        />
+        {areTasksLoading ? <Loading />
+          : (
+            <Table
+              data={getTasksData()}
+              className="default-theme"
+              defaultSortParameter="status"
+              defaultSortDirection="desc"
+              columns={columns}
+            />
+          )}
       </div>
       {equipment !== undefined && modalHook.data !== undefined && (
       <ModalEditTask
