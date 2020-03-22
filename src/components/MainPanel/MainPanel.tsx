@@ -53,10 +53,10 @@ export default function MainPanel() {
     }
   };
 
-  const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
+  const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(equipmentManager.getCurrentEquipment());
 
-  const [taskList, setTaskList] = useState<TaskModel[]>([]);
-  const [currentTask, setCurrentTask] = useState<TaskModel | undefined>(undefined);
+  const [taskList, setTaskList] = useState<TaskModel[]>(taskManager.getTasks());
+  const [currentTask, setCurrentTask] = useState<TaskModel | undefined>(taskManager.getCurrentTask());
 
   const [equipmentHistoryRefreshId, setEquipmentHistoryRefreshId] = useState(0);
   const [taskHistoryRefreshId, setTaskHistoryRefreshId] = useState(0);
