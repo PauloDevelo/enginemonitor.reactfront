@@ -7,340 +7,352 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
   toggleModalSignup={[MockFunction]}
   visible={true}
 >
-  <CSSTransition
-    classNames="modal"
-    in={true}
-    timeout={300}
+  <Modal
+    autoFocus={true}
+    backdrop={true}
+    backdropTransition={
+      Object {
+        "mountOnEnter": true,
+        "timeout": 150,
+      }
+    }
+    centered={false}
+    className="modal-dialog-centered"
+    fade={true}
+    isOpen={true}
+    keyboard={true}
+    modalTransition={
+      Object {
+        "timeout": 300,
+      }
+    }
+    onClosed={[Function]}
+    onOpened={[Function]}
+    returnFocusAfterClose={true}
+    role="dialog"
+    scrollable={false}
+    unmountOnClose={true}
+    zIndex={1050}
   >
-    <Transition
-      appear={false}
-      enter={true}
-      exit={true}
-      in={true}
-      mountOnEnter={false}
-      onEnter={[Function]}
-      onEntered={[Function]}
-      onEntering={[Function]}
-      onExit={[Function]}
-      onExited={[Function]}
-      onExiting={[Function]}
-      timeout={300}
-      unmountOnExit={false}
-    >
-      <Modal
-        autoFocus={true}
-        backdrop={true}
-        backdropTransition={
-          Object {
-            "mountOnEnter": true,
-            "timeout": 150,
-          }
-        }
-        centered={false}
-        className="modal-dialog-centered"
-        fade={false}
-        isOpen={true}
-        keyboard={true}
-        modalTransition={
-          Object {
-            "timeout": 300,
-          }
-        }
-        onClosed={[Function]}
-        onOpened={[Function]}
-        returnFocusAfterClose={true}
-        role="dialog"
-        scrollable={false}
-        unmountOnClose={true}
-        zIndex={1050}
-      >
-        <Portal
-          node={
+    <Portal
+      node={
+        <div
+          style="position: relative; z-index: 1050; display: block;"
+          tabindex="-1"
+        >
+          <div
+            class=""
+          >
             <div
-              style="position: relative; z-index: 1050; display: block;"
+              class="modal fade"
+              role="dialog"
+              style="display: block;"
               tabindex="-1"
             >
               <div
-                class=""
+                class="modal-dialog modal-dialog-centered"
+                role="document"
               >
                 <div
-                  class="modal show"
-                  role="dialog"
-                  style="display: block;"
-                  tabindex="-1"
+                  class="modal-content"
                 >
                   <div
-                    class="modal-dialog modal-dialog-centered"
-                    role="document"
+                    class="modal-header"
                   >
-                    <div
-                      class="modal-content"
+                    <h5
+                      class="modal-title"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="svg-inline--fa fa-sign-in-alt fa-w-16 "
+                        data-icon="sign-in-alt"
+                        data-prefix="fas"
+                        focusable="false"
+                        role="img"
+                        viewBox="0 0 512 512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M416 448h-84c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h84c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32h-84c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h84c53 0 96 43 96 96v192c0 53-43 96-96 96zm-47-201L201 79c-15-15-41-4.5-41 17v96H24c-13.3 0-24 10.7-24 24v96c0 13.3 10.7 24 24 24h136v96c0 21.5 26 32 41 17l168-168c9.3-9.4 9.3-24.6 0-34z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                       
+                      Login with an existing account
+                    </h5>
+                  </div>
+                  <div
+                    class="modal-body"
+                  >
+                    <form
+                      class=""
+                      id="formLogin"
+                      novalidate=""
                     >
                       <div
-                        class="modal-header"
+                        class="form-group form-group"
                       >
-                        <h5
-                          class="modal-title"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="svg-inline--fa fa-sign-in-alt fa-w-16 "
-                            data-icon="sign-in-alt"
-                            data-prefix="fas"
-                            focusable="false"
-                            role="img"
-                            viewBox="0 0 512 512"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M416 448h-84c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h84c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32h-84c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h84c53 0 96 43 96 96v192c0 53-43 96-96 96zm-47-201L201 79c-15-15-41-4.5-41 17v96H24c-13.3 0-24 10.7-24 24v96c0 13.3 10.7 24 24 24h136v96c0 21.5 26 32 41 17l168-168c9.3-9.4 9.3-24.6 0-34z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                           
-                          Login with an existing account
-                        </h5>
-                      </div>
-                      <div
-                        class="modal-body"
-                      >
-                        <form
+                        <label
                           class=""
-                          id="formLogin"
-                          novalidate=""
+                          for="email"
                         >
-                          <div
-                            class="form-group form-group"
-                          >
-                            <label
-                              class=""
-                              for="email"
-                            >
-                              Email
-                            </label>
-                            <input
-                              class="form-control form-control"
-                              name="email"
-                              required=""
-                              type="email"
-                              value=""
-                            />
-                          </div>
-                          <div
-                            class="form-group form-group"
-                          >
-                            <label
-                              class=""
-                              for="password"
-                            >
-                              Password
-                            </label>
-                            <input
-                              class="form-control form-control"
-                              name="password"
-                              required=""
-                              type="password"
-                              value=""
-                            />
-                          </div>
-                          <div
-                            class="form-group form-check form-check-inline"
-                          >
-                            <label
-                              class="form-check-label"
-                            >
-                              Remember me
-                               
-                              <input
-                                class="form-check-input"
-                                name="remember"
-                                type="checkbox"
-                                value=""
-                              />
-                            </label>
-                          </div>
-                        </form>
+                          Email
+                        </label>
+                        <input
+                          class="form-control form-control"
+                          name="email"
+                          required=""
+                          type="email"
+                          value=""
+                        />
                       </div>
                       <div
-                        class="modal-footer"
+                        class="form-group form-group"
                       >
-                        <button
-                          class="d-block mx-auto btn btn-warning"
-                          type="button"
+                        <label
+                          class=""
+                          for="password"
                         >
-                          Signup
-                        </button>
-                        <button
-                          class="d-block mx-auto btn btn-success"
-                          form="formLogin"
-                          type="submit"
-                        >
-                          Login
-                        </button>
+                          Password
+                        </label>
+                        <input
+                          class="form-control form-control"
+                          name="password"
+                          required=""
+                          type="password"
+                          value=""
+                        />
                       </div>
-                    </div>
+                      <div
+                        class="form-group form-check form-check-inline"
+                      >
+                        <label
+                          class="form-check-label"
+                        >
+                          Remember me
+                           
+                          <input
+                            class="form-check-input"
+                            name="remember"
+                            type="checkbox"
+                            value=""
+                          />
+                        </label>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="modal-footer"
+                  >
+                    <button
+                      class="d-block mx-auto btn btn-warning"
+                      type="button"
+                    >
+                      Signup
+                    </button>
+                    <button
+                      class="d-block mx-auto btn btn-success"
+                      form="formLogin"
+                      type="submit"
+                    >
+                      Login
+                    </button>
                   </div>
                 </div>
-                <div
-                  class="modal-backdrop show"
-                />
               </div>
             </div>
-          }
-        >
-          <Portal
-            containerInfo={
+            <div
+              class="modal-backdrop fade"
+            />
+          </div>
+        </div>
+      }
+    >
+      <Portal
+        containerInfo={
+          <div
+            style="position: relative; z-index: 1050; display: block;"
+            tabindex="-1"
+          >
+            <div
+              class=""
+            >
               <div
-                style="position: relative; z-index: 1050; display: block;"
+                class="modal fade"
+                role="dialog"
+                style="display: block;"
                 tabindex="-1"
               >
                 <div
-                  class=""
+                  class="modal-dialog modal-dialog-centered"
+                  role="document"
                 >
                   <div
-                    class="modal show"
-                    role="dialog"
-                    style="display: block;"
-                    tabindex="-1"
+                    class="modal-content"
                   >
                     <div
-                      class="modal-dialog modal-dialog-centered"
-                      role="document"
+                      class="modal-header"
                     >
-                      <div
-                        class="modal-content"
+                      <h5
+                        class="modal-title"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="svg-inline--fa fa-sign-in-alt fa-w-16 "
+                          data-icon="sign-in-alt"
+                          data-prefix="fas"
+                          focusable="false"
+                          role="img"
+                          viewBox="0 0 512 512"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M416 448h-84c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h84c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32h-84c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h84c53 0 96 43 96 96v192c0 53-43 96-96 96zm-47-201L201 79c-15-15-41-4.5-41 17v96H24c-13.3 0-24 10.7-24 24v96c0 13.3 10.7 24 24 24h136v96c0 21.5 26 32 41 17l168-168c9.3-9.4 9.3-24.6 0-34z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                         
+                        Login with an existing account
+                      </h5>
+                    </div>
+                    <div
+                      class="modal-body"
+                    >
+                      <form
+                        class=""
+                        id="formLogin"
+                        novalidate=""
                       >
                         <div
-                          class="modal-header"
+                          class="form-group form-group"
                         >
-                          <h5
-                            class="modal-title"
-                          >
-                            <svg
-                              aria-hidden="true"
-                              class="svg-inline--fa fa-sign-in-alt fa-w-16 "
-                              data-icon="sign-in-alt"
-                              data-prefix="fas"
-                              focusable="false"
-                              role="img"
-                              viewBox="0 0 512 512"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M416 448h-84c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h84c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32h-84c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h84c53 0 96 43 96 96v192c0 53-43 96-96 96zm-47-201L201 79c-15-15-41-4.5-41 17v96H24c-13.3 0-24 10.7-24 24v96c0 13.3 10.7 24 24 24h136v96c0 21.5 26 32 41 17l168-168c9.3-9.4 9.3-24.6 0-34z"
-                                fill="currentColor"
-                              />
-                            </svg>
-                             
-                            Login with an existing account
-                          </h5>
-                        </div>
-                        <div
-                          class="modal-body"
-                        >
-                          <form
+                          <label
                             class=""
-                            id="formLogin"
-                            novalidate=""
+                            for="email"
                           >
-                            <div
-                              class="form-group form-group"
-                            >
-                              <label
-                                class=""
-                                for="email"
-                              >
-                                Email
-                              </label>
-                              <input
-                                class="form-control form-control"
-                                name="email"
-                                required=""
-                                type="email"
-                                value=""
-                              />
-                            </div>
-                            <div
-                              class="form-group form-group"
-                            >
-                              <label
-                                class=""
-                                for="password"
-                              >
-                                Password
-                              </label>
-                              <input
-                                class="form-control form-control"
-                                name="password"
-                                required=""
-                                type="password"
-                                value=""
-                              />
-                            </div>
-                            <div
-                              class="form-group form-check form-check-inline"
-                            >
-                              <label
-                                class="form-check-label"
-                              >
-                                Remember me
-                                 
-                                <input
-                                  class="form-check-input"
-                                  name="remember"
-                                  type="checkbox"
-                                  value=""
-                                />
-                              </label>
-                            </div>
-                          </form>
+                            Email
+                          </label>
+                          <input
+                            class="form-control form-control"
+                            name="email"
+                            required=""
+                            type="email"
+                            value=""
+                          />
                         </div>
                         <div
-                          class="modal-footer"
+                          class="form-group form-group"
                         >
-                          <button
-                            class="d-block mx-auto btn btn-warning"
-                            type="button"
+                          <label
+                            class=""
+                            for="password"
                           >
-                            Signup
-                          </button>
-                          <button
-                            class="d-block mx-auto btn btn-success"
-                            form="formLogin"
-                            type="submit"
-                          >
-                            Login
-                          </button>
+                            Password
+                          </label>
+                          <input
+                            class="form-control form-control"
+                            name="password"
+                            required=""
+                            type="password"
+                            value=""
+                          />
                         </div>
-                      </div>
+                        <div
+                          class="form-group form-check form-check-inline"
+                        >
+                          <label
+                            class="form-check-label"
+                          >
+                            Remember me
+                             
+                            <input
+                              class="form-check-input"
+                              name="remember"
+                              type="checkbox"
+                              value=""
+                            />
+                          </label>
+                        </div>
+                      </form>
+                    </div>
+                    <div
+                      class="modal-footer"
+                    >
+                      <button
+                        class="d-block mx-auto btn btn-warning"
+                        type="button"
+                      >
+                        Signup
+                      </button>
+                      <button
+                        class="d-block mx-auto btn btn-success"
+                        form="formLogin"
+                        type="submit"
+                      >
+                        Login
+                      </button>
                     </div>
                   </div>
-                  <div
-                    class="modal-backdrop show"
-                  />
                 </div>
               </div>
+              <div
+                class="modal-backdrop fade"
+              />
+            </div>
+          </div>
+        }
+      >
+        <div
+          className=""
+        >
+          <Fade
+            appear={true}
+            baseClass="fade"
+            baseClassActive="show"
+            className="modal"
+            enter={true}
+            exit={true}
+            in={true}
+            mountOnEnter={false}
+            onClick={[Function]}
+            onEnter={[Function]}
+            onEntered={[Function]}
+            onEntering={[Function]}
+            onExit={[Function]}
+            onExited={[Function]}
+            onExiting={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            role="dialog"
+            style={
+              Object {
+                "display": "block",
+              }
             }
+            tabIndex="-1"
+            tag="div"
+            timeout={300}
+            unmountOnExit={false}
           >
-            <div
-              className=""
+            <Transition
+              appear={true}
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={false}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              timeout={300}
+              unmountOnExit={false}
             >
-              <Fade
-                appear={true}
-                baseClass=""
-                baseClassActive="show"
-                className="modal"
-                enter={true}
-                exit={true}
-                in={true}
-                mountOnEnter={false}
+              <div
+                className="modal fade"
                 onClick={[Function]}
-                onEnter={[Function]}
-                onEntered={[Function]}
-                onEntering={[Function]}
-                onExit={[Function]}
-                onExited={[Function]}
-                onExiting={[Function]}
                 onKeyDown={[Function]}
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
@@ -351,541 +363,543 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                   }
                 }
                 tabIndex="-1"
-                tag="div"
-                timeout={0}
-                unmountOnExit={false}
               >
-                <Transition
-                  appear={true}
-                  enter={true}
-                  exit={true}
-                  in={true}
-                  mountOnEnter={false}
-                  onEnter={[Function]}
-                  onEntered={[Function]}
-                  onEntering={[Function]}
-                  onExit={[Function]}
-                  onExited={[Function]}
-                  onExiting={[Function]}
-                  timeout={0}
-                  unmountOnExit={false}
+                <div
+                  className="modal-dialog modal-dialog-centered"
+                  role="document"
                 >
                   <div
-                    className="modal show"
-                    onClick={[Function]}
-                    onKeyDown={[Function]}
-                    onKeyUp={[Function]}
-                    onMouseDown={[Function]}
-                    role="dialog"
-                    style={
-                      Object {
-                        "display": "block",
-                      }
-                    }
-                    tabIndex="-1"
+                    className="modal-content"
                   >
-                    <div
-                      className="modal-dialog modal-dialog-centered"
-                      role="document"
+                    <ModalHeader
+                      charCode={215}
+                      closeAriaLabel="Close"
+                      tag="h5"
+                      wrapTag="div"
                     >
                       <div
-                        className="modal-content"
+                        className="modal-header"
                       >
-                        <ModalHeader
-                          charCode={215}
-                          closeAriaLabel="Close"
-                          tag="h5"
-                          wrapTag="div"
+                        <h5
+                          className="modal-title"
                         >
-                          <div
-                            className="modal-header"
+                          <FontAwesomeIcon
+                            border={false}
+                            className=""
+                            fixedWidth={false}
+                            flip={null}
+                            icon={
+                              Object {
+                                "icon": Array [
+                                  512,
+                                  512,
+                                  Array [],
+                                  "f2f6",
+                                  "M416 448h-84c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h84c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32h-84c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h84c53 0 96 43 96 96v192c0 53-43 96-96 96zm-47-201L201 79c-15-15-41-4.5-41 17v96H24c-13.3 0-24 10.7-24 24v96c0 13.3 10.7 24 24 24h136v96c0 21.5 26 32 41 17l168-168c9.3-9.4 9.3-24.6 0-34z",
+                                ],
+                                "iconName": "sign-in-alt",
+                                "prefix": "fas",
+                              }
+                            }
+                            inverse={false}
+                            listItem={false}
+                            mask={null}
+                            pull={null}
+                            pulse={false}
+                            rotation={null}
+                            size={null}
+                            spin={false}
+                            swapOpacity={false}
+                            symbol={false}
+                            title=""
+                            transform={null}
                           >
-                            <h5
-                              className="modal-title"
+                            <svg
+                              aria-hidden="true"
+                              className="svg-inline--fa fa-sign-in-alt fa-w-16 "
+                              data-icon="sign-in-alt"
+                              data-prefix="fas"
+                              focusable="false"
+                              role="img"
+                              style={Object {}}
+                              viewBox="0 0 512 512"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <FontAwesomeIcon
-                                border={false}
-                                className=""
-                                fixedWidth={false}
-                                flip={null}
-                                icon={
+                              <path
+                                d="M416 448h-84c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h84c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32h-84c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h84c53 0 96 43 96 96v192c0 53-43 96-96 96zm-47-201L201 79c-15-15-41-4.5-41 17v96H24c-13.3 0-24 10.7-24 24v96c0 13.3 10.7 24 24 24h136v96c0 21.5 26 32 41 17l168-168c9.3-9.4 9.3-24.6 0-34z"
+                                fill="currentColor"
+                                style={Object {}}
+                              />
+                            </svg>
+                          </FontAwesomeIcon>
+                           
+                          <FormattedMessage
+                            defaultMessage="Login with an existing account"
+                            description="Modal title"
+                            id="modalLogintitle"
+                            values={Object {}}
+                          >
+                            Login with an existing account
+                          </FormattedMessage>
+                        </h5>
+                      </div>
+                    </ModalHeader>
+                    <ModalBody
+                      tag="div"
+                    >
+                      <div
+                        className="modal-body"
+                      >
+                        <Memo(MyForm)
+                          id="formLogin"
+                          initialData={
+                            Object {
+                              "email": "",
+                              "password": "",
+                              "remember": false,
+                            }
+                          }
+                          submit={[Function]}
+                        >
+                          <Form
+                            id="formLogin"
+                            innerRef={
+                              Object {
+                                "current": <form
+                                  class=""
+                                  id="formLogin"
+                                  novalidate=""
+                                >
+                                  <div
+                                    class="form-group form-group"
+                                  >
+                                    <label
+                                      class=""
+                                      for="email"
+                                    >
+                                      Email
+                                    </label>
+                                    <input
+                                      class="form-control form-control"
+                                      name="email"
+                                      required=""
+                                      type="email"
+                                      value=""
+                                    />
+                                  </div>
+                                  <div
+                                    class="form-group form-group"
+                                  >
+                                    <label
+                                      class=""
+                                      for="password"
+                                    >
+                                      Password
+                                    </label>
+                                    <input
+                                      class="form-control form-control"
+                                      name="password"
+                                      required=""
+                                      type="password"
+                                      value=""
+                                    />
+                                  </div>
+                                  <div
+                                    class="form-group form-check form-check-inline"
+                                  >
+                                    <label
+                                      class="form-check-label"
+                                    >
+                                      Remember me
+                                       
+                                      <input
+                                        class="form-check-input"
+                                        name="remember"
+                                        type="checkbox"
+                                        value=""
+                                      />
+                                    </label>
+                                  </div>
+                                </form>,
+                              }
+                            }
+                            noValidate={true}
+                            onSubmit={[Function]}
+                            tag="form"
+                          >
+                            <form
+                              className=""
+                              id="formLogin"
+                              noValidate={true}
+                              onSubmit={[Function]}
+                            >
+                              <Memo()
+                                handleChange={[Function]}
+                                key=".0"
+                                label={
                                   Object {
-                                    "icon": Array [
-                                      512,
-                                      512,
-                                      Array [],
-                                      "f2f6",
-                                      "M416 448h-84c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h84c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32h-84c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h84c53 0 96 43 96 96v192c0 53-43 96-96 96zm-47-201L201 79c-15-15-41-4.5-41 17v96H24c-13.3 0-24 10.7-24 24v96c0 13.3 10.7 24 24 24h136v96c0 21.5 26 32 41 17l168-168c9.3-9.4 9.3-24.6 0-34z",
-                                    ],
-                                    "iconName": "sign-in-alt",
-                                    "prefix": "fas",
+                                    "defaultMessage": "Email",
+                                    "description": "Label",
+                                    "id": "email",
                                   }
                                 }
-                                inverse={false}
-                                listItem={false}
-                                mask={null}
-                                pull={null}
-                                pulse={false}
-                                rotation={null}
-                                size={null}
-                                spin={false}
-                                swapOpacity={false}
-                                symbol={false}
-                                title=""
-                                transform={null}
+                                name="email"
+                                required={true}
+                                type="email"
+                                validationTrigger={0}
+                                value=""
                               >
-                                <svg
-                                  aria-hidden="true"
-                                  className="svg-inline--fa fa-sign-in-alt fa-w-16 "
-                                  data-icon="sign-in-alt"
-                                  data-prefix="fas"
-                                  focusable="false"
-                                  role="img"
-                                  style={Object {}}
-                                  viewBox="0 0 512 512"
-                                  xmlns="http://www.w3.org/2000/svg"
+                                <FormGroup
+                                  className="form-group"
+                                  tag="div"
                                 >
-                                  <path
-                                    d="M416 448h-84c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h84c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32h-84c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h84c53 0 96 43 96 96v192c0 53-43 96-96 96zm-47-201L201 79c-15-15-41-4.5-41 17v96H24c-13.3 0-24 10.7-24 24v96c0 13.3 10.7 24 24 24h136v96c0 21.5 26 32 41 17l168-168c9.3-9.4 9.3-24.6 0-34z"
-                                    fill="currentColor"
-                                    style={Object {}}
-                                  />
-                                </svg>
-                              </FontAwesomeIcon>
-                               
-                              <FormattedMessage
-                                defaultMessage="Login with an existing account"
-                                description="Modal title"
-                                id="modalLogintitle"
-                                values={Object {}}
-                              >
-                                Login with an existing account
-                              </FormattedMessage>
-                            </h5>
-                          </div>
-                        </ModalHeader>
-                        <ModalBody
-                          tag="div"
-                        >
-                          <div
-                            className="modal-body"
-                          >
-                            <Memo(MyForm)
-                              id="formLogin"
-                              initialData={
-                                Object {
-                                  "email": "",
-                                  "password": "",
-                                  "remember": false,
-                                }
-                              }
-                              submit={[Function]}
-                            >
-                              <Form
-                                id="formLogin"
-                                innerRef={
-                                  Object {
-                                    "current": <form
-                                      class=""
-                                      id="formLogin"
-                                      novalidate=""
+                                  <div
+                                    className="form-group form-group"
+                                  >
+                                    <Label
+                                      for="email"
+                                      tag="label"
+                                      widths={
+                                        Array [
+                                          "xs",
+                                          "sm",
+                                          "md",
+                                          "lg",
+                                          "xl",
+                                        ]
+                                      }
                                     >
-                                      <div
-                                        class="form-group form-group"
+                                      <label
+                                        className=""
+                                        htmlFor="email"
                                       >
-                                        <label
-                                          class=""
-                                          for="email"
+                                        <FormattedMessage
+                                          defaultMessage="Email"
+                                          description="Label"
+                                          id="email"
+                                          values={Object {}}
                                         >
                                           Email
-                                        </label>
-                                        <input
-                                          class="form-control form-control"
-                                          name="email"
-                                          required=""
-                                          type="email"
-                                          value=""
-                                        />
-                                      </div>
-                                      <div
-                                        class="form-group form-group"
-                                      >
-                                        <label
-                                          class=""
-                                          for="password"
-                                        >
-                                          Password
-                                        </label>
-                                        <input
-                                          class="form-control form-control"
-                                          name="password"
-                                          required=""
-                                          type="password"
-                                          value=""
-                                        />
-                                      </div>
-                                      <div
-                                        class="form-group form-check form-check-inline"
-                                      >
-                                        <label
-                                          class="form-check-label"
-                                        >
-                                          Remember me
-                                           
-                                          <input
-                                            class="form-check-input"
-                                            name="remember"
-                                            type="checkbox"
-                                            value=""
-                                          />
-                                        </label>
-                                      </div>
-                                    </form>,
-                                  }
-                                }
-                                noValidate={true}
-                                onSubmit={[Function]}
-                                tag="form"
-                              >
-                                <form
-                                  className=""
-                                  id="formLogin"
-                                  noValidate={true}
-                                  onSubmit={[Function]}
-                                >
-                                  <Memo()
-                                    handleChange={[Function]}
-                                    key=".0"
-                                    label={
-                                      Object {
-                                        "defaultMessage": "Email",
-                                        "description": "Label",
-                                        "id": "email",
-                                      }
-                                    }
-                                    name="email"
-                                    required={true}
-                                    type="email"
-                                    validationTrigger={0}
-                                    value=""
-                                  >
-                                    <FormGroup
-                                      className="form-group"
-                                      tag="div"
-                                    >
-                                      <div
-                                        className="form-group form-group"
-                                      >
-                                        <Label
-                                          for="email"
-                                          tag="label"
-                                          widths={
-                                            Array [
-                                              "xs",
-                                              "sm",
-                                              "md",
-                                              "lg",
-                                              "xl",
-                                            ]
-                                          }
-                                        >
-                                          <label
-                                            className=""
-                                            htmlFor="email"
-                                          >
-                                            <FormattedMessage
-                                              defaultMessage="Email"
-                                              description="Label"
-                                              id="email"
-                                              values={Object {}}
-                                            >
-                                              Email
-                                            </FormattedMessage>
-                                          </label>
-                                        </Label>
-                                        <Input
-                                          className="form-control"
-                                          innerRef={
-                                            Object {
-                                              "current": <input
-                                                class="form-control form-control"
-                                                name="email"
-                                                required=""
-                                                type="email"
-                                                value=""
-                                              />,
-                                            }
-                                          }
-                                          invalid={false}
-                                          name="email"
-                                          onChange={[Function]}
-                                          required={true}
-                                          type="email"
-                                          value=""
-                                        >
-                                          <input
-                                            className="form-control form-control"
+                                        </FormattedMessage>
+                                      </label>
+                                    </Label>
+                                    <Input
+                                      className="form-control"
+                                      innerRef={
+                                        Object {
+                                          "current": <input
+                                            class="form-control form-control"
                                             name="email"
-                                            onChange={[Function]}
-                                            required={true}
+                                            required=""
                                             type="email"
                                             value=""
-                                          />
-                                        </Input>
-                                      </div>
-                                    </FormGroup>
-                                  </Memo()>
-                                  <Memo()
-                                    handleChange={[Function]}
-                                    key=".1"
-                                    label={
-                                      Object {
-                                        "defaultMessage": "Password",
-                                        "description": "Label",
-                                        "id": "password",
+                                          />,
+                                        }
                                       }
-                                    }
-                                    name="password"
-                                    required={true}
-                                    type="password"
-                                    validationTrigger={0}
-                                    value=""
-                                  >
-                                    <FormGroup
-                                      className="form-group"
-                                      tag="div"
+                                      invalid={false}
+                                      name="email"
+                                      onChange={[Function]}
+                                      required={true}
+                                      type="email"
+                                      value=""
                                     >
-                                      <div
-                                        className="form-group form-group"
+                                      <input
+                                        className="form-control form-control"
+                                        name="email"
+                                        onChange={[Function]}
+                                        required={true}
+                                        type="email"
+                                        value=""
+                                      />
+                                    </Input>
+                                  </div>
+                                </FormGroup>
+                              </Memo()>
+                              <Memo()
+                                handleChange={[Function]}
+                                key=".1"
+                                label={
+                                  Object {
+                                    "defaultMessage": "Password",
+                                    "description": "Label",
+                                    "id": "password",
+                                  }
+                                }
+                                name="password"
+                                required={true}
+                                type="password"
+                                validationTrigger={0}
+                                value=""
+                              >
+                                <FormGroup
+                                  className="form-group"
+                                  tag="div"
+                                >
+                                  <div
+                                    className="form-group form-group"
+                                  >
+                                    <Label
+                                      for="password"
+                                      tag="label"
+                                      widths={
+                                        Array [
+                                          "xs",
+                                          "sm",
+                                          "md",
+                                          "lg",
+                                          "xl",
+                                        ]
+                                      }
+                                    >
+                                      <label
+                                        className=""
+                                        htmlFor="password"
                                       >
-                                        <Label
-                                          for="password"
-                                          tag="label"
-                                          widths={
-                                            Array [
-                                              "xs",
-                                              "sm",
-                                              "md",
-                                              "lg",
-                                              "xl",
-                                            ]
-                                          }
+                                        <FormattedMessage
+                                          defaultMessage="Password"
+                                          description="Label"
+                                          id="password"
+                                          values={Object {}}
                                         >
-                                          <label
-                                            className=""
-                                            htmlFor="password"
-                                          >
-                                            <FormattedMessage
-                                              defaultMessage="Password"
-                                              description="Label"
-                                              id="password"
-                                              values={Object {}}
-                                            >
-                                              Password
-                                            </FormattedMessage>
-                                          </label>
-                                        </Label>
+                                          Password
+                                        </FormattedMessage>
+                                      </label>
+                                    </Label>
+                                    <Input
+                                      className="form-control"
+                                      innerRef={
+                                        Object {
+                                          "current": <input
+                                            class="form-control form-control"
+                                            name="password"
+                                            required=""
+                                            type="password"
+                                            value=""
+                                          />,
+                                        }
+                                      }
+                                      invalid={false}
+                                      name="password"
+                                      onChange={[Function]}
+                                      required={true}
+                                      type="password"
+                                      value=""
+                                    >
+                                      <input
+                                        className="form-control form-control"
+                                        name="password"
+                                        onChange={[Function]}
+                                        required={true}
+                                        type="password"
+                                        value=""
+                                      />
+                                    </Input>
+                                  </div>
+                                </FormGroup>
+                              </Memo()>
+                              <Memo()
+                                checked={false}
+                                handleChange={[Function]}
+                                key=".2"
+                                label={
+                                  Object {
+                                    "defaultMessage": "Remember me",
+                                    "description": "Label",
+                                    "id": "remember",
+                                  }
+                                }
+                                name="remember"
+                                type="checkbox"
+                                validationTrigger={0}
+                              >
+                                <FormGroup
+                                  check={true}
+                                  className="form-group"
+                                  inline={true}
+                                  tag="div"
+                                >
+                                  <div
+                                    className="form-group form-check form-check-inline"
+                                  >
+                                    <Label
+                                      check={true}
+                                      tag="label"
+                                      widths={
+                                        Array [
+                                          "xs",
+                                          "sm",
+                                          "md",
+                                          "lg",
+                                          "xl",
+                                        ]
+                                      }
+                                    >
+                                      <label
+                                        className="form-check-label"
+                                      >
+                                        <FormattedMessage
+                                          defaultMessage="Remember me"
+                                          description="Label"
+                                          id="remember"
+                                          values={Object {}}
+                                        >
+                                          Remember me
+                                        </FormattedMessage>
+                                         
                                         <Input
-                                          className="form-control"
+                                          checked={false}
                                           innerRef={
                                             Object {
                                               "current": <input
-                                                class="form-control form-control"
-                                                name="password"
-                                                required=""
-                                                type="password"
+                                                class="form-check-input"
+                                                name="remember"
+                                                type="checkbox"
                                                 value=""
                                               />,
                                             }
                                           }
                                           invalid={false}
-                                          name="password"
+                                          name="remember"
                                           onChange={[Function]}
-                                          required={true}
-                                          type="password"
-                                          value=""
+                                          type="checkbox"
                                         >
                                           <input
-                                            className="form-control form-control"
-                                            name="password"
+                                            checked={false}
+                                            className="form-check-input"
+                                            name="remember"
                                             onChange={[Function]}
-                                            required={true}
-                                            type="password"
-                                            value=""
+                                            type="checkbox"
                                           />
                                         </Input>
-                                      </div>
-                                    </FormGroup>
-                                  </Memo()>
-                                  <Memo()
-                                    checked={false}
-                                    handleChange={[Function]}
-                                    key=".2"
-                                    label={
-                                      Object {
-                                        "defaultMessage": "Remember me",
-                                        "description": "Label",
-                                        "id": "remember",
-                                      }
-                                    }
-                                    name="remember"
-                                    type="checkbox"
-                                    validationTrigger={0}
-                                  >
-                                    <FormGroup
-                                      check={true}
-                                      className="form-group"
-                                      inline={true}
-                                      tag="div"
-                                    >
-                                      <div
-                                        className="form-group form-check form-check-inline"
-                                      >
-                                        <Label
-                                          check={true}
-                                          tag="label"
-                                          widths={
-                                            Array [
-                                              "xs",
-                                              "sm",
-                                              "md",
-                                              "lg",
-                                              "xl",
-                                            ]
-                                          }
-                                        >
-                                          <label
-                                            className="form-check-label"
-                                          >
-                                            <FormattedMessage
-                                              defaultMessage="Remember me"
-                                              description="Label"
-                                              id="remember"
-                                              values={Object {}}
-                                            >
-                                              Remember me
-                                            </FormattedMessage>
-                                             
-                                            <Input
-                                              checked={false}
-                                              innerRef={
-                                                Object {
-                                                  "current": <input
-                                                    class="form-check-input"
-                                                    name="remember"
-                                                    type="checkbox"
-                                                    value=""
-                                                  />,
-                                                }
-                                              }
-                                              invalid={false}
-                                              name="remember"
-                                              onChange={[Function]}
-                                              type="checkbox"
-                                            >
-                                              <input
-                                                checked={false}
-                                                className="form-check-input"
-                                                name="remember"
-                                                onChange={[Function]}
-                                                type="checkbox"
-                                              />
-                                            </Input>
-                                          </label>
-                                        </Label>
-                                      </div>
-                                    </FormGroup>
-                                  </Memo()>
-                                </form>
-                              </Form>
-                            </Memo(MyForm)>
-                          </div>
-                        </ModalBody>
-                        <ModalFooter
-                          tag="div"
+                                      </label>
+                                    </Label>
+                                  </div>
+                                </FormGroup>
+                              </Memo()>
+                            </form>
+                          </Form>
+                        </Memo(MyForm)>
+                      </div>
+                    </ModalBody>
+                    <ModalFooter
+                      tag="div"
+                    >
+                      <div
+                        className="modal-footer"
+                      >
+                        <Button
+                          className="d-block mx-auto"
+                          color="warning"
+                          onClick={[MockFunction]}
+                          tag="button"
                         >
-                          <div
-                            className="modal-footer"
+                          <button
+                            aria-label={null}
+                            className="d-block mx-auto btn btn-warning"
+                            onClick={[Function]}
+                            type="button"
                           >
-                            <Button
-                              className="d-block mx-auto"
-                              color="warning"
-                              onClick={[MockFunction]}
-                              tag="button"
+                            <FormattedMessage
+                              defaultMessage="Signup"
+                              description="Button signup"
+                              id="signup"
+                              values={Object {}}
                             >
-                              <button
-                                aria-label={null}
-                                className="d-block mx-auto btn btn-warning"
-                                onClick={[Function]}
-                                type="button"
-                              >
-                                <FormattedMessage
-                                  defaultMessage="Signup"
-                                  description="Button signup"
-                                  id="signup"
-                                  values={Object {}}
-                                >
-                                  Signup
-                                </FormattedMessage>
-                              </button>
-                            </Button>
-                            <ActionButton
-                              className="d-block mx-auto"
-                              color="success"
+                              Signup
+                            </FormattedMessage>
+                          </button>
+                        </Button>
+                        <ActionButton
+                          className="d-block mx-auto"
+                          color="success"
+                          form="formLogin"
+                          isActing={false}
+                          message={
+                            Object {
+                              "defaultMessage": "Login",
+                              "description": "Label",
+                              "id": "login",
+                            }
+                          }
+                          type="submit"
+                        >
+                          <Button
+                            className="d-block mx-auto"
+                            color="success"
+                            disabled={false}
+                            form="formLogin"
+                            tag="button"
+                            type="submit"
+                          >
+                            <button
+                              aria-label={null}
+                              className="d-block mx-auto btn btn-success"
+                              disabled={false}
                               form="formLogin"
-                              isActing={false}
-                              message={
-                                Object {
-                                  "defaultMessage": "Login",
-                                  "description": "Label",
-                                  "id": "login",
-                                }
-                              }
+                              onClick={[Function]}
                               type="submit"
                             >
-                              <Button
-                                className="d-block mx-auto"
-                                color="success"
-                                disabled={false}
-                                form="formLogin"
-                                tag="button"
-                                type="submit"
+                              <FormattedMessage
+                                defaultMessage="Login"
+                                description="Label"
+                                id="login"
+                                values={Object {}}
                               >
-                                <button
-                                  aria-label={null}
-                                  className="d-block mx-auto btn btn-success"
-                                  disabled={false}
-                                  form="formLogin"
-                                  onClick={[Function]}
-                                  type="submit"
-                                >
-                                  <FormattedMessage
-                                    defaultMessage="Login"
-                                    description="Label"
-                                    id="login"
-                                    values={Object {}}
-                                  >
-                                    Login
-                                  </FormattedMessage>
-                                </button>
-                              </Button>
-                            </ActionButton>
-                          </div>
-                        </ModalFooter>
+                                Login
+                              </FormattedMessage>
+                            </button>
+                          </Button>
+                        </ActionButton>
                       </div>
-                    </div>
+                    </ModalFooter>
                   </div>
-                </Transition>
-              </Fade>
+                </div>
+              </div>
+            </Transition>
+          </Fade>
+          <Fade
+            appear={true}
+            baseClass="fade"
+            baseClassActive="show"
+            className="modal-backdrop"
+            enter={true}
+            exit={true}
+            in={true}
+            mountOnEnter={true}
+            onEnter={[Function]}
+            onEntered={[Function]}
+            onEntering={[Function]}
+            onExit={[Function]}
+            onExited={[Function]}
+            onExiting={[Function]}
+            tag="div"
+            timeout={150}
+            unmountOnExit={false}
+          >
+            <Transition
+              appear={true}
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={true}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              timeout={150}
+              unmountOnExit={false}
+            >
               <div
-                className="modal-backdrop show"
+                className="modal-backdrop fade"
               />
-            </div>
-          </Portal>
-        </Portal>
-      </Modal>
-    </Transition>
-  </CSSTransition>
+            </Transition>
+          </Fade>
+        </div>
+      </Portal>
+    </Portal>
+  </Modal>
   <ModalPasswordReset
     className="modal-dialog-centered"
     data={
@@ -898,56 +912,34 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
     toggle={[Function]}
     visible={false}
   >
-    <CSSTransition
-      classNames="modal"
-      in={false}
-      timeout={300}
-    >
-      <Transition
-        appear={false}
-        enter={true}
-        exit={true}
-        in={false}
-        mountOnEnter={false}
-        onEnter={[Function]}
-        onEntered={[Function]}
-        onEntering={[Function]}
-        onExit={[Function]}
-        onExited={[Function]}
-        onExiting={[Function]}
-        timeout={300}
-        unmountOnExit={false}
-      >
-        <Modal
-          autoFocus={true}
-          backdrop={true}
-          backdropTransition={
-            Object {
-              "mountOnEnter": true,
-              "timeout": 150,
-            }
-          }
-          centered={false}
-          className="modal-dialog-centered"
-          fade={false}
-          isOpen={false}
-          keyboard={true}
-          modalTransition={
-            Object {
-              "timeout": 300,
-            }
-          }
-          onClosed={[Function]}
-          onOpened={[Function]}
-          returnFocusAfterClose={true}
-          role="dialog"
-          scrollable={false}
-          toggle={[Function]}
-          unmountOnClose={true}
-          zIndex={1050}
-        />
-      </Transition>
-    </CSSTransition>
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      className="modal-dialog-centered"
+      fade={true}
+      isOpen={false}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      returnFocusAfterClose={true}
+      role="dialog"
+      scrollable={false}
+      toggle={[Function]}
+      unmountOnClose={true}
+      zIndex={1050}
+    />
   </ModalPasswordReset>
 </ModalLogin>
 `;

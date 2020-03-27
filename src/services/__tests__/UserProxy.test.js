@@ -2,16 +2,22 @@ import ignoredMessages from '../../testHelpers/MockConsole';
 import httpProxy from '../HttpProxy';
 import storageService from '../StorageService';
 import userProxy from '../UserProxy';
-import syncService from '../SyncService';
+import onlineManager from '../OnlineManager';
+import assetProxy from '../AssetProxy';
 
 jest.mock('../HttpProxy');
 jest.mock('../StorageService');
-jest.mock('../SyncService');
+jest.mock('../OnlineManager');
+jest.mock('../AssetProxy');
 
 describe('Test UserProxy', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('an error happened');
+  });
+
+  beforeEach(() => {
+    assetProxy.fetchAssets.mockImplementation(async () => Promise.resolve([]));
   });
 
   afterEach(() => {
@@ -26,7 +32,9 @@ describe('Test UserProxy', () => {
     httpProxy.post.mockReset();
     httpProxy.get.mockReset();
 
-    syncService.isOnline.mockReset();
+    assetProxy.fetchAssets.mockReset();
+
+    onlineManager.isOnline.mockReset();
   });
 
   describe('tryGetAndSetMemorizedUser', () => {
@@ -39,7 +47,7 @@ describe('Test UserProxy', () => {
         token: 'jwt',
       };
 
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(false));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(false));
 
       storageService.getGlobalItem.mockImplementation((key) => Promise.resolve(key === 'currentUser' ? user : null));
       storageService.existGlobalItem.mockImplementation(async (key) => Promise.resolve(key === 'currentUser'));
@@ -63,7 +71,7 @@ describe('Test UserProxy', () => {
         token: 'jwt',
       };
 
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       httpProxy.get.mockImplementation(async () => Promise.resolve({ user }));
 
       storageService.getGlobalItem.mockImplementation((key) => Promise.resolve(key === 'currentUser' ? user : null));
@@ -88,7 +96,7 @@ describe('Test UserProxy', () => {
         token: 'jwt',
       };
 
-      syncService.isOnline.mockImplementation(async () => Promise.resolve(true));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       httpProxy.get.mockImplementation(async () => {
         throw new Error('an error happened');
       });
@@ -132,7 +140,7 @@ describe('Test UserProxy', () => {
       // assert
       expect(httpProxy.setConfig).toHaveBeenCalledTimes(1);
       expect(storageService.closeUserStorage).toHaveBeenCalledTimes(1);
-      expect(storageService.removeGlobalItem).toHaveBeenCalledTimes(1);
+      expect(storageService.setGlobalItem).toHaveBeenCalledTimes(1);
     });
 
     it('should post the authentification, update the local storage and set the httpProxy config because of the remember flag it true', async () => {
@@ -162,7 +170,7 @@ describe('Test UserProxy', () => {
       expect(authUser).toEqual(user);
       expect(currentConfig).toEqual({ headers: { Authorization: `Token ${user.token}` } });
       expect(storageService.openUserStorage).toHaveBeenCalledTimes(1);
-      expect(storageService.setGlobalItem).toHaveBeenCalledTimes(1);
+      expect(storageService.setGlobalItem).toHaveBeenCalledTimes(2);
     });
 
     it('should not update the local storage because of the remember flag at false but should configure the http proxy and open the user storage.', async () => {
@@ -192,7 +200,7 @@ describe('Test UserProxy', () => {
       expect(authUser).toEqual(user);
       expect(currentConfig).toEqual({ headers: { Authorization: `Token ${user.token}` } });
       expect(storageService.openUserStorage).toHaveBeenCalledTimes(1);
-      expect(storageService.setGlobalItem).toHaveBeenCalledTimes(0);
+      expect(storageService.setGlobalItem).toHaveBeenCalledTimes(1);
     });
   });
 });

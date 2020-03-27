@@ -1,153 +1,84 @@
+/* eslint-disable max-classes-per-file */
+
 import log from 'loglevel';
+import { TaskWithProgress } from './TaskWithProgress';
+
 // eslint-disable-next-line no-unused-vars
-import actionManager, { Action, NoActionPendingError } from './ActionManager';
+import actionManager, { Action } from './ActionManager';
 // eslint-disable-next-line no-unused-vars
 import storageService, { IUserStorageListener } from './StorageService';
+import onlineManager from './OnlineManager';
 
-export interface ISyncService {
-    isOnlineAndSynced(): Promise<boolean>;
-    isOnline(): boolean;
-    isSynced():Promise<boolean>;
-    isOfflineModeActivated():boolean;
+export class SyncServiceException extends Error {}
 
-    setOfflineMode(offlineMode: boolean):void;
-    synchronize(): Promise<boolean>;
+class SyncService extends TaskWithProgress implements IUserStorageListener {
+  constructor() {
+    super();
+    storageService.registerUserStorageListener(this);
+    onlineManager.registerIsOnlineListener(this.onIsOnlineChanged);
+    actionManager.registerOnActionManagerChanged(this.onActionManagerChanged);
+  }
 
-    registerIsOnlineListener(listener: (isOnline: boolean) => void):void;
-    unregisterIsOnlineListener(listenerToRemove: (isOnline: boolean) => void):void;
+  onIsOnlineChanged = async (online: boolean): Promise<void> => ((online && storageService.isUserStorageOpened() ? this.tryToRun() : Promise.resolve()))
 
-    registerSyncListener(listener: (context: SyncContext) => void):void;
-    unregisterSyncListener(listener: (context: SyncContext) => void):void;
-}
-
-export type SyncContext = {
-    isSyncing: boolean;
-    totalActionToSync: number;
-    remainingActionToSync: number;
-}
-
-let syncService: ISyncService;
-
-class SyncService implements ISyncService, IUserStorageListener {
-    private offlineModeActivated:boolean = false;
-
-    constructor() {
-      window.addEventListener('offline', async () => (syncService as SyncService).setIsOnline(false && this.isOfflineModeActivated() === false));
-      window.addEventListener('online', async () => (syncService as SyncService).setIsOnline(true && this.isOfflineModeActivated() === false));
-
-      storageService.registerUserStorageListener(this);
+  async onUserStorageOpened(): Promise<void> {
+    if ((await onlineManager.isOnline()) === false) {
+      return Promise.resolve();
     }
 
-    private listeners: ((isOnline: boolean) => void)[] = [];
+    return this.tryToRun();
+  }
 
-    private syncListeners: ((context: SyncContext) => void)[] = [];
+  onUserStorageClosed = async (): Promise<void> => {}
 
-    registerSyncListener(listener: (context: SyncContext) => void):void{
-      this.syncListeners.push(listener);
+  onActionManagerChanged = async (nbAction: number) => {
+    if (this.taskProgress.isRunning === false) {
+      this.taskProgress.total = nbAction;
     }
 
-    unregisterSyncListener(listenerToRemove: (context: SyncContext) => void):void{
-      this.syncListeners = this.syncListeners.filter((listener) => listener !== listenerToRemove);
+    this.taskProgress.remaining = nbAction;
+    return this.triggerTaskProgressChanged();
+  }
+
+  run = async (): Promise<void> => {
+    if (storageService.isUserStorageOpened() === false) {
+      throw new SyncServiceException('storageNotOpenedYet');
     }
 
-    registerIsOnlineListener(listener: (isOnline: boolean) => void):void{
-      this.listeners.push(listener);
+    if ((await onlineManager.isOnline()) === false) {
+      throw new SyncServiceException('actionErrorBecauseOffline');
     }
 
-    unregisterIsOnlineListener(listenerToRemove: (isOnline: boolean) => void):void{
-      this.listeners = this.listeners.filter((listener) => listener !== listenerToRemove);
-    }
+    return this.syncStorage();
+  }
 
-    private async triggerIsOnlineChanged(): Promise<void> {
-      const isOnline = await this.isOnline();
-      this.listeners.map((listener) => listener(isOnline));
-    }
+  cancel = () => {
+    actionManager.cancelAction();
+  }
 
-    private async triggerSyncContextChanged(context: SyncContext): Promise<void> {
-      this.syncListeners.map((listener) => listener({ ...context }));
-    }
+  private syncStorage = async (): Promise<void> => {
+    this.taskProgress.init(actionManager.countAction());
+    await this.triggerTaskProgressChanged();
 
-    isOnlineAndSynced = async (): Promise<boolean> => this.isOnline() && this.isSynced();
+    try {
+      while (actionManager.countAction() > 0) {
+        const action: Action = actionManager.getNextActionToPerform();
 
-    isOnline = (): boolean => window.navigator.onLine === true && this.isOfflineModeActivated() === false;
-
-    isSynced = async ():Promise<boolean> => (await actionManager.countAction()) === 0
-
-    isOfflineModeActivated = ():boolean => this.offlineModeActivated
-
-    setOfflineMode(offlineMode: boolean): void {
-      this.offlineModeActivated = offlineMode;
-      this.setIsOnline(this.isOfflineModeActivated() && window.navigator.onLine);
-    }
-
-    setIsOnline = async (isOnline: boolean): Promise<void> => {
-      if (isOnline) {
-        await this.syncStorage();
+        // eslint-disable-next-line no-await-in-loop
+        await actionManager.performAction(action);
+        // eslint-disable-next-line no-await-in-loop
+        await actionManager.shiftAction();
       }
-
-      await this.triggerIsOnlineChanged();
+    } catch (error) {
+      log.error(error);
+      throw new SyncServiceException('unexpectedError');
+    } finally {
+      this.taskProgress.isRunning = false;
+      await this.triggerTaskProgressChanged();
     }
-
-    synchronize = async (): Promise<boolean> => this.syncStorage()
-
-    private syncStorage = async (): Promise<boolean> => {
-      const nbActionToSync = await actionManager.countAction();
-      const context: SyncContext = {
-        isSyncing: true,
-        totalActionToSync: nbActionToSync,
-        remainingActionToSync: nbActionToSync,
-      };
-      this.triggerSyncContextChanged(context);
-
-      let success = false;
-      let stopCondition = false;
-      while (stopCondition === false) {
-        let action: Action;
-        try {
-          // eslint-disable-next-line no-await-in-loop
-          action = await actionManager.getNextActionToPerform();
-        } catch (error) {
-          if (error instanceof NoActionPendingError === false) {
-            log.error(error);
-          } else {
-            success = true;
-          }
-
-          stopCondition = true;
-          break;
-        }
-
-        try {
-          // eslint-disable-next-line no-await-in-loop
-          await actionManager.performAction(action);
-          context.remainingActionToSync--;
-          this.triggerSyncContextChanged(context);
-        } catch (error) {
-          // eslint-disable-next-line no-await-in-loop
-          await actionManager.putBackAction(action);
-
-          log.error(error);
-          stopCondition = true;
-        }
-      }
-
-      this.triggerEndSync(context);
-      return Promise.resolve(success);
-    }
-
-    private triggerEndSync(context: SyncContext) {
-      const newContext = { ...context };
-      newContext.isSyncing = false;
-      this.triggerSyncContextChanged(newContext);
-    }
-
-    async onUserStorageOpened(): Promise<void> {
-      return this.setIsOnline(this.isOfflineModeActivated() === false && window.navigator.onLine);
-    }
-
-    onUserStorageClosed = async (): Promise<void> => {}
+  }
 }
 
-syncService = new SyncService();
+const syncService = new SyncService();
 
-export default syncService as ISyncService;
+export default syncService as TaskWithProgress;

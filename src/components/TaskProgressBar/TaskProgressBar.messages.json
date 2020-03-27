@@ -1,0 +1,12 @@
+{
+  "rebuildInProgress": {
+    "defaultMessage": "Local storage rebuild in progress",
+    "description": "information message",
+    "id": "rebuildInProgress"
+  },
+  "syncInProgress": {
+    "defaultMessage": "Synchronisation in progress",
+    "description": "information message",
+    "id": "syncInProgress"
+  }
+}

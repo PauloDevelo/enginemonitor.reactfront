@@ -11,46 +11,65 @@ import { updateEquipment } from '../helpers/EquipmentHelper';
 import { EquipmentModel } from '../types/Types';
 import imageProxy from './ImageProxy';
 
+import assetManager from './AssetManager';
+import HttpError from '../http/HttpError';
+
 export interface IEquipmentProxy{
-    fetchEquipments(): Promise<EquipmentModel[]>;
+    fetchEquipments(assetId?: string): Promise<EquipmentModel[]>;
     createOrSaveEquipment(equipmentToSave: EquipmentModel):Promise<EquipmentModel>;
     deleteEquipment(idEquipment: string): Promise<EquipmentModel>;
 
     getStoredEquipment():Promise<EquipmentModel[]>;
 
     existEquipment(equipmentId: string | undefined):Promise<boolean>;
+
+    onAssetDeleted(idAsset: string): Promise<void>;
 }
 
 class EquipmentProxy implements IEquipmentProxy {
-    private baseUrl:string = `${process.env.REACT_APP_URL_BASE}equipments/`;
+    private getBaseUrl = (assetId: string | undefined) => `${process.env.REACT_APP_API_URL_BASE}equipments/${assetId}/`
 
     // //////////////Equipment////////////////////////
-    fetchEquipments = async (forceToLookUpInStorage: boolean = false): Promise<EquipmentModel[]> => {
+    fetchEquipments = async (assetId: string| undefined = undefined, forceToLookUpInStorage: boolean = false): Promise<EquipmentModel[]> => {
+      const assetUiId = assetId === undefined ? assetManager.getCurrentAsset()?._uiId : assetId;
       if (forceToLookUpInStorage) {
-        return storageService.getArray<EquipmentModel>(this.baseUrl);
+        return progressiveHttpProxy.getArrayFromStorage<EquipmentModel>(this.getBaseUrl(assetUiId), updateEquipment);
       }
 
-      return progressiveHttpProxy.getArrayOnlineFirst<EquipmentModel>(this.baseUrl, 'equipments', updateEquipment);
+      return progressiveHttpProxy.getArrayOnlineFirst<EquipmentModel>(this.getBaseUrl(assetUiId), 'equipments', updateEquipment);
     }
 
     createOrSaveEquipment = async (equipmentToSave: EquipmentModel):Promise<EquipmentModel> => {
-      const updatedEquipment = await progressiveHttpProxy.postAndUpdate<EquipmentModel>(this.baseUrl + equipmentToSave._uiId, 'equipment', equipmentToSave, updateEquipment);
-      await storageService.updateArray(this.baseUrl, updatedEquipment);
+      if (await this.existEquipment(equipmentToSave._uiId) === false) {
+        const equipments = await this.getStoredEquipment();
+        if (equipments.findIndex((equipment) => equipment.name === equipmentToSave.name) !== -1) {
+          throw new HttpError({ name: 'alreadyexisting' });
+        }
+      }
+
+      const assetId = assetManager.getCurrentAsset()?._uiId;
+      const postUrl: string = `${this.getBaseUrl(assetId)}${equipmentToSave._uiId}`;
+      const updatedEquipment = await progressiveHttpProxy.postAndUpdate<EquipmentModel>(postUrl, 'equipment', equipmentToSave, updateEquipment);
+
+      await storageService.updateArray(this.getBaseUrl(assetId), updatedEquipment);
       return updatedEquipment;
     }
 
     deleteEquipment = async (idEquipment: string): Promise<EquipmentModel> => {
-      await progressiveHttpProxy.deleteAndUpdate<EquipmentModel>(this.baseUrl + idEquipment, 'equipment', updateEquipment);
+      const assetId = assetManager.getCurrentAsset()?._uiId;
+      const deleteUrl = `${this.getBaseUrl(assetId)}${idEquipment}`;
+
+      await progressiveHttpProxy.deleteAndUpdate<EquipmentModel>(deleteUrl, 'equipment', updateEquipment);
 
       await entryProxy.onEquipmentDeleted(idEquipment);
       await taskProxy.onEquipmentDeleted(idEquipment);
       await imageProxy.onEntityDeleted(idEquipment);
 
-      const deletedEquipment = await storageService.removeItemInArray<EquipmentModel>(this.baseUrl, idEquipment);
+      const deletedEquipment = await storageService.removeItemInArray<EquipmentModel>(this.getBaseUrl(assetId), idEquipment);
       return updateEquipment(deletedEquipment);
     }
 
-    getStoredEquipment = async ():Promise<EquipmentModel[]> => this.fetchEquipments(true)
+    getStoredEquipment = async ():Promise<EquipmentModel[]> => this.fetchEquipments(assetManager.getCurrentAsset()?._uiId, true)
 
     existEquipment = async (equipmentId: string | undefined):Promise<boolean> => {
       if (equipmentId === undefined) {
@@ -58,8 +77,22 @@ class EquipmentProxy implements IEquipmentProxy {
         return false;
       }
 
-      const allEquipments = await this.fetchEquipments(true);
+      const allEquipments = await this.getStoredEquipment();
       return allEquipments.findIndex((equipment) => equipment._uiId === equipmentId) !== -1;
+    }
+
+    onAssetDeleted = async (assetId: string): Promise<void> => {
+      const equipments = await this.fetchEquipments(assetId, true);
+
+      await equipments.reduce(async (previousPromise, equipment) => {
+        await previousPromise;
+
+        await entryProxy.onEquipmentDeleted(equipment._uiId);
+        await taskProxy.onEquipmentDeleted(equipment._uiId);
+        await imageProxy.onEntityDeleted(equipment._uiId);
+
+        await storageService.removeItemInArray<EquipmentModel>(this.getBaseUrl(assetId), equipment._uiId);
+      }, Promise.resolve());
     }
 }
 

@@ -3,14 +3,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IntlProvider } from 'react-intl';
+import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 
+import * as Sentry from '@sentry/browser';
 import App from './components/App/App';
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './serviceWorker.js';
+
 
 import messagesFr from './translations/fr.json';
 import messagesEn from './translations/en.json';
+
+Sentry.init({ dsn: 'https://9b118304a0fe422f94456016f2aa6993@sentry.io/3533569' });
 
 const messages = {
   fr: messagesFr,
@@ -22,7 +27,14 @@ const shortLanguage = navigator.language.split(/[-_]/)[0]; // language without r
 
 log.setLevel('trace', false);
 
-ReactDOM.render(<IntlProvider locale={language} messages={messages[shortLanguage]}><App /></IntlProvider>, document.getElementById('root'));
+ReactDOM.render(
+  <BrowserRouter>
+    <IntlProvider locale={language} messages={messages[shortLanguage]}>
+      <App />
+    </IntlProvider>
+  </BrowserRouter>,
+  document.getElementById('root'),
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

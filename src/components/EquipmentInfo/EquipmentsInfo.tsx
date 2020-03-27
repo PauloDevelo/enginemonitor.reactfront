@@ -17,17 +17,24 @@ import Loading from '../Loading/Loading';
 import { createDefaultEquipment } from '../../helpers/EquipmentHelper';
 
 // eslint-disable-next-line no-unused-vars
-import { EquipmentModel } from '../../types/Types';
+import { EquipmentModel, AssetModel } from '../../types/Types';
+
+import assetManager from '../../services/AssetManager';
 
 type Props = {
-userId?: string | undefined,
 changeCurrentEquipment: (equipment: EquipmentModel | undefined) => void,
 extraClassNames: string
 }
 
-function EquipmentsInfo({ userId, changeCurrentEquipment, extraClassNames }: Props) {
+function EquipmentsInfo({ changeCurrentEquipment, extraClassNames }: Props) {
+  const [currentAsset, setCurrentAsset] = useState<AssetModel | undefined>(assetManager.getCurrentAsset());
   const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(undefined);
   const modalHook = useEditModal<EquipmentModel | undefined>(undefined);
+
+  useEffect(() => {
+    assetManager.registerOnCurrentAssetChanged(setCurrentAsset);
+    return () => assetManager.unregisterOnCurrentAssetChanged(setCurrentAsset);
+  }, []);
 
   const isCurrentEquipment = useCallback((equipment: EquipmentModel) => {
     if (currentEquipment === undefined || equipment === undefined) {
@@ -44,12 +51,12 @@ function EquipmentsInfo({ userId, changeCurrentEquipment, extraClassNames }: Pro
   const [equipments, setEquipments] = useState<EquipmentModel[]>([]);
 
   const fetchEquipments = useCallback(async () => {
-    if (userId !== undefined) {
+    if (currentAsset !== undefined) {
       return equipmentProxy.fetchEquipments();
     }
 
     return Promise.resolve([]);
-  }, [userId]);
+  }, [currentAsset]);
   const { data: fetchedEquipments, isLoading, isRejected } = useAsync({ promiseFn: fetchEquipments });
 
   useEffect(() => {

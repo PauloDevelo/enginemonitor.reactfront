@@ -14,7 +14,7 @@ const NbActionPending = () => {
 
   useEffect(() => {
     actionManager.registerOnActionManagerChanged(setActionCounter);
-    actionManager.countAction().then(setActionCounter);
+    setActionCounter(actionManager.countAction());
 
     return () => {
       actionManager.unregisterOnActionManagerChanged(setActionCounter);

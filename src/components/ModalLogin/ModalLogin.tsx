@@ -4,7 +4,7 @@ import {
 } from 'reactstrap';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CSSTransition } from 'react-transition-group';
+
 import { FormattedMessage, defineMessages } from 'react-intl';
 
 import useEditModal from '../../hooks/EditModalHook';
@@ -111,33 +111,31 @@ const ModalLogin = ({
 
   return (
     <>
-      <CSSTransition in={visible} timeout={300} classNames="modal">
-        <Modal isOpen={visible} className={className} fade={false}>
-          <ModalHeader>
-            <FontAwesomeIcon icon={faSignInAlt} />
-            {' '}
-            <FormattedMessage {...loginmsg.modaltitle} />
-          </ModalHeader>
-          <ModalBody>
-            {visible && (
-            <MyForm submit={handleSubmit} id="formLogin" initialData={user}>
-              <MyInput name="email" label={loginmsg.email} type="email" required />
-              <MyInput name="password" label={loginmsg.password} type="password" required />
-              <MyInput name="remember" label={loginmsg.remember} type="checkbox" />
-            </MyForm>
-            )}
-            {state.state === LoginState.IsLoggingIn && <Spinner size="sm" color="secondary" />}
-            {state.infoMsg && <Alerts error={state.infoMsg} color="success" />}
-            {state.errors && <Alerts errors={state.errors} />}
-          </ModalBody>
-          <ModalFooter>
-            <Button onClick={toggleModalSignup} color="warning" className="d-block mx-auto"><FormattedMessage {...loginmsg.signup} /></Button>
-            {state.state === LoginState.WrongPassword && <Button onClick={resetPasswordModalHook.toggleModal} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.resetPassword} /></Button>}
-            {state.state === LoginState.NotVerified && <Button onClick={sendVerificationEmail} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.sendVerification} /></Button>}
-            <ActionButton type="submit" form="formLogin" color="success" className="d-block mx-auto" message={loginmsg.login} isActing={state.state === LoginState.IsLoggingIn} />
-          </ModalFooter>
-        </Modal>
-      </CSSTransition>
+      <Modal isOpen={visible && state.state !== LoginState.LoggedIn} className={className} fade>
+        <ModalHeader>
+          <FontAwesomeIcon icon={faSignInAlt} />
+          {' '}
+          <FormattedMessage {...loginmsg.modaltitle} />
+        </ModalHeader>
+        <ModalBody>
+          {visible && (
+          <MyForm submit={handleSubmit} id="formLogin" initialData={user}>
+            <MyInput name="email" label={loginmsg.email} type="email" required />
+            <MyInput name="password" label={loginmsg.password} type="password" required />
+            <MyInput name="remember" label={loginmsg.remember} type="checkbox" />
+          </MyForm>
+          )}
+          {state.state === LoginState.IsLoggingIn && <Spinner size="sm" color="secondary" />}
+          {state.infoMsg && <Alerts error={state.infoMsg} color="success" />}
+          {state.errors && <Alerts errors={state.errors} />}
+        </ModalBody>
+        <ModalFooter>
+          <Button onClick={toggleModalSignup} color="warning" className="d-block mx-auto"><FormattedMessage {...loginmsg.signup} /></Button>
+          {state.state === LoginState.WrongPassword && <Button onClick={resetPasswordModalHook.toggleModal} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.resetPassword} /></Button>}
+          {state.state === LoginState.NotVerified && <Button onClick={sendVerificationEmail} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.sendVerification} /></Button>}
+          <ActionButton type="submit" form="formLogin" color="success" className="d-block mx-auto" message={loginmsg.login} isActing={state.state === LoginState.IsLoggingIn} />
+        </ModalFooter>
+      </Modal>
       <ModalPasswordReset toggle={resetPasswordModalHook.toggleModal} visible={resetPasswordModalHook.editModalVisibility} data={resetPasswordModalHook.data} className="modal-dialog-centered" />
     </>
   );

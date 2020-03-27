@@ -53,8 +53,8 @@ const getOrientationInDegrees = async (file: File): Promise<number> => {
     const tags = await readExifTags(file);
     return convertExifOrientationIntoDegree(tags.Orientation);
   } catch (error) {
-    log.error('Impossible to get the image orientation in the Exif data.');
-    log.error(error);
+    log.warn('Impossible to get the image orientation in the Exif data.');
+    log.warn(error.message);
     return 0;
   }
 };
@@ -117,6 +117,32 @@ const resizeBase64ImageIntoBlob = (base64Str: string, maxWidth = 400, maxHeight 
   img.src = base64Str;
 });
 
+export const convertUrlImageIntoDataUrl = (urlImage: string):Promise<string> => new Promise((resolve, reject) => {
+  const img = new Image();
+
+  img.addEventListener('load', () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width as number;
+    canvas.height = img.height as number;
+
+    const ctx = canvas.getContext('2d');
+    if (ctx === null) {
+      throw new Error("Cannot get the canva's context");
+    }
+
+    ctx.drawImage(img, 0, 0, img.width as number, img.height as number);
+    resolve(canvas.toDataURL('image/jpeg', 0.95));
+  });
+
+  img.addEventListener('error', (event: Event| string) => {
+    log.error(event);
+    reject(new Error(event.toString()));
+  });
+
+  img.crossOrigin = 'anonymous';
+  img.src = urlImage;
+});
+
 export const createImageModel = (parentUiId: string):ImageModel => {
   const uiid = uuidv1();
   return ({
@@ -126,8 +152,8 @@ export const createImageModel = (parentUiId: string):ImageModel => {
     title: '',
     description: '',
     sizeInByte: 0,
-    thumbnailUrl: `${process.env.REACT_APP_URL_BASE}${userContext.getCurrentUser()!.imageFolder}/thumbnail_${uiid}.jpeg`,
-    url: `${process.env.REACT_APP_URL_BASE}${userContext.getCurrentUser()!.imageFolder}/${uiid}.jpeg`,
+    thumbnailUrl: `${process.env.REACT_APP_API_URL_BASE}${userContext.getCurrentUser()!.imageFolder}/thumbnail_${uiid}.jpeg`,
+    url: `${process.env.REACT_APP_API_URL_BASE}${userContext.getCurrentUser()!.imageFolder}/${uiid}.jpeg`,
   });
 };
 

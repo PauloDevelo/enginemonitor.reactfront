@@ -162,13 +162,8 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
             className="d-flex p-0 card-body"
           >
             <div
-              className="p-2 button-previous-task"
+              className="p-2 button-previous-task clickable"
               onClick={[Function]}
-              style={
-                Object {
-                  "cursor": "pointer",
-                }
-              }
             >
               <div
                 className="card-control-prev-icon invisible"
@@ -522,55 +517,33 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                           toggle={[Function]}
                           visible={false}
                         >
-                          <CSSTransition
-                            classNames="modal"
-                            in={false}
-                            timeout={300}
-                          >
-                            <Transition
-                              appear={false}
-                              enter={true}
-                              exit={true}
-                              in={false}
-                              mountOnEnter={false}
-                              onEnter={[Function]}
-                              onEntered={[Function]}
-                              onEntering={[Function]}
-                              onExit={[Function]}
-                              onExited={[Function]}
-                              onExiting={[Function]}
-                              timeout={300}
-                              unmountOnExit={false}
-                            >
-                              <Modal
-                                autoFocus={true}
-                                backdrop={true}
-                                backdropTransition={
-                                  Object {
-                                    "mountOnEnter": true,
-                                    "timeout": 150,
-                                  }
-                                }
-                                centered={false}
-                                fade={false}
-                                isOpen={false}
-                                keyboard={true}
-                                modalTransition={
-                                  Object {
-                                    "timeout": 300,
-                                  }
-                                }
-                                onClosed={[Function]}
-                                onOpened={[Function]}
-                                returnFocusAfterClose={true}
-                                role="dialog"
-                                scrollable={false}
-                                toggle={[Function]}
-                                unmountOnClose={true}
-                                zIndex={1050}
-                              />
-                            </Transition>
-                          </CSSTransition>
+                          <Modal
+                            autoFocus={true}
+                            backdrop={true}
+                            backdropTransition={
+                              Object {
+                                "mountOnEnter": true,
+                                "timeout": 150,
+                              }
+                            }
+                            centered={false}
+                            fade={true}
+                            isOpen={false}
+                            keyboard={true}
+                            modalTransition={
+                              Object {
+                                "timeout": 300,
+                              }
+                            }
+                            onClosed={[Function]}
+                            onOpened={[Function]}
+                            returnFocusAfterClose={true}
+                            role="dialog"
+                            scrollable={false}
+                            toggle={[Function]}
+                            unmountOnClose={true}
+                            zIndex={1050}
+                          />
                           <ModalYesNoConfirmation
                             className="modal-dialog-centered"
                             isActing={false}
@@ -593,56 +566,34 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                             visible={false}
                             yes={[Function]}
                           >
-                            <CSSTransition
-                              classNames="modal"
-                              in={false}
-                              timeout={300}
-                            >
-                              <Transition
-                                appear={false}
-                                enter={true}
-                                exit={true}
-                                in={false}
-                                mountOnEnter={false}
-                                onEnter={[Function]}
-                                onEntered={[Function]}
-                                onEntering={[Function]}
-                                onExit={[Function]}
-                                onExited={[Function]}
-                                onExiting={[Function]}
-                                timeout={300}
-                                unmountOnExit={false}
-                              >
-                                <Modal
-                                  autoFocus={true}
-                                  backdrop={true}
-                                  backdropTransition={
-                                    Object {
-                                      "mountOnEnter": true,
-                                      "timeout": 150,
-                                    }
-                                  }
-                                  centered={false}
-                                  className="modal-dialog-centered"
-                                  fade={false}
-                                  isOpen={false}
-                                  keyboard={true}
-                                  modalTransition={
-                                    Object {
-                                      "timeout": 300,
-                                    }
-                                  }
-                                  onClosed={[Function]}
-                                  onOpened={[Function]}
-                                  returnFocusAfterClose={true}
-                                  role="dialog"
-                                  scrollable={false}
-                                  toggle={[Function]}
-                                  unmountOnClose={true}
-                                  zIndex={1050}
-                                />
-                              </Transition>
-                            </CSSTransition>
+                            <Modal
+                              autoFocus={true}
+                              backdrop={true}
+                              backdropTransition={
+                                Object {
+                                  "mountOnEnter": true,
+                                  "timeout": 150,
+                                }
+                              }
+                              centered={false}
+                              className="modal-dialog-centered"
+                              fade={true}
+                              isOpen={false}
+                              keyboard={true}
+                              modalTransition={
+                                Object {
+                                  "timeout": 300,
+                                }
+                              }
+                              onClosed={[Function]}
+                              onOpened={[Function]}
+                              returnFocusAfterClose={true}
+                              role="dialog"
+                              scrollable={false}
+                              toggle={[Function]}
+                              unmountOnClose={true}
+                              zIndex={1050}
+                            />
                           </ModalYesNoConfirmation>
                         </ModalEditImage>
                       </Memo(Gallery)>
@@ -652,13 +603,8 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
               </div>
             </TransitionGroup>
             <div
-              className="p-2 button-next-task"
+              className="p-2 button-next-task clickable"
               onClick={[Function]}
-              style={
-                Object {
-                  "cursor": "pointer",
-                }
-              }
             >
               <div
                 className="card-control-next-icon"
@@ -741,6 +687,115 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
         </CardFooter>
       </div>
     </Card>
+    <ModalEditTask
+      className="modal-dialog-centered"
+      equipment={
+        Object {
+          "_uiId": "1234",
+          "age": 2563,
+          "brand": "nanni",
+          "installation": 2011-02-22T16:00:00.000Z,
+          "model": "N3.30",
+          "name": "engine",
+        }
+      }
+      onTaskDeleted={[MockFunction]}
+      onTaskSaved={[MockFunction]}
+      task={
+        Object {
+          "_uiId": "task1",
+          "description": "task1 description",
+          "level": 1,
+          "name": "taskname1",
+          "nextDueDate": 2011-02-22T16:00:00.000Z,
+          "periodInMonth": 12,
+          "usageInHourLeft": 20,
+          "usagePeriodInHour": 200,
+        }
+      }
+      toggle={[Function]}
+      visible={false}
+    >
+      <Modal
+        autoFocus={true}
+        backdrop={true}
+        backdropTransition={
+          Object {
+            "mountOnEnter": true,
+            "timeout": 150,
+          }
+        }
+        centered={false}
+        className="modal-dialog-centered"
+        fade={true}
+        isOpen={false}
+        keyboard={true}
+        modalTransition={
+          Object {
+            "timeout": 300,
+          }
+        }
+        onClosed={[Function]}
+        onOpened={[Function]}
+        returnFocusAfterClose={true}
+        role="dialog"
+        scrollable={false}
+        toggle={[Function]}
+        unmountOnClose={true}
+        zIndex={1050}
+      />
+      <ModalYesNoConfirmation
+        className="modal-dialog-centered"
+        isActing={false}
+        message={
+          Object {
+            "defaultMessage": "Are you sure you want to delete this task?",
+            "description": "User message",
+            "id": "taskDeleteMsg",
+          }
+        }
+        no={[Function]}
+        title={
+          Object {
+            "defaultMessage": "Delete task",
+            "description": "Modal title",
+            "id": "taskDeleteTitle",
+          }
+        }
+        toggle={[Function]}
+        visible={false}
+        yes={[Function]}
+      >
+        <Modal
+          autoFocus={true}
+          backdrop={true}
+          backdropTransition={
+            Object {
+              "mountOnEnter": true,
+              "timeout": 150,
+            }
+          }
+          centered={false}
+          className="modal-dialog-centered"
+          fade={true}
+          isOpen={false}
+          keyboard={true}
+          modalTransition={
+            Object {
+              "timeout": 300,
+            }
+          }
+          onClosed={[Function]}
+          onOpened={[Function]}
+          returnFocusAfterClose={true}
+          role="dialog"
+          scrollable={false}
+          toggle={[Function]}
+          unmountOnClose={true}
+          zIndex={1050}
+        />
+      </ModalYesNoConfirmation>
+    </ModalEditTask>
   </div>
 </Memo(CardTaskDetails)>
 `;
@@ -813,13 +868,8 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
             className="d-flex p-0 card-body"
           >
             <div
-              className="p-2 button-previous-task"
+              className="p-2 button-previous-task clickable"
               onClick={[Function]}
-              style={
-                Object {
-                  "cursor": "pointer",
-                }
-              }
             >
               <div
                 className="card-control-prev-icon"
@@ -1173,55 +1223,33 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                           toggle={[Function]}
                           visible={false}
                         >
-                          <CSSTransition
-                            classNames="modal"
-                            in={false}
-                            timeout={300}
-                          >
-                            <Transition
-                              appear={false}
-                              enter={true}
-                              exit={true}
-                              in={false}
-                              mountOnEnter={false}
-                              onEnter={[Function]}
-                              onEntered={[Function]}
-                              onEntering={[Function]}
-                              onExit={[Function]}
-                              onExited={[Function]}
-                              onExiting={[Function]}
-                              timeout={300}
-                              unmountOnExit={false}
-                            >
-                              <Modal
-                                autoFocus={true}
-                                backdrop={true}
-                                backdropTransition={
-                                  Object {
-                                    "mountOnEnter": true,
-                                    "timeout": 150,
-                                  }
-                                }
-                                centered={false}
-                                fade={false}
-                                isOpen={false}
-                                keyboard={true}
-                                modalTransition={
-                                  Object {
-                                    "timeout": 300,
-                                  }
-                                }
-                                onClosed={[Function]}
-                                onOpened={[Function]}
-                                returnFocusAfterClose={true}
-                                role="dialog"
-                                scrollable={false}
-                                toggle={[Function]}
-                                unmountOnClose={true}
-                                zIndex={1050}
-                              />
-                            </Transition>
-                          </CSSTransition>
+                          <Modal
+                            autoFocus={true}
+                            backdrop={true}
+                            backdropTransition={
+                              Object {
+                                "mountOnEnter": true,
+                                "timeout": 150,
+                              }
+                            }
+                            centered={false}
+                            fade={true}
+                            isOpen={false}
+                            keyboard={true}
+                            modalTransition={
+                              Object {
+                                "timeout": 300,
+                              }
+                            }
+                            onClosed={[Function]}
+                            onOpened={[Function]}
+                            returnFocusAfterClose={true}
+                            role="dialog"
+                            scrollable={false}
+                            toggle={[Function]}
+                            unmountOnClose={true}
+                            zIndex={1050}
+                          />
                           <ModalYesNoConfirmation
                             className="modal-dialog-centered"
                             isActing={false}
@@ -1244,56 +1272,34 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                             visible={false}
                             yes={[Function]}
                           >
-                            <CSSTransition
-                              classNames="modal"
-                              in={false}
-                              timeout={300}
-                            >
-                              <Transition
-                                appear={false}
-                                enter={true}
-                                exit={true}
-                                in={false}
-                                mountOnEnter={false}
-                                onEnter={[Function]}
-                                onEntered={[Function]}
-                                onEntering={[Function]}
-                                onExit={[Function]}
-                                onExited={[Function]}
-                                onExiting={[Function]}
-                                timeout={300}
-                                unmountOnExit={false}
-                              >
-                                <Modal
-                                  autoFocus={true}
-                                  backdrop={true}
-                                  backdropTransition={
-                                    Object {
-                                      "mountOnEnter": true,
-                                      "timeout": 150,
-                                    }
-                                  }
-                                  centered={false}
-                                  className="modal-dialog-centered"
-                                  fade={false}
-                                  isOpen={false}
-                                  keyboard={true}
-                                  modalTransition={
-                                    Object {
-                                      "timeout": 300,
-                                    }
-                                  }
-                                  onClosed={[Function]}
-                                  onOpened={[Function]}
-                                  returnFocusAfterClose={true}
-                                  role="dialog"
-                                  scrollable={false}
-                                  toggle={[Function]}
-                                  unmountOnClose={true}
-                                  zIndex={1050}
-                                />
-                              </Transition>
-                            </CSSTransition>
+                            <Modal
+                              autoFocus={true}
+                              backdrop={true}
+                              backdropTransition={
+                                Object {
+                                  "mountOnEnter": true,
+                                  "timeout": 150,
+                                }
+                              }
+                              centered={false}
+                              className="modal-dialog-centered"
+                              fade={true}
+                              isOpen={false}
+                              keyboard={true}
+                              modalTransition={
+                                Object {
+                                  "timeout": 300,
+                                }
+                              }
+                              onClosed={[Function]}
+                              onOpened={[Function]}
+                              returnFocusAfterClose={true}
+                              role="dialog"
+                              scrollable={false}
+                              toggle={[Function]}
+                              unmountOnClose={true}
+                              zIndex={1050}
+                            />
                           </ModalYesNoConfirmation>
                         </ModalEditImage>
                       </Memo(Gallery)>
@@ -1303,13 +1309,8 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
               </div>
             </TransitionGroup>
             <div
-              className="p-2 button-next-task"
+              className="p-2 button-next-task clickable"
               onClick={[Function]}
-              style={
-                Object {
-                  "cursor": "pointer",
-                }
-              }
             >
               <div
                 className="card-control-next-icon invisible"
@@ -1392,6 +1393,115 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
         </CardFooter>
       </div>
     </Card>
+    <ModalEditTask
+      className="modal-dialog-centered"
+      equipment={
+        Object {
+          "_uiId": "1234",
+          "age": 2563,
+          "brand": "nanni",
+          "installation": 2011-02-22T16:00:00.000Z,
+          "model": "N3.30",
+          "name": "engine",
+        }
+      }
+      onTaskDeleted={[MockFunction]}
+      onTaskSaved={[MockFunction]}
+      task={
+        Object {
+          "_uiId": "task2",
+          "description": "task2 description",
+          "level": 3,
+          "name": "taskname2",
+          "nextDueDate": 2018-02-22T16:00:00.000Z,
+          "periodInMonth": 24,
+          "usageInHourLeft": 20,
+          "usagePeriodInHour": 400,
+        }
+      }
+      toggle={[Function]}
+      visible={false}
+    >
+      <Modal
+        autoFocus={true}
+        backdrop={true}
+        backdropTransition={
+          Object {
+            "mountOnEnter": true,
+            "timeout": 150,
+          }
+        }
+        centered={false}
+        className="modal-dialog-centered"
+        fade={true}
+        isOpen={false}
+        keyboard={true}
+        modalTransition={
+          Object {
+            "timeout": 300,
+          }
+        }
+        onClosed={[Function]}
+        onOpened={[Function]}
+        returnFocusAfterClose={true}
+        role="dialog"
+        scrollable={false}
+        toggle={[Function]}
+        unmountOnClose={true}
+        zIndex={1050}
+      />
+      <ModalYesNoConfirmation
+        className="modal-dialog-centered"
+        isActing={false}
+        message={
+          Object {
+            "defaultMessage": "Are you sure you want to delete this task?",
+            "description": "User message",
+            "id": "taskDeleteMsg",
+          }
+        }
+        no={[Function]}
+        title={
+          Object {
+            "defaultMessage": "Delete task",
+            "description": "Modal title",
+            "id": "taskDeleteTitle",
+          }
+        }
+        toggle={[Function]}
+        visible={false}
+        yes={[Function]}
+      >
+        <Modal
+          autoFocus={true}
+          backdrop={true}
+          backdropTransition={
+            Object {
+              "mountOnEnter": true,
+              "timeout": 150,
+            }
+          }
+          centered={false}
+          className="modal-dialog-centered"
+          fade={true}
+          isOpen={false}
+          keyboard={true}
+          modalTransition={
+            Object {
+              "timeout": 300,
+            }
+          }
+          onClosed={[Function]}
+          onOpened={[Function]}
+          returnFocusAfterClose={true}
+          role="dialog"
+          scrollable={false}
+          toggle={[Function]}
+          unmountOnClose={true}
+          zIndex={1050}
+        />
+      </ModalYesNoConfirmation>
+    </ModalEditTask>
   </div>
 </Memo(CardTaskDetails)>
 `;

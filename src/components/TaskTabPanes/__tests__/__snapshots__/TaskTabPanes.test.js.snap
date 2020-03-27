@@ -340,28 +340,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
             data={
               Array [
                 Object {
-                  "initialIndex": 1,
-                  "level": 1,
-                  "name": "Change the impeller",
-                  "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
-                  "task": Object {
-                    "_uiId": "task_02",
-                    "description": "Changer l'impeller de la pompe a eau de mer",
-                    "level": 1,
-                    "name": "Change the impeller",
-                    "nextDueDate": 2021-07-09T16:00:00.000Z,
-                    "periodInMonth": 24,
-                    "usageInHourLeft": undefined,
-                    "usagePeriodInHour": 800,
-                  },
-                  "todo": Object {
-                    "dueDate": 2021-07-09T16:00:00.000Z,
-                    "level": 1,
-                    "onlyDate": true,
-                    "usageInHourLeft": undefined,
-                  },
-                },
-                Object {
                   "initialIndex": 0,
                   "level": 1,
                   "name": "Vidange",
@@ -378,6 +356,28 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                   },
                   "todo": Object {
                     "dueDate": 2020-07-09T16:00:00.000Z,
+                    "level": 1,
+                    "onlyDate": true,
+                    "usageInHourLeft": undefined,
+                  },
+                },
+                Object {
+                  "initialIndex": 1,
+                  "level": 1,
+                  "name": "Change the impeller",
+                  "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
+                  "task": Object {
+                    "_uiId": "task_02",
+                    "description": "Changer l'impeller de la pompe a eau de mer",
+                    "level": 1,
+                    "name": "Change the impeller",
+                    "nextDueDate": 2021-07-09T16:00:00.000Z,
+                    "periodInMonth": 24,
+                    "usageInHourLeft": undefined,
+                    "usagePeriodInHour": 800,
+                  },
+                  "todo": Object {
+                    "dueDate": 2021-07-09T16:00:00.000Z,
                     "level": 1,
                     "onlyDate": true,
                     "usageInHourLeft": undefined,
@@ -415,28 +415,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
               data={
                 Array [
                   Object {
-                    "initialIndex": 1,
-                    "level": 1,
-                    "name": "Change the impeller",
-                    "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
-                    "task": Object {
-                      "_uiId": "task_02",
-                      "description": "Changer l'impeller de la pompe a eau de mer",
-                      "level": 1,
-                      "name": "Change the impeller",
-                      "nextDueDate": 2021-07-09T16:00:00.000Z,
-                      "periodInMonth": 24,
-                      "usageInHourLeft": undefined,
-                      "usagePeriodInHour": 800,
-                    },
-                    "todo": Object {
-                      "dueDate": 2021-07-09T16:00:00.000Z,
-                      "level": 1,
-                      "onlyDate": true,
-                      "usageInHourLeft": undefined,
-                    },
-                  },
-                  Object {
                     "initialIndex": 0,
                     "level": 1,
                     "name": "Vidange",
@@ -453,6 +431,28 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                     },
                     "todo": Object {
                       "dueDate": 2020-07-09T16:00:00.000Z,
+                      "level": 1,
+                      "onlyDate": true,
+                      "usageInHourLeft": undefined,
+                    },
+                  },
+                  Object {
+                    "initialIndex": 1,
+                    "level": 1,
+                    "name": "Change the impeller",
+                    "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
+                    "task": Object {
+                      "_uiId": "task_02",
+                      "description": "Changer l'impeller de la pompe a eau de mer",
+                      "level": 1,
+                      "name": "Change the impeller",
+                      "nextDueDate": 2021-07-09T16:00:00.000Z,
+                      "periodInMonth": 24,
+                      "usageInHourLeft": undefined,
+                      "usagePeriodInHour": 800,
+                    },
+                    "todo": Object {
+                      "dueDate": 2021-07-09T16:00:00.000Z,
                       "level": 1,
                       "onlyDate": true,
                       "usageInHourLeft": undefined,
@@ -491,28 +491,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                 data={
                   Array [
                     Object {
-                      "initialIndex": 1,
-                      "level": 1,
-                      "name": "Change the impeller",
-                      "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
-                      "task": Object {
-                        "_uiId": "task_02",
-                        "description": "Changer l'impeller de la pompe a eau de mer",
-                        "level": 1,
-                        "name": "Change the impeller",
-                        "nextDueDate": 2021-07-09T16:00:00.000Z,
-                        "periodInMonth": 24,
-                        "usageInHourLeft": undefined,
-                        "usagePeriodInHour": 800,
-                      },
-                      "todo": Object {
-                        "dueDate": 2021-07-09T16:00:00.000Z,
-                        "level": 1,
-                        "onlyDate": true,
-                        "usageInHourLeft": undefined,
-                      },
-                    },
-                    Object {
                       "initialIndex": 0,
                       "level": 1,
                       "name": "Vidange",
@@ -529,6 +507,28 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                       },
                       "todo": Object {
                         "dueDate": 2020-07-09T16:00:00.000Z,
+                        "level": 1,
+                        "onlyDate": true,
+                        "usageInHourLeft": undefined,
+                      },
+                    },
+                    Object {
+                      "initialIndex": 1,
+                      "level": 1,
+                      "name": "Change the impeller",
+                      "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
+                      "task": Object {
+                        "_uiId": "task_02",
+                        "description": "Changer l'impeller de la pompe a eau de mer",
+                        "level": 1,
+                        "name": "Change the impeller",
+                        "nextDueDate": 2021-07-09T16:00:00.000Z,
+                        "periodInMonth": 24,
+                        "usageInHourLeft": undefined,
+                        "usagePeriodInHour": 800,
+                      },
+                      "todo": Object {
+                        "dueDate": 2021-07-09T16:00:00.000Z,
                         "level": 1,
                         "onlyDate": true,
                         "usageInHourLeft": undefined,
@@ -564,28 +564,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                   data={
                     Array [
                       Object {
-                        "initialIndex": 1,
-                        "level": 1,
-                        "name": "Change the impeller",
-                        "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
-                        "task": Object {
-                          "_uiId": "task_02",
-                          "description": "Changer l'impeller de la pompe a eau de mer",
-                          "level": 1,
-                          "name": "Change the impeller",
-                          "nextDueDate": 2021-07-09T16:00:00.000Z,
-                          "periodInMonth": 24,
-                          "usageInHourLeft": undefined,
-                          "usagePeriodInHour": 800,
-                        },
-                        "todo": Object {
-                          "dueDate": 2021-07-09T16:00:00.000Z,
-                          "level": 1,
-                          "onlyDate": true,
-                          "usageInHourLeft": undefined,
-                        },
-                      },
-                      Object {
                         "initialIndex": 0,
                         "level": 1,
                         "name": "Vidange",
@@ -602,6 +580,28 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                         },
                         "todo": Object {
                           "dueDate": 2020-07-09T16:00:00.000Z,
+                          "level": 1,
+                          "onlyDate": true,
+                          "usageInHourLeft": undefined,
+                        },
+                      },
+                      Object {
+                        "initialIndex": 1,
+                        "level": 1,
+                        "name": "Change the impeller",
+                        "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
+                        "task": Object {
+                          "_uiId": "task_02",
+                          "description": "Changer l'impeller de la pompe a eau de mer",
+                          "level": 1,
+                          "name": "Change the impeller",
+                          "nextDueDate": 2021-07-09T16:00:00.000Z,
+                          "periodInMonth": 24,
+                          "usageInHourLeft": undefined,
+                          "usagePeriodInHour": 800,
+                        },
+                        "todo": Object {
+                          "dueDate": 2021-07-09T16:00:00.000Z,
                           "level": 1,
                           "onlyDate": true,
                           "usageInHourLeft": undefined,
@@ -654,28 +654,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                             data={
                               Array [
                                 Object {
-                                  "initialIndex": 1,
-                                  "level": 1,
-                                  "name": "Change the impeller",
-                                  "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
-                                  "task": Object {
-                                    "_uiId": "task_02",
-                                    "description": "Changer l'impeller de la pompe a eau de mer",
-                                    "level": 1,
-                                    "name": "Change the impeller",
-                                    "nextDueDate": 2021-07-09T16:00:00.000Z,
-                                    "periodInMonth": 24,
-                                    "usageInHourLeft": undefined,
-                                    "usagePeriodInHour": 800,
-                                  },
-                                  "todo": Object {
-                                    "dueDate": 2021-07-09T16:00:00.000Z,
-                                    "level": 1,
-                                    "onlyDate": true,
-                                    "usageInHourLeft": undefined,
-                                  },
-                                },
-                                Object {
                                   "initialIndex": 0,
                                   "level": 1,
                                   "name": "Vidange",
@@ -692,6 +670,28 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                   },
                                   "todo": Object {
                                     "dueDate": 2020-07-09T16:00:00.000Z,
+                                    "level": 1,
+                                    "onlyDate": true,
+                                    "usageInHourLeft": undefined,
+                                  },
+                                },
+                                Object {
+                                  "initialIndex": 1,
+                                  "level": 1,
+                                  "name": "Change the impeller",
+                                  "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
+                                  "task": Object {
+                                    "_uiId": "task_02",
+                                    "description": "Changer l'impeller de la pompe a eau de mer",
+                                    "level": 1,
+                                    "name": "Change the impeller",
+                                    "nextDueDate": 2021-07-09T16:00:00.000Z,
+                                    "periodInMonth": 24,
+                                    "usageInHourLeft": undefined,
+                                    "usagePeriodInHour": 800,
+                                  },
+                                  "todo": Object {
+                                    "dueDate": 2021-07-09T16:00:00.000Z,
                                     "level": 1,
                                     "onlyDate": true,
                                     "usageInHourLeft": undefined,
@@ -1151,22 +1151,22 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                   }
                                   data={
                                     Object {
-                                      "initialIndex": 1,
+                                      "initialIndex": 0,
                                       "level": 1,
-                                      "name": "Change the impeller",
-                                      "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
+                                      "name": "Vidange",
+                                      "shortenDescription": "Changer l'huile",
                                       "task": Object {
-                                        "_uiId": "task_02",
-                                        "description": "Changer l'impeller de la pompe a eau de mer",
+                                        "_uiId": "task_01",
+                                        "description": "Changer l'huile",
                                         "level": 1,
-                                        "name": "Change the impeller",
-                                        "nextDueDate": 2021-07-09T16:00:00.000Z,
-                                        "periodInMonth": 24,
+                                        "name": "Vidange",
+                                        "nextDueDate": 2020-07-09T16:00:00.000Z,
+                                        "periodInMonth": 12,
                                         "usageInHourLeft": undefined,
-                                        "usagePeriodInHour": 800,
+                                        "usagePeriodInHour": 500,
                                       },
                                       "todo": Object {
-                                        "dueDate": 2021-07-09T16:00:00.000Z,
+                                        "dueDate": 2020-07-09T16:00:00.000Z,
                                         "level": 1,
                                         "onlyDate": true,
                                         "usageInHourLeft": undefined,
@@ -1249,22 +1249,22 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                               cell={[Function]}
                                               data={
                                                 Object {
-                                                  "initialIndex": 1,
+                                                  "initialIndex": 0,
                                                   "level": 1,
-                                                  "name": "Change the impeller",
-                                                  "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
+                                                  "name": "Vidange",
+                                                  "shortenDescription": "Changer l'huile",
                                                   "task": Object {
-                                                    "_uiId": "task_02",
-                                                    "description": "Changer l'impeller de la pompe a eau de mer",
+                                                    "_uiId": "task_01",
+                                                    "description": "Changer l'huile",
                                                     "level": 1,
-                                                    "name": "Change the impeller",
-                                                    "nextDueDate": 2021-07-09T16:00:00.000Z,
-                                                    "periodInMonth": 24,
+                                                    "name": "Vidange",
+                                                    "nextDueDate": 2020-07-09T16:00:00.000Z,
+                                                    "periodInMonth": 12,
                                                     "usageInHourLeft": undefined,
-                                                    "usagePeriodInHour": 800,
+                                                    "usagePeriodInHour": 500,
                                                   },
                                                   "todo": Object {
-                                                    "dueDate": 2021-07-09T16:00:00.000Z,
+                                                    "dueDate": 2020-07-09T16:00:00.000Z,
                                                     "level": 1,
                                                     "onlyDate": true,
                                                     "usageInHourLeft": undefined,
@@ -1280,22 +1280,22 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                               <cell
                                                 data={
                                                   Object {
-                                                    "initialIndex": 1,
+                                                    "initialIndex": 0,
                                                     "level": 1,
-                                                    "name": "Change the impeller",
-                                                    "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
+                                                    "name": "Vidange",
+                                                    "shortenDescription": "Changer l'huile",
                                                     "task": Object {
-                                                      "_uiId": "task_02",
-                                                      "description": "Changer l'impeller de la pompe a eau de mer",
+                                                      "_uiId": "task_01",
+                                                      "description": "Changer l'huile",
                                                       "level": 1,
-                                                      "name": "Change the impeller",
-                                                      "nextDueDate": 2021-07-09T16:00:00.000Z,
-                                                      "periodInMonth": 24,
+                                                      "name": "Vidange",
+                                                      "nextDueDate": 2020-07-09T16:00:00.000Z,
+                                                      "periodInMonth": 12,
                                                       "usageInHourLeft": undefined,
-                                                      "usagePeriodInHour": 800,
+                                                      "usagePeriodInHour": 500,
                                                     },
                                                     "todo": Object {
-                                                      "dueDate": 2021-07-09T16:00:00.000Z,
+                                                      "dueDate": 2020-07-09T16:00:00.000Z,
                                                       "level": 1,
                                                       "onlyDate": true,
                                                       "usageInHourLeft": undefined,
@@ -1310,14 +1310,14 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                   classNames="table-success"
                                                   data={
                                                     Object {
-                                                      "_uiId": "task_02",
-                                                      "description": "Changer l'impeller de la pompe a eau de mer",
+                                                      "_uiId": "task_01",
+                                                      "description": "Changer l'huile",
                                                       "level": 1,
-                                                      "name": "Change the impeller",
-                                                      "nextDueDate": 2021-07-09T16:00:00.000Z,
-                                                      "periodInMonth": 24,
+                                                      "name": "Vidange",
+                                                      "nextDueDate": 2020-07-09T16:00:00.000Z,
+                                                      "periodInMonth": 12,
                                                       "usageInHourLeft": undefined,
-                                                      "usagePeriodInHour": 800,
+                                                      "usagePeriodInHour": 500,
                                                     }
                                                   }
                                                   onDisplayData={[MockFunction]}
@@ -1327,7 +1327,7 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                     onClick={[Function]}
                                                   >
                                                     <span>
-                                                      Change the impeller
+                                                      Vidange
                                                     </span>
                                                   </div>
                                                 </ClickableCell>
@@ -1394,22 +1394,22 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                               cell={[Function]}
                                               data={
                                                 Object {
-                                                  "initialIndex": 1,
+                                                  "initialIndex": 0,
                                                   "level": 1,
-                                                  "name": "Change the impeller",
-                                                  "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
+                                                  "name": "Vidange",
+                                                  "shortenDescription": "Changer l'huile",
                                                   "task": Object {
-                                                    "_uiId": "task_02",
-                                                    "description": "Changer l'impeller de la pompe a eau de mer",
+                                                    "_uiId": "task_01",
+                                                    "description": "Changer l'huile",
                                                     "level": 1,
-                                                    "name": "Change the impeller",
-                                                    "nextDueDate": 2021-07-09T16:00:00.000Z,
-                                                    "periodInMonth": 24,
+                                                    "name": "Vidange",
+                                                    "nextDueDate": 2020-07-09T16:00:00.000Z,
+                                                    "periodInMonth": 12,
                                                     "usageInHourLeft": undefined,
-                                                    "usagePeriodInHour": 800,
+                                                    "usagePeriodInHour": 500,
                                                   },
                                                   "todo": Object {
-                                                    "dueDate": 2021-07-09T16:00:00.000Z,
+                                                    "dueDate": 2020-07-09T16:00:00.000Z,
                                                     "level": 1,
                                                     "onlyDate": true,
                                                     "usageInHourLeft": undefined,
@@ -1425,22 +1425,22 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                               <cell
                                                 data={
                                                   Object {
-                                                    "initialIndex": 1,
+                                                    "initialIndex": 0,
                                                     "level": 1,
-                                                    "name": "Change the impeller",
-                                                    "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
+                                                    "name": "Vidange",
+                                                    "shortenDescription": "Changer l'huile",
                                                     "task": Object {
-                                                      "_uiId": "task_02",
-                                                      "description": "Changer l'impeller de la pompe a eau de mer",
+                                                      "_uiId": "task_01",
+                                                      "description": "Changer l'huile",
                                                       "level": 1,
-                                                      "name": "Change the impeller",
-                                                      "nextDueDate": 2021-07-09T16:00:00.000Z,
-                                                      "periodInMonth": 24,
+                                                      "name": "Vidange",
+                                                      "nextDueDate": 2020-07-09T16:00:00.000Z,
+                                                      "periodInMonth": 12,
                                                       "usageInHourLeft": undefined,
-                                                      "usagePeriodInHour": 800,
+                                                      "usagePeriodInHour": 500,
                                                     },
                                                     "todo": Object {
-                                                      "dueDate": 2021-07-09T16:00:00.000Z,
+                                                      "dueDate": 2020-07-09T16:00:00.000Z,
                                                       "level": 1,
                                                       "onlyDate": true,
                                                       "usageInHourLeft": undefined,
@@ -1455,14 +1455,14 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                   classNames="table-success d-flex"
                                                   data={
                                                     Object {
-                                                      "_uiId": "task_02",
-                                                      "description": "Changer l'impeller de la pompe a eau de mer",
+                                                      "_uiId": "task_01",
+                                                      "description": "Changer l'huile",
                                                       "level": 1,
-                                                      "name": "Change the impeller",
-                                                      "nextDueDate": 2021-07-09T16:00:00.000Z,
-                                                      "periodInMonth": 24,
+                                                      "name": "Vidange",
+                                                      "nextDueDate": 2020-07-09T16:00:00.000Z,
+                                                      "periodInMonth": 12,
                                                       "usageInHourLeft": undefined,
-                                                      "usagePeriodInHour": 800,
+                                                      "usagePeriodInHour": 500,
                                                     }
                                                   }
                                                   onDisplayData={[MockFunction]}
@@ -1549,22 +1549,22 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                               cell={[Function]}
                                               data={
                                                 Object {
-                                                  "initialIndex": 1,
+                                                  "initialIndex": 0,
                                                   "level": 1,
-                                                  "name": "Change the impeller",
-                                                  "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
+                                                  "name": "Vidange",
+                                                  "shortenDescription": "Changer l'huile",
                                                   "task": Object {
-                                                    "_uiId": "task_02",
-                                                    "description": "Changer l'impeller de la pompe a eau de mer",
+                                                    "_uiId": "task_01",
+                                                    "description": "Changer l'huile",
                                                     "level": 1,
-                                                    "name": "Change the impeller",
-                                                    "nextDueDate": 2021-07-09T16:00:00.000Z,
-                                                    "periodInMonth": 24,
+                                                    "name": "Vidange",
+                                                    "nextDueDate": 2020-07-09T16:00:00.000Z,
+                                                    "periodInMonth": 12,
                                                     "usageInHourLeft": undefined,
-                                                    "usagePeriodInHour": 800,
+                                                    "usagePeriodInHour": 500,
                                                   },
                                                   "todo": Object {
-                                                    "dueDate": 2021-07-09T16:00:00.000Z,
+                                                    "dueDate": 2020-07-09T16:00:00.000Z,
                                                     "level": 1,
                                                     "onlyDate": true,
                                                     "usageInHourLeft": undefined,
@@ -1580,22 +1580,22 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                               <cell
                                                 data={
                                                   Object {
-                                                    "initialIndex": 1,
+                                                    "initialIndex": 0,
                                                     "level": 1,
-                                                    "name": "Change the impeller",
-                                                    "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
+                                                    "name": "Vidange",
+                                                    "shortenDescription": "Changer l'huile",
                                                     "task": Object {
-                                                      "_uiId": "task_02",
-                                                      "description": "Changer l'impeller de la pompe a eau de mer",
+                                                      "_uiId": "task_01",
+                                                      "description": "Changer l'huile",
                                                       "level": 1,
-                                                      "name": "Change the impeller",
-                                                      "nextDueDate": 2021-07-09T16:00:00.000Z,
-                                                      "periodInMonth": 24,
+                                                      "name": "Vidange",
+                                                      "nextDueDate": 2020-07-09T16:00:00.000Z,
+                                                      "periodInMonth": 12,
                                                       "usageInHourLeft": undefined,
-                                                      "usagePeriodInHour": 800,
+                                                      "usagePeriodInHour": 500,
                                                     },
                                                     "todo": Object {
-                                                      "dueDate": 2021-07-09T16:00:00.000Z,
+                                                      "dueDate": 2020-07-09T16:00:00.000Z,
                                                       "level": 1,
                                                       "onlyDate": true,
                                                       "usageInHourLeft": undefined,
@@ -1610,14 +1610,14 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                   classNames="table-success"
                                                   data={
                                                     Object {
-                                                      "_uiId": "task_02",
-                                                      "description": "Changer l'impeller de la pompe a eau de mer",
+                                                      "_uiId": "task_01",
+                                                      "description": "Changer l'huile",
                                                       "level": 1,
-                                                      "name": "Change the impeller",
-                                                      "nextDueDate": 2021-07-09T16:00:00.000Z,
-                                                      "periodInMonth": 24,
+                                                      "name": "Vidange",
+                                                      "nextDueDate": 2020-07-09T16:00:00.000Z,
+                                                      "periodInMonth": 12,
                                                       "usageInHourLeft": undefined,
-                                                      "usagePeriodInHour": 800,
+                                                      "usagePeriodInHour": 500,
                                                     }
                                                   }
                                                   onDisplayData={[MockFunction]}
@@ -1627,7 +1627,7 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                     onClick={[Function]}
                                                   >
                                                     <ToDoText
-                                                      dueDate={2021-07-09T16:00:00.000Z}
+                                                      dueDate={2020-07-09T16:00:00.000Z}
                                                       level={1}
                                                       onlyDate={true}
                                                     >
@@ -1642,9 +1642,9 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                         </FormattedMessage>
                                                         <b>
                                                           <FormattedDate
-                                                            value={2021-07-09T16:00:00.000Z}
+                                                            value={2020-07-09T16:00:00.000Z}
                                                           >
-                                                            7/10/2021
+                                                            7/10/2020
                                                           </FormattedDate>
                                                         </b>
                                                       </span>
@@ -1690,22 +1690,22 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                   }
                                   data={
                                     Object {
-                                      "initialIndex": 0,
+                                      "initialIndex": 1,
                                       "level": 1,
-                                      "name": "Vidange",
-                                      "shortenDescription": "Changer l'huile",
+                                      "name": "Change the impeller",
+                                      "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
                                       "task": Object {
-                                        "_uiId": "task_01",
-                                        "description": "Changer l'huile",
+                                        "_uiId": "task_02",
+                                        "description": "Changer l'impeller de la pompe a eau de mer",
                                         "level": 1,
-                                        "name": "Vidange",
-                                        "nextDueDate": 2020-07-09T16:00:00.000Z,
-                                        "periodInMonth": 12,
+                                        "name": "Change the impeller",
+                                        "nextDueDate": 2021-07-09T16:00:00.000Z,
+                                        "periodInMonth": 24,
                                         "usageInHourLeft": undefined,
-                                        "usagePeriodInHour": 500,
+                                        "usagePeriodInHour": 800,
                                       },
                                       "todo": Object {
-                                        "dueDate": 2020-07-09T16:00:00.000Z,
+                                        "dueDate": 2021-07-09T16:00:00.000Z,
                                         "level": 1,
                                         "onlyDate": true,
                                         "usageInHourLeft": undefined,
@@ -1788,22 +1788,22 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                               cell={[Function]}
                                               data={
                                                 Object {
-                                                  "initialIndex": 0,
+                                                  "initialIndex": 1,
                                                   "level": 1,
-                                                  "name": "Vidange",
-                                                  "shortenDescription": "Changer l'huile",
+                                                  "name": "Change the impeller",
+                                                  "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
                                                   "task": Object {
-                                                    "_uiId": "task_01",
-                                                    "description": "Changer l'huile",
+                                                    "_uiId": "task_02",
+                                                    "description": "Changer l'impeller de la pompe a eau de mer",
                                                     "level": 1,
-                                                    "name": "Vidange",
-                                                    "nextDueDate": 2020-07-09T16:00:00.000Z,
-                                                    "periodInMonth": 12,
+                                                    "name": "Change the impeller",
+                                                    "nextDueDate": 2021-07-09T16:00:00.000Z,
+                                                    "periodInMonth": 24,
                                                     "usageInHourLeft": undefined,
-                                                    "usagePeriodInHour": 500,
+                                                    "usagePeriodInHour": 800,
                                                   },
                                                   "todo": Object {
-                                                    "dueDate": 2020-07-09T16:00:00.000Z,
+                                                    "dueDate": 2021-07-09T16:00:00.000Z,
                                                     "level": 1,
                                                     "onlyDate": true,
                                                     "usageInHourLeft": undefined,
@@ -1819,22 +1819,22 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                               <cell
                                                 data={
                                                   Object {
-                                                    "initialIndex": 0,
+                                                    "initialIndex": 1,
                                                     "level": 1,
-                                                    "name": "Vidange",
-                                                    "shortenDescription": "Changer l'huile",
+                                                    "name": "Change the impeller",
+                                                    "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
                                                     "task": Object {
-                                                      "_uiId": "task_01",
-                                                      "description": "Changer l'huile",
+                                                      "_uiId": "task_02",
+                                                      "description": "Changer l'impeller de la pompe a eau de mer",
                                                       "level": 1,
-                                                      "name": "Vidange",
-                                                      "nextDueDate": 2020-07-09T16:00:00.000Z,
-                                                      "periodInMonth": 12,
+                                                      "name": "Change the impeller",
+                                                      "nextDueDate": 2021-07-09T16:00:00.000Z,
+                                                      "periodInMonth": 24,
                                                       "usageInHourLeft": undefined,
-                                                      "usagePeriodInHour": 500,
+                                                      "usagePeriodInHour": 800,
                                                     },
                                                     "todo": Object {
-                                                      "dueDate": 2020-07-09T16:00:00.000Z,
+                                                      "dueDate": 2021-07-09T16:00:00.000Z,
                                                       "level": 1,
                                                       "onlyDate": true,
                                                       "usageInHourLeft": undefined,
@@ -1849,14 +1849,14 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                   classNames="table-success"
                                                   data={
                                                     Object {
-                                                      "_uiId": "task_01",
-                                                      "description": "Changer l'huile",
+                                                      "_uiId": "task_02",
+                                                      "description": "Changer l'impeller de la pompe a eau de mer",
                                                       "level": 1,
-                                                      "name": "Vidange",
-                                                      "nextDueDate": 2020-07-09T16:00:00.000Z,
-                                                      "periodInMonth": 12,
+                                                      "name": "Change the impeller",
+                                                      "nextDueDate": 2021-07-09T16:00:00.000Z,
+                                                      "periodInMonth": 24,
                                                       "usageInHourLeft": undefined,
-                                                      "usagePeriodInHour": 500,
+                                                      "usagePeriodInHour": 800,
                                                     }
                                                   }
                                                   onDisplayData={[MockFunction]}
@@ -1866,7 +1866,7 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                     onClick={[Function]}
                                                   >
                                                     <span>
-                                                      Vidange
+                                                      Change the impeller
                                                     </span>
                                                   </div>
                                                 </ClickableCell>
@@ -1933,22 +1933,22 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                               cell={[Function]}
                                               data={
                                                 Object {
-                                                  "initialIndex": 0,
+                                                  "initialIndex": 1,
                                                   "level": 1,
-                                                  "name": "Vidange",
-                                                  "shortenDescription": "Changer l'huile",
+                                                  "name": "Change the impeller",
+                                                  "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
                                                   "task": Object {
-                                                    "_uiId": "task_01",
-                                                    "description": "Changer l'huile",
+                                                    "_uiId": "task_02",
+                                                    "description": "Changer l'impeller de la pompe a eau de mer",
                                                     "level": 1,
-                                                    "name": "Vidange",
-                                                    "nextDueDate": 2020-07-09T16:00:00.000Z,
-                                                    "periodInMonth": 12,
+                                                    "name": "Change the impeller",
+                                                    "nextDueDate": 2021-07-09T16:00:00.000Z,
+                                                    "periodInMonth": 24,
                                                     "usageInHourLeft": undefined,
-                                                    "usagePeriodInHour": 500,
+                                                    "usagePeriodInHour": 800,
                                                   },
                                                   "todo": Object {
-                                                    "dueDate": 2020-07-09T16:00:00.000Z,
+                                                    "dueDate": 2021-07-09T16:00:00.000Z,
                                                     "level": 1,
                                                     "onlyDate": true,
                                                     "usageInHourLeft": undefined,
@@ -1964,22 +1964,22 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                               <cell
                                                 data={
                                                   Object {
-                                                    "initialIndex": 0,
+                                                    "initialIndex": 1,
                                                     "level": 1,
-                                                    "name": "Vidange",
-                                                    "shortenDescription": "Changer l'huile",
+                                                    "name": "Change the impeller",
+                                                    "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
                                                     "task": Object {
-                                                      "_uiId": "task_01",
-                                                      "description": "Changer l'huile",
+                                                      "_uiId": "task_02",
+                                                      "description": "Changer l'impeller de la pompe a eau de mer",
                                                       "level": 1,
-                                                      "name": "Vidange",
-                                                      "nextDueDate": 2020-07-09T16:00:00.000Z,
-                                                      "periodInMonth": 12,
+                                                      "name": "Change the impeller",
+                                                      "nextDueDate": 2021-07-09T16:00:00.000Z,
+                                                      "periodInMonth": 24,
                                                       "usageInHourLeft": undefined,
-                                                      "usagePeriodInHour": 500,
+                                                      "usagePeriodInHour": 800,
                                                     },
                                                     "todo": Object {
-                                                      "dueDate": 2020-07-09T16:00:00.000Z,
+                                                      "dueDate": 2021-07-09T16:00:00.000Z,
                                                       "level": 1,
                                                       "onlyDate": true,
                                                       "usageInHourLeft": undefined,
@@ -1994,14 +1994,14 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                   classNames="table-success d-flex"
                                                   data={
                                                     Object {
-                                                      "_uiId": "task_01",
-                                                      "description": "Changer l'huile",
+                                                      "_uiId": "task_02",
+                                                      "description": "Changer l'impeller de la pompe a eau de mer",
                                                       "level": 1,
-                                                      "name": "Vidange",
-                                                      "nextDueDate": 2020-07-09T16:00:00.000Z,
-                                                      "periodInMonth": 12,
+                                                      "name": "Change the impeller",
+                                                      "nextDueDate": 2021-07-09T16:00:00.000Z,
+                                                      "periodInMonth": 24,
                                                       "usageInHourLeft": undefined,
-                                                      "usagePeriodInHour": 500,
+                                                      "usagePeriodInHour": 800,
                                                     }
                                                   }
                                                   onDisplayData={[MockFunction]}
@@ -2088,22 +2088,22 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                               cell={[Function]}
                                               data={
                                                 Object {
-                                                  "initialIndex": 0,
+                                                  "initialIndex": 1,
                                                   "level": 1,
-                                                  "name": "Vidange",
-                                                  "shortenDescription": "Changer l'huile",
+                                                  "name": "Change the impeller",
+                                                  "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
                                                   "task": Object {
-                                                    "_uiId": "task_01",
-                                                    "description": "Changer l'huile",
+                                                    "_uiId": "task_02",
+                                                    "description": "Changer l'impeller de la pompe a eau de mer",
                                                     "level": 1,
-                                                    "name": "Vidange",
-                                                    "nextDueDate": 2020-07-09T16:00:00.000Z,
-                                                    "periodInMonth": 12,
+                                                    "name": "Change the impeller",
+                                                    "nextDueDate": 2021-07-09T16:00:00.000Z,
+                                                    "periodInMonth": 24,
                                                     "usageInHourLeft": undefined,
-                                                    "usagePeriodInHour": 500,
+                                                    "usagePeriodInHour": 800,
                                                   },
                                                   "todo": Object {
-                                                    "dueDate": 2020-07-09T16:00:00.000Z,
+                                                    "dueDate": 2021-07-09T16:00:00.000Z,
                                                     "level": 1,
                                                     "onlyDate": true,
                                                     "usageInHourLeft": undefined,
@@ -2119,22 +2119,22 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                               <cell
                                                 data={
                                                   Object {
-                                                    "initialIndex": 0,
+                                                    "initialIndex": 1,
                                                     "level": 1,
-                                                    "name": "Vidange",
-                                                    "shortenDescription": "Changer l'huile",
+                                                    "name": "Change the impeller",
+                                                    "shortenDescription": "Changer l'impeller de la pompe a eau de mer",
                                                     "task": Object {
-                                                      "_uiId": "task_01",
-                                                      "description": "Changer l'huile",
+                                                      "_uiId": "task_02",
+                                                      "description": "Changer l'impeller de la pompe a eau de mer",
                                                       "level": 1,
-                                                      "name": "Vidange",
-                                                      "nextDueDate": 2020-07-09T16:00:00.000Z,
-                                                      "periodInMonth": 12,
+                                                      "name": "Change the impeller",
+                                                      "nextDueDate": 2021-07-09T16:00:00.000Z,
+                                                      "periodInMonth": 24,
                                                       "usageInHourLeft": undefined,
-                                                      "usagePeriodInHour": 500,
+                                                      "usagePeriodInHour": 800,
                                                     },
                                                     "todo": Object {
-                                                      "dueDate": 2020-07-09T16:00:00.000Z,
+                                                      "dueDate": 2021-07-09T16:00:00.000Z,
                                                       "level": 1,
                                                       "onlyDate": true,
                                                       "usageInHourLeft": undefined,
@@ -2149,14 +2149,14 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                   classNames="table-success"
                                                   data={
                                                     Object {
-                                                      "_uiId": "task_01",
-                                                      "description": "Changer l'huile",
+                                                      "_uiId": "task_02",
+                                                      "description": "Changer l'impeller de la pompe a eau de mer",
                                                       "level": 1,
-                                                      "name": "Vidange",
-                                                      "nextDueDate": 2020-07-09T16:00:00.000Z,
-                                                      "periodInMonth": 12,
+                                                      "name": "Change the impeller",
+                                                      "nextDueDate": 2021-07-09T16:00:00.000Z,
+                                                      "periodInMonth": 24,
                                                       "usageInHourLeft": undefined,
-                                                      "usagePeriodInHour": 500,
+                                                      "usagePeriodInHour": 800,
                                                     }
                                                   }
                                                   onDisplayData={[MockFunction]}
@@ -2166,7 +2166,7 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                     onClick={[Function]}
                                                   >
                                                     <ToDoText
-                                                      dueDate={2020-07-09T16:00:00.000Z}
+                                                      dueDate={2021-07-09T16:00:00.000Z}
                                                       level={1}
                                                       onlyDate={true}
                                                     >
@@ -2181,9 +2181,9 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                         </FormattedMessage>
                                                         <b>
                                                           <FormattedDate
-                                                            value={2020-07-09T16:00:00.000Z}
+                                                            value={2021-07-09T16:00:00.000Z}
                                                           >
-                                                            7/10/2020
+                                                            7/10/2021
                                                           </FormattedDate>
                                                         </b>
                                                       </span>

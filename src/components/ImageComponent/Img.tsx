@@ -24,7 +24,7 @@ export const canvasImageSourceToDataURL = (img: CanvasImageSource) => {
   }
 
   ctx.drawImage(img, 0, 0, img.width as number, img.height as number);
-  return canvas.toDataURL('image/jpeg', 0.75);
+  return canvas.toDataURL('image/jpeg', 0.95);
 };
 
 const Img = ({

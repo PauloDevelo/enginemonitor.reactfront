@@ -1,150 +1,81 @@
-import ignoredMessages from '../../testHelpers/MockConsole';
-// eslint-disable-next-line no-unused-vars
-import syncService, { SyncContext } from '../SyncService';
-import actionManager, { NoActionPendingError, ActionType } from '../ActionManager';
 
-jest.mock('../ActionManager');
+// eslint-disable-next-line no-unused-vars
+import localforage from 'localforage';
+
+import ignoredMessages from '../../testHelpers/MockConsole';
+
+import syncService, { SyncServiceException } from '../SyncService';
+import onlineManager from '../OnlineManager';
+import storageService from '../StorageService';
+import actionManager, { ActionType } from '../ActionManager';
+import httpProxy from '../HttpProxy';
+import errorService from '../ErrorService';
+
+jest.mock('../HttpProxy');
+jest.mock('../OnlineManager');
+jest.mock('../ErrorService');
 
 describe('Test SyncService', () => {
-  let isOnlineGetter;
-
-  beforeEach(() => {
-    isOnlineGetter = jest.spyOn(window.navigator, 'onLine', 'get');
-  });
-
-  beforeAll(() => {
+  beforeAll(async () => {
     ignoredMessages.length = 0;
     ignoredMessages.push('undefined used as a key, but it is not a string.');
-    ignoredMessages.push('something wrong happened');
+    ignoredMessages.push('something happened');
+  });
+
+  beforeEach(async () => {
+    const user = { email: 'test@gmail.com' };
+    await storageService.openUserStorage(user);
+
+    onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
+
+    httpProxy.get.mockImplementation(() => {});
+    httpProxy.post.mockImplementation(() => {});
+    httpProxy.postImage.mockImplementation(() => {});
+    httpProxy.deleteReq.mockImplementation(() => {});
+    httpProxy.createCancelTokenSource.mockImplementation(() => ({ token: {} }));
+
+    errorService.addError.mockImplementation(() => {});
   });
 
   afterEach(async () => {
-    isOnlineGetter.mockRestore();
-    actionManager.getNextActionToPerform.mockRestore();
-    actionManager.countAction.mockRestore();
-    actionManager.performAction.mockRestore();
-    actionManager.putBackAction.mockRestore();
-  });
+    onlineManager.isOnline.mockRestore();
 
-  const isOnlineParams = [
-    { isOnline: true, offlineMode: false, expectedIsOnLineResult: true },
-    { isOnline: true, offlineMode: true, expectedIsOnLineResult: false },
-    { isOnline: false, offlineMode: false, expectedIsOnLineResult: false },
-    { isOnline: false, offlineMode: true, expectedIsOnLineResult: false },
-  ];
-  describe.each(isOnlineParams)('isOnline', ({ isOnline, offlineMode, expectedIsOnLineResult }) => {
-    it(`When the browser detects internet is ${isOnline}, and offline mode is ${offlineMode} the sync service should return isOnline ${expectedIsOnLineResult}`, () => {
-      // Arrange
-      jest.spyOn(actionManager, 'getNextActionToPerform').mockImplementation(() => {
-        throw new NoActionPendingError();
-      });
+    httpProxy.get.mockRestore();
+    httpProxy.post.mockRestore();
+    httpProxy.postImage.mockRestore();
+    httpProxy.deleteReq.mockRestore();
+    httpProxy.createCancelTokenSource.mockRestore();
 
-      isOnlineGetter.mockReturnValue(isOnline);
-      syncService.setOfflineMode(offlineMode);
+    errorService.addError.mockRestore();
 
-      // Act
-      const isOnlineReturned = syncService.isOnline();
+    if (storageService.isUserStorageOpened()) {
+      await actionManager.clearActions();
+    }
 
-      // Assert
-      expect(isOnlineReturned).toBe(expectedIsOnLineResult);
-    });
-  });
-
-  const isSyncedParams = [
-    { nbAction: 0, expectedIsSynced: true },
-    { nbAction: 15, expectedIsSynced: false },
-  ];
-  describe.each(isSyncedParams)('isSynced', ({ nbAction, expectedIsSynced }) => {
-    it(`When the action manager has ${nbAction} to sync, isSynced should be ${expectedIsSynced}`, async () => {
-      // Arrange
-      jest.spyOn(actionManager, 'countAction').mockImplementation(() => Promise.resolve(nbAction));
-
-      // Act
-      const isSyncedReturned = await syncService.isSynced();
-
-      // Assert
-      expect(isSyncedReturned).toBe(expectedIsSynced);
-    });
-  });
-
-  const isOnlineAndSyncedParams = [
-    {
-      isOnline: true, offlineMode: false, nbAction: 0, expectedIsOnLineAndSyncedResult: true,
-    },
-    {
-      isOnline: true, offlineMode: true, nbAction: 0, expectedIsOnLineAndSyncedResult: false,
-    },
-    {
-      isOnline: false, offlineMode: false, nbAction: 0, expectedIsOnLineAndSyncedResult: false,
-    },
-    {
-      isOnline: false, offlineMode: true, nbAction: 0, expectedIsOnLineAndSyncedResult: false,
-    },
-    {
-      isOnline: true, offlineMode: false, nbAction: 15, expectedIsOnLineAndSyncedResult: false,
-    },
-    {
-      isOnline: true, offlineMode: true, nbAction: 15, expectedIsOnLineAndSyncedResult: false,
-    },
-    {
-      isOnline: false, offlineMode: false, nbAction: 15, expectedIsOnLineAndSyncedResult: false,
-    },
-    {
-      isOnline: false, offlineMode: true, nbAction: 15, expectedIsOnLineAndSyncedResult: false,
-    },
-  ];
-  describe.each(isOnlineAndSyncedParams)('isOnlineAndSynced', ({
-    isOnline, offlineMode, nbAction, expectedIsOnLineAndSyncedResult,
-  }) => {
-    it(`When the browser detects internet is ${isOnline}, and offline mode is ${offlineMode} and the action manager has ${nbAction} to sync, the sync service should return isOnlineAndSync to be ${expectedIsOnLineAndSyncedResult}`, async () => {
-      // Arrange
-      jest.spyOn(actionManager, 'getNextActionToPerform').mockImplementation(() => {
-        throw new NoActionPendingError();
-      });
-      jest.spyOn(actionManager, 'countAction').mockImplementation(() => Promise.resolve(nbAction));
-
-      isOnlineGetter.mockReturnValue(isOnline);
-      syncService.setOfflineMode(offlineMode);
-
-      // Act
-      const isOnlineAndSyncedReturned = await syncService.isOnlineAndSynced();
-
-      // Assert
-      expect(isOnlineAndSyncedReturned).toBe(expectedIsOnLineAndSyncedResult);
-    });
+    await storageService.closeUserStorage();
   });
 
   describe('synchronize', () => {
     it('should do nothing if there is no action to sync', async (done) => {
       // Arrange
-      jest.spyOn(actionManager, 'countAction').mockImplementation(() => Promise.resolve(0));
-
-      jest.spyOn(actionManager, 'getNextActionToPerform').mockImplementation(() => {
-        throw new NoActionPendingError();
-      });
-
-      let syncContext;
-      const syncListener = jest.fn().mockImplementation((context) => { syncContext = context; });
-      syncService.registerSyncListener(syncListener);
+      const syncListener = jest.fn();
+      syncService.registerListener(syncListener);
 
       // Act
-      await syncService.synchronize();
+      await syncService.tryToRun();
 
       // Assert
       expect(syncListener).toHaveBeenCalledTimes(2);
+      expect(syncListener.mock.calls[0][0]).toEqual({ isRunning: true, remaining: 0, total: 0 });
+      expect(syncListener.mock.calls[1][0]).toEqual({ isRunning: false, remaining: 0, total: 0 });
 
-      expect(syncContext).not.toBeUndefined();
-      expect(syncContext.isSyncing).toBe(false);
-      expect(syncContext.totalActionToSync).toBe(0);
-      expect(syncContext.remainingActionToSync).toBe(0);
-
-      syncService.unregisterSyncListener(syncListener);
+      syncService.unregisterListener(syncListener);
       done();
     });
 
-    it('should perform the action if there is action pending in the correct order', async (done) => {
+    it('should do nothing if not online', async (done) => {
       // Arrange
-      jest.spyOn(actionManager, 'countAction').mockImplementation(() => Promise.resolve(2));
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(false));
 
       const action1 = {
         type: ActionType.Post,
@@ -157,15 +88,64 @@ describe('Test SyncService', () => {
         key: 'http://localhost/delete/something',
         data: 'anything',
       };
+      await actionManager.addAction(action1);
+      await actionManager.addAction(action2);
 
-      const getNextActionToPerform = jest.spyOn(actionManager, 'getNextActionToPerform');
-      getNextActionToPerform.mockImplementationOnce(() => Promise.resolve(action1));
-      getNextActionToPerform.mockImplementationOnce(() => Promise.resolve(action2));
-      getNextActionToPerform.mockImplementationOnce(() => { throw new NoActionPendingError(); });
+      const syncListener = jest.fn();
+      syncService.registerListener(syncListener);
 
-      const performedActions = [];
-      const performAction = jest.spyOn(actionManager, 'performAction');
-      performAction.mockImplementation((action) => performedActions.push(action));
+      // Act
+      await syncService.tryToRun();
+
+      // Assert
+      expect(syncListener).toHaveBeenCalledTimes(0);
+      expect(actionManager.countAction()).toBe(2);
+
+      expect(errorService.addError).toHaveBeenCalledTimes(1);
+      expect(errorService.addError.mock.calls[0][0]).toBeInstanceOf(SyncServiceException);
+      expect(errorService.addError.mock.calls[0][0].message).toEqual('actionErrorBecauseOffline');
+
+      syncService.unregisterListener(syncListener);
+      done();
+    });
+
+    it('should do nothing if user storage not opened yet', async (done) => {
+      // Arrange
+      await storageService.closeUserStorage();
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
+
+      const syncListener = jest.fn();
+      syncService.registerListener(syncListener);
+
+      // Act
+      await syncService.tryToRun();
+
+      // Assert
+      expect(syncListener).toHaveBeenCalledTimes(0);
+
+      expect(errorService.addError).toHaveBeenCalledTimes(1);
+      expect(errorService.addError.mock.calls[0][0]).toBeInstanceOf(SyncServiceException);
+      expect(errorService.addError.mock.calls[0][0].message).toEqual('storageNotOpenedYet');
+
+      syncService.unregisterListener(syncListener);
+      done();
+    });
+
+    it('should perform the action if there is action pending in the correct order', async (done) => {
+      // Arrange
+      const action1 = {
+        type: ActionType.Post,
+        key: 'http://localhost/post/something',
+        data: 'anything',
+      };
+
+      const action2 = {
+        type: ActionType.Delete,
+        key: 'http://localhost/delete/something',
+        data: 'anything',
+      };
+      await actionManager.addAction(action1);
+      await actionManager.addAction(action2);
 
       const contexts = [];
       const syncListener = jest.fn();
@@ -173,36 +153,27 @@ describe('Test SyncService', () => {
         contexts.push(context);
       });
 
-      syncService.registerSyncListener(syncListener);
+      syncService.registerListener(syncListener);
 
       // Act
-      await syncService.synchronize();
+      await syncService.tryToRun();
 
       // Assert
       expect(syncListener).toHaveBeenCalledTimes(4);
 
-      expect(contexts[0]).toEqual({ isSyncing: true, totalActionToSync: 2, remainingActionToSync: 2 });
-      expect(contexts[1]).toEqual({ isSyncing: true, totalActionToSync: 2, remainingActionToSync: 1 });
-      expect(contexts[2]).toEqual({ isSyncing: true, totalActionToSync: 2, remainingActionToSync: 0 });
-      expect(contexts[3]).toEqual({ isSyncing: false, totalActionToSync: 2, remainingActionToSync: 0 });
+      expect(contexts[0]).toEqual({ isRunning: true, total: 2, remaining: 2 });
+      expect(contexts[1]).toEqual({ isRunning: true, total: 2, remaining: 1 });
+      expect(contexts[2]).toEqual({ isRunning: true, total: 2, remaining: 0 });
+      expect(contexts[3]).toEqual({ isRunning: false, total: 2, remaining: 0 });
 
-      expect(getNextActionToPerform).toBeCalledTimes(3);
+      expect(actionManager.countAction()).toBe(0);
 
-      expect(performAction).toBeCalledTimes(2);
-      expect(performedActions[0]).toBe(action1);
-      expect(performedActions[1]).toBe(action2);
-
-      syncService.unregisterSyncListener(syncListener);
+      syncService.unregisterListener(syncListener);
       done();
     });
 
     it('should perform the action if there is action pending in the correct order but it should stop when an action fails', async (done) => {
       // Arrange
-      jest.spyOn(actionManager, 'countAction').mockImplementation(() => Promise.resolve(3));
-
-      let actionBack;
-      const putBackAction = jest.spyOn(actionManager, 'putBackAction').mockImplementationOnce((action) => { actionBack = action; });
-
       const action1 = {
         type: ActionType.Post,
         key: 'http://localhost/post/something',
@@ -220,18 +191,16 @@ describe('Test SyncService', () => {
         key: 'http://localhost/post/somethingelse',
         data: 'anything',
       };
+      await actionManager.addAction(action1);
+      await actionManager.addAction(action2);
+      await actionManager.addAction(action3);
 
-      const getNextActionToPerform = jest.spyOn(actionManager, 'getNextActionToPerform');
-      getNextActionToPerform.mockImplementationOnce(() => Promise.resolve(action1));
-      getNextActionToPerform.mockImplementationOnce(() => Promise.resolve(action2));
-      getNextActionToPerform.mockImplementationOnce(() => Promise.resolve(action3));
-      getNextActionToPerform.mockImplementationOnce(() => { throw new NoActionPendingError(); });
-
-      const performedActions = [];
-      const performAction = jest.spyOn(actionManager, 'performAction');
-      performAction.mockImplementationOnce((action) => performedActions.push(action));
-      performAction.mockImplementationOnce((action) => performedActions.push(action));
-      performAction.mockImplementationOnce(() => { throw new Error('something wrong happened'); });
+      httpProxy.post.mockImplementation(async (url) => {
+        if (url === 'http://localhost/post/somethingelse') {
+          throw new Error('something happened');
+        }
+        return Promise.resolve({});
+      });
 
       const contexts = [];
       const syncListener = jest.fn();
@@ -239,29 +208,22 @@ describe('Test SyncService', () => {
         contexts.push(context);
       });
 
-      syncService.registerSyncListener(syncListener);
+      syncService.registerListener(syncListener);
 
       // Act
-      await syncService.synchronize();
+      await syncService.tryToRun();
 
       // Assert
       expect(syncListener).toHaveBeenCalledTimes(4);
 
-      expect(contexts[0]).toEqual({ isSyncing: true, totalActionToSync: 3, remainingActionToSync: 3 });
-      expect(contexts[1]).toEqual({ isSyncing: true, totalActionToSync: 3, remainingActionToSync: 2 });
-      expect(contexts[2]).toEqual({ isSyncing: true, totalActionToSync: 3, remainingActionToSync: 1 });
-      expect(contexts[3]).toEqual({ isSyncing: false, totalActionToSync: 3, remainingActionToSync: 1 });
+      expect(contexts[0]).toEqual({ isRunning: true, total: 3, remaining: 3 });
+      expect(contexts[1]).toEqual({ isRunning: true, total: 3, remaining: 2 });
+      expect(contexts[2]).toEqual({ isRunning: true, total: 3, remaining: 1 });
+      expect(contexts[3]).toEqual({ isRunning: false, total: 3, remaining: 1 });
 
-      expect(getNextActionToPerform).toBeCalledTimes(3);
+      expect(actionManager.countAction()).toBe(1);
 
-      expect(performAction).toBeCalledTimes(3);
-      expect(performedActions[0]).toBe(action1);
-      expect(performedActions[1]).toBe(action2);
-
-      expect(putBackAction).toBeCalledTimes(1);
-      expect(actionBack).toBe(action3);
-
-      syncService.unregisterSyncListener(syncListener);
+      syncService.unregisterListener(syncListener);
       done();
     });
   });

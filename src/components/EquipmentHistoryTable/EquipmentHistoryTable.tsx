@@ -60,7 +60,7 @@ const EquipmentHistoryTable = ({
   const [entries, setEntries] = useState<EntryModel[]>([]);
   const {
     data: fetchedEntries, error, isLoading,
-  } = useFetcher({ fetchPromise: entryProxy.fetchAllEntries, fetchProps: { equipmentId }, cancellationMsg: 'Cancellation of equipment history fetching' });
+  } = useFetcher({ fetchPromise: entryProxy.fetchAllEntries, fetchProps: { equipmentId }, cancellationMsg: `Cancellation of ${equipment?.name} equipment history fetching` });
 
   useEffect(() => {
     setEntries(fetchedEntries || []);

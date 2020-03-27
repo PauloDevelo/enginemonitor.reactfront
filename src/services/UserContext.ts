@@ -3,7 +3,7 @@ import { UserModel } from '../types/Types';
 
 export interface IUserContext{
     getCurrentUser():UserModel | undefined;
-    onUserChanged(user: UserModel | undefined): void;
+    onUserChanged(user: UserModel | undefined): Promise<void>;
 
     onImageAdded(imageSize: number): void;
     onImageRemoved(imageSize: number): void;
@@ -11,7 +11,7 @@ export interface IUserContext{
     registerOnUserStorageSizeChanged(listener: (newUserStorageSize: number) => void):void;
     unregisterOnUserStorageSizeChanged(listener: (newUserStorageSize: number) => void):void;
 
-    registerOnUserChanged(listener: (newUser: UserModel | undefined) => void):void;
+    registerOnUserChanged(listener: (newUser: UserModel | undefined) => Promise<void>):void;
     unregisterOnUserChanged(listener: (newUser: UserModel | undefined) => void):void;
 }
 
@@ -20,15 +20,15 @@ class UserContext implements IUserContext {
 
     private userStorageSizeListeners: ((newUserStorageSize: number) => void)[] = [];
 
-    private userListeners: ((newUser: UserModel | undefined) => void)[] = [];
+    private userListeners: ((newUser: UserModel | undefined) => Promise<void>)[] = [];
 
     getCurrentUser():UserModel | undefined {
       return this.user;
     }
 
-    onUserChanged(user: UserModel | undefined) {
+    onUserChanged = async (user: UserModel | undefined): Promise<void> => {
       this.user = user;
-      this.triggerOnUserChanged();
+      await this.triggerOnUserChanged();
       this.triggerOnUserStorageSizeChanged();
     }
 
@@ -40,7 +40,7 @@ class UserContext implements IUserContext {
       this.userStorageSizeListeners = this.userStorageSizeListeners.filter((listener) => listener !== listenerToRemove);
     }
 
-    registerOnUserChanged(listener: (newUser: UserModel | undefined) => void):void{
+    registerOnUserChanged(listener: (newUser: UserModel | undefined) => Promise<void>):void{
       this.userListeners.push(listener);
     }
 
@@ -62,13 +62,14 @@ class UserContext implements IUserContext {
       }
     }
 
-    triggerOnUserStorageSizeChanged(): void {
+    private triggerOnUserStorageSizeChanged(): void {
       const userImageFolderSize = this.user !== undefined ? this.user.imageFolderSizeInByte : 0;
       this.userStorageSizeListeners.map((listener) => listener(userImageFolderSize));
     }
 
-    triggerOnUserChanged(): void {
-      this.userListeners.map((listener) => listener(this.user));
+    private async triggerOnUserChanged(): Promise<void> {
+      const promises = this.userListeners.map((listener) => listener(this.user));
+      await Promise.all(promises);
     }
 }
 

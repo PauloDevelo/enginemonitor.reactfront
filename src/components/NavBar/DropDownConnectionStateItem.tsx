@@ -7,6 +7,7 @@ import ConnectionStateMessage from './ConnectionStateMessage';
 import NbActionPending from './NbActionPending';
 
 
+import onlineManager from '../../services/OnlineManager';
 import syncService from '../../services/SyncService';
 import actionManager from '../../services/ActionManager';
 
@@ -15,6 +16,7 @@ type ConnectionState = {
     isSynced: boolean
 };
 
+// eslint-disable-next-line no-unused-vars
 const ConnectionStateIcon = ({ isOnline, isSynced }:ConnectionState) => {
   if (isOnline) {
     return <FontAwesomeIcon icon={faPlug} />;
@@ -32,22 +34,20 @@ const DropDownConnectionStateItem = () => {
   };
 
   useEffect(() => {
-    syncService.registerIsOnlineListener(onIsOnlineChanged);
-    onIsOnlineChanged(syncService.isOnline());
+    onlineManager.registerIsOnlineListener(onIsOnlineChanged);
+    onlineManager.isOnline().then((online) => onIsOnlineChanged(online));
 
     actionManager.registerOnActionManagerChanged(onActionManagerChanged);
-    actionManager.countAction().then((nbAction: number) => {
-      onActionManagerChanged(nbAction);
-    });
+    onActionManagerChanged(actionManager.countAction());
 
     return () => {
-      syncService.unregisterIsOnlineListener(onIsOnlineChanged);
+      onlineManager.unregisterIsOnlineListener(onIsOnlineChanged);
       actionManager.unregisterOnActionManagerChanged(onActionManagerChanged);
     };
   }, []);
 
   return (
-    <DropdownItem disabled={isOnline === false || isSync === true} onClick={syncService.synchronize}>
+    <DropdownItem disabled={isOnline === false || isSync === true} onClick={syncService.tryToRun}>
       <ConnectionStateIcon isOnline={isOnline} isSynced={isSync} />
       {' '}
       <ConnectionStateMessage isOnline={isOnline} isSynced={isSync} />

@@ -16,6 +16,10 @@
     "defaultMessage": "Online",
     "id": "online"
   },
+  "rebuildLocalStorage": {
+    "defaultMessage": "Rebuild local storage",
+    "id": "rebuildLocalStorage"
+  },
   "signout": {
     "defaultMessage": "Signout",
     "description": "Menu",

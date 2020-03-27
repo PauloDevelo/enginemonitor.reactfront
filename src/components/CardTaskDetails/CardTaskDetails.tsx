@@ -56,7 +56,6 @@ const CardTaskDetails = ({
     return <Card className={classNames} />;
   }
 
-  const cursorPointerStyle = { cursor: 'pointer' };
   const badgeText = getBadgeText(currentTask.level);
   const badgeContext = getContext(currentTask.level);
   const descriptionFormatted = currentTask.description.replace(/\n/g, '<br />');
@@ -71,7 +70,7 @@ const CardTaskDetails = ({
     <div ref={callBackRef}>
       <Card className={classNames + (currentTaskIsChanging ? ' hover' : '')}>
         <CardBody className="d-flex p-0">
-          <div className="p-2 button-previous-task" onClick={previousTask} style={cursorPointerStyle}><div className={prevClassNames} /></div>
+          <div className="p-2 button-previous-task clickable" onClick={previousTask}><div className={prevClassNames} /></div>
           <TransitionGroup className="p-2 flex-grow-1">
             <CSSTransition key={currentTask._uiId} timeout={250} classNames="card">
               <div>
@@ -88,14 +87,12 @@ const CardTaskDetails = ({
               </div>
             </CSSTransition>
           </TransitionGroup>
-          <div className="p-2 button-next-task" onClick={nextTask} style={cursorPointerStyle}><div className={nextClassNames} /></div>
+          <div className="p-2 button-next-task clickable" onClick={nextTask}><div className={nextClassNames} /></div>
         </CardBody>
         <CardFooter className="pl-5 pr-5">
           <Button color="light" className="float-left" onClick={modalHook.toggleModal} aria-label="Edit"><FontAwesomeIcon icon={faEdit} /></Button>
         </CardFooter>
       </Card>
-
-      {modalHook.editModalVisibility && (
       <ModalEditTask
         equipment={equipment}
         task={currentTask}
@@ -105,7 +102,6 @@ const CardTaskDetails = ({
         toggle={modalHook.toggleModal}
         className="modal-dialog-centered"
       />
-      )}
     </div>
   );
 };

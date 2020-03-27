@@ -63,7 +63,7 @@ const HistoryTaskTable = ({
 
   const {
     data: fetchedEntries, error, isLoading, reloadRef,
-  } = useFetcher({ fetchPromise: entryProxy.fetchEntries, fetchProps: { equipmentId, taskId }, cancellationMsg: 'Cancellation of task history fetching' });
+  } = useFetcher({ fetchPromise: entryProxy.fetchEntries, fetchProps: { equipmentId, taskId }, cancellationMsg: `Cancellation of task '${task?.name}' history fetching` });
 
   useEffect(() => {
     if (taskHistoryRefreshId !== 0) {

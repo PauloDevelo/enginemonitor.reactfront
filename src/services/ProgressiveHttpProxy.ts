@@ -6,12 +6,21 @@ import HttpError from '../http/HttpError';
 // eslint-disable-next-line no-unused-vars
 import { ImageModel } from '../types/Types';
 
-import syncService from './SyncService';
+import onlineManager from './OnlineManager';
 import httpProxy from './HttpProxy';
 // eslint-disable-next-line no-unused-vars
 import actionManager, { Action, ActionType } from './ActionManager';
 import storageService from './StorageService';
+import userContext from './UserContext';
+import assetManager from './AssetManager';
 
+const timeout = {
+  postImage: 5000,
+  post: 2000,
+  delete: 2000,
+  get: 2000,
+  notStoredGet: 10000,
+};
 /**
  * This interface is an enhanced http proxy that manages offline mode.
  */
@@ -33,7 +42,7 @@ export interface ISyncHttpProxy{
      * @param dataToPost The data to send. The data will be in the field keyname of a container.
      * @param update Function that will update the returned data before sending it back the the callee.
      */
-    postAndUpdate<T>(url: string, keyName:string, dataToPost:T, update:(date:T)=>T):Promise<T>;
+    postAndUpdate<T>(url: string, keyName:string, dataToPost:T, update?:(date:T)=>T, checkReadOnlyCredentials?: boolean):Promise<T>;
 
     /**
      * This function excute the http delete query and call the update function in the returned data.
@@ -42,7 +51,7 @@ export interface ISyncHttpProxy{
      * @param keyName The field name that contain the data to return.
      * @param update The function that will update the data before returning it to the callee
      */
-    deleteAndUpdate<T>(url: string, keyName: string, update:(data:T)=>T):Promise<void>;
+    deleteAndUpdate<T>(url: string, keyName: string, update?:(data:T)=>T):Promise<void>;
 
     /**
      * This function returns an array of T element and update the array in the user storage if online.
@@ -51,7 +60,9 @@ export interface ISyncHttpProxy{
      * @param keyName The field name that contain the array
      * @param init The function init to call on each item before returning the array to the callee
      */
-    getArrayOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T, cancelToken?: CancelToken | undefined): Promise<T[]>;
+    getArrayOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken?: CancelToken | undefined): Promise<T[]>;
+
+    getArrayFromStorage<T>(key: string, init?:(model:T) => T): Promise<T[]>;
 
     /**
      * This function returns a T element and update it in the user storage if online.
@@ -60,19 +71,23 @@ export interface ISyncHttpProxy{
      * @param keyName The field name that contain the array
      * @param init The function init to call on each item before returning the array to the callee
      */
-    getOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T, cancelToken?: CancelToken | undefined): Promise<T>;
+    getOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken?: CancelToken | undefined): Promise<T>;
+
+    getFromStorage<T>(key: string, init?:(model:T) => T): Promise<T>
 }
 
 class ProgressiveHttpProxy implements ISyncHttpProxy {
   async postNewImage(createImageUrl: string, imgToSave: ImageModel, blobImage: Blob, thumbnail: Blob): Promise<ImageModel> {
+    this.checkUserCredentialForUploadingImages();
+
     const addCreateImageAction = async () => {
       const action: Action = { key: createImageUrl, type: ActionType.CreateImage, data: imgToSave };
       await actionManager.addAction(action);
     };
 
-    if (await syncService.isOnlineAndSynced()) {
+    if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const { image } = await httpProxy.postImage(createImageUrl, imgToSave, blobImage, thumbnail);
+        const { image } = await httpProxy.postImage(createImageUrl, imgToSave, blobImage, thumbnail, { timeout: timeout.postImage });
         return image;
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
@@ -88,7 +103,11 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
     return { ...imgToSave, sizeInByte: 450 * 1024 };
   }
 
-  async postAndUpdate<T>(url: string, keyName:string, dataToPost:T, update:(data:T)=>T):Promise<T> {
+  async postAndUpdate<T>(url: string, keyName:string, dataToPost:T, update?:(data:T)=>T, checkReadOnlyCredentials = true):Promise<T> {
+    if (checkReadOnlyCredentials) {
+      this.checkUserCredentialForPostingOrDeleting();
+    }
+
     const data:any = { [keyName]: dataToPost };
 
     const addPostAction = async () => {
@@ -96,11 +115,11 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
       await actionManager.addAction(action);
     };
 
-    if (await syncService.isOnlineAndSynced()) {
+    if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const savedData = (await httpProxy.post(url, data))[keyName];
+        const savedData = (await httpProxy.post(url, data, { timeout: timeout.post }))[keyName];
 
-        return update(savedData);
+        return update ? update(savedData) : savedData;
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
           await addPostAction();
@@ -115,16 +134,20 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
     return dataToPost;
   }
 
-  async deleteAndUpdate<T>(url: string, keyName: string, update:(data:T)=>T):Promise<void> {
+  async deleteAndUpdate<T>(url: string, keyName: string, update?:(data:T)=>T):Promise<void> {
+    this.checkUserCredentialForPostingOrDeleting();
+
     const addDeleteAction = () => {
       const action: Action = { key: url, type: ActionType.Delete };
       actionManager.addAction(action);
     };
 
-    if (await syncService.isOnlineAndSynced()) {
+    if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const deletedEntity = (await httpProxy.deleteReq(url))[keyName];
-        update(deletedEntity);
+        const deletedEntity = (await httpProxy.deleteReq(url, { timeout: timeout.delete }))[keyName];
+        if (update) {
+          update(deletedEntity);
+        }
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
           addDeleteAction();
@@ -137,44 +160,75 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
     }
   }
 
-  async getArrayOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T[]> {
-    if (await syncService.isOnlineAndSynced()) {
+  async getArrayOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T[]> {
+    if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const array = (await httpProxy.get(url, cancelToken))[keyName] as T[];
-        const initArray = array.map(init);
+        const array = (await httpProxy.get(url, { cancelToken, timeout: (await this.getGetTimeout(url)) }))[keyName] as T[];
+
+        const initArray = init ? array.map(init) : array;
 
         storageService.setItem<T[]>(url, initArray);
 
         return initArray;
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
-          return storageService.getArray<T>(url);
+          return this.getArrayFromStorage<T>(url, init);
         }
         throw reason;
       }
     }
 
-    return storageService.getArray<T>(url);
+    return this.getArrayFromStorage<T>(url, init);
   }
 
-  async getOnlineFirst<T>(url: string, keyName:string, init:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T> {
-    if (await syncService.isOnlineAndSynced()) {
+  async getArrayFromStorage<T>(key: string, init?:(model:T) => T) {
+    const array = await storageService.getArray<T>(key);
+    return init ? array.map(init) : array;
+  }
+
+  async getOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T> {
+    if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const item = (await httpProxy.get(url, cancelToken))[keyName] as T;
-        const updatedItem = init(item);
+        const item = (await httpProxy.get(url, { cancelToken, timeout: (await this.getGetTimeout(url)) }))[keyName] as T;
+        const updatedItem = init ? init(item) : item;
 
         storageService.setItem<T>(url, updatedItem);
 
         return updatedItem;
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
-          return storageService.getItem<T>(url);
+          return this.getFromStorage<T>(url, init);
         }
         throw reason;
       }
     }
 
-    return storageService.getItem<T>(url);
+    return this.getFromStorage<T>(url, init);
+  }
+
+  async getFromStorage<T>(key: string, init?:(model:T) => T) {
+    const item = await storageService.getItem<T>(key);
+    return init ? init(item) : item;
+  }
+
+  private checkUserCredentialForUploadingImages() {
+    if (userContext.getCurrentUser() === undefined || userContext.getCurrentUser()?.forbidUploadingImage === undefined || userContext.getCurrentUser()?.forbidUploadingImage) {
+      throw new HttpError({ message: 'credentialError' });
+    }
+  }
+
+  private checkUserCredentialForPostingOrDeleting() {
+    if (assetManager.getUserCredentials() === undefined || assetManager.getUserCredentials()?.readonly === undefined || assetManager.getUserCredentials()?.readonly) {
+      throw new HttpError({ message: 'credentialError' });
+    }
+  }
+
+  private async getGetTimeout(url: string): Promise<number> {
+    if (await storageService.existItem(url) === false) {
+      return timeout.notStoredGet;
+    }
+
+    return timeout.get;
   }
 }
 

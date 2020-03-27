@@ -191,55 +191,33 @@ exports[`Component Gallery should render 0 thumbnails since this test delete all
     toggle={[Function]}
     visible={false}
   >
-    <CSSTransition
-      classNames="modal"
-      in={false}
-      timeout={300}
-    >
-      <Transition
-        appear={false}
-        enter={true}
-        exit={true}
-        in={false}
-        mountOnEnter={false}
-        onEnter={[Function]}
-        onEntered={[Function]}
-        onEntering={[Function]}
-        onExit={[Function]}
-        onExited={[Function]}
-        onExiting={[Function]}
-        timeout={300}
-        unmountOnExit={false}
-      >
-        <Modal
-          autoFocus={true}
-          backdrop={true}
-          backdropTransition={
-            Object {
-              "mountOnEnter": true,
-              "timeout": 150,
-            }
-          }
-          centered={false}
-          fade={false}
-          isOpen={false}
-          keyboard={true}
-          modalTransition={
-            Object {
-              "timeout": 300,
-            }
-          }
-          onClosed={[Function]}
-          onOpened={[Function]}
-          returnFocusAfterClose={true}
-          role="dialog"
-          scrollable={false}
-          toggle={[Function]}
-          unmountOnClose={true}
-          zIndex={1050}
-        />
-      </Transition>
-    </CSSTransition>
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      fade={true}
+      isOpen={false}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      returnFocusAfterClose={true}
+      role="dialog"
+      scrollable={false}
+      toggle={[Function]}
+      unmountOnClose={true}
+      zIndex={1050}
+    />
     <ModalYesNoConfirmation
       className="modal-dialog-centered"
       isActing={false}
@@ -262,56 +240,34 @@ exports[`Component Gallery should render 0 thumbnails since this test delete all
       visible={false}
       yes={[Function]}
     >
-      <CSSTransition
-        classNames="modal"
-        in={false}
-        timeout={300}
-      >
-        <Transition
-          appear={false}
-          enter={true}
-          exit={true}
-          in={false}
-          mountOnEnter={false}
-          onEnter={[Function]}
-          onEntered={[Function]}
-          onEntering={[Function]}
-          onExit={[Function]}
-          onExited={[Function]}
-          onExiting={[Function]}
-          timeout={300}
-          unmountOnExit={false}
-        >
-          <Modal
-            autoFocus={true}
-            backdrop={true}
-            backdropTransition={
-              Object {
-                "mountOnEnter": true,
-                "timeout": 150,
-              }
-            }
-            centered={false}
-            className="modal-dialog-centered"
-            fade={false}
-            isOpen={false}
-            keyboard={true}
-            modalTransition={
-              Object {
-                "timeout": 300,
-              }
-            }
-            onClosed={[Function]}
-            onOpened={[Function]}
-            returnFocusAfterClose={true}
-            role="dialog"
-            scrollable={false}
-            toggle={[Function]}
-            unmountOnClose={true}
-            zIndex={1050}
-          />
-        </Transition>
-      </CSSTransition>
+      <Modal
+        autoFocus={true}
+        backdrop={true}
+        backdropTransition={
+          Object {
+            "mountOnEnter": true,
+            "timeout": 150,
+          }
+        }
+        centered={false}
+        className="modal-dialog-centered"
+        fade={true}
+        isOpen={false}
+        keyboard={true}
+        modalTransition={
+          Object {
+            "timeout": 300,
+          }
+        }
+        onClosed={[Function]}
+        onOpened={[Function]}
+        returnFocusAfterClose={true}
+        role="dialog"
+        scrollable={false}
+        toggle={[Function]}
+        unmountOnClose={true}
+        zIndex={1050}
+      />
     </ModalYesNoConfirmation>
   </ModalEditImage>
 </Memo(Gallery)>
@@ -814,378 +770,390 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
     toggle={[Function]}
     visible={true}
   >
-    <CSSTransition
-      classNames="modal"
-      in={true}
-      timeout={300}
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      fade={true}
+      isOpen={true}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      returnFocusAfterClose={true}
+      role="dialog"
+      scrollable={false}
+      toggle={[Function]}
+      unmountOnClose={true}
+      zIndex={1050}
     >
-      <Transition
-        appear={false}
-        enter={true}
-        exit={true}
-        in={true}
-        mountOnEnter={false}
-        onEnter={[Function]}
-        onEntered={[Function]}
-        onEntering={[Function]}
-        onExit={[Function]}
-        onExited={[Function]}
-        onExiting={[Function]}
-        timeout={300}
-        unmountOnExit={false}
-      >
-        <Modal
-          autoFocus={true}
-          backdrop={true}
-          backdropTransition={
-            Object {
-              "mountOnEnter": true,
-              "timeout": 150,
-            }
-          }
-          centered={false}
-          fade={false}
-          isOpen={true}
-          keyboard={true}
-          modalTransition={
-            Object {
-              "timeout": 300,
-            }
-          }
-          onClosed={[Function]}
-          onOpened={[Function]}
-          returnFocusAfterClose={true}
-          role="dialog"
-          scrollable={false}
-          toggle={[Function]}
-          unmountOnClose={true}
-          zIndex={1050}
-        >
-          <Portal
-            node={
+      <Portal
+        node={
+          <div
+            style="position: relative; z-index: 1050; display: block;"
+            tabindex="-1"
+          >
+            <div
+              class=""
+            >
               <div
-                style="position: relative; z-index: 1050; display: block;"
+                class="modal fade"
+                role="dialog"
+                style="display: block;"
                 tabindex="-1"
               >
                 <div
-                  class=""
+                  class="modal-dialog"
+                  role="document"
                 >
                   <div
-                    class="modal show"
-                    role="dialog"
-                    style="display: block;"
-                    tabindex="-1"
+                    class="modal-content"
                   >
                     <div
-                      class="modal-dialog"
-                      role="document"
+                      class="modal-header"
                     >
-                      <div
-                        class="modal-content"
+                      <h5
+                        class="modal-title"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="svg-inline--fa fa-edit fa-w-18 "
+                          data-icon="edit"
+                          data-prefix="fas"
+                          focusable="false"
+                          role="img"
+                          viewBox="0 0 576 512"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                         
+                        Image edition
+                      </h5>
+                      <button
+                        aria-label="Close"
+                        class="close"
+                        type="button"
+                      >
+                        <span
+                          aria-hidden="true"
+                        >
+                          ×
+                        </span>
+                      </button>
+                    </div>
+                    <div
+                      class="modal-body"
+                    >
+                      <span
+                        class="spinnerContainer"
                       >
                         <div
-                          class="modal-header"
+                          class="lds-spinner"
                         >
-                          <h5
-                            class="modal-title"
-                          >
-                            <svg
-                              aria-hidden="true"
-                              class="svg-inline--fa fa-edit fa-w-18 "
-                              data-icon="edit"
-                              data-prefix="fas"
-                              focusable="false"
-                              role="img"
-                              viewBox="0 0 576 512"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-                                fill="currentColor"
-                              />
-                            </svg>
-                             
-                            Image edition
-                          </h5>
-                          <button
-                            aria-label="Close"
-                            class="close"
-                            type="button"
-                          >
-                            <span
-                              aria-hidden="true"
-                            >
-                              ×
-                            </span>
-                          </button>
+                          <div />
+                          <div />
+                          <div />
+                          <div />
+                          <div />
+                          <div />
+                          <div />
+                          <div />
+                          <div />
+                          <div />
+                          <div />
+                          <div />
                         </div>
+                      </span>
+                      <form
+                        class=""
+                        id="imageEditForm"
+                        novalidate=""
+                      >
                         <div
-                          class="modal-body"
+                          class="form-group form-group"
                         >
-                          <span
-                            class="spinnerContainer"
-                          >
-                            <div
-                              class="lds-spinner"
-                            >
-                              <div />
-                              <div />
-                              <div />
-                              <div />
-                              <div />
-                              <div />
-                              <div />
-                              <div />
-                              <div />
-                              <div />
-                              <div />
-                              <div />
-                            </div>
-                          </span>
-                          <form
+                          <label
                             class=""
-                            id="imageEditForm"
-                            novalidate=""
+                            for="title"
                           >
-                            <div
-                              class="form-group form-group"
-                            >
-                              <label
-                                class=""
-                                for="title"
-                              >
-                                Title
-                              </label>
-                              <input
-                                class="form-control form-control"
-                                name="title"
-                                type="text"
-                                value=""
-                              />
-                            </div>
-                            <div
-                              class="form-group form-group"
-                            >
-                              <label
-                                class=""
-                                for="description"
-                              >
-                                Description
-                              </label>
-                              <input
-                                class="form-control form-control"
-                                name="description"
-                                type="text"
-                                value=""
-                              />
-                            </div>
-                          </form>
+                            Title
+                          </label>
+                          <input
+                            class="form-control form-control"
+                            name="title"
+                            type="text"
+                            value=""
+                          />
                         </div>
                         <div
-                          class="modal-footer"
+                          class="form-group form-group"
                         >
-                          <button
-                            class="btn btn-success"
-                            form="imageEditForm"
-                            type="submit"
+                          <label
+                            class=""
+                            for="description"
                           >
-                            Save
-                          </button>
-                          <button
-                            class="btn btn-secondary"
-                            type="button"
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            class="btn btn-danger"
-                            type="button"
-                          >
-                            Delete
-                          </button>
+                            Description
+                          </label>
+                          <input
+                            class="form-control form-control"
+                            name="description"
+                            type="text"
+                            value=""
+                          />
                         </div>
-                      </div>
+                      </form>
+                    </div>
+                    <div
+                      class="modal-footer"
+                    >
+                      <button
+                        class="btn btn-success"
+                        form="imageEditForm"
+                        type="submit"
+                      >
+                        Save
+                      </button>
+                      <button
+                        class="btn btn-secondary"
+                        type="button"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        class="btn btn-danger"
+                        type="button"
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
-                  <div
-                    class="modal-backdrop show"
-                  />
                 </div>
               </div>
-            }
-          >
-            <Portal
-              containerInfo={
+              <div
+                class="modal-backdrop fade"
+              />
+            </div>
+          </div>
+        }
+      >
+        <Portal
+          containerInfo={
+            <div
+              style="position: relative; z-index: 1050; display: block;"
+              tabindex="-1"
+            >
+              <div
+                class=""
+              >
                 <div
-                  style="position: relative; z-index: 1050; display: block;"
+                  class="modal fade"
+                  role="dialog"
+                  style="display: block;"
                   tabindex="-1"
                 >
                   <div
-                    class=""
+                    class="modal-dialog"
+                    role="document"
                   >
                     <div
-                      class="modal show"
-                      role="dialog"
-                      style="display: block;"
-                      tabindex="-1"
+                      class="modal-content"
                     >
                       <div
-                        class="modal-dialog"
-                        role="document"
+                        class="modal-header"
                       >
-                        <div
-                          class="modal-content"
+                        <h5
+                          class="modal-title"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="svg-inline--fa fa-edit fa-w-18 "
+                            data-icon="edit"
+                            data-prefix="fas"
+                            focusable="false"
+                            role="img"
+                            viewBox="0 0 576 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+                              fill="currentColor"
+                            />
+                          </svg>
+                           
+                          Image edition
+                        </h5>
+                        <button
+                          aria-label="Close"
+                          class="close"
+                          type="button"
+                        >
+                          <span
+                            aria-hidden="true"
+                          >
+                            ×
+                          </span>
+                        </button>
+                      </div>
+                      <div
+                        class="modal-body"
+                      >
+                        <span
+                          class="spinnerContainer"
                         >
                           <div
-                            class="modal-header"
+                            class="lds-spinner"
                           >
-                            <h5
-                              class="modal-title"
-                            >
-                              <svg
-                                aria-hidden="true"
-                                class="svg-inline--fa fa-edit fa-w-18 "
-                                data-icon="edit"
-                                data-prefix="fas"
-                                focusable="false"
-                                role="img"
-                                viewBox="0 0 576 512"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-                                  fill="currentColor"
-                                />
-                              </svg>
-                               
-                              Image edition
-                            </h5>
-                            <button
-                              aria-label="Close"
-                              class="close"
-                              type="button"
-                            >
-                              <span
-                                aria-hidden="true"
-                              >
-                                ×
-                              </span>
-                            </button>
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
                           </div>
+                        </span>
+                        <form
+                          class=""
+                          id="imageEditForm"
+                          novalidate=""
+                        >
                           <div
-                            class="modal-body"
+                            class="form-group form-group"
                           >
-                            <span
-                              class="spinnerContainer"
-                            >
-                              <div
-                                class="lds-spinner"
-                              >
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                              </div>
-                            </span>
-                            <form
+                            <label
                               class=""
-                              id="imageEditForm"
-                              novalidate=""
+                              for="title"
                             >
-                              <div
-                                class="form-group form-group"
-                              >
-                                <label
-                                  class=""
-                                  for="title"
-                                >
-                                  Title
-                                </label>
-                                <input
-                                  class="form-control form-control"
-                                  name="title"
-                                  type="text"
-                                  value=""
-                                />
-                              </div>
-                              <div
-                                class="form-group form-group"
-                              >
-                                <label
-                                  class=""
-                                  for="description"
-                                >
-                                  Description
-                                </label>
-                                <input
-                                  class="form-control form-control"
-                                  name="description"
-                                  type="text"
-                                  value=""
-                                />
-                              </div>
-                            </form>
+                              Title
+                            </label>
+                            <input
+                              class="form-control form-control"
+                              name="title"
+                              type="text"
+                              value=""
+                            />
                           </div>
                           <div
-                            class="modal-footer"
+                            class="form-group form-group"
                           >
-                            <button
-                              class="btn btn-success"
-                              form="imageEditForm"
-                              type="submit"
+                            <label
+                              class=""
+                              for="description"
                             >
-                              Save
-                            </button>
-                            <button
-                              class="btn btn-secondary"
-                              type="button"
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              class="btn btn-danger"
-                              type="button"
-                            >
-                              Delete
-                            </button>
+                              Description
+                            </label>
+                            <input
+                              class="form-control form-control"
+                              name="description"
+                              type="text"
+                              value=""
+                            />
                           </div>
-                        </div>
+                        </form>
+                      </div>
+                      <div
+                        class="modal-footer"
+                      >
+                        <button
+                          class="btn btn-success"
+                          form="imageEditForm"
+                          type="submit"
+                        >
+                          Save
+                        </button>
+                        <button
+                          class="btn btn-secondary"
+                          type="button"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          class="btn btn-danger"
+                          type="button"
+                        >
+                          Delete
+                        </button>
                       </div>
                     </div>
-                    <div
-                      class="modal-backdrop show"
-                    />
                   </div>
                 </div>
+                <div
+                  class="modal-backdrop fade"
+                />
+              </div>
+            </div>
+          }
+        >
+          <div
+            className=""
+          >
+            <Fade
+              appear={true}
+              baseClass="fade"
+              baseClassActive="show"
+              className="modal"
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={false}
+              onClick={[Function]}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              role="dialog"
+              style={
+                Object {
+                  "display": "block",
+                }
               }
+              tabIndex="-1"
+              tag="div"
+              timeout={300}
+              unmountOnExit={false}
             >
-              <div
-                className=""
+              <Transition
+                appear={true}
+                enter={true}
+                exit={true}
+                in={true}
+                mountOnEnter={false}
+                onEnter={[Function]}
+                onEntered={[Function]}
+                onEntering={[Function]}
+                onExit={[Function]}
+                onExited={[Function]}
+                onExiting={[Function]}
+                timeout={300}
+                unmountOnExit={false}
               >
-                <Fade
-                  appear={true}
-                  baseClass=""
-                  baseClassActive="show"
-                  className="modal"
-                  enter={true}
-                  exit={true}
-                  in={true}
-                  mountOnEnter={false}
+                <div
+                  className="modal fade"
                   onClick={[Function]}
-                  onEnter={[Function]}
-                  onEntered={[Function]}
-                  onEntering={[Function]}
-                  onExit={[Function]}
-                  onExited={[Function]}
-                  onExiting={[Function]}
                   onKeyDown={[Function]}
                   onKeyUp={[Function]}
                   onMouseDown={[Function]}
@@ -1196,520 +1164,522 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                     }
                   }
                   tabIndex="-1"
-                  tag="div"
-                  timeout={0}
-                  unmountOnExit={false}
                 >
-                  <Transition
-                    appear={true}
-                    enter={true}
-                    exit={true}
-                    in={true}
-                    mountOnEnter={false}
-                    onEnter={[Function]}
-                    onEntered={[Function]}
-                    onEntering={[Function]}
-                    onExit={[Function]}
-                    onExited={[Function]}
-                    onExiting={[Function]}
-                    timeout={0}
-                    unmountOnExit={false}
+                  <div
+                    className="modal-dialog"
+                    role="document"
                   >
                     <div
-                      className="modal show"
-                      onClick={[Function]}
-                      onKeyDown={[Function]}
-                      onKeyUp={[Function]}
-                      onMouseDown={[Function]}
-                      role="dialog"
-                      style={
-                        Object {
-                          "display": "block",
-                        }
-                      }
-                      tabIndex="-1"
+                      className="modal-content"
                     >
-                      <div
-                        className="modal-dialog"
-                        role="document"
+                      <ModalHeader
+                        charCode={215}
+                        closeAriaLabel="Close"
+                        tag="h5"
+                        toggle={[Function]}
+                        wrapTag="div"
                       >
                         <div
-                          className="modal-content"
+                          className="modal-header"
                         >
-                          <ModalHeader
-                            charCode={215}
-                            closeAriaLabel="Close"
-                            tag="h5"
-                            toggle={[Function]}
-                            wrapTag="div"
+                          <h5
+                            className="modal-title"
                           >
-                            <div
-                              className="modal-header"
+                            <FontAwesomeIcon
+                              border={false}
+                              className=""
+                              fixedWidth={false}
+                              flip={null}
+                              icon={
+                                Object {
+                                  "icon": Array [
+                                    576,
+                                    512,
+                                    Array [],
+                                    "f044",
+                                    "M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z",
+                                  ],
+                                  "iconName": "edit",
+                                  "prefix": "fas",
+                                }
+                              }
+                              inverse={false}
+                              listItem={false}
+                              mask={null}
+                              pull={null}
+                              pulse={false}
+                              rotation={null}
+                              size={null}
+                              spin={false}
+                              swapOpacity={false}
+                              symbol={false}
+                              title=""
+                              transform={null}
                             >
-                              <h5
-                                className="modal-title"
+                              <svg
+                                aria-hidden="true"
+                                className="svg-inline--fa fa-edit fa-w-18 "
+                                data-icon="edit"
+                                data-prefix="fas"
+                                focusable="false"
+                                role="img"
+                                style={Object {}}
+                                viewBox="0 0 576 512"
+                                xmlns="http://www.w3.org/2000/svg"
                               >
-                                <FontAwesomeIcon
-                                  border={false}
-                                  className=""
-                                  fixedWidth={false}
-                                  flip={null}
-                                  icon={
+                                <path
+                                  d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+                                  fill="currentColor"
+                                  style={Object {}}
+                                />
+                              </svg>
+                            </FontAwesomeIcon>
+                             
+                            <FormattedMessage
+                              defaultMessage="Image edition"
+                              description="modal title"
+                              id="modalImageEditTitle"
+                              values={Object {}}
+                            >
+                              Image edition
+                            </FormattedMessage>
+                          </h5>
+                          <button
+                            aria-label="Close"
+                            className="close"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <span
+                              aria-hidden="true"
+                            >
+                              ×
+                            </span>
+                          </button>
+                        </div>
+                      </ModalHeader>
+                      <ModalBody
+                        tag="div"
+                      >
+                        <div
+                          className="modal-body"
+                        >
+                          <Img
+                            alt="undefined - undefined"
+                            loader={
+                              <span
+                                className="spinnerContainer"
+                              >
+                                <Loading />
+                              </span>
+                            }
+                            src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339188DJI_1645.JPG.jpeg"
+                            storage={
+                              Object {
+                                "getItem": [MockFunction],
+                                "keys": [MockFunction] {
+                                  "calls": Array [
+                                    Array [],
+                                  ],
+                                  "results": Array [
                                     Object {
-                                      "icon": Array [
-                                        576,
-                                        512,
-                                        Array [],
-                                        "f044",
-                                        "M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z",
-                                      ],
-                                      "iconName": "edit",
-                                      "prefix": "fas",
+                                      "type": "return",
+                                      "value": Promise {},
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            style={
+                              Object {
+                                "width": "100%",
+                              }
+                            }
+                          >
+                            <span
+                              className="spinnerContainer"
+                            >
+                              <Loading>
+                                <div
+                                  className="lds-spinner"
+                                >
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                </div>
+                              </Loading>
+                            </span>
+                          </Img>
+                          <Memo(MyForm)
+                            id="imageEditForm"
+                            initialData={
+                              Object {
+                                "_uiId": "dfc66510-f5f3-11e9-b3b1-f7086d79fbcb",
+                                "name": "DJI_1645.JPG",
+                                "parentUiId": "equipment_01",
+                                "sizeInByte": 262985,
+                                "thumbnailUrl": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg",
+                                "url": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339188DJI_1645.JPG.jpeg",
+                              }
+                            }
+                            submit={[Function]}
+                          >
+                            <Form
+                              id="imageEditForm"
+                              innerRef={
+                                Object {
+                                  "current": <form
+                                    class=""
+                                    id="imageEditForm"
+                                    novalidate=""
+                                  >
+                                    <div
+                                      class="form-group form-group"
+                                    >
+                                      <label
+                                        class=""
+                                        for="title"
+                                      >
+                                        Title
+                                      </label>
+                                      <input
+                                        class="form-control form-control"
+                                        name="title"
+                                        type="text"
+                                        value=""
+                                      />
+                                    </div>
+                                    <div
+                                      class="form-group form-group"
+                                    >
+                                      <label
+                                        class=""
+                                        for="description"
+                                      >
+                                        Description
+                                      </label>
+                                      <input
+                                        class="form-control form-control"
+                                        name="description"
+                                        type="text"
+                                        value=""
+                                      />
+                                    </div>
+                                  </form>,
+                                }
+                              }
+                              noValidate={true}
+                              onSubmit={[Function]}
+                              tag="form"
+                            >
+                              <form
+                                className=""
+                                id="imageEditForm"
+                                noValidate={true}
+                                onSubmit={[Function]}
+                              >
+                                <Memo()
+                                  handleChange={[Function]}
+                                  key=".0"
+                                  label={
+                                    Object {
+                                      "defaultMessage": "Title",
+                                      "description": "Label",
+                                      "id": "imageTitle",
                                     }
                                   }
-                                  inverse={false}
-                                  listItem={false}
-                                  mask={null}
-                                  pull={null}
-                                  pulse={false}
-                                  rotation={null}
-                                  size={null}
-                                  spin={false}
-                                  swapOpacity={false}
-                                  symbol={false}
-                                  title=""
-                                  transform={null}
+                                  name="title"
+                                  type="text"
+                                  validationTrigger={0}
                                 >
-                                  <svg
-                                    aria-hidden="true"
-                                    className="svg-inline--fa fa-edit fa-w-18 "
-                                    data-icon="edit"
-                                    data-prefix="fas"
-                                    focusable="false"
-                                    role="img"
-                                    style={Object {}}
-                                    viewBox="0 0 576 512"
-                                    xmlns="http://www.w3.org/2000/svg"
+                                  <FormGroup
+                                    className="form-group"
+                                    tag="div"
                                   >
-                                    <path
-                                      d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-                                      fill="currentColor"
-                                      style={Object {}}
-                                    />
-                                  </svg>
-                                </FontAwesomeIcon>
-                                 
-                                <FormattedMessage
-                                  defaultMessage="Image edition"
-                                  description="modal title"
-                                  id="modalImageEditTitle"
-                                  values={Object {}}
-                                >
-                                  Image edition
-                                </FormattedMessage>
-                              </h5>
-                              <button
-                                aria-label="Close"
-                                className="close"
-                                onClick={[Function]}
-                                type="button"
-                              >
-                                <span
-                                  aria-hidden="true"
-                                >
-                                  ×
-                                </span>
-                              </button>
-                            </div>
-                          </ModalHeader>
-                          <ModalBody
-                            tag="div"
-                          >
-                            <div
-                              className="modal-body"
-                            >
-                              <Img
-                                alt="undefined - undefined"
-                                loader={
-                                  <span
-                                    className="spinnerContainer"
-                                  >
-                                    <Loading />
-                                  </span>
-                                }
-                                src="http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339188DJI_1645.JPG.jpeg"
-                                storage={
-                                  Object {
-                                    "getItem": [MockFunction],
-                                    "keys": [MockFunction] {
-                                      "calls": Array [
-                                        Array [],
-                                      ],
-                                      "results": Array [
-                                        Object {
-                                          "type": "return",
-                                          "value": Promise {},
-                                        },
-                                      ],
-                                    },
-                                  }
-                                }
-                                style={
-                                  Object {
-                                    "width": "100%",
-                                  }
-                                }
-                              >
-                                <span
-                                  className="spinnerContainer"
-                                >
-                                  <Loading>
                                     <div
-                                      className="lds-spinner"
+                                      className="form-group form-group"
                                     >
-                                      <div />
-                                      <div />
-                                      <div />
-                                      <div />
-                                      <div />
-                                      <div />
-                                      <div />
-                                      <div />
-                                      <div />
-                                      <div />
-                                      <div />
-                                      <div />
-                                    </div>
-                                  </Loading>
-                                </span>
-                              </Img>
-                              <Memo(MyForm)
-                                id="imageEditForm"
-                                initialData={
-                                  Object {
-                                    "_uiId": "dfc66510-f5f3-11e9-b3b1-f7086d79fbcb",
-                                    "name": "DJI_1645.JPG",
-                                    "parentUiId": "equipment_01",
-                                    "sizeInByte": 262985,
-                                    "thumbnailUrl": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339198thumbnail_DJI_1645.JPG.jpeg",
-                                    "url": "http://localhost:8000/api/uploads/5d162f2429b0dc049c9c700e/1571876339188DJI_1645.JPG.jpeg",
-                                  }
-                                }
-                                submit={[Function]}
-                              >
-                                <Form
-                                  id="imageEditForm"
-                                  innerRef={
-                                    Object {
-                                      "current": <form
-                                        class=""
-                                        id="imageEditForm"
-                                        novalidate=""
+                                      <Label
+                                        for="title"
+                                        tag="label"
+                                        widths={
+                                          Array [
+                                            "xs",
+                                            "sm",
+                                            "md",
+                                            "lg",
+                                            "xl",
+                                          ]
+                                        }
                                       >
-                                        <div
-                                          class="form-group form-group"
+                                        <label
+                                          className=""
+                                          htmlFor="title"
                                         >
-                                          <label
-                                            class=""
-                                            for="title"
+                                          <FormattedMessage
+                                            defaultMessage="Title"
+                                            description="Label"
+                                            id="imageTitle"
+                                            values={Object {}}
                                           >
                                             Title
-                                          </label>
-                                          <input
-                                            class="form-control form-control"
-                                            name="title"
-                                            type="text"
-                                            value=""
-                                          />
-                                        </div>
-                                        <div
-                                          class="form-group form-group"
-                                        >
-                                          <label
-                                            class=""
-                                            for="description"
-                                          >
-                                            Description
-                                          </label>
-                                          <input
-                                            class="form-control form-control"
-                                            name="description"
-                                            type="text"
-                                            value=""
-                                          />
-                                        </div>
-                                      </form>,
+                                          </FormattedMessage>
+                                        </label>
+                                      </Label>
+                                      <Input
+                                        className="form-control"
+                                        innerRef={
+                                          Object {
+                                            "current": <input
+                                              class="form-control form-control"
+                                              name="title"
+                                              type="text"
+                                              value=""
+                                            />,
+                                          }
+                                        }
+                                        invalid={false}
+                                        name="title"
+                                        onChange={[Function]}
+                                        type="text"
+                                      >
+                                        <input
+                                          className="form-control form-control"
+                                          name="title"
+                                          onChange={[Function]}
+                                          type="text"
+                                        />
+                                      </Input>
+                                    </div>
+                                  </FormGroup>
+                                </Memo()>
+                                <Memo()
+                                  handleChange={[Function]}
+                                  key=".1"
+                                  label={
+                                    Object {
+                                      "defaultMessage": "Description",
+                                      "description": "Label",
+                                      "id": "imageDescription",
                                     }
                                   }
-                                  noValidate={true}
-                                  onSubmit={[Function]}
-                                  tag="form"
+                                  name="description"
+                                  type="text"
+                                  validationTrigger={0}
                                 >
-                                  <form
-                                    className=""
-                                    id="imageEditForm"
-                                    noValidate={true}
-                                    onSubmit={[Function]}
+                                  <FormGroup
+                                    className="form-group"
+                                    tag="div"
                                   >
-                                    <Memo()
-                                      handleChange={[Function]}
-                                      key=".0"
-                                      label={
-                                        Object {
-                                          "defaultMessage": "Title",
-                                          "description": "Label",
-                                          "id": "imageTitle",
-                                        }
-                                      }
-                                      name="title"
-                                      type="text"
-                                      validationTrigger={0}
+                                    <div
+                                      className="form-group form-group"
                                     >
-                                      <FormGroup
-                                        className="form-group"
-                                        tag="div"
-                                      >
-                                        <div
-                                          className="form-group form-group"
-                                        >
-                                          <Label
-                                            for="title"
-                                            tag="label"
-                                            widths={
-                                              Array [
-                                                "xs",
-                                                "sm",
-                                                "md",
-                                                "lg",
-                                                "xl",
-                                              ]
-                                            }
-                                          >
-                                            <label
-                                              className=""
-                                              htmlFor="title"
-                                            >
-                                              <FormattedMessage
-                                                defaultMessage="Title"
-                                                description="Label"
-                                                id="imageTitle"
-                                                values={Object {}}
-                                              >
-                                                Title
-                                              </FormattedMessage>
-                                            </label>
-                                          </Label>
-                                          <Input
-                                            className="form-control"
-                                            innerRef={
-                                              Object {
-                                                "current": <input
-                                                  class="form-control form-control"
-                                                  name="title"
-                                                  type="text"
-                                                  value=""
-                                                />,
-                                              }
-                                            }
-                                            invalid={false}
-                                            name="title"
-                                            onChange={[Function]}
-                                            type="text"
-                                          >
-                                            <input
-                                              className="form-control form-control"
-                                              name="title"
-                                              onChange={[Function]}
-                                              type="text"
-                                            />
-                                          </Input>
-                                        </div>
-                                      </FormGroup>
-                                    </Memo()>
-                                    <Memo()
-                                      handleChange={[Function]}
-                                      key=".1"
-                                      label={
-                                        Object {
-                                          "defaultMessage": "Description",
-                                          "description": "Label",
-                                          "id": "imageDescription",
+                                      <Label
+                                        for="description"
+                                        tag="label"
+                                        widths={
+                                          Array [
+                                            "xs",
+                                            "sm",
+                                            "md",
+                                            "lg",
+                                            "xl",
+                                          ]
                                         }
-                                      }
-                                      name="description"
-                                      type="text"
-                                      validationTrigger={0}
-                                    >
-                                      <FormGroup
-                                        className="form-group"
-                                        tag="div"
                                       >
-                                        <div
-                                          className="form-group form-group"
+                                        <label
+                                          className=""
+                                          htmlFor="description"
                                         >
-                                          <Label
-                                            for="description"
-                                            tag="label"
-                                            widths={
-                                              Array [
-                                                "xs",
-                                                "sm",
-                                                "md",
-                                                "lg",
-                                                "xl",
-                                              ]
-                                            }
+                                          <FormattedMessage
+                                            defaultMessage="Description"
+                                            description="Label"
+                                            id="imageDescription"
+                                            values={Object {}}
                                           >
-                                            <label
-                                              className=""
-                                              htmlFor="description"
-                                            >
-                                              <FormattedMessage
-                                                defaultMessage="Description"
-                                                description="Label"
-                                                id="imageDescription"
-                                                values={Object {}}
-                                              >
-                                                Description
-                                              </FormattedMessage>
-                                            </label>
-                                          </Label>
-                                          <Input
-                                            className="form-control"
-                                            innerRef={
-                                              Object {
-                                                "current": <input
-                                                  class="form-control form-control"
-                                                  name="description"
-                                                  type="text"
-                                                  value=""
-                                                />,
-                                              }
-                                            }
-                                            invalid={false}
-                                            name="description"
-                                            onChange={[Function]}
-                                            type="text"
-                                          >
-                                            <input
-                                              className="form-control form-control"
+                                            Description
+                                          </FormattedMessage>
+                                        </label>
+                                      </Label>
+                                      <Input
+                                        className="form-control"
+                                        innerRef={
+                                          Object {
+                                            "current": <input
+                                              class="form-control form-control"
                                               name="description"
-                                              onChange={[Function]}
                                               type="text"
-                                            />
-                                          </Input>
-                                        </div>
-                                      </FormGroup>
-                                    </Memo()>
-                                  </form>
-                                </Form>
-                              </Memo(MyForm)>
-                              <Alerts />
-                            </div>
-                          </ModalBody>
-                          <ModalFooter
-                            tag="div"
+                                              value=""
+                                            />,
+                                          }
+                                        }
+                                        invalid={false}
+                                        name="description"
+                                        onChange={[Function]}
+                                        type="text"
+                                      >
+                                        <input
+                                          className="form-control form-control"
+                                          name="description"
+                                          onChange={[Function]}
+                                          type="text"
+                                        />
+                                      </Input>
+                                    </div>
+                                  </FormGroup>
+                                </Memo()>
+                              </form>
+                            </Form>
+                          </Memo(MyForm)>
+                          <Alerts />
+                        </div>
+                      </ModalBody>
+                      <ModalFooter
+                        tag="div"
+                      >
+                        <div
+                          className="modal-footer"
+                        >
+                          <ActionButton
+                            color="success"
+                            form="imageEditForm"
+                            isActing={false}
+                            message={
+                              Object {
+                                "defaultMessage": "Save",
+                                "description": "Button",
+                                "id": "save",
+                              }
+                            }
+                            type="submit"
                           >
-                            <div
-                              className="modal-footer"
+                            <Button
+                              color="success"
+                              disabled={false}
+                              form="imageEditForm"
+                              tag="button"
+                              type="submit"
                             >
-                              <ActionButton
-                                color="success"
+                              <button
+                                aria-label={null}
+                                className="btn btn-success"
+                                disabled={false}
                                 form="imageEditForm"
-                                isActing={false}
-                                message={
-                                  Object {
-                                    "defaultMessage": "Save",
-                                    "description": "Button",
-                                    "id": "save",
-                                  }
-                                }
+                                onClick={[Function]}
                                 type="submit"
                               >
-                                <Button
-                                  color="success"
-                                  disabled={false}
-                                  form="imageEditForm"
-                                  tag="button"
-                                  type="submit"
+                                <FormattedMessage
+                                  defaultMessage="Save"
+                                  description="Button"
+                                  id="save"
+                                  values={Object {}}
                                 >
-                                  <button
-                                    aria-label={null}
-                                    className="btn btn-success"
-                                    disabled={false}
-                                    form="imageEditForm"
-                                    onClick={[Function]}
-                                    type="submit"
-                                  >
-                                    <FormattedMessage
-                                      defaultMessage="Save"
-                                      description="Button"
-                                      id="save"
-                                      values={Object {}}
-                                    >
-                                      Save
-                                    </FormattedMessage>
-                                  </button>
-                                </Button>
-                              </ActionButton>
-                              <Button
-                                color="secondary"
-                                onClick={[Function]}
-                                tag="button"
+                                  Save
+                                </FormattedMessage>
+                              </button>
+                            </Button>
+                          </ActionButton>
+                          <Button
+                            color="secondary"
+                            onClick={[Function]}
+                            tag="button"
+                          >
+                            <button
+                              aria-label={null}
+                              className="btn btn-secondary"
+                              onClick={[Function]}
+                              type="button"
+                            >
+                              <FormattedMessage
+                                defaultMessage="Cancel"
+                                description="Button"
+                                id="cancel"
+                                values={Object {}}
                               >
-                                <button
-                                  aria-label={null}
-                                  className="btn btn-secondary"
-                                  onClick={[Function]}
-                                  type="button"
-                                >
-                                  <FormattedMessage
-                                    defaultMessage="Cancel"
-                                    description="Button"
-                                    id="cancel"
-                                    values={Object {}}
-                                  >
-                                    Cancel
-                                  </FormattedMessage>
-                                </button>
-                              </Button>
-                              <Button
-                                color="danger"
-                                onClick={[Function]}
-                                tag="button"
+                                Cancel
+                              </FormattedMessage>
+                            </button>
+                          </Button>
+                          <Button
+                            color="danger"
+                            onClick={[Function]}
+                            tag="button"
+                          >
+                            <button
+                              aria-label={null}
+                              className="btn btn-danger"
+                              onClick={[Function]}
+                              type="button"
+                            >
+                              <FormattedMessage
+                                defaultMessage="Delete"
+                                description="Button"
+                                id="delete"
+                                values={Object {}}
                               >
-                                <button
-                                  aria-label={null}
-                                  className="btn btn-danger"
-                                  onClick={[Function]}
-                                  type="button"
-                                >
-                                  <FormattedMessage
-                                    defaultMessage="Delete"
-                                    description="Button"
-                                    id="delete"
-                                    values={Object {}}
-                                  >
-                                    Delete
-                                  </FormattedMessage>
-                                </button>
-                              </Button>
-                            </div>
-                          </ModalFooter>
+                                Delete
+                              </FormattedMessage>
+                            </button>
+                          </Button>
                         </div>
-                      </div>
+                      </ModalFooter>
                     </div>
-                  </Transition>
-                </Fade>
+                  </div>
+                </div>
+              </Transition>
+            </Fade>
+            <Fade
+              appear={true}
+              baseClass="fade"
+              baseClassActive="show"
+              className="modal-backdrop"
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={true}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              tag="div"
+              timeout={150}
+              unmountOnExit={false}
+            >
+              <Transition
+                appear={true}
+                enter={true}
+                exit={true}
+                in={true}
+                mountOnEnter={true}
+                onEnter={[Function]}
+                onEntered={[Function]}
+                onEntering={[Function]}
+                onExit={[Function]}
+                onExited={[Function]}
+                onExiting={[Function]}
+                timeout={150}
+                unmountOnExit={false}
+              >
                 <div
-                  className="modal-backdrop show"
+                  className="modal-backdrop fade"
                 />
-              </div>
-            </Portal>
-          </Portal>
-        </Modal>
-      </Transition>
-    </CSSTransition>
+              </Transition>
+            </Fade>
+          </div>
+        </Portal>
+      </Portal>
+    </Modal>
     <ModalYesNoConfirmation
       className="modal-dialog-centered"
       isActing={false}
@@ -1732,56 +1702,34 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
       visible={false}
       yes={[Function]}
     >
-      <CSSTransition
-        classNames="modal"
-        in={false}
-        timeout={300}
-      >
-        <Transition
-          appear={false}
-          enter={true}
-          exit={true}
-          in={false}
-          mountOnEnter={false}
-          onEnter={[Function]}
-          onEntered={[Function]}
-          onEntering={[Function]}
-          onExit={[Function]}
-          onExited={[Function]}
-          onExiting={[Function]}
-          timeout={300}
-          unmountOnExit={false}
-        >
-          <Modal
-            autoFocus={true}
-            backdrop={true}
-            backdropTransition={
-              Object {
-                "mountOnEnter": true,
-                "timeout": 150,
-              }
-            }
-            centered={false}
-            className="modal-dialog-centered"
-            fade={false}
-            isOpen={false}
-            keyboard={true}
-            modalTransition={
-              Object {
-                "timeout": 300,
-              }
-            }
-            onClosed={[Function]}
-            onOpened={[Function]}
-            returnFocusAfterClose={true}
-            role="dialog"
-            scrollable={false}
-            toggle={[Function]}
-            unmountOnClose={true}
-            zIndex={1050}
-          />
-        </Transition>
-      </CSSTransition>
+      <Modal
+        autoFocus={true}
+        backdrop={true}
+        backdropTransition={
+          Object {
+            "mountOnEnter": true,
+            "timeout": 150,
+          }
+        }
+        centered={false}
+        className="modal-dialog-centered"
+        fade={true}
+        isOpen={false}
+        keyboard={true}
+        modalTransition={
+          Object {
+            "timeout": 300,
+          }
+        }
+        onClosed={[Function]}
+        onOpened={[Function]}
+        returnFocusAfterClose={true}
+        role="dialog"
+        scrollable={false}
+        toggle={[Function]}
+        unmountOnClose={true}
+        zIndex={1050}
+      />
     </ModalYesNoConfirmation>
   </ModalEditImage>
 </Memo(Gallery)>
@@ -3773,55 +3721,33 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
     toggle={[Function]}
     visible={false}
   >
-    <CSSTransition
-      classNames="modal"
-      in={false}
-      timeout={300}
-    >
-      <Transition
-        appear={false}
-        enter={true}
-        exit={true}
-        in={false}
-        mountOnEnter={false}
-        onEnter={[Function]}
-        onEntered={[Function]}
-        onEntering={[Function]}
-        onExit={[Function]}
-        onExited={[Function]}
-        onExiting={[Function]}
-        timeout={300}
-        unmountOnExit={false}
-      >
-        <Modal
-          autoFocus={true}
-          backdrop={true}
-          backdropTransition={
-            Object {
-              "mountOnEnter": true,
-              "timeout": 150,
-            }
-          }
-          centered={false}
-          fade={false}
-          isOpen={false}
-          keyboard={true}
-          modalTransition={
-            Object {
-              "timeout": 300,
-            }
-          }
-          onClosed={[Function]}
-          onOpened={[Function]}
-          returnFocusAfterClose={true}
-          role="dialog"
-          scrollable={false}
-          toggle={[Function]}
-          unmountOnClose={true}
-          zIndex={1050}
-        />
-      </Transition>
-    </CSSTransition>
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      fade={true}
+      isOpen={false}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      returnFocusAfterClose={true}
+      role="dialog"
+      scrollable={false}
+      toggle={[Function]}
+      unmountOnClose={true}
+      zIndex={1050}
+    />
     <ModalYesNoConfirmation
       className="modal-dialog-centered"
       isActing={false}
@@ -3844,56 +3770,34 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
       visible={false}
       yes={[Function]}
     >
-      <CSSTransition
-        classNames="modal"
-        in={false}
-        timeout={300}
-      >
-        <Transition
-          appear={false}
-          enter={true}
-          exit={true}
-          in={false}
-          mountOnEnter={false}
-          onEnter={[Function]}
-          onEntered={[Function]}
-          onEntering={[Function]}
-          onExit={[Function]}
-          onExited={[Function]}
-          onExiting={[Function]}
-          timeout={300}
-          unmountOnExit={false}
-        >
-          <Modal
-            autoFocus={true}
-            backdrop={true}
-            backdropTransition={
-              Object {
-                "mountOnEnter": true,
-                "timeout": 150,
-              }
-            }
-            centered={false}
-            className="modal-dialog-centered"
-            fade={false}
-            isOpen={false}
-            keyboard={true}
-            modalTransition={
-              Object {
-                "timeout": 300,
-              }
-            }
-            onClosed={[Function]}
-            onOpened={[Function]}
-            returnFocusAfterClose={true}
-            role="dialog"
-            scrollable={false}
-            toggle={[Function]}
-            unmountOnClose={true}
-            zIndex={1050}
-          />
-        </Transition>
-      </CSSTransition>
+      <Modal
+        autoFocus={true}
+        backdrop={true}
+        backdropTransition={
+          Object {
+            "mountOnEnter": true,
+            "timeout": 150,
+          }
+        }
+        centered={false}
+        className="modal-dialog-centered"
+        fade={true}
+        isOpen={false}
+        keyboard={true}
+        modalTransition={
+          Object {
+            "timeout": 300,
+          }
+        }
+        onClosed={[Function]}
+        onOpened={[Function]}
+        returnFocusAfterClose={true}
+        role="dialog"
+        scrollable={false}
+        toggle={[Function]}
+        unmountOnClose={true}
+        zIndex={1050}
+      />
     </ModalYesNoConfirmation>
   </ModalEditImage>
 </Memo(Gallery)>
@@ -4313,55 +4217,33 @@ exports[`Component Gallery should render a list of image using the thumbnail url
     toggle={[Function]}
     visible={false}
   >
-    <CSSTransition
-      classNames="modal"
-      in={false}
-      timeout={300}
-    >
-      <Transition
-        appear={false}
-        enter={true}
-        exit={true}
-        in={false}
-        mountOnEnter={false}
-        onEnter={[Function]}
-        onEntered={[Function]}
-        onEntering={[Function]}
-        onExit={[Function]}
-        onExited={[Function]}
-        onExiting={[Function]}
-        timeout={300}
-        unmountOnExit={false}
-      >
-        <Modal
-          autoFocus={true}
-          backdrop={true}
-          backdropTransition={
-            Object {
-              "mountOnEnter": true,
-              "timeout": 150,
-            }
-          }
-          centered={false}
-          fade={false}
-          isOpen={false}
-          keyboard={true}
-          modalTransition={
-            Object {
-              "timeout": 300,
-            }
-          }
-          onClosed={[Function]}
-          onOpened={[Function]}
-          returnFocusAfterClose={true}
-          role="dialog"
-          scrollable={false}
-          toggle={[Function]}
-          unmountOnClose={true}
-          zIndex={1050}
-        />
-      </Transition>
-    </CSSTransition>
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      fade={true}
+      isOpen={false}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      returnFocusAfterClose={true}
+      role="dialog"
+      scrollable={false}
+      toggle={[Function]}
+      unmountOnClose={true}
+      zIndex={1050}
+    />
     <ModalYesNoConfirmation
       className="modal-dialog-centered"
       isActing={false}
@@ -4384,56 +4266,34 @@ exports[`Component Gallery should render a list of image using the thumbnail url
       visible={false}
       yes={[Function]}
     >
-      <CSSTransition
-        classNames="modal"
-        in={false}
-        timeout={300}
-      >
-        <Transition
-          appear={false}
-          enter={true}
-          exit={true}
-          in={false}
-          mountOnEnter={false}
-          onEnter={[Function]}
-          onEntered={[Function]}
-          onEntering={[Function]}
-          onExit={[Function]}
-          onExited={[Function]}
-          onExiting={[Function]}
-          timeout={300}
-          unmountOnExit={false}
-        >
-          <Modal
-            autoFocus={true}
-            backdrop={true}
-            backdropTransition={
-              Object {
-                "mountOnEnter": true,
-                "timeout": 150,
-              }
-            }
-            centered={false}
-            className="modal-dialog-centered"
-            fade={false}
-            isOpen={false}
-            keyboard={true}
-            modalTransition={
-              Object {
-                "timeout": 300,
-              }
-            }
-            onClosed={[Function]}
-            onOpened={[Function]}
-            returnFocusAfterClose={true}
-            role="dialog"
-            scrollable={false}
-            toggle={[Function]}
-            unmountOnClose={true}
-            zIndex={1050}
-          />
-        </Transition>
-      </CSSTransition>
+      <Modal
+        autoFocus={true}
+        backdrop={true}
+        backdropTransition={
+          Object {
+            "mountOnEnter": true,
+            "timeout": 150,
+          }
+        }
+        centered={false}
+        className="modal-dialog-centered"
+        fade={true}
+        isOpen={false}
+        keyboard={true}
+        modalTransition={
+          Object {
+            "timeout": 300,
+          }
+        }
+        onClosed={[Function]}
+        onOpened={[Function]}
+        returnFocusAfterClose={true}
+        role="dialog"
+        scrollable={false}
+        toggle={[Function]}
+        unmountOnClose={true}
+        zIndex={1050}
+      />
     </ModalYesNoConfirmation>
   </ModalEditImage>
 </Memo(Gallery)>
@@ -4649,55 +4509,33 @@ exports[`Component Gallery should render a spinner the time to get the answer fr
     toggle={[Function]}
     visible={false}
   >
-    <CSSTransition
-      classNames="modal"
-      in={false}
-      timeout={300}
-    >
-      <Transition
-        appear={false}
-        enter={true}
-        exit={true}
-        in={false}
-        mountOnEnter={false}
-        onEnter={[Function]}
-        onEntered={[Function]}
-        onEntering={[Function]}
-        onExit={[Function]}
-        onExited={[Function]}
-        onExiting={[Function]}
-        timeout={300}
-        unmountOnExit={false}
-      >
-        <Modal
-          autoFocus={true}
-          backdrop={true}
-          backdropTransition={
-            Object {
-              "mountOnEnter": true,
-              "timeout": 150,
-            }
-          }
-          centered={false}
-          fade={false}
-          isOpen={false}
-          keyboard={true}
-          modalTransition={
-            Object {
-              "timeout": 300,
-            }
-          }
-          onClosed={[Function]}
-          onOpened={[Function]}
-          returnFocusAfterClose={true}
-          role="dialog"
-          scrollable={false}
-          toggle={[Function]}
-          unmountOnClose={true}
-          zIndex={1050}
-        />
-      </Transition>
-    </CSSTransition>
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      fade={true}
+      isOpen={false}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      returnFocusAfterClose={true}
+      role="dialog"
+      scrollable={false}
+      toggle={[Function]}
+      unmountOnClose={true}
+      zIndex={1050}
+    />
     <ModalYesNoConfirmation
       className="modal-dialog-centered"
       isActing={false}
@@ -4720,56 +4558,34 @@ exports[`Component Gallery should render a spinner the time to get the answer fr
       visible={false}
       yes={[Function]}
     >
-      <CSSTransition
-        classNames="modal"
-        in={false}
-        timeout={300}
-      >
-        <Transition
-          appear={false}
-          enter={true}
-          exit={true}
-          in={false}
-          mountOnEnter={false}
-          onEnter={[Function]}
-          onEntered={[Function]}
-          onEntering={[Function]}
-          onExit={[Function]}
-          onExited={[Function]}
-          onExiting={[Function]}
-          timeout={300}
-          unmountOnExit={false}
-        >
-          <Modal
-            autoFocus={true}
-            backdrop={true}
-            backdropTransition={
-              Object {
-                "mountOnEnter": true,
-                "timeout": 150,
-              }
-            }
-            centered={false}
-            className="modal-dialog-centered"
-            fade={false}
-            isOpen={false}
-            keyboard={true}
-            modalTransition={
-              Object {
-                "timeout": 300,
-              }
-            }
-            onClosed={[Function]}
-            onOpened={[Function]}
-            returnFocusAfterClose={true}
-            role="dialog"
-            scrollable={false}
-            toggle={[Function]}
-            unmountOnClose={true}
-            zIndex={1050}
-          />
-        </Transition>
-      </CSSTransition>
+      <Modal
+        autoFocus={true}
+        backdrop={true}
+        backdropTransition={
+          Object {
+            "mountOnEnter": true,
+            "timeout": 150,
+          }
+        }
+        centered={false}
+        className="modal-dialog-centered"
+        fade={true}
+        isOpen={false}
+        keyboard={true}
+        modalTransition={
+          Object {
+            "timeout": 300,
+          }
+        }
+        onClosed={[Function]}
+        onOpened={[Function]}
+        returnFocusAfterClose={true}
+        role="dialog"
+        scrollable={false}
+        toggle={[Function]}
+        unmountOnClose={true}
+        zIndex={1050}
+      />
     </ModalYesNoConfirmation>
   </ModalEditImage>
 </Memo(Gallery)>
@@ -7226,55 +7042,33 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
     toggle={[Function]}
     visible={false}
   >
-    <CSSTransition
-      classNames="modal"
-      in={false}
-      timeout={300}
-    >
-      <Transition
-        appear={false}
-        enter={true}
-        exit={true}
-        in={false}
-        mountOnEnter={false}
-        onEnter={[Function]}
-        onEntered={[Function]}
-        onEntering={[Function]}
-        onExit={[Function]}
-        onExited={[Function]}
-        onExiting={[Function]}
-        timeout={300}
-        unmountOnExit={false}
-      >
-        <Modal
-          autoFocus={true}
-          backdrop={true}
-          backdropTransition={
-            Object {
-              "mountOnEnter": true,
-              "timeout": 150,
-            }
-          }
-          centered={false}
-          fade={false}
-          isOpen={false}
-          keyboard={true}
-          modalTransition={
-            Object {
-              "timeout": 300,
-            }
-          }
-          onClosed={[Function]}
-          onOpened={[Function]}
-          returnFocusAfterClose={true}
-          role="dialog"
-          scrollable={false}
-          toggle={[Function]}
-          unmountOnClose={true}
-          zIndex={1050}
-        />
-      </Transition>
-    </CSSTransition>
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      fade={true}
+      isOpen={false}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      returnFocusAfterClose={true}
+      role="dialog"
+      scrollable={false}
+      toggle={[Function]}
+      unmountOnClose={true}
+      zIndex={1050}
+    />
     <ModalYesNoConfirmation
       className="modal-dialog-centered"
       isActing={false}
@@ -7297,56 +7091,34 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
       visible={false}
       yes={[Function]}
     >
-      <CSSTransition
-        classNames="modal"
-        in={false}
-        timeout={300}
-      >
-        <Transition
-          appear={false}
-          enter={true}
-          exit={true}
-          in={false}
-          mountOnEnter={false}
-          onEnter={[Function]}
-          onEntered={[Function]}
-          onEntering={[Function]}
-          onExit={[Function]}
-          onExited={[Function]}
-          onExiting={[Function]}
-          timeout={300}
-          unmountOnExit={false}
-        >
-          <Modal
-            autoFocus={true}
-            backdrop={true}
-            backdropTransition={
-              Object {
-                "mountOnEnter": true,
-                "timeout": 150,
-              }
-            }
-            centered={false}
-            className="modal-dialog-centered"
-            fade={false}
-            isOpen={false}
-            keyboard={true}
-            modalTransition={
-              Object {
-                "timeout": 300,
-              }
-            }
-            onClosed={[Function]}
-            onOpened={[Function]}
-            returnFocusAfterClose={true}
-            role="dialog"
-            scrollable={false}
-            toggle={[Function]}
-            unmountOnClose={true}
-            zIndex={1050}
-          />
-        </Transition>
-      </CSSTransition>
+      <Modal
+        autoFocus={true}
+        backdrop={true}
+        backdropTransition={
+          Object {
+            "mountOnEnter": true,
+            "timeout": 150,
+          }
+        }
+        centered={false}
+        className="modal-dialog-centered"
+        fade={true}
+        isOpen={false}
+        keyboard={true}
+        modalTransition={
+          Object {
+            "timeout": 300,
+          }
+        }
+        onClosed={[Function]}
+        onOpened={[Function]}
+        returnFocusAfterClose={true}
+        role="dialog"
+        scrollable={false}
+        toggle={[Function]}
+        unmountOnClose={true}
+        zIndex={1050}
+      />
     </ModalYesNoConfirmation>
   </ModalEditImage>
 </Memo(Gallery)>

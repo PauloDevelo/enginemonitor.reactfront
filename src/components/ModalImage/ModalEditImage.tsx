@@ -6,7 +6,6 @@ import {
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage, defineMessages } from 'react-intl';
-import { CSSTransition } from 'react-transition-group';
 
 import storageService from '../../services/StorageService';
 
@@ -57,31 +56,29 @@ const ModalEditImage = ({
 
   return (
     <>
-      <CSSTransition in={visible} timeout={300} classNames="modal">
-        <Modal isOpen={visible} toggle={modalLogic.cancel} className={className} fade={false}>
-          <ModalHeader toggle={modalLogic.cancel}>
-            <FontAwesomeIcon icon={faEdit} />
-            {' '}
-            <FormattedMessage {...editImageMsg.modalImageEditTitle} />
-          </ModalHeader>
-          <ModalBody>
-            {image !== undefined && <Img storage={storageService.getUserStorage()} src={image.url} style={{ width: '100%' }} alt={`${image.title} - ${image.description}`} loader={<span className="spinnerContainer"><Loading /></span>} />}
-            {visible
-                        && (
-                        <MyForm id="imageEditForm" submit={modalLogic.handleSubmit} initialData={image}>
-                          <MyInput name="title" label={editImageMsg.title} type="text" />
-                          <MyInput name="description" label={editImageMsg.description} type="text" />
-                        </MyForm>
-                        )}
-            <Alerts errors={modalLogic.alerts} />
-          </ModalBody>
-          <ModalFooter>
-            <ActionButton type="submit" isActing={modalLogic.isSaving} form="imageEditForm" color="success" message={editImageMsg.save} />
-            <Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...editImageMsg.cancel} /></Button>
-            <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editImageMsg.delete} /></Button>
-          </ModalFooter>
-        </Modal>
-      </CSSTransition>
+      <Modal isOpen={visible} toggle={modalLogic.cancel} className={className} fade>
+        <ModalHeader toggle={modalLogic.cancel}>
+          <FontAwesomeIcon icon={faEdit} />
+          {' '}
+          <FormattedMessage {...editImageMsg.modalImageEditTitle} />
+        </ModalHeader>
+        <ModalBody>
+          {image !== undefined && <Img storage={storageService.getUserStorage()} src={image.url} style={{ width: '100%' }} alt={`${image.title} - ${image.description}`} loader={<span className="spinnerContainer"><Loading /></span>} />}
+          {visible
+                      && (
+                      <MyForm id="imageEditForm" submit={modalLogic.handleSubmit} initialData={image}>
+                        <MyInput name="title" label={editImageMsg.title} type="text" />
+                        <MyInput name="description" label={editImageMsg.description} type="text" />
+                      </MyForm>
+                      )}
+          <Alerts errors={modalLogic.alerts} />
+        </ModalBody>
+        <ModalFooter>
+          <ActionButton type="submit" isActing={modalLogic.isSaving} form="imageEditForm" color="success" message={editImageMsg.save} />
+          <Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...editImageMsg.cancel} /></Button>
+          <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...editImageMsg.delete} /></Button>
+        </ModalFooter>
+      </Modal>
       <ModalYesNoConfirmation
         visible={modalLogic.yesNoModalVisibility}
         toggle={modalLogic.toggleModalYesNoConfirmation}

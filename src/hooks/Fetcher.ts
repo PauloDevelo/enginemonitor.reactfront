@@ -20,7 +20,7 @@ export type FetcherState<T> = {
 
 export default function useFetcher<T, P>({ fetchPromise, fetchProps, cancellationMsg }:AxiosAsyncProps<T, P>):FetcherState<T> {
   const cancelTokenSourceRef = useRef<CancelTokenSource | undefined>(undefined);
-  const cancelFetchImages = useCallback(() => {
+  const cancelFetching = useCallback(() => {
     if (cancelTokenSourceRef.current) {
       cancelTokenSourceRef.current.cancel(cancellationMsg);
     }
@@ -35,7 +35,7 @@ export default function useFetcher<T, P>({ fetchPromise, fetchProps, cancellatio
 
   const {
     data, error, isLoading, reload,
-  } = useAsync({ promiseFn: fetch, onCancel: cancelFetchImages });
+  } = useAsync({ promiseFn: fetch, onCancel: cancelFetching });
 
   const reloadRef = useRef(reload);
   useEffect(() => {
