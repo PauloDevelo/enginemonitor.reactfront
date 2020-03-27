@@ -113,19 +113,19 @@ export default function MainPanel() {
               <NavBar onLoggedOut={logOut} />
               <div className="appBody mb-2">
                 <div className="wrapperColumn">
-                  <EquipmentsInfo extraClassNames={`${panelClassNames} columnHeader`} />
+                  <EquipmentsInfo className={`${panelClassNames} columnHeader`} />
                   <TaskTabPanes
-                    classNames={`${panelClassNames} columnBody`}
+                    className={`${panelClassNames} columnBody`}
                     changeCurrentTask={onClickTaskTable}
                   />
                 </div>
                 <div className="wrapperColumn">
                   <CardTaskDetails
                     callBackRef={cardTaskDetailDomCallBack}
-                    classNames={`${panelClassNames} columnHeader`}
+                    className={`${panelClassNames} columnHeader`}
                   />
                   <HistoryTaskTable
-                    classNames={`${panelClassNames} columnBody lastBlock`}
+                    className={`${panelClassNames} columnBody lastBlock`}
                   />
                 </div>
               </div>

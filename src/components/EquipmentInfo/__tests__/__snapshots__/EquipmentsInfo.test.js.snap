@@ -12,7 +12,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
   timeZone="Asia/Kuala_Lumpur"
 >
   <Memo(EquipmentsInfo)
-    extraClassNames=""
+    className=""
   >
     <div
       className=""

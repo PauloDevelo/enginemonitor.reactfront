@@ -35,7 +35,7 @@ type Props = {
 asset: AssetModel,
 visible: boolean,
 toggle?: () => void,
-className: string,
+className?: string,
 hideDeleteButton?: boolean
 }
 

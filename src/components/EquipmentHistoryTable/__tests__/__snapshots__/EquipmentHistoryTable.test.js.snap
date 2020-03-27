@@ -1475,7 +1475,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_05",
@@ -1644,7 +1644,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_05",
@@ -1809,7 +1809,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_05",
@@ -1974,7 +1974,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_05",
@@ -2225,7 +2225,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_04",
@@ -2394,7 +2394,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_04",
@@ -2559,7 +2559,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_04",
@@ -2724,7 +2724,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_04",
@@ -2975,7 +2975,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_03",
@@ -3144,7 +3144,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_03",
@@ -3309,7 +3309,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_03",
@@ -3474,7 +3474,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_03",
@@ -3725,7 +3725,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_01",
@@ -3894,7 +3894,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_01",
@@ -4059,7 +4059,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_01",
@@ -4224,7 +4224,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_01",
@@ -4475,7 +4475,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_02",
@@ -4644,7 +4644,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_02",
@@ -4809,7 +4809,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_02",
@@ -4974,7 +4974,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_02",

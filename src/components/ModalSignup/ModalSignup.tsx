@@ -26,7 +26,7 @@ const loginMsg = defineMessages(jsonMessages);
 
 type Props = {
 visible: boolean,
-className: string,
+className?: string,
 toggle: () => void
 }
 

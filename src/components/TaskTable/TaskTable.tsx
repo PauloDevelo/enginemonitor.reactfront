@@ -6,6 +6,7 @@ import { Button, Badge } from 'reactstrap';
 import { FormattedMessage, defineMessages } from 'react-intl';
 import { faTasks, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classnames from 'classnames';
 import { composeDecorators } from '../react-table-factory/table.js';
 import { withInMemorySortingContext } from '../react-table-factory/withSortingContext.js';
 import { withHeaderControl } from '../react-table-factory/withHeaderControl.js';
@@ -13,6 +14,7 @@ import { withFixedHeader } from '../react-table-factory/withFixedHeader.js';
 
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
 import Loading from '../Loading/Loading';
+
 
 import {
   // eslint-disable-next-line no-unused-vars
@@ -42,7 +44,7 @@ const taskTableMsg = defineMessages(jsonMessages);
 
 type Props = {
   changeCurrentTask: (task: TaskModel) => void,
-  classNames?: string
+  className?: string
 };
 
 type DisplayableTask = {
@@ -60,8 +62,7 @@ const Table = composeDecorators(
   withFixedHeader, // should be last
 )();
 
-export const TaskTable = ({ classNames, changeCurrentTask }: Props) => {
-  const classNamesStr = classNames === undefined ? 'tasktable' : `${classNames} tasktable`;
+export const TaskTable = ({ className, changeCurrentTask }: Props) => {
   const [equipment, setEquipment] = useState<EquipmentModel | undefined>(equipmentManager.getCurrentEquipment());
   const [tasks, setTasks] = useState<TaskModel[]>(taskManager.getTasks());
 
@@ -109,7 +110,7 @@ export const TaskTable = ({ classNames, changeCurrentTask }: Props) => {
       cell: (content: any) => {
         const { data }: { data: DisplayableTask} = content;
         return (
-          <ClickableCell data={data.task} onDisplayData={onClickTaskRow} classNames={`table-${getContext(data.level)}`}>
+          <ClickableCell data={data.task} onDisplayData={onClickTaskRow} className={`table-${getContext(data.level)}`}>
             <span>{data.name}</span>
           </ClickableCell>
         );
@@ -126,7 +127,7 @@ export const TaskTable = ({ classNames, changeCurrentTask }: Props) => {
       cell: (content: any) => {
         const { data }: { data: DisplayableTask} = content;
         return (
-          <ClickableCell data={data.task} onDisplayData={onClickTaskRow} classNames={`table-${getContext(data.level)} d-flex`}>
+          <ClickableCell data={data.task} onDisplayData={onClickTaskRow} className={`table-${getContext(data.level)} d-flex`}>
             <Badge color={getContext(data.level)} pill className="mx-auto my-auto">
               {getBadgeText(data.level)}
               {' '}
@@ -147,7 +148,7 @@ export const TaskTable = ({ classNames, changeCurrentTask }: Props) => {
         const { data }: { data: DisplayableTask} = content;
         const { todo } = data;
         return (
-          <ClickableCell data={data.task} onDisplayData={onClickTaskRow} classNames={`table-${getContext(data.level)}`}>
+          <ClickableCell data={data.task} onDisplayData={onClickTaskRow} className={`table-${getContext(data.level)}`}>
             <ToDoText dueDate={todo.dueDate} level={todo.level} onlyDate={todo.onlyDate} usageInHourLeft={todo.usageInHourLeft} />
           </ClickableCell>
         );
@@ -176,7 +177,7 @@ export const TaskTable = ({ classNames, changeCurrentTask }: Props) => {
             cell: (content: any) => {
               const { data }: { data: DisplayableTask} = content;
               return (
-                <ClickableCell data={data.task} onDisplayData={onClickTaskRow} classNames={`table-${getContext(data.level)}`}>
+                <ClickableCell data={data.task} onDisplayData={onClickTaskRow} className={`table-${getContext(data.level)}`}>
                   <span>{data.shortenDescription}</span>
                 </ClickableCell>
               );
@@ -196,7 +197,7 @@ export const TaskTable = ({ classNames, changeCurrentTask }: Props) => {
 
   return (
     <>
-      <div className={classNamesStr}>
+      <div className={classnames(className, 'tasktable')}>
         <span>
           <FontAwesomeIcon icon={faTasks} />
           {' '}

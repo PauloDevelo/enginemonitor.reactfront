@@ -94,7 +94,7 @@ describe('EquipmentsInfo', () => {
     // Act
     const equipmentsInfo = mount(
       <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
-        <EquipmentsInfo extraClassNames="" />
+        <EquipmentsInfo className="" />
       </IntlProvider>,
     );
     await updateWrapper(equipmentsInfo);
@@ -117,7 +117,7 @@ describe('EquipmentsInfo', () => {
     // Arrange
     const equipmentsInfo = mount(
       <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
-        <EquipmentsInfo extraClassNames="" />
+        <EquipmentsInfo className="" />
       </IntlProvider>,
     );
     await updateWrapper(equipmentsInfo);
@@ -146,7 +146,7 @@ describe('EquipmentsInfo', () => {
     const nbEquipment = equipments.length;
     const equipmentsInfo = mount(
       <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
-        <EquipmentsInfo extraClassNames="" />
+        <EquipmentsInfo className="" />
       </IntlProvider>,
     );
     await updateWrapper(equipmentsInfo);
@@ -191,7 +191,7 @@ describe('EquipmentsInfo', () => {
     // Arrange
     const equipmentsInfo = mount(
       <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
-        <EquipmentsInfo extraClassNames="" />
+        <EquipmentsInfo className="" />
       </IntlProvider>,
     );
     await updateWrapper(equipmentsInfo);

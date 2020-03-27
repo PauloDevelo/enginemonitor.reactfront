@@ -7,6 +7,7 @@ import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as moment from 'moment';
+import classNames from 'classnames';
 import { composeDecorators } from '../react-table-factory/table.js';
 import { withInMemorySortingContext } from '../react-table-factory/withSortingContext.js';
 import { withHeaderControl } from '../react-table-factory/withHeaderControl.js';
@@ -37,7 +38,7 @@ import jsonMessages from './EquipmentHistoryTable.messages.json';
 const messages = defineMessages(jsonMessages);
 
 type Props = {
-    classNames?: string
+    className?: string
 }
 
 const Table = composeDecorators(
@@ -46,9 +47,7 @@ const Table = composeDecorators(
   withFixedHeader, // should be last
 )();
 
-const EquipmentHistoryTable = ({ classNames }: Props) => {
-  const classNamesStr = classNames ? `${classNames} historytasktable` : 'historytasktable';
-
+const EquipmentHistoryTable = ({ className }: Props) => {
   const [equipment, setEquipment] = useState<EquipmentModel | undefined>(equipmentManager.getCurrentEquipment());
   const [parentTask, setParentTask] = useState<TaskModel | undefined>(undefined);
   const modalHook = useEditModal<EntryModel | undefined>(undefined);
@@ -88,7 +87,7 @@ const EquipmentHistoryTable = ({ classNames }: Props) => {
       cell: (content: any) => {
         const entry: EntryModel = content.data;
         return (
-          <ClickableCell data={content.data} onDisplayData={displayEntry} classNames={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
+          <ClickableCell data={content.data} onDisplayData={displayEntry} className={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
             <FormattedDate value={entry.date} />
           </ClickableCell>
         );
@@ -107,7 +106,7 @@ const EquipmentHistoryTable = ({ classNames }: Props) => {
         const entry: EntryModel = content.data;
         const entryName = entry.name;
         return (
-          <ClickableCell data={content.data} onDisplayData={displayEntry} classNames={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
+          <ClickableCell data={content.data} onDisplayData={displayEntry} className={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
             <>{entryName}</>
           </ClickableCell>
         );
@@ -126,7 +125,7 @@ const EquipmentHistoryTable = ({ classNames }: Props) => {
         const entry:EntryModel = content.data;
         if (equipment === undefined || equipment.ageAcquisitionType !== AgeAcquisitionType.time) {
           return (
-            <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
+            <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
               <>{entry.age === -1 ? '' : `${entry.age}h`}</>
             </ClickableCell>
           );
@@ -137,7 +136,7 @@ const EquipmentHistoryTable = ({ classNames }: Props) => {
         const month = diff.months();
         const day = diff.days();
         return (
-          <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
+          <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
             <>
               {diff.years() > 0 && <FormattedMessage {... messages.yearperiod} values={{ year }} />}
               {' '}
@@ -164,7 +163,7 @@ const EquipmentHistoryTable = ({ classNames }: Props) => {
         const shortenRemarks = shorten(remarks);
 
         return (
-          <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
+          <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
             <div dangerouslySetInnerHTML={{ __html: shortenRemarks }} />
           </ClickableCell>
         );
@@ -175,7 +174,7 @@ const EquipmentHistoryTable = ({ classNames }: Props) => {
   ];
 
   return (
-    <div className={classNamesStr}>
+    <div className={classNames(className, 'historytasktable')}>
       <span className="mb-2">
         <b><FormattedMessage {...messages.equipmentHistoryTitle} /></b>
         {equipment && (

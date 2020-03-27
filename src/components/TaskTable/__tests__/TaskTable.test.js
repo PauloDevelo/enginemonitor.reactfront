@@ -120,7 +120,7 @@ describe('TaskTable', () => {
       <IntlProvider locale={navigator.language}>
         <TaskTable
           changeCurrentTask={changeCurrentTask}
-          classNames="mySpecialClassName"
+          className="mySpecialClassName"
         />
       </IntlProvider>,
     );

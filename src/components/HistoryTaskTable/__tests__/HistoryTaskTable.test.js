@@ -186,7 +186,7 @@ describe('HistoryTaskTable', () => {
     clickableCells.forEach((clickableCell) => {
       const cellProps = clickableCell.props();
       const entry = cellProps.data;
-      expect(cellProps.classNames.includes(entry.ack ? 'table-white' : 'table-warning')).toBe(true);
+      expect(cellProps.className.includes(entry.ack ? 'table-white' : 'table-warning')).toBe(true);
     });
 
     expect(entryManager.getTaskEntries).toBeCalledTimes(1);

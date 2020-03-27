@@ -22,10 +22,10 @@ import equipmentManager from '../../services/EquipmentManager';
 
 type Props = {
     callBackRef: (t: any) => any,
-    classNames?: string
+    className?: string
 }
 
-const CardTaskDetails = ({ callBackRef, classNames }: Props) => {
+const CardTaskDetails = ({ callBackRef, className }: Props) => {
   const [equipment, setEquipment] = useState(equipmentManager.getCurrentEquipment());
   const [currentTask, setCurrentTask] = useState(taskManager.getCurrentTask());
   const [tasks, setTasks] = useState(taskManager.getTasks());
@@ -60,24 +60,21 @@ const CardTaskDetails = ({ callBackRef, classNames }: Props) => {
   }, [isPrevButtonVisible, taskIndex, tasks]);
 
   if (equipment === undefined || currentTask === undefined) {
-    return <Card className={classNames} />;
+    return <Card className={className} />;
   }
 
   const badgeText = getBadgeText(currentTask.level);
   const badgeContext = getContext(currentTask.level);
   const descriptionFormatted = currentTask.description.replace(/\n/g, '<br />');
 
-  let prevClassNames = 'card-control-prev-icon';
-  if (!isPrevButtonVisible()) { prevClassNames += ' invisible'; }
-
-  let nextClassNames = 'card-control-next-icon';
-  if (!isNextButtonVisible()) { nextClassNames += ' invisible'; }
+  const prevClassNames = { 'card-control-prev-icon': true, invisible: !isPrevButtonVisible() };
+  const nextClassNames = { 'card-control-next-icon': true, invisible: !isNextButtonVisible() };
 
   return (
     <div ref={callBackRef}>
-      <Card className={classnames(classNames, taskManager.isCurrentTaskChanging() ? 'hover' : undefined)}>
+      <Card className={classnames(className, { hover: taskManager.isCurrentTaskChanging() })}>
         <CardBody className="d-flex p-0">
-          <div className="p-2 button-previous-task clickable" onClick={previousTask}><div className={prevClassNames} /></div>
+          <div className="p-2 button-previous-task clickable" onClick={previousTask}><div className={classnames(prevClassNames)} /></div>
           <TransitionGroup className="p-2 flex-grow-1">
             <CSSTransition key={currentTask._uiId} timeout={250} classNames="card">
               <div>
@@ -94,7 +91,7 @@ const CardTaskDetails = ({ callBackRef, classNames }: Props) => {
               </div>
             </CSSTransition>
           </TransitionGroup>
-          <div className="p-2 button-next-task clickable" onClick={nextTask}><div className={nextClassNames} /></div>
+          <div className="p-2 button-next-task clickable" onClick={nextTask}><div className={classnames(nextClassNames)} /></div>
         </CardBody>
         <CardFooter className="pl-5 pr-5">
           <Button color="light" className="float-left" onClick={modalHook.toggleModal} aria-label="Edit"><FontAwesomeIcon icon={faEdit} /></Button>

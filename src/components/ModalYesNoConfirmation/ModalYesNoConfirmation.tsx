@@ -18,7 +18,7 @@ type Props = {
     isActing: boolean,
     no?: ()=>void,
     visible: boolean,
-    className: string,
+    className?: string,
     title: MessageDescriptor,
     message: MessageDescriptor,
     toggle: () => void

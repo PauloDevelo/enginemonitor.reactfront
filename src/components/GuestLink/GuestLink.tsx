@@ -12,6 +12,7 @@ import {
   faShareAlt, faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import jsonMessages from './GuestLink.messages.json';
 
 // eslint-disable-next-line no-unused-vars
@@ -89,7 +90,7 @@ const GuestLink = ({ asset, onError, className }:Type) => {
   const getUrl = useCallback(() => (guestLink ? `${process.env.REACT_APP_URL}${guestLink.niceKey}` : ''), [guestLink]);
 
   return (
-    <div className={`${className || ''} p-1 mb-3 border border-secondary rounded shadow flex-row`}>
+    <div className={classNames(className, 'p-1 mb-3 border border-secondary rounded shadow flex-row')}>
       {guestLink && <Button color="light" size="sm" onClick={unshareCallBack} aria-label="Share" style={{ alignSelf: 'flex-start' }}><FontAwesomeIcon icon={faTrash} /></Button>}
       {!guestLink && <Button color="light" size="sm" onClick={shareCallBack} aria-label="Share" style={{ alignSelf: 'flex-start' }}><FontAwesomeIcon icon={faShareAlt} /></Button>}
       <div className="flex-column" style={{ flex: 'auto' }}>

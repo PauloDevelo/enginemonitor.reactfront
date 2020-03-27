@@ -4,15 +4,15 @@ import { NavItem, NavLink } from 'reactstrap';
 import { FormattedMessage, MessageDescriptor } from 'react-intl';
 
 type Props = {
-    classNames?: string,
+    className?: string,
     activeFunc?: () => void,
     label: MessageDescriptor
 };
 
-const MyNavItem = ({ classNames, activeFunc, label }:Props) => (
+const MyNavItem = ({ className, activeFunc, label }:Props) => (
   <NavItem>
     <NavLink
-      className={classNames}
+      className={className}
       onClick={activeFunc}
     >
       <FormattedMessage {...label} />

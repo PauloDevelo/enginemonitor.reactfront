@@ -6,6 +6,8 @@ import { Button } from 'reactstrap';
 
 import * as moment from 'moment';
 
+import classnames from 'classnames';
+
 import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -39,7 +41,7 @@ import equipmentManager from '../../services/EquipmentManager';
 const messages = defineMessages(jsonMessages);
 
 type Props = {
-    classNames: string
+    className?: string
 }
 
 const Table = composeDecorators(
@@ -48,7 +50,7 @@ const Table = composeDecorators(
   withFixedHeader, // should be last
 )();
 
-const HistoryTaskTable = ({ classNames }: Props) => {
+const HistoryTaskTable = ({ className }: Props) => {
   const modalHook = useEditModal<EntryModel | undefined>(undefined);
   const [entries, setEntries] = useState<EntryModel[]>(entryManager.getTaskEntries());
 
@@ -79,8 +81,9 @@ const HistoryTaskTable = ({ classNames }: Props) => {
       ),
       cell: (content: any) => {
         const entry : EntryModel = content.data;
+
         return (
-          <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.ack === false ? 'warning' : 'white'}`}>
+          <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`}>
             <FormattedDate value={entry.date} />
           </ClickableCell>
         );
@@ -102,7 +105,7 @@ const HistoryTaskTable = ({ classNames }: Props) => {
 
         if (equipment.ageAcquisitionType !== AgeAcquisitionType.time) {
           return (
-            <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.ack === false ? 'warning' : 'white'}`}>
+            <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`}>
               <>{entry.age === -1 ? '' : `${entry.age}h`}</>
             </ClickableCell>
           );
@@ -114,7 +117,7 @@ const HistoryTaskTable = ({ classNames }: Props) => {
         const day = diff.days();
 
         return (
-          <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.ack === false ? 'warning' : 'white'}`}>
+          <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`}>
             <>
               {diff.years() > 0 && <FormattedMessage {... messages.yearperiod} values={{ year }} />}
               {' '}
@@ -139,7 +142,7 @@ const HistoryTaskTable = ({ classNames }: Props) => {
         const shortenRemarks = shorten(remarks);
 
         return (
-          <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.ack === false ? 'warning' : 'white'}`}>
+          <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`}>
             <div dangerouslySetInnerHTML={{ __html: shortenRemarks }} />
           </ClickableCell>
         );
@@ -150,7 +153,7 @@ const HistoryTaskTable = ({ classNames }: Props) => {
   ];
 
   return (
-    <div className={`${classNames} historytasktable`}>
+    <div className={classnames(className, 'historytasktable')}>
       <span className="mb-2">
         <b><FormattedMessage {...messages.taskHistoryTitle} /></b>
         {equipmentManager.getCurrentEquipment() && taskManager.getCurrentTask() && (

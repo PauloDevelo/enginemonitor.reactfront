@@ -12,7 +12,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
 >
   <Memo(HistoryTaskTable)>
     <div
-      className="undefined historytasktable"
+      className="historytasktable"
     >
       <span
         className="mb-2"
@@ -1197,7 +1197,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_04",
@@ -1348,7 +1348,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_04",
@@ -1495,7 +1495,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_04",
@@ -1719,7 +1719,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-warning"
+                                              className="table-warning"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_03",
@@ -1870,7 +1870,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-warning"
+                                              className="table-warning"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_03",
@@ -2017,7 +2017,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-warning"
+                                              className="table-warning"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_03",
@@ -2241,7 +2241,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_01",
@@ -2392,7 +2392,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_01",
@@ -2539,7 +2539,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_01",
@@ -2763,7 +2763,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_02",
@@ -2914,7 +2914,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_02",
@@ -3061,7 +3061,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             }
                                           >
                                             <ClickableCell
-                                              classNames="table-white"
+                                              className="table-white"
                                               data={
                                                 Object {
                                                   "_uiId": "entry_02",
@@ -3567,7 +3567,7 @@ exports[`HistoryTaskTable Should render an empty table even when the task is und
 >
   <Memo(HistoryTaskTable)>
     <div
-      className="undefined historytasktable"
+      className="historytasktable"
     >
       <span
         className="mb-2"
@@ -4753,7 +4753,7 @@ exports[`HistoryTaskTable Should render render the loading spinner while loading
 >
   <Memo(HistoryTaskTable)>
     <div
-      className="undefined historytasktable"
+      className="historytasktable"
     >
       <span
         className="mb-2"

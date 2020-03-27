@@ -19,10 +19,10 @@ import { EquipmentModel } from '../../types/Types';
 import equipmentManager from '../../services/EquipmentManager';
 
 type Props = {
-  extraClassNames: string
+  className: string
 }
 
-function EquipmentsInfo({ extraClassNames }: Props) {
+function EquipmentsInfo({ className }: Props) {
   const [equipments, setEquipments] = useState<EquipmentModel[]>(equipmentManager.getEquipments());
   const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(equipmentManager.getCurrentEquipment());
   const modalHook = useEditModal<EquipmentModel | undefined>(undefined);
@@ -58,7 +58,7 @@ function EquipmentsInfo({ extraClassNames }: Props) {
 
   return (
     <>
-      <div className={extraClassNames}>
+      <div className={className}>
         <span className="small mb-3">
           <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEquipment())} aria-label="Add">
             <FontAwesomeIcon icon={faPlusSquare} />

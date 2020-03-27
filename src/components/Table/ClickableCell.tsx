@@ -1,23 +1,23 @@
 import React, { useCallback } from 'react';
 
+import classnames from 'classnames';
+
 type Props<T> = {
     data: T;
     onDisplayData: (data:T) => void;
-    classNames?: string;
+    className?: string;
     children?: JSX.Element[] | JSX.Element
 }
 
 function ClickableCell<T>({
-  data, onDisplayData, classNames, children,
+  data, onDisplayData, className, children,
 }: Props<T>) {
   const onClick = useCallback(() => {
     onDisplayData(data);
   }, [data, onDisplayData]);
 
-  const classNamesStr = classNames === undefined ? '' : classNames;
-
   return (
-    <div onClick={onClick} className={`${classNamesStr} innerTd clickable`}>
+    <div onClick={onClick} className={classnames(className, 'innerTd clickable')}>
       {children}
     </div>
   );
