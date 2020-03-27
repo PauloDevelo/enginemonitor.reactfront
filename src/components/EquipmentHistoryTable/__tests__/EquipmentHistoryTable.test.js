@@ -9,16 +9,20 @@ import { mount } from 'enzyme';
 import localforage from 'localforage';
 import ignoredMessages from '../../../testHelpers/MockConsole';
 import imageProxy from '../../../services/ImageProxy';
+import entryManager from '../../../services/EntryManager';
 import entryProxy from '../../../services/EntryProxy';
-import taskProxy from '../../../services/TaskProxy';
+import taskManager from '../../../services/TaskManager';
+import equipmentManager from '../../../services/EquipmentManager';
 
 import { AgeAcquisitionType } from '../../../types/Types';
 import EquipmentHistoryTable from '../EquipmentHistoryTable';
 import updateWrapper from '../../../testHelpers/EnzymeHelper';
 
 jest.mock('../../../services/ImageProxy');
+jest.mock('../../../services/EntryManager');
 jest.mock('../../../services/EntryProxy');
-jest.mock('../../../services/TaskProxy');
+jest.mock('../../../services/TaskManager');
+jest.mock('../../../services/EquipmentManager');
 jest.mock('localforage');
 
 chai.use(require('chai-datetime'));
@@ -118,22 +122,18 @@ describe('EquipmentHistoryTable', () => {
   });
 
   beforeEach(() => {
-    jest.spyOn(entryProxy, 'fetchAllEntries').mockImplementation(async (props) => {
-      if (props.equipmentId) {
-        return Promise.resolve(entries);
-      }
-      return Promise.resolve([]);
-    });
-
-    jest.spyOn(taskProxy, 'fetchTasks').mockImplementation(async () => Promise.resolve(tasks));
-
-    jest.spyOn(entryProxy, 'existEntry').mockImplementation(async (equipmentId, entryId) => {
+    entryManager.getEquipmentEntries.mockImplementation(() => entries);
+    entryManager.areEntriesLoading.mockImplementation(() => false);
+    entryProxy.existEntry.mockImplementation(async (equipmentId, entryId) => {
       if (entries.findIndex((e) => e._uiId === entryId) !== -1) {
         return Promise.resolve(true);
       }
       return Promise.resolve(false);
     });
 
+    taskManager.getTasks.mockImplementation(() => tasks);
+    taskManager.getTask.mockImplementation((uiId) => tasks.filter((task) => task._uiId === uiId)[0]);
+    equipmentManager.getCurrentEquipment.mockImplementation(() => equipment);
 
     imageProxy.fetchImages.mockResolvedValue([]);
   });
@@ -155,48 +155,42 @@ describe('EquipmentHistoryTable', () => {
   }
 
   afterEach(() => {
-    entryProxy.fetchAllEntries.mockRestore();
-    taskProxy.fetchTasks.mockRestore();
+    entryManager.getEquipmentEntries.mockRestore();
+    entryManager.areEntriesLoading.mockRestore();
     entryProxy.existEntry.mockRestore();
+    taskManager.getTasks.mockRestore();
+    taskManager.getTask.mockRestore();
+    equipmentManager.getCurrentEquipment.mockRestore();
+
     imageProxy.fetchImages.mockRestore();
   });
 
   it('Should render render the loading spinner while loading the entries', async () => {
     // Arrange
-    const onEquipmentChanged = jest.fn();
+    entryManager.areEntriesLoading.mockImplementation(() => true);
 
     // Act
     const equipmentHistoryTable = mount(
       <IntlProvider locale={navigator.language}>
-        <EquipmentHistoryTable
-          equipment={equipment}
-          onTaskChanged={onEquipmentChanged}
-          equipmentHistoryRefreshId={0}
-        />
+        <EquipmentHistoryTable />
       </IntlProvider>,
     );
 
     // Assert
     expect(equipmentHistoryTable.find('tbody').length).toBe(0);
     expect(equipmentHistoryTable.find('Loading').length).toBe(1);
-    expect(entryProxy.fetchAllEntries).toBeCalledTimes(1);
-    expect(onEquipmentChanged).toBeCalledTimes(0);
+    expect(entryManager.getEquipmentEntries).toBeCalledTimes(1);
 
     expect(equipmentHistoryTable).toMatchSnapshot();
   });
 
   it('Should render all the entries for an equipment', async () => {
     // Arrange
-    const onEquipmentChanged = jest.fn();
 
     // Act
     const equipmentHistoryTable = mount(
       <IntlProvider locale={navigator.language}>
-        <EquipmentHistoryTable
-          equipment={equipment}
-          onTaskChanged={onEquipmentChanged}
-          equipmentHistoryRefreshId={0}
-        />
+        <EquipmentHistoryTable />
       </IntlProvider>,
     );
     await updateWrapper(equipmentHistoryTable);
@@ -206,24 +200,19 @@ describe('EquipmentHistoryTable', () => {
     for (let i = 0; i < entries.length; i++) {
       expect(tbodyProps.children[i].props.data).toBe(entries[i]);
     }
-    expect(entryProxy.fetchAllEntries).toBeCalledTimes(1);
-    expect(onEquipmentChanged).toBeCalledTimes(0);
+    expect(entryManager.getEquipmentEntries).toBeCalledTimes(1);
 
     expect(equipmentHistoryTable).toMatchSnapshot();
   });
 
   it('Should render an empty table even when the equipment is undefined', async () => {
     // Arrange
-    const onEquipmentChanged = jest.fn();
+    entryManager.getEquipmentEntries.mockImplementation(() => []);
 
     // Act
     const equipmentHistoryTable = mount(
       <IntlProvider locale={navigator.language}>
-        <EquipmentHistoryTable
-          equipment={undefined}
-          onTaskChanged={onEquipmentChanged}
-          equipmentHistoryRefreshId={0}
-        />
+        <EquipmentHistoryTable />
       </IntlProvider>,
     );
     await updateWrapper(equipmentHistoryTable);
@@ -231,55 +220,16 @@ describe('EquipmentHistoryTable', () => {
     // Assert
     const tbodyProps = equipmentHistoryTable.find('tbody').at(0).props();
     expect(tbodyProps.children.length).toBe(0);
-    expect(entryProxy.fetchAllEntries).toBeCalledTimes(1);
-    expect(onEquipmentChanged).toBeCalledTimes(0);
+    expect(entryManager.getEquipmentEntries).toBeCalledTimes(1);
 
     expect(equipmentHistoryTable).toMatchSnapshot();
   });
 
-  it('Should rerender all the entries for an equipment when equipmentHistoryRefreshId change', async () => {
-    // Arrange
-    const onEquipmentChanged = jest.fn();
-
-    let key = 0;
-    const properties = { equipment, onTaskChanged: onEquipmentChanged };
-    const wrapper = mount(
-      React.createElement(
-        (props) => (
-          <IntlProvider locale={navigator.language}>
-            <EquipmentHistoryTable
-              key={key}
-              {...props}
-            />
-          </IntlProvider>
-        ),
-        properties,
-      ),
-    );
-    await updateWrapper(wrapper);
-
-    // Act
-    key = 1;
-
-    wrapper.setProps(properties);
-    await updateWrapper(wrapper);
-
-    // Assert
-    expect(entryProxy.fetchAllEntries).toBeCalledTimes(2);
-    expect(onEquipmentChanged).toBeCalledTimes(0);
-  });
-
   it('Should open the edition entry modal when clicking on any cell', async () => {
     // Arrange
-    const onEquipmentChanged = jest.fn();
-
     const equipmentHistoryTable = mount(
       <IntlProvider locale={navigator.language}>
-        <EquipmentHistoryTable
-          equipment={equipment}
-          onTaskChanged={onEquipmentChanged}
-          equipmentHistoryRefreshId={0}
-        />
+        <EquipmentHistoryTable />
       </IntlProvider>,
     );
     await updateWrapper(equipmentHistoryTable);
@@ -310,16 +260,11 @@ describe('EquipmentHistoryTable', () => {
 
   it('Should display the entries from the most recent to the oldest by default', async () => {
     // Arrange
-    const onEquipmentChanged = jest.fn();
 
     // Act
     const equipmentHistoryTable = mount(
       <IntlProvider locale={navigator.language}>
-        <EquipmentHistoryTable
-          equipment={equipment}
-          onTaskChanged={onEquipmentChanged}
-          equipmentHistoryRefreshId={0}
-        />
+        <EquipmentHistoryTable />
       </IntlProvider>,
     );
     await updateWrapper(equipmentHistoryTable);
@@ -328,17 +273,11 @@ describe('EquipmentHistoryTable', () => {
     assertTableSortedByDate(equipmentHistoryTable);
   });
 
-  it('Should add an entry and it should remain sorted by date', async () => {
+  it('Should add an entry in the entryManager', async () => {
     // Arrange
-    const onEquipmentChanged = jest.fn();
-
     const equipmentHistoryTable = mount(
       <IntlProvider locale={navigator.language}>
-        <EquipmentHistoryTable
-          equipment={equipment}
-          onTaskChanged={onEquipmentChanged}
-          equipmentHistoryRefreshId={0}
-        />
+        <EquipmentHistoryTable />
       </IntlProvider>,
     );
     await updateWrapper(equipmentHistoryTable);
@@ -368,26 +307,14 @@ describe('EquipmentHistoryTable', () => {
     expect(editEntryModal.length).toBe(1);
     expect(editEntryModal.props().visible).toBe(true);
     expect(editEntryModal.props().equipment).toBe(equipment);
-
-    expect(equipmentHistoryTable.find('ClickableCell').length).toBe((entries.length + 1) * 4);
-    const newCells = equipmentHistoryTable.find('ClickableCell').findWhere((n) => n.props().data === newEntry);
-    expect(newCells.length).toBe(4);
-
-    assertTableSortedByDate(equipmentHistoryTable);
-    expect(onEquipmentChanged).toBeCalledTimes(1);
+    expect(entryManager.onEntrySaved).toBeCalledTimes(1);
   });
 
   it('Should remove an entry', async () => {
     // Arrange
-    const onTaskChanged = jest.fn();
-
     const equipmentHistoryTable = mount(
       <IntlProvider locale={navigator.language}>
-        <EquipmentHistoryTable
-          equipment={equipment}
-          onTaskChanged={onTaskChanged}
-          equipmentHistoryRefreshId={0}
-        />
+        <EquipmentHistoryTable />
       </IntlProvider>,
     );
     await updateWrapper(equipmentHistoryTable);
@@ -410,10 +337,7 @@ describe('EquipmentHistoryTable', () => {
     expect(editEntryModal.props().equipment).toBe(equipment);
     expect(editEntryModal.props().entry).toBe(entryToDelete);
 
-    expect(equipmentHistoryTable.find('ClickableCell').length).toBe((entries.length - 1) * 4);
-    const newCells = equipmentHistoryTable.find('ClickableCell').findWhere((n) => n.props().data === entryToDelete);
-    expect(newCells.length).toBe(0);
-
-    expect(onTaskChanged).toBeCalledTimes(1);
+    expect(entryManager.onEntryDeleted).toBeCalledTimes(1);
+    expect(entryManager.onEntryDeleted.mock.calls[0][0]).toBe(entryToDelete);
   });
 });

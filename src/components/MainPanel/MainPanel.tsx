@@ -32,12 +32,10 @@ import './MainPanel.css';
 import
 {
   // eslint-disable-next-line no-unused-vars
-  UserModel, EquipmentModel, TaskModel, AssetModel,
+  UserModel, TaskModel, AssetModel,
 } from '../../types/Types';
 
 import ModalEditAsset from '../ModalEditAsset/ModalEditAsset';
-import equipmentManager from '../../services/EquipmentManager';
-import taskManager from '../../services/TaskManager';
 
 export default function MainPanel() {
   const [user, setUser] = useState<UserModel | undefined>(undefined);
@@ -53,43 +51,11 @@ export default function MainPanel() {
     }
   };
 
-  const [currentEquipment, setCurrentEquipment] = useState<EquipmentModel | undefined>(equipmentManager.getCurrentEquipment());
-
-  const [taskList, setTaskList] = useState<TaskModel[]>(taskManager.getTasks());
-  const [currentTask, setCurrentTask] = useState<TaskModel | undefined>(taskManager.getCurrentTask());
-
-  const [equipmentHistoryRefreshId, setEquipmentHistoryRefreshId] = useState(0);
-  const [taskHistoryRefreshId, setTaskHistoryRefreshId] = useState(0);
-
   useEffect(() => {
-    const onCurrentAssetChanged = (asset: AssetModel|undefined) => {
-      setCurrentAsset(asset);
-    };
-
-    const onCurrentEquipmentChanged = (equipment: EquipmentModel | undefined) => {
-      setCurrentEquipment(equipment);
-    };
-
-    const onTasksChanged = (tasks: TaskModel[]) => {
-      setTaskList(tasks);
-      setEquipmentHistoryRefreshId((previousEquipmentHistoryRefreshId) => previousEquipmentHistoryRefreshId + 1);
-    };
-
-    const onCurrentTaskChanged = (task: TaskModel | undefined) => {
-      setCurrentTask(task);
-      setTaskHistoryRefreshId((previousTaskHistoryRefreshId) => previousTaskHistoryRefreshId + 1);
-    };
-
-    assetManager.registerOnCurrentAssetChanged(onCurrentAssetChanged);
-    equipmentManager.registerOnCurrentEquipmentChanged(onCurrentEquipmentChanged);
-    taskManager.registerOnCurrentTaskChanged(onCurrentTaskChanged);
-    taskManager.registerOnTasksChanged(onTasksChanged);
+    assetManager.registerOnCurrentAssetChanged(setCurrentAsset);
 
     return () => {
-      assetManager.unregisterOnCurrentAssetChanged(onCurrentAssetChanged);
-      equipmentManager.unregisterOnCurrentEquipmentChanged(onCurrentEquipmentChanged);
-      taskManager.unregisterOnCurrentTaskChanged(onCurrentTaskChanged);
-      taskManager.unregisterOnTasksChanged(onTasksChanged);
+      assetManager.unregisterOnCurrentAssetChanged(setCurrentAsset);
     };
   }, []);
 
@@ -117,9 +83,9 @@ export default function MainPanel() {
 
   const cardTaskDetailDomRef = useRef(null);
   const cardTaskDetailDomCallBack = useCallback((node) => { cardTaskDetailDomRef.current = node; }, []);
-  const onClickTaskTable = useCallback((task: TaskModel) => {
-    setCurrentTask(task);
 
+  // eslint-disable-next-line no-unused-vars
+  const onClickTaskTable = useCallback((task: TaskModel) => {
     if (cardTaskDetailDomRef.current != null) {
       scrollTo((cardTaskDetailDomRef!.current! as any).offsetLeft, (cardTaskDetailDomRef!.current! as any).offsetTop, 250);
     }
@@ -150,31 +116,15 @@ export default function MainPanel() {
                   <EquipmentsInfo extraClassNames={`${panelClassNames} columnHeader`} />
                   <TaskTabPanes
                     classNames={`${panelClassNames} columnBody`}
-                    currentEquipment={currentEquipment}
-                    taskList={taskList}
-                    areTasksLoading={taskManager.areTasksLoading()}
                     changeCurrentTask={onClickTaskTable}
-                    equipmentHistoryRefreshId={equipmentHistoryRefreshId}
-                    onTaskChanged={taskManager.setCurrentTask}
                   />
                 </div>
                 <div className="wrapperColumn">
                   <CardTaskDetails
                     callBackRef={cardTaskDetailDomCallBack}
-                    currentTaskIsChanging={taskManager.isCurrentTaskChanging()}
-                    equipment={currentEquipment}
-                    tasks={taskList}
-                    currentTask={currentTask}
-                    onTaskChanged={taskManager.onTaskSaved}
-                    onTaskDeleted={taskManager.onTaskDeleted}
-                    changeCurrentTask={taskManager.setCurrentTask}
                     classNames={`${panelClassNames} columnHeader`}
                   />
                   <HistoryTaskTable
-                    equipment={currentEquipment}
-                    task={currentTask}
-                    onHistoryChanged={taskManager.refreshTasks}
-                    taskHistoryRefreshId={taskHistoryRefreshId}
                     classNames={`${panelClassNames} columnBody lastBlock`}
                   />
                 </div>

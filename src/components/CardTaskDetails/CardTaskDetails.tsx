@@ -15,27 +15,32 @@ import TaskScheduleText from '../TaskScheduleText/TaskScheduleText';
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
 import Gallery from '../Gallery/Gallery';
 
-
 import './CardTaskDetails.css';
 import '../../style/transition.css';
-// eslint-disable-next-line no-unused-vars
-import { EquipmentModel, TaskModel } from '../../types/Types';
+import taskManager from '../../services/TaskManager';
+import equipmentManager from '../../services/EquipmentManager';
 
 type Props = {
     callBackRef: (t: any) => any,
-    currentTaskIsChanging: boolean,
-    equipment?: EquipmentModel,
-    tasks: TaskModel[],
-    currentTask?: TaskModel,
-    onTaskChanged: (task: TaskModel) => void,
-    onTaskDeleted: (task: TaskModel) => void,
-    changeCurrentTask: (task: TaskModel | undefined) => void,
     classNames?: string
 }
 
-const CardTaskDetails = ({
-  callBackRef, currentTaskIsChanging, equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames,
-}: Props) => {
+const CardTaskDetails = ({ callBackRef, classNames }: Props) => {
+  const [equipment, setEquipment] = useState(equipmentManager.getCurrentEquipment());
+  const [currentTask, setCurrentTask] = useState(taskManager.getCurrentTask());
+  const [tasks, setTasks] = useState(taskManager.getTasks());
+
+  useEffect(() => {
+    equipmentManager.registerOnCurrentEquipmentChanged(setEquipment);
+    taskManager.registerOnCurrentTaskChanged(setCurrentTask);
+    taskManager.registerOnTasksChanged(setTasks);
+
+    return () => {
+      equipmentManager.unregisterOnCurrentEquipmentChanged(setEquipment);
+      taskManager.unregisterOnCurrentTaskChanged(setCurrentTask);
+      taskManager.unregisterOnTasksChanged(setTasks);
+    };
+  }, []);
   const modalHook = useEditModal(currentTask);
 
   const [taskIndex, setTaskIndex] = useState(currentTask === undefined ? -1 : tasks.findIndex((t) => t._uiId === currentTask._uiId));
@@ -47,12 +52,12 @@ const CardTaskDetails = ({
   const isNextButtonVisible = useCallback(():boolean => (taskIndex < tasks.length - 1), [taskIndex, tasks]);
 
   const nextTask = useCallback(():void => {
-    if (isNextButtonVisible()) { changeCurrentTask(tasks[taskIndex + 1]); }
-  }, [changeCurrentTask, isNextButtonVisible, taskIndex, tasks]);
+    if (isNextButtonVisible()) { taskManager.setCurrentTask(tasks[taskIndex + 1]); }
+  }, [isNextButtonVisible, taskIndex, tasks]);
 
   const previousTask = useCallback(():void => {
-    if (isPrevButtonVisible()) { changeCurrentTask(tasks[taskIndex - 1]); }
-  }, [isPrevButtonVisible, changeCurrentTask, tasks, taskIndex]);
+    if (isPrevButtonVisible()) { taskManager.setCurrentTask(tasks[taskIndex - 1]); }
+  }, [isPrevButtonVisible, taskIndex, tasks]);
 
   if (equipment === undefined || currentTask === undefined) {
     return <Card className={classNames} />;
@@ -70,7 +75,7 @@ const CardTaskDetails = ({
 
   return (
     <div ref={callBackRef}>
-      <Card className={classnames(classNames, currentTaskIsChanging ? 'hover' : undefined)}>
+      <Card className={classnames(classNames, taskManager.isCurrentTaskChanging() ? 'hover' : undefined)}>
         <CardBody className="d-flex p-0">
           <div className="p-2 button-previous-task clickable" onClick={previousTask}><div className={prevClassNames} /></div>
           <TransitionGroup className="p-2 flex-grow-1">
@@ -98,8 +103,8 @@ const CardTaskDetails = ({
       <ModalEditTask
         equipment={equipment}
         task={currentTask}
-        onTaskSaved={onTaskChanged}
-        onTaskDeleted={onTaskDeleted}
+        onTaskSaved={taskManager.onTaskSaved}
+        onTaskDeleted={taskManager.onTaskDeleted}
         visible={modalHook.editModalVisibility}
         toggle={modalHook.toggleModal}
         className="modal-dialog-centered"

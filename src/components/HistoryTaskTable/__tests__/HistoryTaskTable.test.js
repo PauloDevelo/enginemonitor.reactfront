@@ -9,6 +9,9 @@ import { mount } from 'enzyme';
 import localforage from 'localforage';
 import ignoredMessages from '../../../testHelpers/MockConsole';
 import imageProxy from '../../../services/ImageProxy';
+import equipmentManager from '../../../services/EquipmentManager';
+import taskManager from '../../../services/TaskManager';
+import entryManager from '../../../services/EntryManager';
 import entryProxy from '../../../services/EntryProxy';
 
 import { AgeAcquisitionType } from '../../../types/Types';
@@ -16,6 +19,9 @@ import HistoryTaskTable from '../HistoryTaskTable';
 import updateWrapper from '../../../testHelpers/EnzymeHelper';
 
 jest.mock('../../../services/ImageProxy');
+jest.mock('../../../services/EquipmentManager');
+jest.mock('../../../services/TaskManager');
+jest.mock('../../../services/EntryManager');
 jest.mock('../../../services/EntryProxy');
 jest.mock('localforage');
 
@@ -94,14 +100,12 @@ describe('HistoryTaskTable', () => {
   });
 
   beforeEach(() => {
-    jest.spyOn(entryProxy, 'fetchEntries').mockImplementation(async (props) => {
-      if (props.taskId === 'task_01') {
-        return Promise.resolve(entries);
-      }
-      return Promise.resolve([]);
-    });
+    equipmentManager.getCurrentEquipment.mockImplementation(() => equipment);
+    taskManager.getCurrentTask.mockImplementation(() => task);
+    entryManager.getTaskEntries.mockImplementation(() => entries);
+    entryManager.areEntriesLoading.mockImplementation(() => false);
 
-    jest.spyOn(entryProxy, 'existEntry').mockImplementation(async (equipmentId, entryId) => {
+    entryProxy.existEntry.mockImplementation(async (equipmentId, entryId) => {
       if (entries.findIndex((e) => e._uiId === entryId) !== -1) {
         return Promise.resolve(true);
       }
@@ -113,9 +117,17 @@ describe('HistoryTaskTable', () => {
   });
 
   afterEach(() => {
-    entryProxy.fetchEntries.mockRestore();
+    equipmentManager.getCurrentEquipment.mockRestore();
+    taskManager.getCurrentTask.mockRestore();
+    entryManager.getTaskEntries.mockRestore();
+    entryManager.areEntriesLoading.mockRestore();
+
     entryProxy.existEntry.mockRestore();
     imageProxy.fetchImages.mockRestore();
+
+    entryManager.getTaskEntries.mockReset();
+    entryManager.onEntrySaved.mockReset();
+    entryManager.onEntryDeleted.mockReset();
   });
 
   function assertTableSortedByDate(table) {
@@ -136,42 +148,30 @@ describe('HistoryTaskTable', () => {
 
   it('Should render render the loading spinner while loading the entries', async () => {
     // Arrange
-    const onHistoryChanged = jest.fn();
+    entryManager.areEntriesLoading.mockImplementation(() => true);
 
     // Act
     const historyTaskTable = mount(
       <IntlProvider locale={navigator.language}>
-        <HistoryTaskTable
-          equipment={equipment}
-          task={task}
-          onHistoryChanged={onHistoryChanged}
-          taskHistoryRefreshId={0}
-        />
+        <HistoryTaskTable />
       </IntlProvider>,
     );
 
     // Assert
     expect(historyTaskTable.find('tbody').length).toBe(0);
     expect(historyTaskTable.find('Loading').length).toBe(1);
-    expect(entryProxy.fetchEntries).toBeCalledTimes(1);
-    expect(onHistoryChanged).toBeCalledTimes(0);
+    expect(entryManager.getTaskEntries).toBeCalledTimes(1);
 
     expect(historyTaskTable).toMatchSnapshot();
   });
 
   it('Should render all the entries with the correct classnames for a task', async () => {
     // Arrange
-    const onHistoryChanged = jest.fn();
 
     // Act
     const historyTaskTable = mount(
       <IntlProvider locale={navigator.language}>
-        <HistoryTaskTable
-          equipment={equipment}
-          task={task}
-          onHistoryChanged={onHistoryChanged}
-          taskHistoryRefreshId={0}
-        />
+        <HistoryTaskTable />
       </IntlProvider>,
     );
     await updateWrapper(historyTaskTable);
@@ -189,24 +189,19 @@ describe('HistoryTaskTable', () => {
       expect(cellProps.classNames.includes(entry.ack ? 'table-white' : 'table-warning')).toBe(true);
     });
 
-    expect(entryProxy.fetchEntries).toBeCalledTimes(1);
-    expect(onHistoryChanged).toBeCalledTimes(0);
-    expect(onHistoryChanged).toMatchSnapshot();
+    expect(entryManager.getTaskEntries).toBeCalledTimes(1);
+    expect(historyTaskTable).toMatchSnapshot();
   });
 
   it('Should render an empty table even when the task is undefined', async () => {
     // Arrange
-    const onHistoryChanged = jest.fn();
+    taskManager.getCurrentTask.mockImplementation(() => undefined);
+    entryManager.getTaskEntries.mockImplementation(() => []);
 
     // Act
     const historyTaskTable = mount(
       <IntlProvider locale={navigator.language}>
-        <HistoryTaskTable
-          equipment={equipment}
-          task={undefined}
-          onHistoryChanged={onHistoryChanged}
-          taskHistoryRefreshId={0}
-        />
+        <HistoryTaskTable />
       </IntlProvider>,
     );
     await updateWrapper(historyTaskTable);
@@ -214,56 +209,16 @@ describe('HistoryTaskTable', () => {
     // Assert
     const tbodyProps = historyTaskTable.find('tbody').at(0).props();
     expect(tbodyProps.children.length).toBe(0);
-    expect(entryProxy.fetchEntries).toBeCalledTimes(1);
-    expect(onHistoryChanged).toBeCalledTimes(0);
+    expect(entryManager.getTaskEntries).toBeCalledTimes(1);
 
-    expect(onHistoryChanged).toMatchSnapshot();
-  });
-
-  it('Should rerender all the entries for a task when equipmentHistoryRefreshId change', async () => {
-    // Arrange
-    const onHistoryChanged = jest.fn();
-
-    const properties = {
-      equipment, task, onHistoryChanged, taskHistoryRefreshId: 0,
-    };
-    const wrapper = mount(
-      React.createElement(
-        (props) => (
-          <IntlProvider locale={navigator.language}>
-            <HistoryTaskTable
-              {...props}
-            />
-          </IntlProvider>
-        ),
-        properties,
-      ),
-    );
-    await updateWrapper(wrapper);
-
-    // Act
-    properties.taskHistoryRefreshId = 1;
-
-    wrapper.setProps(properties);
-    await updateWrapper(wrapper);
-
-    // Assert
-    expect(entryProxy.fetchEntries).toBeCalledTimes(2);
-    expect(onHistoryChanged).toBeCalledTimes(0);
+    expect(historyTaskTable).toMatchSnapshot();
   });
 
   it('Should open the edition entry modal when clicking on any cell', async () => {
     // Arrange
-    const onHistoryChanged = jest.fn();
-
     const historyTaskTable = mount(
       <IntlProvider locale={navigator.language}>
-        <HistoryTaskTable
-          equipment={equipment}
-          task={task}
-          onHistoryChanged={onHistoryChanged}
-          taskHistoryRefreshId={0}
-        />
+        <HistoryTaskTable />
       </IntlProvider>,
     );
     await updateWrapper(historyTaskTable);
@@ -290,17 +245,11 @@ describe('HistoryTaskTable', () => {
 
   it('Should display the entries from the most recent to the oldest by default', async () => {
     // Arrange
-    const onHistoryChanged = jest.fn();
 
     // Act
     const historyTaskTable = mount(
       <IntlProvider locale={navigator.language}>
-        <HistoryTaskTable
-          equipment={equipment}
-          task={task}
-          onHistoryChanged={onHistoryChanged}
-          taskHistoryRefreshId={0}
-        />
+        <HistoryTaskTable />
       </IntlProvider>,
     );
     await updateWrapper(historyTaskTable);
@@ -311,16 +260,9 @@ describe('HistoryTaskTable', () => {
 
   it('Should add an entry and it should remain sorted by date', async () => {
     // Arrange
-    const onHistoryChanged = jest.fn();
-
     const historyTaskTable = mount(
       <IntlProvider locale={navigator.language}>
-        <HistoryTaskTable
-          equipment={equipment}
-          task={task}
-          onHistoryChanged={onHistoryChanged}
-          taskHistoryRefreshId={0}
-        />
+        <HistoryTaskTable />
       </IntlProvider>,
     );
     await updateWrapper(historyTaskTable);
@@ -350,26 +292,15 @@ describe('HistoryTaskTable', () => {
     expect(editEntryModal.props().visible).toBe(true);
     expect(editEntryModal.props().equipment).toBe(equipment);
 
-    expect(historyTaskTable.find('ClickableCell').length).toBe((entries.length + 1) * 3);
-    const newCells = historyTaskTable.find('ClickableCell').findWhere((n) => n.props().data === newEntry);
-    expect(newCells.length).toBe(3);
-
-    assertTableSortedByDate(historyTaskTable);
-    expect(onHistoryChanged).toBeCalledTimes(1);
+    expect(entryManager.onEntrySaved).toBeCalledTimes(1);
+    expect(entryManager.onEntrySaved.mock.calls[0][0]).toBe(newEntry);
   });
 
   it('Should remove an entry', async () => {
     // Arrange
-    const onHistoryChanged = jest.fn();
-
     const historyTaskTable = mount(
       <IntlProvider locale={navigator.language}>
-        <HistoryTaskTable
-          equipment={equipment}
-          task={task}
-          onHistoryChanged={onHistoryChanged}
-          taskHistoryRefreshId={0}
-        />
+        <HistoryTaskTable />
       </IntlProvider>,
     );
     await updateWrapper(historyTaskTable);
@@ -392,10 +323,7 @@ describe('HistoryTaskTable', () => {
     expect(editEntryModal.props().equipment).toBe(equipment);
     expect(editEntryModal.props().entry).toBe(entryToDelete);
 
-    expect(historyTaskTable.find('ClickableCell').length).toBe((entries.length - 1) * 3);
-    const newCells = historyTaskTable.find('ClickableCell').findWhere((n) => n.props().data === entryToDelete);
-    expect(newCells.length).toBe(0);
-
-    expect(onHistoryChanged).toBeCalledTimes(1);
+    expect(entryManager.onEntryDeleted).toBeCalledTimes(1);
+    expect(entryManager.onEntryDeleted.mock.calls[0][0]).toBe(entryToDelete);
   });
 });

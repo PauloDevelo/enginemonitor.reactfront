@@ -12,6 +12,7 @@ export type CurrentTaskListener = (task: TaskModel|undefined) => void;
 export type TasksListener = (tasks: TaskModel[]) => void;
 
 export interface ITaskManager{
+    getTask(uiId: string): TaskModel;
     getTasks(): TaskModel[];
     areTasksLoading(): boolean;
 
@@ -85,6 +86,8 @@ class TaskManager implements ITaskManager {
     refreshTasks = () => {
       this.onCurrentEquipmentChanged(equipmentManager.getCurrentEquipment());
     }
+
+    getTask = (uiId: string): TaskModel => this.getTasks().filter((task) => task._uiId === uiId)[0]
 
     getTasks = (): TaskModel[] => this.tasks.concat([])
 

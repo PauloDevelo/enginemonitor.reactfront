@@ -3,10 +3,14 @@ import { mount } from 'enzyme';
 import ignoredMessages from '../../../testHelpers/MockConsole';
 
 import imageProxy from '../../../services/ImageProxy';
+import equipmentManager from '../../../services/EquipmentManager';
+import taskManager from '../../../services/TaskManager';
 
 import CardTaskDetails from '../CardTaskDetails';
 
 jest.mock('../../../services/ImageProxy');
+jest.mock('../../../services/EquipmentManager');
+jest.mock('../../../services/TaskManager');
 
 describe('CardTaskDetails', () => {
   beforeAll(() => {
@@ -47,194 +51,173 @@ describe('CardTaskDetails', () => {
   };
 
   const tasks = [task1, task2];
-  const onTaskChangedMock = jest.fn();
-  const onTaskDeletedMock = jest.fn();
-  const changeCurrentTaskMock = jest.fn();
 
   beforeEach(() => {
-    onTaskChangedMock.mockClear();
-    onTaskDeletedMock.mockClear();
-    changeCurrentTaskMock.mockClear();
-
     imageProxy.fetchImages.mockResolvedValue([]);
+    equipmentManager.getCurrentEquipment.mockImplementation(() => equipment);
   });
 
   afterEach(() => {
     imageProxy.fetchImages.mockRestore();
+    equipmentManager.getCurrentEquipment.mockRestore();
+    taskManager.getTasks.mockRestore();
+    taskManager.getCurrentTask.mockRestore();
+
+    taskManager.onTaskDeleted.mockClear();
+    taskManager.onTaskSaved.mockClear();
+    taskManager.setCurrentTask.mockClear();
   });
 
   it('Should render correctly even if the equipment is undefined', () => {
     // Arrange
-    const wrapper = mount(<CardTaskDetails
-      equipment={undefined}
-      tasks={[]}
-      currentTask={undefined}
-      onTaskChanged={onTaskChangedMock}
-      onTaskDeleted={onTaskDeletedMock}
-      changeCurrentTask={changeCurrentTaskMock}
-    />);
+    equipmentManager.getCurrentEquipment.mockImplementation(() => undefined);
+    taskManager.getTasks.mockImplementation(() => []);
+    taskManager.getCurrentTask.mockImplementation(() => undefined);
+
+    const wrapper = mount(<CardTaskDetails />);
 
     // Assert
     expect(wrapper).toMatchSnapshot();
-    expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskDeleted).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskSaved).toHaveBeenCalledTimes(0);
+    expect(taskManager.setCurrentTask).toHaveBeenCalledTimes(0);
   });
 
   it('Should render correctly even if the task array is empty', () => {
     // Arrange
-    const wrapper = mount(<CardTaskDetails
-      equipment={equipment}
-      tasks={[]}
-      currentTask={undefined}
-      onTaskChanged={onTaskChangedMock}
-      onTaskDeleted={onTaskDeletedMock}
-      changeCurrentTask={changeCurrentTaskMock}
-    />);
+    taskManager.getTasks.mockImplementation(() => []);
+    taskManager.getCurrentTask.mockImplementation(() => undefined);
+
+    const wrapper = mount(<CardTaskDetails />);
 
     // Assert
     expect(wrapper).toMatchSnapshot();
-    expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskDeleted).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskSaved).toHaveBeenCalledTimes(0);
+    expect(taskManager.setCurrentTask).toHaveBeenCalledTimes(0);
   });
 
   it('Should render correctly even if the current task is undefined', () => {
     // Arrange
-    const wrapper = mount(<CardTaskDetails
-      equipment={equipment}
-      tasks={tasks}
-      currentTask={undefined}
-      onTaskChanged={onTaskChangedMock}
-      onTaskDeleted={onTaskDeletedMock}
-      changeCurrentTask={changeCurrentTaskMock}
-    />);
+    taskManager.getTasks.mockImplementation(() => tasks);
+    taskManager.getCurrentTask.mockImplementation(() => undefined);
+
+    const wrapper = mount(<CardTaskDetails />);
 
     // Assert
     expect(wrapper).toMatchSnapshot();
-    expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskDeleted).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskSaved).toHaveBeenCalledTimes(0);
+    expect(taskManager.setCurrentTask).toHaveBeenCalledTimes(0);
   });
 
   it('Should render the task 1 details', () => {
-    const wrapper = mount(<CardTaskDetails
-      equipment={equipment}
-      tasks={tasks}
-      currentTask={task1}
-      onTaskChanged={onTaskChangedMock}
-      onTaskDeleted={onTaskDeletedMock}
-      changeCurrentTask={changeCurrentTaskMock}
-    />);
+    // Arrange
+    taskManager.getTasks.mockImplementation(() => tasks);
+    taskManager.getCurrentTask.mockImplementation(() => task1);
 
+    // Act
+    const wrapper = mount(<CardTaskDetails />);
+
+    // Assert
     expect(wrapper.find('.card-title').text()).toEqual(`${task1.name} Done`);
     expect(wrapper.find('.badge-success').text()).toEqual('Done');
     expect(wrapper.find('.card-control-prev-icon').hasClass('invisible')).toEqual(true);
     expect(wrapper.find('.card-text').text()).toEqual(task1.description);
     expect(wrapper.find('.card-control-next-icon').hasClass('invisible')).toEqual(false);
 
-    expect(onTaskChangedMock).toHaveBeenCalledTimes(0);
-    expect(onTaskDeletedMock).toHaveBeenCalledTimes(0);
-    expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskDeleted).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskSaved).toHaveBeenCalledTimes(0);
+    expect(taskManager.setCurrentTask).toHaveBeenCalledTimes(0);
 
     expect(wrapper).toMatchSnapshot();
   });
 
   it('Should render the task 2 details', () => {
-    const wrapper = mount(<CardTaskDetails
-      equipment={equipment}
-      tasks={tasks}
-      currentTask={task2}
-      onTaskChanged={onTaskChangedMock}
-      onTaskDeleted={onTaskDeletedMock}
-      changeCurrentTask={changeCurrentTaskMock}
-    />);
+    // Arrange
+    taskManager.getTasks.mockImplementation(() => tasks);
+    taskManager.getCurrentTask.mockImplementation(() => task2);
 
+    // Act
+    const wrapper = mount(<CardTaskDetails />);
+
+    // Assert
     expect(wrapper.find('.card-title').text()).toEqual(`${task2.name} ToDo`);
     expect(wrapper.find('.badge-danger').text()).toEqual('ToDo');
     expect(wrapper.find('.card-control-prev-icon').hasClass('invisible')).toEqual(false);
     expect(wrapper.find('.card-text').text()).toEqual(task2.description);
     expect(wrapper.find('.card-control-next-icon').hasClass('invisible')).toEqual(true);
 
-    expect(onTaskChangedMock).toHaveBeenCalledTimes(0);
-    expect(onTaskDeletedMock).toHaveBeenCalledTimes(0);
-    expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskDeleted).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskSaved).toHaveBeenCalledTimes(0);
+    expect(taskManager.setCurrentTask).toHaveBeenCalledTimes(0);
+
     expect(wrapper).toMatchSnapshot();
   });
 
   it('Should call changeCurrentTask after clicking on the next button', () => {
     // Arrange
-    const wrapper = mount(<CardTaskDetails
-      equipment={equipment}
-      tasks={tasks}
-      currentTask={task1}
-      onTaskChanged={onTaskChangedMock}
-      onTaskDeleted={onTaskDeletedMock}
-      changeCurrentTask={changeCurrentTaskMock}
-    />);
+    taskManager.getTasks.mockImplementation(() => tasks);
+    taskManager.getCurrentTask.mockImplementation(() => task1);
+
+    const wrapper = mount(<CardTaskDetails />);
 
     // Act
     wrapper.find('.button-next-task').simulate('click');
 
     // Assert
-    expect(changeCurrentTaskMock).toHaveBeenCalledTimes(1);
-    expect(changeCurrentTaskMock.mock.calls[0][0]).toBe(task2);
-    expect(onTaskChangedMock).toHaveBeenCalledTimes(0);
-    expect(onTaskDeletedMock).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskDeleted).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskSaved).toHaveBeenCalledTimes(0);
+    expect(taskManager.setCurrentTask).toHaveBeenCalledTimes(1);
+    expect(taskManager.setCurrentTask.mock.calls[0][0]).toBe(task2);
   });
 
   it('Should not call changeCurrentTask after clicking on the next button because task2 is the last task', () => {
     // Arrange
-    const wrapper = mount(<CardTaskDetails
-      equipment={equipment}
-      tasks={tasks}
-      currentTask={task2}
-      onTaskChanged={onTaskChangedMock}
-      onTaskDeleted={onTaskDeletedMock}
-      changeCurrentTask={changeCurrentTaskMock}
-    />);
+    taskManager.getTasks.mockImplementation(() => tasks);
+    taskManager.getCurrentTask.mockImplementation(() => task2);
+
+    const wrapper = mount(<CardTaskDetails />);
 
     // Act
     wrapper.find('.button-next-task').simulate('click');
 
     // Assert
-    expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
-    expect(onTaskChangedMock).toHaveBeenCalledTimes(0);
-    expect(onTaskDeletedMock).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskDeleted).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskSaved).toHaveBeenCalledTimes(0);
+    expect(taskManager.setCurrentTask).toHaveBeenCalledTimes(0);
   });
 
   it('Should not call changeCurrentTask after clicking on the prev button because task1 is the first task', () => {
     // Arrange
-    const wrapper = mount(<CardTaskDetails
-      equipment={equipment}
-      tasks={tasks}
-      currentTask={task1}
-      onTaskChanged={onTaskChangedMock}
-      onTaskDeleted={onTaskDeletedMock}
-      changeCurrentTask={changeCurrentTaskMock}
-    />);
+    taskManager.getTasks.mockImplementation(() => tasks);
+    taskManager.getCurrentTask.mockImplementation(() => task1);
+
+    const wrapper = mount(<CardTaskDetails />);
 
     // Act
     wrapper.find('.button-previous-task').simulate('click');
 
     // Assert
-    expect(changeCurrentTaskMock).toHaveBeenCalledTimes(0);
-    expect(onTaskChangedMock).toHaveBeenCalledTimes(0);
-    expect(onTaskDeletedMock).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskDeleted).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskSaved).toHaveBeenCalledTimes(0);
+    expect(taskManager.setCurrentTask).toHaveBeenCalledTimes(0);
   });
 
   it('Should call changeCurrentTask after clicking on the prev button', () => {
     // Arrange
-    const wrapper = mount(<CardTaskDetails
-      equipment={equipment}
-      tasks={tasks}
-      currentTask={task2}
-      onTaskChanged={onTaskChangedMock}
-      onTaskDeleted={onTaskDeletedMock}
-      changeCurrentTask={changeCurrentTaskMock}
-    />);
+    taskManager.getTasks.mockImplementation(() => tasks);
+    taskManager.getCurrentTask.mockImplementation(() => task2);
+
+    const wrapper = mount(<CardTaskDetails />);
 
     // Act
     wrapper.find('.button-previous-task').simulate('click');
 
     // Assert
-    expect(changeCurrentTaskMock).toHaveBeenCalledTimes(1);
-    expect(changeCurrentTaskMock.mock.calls[0][0]).toBe(task1);
-    expect(onTaskChangedMock).toHaveBeenCalledTimes(0);
-    expect(onTaskDeletedMock).toHaveBeenCalledTimes(0);
+    expect(taskManager.setCurrentTask).toHaveBeenCalledTimes(1);
+    expect(taskManager.setCurrentTask.mock.calls[0][0]).toBe(task1);
+    expect(taskManager.onTaskSaved).toHaveBeenCalledTimes(0);
+    expect(taskManager.onTaskDeleted).toHaveBeenCalledTimes(0);
   });
 });

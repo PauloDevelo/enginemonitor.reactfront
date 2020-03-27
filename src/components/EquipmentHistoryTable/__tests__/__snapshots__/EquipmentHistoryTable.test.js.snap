@@ -10,22 +10,7 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
   onError={[Function]}
   textComponent={Symbol(react.fragment)}
 >
-  <Memo(EquipmentHistoryTable)
-    equipment={
-      Object {
-        "_uiId": "equipment_01",
-        "age": 2750,
-        "ageAcquisitionType": 1,
-        "ageUrl": "",
-        "brand": "Nanni",
-        "installation": 2019-11-07T23:39:36.288Z,
-        "model": "N3.30",
-        "name": "moteur",
-      }
-    }
-    equipmentHistoryRefreshId={0}
-    onTaskChanged={[MockFunction]}
-  >
+  <Memo(EquipmentHistoryTable)>
     <div
       className="historytasktable"
     >
@@ -5622,10 +5607,7 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
   onError={[Function]}
   textComponent={Symbol(react.fragment)}
 >
-  <Memo(EquipmentHistoryTable)
-    equipmentHistoryRefreshId={0}
-    onTaskChanged={[MockFunction]}
-  >
+  <Memo(EquipmentHistoryTable)>
     <div
       className="historytasktable"
     >
@@ -5642,6 +5624,71 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
             Equipment history
           </FormattedMessage>
         </b>
+        <Button
+          aria-label="Add"
+          className="float-right mb-2"
+          color="light"
+          onClick={[Function]}
+          size="sm"
+          tag="button"
+        >
+          <button
+            aria-label="Add"
+            className="float-right mb-2 btn btn-light btn-sm"
+            onClick={[Function]}
+            type="button"
+          >
+            <FontAwesomeIcon
+              border={false}
+              className=""
+              fixedWidth={false}
+              flip={null}
+              icon={
+                Object {
+                  "icon": Array [
+                    448,
+                    512,
+                    Array [],
+                    "f0fe",
+                    "M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-32 252c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92H92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z",
+                  ],
+                  "iconName": "plus-square",
+                  "prefix": "fas",
+                }
+              }
+              inverse={false}
+              listItem={false}
+              mask={null}
+              pull={null}
+              pulse={false}
+              rotation={null}
+              size={null}
+              spin={false}
+              swapOpacity={false}
+              symbol={false}
+              title=""
+              transform={null}
+            >
+              <svg
+                aria-hidden="true"
+                className="svg-inline--fa fa-plus-square fa-w-14 "
+                data-icon="plus-square"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                style={Object {}}
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-32 252c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92H92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"
+                  fill="currentColor"
+                  style={Object {}}
+                />
+              </svg>
+            </FontAwesomeIcon>
+          </button>
+        </Button>
       </span>
       <ForwardRef
         className="default-theme"
@@ -7141,22 +7188,7 @@ exports[`EquipmentHistoryTable Should render render the loading spinner while lo
   onError={[Function]}
   textComponent={Symbol(react.fragment)}
 >
-  <Memo(EquipmentHistoryTable)
-    equipment={
-      Object {
-        "_uiId": "equipment_01",
-        "age": 2750,
-        "ageAcquisitionType": 1,
-        "ageUrl": "",
-        "brand": "Nanni",
-        "installation": 2019-11-07T23:39:36.288Z,
-        "model": "N3.30",
-        "name": "moteur",
-      }
-    }
-    equipmentHistoryRefreshId={0}
-    onTaskChanged={[MockFunction]}
-  >
+  <Memo(EquipmentHistoryTable)>
     <div
       className="historytasktable"
     >

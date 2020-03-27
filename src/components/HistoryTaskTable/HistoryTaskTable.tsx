@@ -7,7 +7,7 @@ import { Button } from 'reactstrap';
 import * as moment from 'moment';
 
 import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
-import { faCheckSquare, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
@@ -18,8 +18,6 @@ import { withInMemorySortingContext } from '../react-table-factory/withSortingCo
 import { withHeaderControl } from '../react-table-factory/withHeaderControl.js';
 import { withFixedHeader } from '../react-table-factory/withFixedHeader.js';
 
-import entryProxy from '../../services/EntryProxy';
-
 import useEditModal from '../../hooks/EditModalHook';
 
 import { shorten } from '../../helpers/TaskHelper';
@@ -29,20 +27,18 @@ import './HistoryTaskTable.css';
 
 import {
   // eslint-disable-next-line no-unused-vars
-  EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType,
+  TaskModel, EntryModel, AgeAcquisitionType,
 } from '../../types/Types';
 
-import useFetcher from '../../hooks/Fetcher';
-
 import jsonMessages from './HistoryTaskTable.messages.json';
+
+import entryManager from '../../services/EntryManager';
+import taskManager from '../../services/TaskManager';
+import equipmentManager from '../../services/EquipmentManager';
 
 const messages = defineMessages(jsonMessages);
 
 type Props = {
-    equipment: EquipmentModel | undefined,
-    task: TaskModel | undefined,
-    taskHistoryRefreshId: number,
-    onHistoryChanged: (newEntries: EntryModel[])=>void,
     classNames: string
 }
 
@@ -52,48 +48,24 @@ const Table = composeDecorators(
   withFixedHeader, // should be last
 )();
 
-const HistoryTaskTable = ({
-  equipment, task, taskHistoryRefreshId, onHistoryChanged, classNames,
-}: Props) => {
-  const equipmentId = equipment ? equipment._uiId : undefined;
-  const taskId = task ? task._uiId : undefined;
-
+const HistoryTaskTable = ({ classNames }: Props) => {
   const modalHook = useEditModal<EntryModel | undefined>(undefined);
-  const [entries, setEntries] = useState<EntryModel[]>([]);
-
-  const {
-    data: fetchedEntries, error, isLoading, reloadRef,
-  } = useFetcher({ fetchPromise: entryProxy.fetchEntries, fetchProps: { equipmentId, taskId }, cancellationMsg: `Cancellation of task '${task?.name}' history fetching` });
+  const [entries, setEntries] = useState<EntryModel[]>(entryManager.getTaskEntries());
 
   useEffect(() => {
-    if (taskHistoryRefreshId !== 0) {
-      reloadRef.current();
-    }
-  }, [taskHistoryRefreshId, reloadRef]);
+    // eslint-disable-next-line no-unused-vars
+    const onEntriesChanged = (_: EntryModel[] | TaskModel | undefined) => {
+      setEntries(entryManager.getTaskEntries());
+    };
 
-  useEffect(() => {
-    setEntries(fetchedEntries || []);
-  }, [fetchedEntries]);
+    taskManager.registerOnCurrentTaskChanged(onEntriesChanged);
+    entryManager.registerOnEquipmentEntriesChanged(onEntriesChanged);
 
-  const changeEntries = (newEntries: EntryModel[]) => {
-    setEntries(newEntries);
-    if (onHistoryChanged) {
-      onHistoryChanged(newEntries);
-    }
-  };
-
-  const onSavedEntry = (savedEntry: EntryModel) => {
-    const newCurrentHistoryTask = entries.filter((entry) => entry._uiId !== savedEntry._uiId);
-    newCurrentHistoryTask.unshift(savedEntry);
-    newCurrentHistoryTask.sort((entryA, entryB) => entryA.date.getTime() - entryB.date.getTime());
-
-    changeEntries(newCurrentHistoryTask);
-  };
-
-  const onDeleteEntry = async (entry: EntryModel) => {
-    const newCurrentHistoryTask = entries.slice(0).filter((e) => e._uiId !== entry._uiId);
-    changeEntries(newCurrentHistoryTask);
-  };
+    return () => {
+      taskManager.unregisterOnCurrentTaskChanged(onEntriesChanged);
+      entryManager.unregisterOnEquipmentEntriesChanged(onEntriesChanged);
+    };
+  }, []);
 
   const displayEntry = useCallback((entry:EntryModel) => {
     modalHook.displayData(entry);
@@ -123,6 +95,7 @@ const HistoryTaskTable = ({
       ),
       cell: (content: any) => {
         const entry:EntryModel = content.data;
+        const equipment = equipmentManager.getCurrentEquipment();
         if (equipment == null) {
           return <div />;
         }
@@ -180,20 +153,14 @@ const HistoryTaskTable = ({
     <div className={`${classNames} historytasktable`}>
       <span className="mb-2">
         <b><FormattedMessage {...messages.taskHistoryTitle} /></b>
-        {equipment && task && (
-          <Button aria-label="Add" color="success" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEntry(equipment, task))}>
+        {equipmentManager.getCurrentEquipment() && taskManager.getCurrentTask() && (
+          <Button aria-label="Add" color="success" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEntry(equipmentManager.getCurrentEquipment()!, taskManager.getCurrentTask()))}>
             <FontAwesomeIcon icon={faCheckSquare} />
           </Button>
         )}
       </span>
-      {error && (
-        <div>
-          <FontAwesomeIcon icon={faExclamationTriangle} color="red" />
-          <FormattedMessage {...messages.errorFetching} />
-        </div>
-      )}
-      {isLoading && <Loading />}
-      {error === undefined && isLoading === false
+      {entryManager.areEntriesLoading() && <Loading />}
+      {entryManager.areEntriesLoading() === false
             && (
             <Table
               data={entries}
@@ -204,13 +171,13 @@ const HistoryTaskTable = ({
             />
             )}
 
-      {equipment && task && modalHook.data && (
+      {equipmentManager.getCurrentEquipment() && taskManager.getCurrentTask() && modalHook.data && (
       <ModalEditEntry
-        equipment={equipment}
-        task={task}
+        equipment={equipmentManager.getCurrentEquipment()!}
+        task={taskManager.getCurrentTask()}
         entry={modalHook.data}
-        saveEntry={onSavedEntry}
-        deleteEntry={onDeleteEntry}
+        saveEntry={entryManager.onEntrySaved}
+        deleteEntry={entryManager.onEntryDeleted}
         visible={modalHook.editModalVisibility}
         toggle={modalHook.toggleModal}
         className="modal-dialog-centered"

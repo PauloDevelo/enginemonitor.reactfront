@@ -9,7 +9,12 @@ import TaskTabPanes from '../TaskTabPanes';
 import entryProxy from '../../../services/EntryProxy';
 import { TaskLevel } from '../../../types/Types';
 
+import equipmentManager from '../../../services/EquipmentManager';
+import taskManager from '../../../services/TaskManager';
+
 jest.mock('../../../services/EntryProxy');
+jest.mock('../../../services/EquipmentManager');
+jest.mock('../../../services/TaskManager');
 
 describe('TaskTabPanes', () => {
   const currentEquipment = {
@@ -54,21 +59,24 @@ describe('TaskTabPanes', () => {
   });
 
   beforeEach(() => {
+    equipmentManager.getCurrentEquipment.mockImplementation(() => currentEquipment);
+    taskManager.getTasks.mockImplementation(() => taskList);
   });
 
   afterEach(() => {
     entryProxy.fetchAllEntries.mockRestore();
+    equipmentManager.getCurrentEquipment.mockRestore();
+    taskManager.getTasks.mockRestore();
   });
 
   it('should render a TaskTabPanes with the task table selected', () => {
     // Arrange
     const changeCurrentTask = jest.fn();
-    const onTaskChangedFn = jest.fn();
 
     // Act
     const wrapper = mount(
       <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
-        <TaskTabPanes currentEquipment={currentEquipment} taskList={taskList} areTasksLoading={false} changeCurrentTask={changeCurrentTask} equipmentHistoryRefreshId={0} onTaskChanged={onTaskChangedFn} />
+        <TaskTabPanes changeCurrentTask={changeCurrentTask} />
       </IntlProvider>,
     );
 
@@ -81,11 +89,10 @@ describe('TaskTabPanes', () => {
     // Arrange
     jest.spyOn(entryProxy, 'fetchAllEntries').mockImplementation(async () => Promise.resolve([]));
     const changeCurrentTask = jest.fn();
-    const onTaskChangedFn = jest.fn();
 
     const wrapper = mount(
       <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
-        <TaskTabPanes currentEquipment={currentEquipment} taskList={taskList} areTasksLoading={false} changeCurrentTask={changeCurrentTask} equipmentHistoryRefreshId={0} onTaskChanged={onTaskChangedFn} />
+        <TaskTabPanes changeCurrentTask={changeCurrentTask} />
       </IntlProvider>,
     );
 
@@ -97,32 +104,5 @@ describe('TaskTabPanes', () => {
 
     // Assert
     expect(wrapper.find('Memo(EquipmentHistoryTable)').length).toBe(1);
-  });
-
-  it('should call onTaskChanged function', () => {
-    // Arrange
-    jest.spyOn(entryProxy, 'fetchAllEntries').mockImplementation(async () => Promise.resolve([]));
-    const changeCurrentTask = jest.fn();
-    const onTaskChangedFn = jest.fn();
-
-    const wrapper = mount(
-      <IntlProvider locale={navigator.language}>
-        <TaskTabPanes currentEquipment={currentEquipment} taskList={taskList} areTasksLoading={false} changeCurrentTask={changeCurrentTask} equipmentHistoryRefreshId={0} onTaskChanged={onTaskChangedFn} />
-      </IntlProvider>,
-    );
-
-    const equipmentHistoryLink = wrapper.find('Memo(MyNavItem)').at(1).find('NavLink');
-    equipmentHistoryLink.simulate('click');
-    wrapper.update();
-
-    const equipmentHistoryTable = wrapper.find('Memo(EquipmentHistoryTable)');
-    const { onTaskChanged } = equipmentHistoryTable.props();
-
-    // Act
-    onTaskChanged('task_02');
-
-    // Assert
-    expect(onTaskChangedFn).toHaveBeenCalledTimes(1);
-    expect(onTaskChangedFn.mock.calls[0][0]).toBe(taskList[1]);
   });
 });

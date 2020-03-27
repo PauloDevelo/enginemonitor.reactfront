@@ -1,45 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CardTaskDetails Should render correctly even if the current task is undefined 1`] = `
-<Memo(CardTaskDetails)
-  changeCurrentTask={[MockFunction]}
-  equipment={
-    Object {
-      "_uiId": "1234",
-      "age": 2563,
-      "brand": "nanni",
-      "installation": 2011-02-22T16:00:00.000Z,
-      "model": "N3.30",
-      "name": "engine",
-    }
-  }
-  onTaskChanged={[MockFunction]}
-  onTaskDeleted={[MockFunction]}
-  tasks={
-    Array [
-      Object {
-        "_uiId": "task1",
-        "description": "task1 description",
-        "level": 1,
-        "name": "taskname1",
-        "nextDueDate": 2011-02-22T16:00:00.000Z,
-        "periodInMonth": 12,
-        "usageInHourLeft": 20,
-        "usagePeriodInHour": 200,
-      },
-      Object {
-        "_uiId": "task2",
-        "description": "task2 description",
-        "level": 3,
-        "name": "taskname2",
-        "nextDueDate": 2018-02-22T16:00:00.000Z,
-        "periodInMonth": 24,
-        "usageInHourLeft": 20,
-        "usagePeriodInHour": 400,
-      },
-    ]
-  }
->
+<Memo(CardTaskDetails)>
   <Card
     tag="div"
   >
@@ -51,12 +13,7 @@ exports[`CardTaskDetails Should render correctly even if the current task is und
 `;
 
 exports[`CardTaskDetails Should render correctly even if the equipment is undefined 1`] = `
-<Memo(CardTaskDetails)
-  changeCurrentTask={[MockFunction]}
-  onTaskChanged={[MockFunction]}
-  onTaskDeleted={[MockFunction]}
-  tasks={Array []}
->
+<Memo(CardTaskDetails)>
   <Card
     tag="div"
   >
@@ -68,22 +25,7 @@ exports[`CardTaskDetails Should render correctly even if the equipment is undefi
 `;
 
 exports[`CardTaskDetails Should render correctly even if the task array is empty 1`] = `
-<Memo(CardTaskDetails)
-  changeCurrentTask={[MockFunction]}
-  equipment={
-    Object {
-      "_uiId": "1234",
-      "age": 2563,
-      "brand": "nanni",
-      "installation": 2011-02-22T16:00:00.000Z,
-      "model": "N3.30",
-      "name": "engine",
-    }
-  }
-  onTaskChanged={[MockFunction]}
-  onTaskDeleted={[MockFunction]}
-  tasks={Array []}
->
+<Memo(CardTaskDetails)>
   <Card
     tag="div"
   >
@@ -95,57 +37,7 @@ exports[`CardTaskDetails Should render correctly even if the task array is empty
 `;
 
 exports[`CardTaskDetails Should render the task 1 details 1`] = `
-<Memo(CardTaskDetails)
-  changeCurrentTask={[MockFunction]}
-  currentTask={
-    Object {
-      "_uiId": "task1",
-      "description": "task1 description",
-      "level": 1,
-      "name": "taskname1",
-      "nextDueDate": 2011-02-22T16:00:00.000Z,
-      "periodInMonth": 12,
-      "usageInHourLeft": 20,
-      "usagePeriodInHour": 200,
-    }
-  }
-  equipment={
-    Object {
-      "_uiId": "1234",
-      "age": 2563,
-      "brand": "nanni",
-      "installation": 2011-02-22T16:00:00.000Z,
-      "model": "N3.30",
-      "name": "engine",
-    }
-  }
-  onTaskChanged={[MockFunction]}
-  onTaskDeleted={[MockFunction]}
-  tasks={
-    Array [
-      Object {
-        "_uiId": "task1",
-        "description": "task1 description",
-        "level": 1,
-        "name": "taskname1",
-        "nextDueDate": 2011-02-22T16:00:00.000Z,
-        "periodInMonth": 12,
-        "usageInHourLeft": 20,
-        "usagePeriodInHour": 200,
-      },
-      Object {
-        "_uiId": "task2",
-        "description": "task2 description",
-        "level": 3,
-        "name": "taskname2",
-        "nextDueDate": 2018-02-22T16:00:00.000Z,
-        "periodInMonth": 24,
-        "usageInHourLeft": 20,
-        "usagePeriodInHour": 400,
-      },
-    ]
-  }
->
+<Memo(CardTaskDetails)>
   <div>
     <Card
       className=""
@@ -801,57 +693,7 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
 `;
 
 exports[`CardTaskDetails Should render the task 2 details 1`] = `
-<Memo(CardTaskDetails)
-  changeCurrentTask={[MockFunction]}
-  currentTask={
-    Object {
-      "_uiId": "task2",
-      "description": "task2 description",
-      "level": 3,
-      "name": "taskname2",
-      "nextDueDate": 2018-02-22T16:00:00.000Z,
-      "periodInMonth": 24,
-      "usageInHourLeft": 20,
-      "usagePeriodInHour": 400,
-    }
-  }
-  equipment={
-    Object {
-      "_uiId": "1234",
-      "age": 2563,
-      "brand": "nanni",
-      "installation": 2011-02-22T16:00:00.000Z,
-      "model": "N3.30",
-      "name": "engine",
-    }
-  }
-  onTaskChanged={[MockFunction]}
-  onTaskDeleted={[MockFunction]}
-  tasks={
-    Array [
-      Object {
-        "_uiId": "task1",
-        "description": "task1 description",
-        "level": 1,
-        "name": "taskname1",
-        "nextDueDate": 2011-02-22T16:00:00.000Z,
-        "periodInMonth": 12,
-        "usageInHourLeft": 20,
-        "usagePeriodInHour": 200,
-      },
-      Object {
-        "_uiId": "task2",
-        "description": "task2 description",
-        "level": 3,
-        "name": "taskname2",
-        "nextDueDate": 2018-02-22T16:00:00.000Z,
-        "periodInMonth": 24,
-        "usageInHourLeft": 20,
-        "usagePeriodInHour": 400,
-      },
-    ]
-  }
->
+<Memo(CardTaskDetails)>
   <div>
     <Card
       className=""

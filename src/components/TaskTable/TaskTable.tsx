@@ -35,13 +35,12 @@ import './TaskTable.css';
 import jsonMessages from './TaskTable.messages.json';
 import ClickableCell from '../Table/ClickableCell';
 
+import taskManager from '../../services/TaskManager';
+import equipmentManager from '../../services/EquipmentManager';
+
 const taskTableMsg = defineMessages(jsonMessages);
 
 type Props = {
-  equipment?: EquipmentModel,
-  tasks: TaskModel[],
-  areTasksLoading: boolean,
-  onTaskSaved: (task: TaskModel) => void,
   changeCurrentTask: (task: TaskModel) => void,
   classNames?: string
 };
@@ -61,10 +60,26 @@ const Table = composeDecorators(
   withFixedHeader, // should be last
 )();
 
-export const TaskTable = ({
-  equipment, tasks, areTasksLoading, onTaskSaved, changeCurrentTask, classNames,
-}: Props) => {
+export const TaskTable = ({ classNames, changeCurrentTask }: Props) => {
   const classNamesStr = classNames === undefined ? 'tasktable' : `${classNames} tasktable`;
+  const [equipment, setEquipment] = useState<EquipmentModel | undefined>(equipmentManager.getCurrentEquipment());
+  const [tasks, setTasks] = useState<TaskModel[]>(taskManager.getTasks());
+
+  const onClickTaskRow = useCallback((task: TaskModel) => {
+    taskManager.setCurrentTask(task);
+    changeCurrentTask(task);
+  }, [changeCurrentTask]);
+
+  useEffect(() => {
+    equipmentManager.registerOnCurrentEquipmentChanged(setEquipment);
+    taskManager.registerOnTasksChanged(setTasks);
+
+    return () => {
+      equipmentManager.unregisterOnCurrentEquipmentChanged(setEquipment);
+      taskManager.unregisterOnTasksChanged(setTasks);
+    };
+  }, []);
+
   const modalHook = useEditModal<TaskModel | undefined>(undefined);
 
   const getTasksData = useCallback(() => {
@@ -94,7 +109,7 @@ export const TaskTable = ({
       cell: (content: any) => {
         const { data }: { data: DisplayableTask} = content;
         return (
-          <ClickableCell data={data.task} onDisplayData={changeCurrentTask} classNames={`table-${getContext(data.level)}`}>
+          <ClickableCell data={data.task} onDisplayData={onClickTaskRow} classNames={`table-${getContext(data.level)}`}>
             <span>{data.name}</span>
           </ClickableCell>
         );
@@ -111,7 +126,7 @@ export const TaskTable = ({
       cell: (content: any) => {
         const { data }: { data: DisplayableTask} = content;
         return (
-          <ClickableCell data={data.task} onDisplayData={changeCurrentTask} classNames={`table-${getContext(data.level)} d-flex`}>
+          <ClickableCell data={data.task} onDisplayData={onClickTaskRow} classNames={`table-${getContext(data.level)} d-flex`}>
             <Badge color={getContext(data.level)} pill className="mx-auto my-auto">
               {getBadgeText(data.level)}
               {' '}
@@ -132,7 +147,7 @@ export const TaskTable = ({
         const { data }: { data: DisplayableTask} = content;
         const { todo } = data;
         return (
-          <ClickableCell data={data.task} onDisplayData={changeCurrentTask} classNames={`table-${getContext(data.level)}`}>
+          <ClickableCell data={data.task} onDisplayData={onClickTaskRow} classNames={`table-${getContext(data.level)}`}>
             <ToDoText dueDate={todo.dueDate} level={todo.level} onlyDate={todo.onlyDate} usageInHourLeft={todo.usageInHourLeft} />
           </ClickableCell>
         );
@@ -161,7 +176,7 @@ export const TaskTable = ({
             cell: (content: any) => {
               const { data }: { data: DisplayableTask} = content;
               return (
-                <ClickableCell data={data.task} onDisplayData={changeCurrentTask} classNames={`table-${getContext(data.level)}`}>
+                <ClickableCell data={data.task} onDisplayData={onClickTaskRow} classNames={`table-${getContext(data.level)}`}>
                   <span>{data.shortenDescription}</span>
                 </ClickableCell>
               );
@@ -177,7 +192,7 @@ export const TaskTable = ({
     onResize();
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
-  }, [changeCurrentTask]);
+  }, [onClickTaskRow]);
 
   return (
     <>
@@ -188,7 +203,7 @@ export const TaskTable = ({
           <b><FormattedMessage {...taskTableMsg.tasklistTitle} /></b>
           {equipment && <Button color="light" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultTask(equipment))} aria-label="Add"><FontAwesomeIcon icon={faPlusSquare} /></Button>}
         </span>
-        {areTasksLoading ? <Loading />
+        {taskManager.areTasksLoading() ? <Loading />
           : (
             <Table
               data={getTasksData()}
@@ -203,7 +218,7 @@ export const TaskTable = ({
       <ModalEditTask
         equipment={equipment}
         task={modalHook.data}
-        onTaskSaved={onTaskSaved}
+        onTaskSaved={taskManager.onTaskSaved}
         visible={modalHook.editModalVisibility}
         toggle={modalHook.toggleModal}
         className="modal-dialog-centered"
