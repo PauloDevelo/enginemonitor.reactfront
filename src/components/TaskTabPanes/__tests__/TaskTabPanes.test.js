@@ -56,6 +56,7 @@ describe('TaskTabPanes', () => {
     ignoredMessages.push('[React Intl] Could not find required `intl` object.');
     ignoredMessages.push('[React Intl] Missing message');
     ignoredMessages.push('a test was not wrapped in act(...)');
+    ignoredMessages.push('MISSING_TRANSLATION');
   });
 
   beforeEach(() => {

@@ -97,6 +97,7 @@ describe('HistoryTaskTable', () => {
     ignoredMessages.length = 0;
     ignoredMessages.push('test was not wrapped in act(...)');
     ignoredMessages.push('[React Intl] Missing message');
+    ignoredMessages.push('MISSING_TRANSLATION');
   });
 
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import chai, { assert } from 'chai';
+import chai from 'chai';
 
 import React from 'react';
 import { IntlProvider } from 'react-intl';
@@ -93,6 +93,7 @@ describe('TaskTable', () => {
     ignoredMessages.length = 0;
     ignoredMessages.push('test was not wrapped in act(...)');
     ignoredMessages.push('[React Intl] Missing message');
+    ignoredMessages.push('MISSING_TRANSLATION');
   });
 
   beforeEach(() => {
@@ -252,7 +253,7 @@ describe('TaskTable', () => {
     done();
   });
 
-  it('it should display only 3 columns since the inner width is lower than 1200px, but after a resize larger than 1200px, it should display 4 colums', async (done) => {
+  it('it should display only 3 columns since the inner width is lower than 1200px, but after a resize larger than 1200px, it should display 4 columns', async (done) => {
     // Arrange
     window.innerWidth = 1000;
     const changeCurrentTask = jest.fn();

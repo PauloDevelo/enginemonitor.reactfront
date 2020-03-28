@@ -30,6 +30,7 @@ describe('EquipmentInfoTab', () => {
     ignoredMessages.push('test was not wrapped in act(...)');
     ignoredMessages.push('[React Intl] Could not find required `intl` object.');
     ignoredMessages.push('[React Intl] Missing message');
+    ignoredMessages.push('MISSING_TRANSLATION');
   });
 
   beforeEach(() => {
