@@ -77,6 +77,7 @@ class TaskManager implements ITaskManager {
           this.onTasksChanged(tasks);
         } catch (error) {
           log.warn(error.message);
+          this.areTasksLoadingFlag = false;
         }
       } else {
         this.onTasksChanged([]);
