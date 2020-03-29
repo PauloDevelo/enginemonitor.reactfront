@@ -7,4 +7,8 @@ const updateWrapper = (wrapper: any): Promise<void> => new Promise((resolve) => 
   });
 });
 
+export function sleep(ms: number) {
+  return new Promise((resolve: () => void) => setTimeout(resolve, ms));
+}
+
 export default updateWrapper;
