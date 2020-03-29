@@ -3,6 +3,8 @@ import chai, { assert } from 'chai';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 
+import _ from 'lodash';
+
 import { mount } from 'enzyme';
 
 // eslint-disable-next-line no-unused-vars
@@ -34,7 +36,7 @@ describe('HistoryTaskTable', () => {
     brand: 'Nanni',
     model: 'N3.30',
     age: 2750,
-    installation: new Date('2019-11-07T23:39:36.288Z'),
+    installation: new Date('2018-11-07T23:39:36.288Z'),
     ageAcquisitionType: AgeAcquisitionType.manualEntry,
     ageUrl: '',
   };
@@ -55,7 +57,7 @@ describe('HistoryTaskTable', () => {
       _uiId: 'entry_01',
       name: 'vidange',
       date: new Date('2019-11-08T00:11:18.112Z'),
-      age: 1234,
+      age: 1204,
       remarks: 'RAS',
       taskUiId: 'task_01',
       equipmentUiId: 'equipment_01',
@@ -65,7 +67,7 @@ describe('HistoryTaskTable', () => {
       _uiId: 'entry_02',
       name: 'vidange inverseur',
       date: new Date('2019-11-06T00:11:18.112Z'),
-      age: 1214,
+      age: 1194,
       remarks: 'RAS',
       taskUiId: 'task_01',
       equipmentUiId: 'equipment_01',
@@ -93,6 +95,8 @@ describe('HistoryTaskTable', () => {
     },
   ];
 
+  const entriesSortedByDate = _.orderBy(entries, (entry) => entry.date, 'asc');
+
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('test was not wrapped in act(...)');
@@ -103,7 +107,7 @@ describe('HistoryTaskTable', () => {
   beforeEach(() => {
     equipmentManager.getCurrentEquipment.mockImplementation(() => equipment);
     taskManager.getCurrentTask.mockImplementation(() => task);
-    entryManager.getTaskEntries.mockImplementation(() => entries);
+    entryManager.getTaskEntries.mockImplementation(() => entriesSortedByDate);
     entryManager.areEntriesLoading.mockImplementation(() => false);
 
     entryProxy.existEntry.mockImplementation(async (equipmentId, entryId) => {
@@ -179,10 +183,9 @@ describe('HistoryTaskTable', () => {
 
     // Assert
     const tbodyProps = historyTaskTable.find('tbody').at(0).props();
-    for (let i = 0; i < entries.length; i++) {
-      expect(tbodyProps.children[i].props.data).toBe(entries[i]);
+    for (let i = 0; i < entriesSortedByDate.length; i++) {
+      expect(tbodyProps.children[i].props.data._uiId).toBe(entriesSortedByDate[entriesSortedByDate.length - 1 - i]._uiId);
     }
-
     const clickableCells = historyTaskTable.find('ClickableCell');
     clickableCells.forEach((clickableCell) => {
       const cellProps = clickableCell.props();
@@ -226,7 +229,7 @@ describe('HistoryTaskTable', () => {
 
     const cells = historyTaskTable.find('ClickableCell');
 
-    for (let i = 0; i < entries.length; i++) {
+    for (let i = 0; i < entriesSortedByDate.length; i++) {
       for (let numColumn = 0; numColumn < 3; numColumn++) {
         // Act
         cells.at(i * 3 + numColumn).simulate('click');
@@ -239,7 +242,7 @@ describe('HistoryTaskTable', () => {
         expect(editEntryModal.props().visible).toBe(true);
         expect(editEntryModal.props().equipment).toBe(equipment);
         expect(editEntryModal.props().task).toBe(task);
-        expect(editEntryModal.props().entry).toBe(entries[i]);
+        expect(editEntryModal.props().entry._uiId).toEqual(entriesSortedByDate[entriesSortedByDate.length - 1 - i]._uiId);
       }
     }
   });
@@ -257,6 +260,35 @@ describe('HistoryTaskTable', () => {
 
     // Assert
     assertTableSortedByDate(historyTaskTable);
+  });
+
+  it('Should display an exclamation mark when the entry was acknowledged lately', async () => {
+    // Arrange
+
+    // Act
+    const historyTaskTable = mount(
+      <IntlProvider locale={navigator.language}>
+        <HistoryTaskTable />
+      </IntlProvider>,
+    );
+    await updateWrapper(historyTaskTable);
+
+    // Assert
+    const cell1 = historyTaskTable.find('ClickableCell').at(0 * 3 + 1);
+    expect(cell1.props().data.isLate).toBe(false);
+    expect(cell1.find('FontAwesomeIcon').length).toBe(0);
+
+    const cell2 = historyTaskTable.find('ClickableCell').at(1 * 3 + 1);
+    expect(cell2.props().data.isLate).toBe(false);
+    expect(cell2.find('FontAwesomeIcon').length).toBe(0);
+
+    const cell3 = historyTaskTable.find('ClickableCell').at(2 * 3 + 1);
+    expect(cell3.props().data.isLate).toBe(false);
+    expect(cell3.find('FontAwesomeIcon').length).toBe(0);
+
+    const cell4 = historyTaskTable.find('ClickableCell').at(3 * 3 + 1);
+    expect(cell4.props().data.isLate).toBe(true);
+    expect(cell4.find('FontAwesomeIcon').length).toBe(1);
   });
 
   it('Should add an entry and it should remain sorted by date', async () => {

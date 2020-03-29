@@ -4,15 +4,15 @@
     "description": "Colum header",
     "id": "ackDate"
   },
-  "age": {
-    "defaultMessage": "Equipment Age",
-    "description": "Colum header",
-    "id": "ageColumHeader"
-  },
   "dayperiod": {
     "defaultMessage": "{day, plural, one {day} other {# days}}",
     "description": "Day period",
     "id": "dayperiod"
+  },
+  "doneAfter": {
+    "defaultMessage": "Done after",
+    "description": "Colum header",
+    "id": "doneAfterColumHeader"
   },
   "errorFetching": {
     "defaultMessage": "Something went wrong ...",

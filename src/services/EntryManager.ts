@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { CancelTokenSource } from 'axios';
+import _ from 'lodash';
 import log from 'loglevel';
 import equipmentManager from './EquipmentManager';
 import taskManager from './TaskManager';
@@ -108,8 +109,7 @@ class EntryManager implements IEntryManager {
     isCurrentEntryChanging = () => this.isCurrentEntryChangingFlag
 
     private onEntriesChanged = (entries: EntryModel[], newCurrentEntry?: EntryModel): void => {
-      this.entries = entries;
-      this.entries.sort((entryA, entryB) => entryA.date.getTime() - entryB.date.getTime());
+      this.entries = _.orderBy(entries, (entry: EntryModel) => entry.date, 'asc');
 
       this.areEntriesLoadingFlag = false;
 

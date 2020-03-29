@@ -133,40 +133,52 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
               "ack": true,
               "age": 1214,
               "date": 2019-11-09T00:11:19.112Z,
+              "durationFromPreviousEntry": "PT24H1S",
               "equipmentUiId": "equipment_01",
+              "isLate": false,
               "name": "vidange inverseur",
               "remarks": "RAS",
               "taskUiId": "task_01",
+              "timeFromPreviousEntry": 10,
             },
             Object {
               "_uiId": "entry_03",
               "ack": false,
               "age": 1214,
               "date": 2019-11-09T00:11:18.112Z,
+              "durationFromPreviousEntry": "PT24H",
               "equipmentUiId": "equipment_01",
+              "isLate": false,
               "name": "vidange inverseur",
               "remarks": "RAS",
               "taskUiId": "task_01",
+              "timeFromPreviousEntry": 10,
             },
             Object {
               "_uiId": "entry_01",
               "ack": true,
-              "age": 1234,
+              "age": 1204,
               "date": 2019-11-08T00:11:18.112Z,
+              "durationFromPreviousEntry": "PT48H",
               "equipmentUiId": "equipment_01",
+              "isLate": false,
               "name": "vidange",
               "remarks": "RAS",
               "taskUiId": "task_01",
+              "timeFromPreviousEntry": 10,
             },
             Object {
               "_uiId": "entry_02",
               "ack": true,
-              "age": 1214,
+              "age": 1194,
               "date": 2019-11-06T00:11:18.112Z,
+              "durationFromPreviousEntry": "PT8712H31M41.824S",
               "equipmentUiId": "equipment_01",
+              "isLate": true,
               "name": "vidange inverseur",
               "remarks": "RAS",
               "taskUiId": "task_01",
+              "timeFromPreviousEntry": 1194,
             },
           ]
         }
@@ -213,40 +225,52 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                 "ack": true,
                 "age": 1214,
                 "date": 2019-11-09T00:11:19.112Z,
+                "durationFromPreviousEntry": "PT24H1S",
                 "equipmentUiId": "equipment_01",
+                "isLate": false,
                 "name": "vidange inverseur",
                 "remarks": "RAS",
                 "taskUiId": "task_01",
+                "timeFromPreviousEntry": 10,
               },
               Object {
                 "_uiId": "entry_03",
                 "ack": false,
                 "age": 1214,
                 "date": 2019-11-09T00:11:18.112Z,
+                "durationFromPreviousEntry": "PT24H",
                 "equipmentUiId": "equipment_01",
+                "isLate": false,
                 "name": "vidange inverseur",
                 "remarks": "RAS",
                 "taskUiId": "task_01",
+                "timeFromPreviousEntry": 10,
               },
               Object {
                 "_uiId": "entry_01",
                 "ack": true,
-                "age": 1234,
+                "age": 1204,
                 "date": 2019-11-08T00:11:18.112Z,
+                "durationFromPreviousEntry": "PT48H",
                 "equipmentUiId": "equipment_01",
+                "isLate": false,
                 "name": "vidange",
                 "remarks": "RAS",
                 "taskUiId": "task_01",
+                "timeFromPreviousEntry": 10,
               },
               Object {
                 "_uiId": "entry_02",
                 "ack": true,
-                "age": 1214,
+                "age": 1194,
                 "date": 2019-11-06T00:11:18.112Z,
+                "durationFromPreviousEntry": "PT8712H31M41.824S",
                 "equipmentUiId": "equipment_01",
+                "isLate": true,
                 "name": "vidange inverseur",
                 "remarks": "RAS",
                 "taskUiId": "task_01",
+                "timeFromPreviousEntry": 1194,
               },
             ]
           }
@@ -294,40 +318,52 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                   "ack": true,
                   "age": 1214,
                   "date": 2019-11-09T00:11:19.112Z,
+                  "durationFromPreviousEntry": "PT24H1S",
                   "equipmentUiId": "equipment_01",
+                  "isLate": false,
                   "name": "vidange inverseur",
                   "remarks": "RAS",
                   "taskUiId": "task_01",
+                  "timeFromPreviousEntry": 10,
                 },
                 Object {
                   "_uiId": "entry_03",
                   "ack": false,
                   "age": 1214,
                   "date": 2019-11-09T00:11:18.112Z,
+                  "durationFromPreviousEntry": "PT24H",
                   "equipmentUiId": "equipment_01",
+                  "isLate": false,
                   "name": "vidange inverseur",
                   "remarks": "RAS",
                   "taskUiId": "task_01",
+                  "timeFromPreviousEntry": 10,
                 },
                 Object {
                   "_uiId": "entry_01",
                   "ack": true,
-                  "age": 1234,
+                  "age": 1204,
                   "date": 2019-11-08T00:11:18.112Z,
+                  "durationFromPreviousEntry": "PT48H",
                   "equipmentUiId": "equipment_01",
+                  "isLate": false,
                   "name": "vidange",
                   "remarks": "RAS",
                   "taskUiId": "task_01",
+                  "timeFromPreviousEntry": 10,
                 },
                 Object {
                   "_uiId": "entry_02",
                   "ack": true,
-                  "age": 1214,
+                  "age": 1194,
                   "date": 2019-11-06T00:11:18.112Z,
+                  "durationFromPreviousEntry": "PT8712H31M41.824S",
                   "equipmentUiId": "equipment_01",
+                  "isLate": true,
                   "name": "vidange inverseur",
                   "remarks": "RAS",
                   "taskUiId": "task_01",
+                  "timeFromPreviousEntry": 1194,
                 },
               ]
             }
@@ -372,40 +408,52 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                     "ack": true,
                     "age": 1214,
                     "date": 2019-11-09T00:11:19.112Z,
+                    "durationFromPreviousEntry": "PT24H1S",
                     "equipmentUiId": "equipment_01",
+                    "isLate": false,
                     "name": "vidange inverseur",
                     "remarks": "RAS",
                     "taskUiId": "task_01",
+                    "timeFromPreviousEntry": 10,
                   },
                   Object {
                     "_uiId": "entry_03",
                     "ack": false,
                     "age": 1214,
                     "date": 2019-11-09T00:11:18.112Z,
+                    "durationFromPreviousEntry": "PT24H",
                     "equipmentUiId": "equipment_01",
+                    "isLate": false,
                     "name": "vidange inverseur",
                     "remarks": "RAS",
                     "taskUiId": "task_01",
+                    "timeFromPreviousEntry": 10,
                   },
                   Object {
                     "_uiId": "entry_01",
                     "ack": true,
-                    "age": 1234,
+                    "age": 1204,
                     "date": 2019-11-08T00:11:18.112Z,
+                    "durationFromPreviousEntry": "PT48H",
                     "equipmentUiId": "equipment_01",
+                    "isLate": false,
                     "name": "vidange",
                     "remarks": "RAS",
                     "taskUiId": "task_01",
+                    "timeFromPreviousEntry": 10,
                   },
                   Object {
                     "_uiId": "entry_02",
                     "ack": true,
-                    "age": 1214,
+                    "age": 1194,
                     "date": 2019-11-06T00:11:18.112Z,
+                    "durationFromPreviousEntry": "PT8712H31M41.824S",
                     "equipmentUiId": "equipment_01",
+                    "isLate": true,
                     "name": "vidange inverseur",
                     "remarks": "RAS",
                     "taskUiId": "task_01",
+                    "timeFromPreviousEntry": 1194,
                   },
                 ]
               }
@@ -467,40 +515,52 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                               "ack": true,
                               "age": 1214,
                               "date": 2019-11-09T00:11:19.112Z,
+                              "durationFromPreviousEntry": "PT24H1S",
                               "equipmentUiId": "equipment_01",
+                              "isLate": false,
                               "name": "vidange inverseur",
                               "remarks": "RAS",
                               "taskUiId": "task_01",
+                              "timeFromPreviousEntry": 10,
                             },
                             Object {
                               "_uiId": "entry_03",
                               "ack": false,
                               "age": 1214,
                               "date": 2019-11-09T00:11:18.112Z,
+                              "durationFromPreviousEntry": "PT24H",
                               "equipmentUiId": "equipment_01",
+                              "isLate": false,
                               "name": "vidange inverseur",
                               "remarks": "RAS",
                               "taskUiId": "task_01",
+                              "timeFromPreviousEntry": 10,
                             },
                             Object {
                               "_uiId": "entry_01",
                               "ack": true,
-                              "age": 1234,
+                              "age": 1204,
                               "date": 2019-11-08T00:11:18.112Z,
+                              "durationFromPreviousEntry": "PT48H",
                               "equipmentUiId": "equipment_01",
+                              "isLate": false,
                               "name": "vidange",
                               "remarks": "RAS",
                               "taskUiId": "task_01",
+                              "timeFromPreviousEntry": 10,
                             },
                             Object {
                               "_uiId": "entry_02",
                               "ack": true,
-                              "age": 1214,
+                              "age": 1194,
                               "date": 2019-11-06T00:11:18.112Z,
+                              "durationFromPreviousEntry": "PT8712H31M41.824S",
                               "equipmentUiId": "equipment_01",
+                              "isLate": true,
                               "name": "vidange inverseur",
                               "remarks": "RAS",
                               "taskUiId": "task_01",
+                              "timeFromPreviousEntry": 1194,
                             },
                           ]
                         }
@@ -830,12 +890,12 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                     className="innerTdHead"
                                                   >
                                                     <FormattedMessage
-                                                      defaultMessage="Equipment Age"
+                                                      defaultMessage="Done after"
                                                       description="Colum header"
-                                                      id="ageColumHeader"
+                                                      id="doneAfterColumHeader"
                                                       values={Object {}}
                                                     >
-                                                      Equipment Age
+                                                      Done after
                                                     </FormattedMessage>
                                                   </div>
                                                 </header>
@@ -1053,10 +1113,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                   "ack": true,
                                   "age": 1214,
                                   "date": 2019-11-09T00:11:19.112Z,
+                                  "durationFromPreviousEntry": "PT24H1S",
                                   "equipmentUiId": "equipment_01",
+                                  "isLate": false,
                                   "name": "vidange inverseur",
                                   "remarks": "RAS",
                                   "taskUiId": "task_01",
+                                  "timeFromPreviousEntry": 10,
                                 }
                               }
                               dataCellRenderer={
@@ -1157,10 +1220,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                               "ack": true,
                                               "age": 1214,
                                               "date": 2019-11-09T00:11:19.112Z,
+                                              "durationFromPreviousEntry": "PT24H1S",
                                               "equipmentUiId": "equipment_01",
+                                              "isLate": false,
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
                                               "taskUiId": "task_01",
+                                              "timeFromPreviousEntry": 10,
                                             }
                                           }
                                           header={[Function]}
@@ -1181,10 +1247,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 "ack": true,
                                                 "age": 1214,
                                                 "date": 2019-11-09T00:11:19.112Z,
+                                                "durationFromPreviousEntry": "PT24H1S",
                                                 "equipmentUiId": "equipment_01",
+                                                "isLate": false,
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
                                                 "taskUiId": "task_01",
+                                                "timeFromPreviousEntry": 10,
                                               }
                                             }
                                             index={0}
@@ -1204,10 +1273,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                   "ack": true,
                                                   "age": 1214,
                                                   "date": 2019-11-09T00:11:19.112Z,
+                                                  "durationFromPreviousEntry": "PT24H1S",
                                                   "equipmentUiId": "equipment_01",
+                                                  "isLate": false,
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
                                                   "taskUiId": "task_01",
+                                                  "timeFromPreviousEntry": 10,
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -1308,10 +1380,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                               "ack": true,
                                               "age": 1214,
                                               "date": 2019-11-09T00:11:19.112Z,
+                                              "durationFromPreviousEntry": "PT24H1S",
                                               "equipmentUiId": "equipment_01",
+                                              "isLate": false,
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
                                               "taskUiId": "task_01",
+                                              "timeFromPreviousEntry": 10,
                                             }
                                           }
                                           header={[Function]}
@@ -1332,10 +1407,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 "ack": true,
                                                 "age": 1214,
                                                 "date": 2019-11-09T00:11:19.112Z,
+                                                "durationFromPreviousEntry": "PT24H1S",
                                                 "equipmentUiId": "equipment_01",
+                                                "isLate": false,
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
                                                 "taskUiId": "task_01",
+                                                "timeFromPreviousEntry": 10,
                                               }
                                             }
                                             index={1}
@@ -1355,10 +1433,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                   "ack": true,
                                                   "age": 1214,
                                                   "date": 2019-11-09T00:11:19.112Z,
+                                                  "durationFromPreviousEntry": "PT24H1S",
                                                   "equipmentUiId": "equipment_01",
+                                                  "isLate": false,
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
                                                   "taskUiId": "task_01",
+                                                  "timeFromPreviousEntry": 10,
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -1367,7 +1448,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 className="table-white innerTd clickable"
                                                 onClick={[Function]}
                                               >
-                                                1214h
+                                                10h 
                                               </div>
                                             </ClickableCell>
                                           </cell>
@@ -1455,10 +1536,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                               "ack": true,
                                               "age": 1214,
                                               "date": 2019-11-09T00:11:19.112Z,
+                                              "durationFromPreviousEntry": "PT24H1S",
                                               "equipmentUiId": "equipment_01",
+                                              "isLate": false,
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
                                               "taskUiId": "task_01",
+                                              "timeFromPreviousEntry": 10,
                                             }
                                           }
                                           header={[Function]}
@@ -1479,10 +1563,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 "ack": true,
                                                 "age": 1214,
                                                 "date": 2019-11-09T00:11:19.112Z,
+                                                "durationFromPreviousEntry": "PT24H1S",
                                                 "equipmentUiId": "equipment_01",
+                                                "isLate": false,
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
                                                 "taskUiId": "task_01",
+                                                "timeFromPreviousEntry": 10,
                                               }
                                             }
                                             index={2}
@@ -1502,10 +1589,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                   "ack": true,
                                                   "age": 1214,
                                                   "date": 2019-11-09T00:11:19.112Z,
+                                                  "durationFromPreviousEntry": "PT24H1S",
                                                   "equipmentUiId": "equipment_01",
+                                                  "isLate": false,
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
                                                   "taskUiId": "task_01",
+                                                  "timeFromPreviousEntry": 10,
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -1575,10 +1665,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                   "ack": false,
                                   "age": 1214,
                                   "date": 2019-11-09T00:11:18.112Z,
+                                  "durationFromPreviousEntry": "PT24H",
                                   "equipmentUiId": "equipment_01",
+                                  "isLate": false,
                                   "name": "vidange inverseur",
                                   "remarks": "RAS",
                                   "taskUiId": "task_01",
+                                  "timeFromPreviousEntry": 10,
                                 }
                               }
                               dataCellRenderer={
@@ -1679,10 +1772,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                               "ack": false,
                                               "age": 1214,
                                               "date": 2019-11-09T00:11:18.112Z,
+                                              "durationFromPreviousEntry": "PT24H",
                                               "equipmentUiId": "equipment_01",
+                                              "isLate": false,
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
                                               "taskUiId": "task_01",
+                                              "timeFromPreviousEntry": 10,
                                             }
                                           }
                                           header={[Function]}
@@ -1703,10 +1799,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 "ack": false,
                                                 "age": 1214,
                                                 "date": 2019-11-09T00:11:18.112Z,
+                                                "durationFromPreviousEntry": "PT24H",
                                                 "equipmentUiId": "equipment_01",
+                                                "isLate": false,
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
                                                 "taskUiId": "task_01",
+                                                "timeFromPreviousEntry": 10,
                                               }
                                             }
                                             index={0}
@@ -1726,10 +1825,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                   "ack": false,
                                                   "age": 1214,
                                                   "date": 2019-11-09T00:11:18.112Z,
+                                                  "durationFromPreviousEntry": "PT24H",
                                                   "equipmentUiId": "equipment_01",
+                                                  "isLate": false,
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
                                                   "taskUiId": "task_01",
+                                                  "timeFromPreviousEntry": 10,
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -1830,10 +1932,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                               "ack": false,
                                               "age": 1214,
                                               "date": 2019-11-09T00:11:18.112Z,
+                                              "durationFromPreviousEntry": "PT24H",
                                               "equipmentUiId": "equipment_01",
+                                              "isLate": false,
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
                                               "taskUiId": "task_01",
+                                              "timeFromPreviousEntry": 10,
                                             }
                                           }
                                           header={[Function]}
@@ -1854,10 +1959,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 "ack": false,
                                                 "age": 1214,
                                                 "date": 2019-11-09T00:11:18.112Z,
+                                                "durationFromPreviousEntry": "PT24H",
                                                 "equipmentUiId": "equipment_01",
+                                                "isLate": false,
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
                                                 "taskUiId": "task_01",
+                                                "timeFromPreviousEntry": 10,
                                               }
                                             }
                                             index={1}
@@ -1877,10 +1985,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                   "ack": false,
                                                   "age": 1214,
                                                   "date": 2019-11-09T00:11:18.112Z,
+                                                  "durationFromPreviousEntry": "PT24H",
                                                   "equipmentUiId": "equipment_01",
+                                                  "isLate": false,
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
                                                   "taskUiId": "task_01",
+                                                  "timeFromPreviousEntry": 10,
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -1889,7 +2000,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 className="table-warning innerTd clickable"
                                                 onClick={[Function]}
                                               >
-                                                1214h
+                                                10h 
                                               </div>
                                             </ClickableCell>
                                           </cell>
@@ -1977,10 +2088,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                               "ack": false,
                                               "age": 1214,
                                               "date": 2019-11-09T00:11:18.112Z,
+                                              "durationFromPreviousEntry": "PT24H",
                                               "equipmentUiId": "equipment_01",
+                                              "isLate": false,
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
                                               "taskUiId": "task_01",
+                                              "timeFromPreviousEntry": 10,
                                             }
                                           }
                                           header={[Function]}
@@ -2001,10 +2115,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 "ack": false,
                                                 "age": 1214,
                                                 "date": 2019-11-09T00:11:18.112Z,
+                                                "durationFromPreviousEntry": "PT24H",
                                                 "equipmentUiId": "equipment_01",
+                                                "isLate": false,
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
                                                 "taskUiId": "task_01",
+                                                "timeFromPreviousEntry": 10,
                                               }
                                             }
                                             index={2}
@@ -2024,10 +2141,13 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                   "ack": false,
                                                   "age": 1214,
                                                   "date": 2019-11-09T00:11:18.112Z,
+                                                  "durationFromPreviousEntry": "PT24H",
                                                   "equipmentUiId": "equipment_01",
+                                                  "isLate": false,
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
                                                   "taskUiId": "task_01",
+                                                  "timeFromPreviousEntry": 10,
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -2095,12 +2215,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                 Object {
                                   "_uiId": "entry_01",
                                   "ack": true,
-                                  "age": 1234,
+                                  "age": 1204,
                                   "date": 2019-11-08T00:11:18.112Z,
+                                  "durationFromPreviousEntry": "PT48H",
                                   "equipmentUiId": "equipment_01",
+                                  "isLate": false,
                                   "name": "vidange",
                                   "remarks": "RAS",
                                   "taskUiId": "task_01",
+                                  "timeFromPreviousEntry": 10,
                                 }
                               }
                               dataCellRenderer={
@@ -2199,12 +2322,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             Object {
                                               "_uiId": "entry_01",
                                               "ack": true,
-                                              "age": 1234,
+                                              "age": 1204,
                                               "date": 2019-11-08T00:11:18.112Z,
+                                              "durationFromPreviousEntry": "PT48H",
                                               "equipmentUiId": "equipment_01",
+                                              "isLate": false,
                                               "name": "vidange",
                                               "remarks": "RAS",
                                               "taskUiId": "task_01",
+                                              "timeFromPreviousEntry": 10,
                                             }
                                           }
                                           header={[Function]}
@@ -2223,12 +2349,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                               Object {
                                                 "_uiId": "entry_01",
                                                 "ack": true,
-                                                "age": 1234,
+                                                "age": 1204,
                                                 "date": 2019-11-08T00:11:18.112Z,
+                                                "durationFromPreviousEntry": "PT48H",
                                                 "equipmentUiId": "equipment_01",
+                                                "isLate": false,
                                                 "name": "vidange",
                                                 "remarks": "RAS",
                                                 "taskUiId": "task_01",
+                                                "timeFromPreviousEntry": 10,
                                               }
                                             }
                                             index={0}
@@ -2246,12 +2375,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 Object {
                                                   "_uiId": "entry_01",
                                                   "ack": true,
-                                                  "age": 1234,
+                                                  "age": 1204,
                                                   "date": 2019-11-08T00:11:18.112Z,
+                                                  "durationFromPreviousEntry": "PT48H",
                                                   "equipmentUiId": "equipment_01",
+                                                  "isLate": false,
                                                   "name": "vidange",
                                                   "remarks": "RAS",
                                                   "taskUiId": "task_01",
+                                                  "timeFromPreviousEntry": 10,
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -2350,12 +2482,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             Object {
                                               "_uiId": "entry_01",
                                               "ack": true,
-                                              "age": 1234,
+                                              "age": 1204,
                                               "date": 2019-11-08T00:11:18.112Z,
+                                              "durationFromPreviousEntry": "PT48H",
                                               "equipmentUiId": "equipment_01",
+                                              "isLate": false,
                                               "name": "vidange",
                                               "remarks": "RAS",
                                               "taskUiId": "task_01",
+                                              "timeFromPreviousEntry": 10,
                                             }
                                           }
                                           header={[Function]}
@@ -2374,12 +2509,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                               Object {
                                                 "_uiId": "entry_01",
                                                 "ack": true,
-                                                "age": 1234,
+                                                "age": 1204,
                                                 "date": 2019-11-08T00:11:18.112Z,
+                                                "durationFromPreviousEntry": "PT48H",
                                                 "equipmentUiId": "equipment_01",
+                                                "isLate": false,
                                                 "name": "vidange",
                                                 "remarks": "RAS",
                                                 "taskUiId": "task_01",
+                                                "timeFromPreviousEntry": 10,
                                               }
                                             }
                                             index={1}
@@ -2397,12 +2535,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 Object {
                                                   "_uiId": "entry_01",
                                                   "ack": true,
-                                                  "age": 1234,
+                                                  "age": 1204,
                                                   "date": 2019-11-08T00:11:18.112Z,
+                                                  "durationFromPreviousEntry": "PT48H",
                                                   "equipmentUiId": "equipment_01",
+                                                  "isLate": false,
                                                   "name": "vidange",
                                                   "remarks": "RAS",
                                                   "taskUiId": "task_01",
+                                                  "timeFromPreviousEntry": 10,
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -2411,7 +2552,7 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 className="table-white innerTd clickable"
                                                 onClick={[Function]}
                                               >
-                                                1234h
+                                                10h 
                                               </div>
                                             </ClickableCell>
                                           </cell>
@@ -2497,12 +2638,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             Object {
                                               "_uiId": "entry_01",
                                               "ack": true,
-                                              "age": 1234,
+                                              "age": 1204,
                                               "date": 2019-11-08T00:11:18.112Z,
+                                              "durationFromPreviousEntry": "PT48H",
                                               "equipmentUiId": "equipment_01",
+                                              "isLate": false,
                                               "name": "vidange",
                                               "remarks": "RAS",
                                               "taskUiId": "task_01",
+                                              "timeFromPreviousEntry": 10,
                                             }
                                           }
                                           header={[Function]}
@@ -2521,12 +2665,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                               Object {
                                                 "_uiId": "entry_01",
                                                 "ack": true,
-                                                "age": 1234,
+                                                "age": 1204,
                                                 "date": 2019-11-08T00:11:18.112Z,
+                                                "durationFromPreviousEntry": "PT48H",
                                                 "equipmentUiId": "equipment_01",
+                                                "isLate": false,
                                                 "name": "vidange",
                                                 "remarks": "RAS",
                                                 "taskUiId": "task_01",
+                                                "timeFromPreviousEntry": 10,
                                               }
                                             }
                                             index={2}
@@ -2544,12 +2691,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 Object {
                                                   "_uiId": "entry_01",
                                                   "ack": true,
-                                                  "age": 1234,
+                                                  "age": 1204,
                                                   "date": 2019-11-08T00:11:18.112Z,
+                                                  "durationFromPreviousEntry": "PT48H",
                                                   "equipmentUiId": "equipment_01",
+                                                  "isLate": false,
                                                   "name": "vidange",
                                                   "remarks": "RAS",
                                                   "taskUiId": "task_01",
+                                                  "timeFromPreviousEntry": 10,
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -2617,12 +2767,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                 Object {
                                   "_uiId": "entry_02",
                                   "ack": true,
-                                  "age": 1214,
+                                  "age": 1194,
                                   "date": 2019-11-06T00:11:18.112Z,
+                                  "durationFromPreviousEntry": "PT8712H31M41.824S",
                                   "equipmentUiId": "equipment_01",
+                                  "isLate": true,
                                   "name": "vidange inverseur",
                                   "remarks": "RAS",
                                   "taskUiId": "task_01",
+                                  "timeFromPreviousEntry": 1194,
                                 }
                               }
                               dataCellRenderer={
@@ -2721,12 +2874,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             Object {
                                               "_uiId": "entry_02",
                                               "ack": true,
-                                              "age": 1214,
+                                              "age": 1194,
                                               "date": 2019-11-06T00:11:18.112Z,
+                                              "durationFromPreviousEntry": "PT8712H31M41.824S",
                                               "equipmentUiId": "equipment_01",
+                                              "isLate": true,
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
                                               "taskUiId": "task_01",
+                                              "timeFromPreviousEntry": 1194,
                                             }
                                           }
                                           header={[Function]}
@@ -2745,12 +2901,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                               Object {
                                                 "_uiId": "entry_02",
                                                 "ack": true,
-                                                "age": 1214,
+                                                "age": 1194,
                                                 "date": 2019-11-06T00:11:18.112Z,
+                                                "durationFromPreviousEntry": "PT8712H31M41.824S",
                                                 "equipmentUiId": "equipment_01",
+                                                "isLate": true,
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
                                                 "taskUiId": "task_01",
+                                                "timeFromPreviousEntry": 1194,
                                               }
                                             }
                                             index={0}
@@ -2768,12 +2927,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 Object {
                                                   "_uiId": "entry_02",
                                                   "ack": true,
-                                                  "age": 1214,
+                                                  "age": 1194,
                                                   "date": 2019-11-06T00:11:18.112Z,
+                                                  "durationFromPreviousEntry": "PT8712H31M41.824S",
                                                   "equipmentUiId": "equipment_01",
+                                                  "isLate": true,
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
                                                   "taskUiId": "task_01",
+                                                  "timeFromPreviousEntry": 1194,
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -2872,12 +3034,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             Object {
                                               "_uiId": "entry_02",
                                               "ack": true,
-                                              "age": 1214,
+                                              "age": 1194,
                                               "date": 2019-11-06T00:11:18.112Z,
+                                              "durationFromPreviousEntry": "PT8712H31M41.824S",
                                               "equipmentUiId": "equipment_01",
+                                              "isLate": true,
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
                                               "taskUiId": "task_01",
+                                              "timeFromPreviousEntry": 1194,
                                             }
                                           }
                                           header={[Function]}
@@ -2896,12 +3061,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                               Object {
                                                 "_uiId": "entry_02",
                                                 "ack": true,
-                                                "age": 1214,
+                                                "age": 1194,
                                                 "date": 2019-11-06T00:11:18.112Z,
+                                                "durationFromPreviousEntry": "PT8712H31M41.824S",
                                                 "equipmentUiId": "equipment_01",
+                                                "isLate": true,
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
                                                 "taskUiId": "task_01",
+                                                "timeFromPreviousEntry": 1194,
                                               }
                                             }
                                             index={1}
@@ -2919,12 +3087,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 Object {
                                                   "_uiId": "entry_02",
                                                   "ack": true,
-                                                  "age": 1214,
+                                                  "age": 1194,
                                                   "date": 2019-11-06T00:11:18.112Z,
+                                                  "durationFromPreviousEntry": "PT8712H31M41.824S",
                                                   "equipmentUiId": "equipment_01",
+                                                  "isLate": true,
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
                                                   "taskUiId": "task_01",
+                                                  "timeFromPreviousEntry": 1194,
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -2933,7 +3104,58 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 className="table-white innerTd clickable"
                                                 onClick={[Function]}
                                               >
-                                                1214h
+                                                1194h 
+                                                <FontAwesomeIcon
+                                                  border={false}
+                                                  className=""
+                                                  color="grey"
+                                                  fixedWidth={false}
+                                                  flip={null}
+                                                  icon={
+                                                    Object {
+                                                      "icon": Array [
+                                                        576,
+                                                        512,
+                                                        Array [],
+                                                        "f071",
+                                                        "M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z",
+                                                      ],
+                                                      "iconName": "exclamation-triangle",
+                                                      "prefix": "fas",
+                                                    }
+                                                  }
+                                                  inverse={false}
+                                                  listItem={false}
+                                                  mask={null}
+                                                  pull={null}
+                                                  pulse={false}
+                                                  rotation={null}
+                                                  size={null}
+                                                  spin={false}
+                                                  swapOpacity={false}
+                                                  symbol={false}
+                                                  title=""
+                                                  transform={null}
+                                                >
+                                                  <svg
+                                                    aria-hidden="true"
+                                                    className="svg-inline--fa fa-exclamation-triangle fa-w-18 "
+                                                    color="grey"
+                                                    data-icon="exclamation-triangle"
+                                                    data-prefix="fas"
+                                                    focusable="false"
+                                                    role="img"
+                                                    style={Object {}}
+                                                    viewBox="0 0 576 512"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                  >
+                                                    <path
+                                                      d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                                                      fill="currentColor"
+                                                      style={Object {}}
+                                                    />
+                                                  </svg>
+                                                </FontAwesomeIcon>
                                               </div>
                                             </ClickableCell>
                                           </cell>
@@ -3019,12 +3241,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                             Object {
                                               "_uiId": "entry_02",
                                               "ack": true,
-                                              "age": 1214,
+                                              "age": 1194,
                                               "date": 2019-11-06T00:11:18.112Z,
+                                              "durationFromPreviousEntry": "PT8712H31M41.824S",
                                               "equipmentUiId": "equipment_01",
+                                              "isLate": true,
                                               "name": "vidange inverseur",
                                               "remarks": "RAS",
                                               "taskUiId": "task_01",
+                                              "timeFromPreviousEntry": 1194,
                                             }
                                           }
                                           header={[Function]}
@@ -3043,12 +3268,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                               Object {
                                                 "_uiId": "entry_02",
                                                 "ack": true,
-                                                "age": 1214,
+                                                "age": 1194,
                                                 "date": 2019-11-06T00:11:18.112Z,
+                                                "durationFromPreviousEntry": "PT8712H31M41.824S",
                                                 "equipmentUiId": "equipment_01",
+                                                "isLate": true,
                                                 "name": "vidange inverseur",
                                                 "remarks": "RAS",
                                                 "taskUiId": "task_01",
+                                                "timeFromPreviousEntry": 1194,
                                               }
                                             }
                                             index={2}
@@ -3066,12 +3294,15 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 Object {
                                                   "_uiId": "entry_02",
                                                   "ack": true,
-                                                  "age": 1214,
+                                                  "age": 1194,
                                                   "date": 2019-11-06T00:11:18.112Z,
+                                                  "durationFromPreviousEntry": "PT8712H31M41.824S",
                                                   "equipmentUiId": "equipment_01",
+                                                  "isLate": true,
                                                   "name": "vidange inverseur",
                                                   "remarks": "RAS",
                                                   "taskUiId": "task_01",
+                                                  "timeFromPreviousEntry": 1194,
                                                 }
                                               }
                                               onDisplayData={[Function]}
@@ -3416,12 +3647,12 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                               className="innerTdHead"
                                             >
                                               <FormattedMessage
-                                                defaultMessage="Equipment Age"
+                                                defaultMessage="Done after"
                                                 description="Colum header"
-                                                id="ageColumHeader"
+                                                id="doneAfterColumHeader"
                                                 values={Object {}}
                                               >
-                                                Equipment Age
+                                                Done after
                                               </FormattedMessage>
                                             </div>
                                           </header>
@@ -4105,12 +4336,12 @@ exports[`HistoryTaskTable Should render an empty table even when the task is und
                                                     className="innerTdHead"
                                                   >
                                                     <FormattedMessage
-                                                      defaultMessage="Equipment Age"
+                                                      defaultMessage="Done after"
                                                       description="Colum header"
-                                                      id="ageColumHeader"
+                                                      id="doneAfterColumHeader"
                                                       values={Object {}}
                                                     >
-                                                      Equipment Age
+                                                      Done after
                                                     </FormattedMessage>
                                                   </div>
                                                 </header>
@@ -4602,12 +4833,12 @@ exports[`HistoryTaskTable Should render an empty table even when the task is und
                                               className="innerTdHead"
                                             >
                                               <FormattedMessage
-                                                defaultMessage="Equipment Age"
+                                                defaultMessage="Done after"
                                                 description="Colum header"
-                                                id="ageColumHeader"
+                                                id="doneAfterColumHeader"
                                                 values={Object {}}
                                               >
-                                                Equipment Age
+                                                Done after
                                               </FormattedMessage>
                                             </div>
                                           </header>

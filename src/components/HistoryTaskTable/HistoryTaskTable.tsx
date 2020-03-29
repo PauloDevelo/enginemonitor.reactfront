@@ -5,11 +5,12 @@ import React, {
 import { Button } from 'reactstrap';
 
 import * as moment from 'moment';
+import _ from 'lodash';
 
 import classnames from 'classnames';
 
 import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
-import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
+import { faCheckSquare, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
@@ -44,6 +45,39 @@ type Props = {
     className?: string
 }
 
+interface DisplayableEntry extends EntryModel {
+  timeFromPreviousEntry: number | undefined;
+  durationFromPreviousEntry: moment.Duration | undefined;
+  isLate: boolean;
+}
+
+const convertEntryModelToDisplayableEntry = (entry: EntryModel, index: number, entries: EntryModel[]): DisplayableEntry => {
+  const equipment = equipmentManager.getCurrentEquipment();
+  const task = taskManager.getCurrentTask();
+
+  const previousAckEntryIndex = index > 0 ? _.findLastIndex(entries, (e: EntryModel) => e.ack, index - 1) : -1;
+
+  let timeFromPreviousEntry: number | undefined;
+  if (equipment && equipment.ageAcquisitionType !== AgeAcquisitionType.time) {
+    if (previousAckEntryIndex === -1) {
+      timeFromPreviousEntry = entry.age;
+    } else {
+      timeFromPreviousEntry = entry.age - entries[previousAckEntryIndex].age;
+    }
+  }
+
+  const previousEntryDate = previousAckEntryIndex === -1 ? (equipment && equipment.installation) : entries[previousAckEntryIndex].date;
+  const durationFromPreviousEntry = previousEntryDate ? moment.duration(entry.date.getTime() - previousEntryDate.getTime()) : undefined;
+
+  const isLate = task !== undefined && entry.ack
+  && ((timeFromPreviousEntry !== undefined && task.usagePeriodInHour !== undefined && timeFromPreviousEntry > task.usagePeriodInHour)
+  || (durationFromPreviousEntry !== undefined && durationFromPreviousEntry.asMonths() > task.periodInMonth));
+
+  return {
+    ...entry, timeFromPreviousEntry, durationFromPreviousEntry, isLate,
+  };
+};
+
 const Table = composeDecorators(
   withHeaderControl,
   withInMemorySortingContext(),
@@ -52,12 +86,12 @@ const Table = composeDecorators(
 
 const HistoryTaskTable = ({ className }: Props) => {
   const modalHook = useEditModal<EntryModel | undefined>(undefined);
-  const [entries, setEntries] = useState<EntryModel[]>(entryManager.getTaskEntries());
+  const [entries, setEntries] = useState<EntryModel[]>(entryManager.getTaskEntries().map(convertEntryModelToDisplayableEntry));
 
   useEffect(() => {
     // eslint-disable-next-line no-unused-vars
     const onEntriesChanged = (_: EntryModel[] | TaskModel | undefined) => {
-      setEntries(entryManager.getTaskEntries());
+      setEntries(entryManager.getTaskEntries().map(convertEntryModelToDisplayableEntry));
     };
 
     taskManager.registerOnCurrentTaskChanged(onEntriesChanged);
@@ -80,7 +114,7 @@ const HistoryTaskTable = ({ className }: Props) => {
         <div className="innerTdHead"><FormattedMessage {...messages.ackDate} /></div>
       ),
       cell: (content: any) => {
-        const entry : EntryModel = content.data;
+        const entry : DisplayableEntry = content.data;
 
         return (
           <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`}>
@@ -94,10 +128,10 @@ const HistoryTaskTable = ({ className }: Props) => {
     {
       name: 'age',
       header: () => (
-        <div className="innerTdHead"><FormattedMessage {...messages.age} /></div>
+        <div className="innerTdHead"><FormattedMessage {...messages.doneAfter} /></div>
       ),
       cell: (content: any) => {
-        const entry:EntryModel = content.data;
+        const entry:DisplayableEntry = content.data;
         const equipment = equipmentManager.getCurrentEquipment();
         if (equipment == null) {
           return <div />;
@@ -106,24 +140,28 @@ const HistoryTaskTable = ({ className }: Props) => {
         if (equipment.ageAcquisitionType !== AgeAcquisitionType.time) {
           return (
             <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`}>
-              <>{entry.age === -1 ? '' : `${entry.age}h`}</>
+              <>{entry.timeFromPreviousEntry !== undefined ? `${entry.timeFromPreviousEntry}h ` : ''}</>
+              {entry.isLate ? <FontAwesomeIcon icon={faExclamationTriangle} color="grey" /> : <></>}
             </ClickableCell>
           );
         }
 
-        const diff = moment.duration(entry.date.getTime() - equipment.installation.getTime());
-        const year = diff.years();
-        const month = diff.months();
-        const day = diff.days();
+        if (entry.durationFromPreviousEntry === undefined) {
+          return <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`} />;
+        }
+
+        const year = entry.durationFromPreviousEntry.years();
+        const month = entry.durationFromPreviousEntry.months();
+        const day = entry.durationFromPreviousEntry.days();
 
         return (
           <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`}>
             <>
-              {diff.years() > 0 && <FormattedMessage {... messages.yearperiod} values={{ year }} />}
+              {year > 0 && <FormattedMessage {... messages.yearperiod} values={{ year }} />}
               {' '}
-              {diff.months() > 0 && <FormattedMessage {... messages.monthperiod} values={{ month }} />}
+              {month > 0 && <FormattedMessage {... messages.monthperiod} values={{ month }} />}
               {' '}
-              {diff.days() > 0 && <FormattedMessage {... messages.dayperiod} values={{ day }} />}
+              {day > 0 && <FormattedMessage {... messages.dayperiod} values={{ day }} />}
             </>
           </ClickableCell>
         );
@@ -137,7 +175,7 @@ const HistoryTaskTable = ({ className }: Props) => {
         <div className="text-center innerTdHead"><FormattedMessage {...messages.remarks} /></div>
       ),
       cell: (content: any) => {
-        const entry:EntryModel = content.data;
+        const entry:DisplayableEntry = content.data;
         const remarks = entry.remarks.replace(/\n/g, '<br />');
         const shortenRemarks = shorten(remarks);
 
