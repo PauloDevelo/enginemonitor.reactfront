@@ -167,7 +167,7 @@ const HistoryTaskTable = ({ className }: Props) => {
         );
       },
       style: { width: '25%' },
-      sortable: true,
+      sortable: false,
     },
     {
       name: 'remarks',
