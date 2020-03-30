@@ -70,9 +70,12 @@ describe('Test TaskManager', () => {
   });
 
   describe('getCurrentTask', () => {
-    it('Should return undefined before setting the current equipment', () => {
+    it('Should return undefined before setting the current equipment', async (done) => {
       // Arrange
       taskProxy.fetchTasks.mockImplementation(() => Promise.resolve([]));
+
+      equipmentManager.setCurrentEquipment(undefined);
+      await sleep(200);
 
       // Act
       const currentTask = taskManager.getCurrentTask();
@@ -80,6 +83,7 @@ describe('Test TaskManager', () => {
       // Assert
       expect(taskProxy.fetchTasks).toBeCalledTimes(0);
       expect(currentTask).toBeUndefined();
+      done();
     });
 
     it('Should return undefined after setting a current equipment which does not have any task yet', async (done) => {
@@ -97,9 +101,9 @@ describe('Test TaskManager', () => {
       done();
     });
 
-    it('Should return the first task issued by fetchTasks after setting the current equipment', async (done) => {
+    it('Should return the task which is the next to perform after setting the current equipment', async (done) => {
       // Arrange
-      taskProxy.fetchTasks.mockImplementation(async () => Promise.resolve([task1, task2]));
+      taskProxy.fetchTasks.mockImplementation(async () => Promise.resolve([task2, task1]));
 
       equipmentManager.setCurrentEquipment(equipment);
       await sleep(200);
@@ -177,7 +181,6 @@ describe('Test TaskManager', () => {
       expect(anotherListener).toBeCalledTimes(1);
       expect(anotherListener.mock.calls[0][0]).toBe(task1);
 
-      taskManager.unregisterOnCurrentTaskChanged(anotherListener);
       done();
     });
   });
@@ -299,11 +302,12 @@ describe('Test TaskManager', () => {
       taskManager.registerOnTasksChanged(anotherTasksListener);
 
       equipmentManager.setCurrentEquipment(equipment);
+      await sleep(200);
 
-      equipmentManager.unregisterOnEquipmentsChanged(anotherTasksListener);
+      taskManager.unregisterOnTasksChanged(anotherTasksListener);
 
       // Act
-      equipmentManager.onEquipmentDeleted(task1);
+      taskManager.onTaskDeleted(task1);
 
       // Assert
       expect(anotherTasksListener).toBeCalledTimes(1);
