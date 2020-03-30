@@ -31,7 +31,7 @@ const loginmsg = defineMessages(jsonMessages);
 type Props = {
 onLoggedIn: (user:UserModel) => void,
 visible: boolean,
-className: string,
+className?: string,
 toggleModalSignup: () => void
 }
 

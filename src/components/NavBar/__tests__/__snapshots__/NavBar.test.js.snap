@@ -118,7 +118,6 @@ exports[`Component NavBar should render the navbar even when the user is still u
             unmountOnExit={false}
           >
             <div
-              aria-expanded="false"
               className="collapse navbar-collapse"
               style={Object {}}
             >

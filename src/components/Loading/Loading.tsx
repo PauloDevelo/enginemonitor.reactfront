@@ -1,31 +1,29 @@
 import React from 'react';
 
+import classnames from 'classnames';
+
 import './Loading.css';
 
 type Props = {
-  classNames?: string;
+  className?: string;
   onClick?: (() => void);
 }
 
-const Loading = ({ classNames, onClick }: Props) => {
-  const className = classNames !== undefined ? `${classNames} lds-spinner` : 'lds-spinner';
-
-  return (
-    <div className={className} onClick={onClick}>
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-    </div>
-  );
-};
+const Loading = ({ className, onClick }: Props) => (
+  <div className={classnames(className, 'lds-spinner')} onClick={onClick}>
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+  </div>
+);
 
 export default Loading;

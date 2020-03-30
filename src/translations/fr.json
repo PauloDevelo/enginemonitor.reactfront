@@ -33,6 +33,7 @@
   "dayperiod": "{day, plural, one {# jour} other {# jours}}",
   "delete": "Supprimer",
   "description": "Description",
+  "doneAfterColumHeader": "Fait après",
   "edit": "Editer",
   "email": "Email",
   "emailSent": "Un email a été envoyé. Cliquez sur le lien pour confirmer votre adresse.",

@@ -5,6 +5,9 @@ import React, {
 import { Button } from 'reactstrap';
 
 import * as moment from 'moment';
+import _ from 'lodash';
+
+import classnames from 'classnames';
 
 import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
 import { faCheckSquare, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
@@ -18,8 +21,6 @@ import { withInMemorySortingContext } from '../react-table-factory/withSortingCo
 import { withHeaderControl } from '../react-table-factory/withHeaderControl.js';
 import { withFixedHeader } from '../react-table-factory/withFixedHeader.js';
 
-import entryProxy from '../../services/EntryProxy';
-
 import useEditModal from '../../hooks/EditModalHook';
 
 import { shorten } from '../../helpers/TaskHelper';
@@ -29,22 +30,53 @@ import './HistoryTaskTable.css';
 
 import {
   // eslint-disable-next-line no-unused-vars
-  EquipmentModel, TaskModel, EntryModel, AgeAcquisitionType,
+  TaskModel, EntryModel, AgeAcquisitionType,
 } from '../../types/Types';
 
-import useFetcher from '../../hooks/Fetcher';
-
 import jsonMessages from './HistoryTaskTable.messages.json';
+
+import entryManager from '../../services/EntryManager';
+import taskManager from '../../services/TaskManager';
+import equipmentManager from '../../services/EquipmentManager';
 
 const messages = defineMessages(jsonMessages);
 
 type Props = {
-    equipment: EquipmentModel | undefined,
-    task: TaskModel | undefined,
-    taskHistoryRefreshId: number,
-    onHistoryChanged: (newEntries: EntryModel[])=>void,
-    classNames: string
+    className?: string
 }
+
+interface DisplayableEntry extends EntryModel {
+  timeFromPreviousEntry: number | undefined;
+  durationFromPreviousEntry: moment.Duration | undefined;
+  isLate: boolean;
+}
+
+const convertEntryModelToDisplayableEntry = (entry: EntryModel, index: number, entries: EntryModel[]): DisplayableEntry => {
+  const equipment = equipmentManager.getCurrentEquipment();
+  const task = taskManager.getCurrentTask();
+
+  const previousAckEntryIndex = index > 0 ? _.findLastIndex(entries, (e: EntryModel) => e.ack, index - 1) : -1;
+
+  let timeFromPreviousEntry: number | undefined;
+  if (equipment && equipment.ageAcquisitionType !== AgeAcquisitionType.time) {
+    if (previousAckEntryIndex === -1) {
+      timeFromPreviousEntry = entry.age;
+    } else {
+      timeFromPreviousEntry = entry.age - entries[previousAckEntryIndex].age;
+    }
+  }
+
+  const previousEntryDate = previousAckEntryIndex === -1 ? (equipment && equipment.installation) : entries[previousAckEntryIndex].date;
+  const durationFromPreviousEntry = previousEntryDate ? moment.duration(entry.date.getTime() - previousEntryDate.getTime()) : undefined;
+
+  const isLate = task !== undefined && entry.ack
+  && ((timeFromPreviousEntry !== undefined && task.usagePeriodInHour !== undefined && timeFromPreviousEntry > task.usagePeriodInHour)
+  || (durationFromPreviousEntry !== undefined && durationFromPreviousEntry.asMonths() > task.periodInMonth));
+
+  return {
+    ...entry, timeFromPreviousEntry, durationFromPreviousEntry, isLate,
+  };
+};
 
 const Table = composeDecorators(
   withHeaderControl,
@@ -52,48 +84,24 @@ const Table = composeDecorators(
   withFixedHeader, // should be last
 )();
 
-const HistoryTaskTable = ({
-  equipment, task, taskHistoryRefreshId, onHistoryChanged, classNames,
-}: Props) => {
-  const equipmentId = equipment ? equipment._uiId : undefined;
-  const taskId = task ? task._uiId : undefined;
-
+const HistoryTaskTable = ({ className }: Props) => {
   const modalHook = useEditModal<EntryModel | undefined>(undefined);
-  const [entries, setEntries] = useState<EntryModel[]>([]);
-
-  const {
-    data: fetchedEntries, error, isLoading, reloadRef,
-  } = useFetcher({ fetchPromise: entryProxy.fetchEntries, fetchProps: { equipmentId, taskId }, cancellationMsg: `Cancellation of task '${task?.name}' history fetching` });
+  const [entries, setEntries] = useState<EntryModel[]>(entryManager.getTaskEntries().map(convertEntryModelToDisplayableEntry));
 
   useEffect(() => {
-    if (taskHistoryRefreshId !== 0) {
-      reloadRef.current();
-    }
-  }, [taskHistoryRefreshId, reloadRef]);
+    // eslint-disable-next-line no-unused-vars
+    const onEntriesChanged = (_: EntryModel[] | TaskModel | undefined) => {
+      setEntries(entryManager.getTaskEntries().map(convertEntryModelToDisplayableEntry));
+    };
 
-  useEffect(() => {
-    setEntries(fetchedEntries || []);
-  }, [fetchedEntries]);
+    taskManager.registerOnCurrentTaskChanged(onEntriesChanged);
+    entryManager.registerOnEquipmentEntriesChanged(onEntriesChanged);
 
-  const changeEntries = (newEntries: EntryModel[]) => {
-    setEntries(newEntries);
-    if (onHistoryChanged) {
-      onHistoryChanged(newEntries);
-    }
-  };
-
-  const onSavedEntry = (savedEntry: EntryModel) => {
-    const newCurrentHistoryTask = entries.filter((entry) => entry._uiId !== savedEntry._uiId);
-    newCurrentHistoryTask.unshift(savedEntry);
-    newCurrentHistoryTask.sort((entryA, entryB) => entryA.date.getTime() - entryB.date.getTime());
-
-    changeEntries(newCurrentHistoryTask);
-  };
-
-  const onDeleteEntry = async (entry: EntryModel) => {
-    const newCurrentHistoryTask = entries.slice(0).filter((e) => e._uiId !== entry._uiId);
-    changeEntries(newCurrentHistoryTask);
-  };
+    return () => {
+      taskManager.unregisterOnCurrentTaskChanged(onEntriesChanged);
+      entryManager.unregisterOnEquipmentEntriesChanged(onEntriesChanged);
+    };
+  }, []);
 
   const displayEntry = useCallback((entry:EntryModel) => {
     modalHook.displayData(entry);
@@ -106,9 +114,10 @@ const HistoryTaskTable = ({
         <div className="innerTdHead"><FormattedMessage {...messages.ackDate} /></div>
       ),
       cell: (content: any) => {
-        const entry : EntryModel = content.data;
+        const entry : DisplayableEntry = content.data;
+
         return (
-          <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.ack === false ? 'warning' : 'white'}`}>
+          <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`}>
             <FormattedDate value={entry.date} />
           </ClickableCell>
         );
@@ -119,41 +128,46 @@ const HistoryTaskTable = ({
     {
       name: 'age',
       header: () => (
-        <div className="innerTdHead"><FormattedMessage {...messages.age} /></div>
+        <div className="innerTdHead"><FormattedMessage {...messages.doneAfter} /></div>
       ),
       cell: (content: any) => {
-        const entry:EntryModel = content.data;
+        const entry:DisplayableEntry = content.data;
+        const equipment = equipmentManager.getCurrentEquipment();
         if (equipment == null) {
           return <div />;
         }
 
         if (equipment.ageAcquisitionType !== AgeAcquisitionType.time) {
           return (
-            <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.ack === false ? 'warning' : 'white'}`}>
-              <>{entry.age === -1 ? '' : `${entry.age}h`}</>
+            <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`}>
+              <>{entry.timeFromPreviousEntry !== undefined ? `${entry.timeFromPreviousEntry}h ` : ''}</>
+              {entry.isLate ? <FontAwesomeIcon icon={faExclamationTriangle} color="grey" /> : <></>}
             </ClickableCell>
           );
         }
 
-        const diff = moment.duration(entry.date.getTime() - equipment.installation.getTime());
-        const year = diff.years();
-        const month = diff.months();
-        const day = diff.days();
+        if (entry.durationFromPreviousEntry === undefined) {
+          return <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`} />;
+        }
+
+        const year = entry.durationFromPreviousEntry.years();
+        const month = entry.durationFromPreviousEntry.months();
+        const day = entry.durationFromPreviousEntry.days();
 
         return (
-          <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.ack === false ? 'warning' : 'white'}`}>
+          <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`}>
             <>
-              {diff.years() > 0 && <FormattedMessage {... messages.yearperiod} values={{ year }} />}
+              {year > 0 && <FormattedMessage {... messages.yearperiod} values={{ year }} />}
               {' '}
-              {diff.months() > 0 && <FormattedMessage {... messages.monthperiod} values={{ month }} />}
+              {month > 0 && <FormattedMessage {... messages.monthperiod} values={{ month }} />}
               {' '}
-              {diff.days() > 0 && <FormattedMessage {... messages.dayperiod} values={{ day }} />}
+              {day > 0 && <FormattedMessage {... messages.dayperiod} values={{ day }} />}
             </>
           </ClickableCell>
         );
       },
       style: { width: '25%' },
-      sortable: true,
+      sortable: false,
     },
     {
       name: 'remarks',
@@ -161,12 +175,12 @@ const HistoryTaskTable = ({
         <div className="text-center innerTdHead"><FormattedMessage {...messages.remarks} /></div>
       ),
       cell: (content: any) => {
-        const entry:EntryModel = content.data;
+        const entry:DisplayableEntry = content.data;
         const remarks = entry.remarks.replace(/\n/g, '<br />');
         const shortenRemarks = shorten(remarks);
 
         return (
-          <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.ack === false ? 'warning' : 'white'}`}>
+          <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`}>
             <div dangerouslySetInnerHTML={{ __html: shortenRemarks }} />
           </ClickableCell>
         );
@@ -177,23 +191,17 @@ const HistoryTaskTable = ({
   ];
 
   return (
-    <div className={`${classNames} historytasktable`}>
+    <div className={classnames(className, 'historytasktable')}>
       <span className="mb-2">
         <b><FormattedMessage {...messages.taskHistoryTitle} /></b>
-        {equipment && task && (
-          <Button aria-label="Add" color="success" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEntry(equipment, task))}>
+        {equipmentManager.getCurrentEquipment() && taskManager.getCurrentTask() && (
+          <Button aria-label="Add" color="success" size="sm" className="float-right mb-2" onClick={() => modalHook.displayData(createDefaultEntry(equipmentManager.getCurrentEquipment()!, taskManager.getCurrentTask()))}>
             <FontAwesomeIcon icon={faCheckSquare} />
           </Button>
         )}
       </span>
-      {error && (
-        <div>
-          <FontAwesomeIcon icon={faExclamationTriangle} color="red" />
-          <FormattedMessage {...messages.errorFetching} />
-        </div>
-      )}
-      {isLoading && <Loading />}
-      {error === undefined && isLoading === false
+      {entryManager.areEntriesLoading() && <Loading />}
+      {entryManager.areEntriesLoading() === false
             && (
             <Table
               data={entries}
@@ -204,13 +212,13 @@ const HistoryTaskTable = ({
             />
             )}
 
-      {equipment && task && modalHook.data && (
+      {equipmentManager.getCurrentEquipment() && taskManager.getCurrentTask() && modalHook.data && (
       <ModalEditEntry
-        equipment={equipment}
-        task={task}
+        equipment={equipmentManager.getCurrentEquipment()!}
+        task={taskManager.getCurrentTask()}
         entry={modalHook.data}
-        saveEntry={onSavedEntry}
-        deleteEntry={onDeleteEntry}
+        saveEntry={entryManager.onEntrySaved}
+        deleteEntry={entryManager.onEntryDeleted}
         visible={modalHook.editModalVisibility}
         toggle={modalHook.toggleModal}
         className="modal-dialog-centered"

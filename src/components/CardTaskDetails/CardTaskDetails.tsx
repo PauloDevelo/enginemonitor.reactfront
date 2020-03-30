@@ -6,6 +6,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
+import classnames from 'classnames';
 import useEditModal from '../../hooks/EditModalHook';
 
 import { getContext, getBadgeText } from '../../helpers/TaskHelper';
@@ -16,24 +17,30 @@ import Gallery from '../Gallery/Gallery';
 
 import './CardTaskDetails.css';
 import '../../style/transition.css';
-// eslint-disable-next-line no-unused-vars
-import { EquipmentModel, TaskModel } from '../../types/Types';
+import taskManager from '../../services/TaskManager';
+import equipmentManager from '../../services/EquipmentManager';
 
 type Props = {
     callBackRef: (t: any) => any,
-    currentTaskIsChanging: boolean,
-    equipment?: EquipmentModel,
-    tasks: TaskModel[],
-    currentTask?: TaskModel,
-    onTaskChanged: (task: TaskModel) => void,
-    onTaskDeleted: (task: TaskModel) => void,
-    changeCurrentTask: (task: TaskModel | undefined) => void,
-    classNames?: string
+    className?: string
 }
 
-const CardTaskDetails = ({
-  callBackRef, currentTaskIsChanging, equipment, tasks, currentTask, onTaskChanged, onTaskDeleted, changeCurrentTask, classNames,
-}: Props) => {
+const CardTaskDetails = ({ callBackRef, className }: Props) => {
+  const [equipment, setEquipment] = useState(equipmentManager.getCurrentEquipment());
+  const [currentTask, setCurrentTask] = useState(taskManager.getCurrentTask());
+  const [tasks, setTasks] = useState(taskManager.getTasks());
+
+  useEffect(() => {
+    equipmentManager.registerOnCurrentEquipmentChanged(setEquipment);
+    taskManager.registerOnCurrentTaskChanged(setCurrentTask);
+    taskManager.registerOnTasksChanged(setTasks);
+
+    return () => {
+      equipmentManager.unregisterOnCurrentEquipmentChanged(setEquipment);
+      taskManager.unregisterOnCurrentTaskChanged(setCurrentTask);
+      taskManager.unregisterOnTasksChanged(setTasks);
+    };
+  }, []);
   const modalHook = useEditModal(currentTask);
 
   const [taskIndex, setTaskIndex] = useState(currentTask === undefined ? -1 : tasks.findIndex((t) => t._uiId === currentTask._uiId));
@@ -45,32 +52,29 @@ const CardTaskDetails = ({
   const isNextButtonVisible = useCallback(():boolean => (taskIndex < tasks.length - 1), [taskIndex, tasks]);
 
   const nextTask = useCallback(():void => {
-    if (isNextButtonVisible()) { changeCurrentTask(tasks[taskIndex + 1]); }
-  }, [changeCurrentTask, isNextButtonVisible, taskIndex, tasks]);
+    if (isNextButtonVisible()) { taskManager.setCurrentTask(tasks[taskIndex + 1]); }
+  }, [isNextButtonVisible, taskIndex, tasks]);
 
   const previousTask = useCallback(():void => {
-    if (isPrevButtonVisible()) { changeCurrentTask(tasks[taskIndex - 1]); }
-  }, [isPrevButtonVisible, changeCurrentTask, tasks, taskIndex]);
+    if (isPrevButtonVisible()) { taskManager.setCurrentTask(tasks[taskIndex - 1]); }
+  }, [isPrevButtonVisible, taskIndex, tasks]);
 
   if (equipment === undefined || currentTask === undefined) {
-    return <Card className={classNames} />;
+    return <Card className={className} />;
   }
 
   const badgeText = getBadgeText(currentTask.level);
   const badgeContext = getContext(currentTask.level);
   const descriptionFormatted = currentTask.description.replace(/\n/g, '<br />');
 
-  let prevClassNames = 'card-control-prev-icon';
-  if (!isPrevButtonVisible()) { prevClassNames += ' invisible'; }
-
-  let nextClassNames = 'card-control-next-icon';
-  if (!isNextButtonVisible()) { nextClassNames += ' invisible'; }
+  const prevClassNames = { 'card-control-prev-icon': true, invisible: !isPrevButtonVisible() };
+  const nextClassNames = { 'card-control-next-icon': true, invisible: !isNextButtonVisible() };
 
   return (
     <div ref={callBackRef}>
-      <Card className={classNames + (currentTaskIsChanging ? ' hover' : '')}>
+      <Card className={classnames(className, { hover: taskManager.isCurrentTaskChanging() })}>
         <CardBody className="d-flex p-0">
-          <div className="p-2 button-previous-task clickable" onClick={previousTask}><div className={prevClassNames} /></div>
+          <div className="p-2 button-previous-task clickable" onClick={previousTask}><div className={classnames(prevClassNames)} /></div>
           <TransitionGroup className="p-2 flex-grow-1">
             <CSSTransition key={currentTask._uiId} timeout={250} classNames="card">
               <div>
@@ -87,7 +91,7 @@ const CardTaskDetails = ({
               </div>
             </CSSTransition>
           </TransitionGroup>
-          <div className="p-2 button-next-task clickable" onClick={nextTask}><div className={nextClassNames} /></div>
+          <div className="p-2 button-next-task clickable" onClick={nextTask}><div className={classnames(nextClassNames)} /></div>
         </CardBody>
         <CardFooter className="pl-5 pr-5">
           <Button color="light" className="float-left" onClick={modalHook.toggleModal} aria-label="Edit"><FontAwesomeIcon icon={faEdit} /></Button>
@@ -96,8 +100,8 @@ const CardTaskDetails = ({
       <ModalEditTask
         equipment={equipment}
         task={currentTask}
-        onTaskSaved={onTaskChanged}
-        onTaskDeleted={onTaskDeleted}
+        onTaskSaved={taskManager.onTaskSaved}
+        onTaskDeleted={taskManager.onTaskDeleted}
         visible={modalHook.editModalVisibility}
         toggle={modalHook.toggleModal}
         className="modal-dialog-centered"

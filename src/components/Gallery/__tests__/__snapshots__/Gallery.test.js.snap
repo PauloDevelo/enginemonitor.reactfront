@@ -2297,6 +2297,16 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
           class="ReactModal__Body--open"
         >
           <div
+            data-react-modal-body-trap=""
+            style="position: absolute; opacity: 0;"
+            tabindex="0"
+          />
+          <div
+            data-react-modal-body-trap=""
+            style="position: absolute; opacity: 0;"
+            tabindex="0"
+          />
+          <div
             class="ReactModalPortal"
           >
             <div
@@ -2900,6 +2910,16 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
               aria-hidden="true"
               class="ReactModal__Body--open"
             >
+              <div
+                data-react-modal-body-trap=""
+                style="position: absolute; opacity: 0;"
+                tabindex="0"
+              />
+              <div
+                data-react-modal-body-trap=""
+                style="position: absolute; opacity: 0;"
+                tabindex="0"
+              />
               <div
                 class="ReactModalPortal"
               >
@@ -5060,6 +5080,11 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
           class="ReactModal__Body--open"
         >
           <div
+            data-react-modal-body-trap=""
+            style="position: absolute; opacity: 0;"
+            tabindex="0"
+          />
+          <div
             class="ReactModalPortal"
           >
             <div
@@ -5338,6 +5363,11 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
               </div>
             </div>
           </div>
+          <div
+            data-react-modal-body-trap=""
+            style="position: absolute; opacity: 0;"
+            tabindex="0"
+          />
           <div
             class="ReactModalPortal"
           >
@@ -5943,6 +5973,11 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
               class="ReactModal__Body--open"
             >
               <div
+                data-react-modal-body-trap=""
+                style="position: absolute; opacity: 0;"
+                tabindex="0"
+              />
+              <div
                 class="ReactModalPortal"
               >
                 <div
@@ -6221,6 +6256,11 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
                   </div>
                 </div>
               </div>
+              <div
+                data-react-modal-body-trap=""
+                style="position: absolute; opacity: 0;"
+                tabindex="0"
+              />
               <div
                 class="ReactModalPortal"
               >

@@ -4,9 +4,10 @@ import React, {
 import { Button } from 'reactstrap';
 
 import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
-import { faPlusSquare, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as moment from 'moment';
+import classNames from 'classnames';
 import { composeDecorators } from '../react-table-factory/table.js';
 import { withInMemorySortingContext } from '../react-table-factory/withSortingContext.js';
 import { withHeaderControl } from '../react-table-factory/withHeaderControl.js';
@@ -15,11 +16,6 @@ import { withFixedHeader } from '../react-table-factory/withFixedHeader.js';
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
 import ClickableCell from '../Table/ClickableCell';
-
-import useFetcher from '../../hooks/Fetcher';
-
-import taskProxy from '../../services/TaskProxy';
-import entryProxy from '../../services/EntryProxy';
 
 import useEditModal from '../../hooks/EditModalHook';
 
@@ -33,14 +29,16 @@ import {
   EquipmentModel, EntryModel, AgeAcquisitionType, TaskModel,
 } from '../../types/Types';
 
+import entryManager from '../../services/EntryManager';
+import taskManager from '../../services/TaskManager';
+import equipmentManager from '../../services/EquipmentManager';
+
 import jsonMessages from './EquipmentHistoryTable.messages.json';
 
 const messages = defineMessages(jsonMessages);
 
 type Props = {
-    equipment: EquipmentModel | undefined,
-    onTaskChanged: (taskId: string) => void,
-    classNames?: string
+    className?: string
 }
 
 const Table = composeDecorators(
@@ -49,47 +47,28 @@ const Table = composeDecorators(
   withFixedHeader, // should be last
 )();
 
-const EquipmentHistoryTable = ({
-  equipment, onTaskChanged, classNames,
-}: Props) => {
-  const classNamesStr = classNames ? `${classNames} historytasktable` : 'historytasktable';
-
-  const equipmentId = equipment ? equipment._uiId : undefined;
+const EquipmentHistoryTable = ({ className }: Props) => {
+  const [equipment, setEquipment] = useState<EquipmentModel | undefined>(equipmentManager.getCurrentEquipment());
   const [parentTask, setParentTask] = useState<TaskModel | undefined>(undefined);
   const modalHook = useEditModal<EntryModel | undefined>(undefined);
-  const [entries, setEntries] = useState<EntryModel[]>([]);
-  const {
-    data: fetchedEntries, error, isLoading,
-  } = useFetcher({ fetchPromise: entryProxy.fetchAllEntries, fetchProps: { equipmentId }, cancellationMsg: `Cancellation of ${equipment?.name} equipment history fetching` });
+  const [entries, setEntries] = useState<EntryModel[]>(entryManager.getEquipmentEntries());
 
   useEffect(() => {
-    setEntries(fetchedEntries || []);
-  }, [fetchedEntries]);
+    entryManager.registerOnEquipmentEntriesChanged(setEntries);
+    equipmentManager.registerOnCurrentEquipmentChanged(setEquipment);
 
-  const onSavedEntry = (savedEntry: EntryModel) => {
-    const newCurrentHistory = entries.filter((entry) => entry._uiId !== savedEntry._uiId);
-    newCurrentHistory.unshift(savedEntry);
-
-    setEntries(newCurrentHistory);
-
-    if (onTaskChanged && savedEntry.taskUiId) {
-      onTaskChanged(savedEntry.taskUiId);
-    }
-  };
-
-  const onDeleteEntry = async (entry: EntryModel) => {
-    const newCurrentHistoryTask = entries.slice(0).filter((e) => e._uiId !== entry._uiId);
-    setEntries(newCurrentHistoryTask);
-
-    if (onTaskChanged && entry.taskUiId) {
-      onTaskChanged(entry.taskUiId);
-    }
-  };
+    return () => {
+      entryManager.unregisterOnEquipmentEntriesChanged(setEntries);
+      equipmentManager.unregisterOnCurrentEquipmentChanged(setEquipment);
+    };
+  }, []);
 
   const displayEntry = useCallback(async (entry:EntryModel) => {
     if (entry.taskUiId !== undefined) {
-      const newParentTask = (await taskProxy.fetchTasks({ equipmentId: entry.equipmentUiId, forceToLookUpInStorage: true })).filter((task) => task._uiId === entry.taskUiId)[0];
+      const newParentTask = taskManager.getTask(entry.taskUiId);
       setParentTask(newParentTask);
+
+      taskManager.setCurrentTask(newParentTask);
     } else {
       setParentTask(undefined);
     }
@@ -108,7 +87,7 @@ const EquipmentHistoryTable = ({
       cell: (content: any) => {
         const entry: EntryModel = content.data;
         return (
-          <ClickableCell data={content.data} onDisplayData={displayEntry} classNames={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
+          <ClickableCell data={content.data} onDisplayData={displayEntry} className={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
             <FormattedDate value={entry.date} />
           </ClickableCell>
         );
@@ -127,7 +106,7 @@ const EquipmentHistoryTable = ({
         const entry: EntryModel = content.data;
         const entryName = entry.name;
         return (
-          <ClickableCell data={content.data} onDisplayData={displayEntry} classNames={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
+          <ClickableCell data={content.data} onDisplayData={displayEntry} className={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
             <>{entryName}</>
           </ClickableCell>
         );
@@ -144,22 +123,20 @@ const EquipmentHistoryTable = ({
       ),
       cell: (content: any) => {
         const entry:EntryModel = content.data;
-        const equ = equipment;
-
-        if (equ === undefined || equ.ageAcquisitionType !== AgeAcquisitionType.time) {
+        if (equipment === undefined || equipment.ageAcquisitionType !== AgeAcquisitionType.time) {
           return (
-            <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
+            <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
               <>{entry.age === -1 ? '' : `${entry.age}h`}</>
             </ClickableCell>
           );
         }
 
-        const diff = moment.duration(entry.date.getTime() - equ.installation.getTime());
+        const diff = moment.duration(entry.date.getTime() - equipment.installation.getTime());
         const year = diff.years();
         const month = diff.months();
         const day = diff.days();
         return (
-          <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
+          <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
             <>
               {diff.years() > 0 && <FormattedMessage {... messages.yearperiod} values={{ year }} />}
               {' '}
@@ -186,7 +163,7 @@ const EquipmentHistoryTable = ({
         const shortenRemarks = shorten(remarks);
 
         return (
-          <ClickableCell data={entry} onDisplayData={displayEntry} classNames={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
+          <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
             <div dangerouslySetInnerHTML={{ __html: shortenRemarks }} />
           </ClickableCell>
         );
@@ -197,7 +174,7 @@ const EquipmentHistoryTable = ({
   ];
 
   return (
-    <div className={classNamesStr}>
+    <div className={classNames(className, 'historytasktable')}>
       <span className="mb-2">
         <b><FormattedMessage {...messages.equipmentHistoryTitle} /></b>
         {equipment && (
@@ -206,14 +183,8 @@ const EquipmentHistoryTable = ({
           </Button>
         )}
       </span>
-      {error && (
-        <div>
-          <FontAwesomeIcon icon={faExclamationTriangle} color="red" />
-          <FormattedMessage {...messages.errorFetching} />
-        </div>
-      )}
-      {isLoading && <Loading />}
-      {error === undefined && isLoading === false
+      {entryManager.areEntriesLoading() && <Loading />}
+      {entryManager.areEntriesLoading() === false
             && (
             <Table
               data={entries}
@@ -229,8 +200,8 @@ const EquipmentHistoryTable = ({
         equipment={equipment}
         entry={modalHook.data}
         task={parentTask}
-        saveEntry={onSavedEntry}
-        deleteEntry={onDeleteEntry}
+        saveEntry={entryManager.onEntrySaved}
+        deleteEntry={entryManager.onEntryDeleted}
         visible={modalHook.editModalVisibility}
         toggle={modalHook.toggleModal}
         className="modal-dialog-centered"

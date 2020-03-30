@@ -83,7 +83,7 @@ exports[`Component ToolTip should be the same as the previous snapshot 1`] = `
           autohide={true}
           delay={
             Object {
-              "hide": 0,
+              "hide": 50,
               "show": 0,
             }
           }

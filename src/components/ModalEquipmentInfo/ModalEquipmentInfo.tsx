@@ -32,7 +32,7 @@ onEquipmentInfoSaved: (equipment: EquipmentModel) => void,
 onEquipmentDeleted: (equipment: EquipmentModel) => void,
 visible: boolean,
 toggle: () => void,
-className: string
+className?: string
 }
 
 const ModalEquipmentInfo = ({

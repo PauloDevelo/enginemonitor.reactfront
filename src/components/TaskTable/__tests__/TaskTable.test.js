@@ -1,4 +1,4 @@
-import chai, { assert } from 'chai';
+import chai from 'chai';
 
 import React from 'react';
 import { IntlProvider } from 'react-intl';
@@ -15,8 +15,13 @@ import { AgeAcquisitionType } from '../../../types/Types';
 import TaskTable from '../TaskTable';
 import updateWrapper from '../../../testHelpers/EnzymeHelper';
 
+import equipmentManager from '../../../services/EquipmentManager';
+import taskManager from '../../../services/TaskManager';
+
 jest.mock('localforage');
 jest.mock('../../../services/TaskProxy');
+jest.mock('../../../services/EquipmentManager');
+jest.mock('../../../services/TaskManager');
 
 chai.use(require('chai-datetime'));
 
@@ -88,59 +93,35 @@ describe('TaskTable', () => {
     ignoredMessages.length = 0;
     ignoredMessages.push('test was not wrapped in act(...)');
     ignoredMessages.push('[React Intl] Missing message');
+    ignoredMessages.push('MISSING_TRANSLATION');
   });
 
   beforeEach(() => {
+    equipmentManager.getCurrentEquipment.mockImplementation(() => equipment);
+    taskManager.getTasks.mockImplementation(() => tasks);
+    taskManager.areTasksLoading.mockImplementation(() => false);
   });
 
   afterEach(() => {
     taskProxy.existTask.mockReset();
-  });
-
-  it('Should render render the loading spinner while loading the tasks', async (done) => {
-    // Arrange
-    const onTaskSaved = jest.fn();
-    const changeCurrentTask = jest.fn();
-
-    // Act
-    const taskTable = mount(
-      <IntlProvider locale={navigator.language}>
-        <TaskTable
-          equipment={equipment}
-          tasks={[]}
-          areTasksLoading
-          onTaskSaved={onTaskSaved}
-          changeCurrentTask={changeCurrentTask}
-        />
-      </IntlProvider>,
-    );
-
-    // Assert
-    expect(taskTable.find('tbody').length).toBe(0);
-    expect(taskTable.find('Loading').length).toBe(1);
-
-    expect(onTaskSaved).toBeCalledTimes(0);
-    expect(changeCurrentTask).toBeCalledTimes(0);
-
-    expect(taskTable).toMatchSnapshot();
-    done();
+    equipmentManager.getCurrentEquipment.mockRestore();
+    taskManager.getTasks.mockRestore();
+    taskManager.areTasksLoading.mockRestore();
   });
 
   it('Should render the table with te special class name', async (done) => {
     // Arrange
-    const onTaskSaved = jest.fn();
+    taskManager.getTasks.mockImplementation(() => []);
+    taskManager.areTasksLoading.mockImplementation(() => true);
+
     const changeCurrentTask = jest.fn();
 
     // Act
     const taskTable = mount(
       <IntlProvider locale={navigator.language}>
         <TaskTable
-          equipment={equipment}
-          tasks={[]}
-          areTasksLoading
-          onTaskSaved={onTaskSaved}
           changeCurrentTask={changeCurrentTask}
-          classNames="mySpecialClassName"
+          className="mySpecialClassName"
         />
       </IntlProvider>,
     );
@@ -153,17 +134,15 @@ describe('TaskTable', () => {
 
   it('Should render an empty table if the equipment is undefined', async (done) => {
     // Arrange
-    const onTaskSaved = jest.fn();
     const changeCurrentTask = jest.fn();
+
+    equipmentManager.getCurrentEquipment.mockImplementation(() => undefined);
+    taskManager.getTasks.mockImplementation(() => []);
 
     // Act
     const taskTable = mount(
       <IntlProvider locale={navigator.language}>
         <TaskTable
-          equipment={undefined}
-          tasks={[]}
-          areTasksLoading={false}
-          onTaskSaved={onTaskSaved}
           changeCurrentTask={changeCurrentTask}
         />
       </IntlProvider>,
@@ -174,24 +153,20 @@ describe('TaskTable', () => {
     const tbodyProps = taskTable.find('tbody').at(0).props();
     expect(tbodyProps.children.length).toBe(0);
 
-    expect(onTaskSaved).toBeCalledTimes(0);
+    expect(taskManager.onTaskSaved).toBeCalledTimes(0);
+    expect(taskManager.setCurrentTask).toBeCalledTimes(0);
     expect(changeCurrentTask).toBeCalledTimes(0);
     done();
   });
 
   it('Should render all the tasks sorted by due date', async (done) => {
     // Arrange
-    const onTaskSaved = jest.fn();
     const changeCurrentTask = jest.fn();
 
     // Act
     const taskTable = mount(
       <IntlProvider locale={navigator.language}>
         <TaskTable
-          equipment={equipment}
-          tasks={tasks}
-          areTasksLoading={false}
-          onTaskSaved={onTaskSaved}
           changeCurrentTask={changeCurrentTask}
         />
       </IntlProvider>,
@@ -205,23 +180,19 @@ describe('TaskTable', () => {
       expect(tbodyProps.children[index].props.data.task).toBe(task);
     });
 
-    expect(onTaskSaved).toBeCalledTimes(0);
+    expect(taskManager.onTaskSaved).toBeCalledTimes(0);
     expect(changeCurrentTask).toBeCalledTimes(0);
+    expect(taskManager.setCurrentTask).toBeCalledTimes(0);
     done();
   });
 
   it('Should call changeCurrentTask when clicking on any cell', async (done) => {
     // Arrange
-    const onTaskSaved = jest.fn();
     const changeCurrentTask = jest.fn();
 
     const taskTable = mount(
       <IntlProvider locale={navigator.language}>
         <TaskTable
-          equipment={equipment}
-          tasks={tasks}
-          areTasksLoading={false}
-          onTaskSaved={onTaskSaved}
           changeCurrentTask={changeCurrentTask}
         />
       </IntlProvider>,
@@ -244,6 +215,9 @@ describe('TaskTable', () => {
         expect(changeCurrentTask).toHaveBeenCalledTimes(clickCounter + 1);
         expect(changeCurrentTask.mock.calls[clickCounter][0]).toBe(task);
 
+        expect(taskManager.setCurrentTask).toHaveBeenCalledTimes(clickCounter + 1);
+        expect(taskManager.setCurrentTask.mock.calls[clickCounter][0]).toBe(task);
+
         clickCounter++;
       }
     }
@@ -252,7 +226,6 @@ describe('TaskTable', () => {
 
   it('should display the task edition modal to add a new entry', async (done) => {
     // Arrange
-    const onTaskSaved = jest.fn();
     const changeCurrentTask = jest.fn();
 
     taskProxy.existTask.mockImplementation(async () => Promise.resolve(false));
@@ -260,10 +233,6 @@ describe('TaskTable', () => {
     const taskTable = mount(
       <IntlProvider locale={navigator.language}>
         <TaskTable
-          equipment={equipment}
-          tasks={tasks}
-          areTasksLoading={false}
-          onTaskSaved={onTaskSaved}
           changeCurrentTask={changeCurrentTask}
         />
       </IntlProvider>,
@@ -279,25 +248,20 @@ describe('TaskTable', () => {
     // Assert
     const editTaskModal = taskTable.find('ModalEditTask');
     expect(editTaskModal.props().visible).toBe(true);
-    expect(editTaskModal.props().onTaskSaved).toBe(onTaskSaved);
-    expect(onTaskSaved).toBeCalledTimes(0);
+    expect(editTaskModal.props().onTaskSaved).toBe(taskManager.onTaskSaved);
+    expect(taskManager.onTaskSaved).toBeCalledTimes(0);
     done();
   });
 
-  it('it should display only 3 columns since the inner width is lower than 1200px, but after a resize larger than 1200px, it should display 4 colums', async (done) => {
+  it('it should display only 3 columns since the inner width is lower than 1200px, but after a resize larger than 1200px, it should display 4 columns', async (done) => {
     // Arrange
     window.innerWidth = 1000;
-    const onTaskSaved = jest.fn();
     const changeCurrentTask = jest.fn();
 
     // Act
     const taskTable = mount(
       <IntlProvider locale={navigator.language}>
         <TaskTable
-          equipment={equipment}
-          tasks={tasks}
-          areTasksLoading={false}
-          onTaskSaved={onTaskSaved}
           changeCurrentTask={changeCurrentTask}
         />
       </IntlProvider>,

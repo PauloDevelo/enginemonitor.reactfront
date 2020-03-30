@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage, defineMessages } from 'react-intl';
+import classNames from 'classnames';
 import TemporalAlert from '../TemporalAlert/TemporalAlert';
 
 import jsonMessages from './Alerts.messages.json';
@@ -14,11 +15,12 @@ type Props = {
     color?: string,
     error?:string,
     errors?: any,
-    children?: JSX.Element[] | JSX.Element
+    children?: JSX.Element[] | JSX.Element,
+    className?: string
 };
 
 const Alerts = ({
-  color, error, errors, children,
+  color, error, errors, children, className,
 }:Props) => {
   const strColor = color === undefined ? 'danger' : color;
 
@@ -34,7 +36,7 @@ const Alerts = ({
       value = strError;
     }
     return (
-      <TemporalAlert className="sm" color={strColor} delayInMs={3000}>
+      <TemporalAlert className={classNames(className, 'sm')} color={strColor} delayInMs={3000}>
         {value}
         {children}
       </TemporalAlert>
@@ -67,7 +69,7 @@ const Alerts = ({
       }
 
       return (
-        <TemporalAlert className="sm" key={key} color={strColor} delayInMs={3000}>
+        <TemporalAlert className={classNames(className, 'sm')} key={key} color={strColor} delayInMs={3000}>
           { fieldElement }
           <span>
             {' '}
