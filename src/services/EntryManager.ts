@@ -82,6 +82,7 @@ class EntryManager implements IEntryManager {
         this.onEntriesChanged(entries);
       } catch (error) {
         log.warn(error.message);
+        this.areEntriesLoadingFlag = false;
       }
     }
 
