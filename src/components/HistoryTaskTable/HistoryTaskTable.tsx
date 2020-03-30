@@ -58,7 +58,7 @@ const convertEntryModelToDisplayableEntry = (entry: EntryModel, index: number, e
   const previousAckEntryIndex = index > 0 ? _.findLastIndex(entries, (e: EntryModel) => e.ack, index - 1) : -1;
 
   let timeFromPreviousEntry: number | undefined;
-  if (equipment && equipment.ageAcquisitionType !== AgeAcquisitionType.time) {
+  if (equipment && task && equipment.ageAcquisitionType !== AgeAcquisitionType.time && task.usagePeriodInHour) {
     if (previousAckEntryIndex === -1) {
       timeFromPreviousEntry = entry.age;
     } else {
@@ -133,15 +133,18 @@ const HistoryTaskTable = ({ className }: Props) => {
       cell: (content: any) => {
         const entry:DisplayableEntry = content.data;
         const equipment = equipmentManager.getCurrentEquipment();
-        if (equipment == null) {
+        const task = taskManager.getCurrentTask();
+        if (equipment === undefined || task === undefined) {
           return <div />;
         }
 
-        if (equipment.ageAcquisitionType !== AgeAcquisitionType.time) {
+        if (entry.timeFromPreviousEntry !== undefined) {
           return (
             <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`}>
-              <>{entry.timeFromPreviousEntry !== undefined ? `${entry.timeFromPreviousEntry}h ` : ''}</>
-              {entry.isLate ? <FontAwesomeIcon icon={faExclamationTriangle} color="grey" /> : <></>}
+              <>
+                {`${entry.timeFromPreviousEntry}h `}
+                {entry.isLate && <FontAwesomeIcon icon={faExclamationTriangle} color="grey" /> }
+              </>
             </ClickableCell>
           );
         }
@@ -162,6 +165,8 @@ const HistoryTaskTable = ({ className }: Props) => {
               {month > 0 && <FormattedMessage {... messages.monthperiod} values={{ month }} />}
               {' '}
               {day > 0 && <FormattedMessage {... messages.dayperiod} values={{ day }} />}
+              {' '}
+              {entry.isLate && <FontAwesomeIcon icon={faExclamationTriangle} color="grey" />}
             </>
           </ClickableCell>
         );
