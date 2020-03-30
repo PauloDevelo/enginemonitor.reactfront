@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.13.5] - 2020-03-20
+
+### Changed
+-Fix a bug in the task history table when the task is configured only with a time period
+
 ## [2.13.4] - 2020-03-20
 
 ### Added
@@ -22,5 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 
-[unreleased]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.4...integration
+[unreleased]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.5...integration
+[2.13.5]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.4...v2.13.5
 [2.13.4]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.3...v2.13.4
