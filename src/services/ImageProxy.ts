@@ -14,6 +14,7 @@ import userContext from './UserContext';
 export interface FetchImagesProps{
     parentUiId: string;
     forceToLookUpInStorage?: boolean;
+    checkStorageFirst? : boolean;
     cancelToken?: CancelToken | undefined;
 }
 
@@ -30,9 +31,17 @@ class ImageProxy implements IImageProxy {
     private baseUrl:string = `${process.env.REACT_APP_API_URL_BASE}images/`;
 
     // //////////////Equipment////////////////////////
-    fetchImages = async ({ parentUiId, forceToLookUpInStorage = false, cancelToken = undefined }: FetchImagesProps): Promise<ImageModel[]> => {
+    fetchImages = async ({
+      parentUiId, forceToLookUpInStorage = false, checkStorageFirst = false, cancelToken = undefined,
+    }: FetchImagesProps): Promise<ImageModel[]> => {
       if (forceToLookUpInStorage) {
         return storageService.getArray<ImageModel>(this.baseUrl + parentUiId);
+      }
+
+      if (checkStorageFirst) {
+        if (await storageService.existItem(this.baseUrl + parentUiId)) {
+          return storageService.getArray<ImageModel>(this.baseUrl + parentUiId);
+        }
       }
 
       return progressiveHttpProxy.getArrayOnlineFirst<ImageModel>(this.baseUrl + parentUiId, 'images', (image) => image, cancelToken);

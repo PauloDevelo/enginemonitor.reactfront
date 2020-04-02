@@ -4,7 +4,7 @@ import React, {
 import { Button } from 'reactstrap';
 
 import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
-import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faCamera } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as moment from 'moment';
 import classNames from 'classnames';
@@ -33,6 +33,8 @@ import entryManager from '../../services/EntryManager';
 import taskManager from '../../services/TaskManager';
 import equipmentManager from '../../services/EquipmentManager';
 
+import imageProxy from '../../services/ImageProxy';
+
 import jsonMessages from './EquipmentHistoryTable.messages.json';
 
 const messages = defineMessages(jsonMessages);
@@ -40,6 +42,18 @@ const messages = defineMessages(jsonMessages);
 type Props = {
     className?: string
 }
+
+interface DisplayableEntry extends EntryModel {
+  nbImage: number;
+}
+
+const convertEntryModelToDisplayableEntry = async (entry: EntryModel): Promise<DisplayableEntry> => {
+  const nbImage = (await imageProxy.fetchImages({ parentUiId: entry._uiId, checkStorageFirst: true })).length;
+
+  return {
+    ...entry, nbImage,
+  };
+};
 
 const Table = composeDecorators(
   withHeaderControl,
@@ -51,14 +65,22 @@ const EquipmentHistoryTable = ({ className }: Props) => {
   const [equipment, setEquipment] = useState<EquipmentModel | undefined>(equipmentManager.getCurrentEquipment());
   const [parentTask, setParentTask] = useState<TaskModel | undefined>(undefined);
   const modalHook = useEditModal<EntryModel | undefined>(undefined);
-  const [entries, setEntries] = useState<EntryModel[]>(entryManager.getEquipmentEntries());
+  const [entries, setEntries] = useState<DisplayableEntry[]>([]);
 
   useEffect(() => {
-    entryManager.registerOnEquipmentEntriesChanged(setEntries);
+    const onEntriesChanged = async (newEntries: EntryModel[]) => {
+      const promises = newEntries.map(convertEntryModelToDisplayableEntry);
+      const displayableEntries = await Promise.all(promises);
+      setEntries(displayableEntries);
+    };
+
+    entryManager.registerOnEquipmentEntriesChanged(onEntriesChanged);
     equipmentManager.registerOnCurrentEquipmentChanged(setEquipment);
 
+    onEntriesChanged(entryManager.getEquipmentEntries());
+
     return () => {
-      entryManager.unregisterOnEquipmentEntriesChanged(setEntries);
+      entryManager.unregisterOnEquipmentEntriesChanged(onEntriesChanged);
       equipmentManager.unregisterOnCurrentEquipmentChanged(setEquipment);
     };
   }, []);
@@ -92,7 +114,7 @@ const EquipmentHistoryTable = ({ className }: Props) => {
           </ClickableCell>
         );
       },
-      style: { width: '20%' },
+      style: { width: '18%' },
       sortable: true,
     },
     {
@@ -111,7 +133,7 @@ const EquipmentHistoryTable = ({ className }: Props) => {
           </ClickableCell>
         );
       },
-      style: { width: '20%' },
+      style: { width: '18%' },
       sortable: true,
     },
     {
@@ -147,8 +169,27 @@ const EquipmentHistoryTable = ({ className }: Props) => {
           </ClickableCell>
         );
       },
-      style: { width: '15%' },
+      style: { width: '12%' },
       sortable: true,
+    },
+    {
+      name: 'pic',
+      header: () => (
+        <div className="innerTdHead"><FontAwesomeIcon icon={faCamera} color="black" /></div>
+      ),
+      cell: (content: any) => {
+        const entry:DisplayableEntry = content.data;
+
+        return (
+          <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.taskUiId === undefined ? 'warning' : 'white'}`}>
+            <>
+              {entry.nbImage > 0 && <FontAwesomeIcon icon={faCamera} color="grey" /> }
+            </>
+          </ClickableCell>
+        );
+      },
+      style: { width: '7%' },
+      sortable: false,
     },
     {
       name: 'remarks',

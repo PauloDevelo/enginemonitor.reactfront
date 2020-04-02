@@ -10,7 +10,7 @@ import _ from 'lodash';
 import classnames from 'classnames';
 
 import { defineMessages, FormattedMessage, FormattedDate } from 'react-intl';
-import { faCheckSquare, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckSquare, faExclamationTriangle, faCamera } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ModalEditEntry from '../ModalEditEntry/ModalEditEntry';
 import Loading from '../Loading/Loading';
@@ -39,6 +39,8 @@ import entryManager from '../../services/EntryManager';
 import taskManager from '../../services/TaskManager';
 import equipmentManager from '../../services/EquipmentManager';
 
+import imageProxy from '../../services/ImageProxy';
+
 const messages = defineMessages(jsonMessages);
 
 type Props = {
@@ -49,9 +51,10 @@ interface DisplayableEntry extends EntryModel {
   timeFromPreviousEntry: number | undefined;
   durationFromPreviousEntry: moment.Duration | undefined;
   isLate: boolean;
+  nbImage: number;
 }
 
-const convertEntryModelToDisplayableEntry = (entry: EntryModel, index: number, entries: EntryModel[]): DisplayableEntry => {
+const convertEntryModelToDisplayableEntry = async (entry: EntryModel, index: number, entries: EntryModel[]): Promise<DisplayableEntry> => {
   const equipment = equipmentManager.getCurrentEquipment();
   const task = taskManager.getCurrentTask();
 
@@ -73,8 +76,10 @@ const convertEntryModelToDisplayableEntry = (entry: EntryModel, index: number, e
   && ((timeFromPreviousEntry !== undefined && task.usagePeriodInHour !== undefined && timeFromPreviousEntry > task.usagePeriodInHour)
   || (durationFromPreviousEntry !== undefined && durationFromPreviousEntry.asMonths() > task.periodInMonth));
 
+  const nbImage = (await imageProxy.fetchImages({ parentUiId: entry._uiId, checkStorageFirst: true })).length;
+
   return {
-    ...entry, timeFromPreviousEntry, durationFromPreviousEntry, isLate,
+    ...entry, timeFromPreviousEntry, durationFromPreviousEntry, isLate, nbImage,
   };
 };
 
@@ -86,16 +91,20 @@ const Table = composeDecorators(
 
 const HistoryTaskTable = ({ className }: Props) => {
   const modalHook = useEditModal<EntryModel | undefined>(undefined);
-  const [entries, setEntries] = useState<EntryModel[]>(entryManager.getTaskEntries().map(convertEntryModelToDisplayableEntry));
+  const [entries, setEntries] = useState<DisplayableEntry[]>([]);
 
   useEffect(() => {
     // eslint-disable-next-line no-unused-vars
-    const onEntriesChanged = (_: EntryModel[] | TaskModel | undefined) => {
-      setEntries(entryManager.getTaskEntries().map(convertEntryModelToDisplayableEntry));
+    const onEntriesChanged = async (entities: EntryModel[] | TaskModel | undefined) => {
+      const promises = entryManager.getTaskEntries().map(convertEntryModelToDisplayableEntry);
+      const displayableEntries = await Promise.all(promises);
+      setEntries(displayableEntries);
     };
 
     taskManager.registerOnCurrentTaskChanged(onEntriesChanged);
     entryManager.registerOnEquipmentEntriesChanged(onEntriesChanged);
+
+    onEntriesChanged(undefined);
 
     return () => {
       taskManager.unregisterOnCurrentTaskChanged(onEntriesChanged);
@@ -122,7 +131,7 @@ const HistoryTaskTable = ({ className }: Props) => {
           </ClickableCell>
         );
       },
-      style: { width: '25%' },
+      style: { width: '20%' },
       sortable: true,
     },
     {
@@ -171,7 +180,26 @@ const HistoryTaskTable = ({ className }: Props) => {
           </ClickableCell>
         );
       },
-      style: { width: '25%' },
+      style: { width: '20%' },
+      sortable: false,
+    },
+    {
+      name: 'pic',
+      header: () => (
+        <div className="innerTdHead"><FontAwesomeIcon icon={faCamera} color="black" /></div>
+      ),
+      cell: (content: any) => {
+        const entry:DisplayableEntry = content.data;
+
+        return (
+          <ClickableCell data={entry} onDisplayData={displayEntry} className={`table-${entry.ack === false ? 'warning' : 'white'}`}>
+            <>
+              {entry.nbImage > 0 && <FontAwesomeIcon icon={faCamera} color="grey" /> }
+            </>
+          </ClickableCell>
+        );
+      },
+      style: { width: '10%' },
       sortable: false,
     },
     {
