@@ -1,462 +1,456 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CardTaskDetails Should render correctly even if the current task is undefined 1`] = `
-<Memo(CardTaskDetails)>
-  <Card
-    tag="div"
-  >
-    <div
-      className="card"
-    />
-  </Card>
-</Memo(CardTaskDetails)>
-`;
-
-exports[`CardTaskDetails Should render correctly even if the equipment is undefined 1`] = `
-<Memo(CardTaskDetails)>
-  <Card
-    tag="div"
-  >
-    <div
-      className="card"
-    />
-  </Card>
-</Memo(CardTaskDetails)>
-`;
-
-exports[`CardTaskDetails Should render correctly even if the task array is empty 1`] = `
-<Memo(CardTaskDetails)>
-  <Card
-    tag="div"
-  >
-    <div
-      className="card"
-    />
-  </Card>
-</Memo(CardTaskDetails)>
-`;
-
-exports[`CardTaskDetails Should render the task 1 details 1`] = `
-<Memo(CardTaskDetails)>
-  <div>
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
+>
+  <Memo(CardTaskDetails)>
     <Card
-      className=""
       tag="div"
     >
       <div
         className="card"
+      />
+    </Card>
+  </Memo(CardTaskDetails)>
+</IntlProvider>
+`;
+
+exports[`CardTaskDetails Should render correctly even if the equipment is undefined 1`] = `
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
+>
+  <Memo(CardTaskDetails)>
+    <Card
+      tag="div"
+    >
+      <div
+        className="card"
+      />
+    </Card>
+  </Memo(CardTaskDetails)>
+</IntlProvider>
+`;
+
+exports[`CardTaskDetails Should render correctly even if the task array is empty 1`] = `
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
+>
+  <Memo(CardTaskDetails)>
+    <Card
+      tag="div"
+    >
+      <div
+        className="card"
+      />
+    </Card>
+  </Memo(CardTaskDetails)>
+</IntlProvider>
+`;
+
+exports[`CardTaskDetails Should render the task 1 details 1`] = `
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
+>
+  <Memo(CardTaskDetails)>
+    <div>
+      <Card
+        className=""
+        tag="div"
       >
-        <CardBody
-          className="d-flex p-0"
-          tag="div"
+        <div
+          className="card"
         >
-          <div
-            className="d-flex p-0 card-body"
+          <CardBody
+            className="d-flex p-0"
+            tag="div"
           >
             <div
-              className="p-2 button-previous-task clickable"
-              onClick={[Function]}
+              className="d-flex p-0 card-body"
             >
               <div
-                className="card-control-prev-icon invisible"
-              />
-            </div>
-            <TransitionGroup
-              childFactory={[Function]}
-              className="p-2 flex-grow-1"
-              component="div"
-            >
-              <div
-                className="p-2 flex-grow-1"
+                className="p-2 button-previous-task clickable"
+                onClick={[Function]}
               >
-                <CSSTransition
-                  classNames="card"
-                  in={true}
-                  key=".$task1"
-                  onExited={[Function]}
-                  timeout={250}
+                <div
+                  className="card-control-prev-icon invisible"
+                />
+              </div>
+              <TransitionGroup
+                childFactory={[Function]}
+                className="p-2 flex-grow-1"
+                component="div"
+              >
+                <div
+                  className="p-2 flex-grow-1"
                 >
-                  <Transition
-                    appear={false}
-                    enter={true}
-                    exit={true}
+                  <CSSTransition
+                    classNames="card"
                     in={true}
-                    mountOnEnter={false}
-                    onEnter={[Function]}
-                    onEntered={[Function]}
-                    onEntering={[Function]}
-                    onExit={[Function]}
+                    key=".$task1"
                     onExited={[Function]}
-                    onExiting={[Function]}
                     timeout={250}
-                    unmountOnExit={false}
                   >
-                    <div>
-                      <CardTitle
-                        tag="div"
-                      >
-                        <div
-                          className="card-title"
+                    <Transition
+                      appear={false}
+                      enter={true}
+                      exit={true}
+                      in={true}
+                      mountOnEnter={false}
+                      onEnter={[Function]}
+                      onEntered={[Function]}
+                      onEntering={[Function]}
+                      onExit={[Function]}
+                      onExited={[Function]}
+                      onExiting={[Function]}
+                      timeout={250}
+                      unmountOnExit={false}
+                    >
+                      <div>
+                        <CardTitle
+                          tag="div"
                         >
-                          taskname1
-                           
-                          <Badge
-                            color="success"
-                            pill={true}
-                            tag="span"
+                          <div
+                            className="card-title"
                           >
-                            <span
-                              className="badge badge-success badge-pill"
+                            taskname1
+                             
+                            <Badge
+                              color="success"
+                              pill={true}
+                              tag="span"
                             >
-                              Done
-                            </span>
-                          </Badge>
-                        </div>
-                      </CardTitle>
-                      <CardSubtitle
-                        tag="div"
-                      >
-                        <div
-                          className="card-subtitle"
+                              <span
+                                className="badge badge-success badge-pill"
+                              >
+                                Done
+                              </span>
+                            </Badge>
+                          </div>
+                        </CardTitle>
+                        <CardSubtitle
+                          tag="div"
                         >
-                          <TaskScheduleText
-                            equipment={
-                              Object {
-                                "_uiId": "1234",
-                                "age": 2563,
-                                "brand": "nanni",
-                                "installation": 2011-02-22T16:00:00.000Z,
-                                "model": "N3.30",
-                                "name": "engine",
-                              }
-                            }
-                            task={
-                              Object {
-                                "_uiId": "task1",
-                                "description": "task1 description",
-                                "level": 1,
-                                "name": "taskname1",
-                                "nextDueDate": 2011-02-22T16:00:00.000Z,
-                                "periodInMonth": 12,
-                                "usageInHourLeft": 20,
-                                "usagePeriodInHour": 200,
-                              }
-                            }
+                          <div
+                            className="card-subtitle"
                           >
-                            <span>
-                              <FormattedMessage
-                                defaultMessage="To do every "
-                                description="Sentence"
-                                id="tobedonemonth"
-                                values={Object {}}
-                              >
-                                To do every 
-                              </FormattedMessage>
-                              <b>
-                                200
-                                h
-                                 
-                              </b>
-                              <FormattedMessage
-                                defaultMessage=" or every "
-                                description="Sentence"
-                                id="orevery"
-                                values={Object {}}
-                              >
-                                 or every 
-                              </FormattedMessage>
-                              <b>
+                            <TaskScheduleText
+                              equipment={
+                                Object {
+                                  "_uiId": "1234",
+                                  "age": 2563,
+                                  "brand": "nanni",
+                                  "installation": 2011-02-22T16:00:00.000Z,
+                                  "model": "N3.30",
+                                  "name": "engine",
+                                }
+                              }
+                              task={
+                                Object {
+                                  "_uiId": "task1",
+                                  "description": "task1 description",
+                                  "level": 1,
+                                  "name": "taskname1",
+                                  "nextDueDate": 2011-02-22T16:00:00.000Z,
+                                  "periodInMonth": 12,
+                                  "usageInHourLeft": 20,
+                                  "usagePeriodInHour": 200,
+                                }
+                              }
+                            >
+                              <span>
                                 <FormattedMessage
-                                  defaultMessage="{month, plural, one {month} other {# months}}"
-                                  description="Month period"
-                                  id="monthperiod"
-                                  values={
-                                    Object {
-                                      "month": 12,
-                                    }
-                                  }
+                                  defaultMessage="To do every "
+                                  description="Sentence"
+                                  id="tobedonemonth"
+                                  values={Object {}}
                                 >
-                                  12 months
+                                  To do every 
                                 </FormattedMessage>
-                              </b>
-                            </span>
-                          </TaskScheduleText>
-                        </div>
-                      </CardSubtitle>
-                      <CardText
-                        dangerouslySetInnerHTML={
-                          Object {
-                            "__html": "task1 description",
-                          }
-                        }
-                        tag="p"
-                      >
-                        <p
-                          className="card-text"
+                                <b>
+                                  200
+                                  h
+                                   
+                                </b>
+                                <FormattedMessage
+                                  defaultMessage=" or every "
+                                  description="Sentence"
+                                  id="orevery"
+                                  values={Object {}}
+                                >
+                                   or every 
+                                </FormattedMessage>
+                                <b>
+                                  <FormattedMessage
+                                    defaultMessage="{month, plural, one {month} other {# months}}"
+                                    description="Month period"
+                                    id="monthperiod"
+                                    values={
+                                      Object {
+                                        "month": 12,
+                                      }
+                                    }
+                                  >
+                                    12 months
+                                  </FormattedMessage>
+                                </b>
+                              </span>
+                            </TaskScheduleText>
+                          </div>
+                        </CardSubtitle>
+                        <CardText
                           dangerouslySetInnerHTML={
                             Object {
                               "__html": "task1 description",
                             }
                           }
-                        />
-                      </CardText>
-                      <Memo(Gallery)
-                        parentUiId="task1"
-                      >
-                        <Memo(GalleryComponent)
-                          addImage={[Function]}
-                          images={Array []}
-                          isLoading={true}
-                          onClickThumbnail={[Function]}
+                          tag="p"
+                        >
+                          <p
+                            className="card-text"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "task1 description",
+                              }
+                            }
+                          />
+                        </CardText>
+                        <Memo(Gallery)
                           parentUiId="task1"
                         >
-                          <div
-                            className="flex-row top-padding-4px"
+                          <Memo(GalleryComponent)
+                            addImage={[Function]}
+                            images={Array []}
+                            isLoading={true}
+                            onClickThumbnail={[Function]}
+                            parentUiId="task1"
                           >
-                            <Label
-                              className="font-weight-bold"
-                              tag="label"
-                              widths={
-                                Array [
-                                  "xs",
-                                  "sm",
-                                  "md",
-                                  "lg",
-                                  "xl",
-                                ]
-                              }
+                            <div
+                              className="flex-row top-padding-4px"
                             >
-                              <label
+                              <Label
                                 className="font-weight-bold"
+                                tag="label"
+                                widths={
+                                  Array [
+                                    "xs",
+                                    "sm",
+                                    "md",
+                                    "lg",
+                                    "xl",
+                                  ]
+                                }
                               >
-                                <FormattedMessage
-                                  defaultMessage="Gallery"
-                                  description="Gallery title"
-                                  id="gallerytitle"
-                                  values={Object {}}
+                                <label
+                                  className="font-weight-bold"
                                 >
-                                  Gallery
-                                </FormattedMessage>
-                              </label>
-                            </Label>
-                            <div>
-                              <Memo(AddImageFileButton)
-                                addImage={[Function]}
-                                className="float-right"
-                                parentUiId="task1"
-                              >
-                                <Button
-                                  aria-label="Edit"
-                                  className="float-right"
-                                  color="light"
-                                  onClick={[Function]}
-                                  tag="button"
-                                >
-                                  <button
-                                    aria-label="Edit"
-                                    className="float-right btn btn-light"
-                                    onClick={[Function]}
-                                    type="button"
+                                  <FormattedMessage
+                                    defaultMessage="Gallery"
+                                    description="Gallery title"
+                                    id="gallerytitle"
+                                    values={Object {}}
                                   >
-                                    <span
-                                      className="fa-layers fa-fw"
+                                    Gallery
+                                  </FormattedMessage>
+                                </label>
+                              </Label>
+                              <div>
+                                <Memo(AddImageFileButton)
+                                  addImage={[Function]}
+                                  className="float-right"
+                                  parentUiId="task1"
+                                >
+                                  <Button
+                                    aria-label="Edit"
+                                    className="float-right"
+                                    color="light"
+                                    onClick={[Function]}
+                                    tag="button"
+                                  >
+                                    <button
+                                      aria-label="Edit"
+                                      className="float-right btn btn-light"
+                                      onClick={[Function]}
+                                      type="button"
                                     >
-                                      <FontAwesomeIcon
-                                        border={false}
-                                        className=""
-                                        fixedWidth={false}
-                                        flip={null}
-                                        icon={
-                                          Object {
-                                            "icon": Array [
-                                              512,
-                                              512,
-                                              Array [],
-                                              "f03e",
-                                              "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
-                                            ],
-                                            "iconName": "image",
-                                            "prefix": "fas",
-                                          }
-                                        }
-                                        inverse={false}
-                                        listItem={false}
-                                        mask={null}
-                                        pull={null}
-                                        pulse={false}
-                                        rotation={null}
-                                        size="lg"
-                                        spin={false}
-                                        swapOpacity={false}
-                                        symbol={false}
-                                        title=""
-                                        transform={null}
+                                      <span
+                                        className="fa-layers fa-fw"
                                       >
-                                        <svg
-                                          aria-hidden="true"
-                                          className="svg-inline--fa fa-image fa-w-16 fa-lg "
-                                          data-icon="image"
-                                          data-prefix="fas"
-                                          focusable="false"
-                                          role="img"
-                                          style={Object {}}
-                                          viewBox="0 0 512 512"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path
-                                            d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
-                                            fill="currentColor"
-                                            style={Object {}}
-                                          />
-                                        </svg>
-                                      </FontAwesomeIcon>
-                                      <FontAwesomeIcon
-                                        border={false}
-                                        className=""
-                                        fixedWidth={false}
-                                        flip={null}
-                                        icon={
-                                          Object {
-                                            "icon": Array [
-                                              448,
-                                              512,
-                                              Array [],
-                                              "f067",
-                                              "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
-                                            ],
-                                            "iconName": "plus",
-                                            "prefix": "fas",
-                                          }
-                                        }
-                                        inverse={false}
-                                        listItem={false}
-                                        mask={null}
-                                        pull={null}
-                                        pulse={false}
-                                        rotation={null}
-                                        size="xs"
-                                        spin={false}
-                                        swapOpacity={false}
-                                        symbol={false}
-                                        title=""
-                                        transform="down-13 left-16"
-                                      >
-                                        <svg
-                                          aria-hidden="true"
-                                          className="svg-inline--fa fa-plus fa-w-14 fa-xs "
-                                          data-icon="plus"
-                                          data-prefix="fas"
-                                          focusable="false"
-                                          role="img"
-                                          style={
+                                        <FontAwesomeIcon
+                                          border={false}
+                                          className=""
+                                          fixedWidth={false}
+                                          flip={null}
+                                          icon={
                                             Object {
-                                              "transformOrigin": "-0.5625em 1.3125em",
+                                              "icon": Array [
+                                                512,
+                                                512,
+                                                Array [],
+                                                "f03e",
+                                                "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                                              ],
+                                              "iconName": "image",
+                                              "prefix": "fas",
                                             }
                                           }
-                                          viewBox="0 0 448 512"
-                                          xmlns="http://www.w3.org/2000/svg"
+                                          inverse={false}
+                                          listItem={false}
+                                          mask={null}
+                                          pull={null}
+                                          pulse={false}
+                                          rotation={null}
+                                          size="lg"
+                                          spin={false}
+                                          swapOpacity={false}
+                                          symbol={false}
+                                          title=""
+                                          transform={null}
                                         >
-                                          <g
+                                          <svg
+                                            aria-hidden="true"
+                                            className="svg-inline--fa fa-image fa-w-16 fa-lg "
+                                            data-icon="image"
+                                            data-prefix="fas"
+                                            focusable="false"
+                                            role="img"
                                             style={Object {}}
-                                            transform="translate(224 256)"
+                                            viewBox="0 0 512 512"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                                              fill="currentColor"
+                                              style={Object {}}
+                                            />
+                                          </svg>
+                                        </FontAwesomeIcon>
+                                        <FontAwesomeIcon
+                                          border={false}
+                                          className=""
+                                          fixedWidth={false}
+                                          flip={null}
+                                          icon={
+                                            Object {
+                                              "icon": Array [
+                                                448,
+                                                512,
+                                                Array [],
+                                                "f067",
+                                                "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
+                                              ],
+                                              "iconName": "plus",
+                                              "prefix": "fas",
+                                            }
+                                          }
+                                          inverse={false}
+                                          listItem={false}
+                                          mask={null}
+                                          pull={null}
+                                          pulse={false}
+                                          rotation={null}
+                                          size="xs"
+                                          spin={false}
+                                          swapOpacity={false}
+                                          symbol={false}
+                                          title=""
+                                          transform="down-13 left-16"
+                                        >
+                                          <svg
+                                            aria-hidden="true"
+                                            className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+                                            data-icon="plus"
+                                            data-prefix="fas"
+                                            focusable="false"
+                                            role="img"
+                                            style={
+                                              Object {
+                                                "transformOrigin": "-0.5625em 1.3125em",
+                                              }
+                                            }
+                                            viewBox="0 0 448 512"
+                                            xmlns="http://www.w3.org/2000/svg"
                                           >
                                             <g
                                               style={Object {}}
-                                              transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                                              transform="translate(224 256)"
                                             >
-                                              <path
-                                                d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                                                fill="currentColor"
+                                              <g
                                                 style={Object {}}
-                                                transform="translate(-224 -256)"
-                                              />
+                                                transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                                              >
+                                                <path
+                                                  d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                                                  fill="currentColor"
+                                                  style={Object {}}
+                                                  transform="translate(-224 -256)"
+                                                />
+                                              </g>
                                             </g>
-                                          </g>
-                                        </svg>
-                                      </FontAwesomeIcon>
-                                    </span>
-                                  </button>
-                                </Button>
-                              </Memo(AddImageFileButton)>
-                            </div>
-                          </div>
-                          <div
-                            className="p-1 border border-secondary rounded shadow gallery"
-                          >
-                            <Loading>
-                              <div
-                                className="lds-spinner"
-                              >
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
+                                          </svg>
+                                        </FontAwesomeIcon>
+                                      </span>
+                                    </button>
+                                  </Button>
+                                </Memo(AddImageFileButton)>
                               </div>
-                            </Loading>
-                          </div>
-                        </Memo(GalleryComponent)>
-                        <ModalEditImage
-                          onImageDeleted={[Function]}
-                          onImageSaved={[Function]}
-                          toggle={[Function]}
-                          visible={false}
-                        >
-                          <Modal
-                            autoFocus={true}
-                            backdrop={true}
-                            backdropTransition={
-                              Object {
-                                "mountOnEnter": true,
-                                "timeout": 150,
-                              }
-                            }
-                            centered={false}
-                            fade={true}
-                            isOpen={false}
-                            keyboard={true}
-                            modalTransition={
-                              Object {
-                                "timeout": 300,
-                              }
-                            }
-                            onClosed={[Function]}
-                            onOpened={[Function]}
-                            returnFocusAfterClose={true}
-                            role="dialog"
-                            scrollable={false}
-                            toggle={[Function]}
-                            unmountOnClose={true}
-                            zIndex={1050}
-                          />
-                          <ModalYesNoConfirmation
-                            className="modal-dialog-centered"
-                            isActing={false}
-                            message={
-                              Object {
-                                "defaultMessage": "Are you sure you want to delete this image?",
-                                "description": "confirmation message",
-                                "id": "imageDeleteMessage",
-                              }
-                            }
-                            no={[Function]}
-                            title={
-                              Object {
-                                "defaultMessage": "Delete image",
-                                "description": "modal title",
-                                "id": "imageDeleteTitle",
-                              }
-                            }
+                            </div>
+                            <div
+                              className="p-1 border border-secondary rounded shadow gallery"
+                            >
+                              <Loading>
+                                <div
+                                  className="lds-spinner"
+                                >
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                </div>
+                              </Loading>
+                            </div>
+                          </Memo(GalleryComponent)>
+                          <ModalEditImage
+                            onImageDeleted={[Function]}
+                            onImageSaved={[Function]}
                             toggle={[Function]}
                             visible={false}
-                            yes={[Function]}
                           >
                             <Modal
                               autoFocus={true}
@@ -468,7 +462,6 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                                 }
                               }
                               centered={false}
-                              className="modal-dialog-centered"
                               fade={true}
                               isOpen={false}
                               keyboard={true}
@@ -486,177 +479,216 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                               unmountOnClose={true}
                               zIndex={1050}
                             />
-                          </ModalYesNoConfirmation>
-                        </ModalEditImage>
-                      </Memo(Gallery)>
-                    </div>
-                  </Transition>
-                </CSSTransition>
-              </div>
-            </TransitionGroup>
-            <div
-              className="p-2 button-next-task clickable"
-              onClick={[Function]}
-            >
+                            <ModalYesNoConfirmation
+                              className="modal-dialog-centered"
+                              isActing={false}
+                              message={
+                                Object {
+                                  "defaultMessage": "Are you sure you want to delete this image?",
+                                  "description": "confirmation message",
+                                  "id": "imageDeleteMessage",
+                                }
+                              }
+                              no={[Function]}
+                              title={
+                                Object {
+                                  "defaultMessage": "Delete image",
+                                  "description": "modal title",
+                                  "id": "imageDeleteTitle",
+                                }
+                              }
+                              toggle={[Function]}
+                              visible={false}
+                              yes={[Function]}
+                            >
+                              <Modal
+                                autoFocus={true}
+                                backdrop={true}
+                                backdropTransition={
+                                  Object {
+                                    "mountOnEnter": true,
+                                    "timeout": 150,
+                                  }
+                                }
+                                centered={false}
+                                className="modal-dialog-centered"
+                                fade={true}
+                                isOpen={false}
+                                keyboard={true}
+                                modalTransition={
+                                  Object {
+                                    "timeout": 300,
+                                  }
+                                }
+                                onClosed={[Function]}
+                                onOpened={[Function]}
+                                returnFocusAfterClose={true}
+                                role="dialog"
+                                scrollable={false}
+                                toggle={[Function]}
+                                unmountOnClose={true}
+                                zIndex={1050}
+                              />
+                            </ModalYesNoConfirmation>
+                          </ModalEditImage>
+                        </Memo(Gallery)>
+                      </div>
+                    </Transition>
+                  </CSSTransition>
+                </div>
+              </TransitionGroup>
               <div
-                className="card-control-next-icon"
-              />
-            </div>
-          </div>
-        </CardBody>
-        <CardFooter
-          className="pl-5 pr-5"
-          tag="div"
-        >
-          <div
-            className="pl-5 pr-5 card-footer"
-          >
-            <Button
-              aria-label="Edit"
-              className="float-left"
-              color="light"
-              onClick={[Function]}
-              tag="button"
-            >
-              <button
-                aria-label="Edit"
-                className="float-left btn btn-light"
+                className="p-2 button-next-task clickable"
                 onClick={[Function]}
-                type="button"
               >
-                <FontAwesomeIcon
-                  border={false}
-                  className=""
-                  fixedWidth={false}
-                  flip={null}
-                  icon={
-                    Object {
-                      "icon": Array [
-                        576,
-                        512,
-                        Array [],
-                        "f044",
-                        "M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z",
-                      ],
-                      "iconName": "edit",
-                      "prefix": "fas",
-                    }
-                  }
-                  inverse={false}
-                  listItem={false}
-                  mask={null}
-                  pull={null}
-                  pulse={false}
-                  rotation={null}
-                  size={null}
-                  spin={false}
-                  swapOpacity={false}
-                  symbol={false}
-                  title=""
-                  transform={null}
+                <div
+                  className="card-control-next-icon"
+                />
+              </div>
+            </div>
+          </CardBody>
+          <CardFooter
+            className="pl-5 pr-5"
+            tag="div"
+          >
+            <div
+              className="pl-5 pr-5 card-footer"
+            >
+              <Button
+                aria-label="Edit"
+                className="float-left"
+                color="light"
+                onClick={[Function]}
+                tag="button"
+              >
+                <button
+                  aria-label="Edit"
+                  className="float-left btn btn-light"
+                  onClick={[Function]}
+                  type="button"
                 >
-                  <svg
-                    aria-hidden="true"
-                    className="svg-inline--fa fa-edit fa-w-18 "
-                    data-icon="edit"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    style={Object {}}
-                    viewBox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <FontAwesomeIcon
+                    border={false}
+                    className=""
+                    fixedWidth={false}
+                    flip={null}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          576,
+                          512,
+                          Array [],
+                          "f044",
+                          "M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z",
+                        ],
+                        "iconName": "edit",
+                        "prefix": "fas",
+                      }
+                    }
+                    inverse={false}
+                    listItem={false}
+                    mask={null}
+                    pull={null}
+                    pulse={false}
+                    rotation={null}
+                    size={null}
+                    spin={false}
+                    swapOpacity={false}
+                    symbol={false}
+                    title=""
+                    transform={null}
                   >
-                    <path
-                      d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-                      fill="currentColor"
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-edit fa-w-18 "
+                      data-icon="edit"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
                       style={Object {}}
-                    />
-                  </svg>
-                </FontAwesomeIcon>
-              </button>
-            </Button>
-          </div>
-        </CardFooter>
-      </div>
-    </Card>
-    <ModalEditTask
-      className="modal-dialog-centered"
-      equipment={
-        Object {
-          "_uiId": "1234",
-          "age": 2563,
-          "brand": "nanni",
-          "installation": 2011-02-22T16:00:00.000Z,
-          "model": "N3.30",
-          "name": "engine",
-        }
-      }
-      onTaskDeleted={[MockFunction]}
-      onTaskSaved={[MockFunction]}
-      task={
-        Object {
-          "_uiId": "task1",
-          "description": "task1 description",
-          "level": 1,
-          "name": "taskname1",
-          "nextDueDate": 2011-02-22T16:00:00.000Z,
-          "periodInMonth": 12,
-          "usageInHourLeft": 20,
-          "usagePeriodInHour": 200,
-        }
-      }
-      toggle={[Function]}
-      visible={false}
-    >
-      <Modal
-        autoFocus={true}
-        backdrop={true}
-        backdropTransition={
-          Object {
-            "mountOnEnter": true,
-            "timeout": 150,
-          }
-        }
-        centered={false}
+                      viewBox="0 0 576 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+                        fill="currentColor"
+                        style={Object {}}
+                      />
+                    </svg>
+                  </FontAwesomeIcon>
+                </button>
+              </Button>
+              <ToDoText
+                className="float-right"
+                dueDate={2011-02-22T16:00:00.000Z}
+                level={1}
+                onlyDate={false}
+                usageInHourLeft={20}
+              >
+                <span
+                  className="float-right"
+                >
+                  <FormattedMessage
+                    defaultMessage="Should be done in "
+                    description="Sentence"
+                    id="shouldbedonein1"
+                    values={Object {}}
+                  >
+                    Should be done in 
+                  </FormattedMessage>
+                  <b>
+                    20
+                    h
+                  </b>
+                  <FormattedMessage
+                    defaultMessage=" equipment or "
+                    description="Sentence"
+                    id="shouldbedonein2"
+                    values={Object {}}
+                  >
+                     equipment or 
+                  </FormattedMessage>
+                  <b>
+                    <FormattedDate
+                      value={2011-02-22T16:00:00.000Z}
+                    >
+                      2/23/2011
+                    </FormattedDate>
+                  </b>
+                </span>
+              </ToDoText>
+            </div>
+          </CardFooter>
+        </div>
+      </Card>
+      <ModalEditTask
         className="modal-dialog-centered"
-        fade={true}
-        isOpen={false}
-        keyboard={true}
-        modalTransition={
+        equipment={
           Object {
-            "timeout": 300,
+            "_uiId": "1234",
+            "age": 2563,
+            "brand": "nanni",
+            "installation": 2011-02-22T16:00:00.000Z,
+            "model": "N3.30",
+            "name": "engine",
           }
         }
-        onClosed={[Function]}
-        onOpened={[Function]}
-        returnFocusAfterClose={true}
-        role="dialog"
-        scrollable={false}
-        toggle={[Function]}
-        unmountOnClose={true}
-        zIndex={1050}
-      />
-      <ModalYesNoConfirmation
-        className="modal-dialog-centered"
-        isActing={false}
-        message={
+        onTaskDeleted={[MockFunction]}
+        onTaskSaved={[MockFunction]}
+        task={
           Object {
-            "defaultMessage": "Are you sure you want to delete this task?",
-            "description": "User message",
-            "id": "taskDeleteMsg",
-          }
-        }
-        no={[Function]}
-        title={
-          Object {
-            "defaultMessage": "Delete task",
-            "description": "Modal title",
-            "id": "taskDeleteTitle",
+            "_uiId": "task1",
+            "description": "task1 description",
+            "level": 1,
+            "name": "taskname1",
+            "nextDueDate": 2011-02-22T16:00:00.000Z,
+            "periodInMonth": 12,
+            "usageInHourLeft": 20,
+            "usagePeriodInHour": 200,
           }
         }
         toggle={[Function]}
         visible={false}
-        yes={[Function]}
       >
         <Modal
           autoFocus={true}
@@ -686,433 +718,445 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
           unmountOnClose={true}
           zIndex={1050}
         />
-      </ModalYesNoConfirmation>
-    </ModalEditTask>
-  </div>
-</Memo(CardTaskDetails)>
+        <ModalYesNoConfirmation
+          className="modal-dialog-centered"
+          isActing={false}
+          message={
+            Object {
+              "defaultMessage": "Are you sure you want to delete this task?",
+              "description": "User message",
+              "id": "taskDeleteMsg",
+            }
+          }
+          no={[Function]}
+          title={
+            Object {
+              "defaultMessage": "Delete task",
+              "description": "Modal title",
+              "id": "taskDeleteTitle",
+            }
+          }
+          toggle={[Function]}
+          visible={false}
+          yes={[Function]}
+        >
+          <Modal
+            autoFocus={true}
+            backdrop={true}
+            backdropTransition={
+              Object {
+                "mountOnEnter": true,
+                "timeout": 150,
+              }
+            }
+            centered={false}
+            className="modal-dialog-centered"
+            fade={true}
+            isOpen={false}
+            keyboard={true}
+            modalTransition={
+              Object {
+                "timeout": 300,
+              }
+            }
+            onClosed={[Function]}
+            onOpened={[Function]}
+            returnFocusAfterClose={true}
+            role="dialog"
+            scrollable={false}
+            toggle={[Function]}
+            unmountOnClose={true}
+            zIndex={1050}
+          />
+        </ModalYesNoConfirmation>
+      </ModalEditTask>
+    </div>
+  </Memo(CardTaskDetails)>
+</IntlProvider>
 `;
 
 exports[`CardTaskDetails Should render the task 2 details 1`] = `
-<Memo(CardTaskDetails)>
-  <div>
-    <Card
-      className=""
-      tag="div"
-    >
-      <div
-        className="card"
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
+>
+  <Memo(CardTaskDetails)>
+    <div>
+      <Card
+        className=""
+        tag="div"
       >
-        <CardBody
-          className="d-flex p-0"
-          tag="div"
+        <div
+          className="card"
         >
-          <div
-            className="d-flex p-0 card-body"
+          <CardBody
+            className="d-flex p-0"
+            tag="div"
           >
             <div
-              className="p-2 button-previous-task clickable"
-              onClick={[Function]}
+              className="d-flex p-0 card-body"
             >
               <div
-                className="card-control-prev-icon"
-              />
-            </div>
-            <TransitionGroup
-              childFactory={[Function]}
-              className="p-2 flex-grow-1"
-              component="div"
-            >
-              <div
-                className="p-2 flex-grow-1"
+                className="p-2 button-previous-task clickable"
+                onClick={[Function]}
               >
-                <CSSTransition
-                  classNames="card"
-                  in={true}
-                  key=".$task2"
-                  onExited={[Function]}
-                  timeout={250}
+                <div
+                  className="card-control-prev-icon"
+                />
+              </div>
+              <TransitionGroup
+                childFactory={[Function]}
+                className="p-2 flex-grow-1"
+                component="div"
+              >
+                <div
+                  className="p-2 flex-grow-1"
                 >
-                  <Transition
-                    appear={false}
-                    enter={true}
-                    exit={true}
+                  <CSSTransition
+                    classNames="card"
                     in={true}
-                    mountOnEnter={false}
-                    onEnter={[Function]}
-                    onEntered={[Function]}
-                    onEntering={[Function]}
-                    onExit={[Function]}
+                    key=".$task2"
                     onExited={[Function]}
-                    onExiting={[Function]}
                     timeout={250}
-                    unmountOnExit={false}
                   >
-                    <div>
-                      <CardTitle
-                        tag="div"
-                      >
-                        <div
-                          className="card-title"
+                    <Transition
+                      appear={false}
+                      enter={true}
+                      exit={true}
+                      in={true}
+                      mountOnEnter={false}
+                      onEnter={[Function]}
+                      onEntered={[Function]}
+                      onEntering={[Function]}
+                      onExit={[Function]}
+                      onExited={[Function]}
+                      onExiting={[Function]}
+                      timeout={250}
+                      unmountOnExit={false}
+                    >
+                      <div>
+                        <CardTitle
+                          tag="div"
                         >
-                          taskname2
-                           
-                          <Badge
-                            color="danger"
-                            pill={true}
-                            tag="span"
+                          <div
+                            className="card-title"
                           >
-                            <span
-                              className="badge badge-danger badge-pill"
+                            taskname2
+                             
+                            <Badge
+                              color="danger"
+                              pill={true}
+                              tag="span"
                             >
-                              ToDo
-                            </span>
-                          </Badge>
-                        </div>
-                      </CardTitle>
-                      <CardSubtitle
-                        tag="div"
-                      >
-                        <div
-                          className="card-subtitle"
+                              <span
+                                className="badge badge-danger badge-pill"
+                              >
+                                ToDo
+                              </span>
+                            </Badge>
+                          </div>
+                        </CardTitle>
+                        <CardSubtitle
+                          tag="div"
                         >
-                          <TaskScheduleText
-                            equipment={
-                              Object {
-                                "_uiId": "1234",
-                                "age": 2563,
-                                "brand": "nanni",
-                                "installation": 2011-02-22T16:00:00.000Z,
-                                "model": "N3.30",
-                                "name": "engine",
-                              }
-                            }
-                            task={
-                              Object {
-                                "_uiId": "task2",
-                                "description": "task2 description",
-                                "level": 3,
-                                "name": "taskname2",
-                                "nextDueDate": 2018-02-22T16:00:00.000Z,
-                                "periodInMonth": 24,
-                                "usageInHourLeft": 20,
-                                "usagePeriodInHour": 400,
-                              }
-                            }
+                          <div
+                            className="card-subtitle"
                           >
-                            <span>
-                              <FormattedMessage
-                                defaultMessage="To do every "
-                                description="Sentence"
-                                id="tobedonemonth"
-                                values={Object {}}
-                              >
-                                To do every 
-                              </FormattedMessage>
-                              <b>
-                                400
-                                h
-                                 
-                              </b>
-                              <FormattedMessage
-                                defaultMessage=" or every "
-                                description="Sentence"
-                                id="orevery"
-                                values={Object {}}
-                              >
-                                 or every 
-                              </FormattedMessage>
-                              <b>
+                            <TaskScheduleText
+                              equipment={
+                                Object {
+                                  "_uiId": "1234",
+                                  "age": 2563,
+                                  "brand": "nanni",
+                                  "installation": 2011-02-22T16:00:00.000Z,
+                                  "model": "N3.30",
+                                  "name": "engine",
+                                }
+                              }
+                              task={
+                                Object {
+                                  "_uiId": "task2",
+                                  "description": "task2 description",
+                                  "level": 3,
+                                  "name": "taskname2",
+                                  "nextDueDate": 2018-02-22T16:00:00.000Z,
+                                  "periodInMonth": 24,
+                                  "usageInHourLeft": 20,
+                                  "usagePeriodInHour": 400,
+                                }
+                              }
+                            >
+                              <span>
                                 <FormattedMessage
-                                  defaultMessage="{month, plural, one {month} other {# months}}"
-                                  description="Month period"
-                                  id="monthperiod"
-                                  values={
-                                    Object {
-                                      "month": 24,
-                                    }
-                                  }
+                                  defaultMessage="To do every "
+                                  description="Sentence"
+                                  id="tobedonemonth"
+                                  values={Object {}}
                                 >
-                                  24 months
+                                  To do every 
                                 </FormattedMessage>
-                              </b>
-                            </span>
-                          </TaskScheduleText>
-                        </div>
-                      </CardSubtitle>
-                      <CardText
-                        dangerouslySetInnerHTML={
-                          Object {
-                            "__html": "task2 description",
-                          }
-                        }
-                        tag="p"
-                      >
-                        <p
-                          className="card-text"
+                                <b>
+                                  400
+                                  h
+                                   
+                                </b>
+                                <FormattedMessage
+                                  defaultMessage=" or every "
+                                  description="Sentence"
+                                  id="orevery"
+                                  values={Object {}}
+                                >
+                                   or every 
+                                </FormattedMessage>
+                                <b>
+                                  <FormattedMessage
+                                    defaultMessage="{month, plural, one {month} other {# months}}"
+                                    description="Month period"
+                                    id="monthperiod"
+                                    values={
+                                      Object {
+                                        "month": 24,
+                                      }
+                                    }
+                                  >
+                                    24 months
+                                  </FormattedMessage>
+                                </b>
+                              </span>
+                            </TaskScheduleText>
+                          </div>
+                        </CardSubtitle>
+                        <CardText
                           dangerouslySetInnerHTML={
                             Object {
                               "__html": "task2 description",
                             }
                           }
-                        />
-                      </CardText>
-                      <Memo(Gallery)
-                        parentUiId="task2"
-                      >
-                        <Memo(GalleryComponent)
-                          addImage={[Function]}
-                          images={Array []}
-                          isLoading={true}
-                          onClickThumbnail={[Function]}
+                          tag="p"
+                        >
+                          <p
+                            className="card-text"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "task2 description",
+                              }
+                            }
+                          />
+                        </CardText>
+                        <Memo(Gallery)
                           parentUiId="task2"
                         >
-                          <div
-                            className="flex-row top-padding-4px"
+                          <Memo(GalleryComponent)
+                            addImage={[Function]}
+                            images={Array []}
+                            isLoading={true}
+                            onClickThumbnail={[Function]}
+                            parentUiId="task2"
                           >
-                            <Label
-                              className="font-weight-bold"
-                              tag="label"
-                              widths={
-                                Array [
-                                  "xs",
-                                  "sm",
-                                  "md",
-                                  "lg",
-                                  "xl",
-                                ]
-                              }
+                            <div
+                              className="flex-row top-padding-4px"
                             >
-                              <label
+                              <Label
                                 className="font-weight-bold"
+                                tag="label"
+                                widths={
+                                  Array [
+                                    "xs",
+                                    "sm",
+                                    "md",
+                                    "lg",
+                                    "xl",
+                                  ]
+                                }
                               >
-                                <FormattedMessage
-                                  defaultMessage="Gallery"
-                                  description="Gallery title"
-                                  id="gallerytitle"
-                                  values={Object {}}
+                                <label
+                                  className="font-weight-bold"
                                 >
-                                  Gallery
-                                </FormattedMessage>
-                              </label>
-                            </Label>
-                            <div>
-                              <Memo(AddImageFileButton)
-                                addImage={[Function]}
-                                className="float-right"
-                                parentUiId="task2"
-                              >
-                                <Button
-                                  aria-label="Edit"
-                                  className="float-right"
-                                  color="light"
-                                  onClick={[Function]}
-                                  tag="button"
-                                >
-                                  <button
-                                    aria-label="Edit"
-                                    className="float-right btn btn-light"
-                                    onClick={[Function]}
-                                    type="button"
+                                  <FormattedMessage
+                                    defaultMessage="Gallery"
+                                    description="Gallery title"
+                                    id="gallerytitle"
+                                    values={Object {}}
                                   >
-                                    <span
-                                      className="fa-layers fa-fw"
+                                    Gallery
+                                  </FormattedMessage>
+                                </label>
+                              </Label>
+                              <div>
+                                <Memo(AddImageFileButton)
+                                  addImage={[Function]}
+                                  className="float-right"
+                                  parentUiId="task2"
+                                >
+                                  <Button
+                                    aria-label="Edit"
+                                    className="float-right"
+                                    color="light"
+                                    onClick={[Function]}
+                                    tag="button"
+                                  >
+                                    <button
+                                      aria-label="Edit"
+                                      className="float-right btn btn-light"
+                                      onClick={[Function]}
+                                      type="button"
                                     >
-                                      <FontAwesomeIcon
-                                        border={false}
-                                        className=""
-                                        fixedWidth={false}
-                                        flip={null}
-                                        icon={
-                                          Object {
-                                            "icon": Array [
-                                              512,
-                                              512,
-                                              Array [],
-                                              "f03e",
-                                              "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
-                                            ],
-                                            "iconName": "image",
-                                            "prefix": "fas",
-                                          }
-                                        }
-                                        inverse={false}
-                                        listItem={false}
-                                        mask={null}
-                                        pull={null}
-                                        pulse={false}
-                                        rotation={null}
-                                        size="lg"
-                                        spin={false}
-                                        swapOpacity={false}
-                                        symbol={false}
-                                        title=""
-                                        transform={null}
+                                      <span
+                                        className="fa-layers fa-fw"
                                       >
-                                        <svg
-                                          aria-hidden="true"
-                                          className="svg-inline--fa fa-image fa-w-16 fa-lg "
-                                          data-icon="image"
-                                          data-prefix="fas"
-                                          focusable="false"
-                                          role="img"
-                                          style={Object {}}
-                                          viewBox="0 0 512 512"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path
-                                            d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
-                                            fill="currentColor"
-                                            style={Object {}}
-                                          />
-                                        </svg>
-                                      </FontAwesomeIcon>
-                                      <FontAwesomeIcon
-                                        border={false}
-                                        className=""
-                                        fixedWidth={false}
-                                        flip={null}
-                                        icon={
-                                          Object {
-                                            "icon": Array [
-                                              448,
-                                              512,
-                                              Array [],
-                                              "f067",
-                                              "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
-                                            ],
-                                            "iconName": "plus",
-                                            "prefix": "fas",
-                                          }
-                                        }
-                                        inverse={false}
-                                        listItem={false}
-                                        mask={null}
-                                        pull={null}
-                                        pulse={false}
-                                        rotation={null}
-                                        size="xs"
-                                        spin={false}
-                                        swapOpacity={false}
-                                        symbol={false}
-                                        title=""
-                                        transform="down-13 left-16"
-                                      >
-                                        <svg
-                                          aria-hidden="true"
-                                          className="svg-inline--fa fa-plus fa-w-14 fa-xs "
-                                          data-icon="plus"
-                                          data-prefix="fas"
-                                          focusable="false"
-                                          role="img"
-                                          style={
+                                        <FontAwesomeIcon
+                                          border={false}
+                                          className=""
+                                          fixedWidth={false}
+                                          flip={null}
+                                          icon={
                                             Object {
-                                              "transformOrigin": "-0.5625em 1.3125em",
+                                              "icon": Array [
+                                                512,
+                                                512,
+                                                Array [],
+                                                "f03e",
+                                                "M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z",
+                                              ],
+                                              "iconName": "image",
+                                              "prefix": "fas",
                                             }
                                           }
-                                          viewBox="0 0 448 512"
-                                          xmlns="http://www.w3.org/2000/svg"
+                                          inverse={false}
+                                          listItem={false}
+                                          mask={null}
+                                          pull={null}
+                                          pulse={false}
+                                          rotation={null}
+                                          size="lg"
+                                          spin={false}
+                                          swapOpacity={false}
+                                          symbol={false}
+                                          title=""
+                                          transform={null}
                                         >
-                                          <g
+                                          <svg
+                                            aria-hidden="true"
+                                            className="svg-inline--fa fa-image fa-w-16 fa-lg "
+                                            data-icon="image"
+                                            data-prefix="fas"
+                                            focusable="false"
+                                            role="img"
                                             style={Object {}}
-                                            transform="translate(224 256)"
+                                            viewBox="0 0 512 512"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"
+                                              fill="currentColor"
+                                              style={Object {}}
+                                            />
+                                          </svg>
+                                        </FontAwesomeIcon>
+                                        <FontAwesomeIcon
+                                          border={false}
+                                          className=""
+                                          fixedWidth={false}
+                                          flip={null}
+                                          icon={
+                                            Object {
+                                              "icon": Array [
+                                                448,
+                                                512,
+                                                Array [],
+                                                "f067",
+                                                "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z",
+                                              ],
+                                              "iconName": "plus",
+                                              "prefix": "fas",
+                                            }
+                                          }
+                                          inverse={false}
+                                          listItem={false}
+                                          mask={null}
+                                          pull={null}
+                                          pulse={false}
+                                          rotation={null}
+                                          size="xs"
+                                          spin={false}
+                                          swapOpacity={false}
+                                          symbol={false}
+                                          title=""
+                                          transform="down-13 left-16"
+                                        >
+                                          <svg
+                                            aria-hidden="true"
+                                            className="svg-inline--fa fa-plus fa-w-14 fa-xs "
+                                            data-icon="plus"
+                                            data-prefix="fas"
+                                            focusable="false"
+                                            role="img"
+                                            style={
+                                              Object {
+                                                "transformOrigin": "-0.5625em 1.3125em",
+                                              }
+                                            }
+                                            viewBox="0 0 448 512"
+                                            xmlns="http://www.w3.org/2000/svg"
                                           >
                                             <g
                                               style={Object {}}
-                                              transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                                              transform="translate(224 256)"
                                             >
-                                              <path
-                                                d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                                                fill="currentColor"
+                                              <g
                                                 style={Object {}}
-                                                transform="translate(-224 -256)"
-                                              />
+                                                transform="translate(-512, 416)  scale(1, 1)  rotate(0 0 0)"
+                                              >
+                                                <path
+                                                  d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                                                  fill="currentColor"
+                                                  style={Object {}}
+                                                  transform="translate(-224 -256)"
+                                                />
+                                              </g>
                                             </g>
-                                          </g>
-                                        </svg>
-                                      </FontAwesomeIcon>
-                                    </span>
-                                  </button>
-                                </Button>
-                              </Memo(AddImageFileButton)>
-                            </div>
-                          </div>
-                          <div
-                            className="p-1 border border-secondary rounded shadow gallery"
-                          >
-                            <Loading>
-                              <div
-                                className="lds-spinner"
-                              >
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                                <div />
+                                          </svg>
+                                        </FontAwesomeIcon>
+                                      </span>
+                                    </button>
+                                  </Button>
+                                </Memo(AddImageFileButton)>
                               </div>
-                            </Loading>
-                          </div>
-                        </Memo(GalleryComponent)>
-                        <ModalEditImage
-                          onImageDeleted={[Function]}
-                          onImageSaved={[Function]}
-                          toggle={[Function]}
-                          visible={false}
-                        >
-                          <Modal
-                            autoFocus={true}
-                            backdrop={true}
-                            backdropTransition={
-                              Object {
-                                "mountOnEnter": true,
-                                "timeout": 150,
-                              }
-                            }
-                            centered={false}
-                            fade={true}
-                            isOpen={false}
-                            keyboard={true}
-                            modalTransition={
-                              Object {
-                                "timeout": 300,
-                              }
-                            }
-                            onClosed={[Function]}
-                            onOpened={[Function]}
-                            returnFocusAfterClose={true}
-                            role="dialog"
-                            scrollable={false}
-                            toggle={[Function]}
-                            unmountOnClose={true}
-                            zIndex={1050}
-                          />
-                          <ModalYesNoConfirmation
-                            className="modal-dialog-centered"
-                            isActing={false}
-                            message={
-                              Object {
-                                "defaultMessage": "Are you sure you want to delete this image?",
-                                "description": "confirmation message",
-                                "id": "imageDeleteMessage",
-                              }
-                            }
-                            no={[Function]}
-                            title={
-                              Object {
-                                "defaultMessage": "Delete image",
-                                "description": "modal title",
-                                "id": "imageDeleteTitle",
-                              }
-                            }
+                            </div>
+                            <div
+                              className="p-1 border border-secondary rounded shadow gallery"
+                            >
+                              <Loading>
+                                <div
+                                  className="lds-spinner"
+                                >
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                </div>
+                              </Loading>
+                            </div>
+                          </Memo(GalleryComponent)>
+                          <ModalEditImage
+                            onImageDeleted={[Function]}
+                            onImageSaved={[Function]}
                             toggle={[Function]}
                             visible={false}
-                            yes={[Function]}
                           >
                             <Modal
                               autoFocus={true}
@@ -1124,7 +1168,6 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                                 }
                               }
                               centered={false}
-                              className="modal-dialog-centered"
                               fade={true}
                               isOpen={false}
                               keyboard={true}
@@ -1142,177 +1185,216 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                               unmountOnClose={true}
                               zIndex={1050}
                             />
-                          </ModalYesNoConfirmation>
-                        </ModalEditImage>
-                      </Memo(Gallery)>
-                    </div>
-                  </Transition>
-                </CSSTransition>
-              </div>
-            </TransitionGroup>
-            <div
-              className="p-2 button-next-task clickable"
-              onClick={[Function]}
-            >
+                            <ModalYesNoConfirmation
+                              className="modal-dialog-centered"
+                              isActing={false}
+                              message={
+                                Object {
+                                  "defaultMessage": "Are you sure you want to delete this image?",
+                                  "description": "confirmation message",
+                                  "id": "imageDeleteMessage",
+                                }
+                              }
+                              no={[Function]}
+                              title={
+                                Object {
+                                  "defaultMessage": "Delete image",
+                                  "description": "modal title",
+                                  "id": "imageDeleteTitle",
+                                }
+                              }
+                              toggle={[Function]}
+                              visible={false}
+                              yes={[Function]}
+                            >
+                              <Modal
+                                autoFocus={true}
+                                backdrop={true}
+                                backdropTransition={
+                                  Object {
+                                    "mountOnEnter": true,
+                                    "timeout": 150,
+                                  }
+                                }
+                                centered={false}
+                                className="modal-dialog-centered"
+                                fade={true}
+                                isOpen={false}
+                                keyboard={true}
+                                modalTransition={
+                                  Object {
+                                    "timeout": 300,
+                                  }
+                                }
+                                onClosed={[Function]}
+                                onOpened={[Function]}
+                                returnFocusAfterClose={true}
+                                role="dialog"
+                                scrollable={false}
+                                toggle={[Function]}
+                                unmountOnClose={true}
+                                zIndex={1050}
+                              />
+                            </ModalYesNoConfirmation>
+                          </ModalEditImage>
+                        </Memo(Gallery)>
+                      </div>
+                    </Transition>
+                  </CSSTransition>
+                </div>
+              </TransitionGroup>
               <div
-                className="card-control-next-icon invisible"
-              />
-            </div>
-          </div>
-        </CardBody>
-        <CardFooter
-          className="pl-5 pr-5"
-          tag="div"
-        >
-          <div
-            className="pl-5 pr-5 card-footer"
-          >
-            <Button
-              aria-label="Edit"
-              className="float-left"
-              color="light"
-              onClick={[Function]}
-              tag="button"
-            >
-              <button
-                aria-label="Edit"
-                className="float-left btn btn-light"
+                className="p-2 button-next-task clickable"
                 onClick={[Function]}
-                type="button"
               >
-                <FontAwesomeIcon
-                  border={false}
-                  className=""
-                  fixedWidth={false}
-                  flip={null}
-                  icon={
-                    Object {
-                      "icon": Array [
-                        576,
-                        512,
-                        Array [],
-                        "f044",
-                        "M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z",
-                      ],
-                      "iconName": "edit",
-                      "prefix": "fas",
-                    }
-                  }
-                  inverse={false}
-                  listItem={false}
-                  mask={null}
-                  pull={null}
-                  pulse={false}
-                  rotation={null}
-                  size={null}
-                  spin={false}
-                  swapOpacity={false}
-                  symbol={false}
-                  title=""
-                  transform={null}
+                <div
+                  className="card-control-next-icon invisible"
+                />
+              </div>
+            </div>
+          </CardBody>
+          <CardFooter
+            className="pl-5 pr-5"
+            tag="div"
+          >
+            <div
+              className="pl-5 pr-5 card-footer"
+            >
+              <Button
+                aria-label="Edit"
+                className="float-left"
+                color="light"
+                onClick={[Function]}
+                tag="button"
+              >
+                <button
+                  aria-label="Edit"
+                  className="float-left btn btn-light"
+                  onClick={[Function]}
+                  type="button"
                 >
-                  <svg
-                    aria-hidden="true"
-                    className="svg-inline--fa fa-edit fa-w-18 "
-                    data-icon="edit"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    style={Object {}}
-                    viewBox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <FontAwesomeIcon
+                    border={false}
+                    className=""
+                    fixedWidth={false}
+                    flip={null}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          576,
+                          512,
+                          Array [],
+                          "f044",
+                          "M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z",
+                        ],
+                        "iconName": "edit",
+                        "prefix": "fas",
+                      }
+                    }
+                    inverse={false}
+                    listItem={false}
+                    mask={null}
+                    pull={null}
+                    pulse={false}
+                    rotation={null}
+                    size={null}
+                    spin={false}
+                    swapOpacity={false}
+                    symbol={false}
+                    title=""
+                    transform={null}
                   >
-                    <path
-                      d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-                      fill="currentColor"
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-edit fa-w-18 "
+                      data-icon="edit"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
                       style={Object {}}
-                    />
-                  </svg>
-                </FontAwesomeIcon>
-              </button>
-            </Button>
-          </div>
-        </CardFooter>
-      </div>
-    </Card>
-    <ModalEditTask
-      className="modal-dialog-centered"
-      equipment={
-        Object {
-          "_uiId": "1234",
-          "age": 2563,
-          "brand": "nanni",
-          "installation": 2011-02-22T16:00:00.000Z,
-          "model": "N3.30",
-          "name": "engine",
-        }
-      }
-      onTaskDeleted={[MockFunction]}
-      onTaskSaved={[MockFunction]}
-      task={
-        Object {
-          "_uiId": "task2",
-          "description": "task2 description",
-          "level": 3,
-          "name": "taskname2",
-          "nextDueDate": 2018-02-22T16:00:00.000Z,
-          "periodInMonth": 24,
-          "usageInHourLeft": 20,
-          "usagePeriodInHour": 400,
-        }
-      }
-      toggle={[Function]}
-      visible={false}
-    >
-      <Modal
-        autoFocus={true}
-        backdrop={true}
-        backdropTransition={
-          Object {
-            "mountOnEnter": true,
-            "timeout": 150,
-          }
-        }
-        centered={false}
+                      viewBox="0 0 576 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+                        fill="currentColor"
+                        style={Object {}}
+                      />
+                    </svg>
+                  </FontAwesomeIcon>
+                </button>
+              </Button>
+              <ToDoText
+                className="float-right"
+                dueDate={2018-02-22T16:00:00.000Z}
+                level={3}
+                onlyDate={false}
+                usageInHourLeft={20}
+              >
+                <span
+                  className="float-right"
+                >
+                  <FormattedMessage
+                    defaultMessage="Should have been done "
+                    description="Sentence"
+                    id="shouldhavebeendonein"
+                    values={Object {}}
+                  >
+                    Should have been done 
+                  </FormattedMessage>
+                  <b>
+                    20
+                    h
+                  </b>
+                  <FormattedMessage
+                    defaultMessage=" equipment ago or "
+                    description="Sentence"
+                    id="shouldhavebeendonein2"
+                    values={Object {}}
+                  >
+                     equipment ago or 
+                  </FormattedMessage>
+                  <b>
+                    <FormattedDate
+                      value={2018-02-22T16:00:00.000Z}
+                    >
+                      2/23/2018
+                    </FormattedDate>
+                  </b>
+                </span>
+              </ToDoText>
+            </div>
+          </CardFooter>
+        </div>
+      </Card>
+      <ModalEditTask
         className="modal-dialog-centered"
-        fade={true}
-        isOpen={false}
-        keyboard={true}
-        modalTransition={
+        equipment={
           Object {
-            "timeout": 300,
+            "_uiId": "1234",
+            "age": 2563,
+            "brand": "nanni",
+            "installation": 2011-02-22T16:00:00.000Z,
+            "model": "N3.30",
+            "name": "engine",
           }
         }
-        onClosed={[Function]}
-        onOpened={[Function]}
-        returnFocusAfterClose={true}
-        role="dialog"
-        scrollable={false}
-        toggle={[Function]}
-        unmountOnClose={true}
-        zIndex={1050}
-      />
-      <ModalYesNoConfirmation
-        className="modal-dialog-centered"
-        isActing={false}
-        message={
+        onTaskDeleted={[MockFunction]}
+        onTaskSaved={[MockFunction]}
+        task={
           Object {
-            "defaultMessage": "Are you sure you want to delete this task?",
-            "description": "User message",
-            "id": "taskDeleteMsg",
-          }
-        }
-        no={[Function]}
-        title={
-          Object {
-            "defaultMessage": "Delete task",
-            "description": "Modal title",
-            "id": "taskDeleteTitle",
+            "_uiId": "task2",
+            "description": "task2 description",
+            "level": 3,
+            "name": "taskname2",
+            "nextDueDate": 2018-02-22T16:00:00.000Z,
+            "periodInMonth": 24,
+            "usageInHourLeft": 20,
+            "usagePeriodInHour": 400,
           }
         }
         toggle={[Function]}
         visible={false}
-        yes={[Function]}
       >
         <Modal
           autoFocus={true}
@@ -1342,8 +1424,59 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
           unmountOnClose={true}
           zIndex={1050}
         />
-      </ModalYesNoConfirmation>
-    </ModalEditTask>
-  </div>
-</Memo(CardTaskDetails)>
+        <ModalYesNoConfirmation
+          className="modal-dialog-centered"
+          isActing={false}
+          message={
+            Object {
+              "defaultMessage": "Are you sure you want to delete this task?",
+              "description": "User message",
+              "id": "taskDeleteMsg",
+            }
+          }
+          no={[Function]}
+          title={
+            Object {
+              "defaultMessage": "Delete task",
+              "description": "Modal title",
+              "id": "taskDeleteTitle",
+            }
+          }
+          toggle={[Function]}
+          visible={false}
+          yes={[Function]}
+        >
+          <Modal
+            autoFocus={true}
+            backdrop={true}
+            backdropTransition={
+              Object {
+                "mountOnEnter": true,
+                "timeout": 150,
+              }
+            }
+            centered={false}
+            className="modal-dialog-centered"
+            fade={true}
+            isOpen={false}
+            keyboard={true}
+            modalTransition={
+              Object {
+                "timeout": 300,
+              }
+            }
+            onClosed={[Function]}
+            onOpened={[Function]}
+            returnFocusAfterClose={true}
+            role="dialog"
+            scrollable={false}
+            toggle={[Function]}
+            unmountOnClose={true}
+            zIndex={1050}
+          />
+        </ModalYesNoConfirmation>
+      </ModalEditTask>
+    </div>
+  </Memo(CardTaskDetails)>
+</IntlProvider>
 `;

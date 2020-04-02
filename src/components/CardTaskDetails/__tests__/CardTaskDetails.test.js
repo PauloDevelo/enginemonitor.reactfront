@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { IntlProvider } from 'react-intl';
 import ignoredMessages from '../../../testHelpers/MockConsole';
 
 import imageProxy from '../../../services/ImageProxy';
@@ -16,7 +17,7 @@ describe('CardTaskDetails', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('test was not wrapped in act(...)');
-    ignoredMessages.push('[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.');
+    ignoredMessages.push('[React Intl Error MISSING_TRANSLATION]');
   });
 
   const equipment = {
@@ -74,7 +75,7 @@ describe('CardTaskDetails', () => {
     taskManager.getTasks.mockImplementation(() => []);
     taskManager.getCurrentTask.mockImplementation(() => undefined);
 
-    const wrapper = mount(<CardTaskDetails />);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><CardTaskDetails /></IntlProvider>);
 
     // Assert
     expect(wrapper).toMatchSnapshot();
@@ -88,7 +89,7 @@ describe('CardTaskDetails', () => {
     taskManager.getTasks.mockImplementation(() => []);
     taskManager.getCurrentTask.mockImplementation(() => undefined);
 
-    const wrapper = mount(<CardTaskDetails />);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><CardTaskDetails /></IntlProvider>);
 
     // Assert
     expect(wrapper).toMatchSnapshot();
@@ -102,7 +103,7 @@ describe('CardTaskDetails', () => {
     taskManager.getTasks.mockImplementation(() => tasks);
     taskManager.getCurrentTask.mockImplementation(() => undefined);
 
-    const wrapper = mount(<CardTaskDetails />);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><CardTaskDetails /></IntlProvider>);
 
     // Assert
     expect(wrapper).toMatchSnapshot();
@@ -117,7 +118,7 @@ describe('CardTaskDetails', () => {
     taskManager.getCurrentTask.mockImplementation(() => task1);
 
     // Act
-    const wrapper = mount(<CardTaskDetails />);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><CardTaskDetails /></IntlProvider>);
 
     // Assert
     expect(wrapper.find('.card-title').text()).toEqual(`${task1.name} Done`);
@@ -139,7 +140,7 @@ describe('CardTaskDetails', () => {
     taskManager.getCurrentTask.mockImplementation(() => task2);
 
     // Act
-    const wrapper = mount(<CardTaskDetails />);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><CardTaskDetails /></IntlProvider>);
 
     // Assert
     expect(wrapper.find('.card-title').text()).toEqual(`${task2.name} ToDo`);
@@ -160,7 +161,7 @@ describe('CardTaskDetails', () => {
     taskManager.getTasks.mockImplementation(() => tasks);
     taskManager.getCurrentTask.mockImplementation(() => task1);
 
-    const wrapper = mount(<CardTaskDetails />);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><CardTaskDetails /></IntlProvider>);
 
     // Act
     wrapper.find('.button-next-task').simulate('click');
@@ -177,7 +178,7 @@ describe('CardTaskDetails', () => {
     taskManager.getTasks.mockImplementation(() => tasks);
     taskManager.getCurrentTask.mockImplementation(() => task2);
 
-    const wrapper = mount(<CardTaskDetails />);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><CardTaskDetails /></IntlProvider>);
 
     // Act
     wrapper.find('.button-next-task').simulate('click');
@@ -193,7 +194,7 @@ describe('CardTaskDetails', () => {
     taskManager.getTasks.mockImplementation(() => tasks);
     taskManager.getCurrentTask.mockImplementation(() => task1);
 
-    const wrapper = mount(<CardTaskDetails />);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><CardTaskDetails /></IntlProvider>);
 
     // Act
     wrapper.find('.button-previous-task').simulate('click');
@@ -209,7 +210,7 @@ describe('CardTaskDetails', () => {
     taskManager.getTasks.mockImplementation(() => tasks);
     taskManager.getCurrentTask.mockImplementation(() => task2);
 
-    const wrapper = mount(<CardTaskDetails />);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><CardTaskDetails /></IntlProvider>);
 
     // Act
     wrapper.find('.button-previous-task').simulate('click');

@@ -9,7 +9,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import classnames from 'classnames';
 import useEditModal from '../../hooks/EditModalHook';
 
-import { getContext, getBadgeText } from '../../helpers/TaskHelper';
+import { getContext, getBadgeText, getTodoValue } from '../../helpers/TaskHelper';
 
 import TaskScheduleText from '../TaskScheduleText/TaskScheduleText';
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
@@ -19,6 +19,10 @@ import './CardTaskDetails.css';
 import '../../style/transition.css';
 import taskManager from '../../services/TaskManager';
 import equipmentManager from '../../services/EquipmentManager';
+import ToDoText from '../ToDoText/TodoText';
+
+// eslint-disable-next-line no-unused-vars
+import { TaskTodo } from '../../types/Types';
 
 type Props = {
     callBackRef: (t: any) => any,
@@ -28,7 +32,16 @@ type Props = {
 const CardTaskDetails = ({ callBackRef, className }: Props) => {
   const [equipment, setEquipment] = useState(equipmentManager.getCurrentEquipment());
   const [currentTask, setCurrentTask] = useState(taskManager.getCurrentTask());
+  const [todoTask, setTodoTask] = useState<TaskTodo | undefined>(equipment === undefined || currentTask === undefined ? undefined : getTodoValue(equipment, currentTask));
   const [tasks, setTasks] = useState(taskManager.getTasks());
+
+  useEffect(() => {
+    if (equipment === undefined || currentTask === undefined) {
+      setTodoTask(undefined);
+    } else {
+      setTodoTask(getTodoValue(equipment, currentTask));
+    }
+  }, [equipment, currentTask]);
 
   useEffect(() => {
     equipmentManager.registerOnCurrentEquipmentChanged(setEquipment);
@@ -95,6 +108,7 @@ const CardTaskDetails = ({ callBackRef, className }: Props) => {
         </CardBody>
         <CardFooter className="pl-5 pr-5">
           <Button color="light" className="float-left" onClick={modalHook.toggleModal} aria-label="Edit"><FontAwesomeIcon icon={faEdit} /></Button>
+          {todoTask && <ToDoText className="float-right" dueDate={todoTask.dueDate} level={todoTask.level} onlyDate={todoTask.onlyDate} usageInHourLeft={todoTask.usageInHourLeft} />}
         </CardFooter>
       </Card>
       <ModalEditTask
