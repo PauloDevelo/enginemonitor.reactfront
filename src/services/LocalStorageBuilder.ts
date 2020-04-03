@@ -94,8 +94,17 @@ class LocalStorageBuilder extends TaskWithProgress {
         await this.triggerTaskProgressChanged();
       }
 
-      const promises = [Promise.all(tasks.map((task) => this.fetchEntityImages(task))), Promise.all(entries.map((entry) => this.fetchEntityImages(entry)))];
-      await Promise.all(promises);
+      for (let index = 0; index < tasks.length; index++) {
+        const task = tasks[index];
+        // eslint-disable-next-line no-await-in-loop
+        await this.fetchEntityImages(task);
+      }
+
+      for (let index = 0; index < entries.length; index++) {
+        const entry = entries[index];
+        // eslint-disable-next-line no-await-in-loop
+        await this.fetchEntityImages(entry);
+      }
 
       return this.fetchEntityImages(equipment);
     }

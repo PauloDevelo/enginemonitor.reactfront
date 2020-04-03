@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.13.7] - 2020-04-03
+
+### Changed
+-Fix a bug when rebuilding the local storage
+
 ## [2.13.6] - 2020-04-03
 
 ### Changed
@@ -33,7 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 
-[unreleased]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.6...integration
-[2.13.5]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.5...v2.13.6
+[unreleased]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.7...integration
+[2.13.7]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.6...v2.13.7
+[2.13.6]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.5...v2.13.6
 [2.13.5]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.4...v2.13.5
 [2.13.4]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.3...v2.13.4
