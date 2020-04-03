@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.13.6] - 2020-04-03
+
+### Changed
+-Add a new colum in the equipment and task history tables to indicates the entry with a picture
+-Add some information in the card task details
+
 ## [2.13.5] - 2020-03-20
 
 ### Changed
@@ -27,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 
-[unreleased]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.5...integration
+[unreleased]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.6...integration
+[2.13.5]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.5...v2.13.6
 [2.13.5]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.4...v2.13.5
 [2.13.4]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.3...v2.13.4
