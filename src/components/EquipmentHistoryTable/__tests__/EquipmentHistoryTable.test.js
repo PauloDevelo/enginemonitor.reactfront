@@ -5,6 +5,8 @@ import { IntlProvider } from 'react-intl';
 
 import { mount } from 'enzyme';
 
+import _ from 'lodash';
+
 // eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
 import ignoredMessages from '../../../testHelpers/MockConsole';
@@ -28,6 +30,8 @@ jest.mock('localforage');
 chai.use(require('chai-datetime'));
 
 describe('EquipmentHistoryTable', () => {
+  const nbColumn = 5;
+
   const equipment = {
     _uiId: 'equipment_01',
     name: 'moteur',
@@ -115,6 +119,8 @@ describe('EquipmentHistoryTable', () => {
     },
   ];
 
+  const entriesSorted = _.orderBy(entries, (entry) => entry.date, 'asc');
+
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('test was not wrapped in act(...)');
@@ -123,7 +129,7 @@ describe('EquipmentHistoryTable', () => {
   });
 
   beforeEach(() => {
-    entryManager.getEquipmentEntries.mockImplementation(() => entries);
+    entryManager.getEquipmentEntries.mockImplementation(() => entriesSorted);
     entryManager.areEntriesLoading.mockImplementation(() => false);
     entryProxy.existEntry.mockImplementation(async (equipmentId, entryId) => {
       if (entries.findIndex((e) => e._uiId === entryId) !== -1) {
@@ -143,8 +149,8 @@ describe('EquipmentHistoryTable', () => {
     const cells = table.find('ClickableCell');
     let previousDate;
     for (let i = 0; i < entries.length; i++) {
-      for (let numColumn = 0; numColumn < 4; numColumn++) {
-        const currentDate = cells.at(i * 4 + numColumn).props().data.date;
+      for (let numColumn = 0; numColumn < nbColumn; numColumn++) {
+        const currentDate = cells.at(i * nbColumn + numColumn).props().data.date;
 
         if (previousDate !== undefined && currentDate !== previousDate) {
           assert.afterTime(previousDate, currentDate);
@@ -198,8 +204,8 @@ describe('EquipmentHistoryTable', () => {
 
     // Assert
     const tbodyProps = equipmentHistoryTable.find('tbody').at(0).props();
-    for (let i = 0; i < entries.length; i++) {
-      expect(tbodyProps.children[i].props.data).toBe(entries[i]);
+    for (let i = 0; i < entriesSorted.length; i++) {
+      expect(tbodyProps.children[i].props.data).toEqual({ ...entriesSorted[entriesSorted.length - 1 - i], nbImage: 0 });
     }
     expect(entryManager.getEquipmentEntries).toBeCalledTimes(1);
 
@@ -236,10 +242,10 @@ describe('EquipmentHistoryTable', () => {
     await updateWrapper(equipmentHistoryTable);
     const cells = equipmentHistoryTable.find('ClickableCell');
 
-    for (let i = 0; i < entries.length; i++) {
-      for (let numColumn = 0; numColumn < 4; numColumn++) {
+    for (let i = 0; i < entriesSorted.length; i++) {
+      for (let numColumn = 0; numColumn < nbColumn; numColumn++) {
         // Act
-        cells.at(i * 4 + numColumn).simulate('click');
+        cells.at(i * nbColumn + numColumn).simulate('click');
         // eslint-disable-next-line no-await-in-loop
         await updateWrapper(equipmentHistoryTable);
 
@@ -248,7 +254,7 @@ describe('EquipmentHistoryTable', () => {
         expect(editEntryModal.length).toBe(1);
         expect(editEntryModal.props().visible).toBe(true);
         expect(editEntryModal.props().equipment).toBe(equipment);
-        expect(editEntryModal.props().entry).toBe(entries[i]);
+        expect(editEntryModal.props().entry).toEqual({ ...entriesSorted[entriesSorted.length - 1 - i], nbImage: 0 });
 
         if (entries[i].taskUiId !== undefined) {
           expect(editEntryModal.props().task).not.toBeUndefined();

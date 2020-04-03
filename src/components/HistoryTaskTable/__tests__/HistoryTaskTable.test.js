@@ -30,6 +30,8 @@ jest.mock('localforage');
 chai.use(require('chai-datetime'));
 
 describe('HistoryTaskTable', () => {
+  const nbColumn = 4;
+
   const equipment = {
     _uiId: 'equipment_01',
     name: 'moteur',
@@ -139,8 +141,8 @@ describe('HistoryTaskTable', () => {
     const cells = table.find('ClickableCell');
     let previousDate;
     for (let i = 0; i < entries.length; i++) {
-      for (let numColumn = 0; numColumn < 3; numColumn++) {
-        const currentDate = cells.at(i * 3 + numColumn).props().data.date;
+      for (let numColumn = 0; numColumn < nbColumn; numColumn++) {
+        const currentDate = cells.at(i * nbColumn + numColumn).props().data.date;
 
         if (previousDate !== undefined && currentDate !== previousDate) {
           assert.afterTime(previousDate, currentDate);
@@ -230,9 +232,9 @@ describe('HistoryTaskTable', () => {
     const cells = historyTaskTable.find('ClickableCell');
 
     for (let i = 0; i < entriesSortedByDate.length; i++) {
-      for (let numColumn = 0; numColumn < 3; numColumn++) {
+      for (let numColumn = 0; numColumn < nbColumn; numColumn++) {
         // Act
-        cells.at(i * 3 + numColumn).simulate('click');
+        cells.at(i * nbColumn + numColumn).simulate('click');
         // eslint-disable-next-line no-await-in-loop
         await updateWrapper(historyTaskTable);
 
@@ -274,19 +276,19 @@ describe('HistoryTaskTable', () => {
     await updateWrapper(historyTaskTable);
 
     // Assert
-    const cell1 = historyTaskTable.find('ClickableCell').at(0 * 3 + 1);
+    const cell1 = historyTaskTable.find('ClickableCell').at(0 * nbColumn + 1);
     expect(cell1.props().data.isLate).toBe(false);
     expect(cell1.find('FontAwesomeIcon').length).toBe(0);
 
-    const cell2 = historyTaskTable.find('ClickableCell').at(1 * 3 + 1);
+    const cell2 = historyTaskTable.find('ClickableCell').at(1 * nbColumn + 1);
     expect(cell2.props().data.isLate).toBe(false);
     expect(cell2.find('FontAwesomeIcon').length).toBe(0);
 
-    const cell3 = historyTaskTable.find('ClickableCell').at(2 * 3 + 1);
+    const cell3 = historyTaskTable.find('ClickableCell').at(2 * nbColumn + 1);
     expect(cell3.props().data.isLate).toBe(false);
     expect(cell3.find('FontAwesomeIcon').length).toBe(0);
 
-    const cell4 = historyTaskTable.find('ClickableCell').at(3 * 3 + 1);
+    const cell4 = historyTaskTable.find('ClickableCell').at(3 * nbColumn + 1);
     expect(cell4.props().data.isLate).toBe(true);
     expect(cell4.find('FontAwesomeIcon').length).toBe(1);
   });
