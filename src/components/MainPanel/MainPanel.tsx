@@ -39,7 +39,7 @@ import ModalEditAsset from '../ModalEditAsset/ModalEditAsset';
 
 export default function MainPanel() {
   const [user, setUser] = useState<UserModel | undefined | null>(null);
-  const [currentAsset, setCurrentAsset] = useState<AssetModel | undefined>(undefined);
+  const [currentAsset, setCurrentAsset] = useState<AssetModel | undefined | null>(null);
   const [error, setError] = useState<Error | undefined>(undefined);
   const { niceKey } = useParams();
 
@@ -143,10 +143,10 @@ export default function MainPanel() {
             />
             )}
 
-            {user && !currentAsset && assetManager.isCurrentAssetChanging() === false && (
+            {user && currentAsset === undefined && (
             <ModalEditAsset
               asset={createDefaultAsset()}
-              visible={user && !currentAsset}
+              visible={user && currentAsset === undefined}
               className="modal-dialog-centered"
             />
             )}

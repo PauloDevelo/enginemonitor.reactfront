@@ -85,7 +85,7 @@ const ModalEditAsset = ({
             <MyInput name="manufactureDate" label={assetMsg.manufactureDateLabel} type="date" required />
           </MyForm>
           )}
-          <GuestLink asset={asset} onError={setAlerts} />
+          {isCreation === false && <GuestLink asset={asset} onError={setAlerts} />}
           <Alerts errors={modalLogic.alerts || alerts} />
         </ModalBody>
         <ModalFooter>
