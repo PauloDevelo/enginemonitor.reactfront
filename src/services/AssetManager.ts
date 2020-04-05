@@ -5,6 +5,8 @@ import { AssetModel, UserModel, UserCredentials } from '../types/Types';
 
 export interface IAssetManager{
     getUserCredentials(): UserCredentials | undefined;
+
+    isCurrentAssetChanging(): boolean
     getCurrentAsset(): AssetModel | undefined;
     setCurrentAsset(asset: AssetModel): Promise<void>;
 
@@ -19,6 +21,8 @@ class AssetManager implements IAssetManager {
 
     private assets: AssetModel[] = [];
 
+    private isCurrentAssetChangingFlag: boolean = false;
+
     private currentAsset: AssetModel|undefined = undefined;
 
     private credentials:UserCredentials | undefined = undefined;
@@ -29,6 +33,7 @@ class AssetManager implements IAssetManager {
 
     // eslint-disable-next-line no-unused-vars
     onCurrentUserChanged = async (user: UserModel | undefined) => {
+      this.isCurrentAssetChangingFlag = true;
       if (user !== undefined) {
         const { default: assetProxy } = await import('./AssetProxy');
         await this.onAssetsChanged(await assetProxy.fetchAssets());
@@ -41,6 +46,10 @@ class AssetManager implements IAssetManager {
       return this.currentAsset;
     }
 
+    isCurrentAssetChanging(): boolean {
+      return this.isCurrentAssetChangingFlag;
+    }
+
     getUserCredentials(): UserCredentials | undefined {
       return this.credentials;
     }
@@ -49,6 +58,7 @@ class AssetManager implements IAssetManager {
       this.currentAsset = asset;
       await this.updateUserCredentials(this.currentAsset);
       this.listeners.map((listener) => listener(this.currentAsset));
+      this.isCurrentAssetChangingFlag = false;
     }
 
     async onAssetsChanged(assets: AssetModel[]): Promise<void> {

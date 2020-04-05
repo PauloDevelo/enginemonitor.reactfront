@@ -38,7 +38,7 @@ import
 import ModalEditAsset from '../ModalEditAsset/ModalEditAsset';
 
 export default function MainPanel() {
-  const [user, setUser] = useState<UserModel | undefined>(undefined);
+  const [user, setUser] = useState<UserModel | undefined | null>(null);
   const [currentAsset, setCurrentAsset] = useState<AssetModel | undefined>(undefined);
   const [error, setError] = useState<Error | undefined>(undefined);
   const { niceKey } = useParams();
@@ -134,7 +134,7 @@ export default function MainPanel() {
               <ErrorAlert error={error} onDismiss={dismissError} className="verytop bottomright" timeoutInMs={5000} />
             </>
 
-            {!user && (
+            {user === undefined && (
             <ModalLogin
               visible={!user}
               onLoggedIn={setUser}
@@ -143,7 +143,7 @@ export default function MainPanel() {
             />
             )}
 
-            {user && !currentAsset && (
+            {user && !currentAsset && assetManager.isCurrentAssetChanging() === false && (
             <ModalEditAsset
               asset={createDefaultAsset()}
               visible={user && !currentAsset}

@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 -Add google analytics
 -Add a file for the android app in order to hide the address bar.
--Make imageProxy fetch function faster with a inMemory object 
+-Make imageProxy fetch function faster with a inMemory object
+-Remove some unnecessary modal display when starting the app
 
 ## [2.13.7] - 2020-04-03
 
