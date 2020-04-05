@@ -165,13 +165,13 @@ describe('Test ImageProxy', () => {
       forceToLookUpInStorage: undefined, isOnlineAndSync: false, getImageNbCall: 0, getArrayInStorageNbCall: 1,
     },
     {
-      forceToLookUpInStorage: true, isOnlineAndSync: true, getImageNbCall: 0, getArrayInStorageNbCall: 1,
+      forceToLookUpInStorage: true, isOnlineAndSync: true, getImageNbCall: 0, getArrayInStorageNbCall: 0,
     },
     {
       forceToLookUpInStorage: false, isOnlineAndSync: true, getImageNbCall: 1, getArrayInStorageNbCall: 0,
     },
     {
-      forceToLookUpInStorage: true, isOnlineAndSync: false, getImageNbCall: 0, getArrayInStorageNbCall: 1,
+      forceToLookUpInStorage: true, isOnlineAndSync: false, getImageNbCall: 0, getArrayInStorageNbCall: 0,
     },
     {
       forceToLookUpInStorage: false, isOnlineAndSync: false, getImageNbCall: 0, getArrayInStorageNbCall: 1,
@@ -187,6 +187,7 @@ describe('Test ImageProxy', () => {
       onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(isOnlineAndSync));
       jest.spyOn(storageService, 'setItem');
       storageService.getArray.mockImplementation(async () => Promise.resolve(images));
+      imageProxy.inMemory[urlFetchImage] = images;
 
       // Act
       await imageProxy.fetchImages({ parentUiId: parentId, forceToLookUpInStorage });
@@ -297,6 +298,8 @@ describe('Test ImageProxy', () => {
     it('Should delete the image on the server and in the storage only for the entity deleted', async () => {
       // Arrange
       const imageToDelete = { ...imageToSave, sizeInByte: 2048 };
+      imageProxy.inMemory[urlFetchImage] = [imageToDelete];
+
       jest.spyOn(httpProxy, 'deleteReq');
 
       storageService.getArray.mockImplementationOnce(async (url) => {

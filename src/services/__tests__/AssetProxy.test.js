@@ -127,7 +127,7 @@ describe('Test AsseProxy', () => {
       await assetProxy.createOrSaveAsset(assetToSave);
 
       // Act
-      const assets = await assetProxy.fetchAssets(true);
+      const assets = await assetProxy.fetchAssets({ forceToLookUpInStorage: true });
 
       // Assert
       expect(assets[0]).toEqual(assetToSave);

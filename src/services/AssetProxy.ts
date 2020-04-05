@@ -13,8 +13,13 @@ import imageProxy from './ImageProxy';
 import userContext from './UserContext';
 import HttpError from '../http/HttpError';
 
+export interface FetchAssetProp{
+  cancelTimeout?: boolean;
+  forceToLookUpInStorage?: boolean;
+}
+
 export interface IAssetProxy{
-    fetchAssets(): Promise<AssetModel[]>;
+    fetchAssets(props?: FetchAssetProp): Promise<AssetModel[]>;
     createOrSaveAsset(assetToSave: AssetModel):Promise<AssetModel>;
     deleteAsset(idAsset: string): Promise<AssetModel>;
 
@@ -27,12 +32,14 @@ class AssetProxy implements IAssetProxy {
     private baseUrl:string = `${process.env.REACT_APP_API_URL_BASE}assets/`;
 
     // //////////////Equipment////////////////////////
-    fetchAssets = async (forceToLookUpInStorage: boolean = false): Promise<AssetModel[]> => {
+    fetchAssets = async ({ cancelTimeout, forceToLookUpInStorage }: FetchAssetProp = { cancelTimeout: false, forceToLookUpInStorage: false }): Promise<AssetModel[]> => {
       if (forceToLookUpInStorage) {
-        return progressiveHttpProxy.getArrayFromStorage(this.baseUrl, updateAsset);
+        return progressiveHttpProxy.getArrayFromStorage({ url: this.baseUrl, init: updateAsset });
       }
 
-      return progressiveHttpProxy.getArrayOnlineFirst<AssetModel>(this.baseUrl, 'assets', updateAsset);
+      return progressiveHttpProxy.getArrayOnlineFirst<AssetModel>({
+        url: this.baseUrl, keyName: 'assets', init: updateAsset, cancelTimeout,
+      });
     }
 
     createOrSaveAsset = async (assetToSave: AssetModel):Promise<AssetModel> => {
@@ -56,7 +63,7 @@ class AssetProxy implements IAssetProxy {
       return updateAsset(deletedAsset);
     }
 
-    getStoredAsset = async ():Promise<AssetModel[]> => this.fetchAssets(true)
+    getStoredAsset = async ():Promise<AssetModel[]> => this.fetchAssets({ forceToLookUpInStorage: true })
 
     existAsset = async (assetId: string | undefined):Promise<boolean> => {
       if (assetId === undefined) {

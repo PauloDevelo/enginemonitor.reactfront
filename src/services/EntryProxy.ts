@@ -18,6 +18,7 @@ export interface FetchAllEntriesProps{
     equipmentId: string|undefined;
     cancelToken?: CancelToken;
     forceToLookUpInStorage?: boolean;
+    cancelTimeout?: boolean;
 }
 export interface IEntryProxy{
     getBaseEntryUrl(equipmentId?: string): string;
@@ -75,23 +76,29 @@ class EntryProxy implements IEntryProxy {
     }
 
     fetchEntries = async ({
-      equipmentId, taskId, cancelToken = undefined, forceToLookUpInStorage = false,
+      equipmentId, taskId, cancelToken = undefined, forceToLookUpInStorage = false, cancelTimeout = false,
     }: FetchEntriesProps):Promise<EntryModel[]> => {
       if (equipmentId === undefined || taskId === undefined) { return []; }
 
-      const allEntries = await this.fetchAllEntries({ equipmentId, cancelToken, forceToLookUpInStorage });
+      const allEntries = await this.fetchAllEntries({
+        equipmentId, cancelToken, forceToLookUpInStorage, cancelTimeout,
+      });
 
       return allEntries.filter((entry) => entry.taskUiId === taskId);
     }
 
-    fetchAllEntries = async ({ equipmentId, cancelToken = undefined, forceToLookUpInStorage = false }:FetchAllEntriesProps):Promise<EntryModel[]> => {
+    fetchAllEntries = async ({
+      equipmentId, cancelToken = undefined, forceToLookUpInStorage = false, cancelTimeout = false,
+    }:FetchAllEntriesProps):Promise<EntryModel[]> => {
       if (equipmentId === undefined) { return []; }
 
       if (forceToLookUpInStorage) {
-        return progressiveHttpProxy.getArrayFromStorage(this.getBaseEntryUrl(equipmentId), updateEntry);
+        return progressiveHttpProxy.getArrayFromStorage({ url: this.getBaseEntryUrl(equipmentId), init: updateEntry });
       }
 
-      return progressiveHttpProxy.getArrayOnlineFirst<EntryModel>(this.getBaseEntryUrl(equipmentId), 'entries', updateEntry, cancelToken);
+      return progressiveHttpProxy.getArrayOnlineFirst<EntryModel>({
+        url: this.getBaseEntryUrl(equipmentId), keyName: 'entries', init: updateEntry, cancelToken, cancelTimeout,
+      });
     }
 
     getStoredEntries = async (equipmentId: string, taskId: string | undefined = undefined):Promise<EntryModel[]> => {

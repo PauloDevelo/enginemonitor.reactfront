@@ -1,9 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import { CancelToken } from 'axios';
+import _ from 'lodash';
 import progressiveHttpProxy from './ProgressiveHttpProxy';
 
 // eslint-disable-next-line no-unused-vars
-import storageService from './StorageService';
+import storageService, { IUserStorageListener } from './StorageService';
 
 // eslint-disable-next-line no-unused-vars
 import { ImageModel } from '../types/Types';
@@ -16,6 +17,7 @@ export interface FetchImagesProps{
     forceToLookUpInStorage?: boolean;
     checkStorageFirst? : boolean;
     cancelToken?: CancelToken | undefined;
+    cancelTimeout?: boolean;
 }
 
 export interface IImageProxy{
@@ -27,24 +29,53 @@ export interface IImageProxy{
     onEntityDeleted(parentUiId: string):Promise<void>;
 }
 
-class ImageProxy implements IImageProxy {
+class ImageProxy implements IImageProxy, IUserStorageListener {
     private baseUrl:string = `${process.env.REACT_APP_API_URL_BASE}images/`;
+
+    private inMemory: any = {};
+
+    public constructor() {
+      storageService.registerUserStorageListener(this);
+    }
+
+    public onUserStorageOpened = async (): Promise<void> => {
+      this.inMemory = {};
+
+      const keys = await storageService.getUserStorage().keys();
+      const imageKeys = _.filter(keys, (key) => _.startsWith(key, this.baseUrl));
+
+      const updateInMemory = async (imagesKey: string): Promise<void> => {
+        this.inMemory[imagesKey] = await storageService.getArray(imagesKey);
+      };
+
+      await Promise.all(imageKeys.map((imageKey) => updateInMemory(imageKey)));
+    }
+
+    public onUserStorageClosed = async (): Promise<void> => {
+      this.inMemory = {};
+    }
 
     // //////////////Equipment////////////////////////
     fetchImages = async ({
-      parentUiId, forceToLookUpInStorage = false, checkStorageFirst = false, cancelToken = undefined,
+      parentUiId, forceToLookUpInStorage = false, checkStorageFirst = false, cancelToken = undefined, cancelTimeout = false,
     }: FetchImagesProps): Promise<ImageModel[]> => {
       if (forceToLookUpInStorage) {
-        return storageService.getArray<ImageModel>(this.baseUrl + parentUiId);
+        return _.get(this.inMemory, this.baseUrl + parentUiId, []);
       }
 
       if (checkStorageFirst) {
-        if (await storageService.existItem(this.baseUrl + parentUiId)) {
-          return storageService.getArray<ImageModel>(this.baseUrl + parentUiId);
+        const images = _.get(this.inMemory, this.baseUrl + parentUiId, undefined);
+        if (images !== undefined) {
+          return images;
         }
       }
 
-      return progressiveHttpProxy.getArrayOnlineFirst<ImageModel>(this.baseUrl + parentUiId, 'images', (image) => image, cancelToken);
+      const images = await progressiveHttpProxy.getArrayOnlineFirst<ImageModel>({
+        url: this.baseUrl + parentUiId, keyName: 'images', init: (image) => image, cancelToken, cancelTimeout,
+      });
+      this.inMemory[this.baseUrl + parentUiId] = images;
+
+      return images;
     }
 
     createImage = async (imgToSave: ImageModel, blobImage: Blob, thumbnail: Blob):Promise<ImageModel> => {
@@ -55,14 +86,19 @@ class ImageProxy implements IImageProxy {
 
       const savedImage: ImageModel = await progressiveHttpProxy.postNewImage(createImageUrl, imgToSave, blobImage, thumbnail);
 
-      await storageService.updateArray(createImageUrl, savedImage);
+      const updateImages = await storageService.updateArray(createImageUrl, savedImage);
+      this.inMemory[createImageUrl] = updateImages;
+
       userContext.onImageAdded(savedImage.sizeInByte);
       return savedImage;
     }
 
     updateImage = async (imageToSave: ImageModel):Promise<ImageModel> => {
       const updatedImage = await progressiveHttpProxy.postAndUpdate(`${this.baseUrl + imageToSave.parentUiId}/${imageToSave._uiId}`, 'image', imageToSave, (image) => image);
-      await storageService.updateArray(this.baseUrl + updatedImage.parentUiId, updatedImage);
+
+      const updatedImages = await storageService.updateArray(this.baseUrl + updatedImage.parentUiId, updatedImage);
+      this.inMemory[this.baseUrl + updatedImage.parentUiId] = updatedImages;
+
       return updatedImage;
     };
 
@@ -86,6 +122,8 @@ class ImageProxy implements IImageProxy {
 
     private async removeImageFromStorage(image: ImageModel) {
       const deletedImage = await storageService.removeItemInArray<ImageModel>(this.baseUrl + image.parentUiId, image._uiId);
+      this.inMemory[this.baseUrl + image.parentUiId] = await storageService.getArray(this.baseUrl + image.parentUiId);
+
       await storageService.removeItem<ImageModel>(image.url);
       await storageService.removeItem<ImageModel>(image.thumbnailUrl);
 

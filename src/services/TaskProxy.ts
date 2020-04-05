@@ -19,6 +19,7 @@ export interface FetchTaskProps{
     equipmentId: string | undefined;
     cancelToken?: CancelToken | undefined;
     forceToLookUpInStorage?: boolean;
+    cancelTimeout?: boolean;
 }
 
 export interface ITaskProxy{
@@ -68,7 +69,9 @@ class TaskProxy implements ITaskProxy {
       return updateTask(removedTask);
     }
 
-    fetchTasks = async ({ equipmentId, forceToLookUpInStorage = false, cancelToken = undefined } :FetchTaskProps): Promise<TaskModel[]> => {
+    fetchTasks = async ({
+      equipmentId, forceToLookUpInStorage = false, cancelToken = undefined, cancelTimeout = false,
+    } :FetchTaskProps): Promise<TaskModel[]> => {
       if (equipmentId === undefined) {
         return [];
       }
@@ -77,7 +80,9 @@ class TaskProxy implements ITaskProxy {
         return storageService.getArray(this.baseUrl + equipmentId);
       }
 
-      const tasks:TaskModel[] = await progressiveHttpProxy.getArrayOnlineFirst(this.baseUrl + equipmentId, 'tasks', updateTask, cancelToken);
+      const tasks:TaskModel[] = await progressiveHttpProxy.getArrayOnlineFirst({
+        url: this.baseUrl + equipmentId, keyName: 'tasks', init: updateTask, cancelToken, cancelTimeout,
+      });
       return Promise.all(tasks.map(async (task) => updateRealtimeFields(equipmentId, task)));
     }
 

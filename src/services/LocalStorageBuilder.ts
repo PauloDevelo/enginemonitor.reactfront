@@ -50,7 +50,7 @@ class LocalStorageBuilder extends TaskWithProgress {
         await actionManager.writeActionsInStorage();
         await storageService.setStorageVersion(storageVersion);
 
-        const assets = await assetProxy.fetchAssets();
+        const assets = await assetProxy.fetchAssets({ cancelTimeout: true });
 
         this.taskProgress.init(assets.length);
         await this.triggerTaskProgressChanged();
@@ -69,7 +69,7 @@ class LocalStorageBuilder extends TaskWithProgress {
       await userProxy.getCredentials({ assetUiId: asset._uiId });
       await guestLinkProxy.getGuestLinks(asset._uiId);
 
-      const equipments = await equipmentProxy.fetchEquipments(asset._uiId);
+      const equipments = await equipmentProxy.fetchEquipments({ assetId: asset._uiId, cancelTimeout: true });
 
       if (equipments.length > 0) {
         this.taskProgress.addEntities(equipments.length);
@@ -82,35 +82,26 @@ class LocalStorageBuilder extends TaskWithProgress {
     }
 
     private fetchEquipmentChildren = async (equipment: EquipmentModel) => {
-      const tasks = await taskProxy.fetchTasks({ equipmentId: equipment._uiId });
+      const tasks = await taskProxy.fetchTasks({ equipmentId: equipment._uiId, cancelTimeout: true });
       if (tasks.length > 0) {
         this.taskProgress.addEntities(tasks.length);
         await this.triggerTaskProgressChanged();
       }
 
-      const entries = await entryProxy.fetchAllEntries({ equipmentId: equipment._uiId });
+      const entries = await entryProxy.fetchAllEntries({ equipmentId: equipment._uiId, cancelTimeout: true });
       if (entries.length > 0) {
         this.taskProgress.addEntities(entries.length);
         await this.triggerTaskProgressChanged();
       }
 
-      for (let index = 0; index < tasks.length; index++) {
-        const task = tasks[index];
-        // eslint-disable-next-line no-await-in-loop
-        await this.fetchEntityImages(task);
-      }
-
-      for (let index = 0; index < entries.length; index++) {
-        const entry = entries[index];
-        // eslint-disable-next-line no-await-in-loop
-        await this.fetchEntityImages(entry);
-      }
+      await Promise.all(tasks.map((task) => this.fetchEntityImages(task)));
+      await Promise.all(entries.map((entry) => this.fetchEntityImages(entry)));
 
       return this.fetchEntityImages(equipment);
     }
 
     private fetchEntityImages = async (entity: EntityModel) => {
-      const images = await imageProxy.fetchImages({ parentUiId: entity._uiId });
+      const images = await imageProxy.fetchImages({ parentUiId: entity._uiId, cancelTimeout: true });
 
       this.taskProgress.decrement();
       this.taskProgress.addEntities(images.length);

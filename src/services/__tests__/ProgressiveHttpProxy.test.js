@@ -463,7 +463,7 @@ describe('Test ProgressiveHttpProxy', () => {
         jest.spyOn(storageService, 'setItem');
 
         // Act
-        const data = await progressiveHttpProxy.getArrayOnlineFirst(urlToGet, keyname, updateFn);
+        const data = await progressiveHttpProxy.getArrayOnlineFirst({ url: urlToGet, keyName: keyname, init: updateFn });
 
         // Assert
         expect(data).toStrictEqual(dataToGet);

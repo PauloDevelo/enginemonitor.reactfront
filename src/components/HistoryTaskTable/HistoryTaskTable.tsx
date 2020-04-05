@@ -92,13 +92,16 @@ const Table = composeDecorators(
 const HistoryTaskTable = ({ className }: Props) => {
   const modalHook = useEditModal<EntryModel | undefined>(undefined);
   const [entries, setEntries] = useState<DisplayableEntry[]>([]);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     // eslint-disable-next-line no-unused-vars
     const onEntriesChanged = async (entities: EntryModel[] | TaskModel | undefined) => {
+      setLoading(true);
       const promises = entryManager.getTaskEntries().map(convertEntryModelToDisplayableEntry);
       const displayableEntries = await Promise.all(promises);
       setEntries(displayableEntries);
+      setLoading(false);
     };
 
     taskManager.registerOnCurrentTaskChanged(onEntriesChanged);
@@ -233,8 +236,8 @@ const HistoryTaskTable = ({ className }: Props) => {
           </Button>
         )}
       </span>
-      {entryManager.areEntriesLoading() && <Loading />}
-      {entryManager.areEntriesLoading() === false
+      {(taskManager.isCurrentTaskChanging() || entryManager.areEntriesLoading() || isLoading) && <Loading />}
+      {taskManager.isCurrentTaskChanging() === false && entryManager.areEntriesLoading() === false && isLoading === false
             && (
             <Table
               data={entries}

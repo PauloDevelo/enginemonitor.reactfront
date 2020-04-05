@@ -39,7 +39,7 @@ class EquipmentManager implements IEquipmentManager {
     private onCurrentAssetChanged = async (currentAsset: AssetModel | undefined) => {
       if (currentAsset !== undefined) {
         const { default: equipmentProxy } = await import('./EquipmentProxy');
-        this.onEquipmentsChanged(await equipmentProxy.fetchEquipments(currentAsset._uiId));
+        this.onEquipmentsChanged(await equipmentProxy.fetchEquipments({ assetId: currentAsset._uiId }));
       } else {
         this.onEquipmentsChanged([]);
       }

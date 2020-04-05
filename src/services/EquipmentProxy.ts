@@ -14,8 +14,14 @@ import imageProxy from './ImageProxy';
 import assetManager from './AssetManager';
 import HttpError from '../http/HttpError';
 
+export interface FetchEquipmentProp{
+  assetId?: string,
+  cancelTimeout?: boolean,
+  forceToLookUpInStorage?: boolean
+}
+
 export interface IEquipmentProxy{
-    fetchEquipments(assetId?: string): Promise<EquipmentModel[]>;
+    fetchEquipments(props?: FetchEquipmentProp): Promise<EquipmentModel[]>;
     createOrSaveEquipment(equipmentToSave: EquipmentModel):Promise<EquipmentModel>;
     deleteEquipment(idEquipment: string): Promise<EquipmentModel>;
 
@@ -30,13 +36,15 @@ class EquipmentProxy implements IEquipmentProxy {
     private getBaseUrl = (assetId: string | undefined) => `${process.env.REACT_APP_API_URL_BASE}equipments/${assetId}/`
 
     // //////////////Equipment////////////////////////
-    fetchEquipments = async (assetId: string| undefined = undefined, forceToLookUpInStorage: boolean = false): Promise<EquipmentModel[]> => {
+    fetchEquipments = async ({ assetId, forceToLookUpInStorage, cancelTimeout }: FetchEquipmentProp = { assetId: undefined, forceToLookUpInStorage: false, cancelTimeout: false }): Promise<EquipmentModel[]> => {
       const assetUiId = assetId === undefined ? assetManager.getCurrentAsset()?._uiId : assetId;
       if (forceToLookUpInStorage) {
-        return progressiveHttpProxy.getArrayFromStorage<EquipmentModel>(this.getBaseUrl(assetUiId), updateEquipment);
+        return progressiveHttpProxy.getArrayFromStorage<EquipmentModel>({ url: this.getBaseUrl(assetUiId), init: updateEquipment });
       }
 
-      return progressiveHttpProxy.getArrayOnlineFirst<EquipmentModel>(this.getBaseUrl(assetUiId), 'equipments', updateEquipment);
+      return progressiveHttpProxy.getArrayOnlineFirst<EquipmentModel>({
+        url: this.getBaseUrl(assetUiId), keyName: 'equipments', init: updateEquipment, cancelTimeout,
+      });
     }
 
     createOrSaveEquipment = async (equipmentToSave: EquipmentModel):Promise<EquipmentModel> => {
@@ -69,7 +77,7 @@ class EquipmentProxy implements IEquipmentProxy {
       return updateEquipment(deletedEquipment);
     }
 
-    getStoredEquipment = async ():Promise<EquipmentModel[]> => this.fetchEquipments(assetManager.getCurrentAsset()?._uiId, true)
+    getStoredEquipment = async ():Promise<EquipmentModel[]> => this.fetchEquipments({ assetId: assetManager.getCurrentAsset()?._uiId, forceToLookUpInStorage: true })
 
     existEquipment = async (equipmentId: string | undefined):Promise<boolean> => {
       if (equipmentId === undefined) {
@@ -82,7 +90,7 @@ class EquipmentProxy implements IEquipmentProxy {
     }
 
     onAssetDeleted = async (assetId: string): Promise<void> => {
-      const equipments = await this.fetchEquipments(assetId, true);
+      const equipments = await this.fetchEquipments({ assetId, forceToLookUpInStorage: true });
 
       await equipments.reduce(async (previousPromise, equipment) => {
         await previousPromise;

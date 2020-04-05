@@ -142,12 +142,12 @@ describe('Test LocalStorageBuilder', () => {
 
     // Assert
     expect(equipmentProxy.fetchEquipments).toHaveBeenCalledTimes(2);
-    expect(equipmentProxy.fetchEquipments.mock.calls[0][0]).toEqual(asset1._uiId);
-    expect(equipmentProxy.fetchEquipments.mock.calls[1][0]).toEqual(asset2._uiId);
+    expect(equipmentProxy.fetchEquipments.mock.calls[0][0]).toEqual({ assetId: asset1._uiId, cancelTimeout: true });
+    expect(equipmentProxy.fetchEquipments.mock.calls[1][0]).toEqual({ assetId: asset2._uiId, cancelTimeout: true });
 
     expect(imageProxy.fetchImages).toHaveBeenCalledTimes(2);
-    expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: asset1._uiId });
-    expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: asset2._uiId });
+    expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: asset1._uiId, cancelTimeout: true });
+    expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: asset2._uiId, cancelTimeout: true });
 
     expect(userProxy.getCredentials).toHaveBeenCalledTimes(2);
     expect(userProxy.getCredentials.mock.calls[0][0]).toEqual({ assetUiId: asset1._uiId });
@@ -181,17 +181,17 @@ describe('Test LocalStorageBuilder', () => {
 
     // Assert
     expect(taskProxy.fetchTasks).toHaveBeenCalledTimes(2);
-    expect(taskProxy.fetchTasks.mock.calls[0][0]).toEqual({ equipmentId: equipment1._uiId });
-    expect(taskProxy.fetchTasks.mock.calls[1][0]).toEqual({ equipmentId: equipment2._uiId });
+    expect(taskProxy.fetchTasks.mock.calls[0][0]).toEqual({ equipmentId: equipment1._uiId, cancelTimeout: true });
+    expect(taskProxy.fetchTasks.mock.calls[1][0]).toEqual({ equipmentId: equipment2._uiId, cancelTimeout: true });
 
     expect(entryProxy.fetchAllEntries).toHaveBeenCalledTimes(2);
-    expect(entryProxy.fetchAllEntries.mock.calls[0][0]).toEqual({ equipmentId: equipment1._uiId });
-    expect(entryProxy.fetchAllEntries.mock.calls[1][0]).toEqual({ equipmentId: equipment2._uiId });
+    expect(entryProxy.fetchAllEntries.mock.calls[0][0]).toEqual({ equipmentId: equipment1._uiId, cancelTimeout: true });
+    expect(entryProxy.fetchAllEntries.mock.calls[1][0]).toEqual({ equipmentId: equipment2._uiId, cancelTimeout: true });
 
     expect(imageProxy.fetchImages).toHaveBeenCalledTimes(3);
-    expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: equipment1._uiId });
-    expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: equipment2._uiId });
-    expect(imageProxy.fetchImages.mock.calls[2][0]).toEqual({ parentUiId: asset1._uiId });
+    expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: equipment1._uiId, cancelTimeout: true });
+    expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: equipment2._uiId, cancelTimeout: true });
+    expect(imageProxy.fetchImages.mock.calls[2][0]).toEqual({ parentUiId: asset1._uiId, cancelTimeout: true });
 
     expect(progressListener).toHaveBeenCalledTimes(1 + 1 + 3 + 1);
     expect(progressListener.mock.calls[0][0]).toEqual({ isRunning: true, total: 1, remaining: 1 });
@@ -219,10 +219,10 @@ describe('Test LocalStorageBuilder', () => {
 
     // Assert
     expect(imageProxy.fetchImages).toHaveBeenCalledTimes(4);
-    expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: task1._uiId });
-    expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: task2._uiId });
-    expect(imageProxy.fetchImages.mock.calls[2][0]).toEqual({ parentUiId: equipment1._uiId });
-    expect(imageProxy.fetchImages.mock.calls[3][0]).toEqual({ parentUiId: asset1._uiId });
+    expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: task1._uiId, cancelTimeout: true });
+    expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: task2._uiId, cancelTimeout: true });
+    expect(imageProxy.fetchImages.mock.calls[2][0]).toEqual({ parentUiId: equipment1._uiId, cancelTimeout: true });
+    expect(imageProxy.fetchImages.mock.calls[3][0]).toEqual({ parentUiId: asset1._uiId, cancelTimeout: true });
 
     expect(progressListener).toHaveBeenCalledTimes(1 + 1 + 1 + 4 + 1);
     expect(progressListener.mock.calls[0][0]).toEqual({ isRunning: true, total: 1, remaining: 1 });
@@ -252,10 +252,10 @@ describe('Test LocalStorageBuilder', () => {
 
     // Assert
     expect(imageProxy.fetchImages).toHaveBeenCalledTimes(4);
-    expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: entry1._uiId });
-    expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: entry2._uiId });
-    expect(imageProxy.fetchImages.mock.calls[2][0]).toEqual({ parentUiId: equipment1._uiId });
-    expect(imageProxy.fetchImages.mock.calls[3][0]).toEqual({ parentUiId: asset1._uiId });
+    expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: entry1._uiId, cancelTimeout: true });
+    expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: entry2._uiId, cancelTimeout: true });
+    expect(imageProxy.fetchImages.mock.calls[2][0]).toEqual({ parentUiId: equipment1._uiId, cancelTimeout: true });
+    expect(imageProxy.fetchImages.mock.calls[3][0]).toEqual({ parentUiId: asset1._uiId, cancelTimeout: true });
 
     expect(progressListener).toHaveBeenCalledTimes(1 + 1 + 1 + 4 + 1);
     expect(progressListener.mock.calls[0][0]).toEqual({ isRunning: true, total: 1, remaining: 1 });

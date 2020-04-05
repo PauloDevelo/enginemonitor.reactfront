@@ -109,6 +109,7 @@ describe('HistoryTaskTable', () => {
   beforeEach(() => {
     equipmentManager.getCurrentEquipment.mockImplementation(() => equipment);
     taskManager.getCurrentTask.mockImplementation(() => task);
+    taskManager.isCurrentTaskChanging.mockImplementation(() => false);
     entryManager.getTaskEntries.mockImplementation(() => entriesSortedByDate);
     entryManager.areEntriesLoading.mockImplementation(() => false);
 
@@ -119,20 +120,21 @@ describe('HistoryTaskTable', () => {
       return Promise.resolve(false);
     });
 
-
     imageProxy.fetchImages.mockResolvedValue([]);
   });
 
   afterEach(() => {
     equipmentManager.getCurrentEquipment.mockRestore();
+
     taskManager.getCurrentTask.mockRestore();
-    entryManager.getTaskEntries.mockRestore();
-    entryManager.areEntriesLoading.mockRestore();
+    taskManager.isCurrentTaskChanging.mockRestore();
 
     entryProxy.existEntry.mockRestore();
+
     imageProxy.fetchImages.mockRestore();
 
-    entryManager.getTaskEntries.mockReset();
+    entryManager.getTaskEntries.mockRestore();
+    entryManager.areEntriesLoading.mockRestore();
     entryManager.onEntrySaved.mockReset();
     entryManager.onEntryDeleted.mockReset();
   });

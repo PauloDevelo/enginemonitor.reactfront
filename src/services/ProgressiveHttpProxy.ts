@@ -14,13 +14,25 @@ import storageService from './StorageService';
 import userContext from './UserContext';
 import assetManager from './AssetManager';
 
-const timeout = {
+const timeouts = {
   postImage: 5000,
   post: 2000,
   delete: 2000,
   get: 2000,
   notStoredGet: 10000,
 };
+
+export interface GetRequest<T>{
+  url: string;
+  init?:(model:T) => T;
+}
+
+export interface GetOnlineRequest<T> extends GetRequest<T>{
+  keyName:string;
+  cancelToken?: CancelToken | undefined;
+  cancelTimeout?: boolean;
+}
+
 /**
  * This interface is an enhanced http proxy that manages offline mode.
  */
@@ -60,9 +72,9 @@ export interface ISyncHttpProxy{
      * @param keyName The field name that contain the array
      * @param init The function init to call on each item before returning the array to the callee
      */
-    getArrayOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken?: CancelToken | undefined): Promise<T[]>;
+    getArrayOnlineFirst<T>(props: GetOnlineRequest<T>): Promise<T[]>;
 
-    getArrayFromStorage<T>(key: string, init?:(model:T) => T): Promise<T[]>;
+    getArrayFromStorage<T>(props: GetRequest<T>): Promise<T[]>;
 
     /**
      * This function returns a T element and update it in the user storage if online.
@@ -87,7 +99,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
 
     if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const { image } = await httpProxy.postImage(createImageUrl, imgToSave, blobImage, thumbnail, { timeout: timeout.postImage });
+        const { image } = await httpProxy.postImage(createImageUrl, imgToSave, blobImage, thumbnail, { timeout: timeouts.postImage });
         return image;
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
@@ -117,7 +129,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
 
     if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const savedData = (await httpProxy.post(url, data, { timeout: timeout.post }))[keyName];
+        const savedData = (await httpProxy.post(url, data, { timeout: timeouts.post }))[keyName];
 
         return update ? update(savedData) : savedData;
       } catch (reason) {
@@ -144,7 +156,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
 
     if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const deletedEntity = (await httpProxy.deleteReq(url, { timeout: timeout.delete }))[keyName];
+        const deletedEntity = (await httpProxy.deleteReq(url, { timeout: timeouts.delete }))[keyName];
         if (update) {
           update(deletedEntity);
         }
@@ -160,10 +172,12 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
     }
   }
 
-  async getArrayOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T[]> {
+  async getArrayOnlineFirst<T>({
+    url, keyName, init, cancelToken, cancelTimeout,
+  }: GetOnlineRequest<T>): Promise<T[]> {
     if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const array = (await httpProxy.get(url, { cancelToken, timeout: (await this.getGetTimeout(url)) }))[keyName] as T[];
+        const array = (await httpProxy.get(url, { cancelToken, timeout: (await this.getGetTimeout(url, cancelTimeout)) }))[keyName] as T[];
 
         const initArray = init ? array.map(init) : array;
 
@@ -172,17 +186,17 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
         return initArray;
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
-          return this.getArrayFromStorage<T>(url, init);
+          return this.getArrayFromStorage<T>({ url, init });
         }
         throw reason;
       }
     }
 
-    return this.getArrayFromStorage<T>(url, init);
+    return this.getArrayFromStorage<T>({ url, init });
   }
 
-  async getArrayFromStorage<T>(key: string, init?:(model:T) => T) {
-    const array = await storageService.getArray<T>(key);
+  async getArrayFromStorage<T>({ url, init }: GetRequest<T>) {
+    const array = await storageService.getArray<T>(url);
     return init ? array.map(init) : array;
   }
 
@@ -223,12 +237,16 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
     }
   }
 
-  private async getGetTimeout(url: string): Promise<number> {
-    if (await storageService.existItem(url) === false) {
-      return timeout.notStoredGet;
+  private async getGetTimeout(url: string, cancelTimeout?: boolean): Promise<number> {
+    if (cancelTimeout === true) {
+      return 0;
     }
 
-    return timeout.get;
+    if (await storageService.existItem(url) === false) {
+      return timeouts.notStoredGet;
+    }
+
+    return timeouts.get;
   }
 }
 

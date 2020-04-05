@@ -66,12 +66,15 @@ const EquipmentHistoryTable = ({ className }: Props) => {
   const [parentTask, setParentTask] = useState<TaskModel | undefined>(undefined);
   const modalHook = useEditModal<EntryModel | undefined>(undefined);
   const [entries, setEntries] = useState<DisplayableEntry[]>([]);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     const onEntriesChanged = async (newEntries: EntryModel[]) => {
+      setLoading(true);
       const promises = newEntries.map(convertEntryModelToDisplayableEntry);
       const displayableEntries = await Promise.all(promises);
       setEntries(displayableEntries);
+      setLoading(false);
     };
 
     entryManager.registerOnEquipmentEntriesChanged(onEntriesChanged);
@@ -224,8 +227,8 @@ const EquipmentHistoryTable = ({ className }: Props) => {
           </Button>
         )}
       </span>
-      {entryManager.areEntriesLoading() && <Loading />}
-      {entryManager.areEntriesLoading() === false
+      {(entryManager.areEntriesLoading() || isLoading) && <Loading />}
+      {entryManager.areEntriesLoading() === false && isLoading === false
             && (
             <Table
               data={entries}

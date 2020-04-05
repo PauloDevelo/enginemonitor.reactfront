@@ -54,7 +54,7 @@ class GuestLinkProxy implements IGuestLinkProxy {
       return guestlink;
     }
 
-    getGuestLinks = async (assetUiId: string): Promise<GuestLinkModel[]> => progressiveHttpProxy.getArrayOnlineFirst(this.getGuestLinksUrl(assetUiId), 'guestlinks')
+    getGuestLinks = async (assetUiId: string): Promise<GuestLinkModel[]> => progressiveHttpProxy.getArrayOnlineFirst({ url: this.getGuestLinksUrl(assetUiId), keyName: 'guestlinks' })
 
     removeGuestLink = async (guestLinkUiId: string, assetUiId: string): Promise<GuestLinkModel> => {
       if (await onlineManager.isOnline() === false) {
