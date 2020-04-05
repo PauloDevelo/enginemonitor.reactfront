@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+-Add google analytics
+-Add a file for the android app in order to hide the address bar.
+-Make imageProxy fetch function faster with a inMemory object 
 
 ## [2.13.7] - 2020-04-03
 
