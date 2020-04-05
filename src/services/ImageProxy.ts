@@ -32,7 +32,7 @@ export interface IImageProxy{
 class ImageProxy implements IImageProxy, IUserStorageListener {
     private baseUrl:string = `${process.env.REACT_APP_API_URL_BASE}images/`;
 
-    private inMemory: any = {};
+    private inMemory: { [url: string]: ImageModel[]} = {};
 
     public constructor() {
       storageService.registerUserStorageListener(this);
@@ -45,7 +45,7 @@ class ImageProxy implements IImageProxy, IUserStorageListener {
       const imageKeys = _.filter(keys, (key) => _.startsWith(key, this.baseUrl));
 
       const updateInMemory = async (imagesKey: string): Promise<void> => {
-        this.inMemory[imagesKey] = await storageService.getArray(imagesKey);
+        this.inMemory[imagesKey] = await progressiveHttpProxy.getArrayFromStorage({ url: imagesKey });
       };
 
       await Promise.all(imageKeys.map((imageKey) => updateInMemory(imageKey)));
@@ -71,7 +71,7 @@ class ImageProxy implements IImageProxy, IUserStorageListener {
       }
 
       const images = await progressiveHttpProxy.getArrayOnlineFirst<ImageModel>({
-        url: this.baseUrl + parentUiId, keyName: 'images', init: (image) => image, cancelToken, cancelTimeout,
+        url: this.baseUrl + parentUiId, keyName: 'images', cancelToken, cancelTimeout,
       });
       this.inMemory[this.baseUrl + parentUiId] = images;
 
@@ -103,7 +103,7 @@ class ImageProxy implements IImageProxy, IUserStorageListener {
     };
 
     deleteImage = async (image: ImageModel): Promise<ImageModel> => {
-      await progressiveHttpProxy.deleteAndUpdate<ImageModel>(`${this.baseUrl + image.parentUiId}/${image._uiId}`, 'image', (anImage) => anImage);
+      await progressiveHttpProxy.delete<ImageModel>(`${this.baseUrl + image.parentUiId}/${image._uiId}`);
       const deletedImage = await this.removeImageFromStorage(image);
       userContext.onImageRemoved(deletedImage.sizeInByte);
 

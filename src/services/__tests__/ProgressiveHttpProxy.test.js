@@ -285,7 +285,7 @@ describe('Test ProgressiveHttpProxy', () => {
         jest.spyOn(actionManager, 'addAction');
 
         // Act
-        await progressiveHttpProxy.deleteAndUpdate(urlToDelete, 'keyname', updateFn);
+        await progressiveHttpProxy.delete(urlToDelete, 'keyname', updateFn);
 
         // Assert
         expect(httpProxy.deleteReq).toBeCalledTimes(expectedHttpDeleteCall);
@@ -317,7 +317,7 @@ describe('Test ProgressiveHttpProxy', () => {
 
       try {
         // Act
-        await progressiveHttpProxy.deleteAndUpdate(urlToDelete, 'keyname', updateFn);
+        await progressiveHttpProxy.delete(urlToDelete, 'keyname', updateFn);
       } catch (error) {
         // Assert
         expect(error.message).toBe('Unexpected exception');
@@ -558,7 +558,7 @@ describe('Test ProgressiveHttpProxy', () => {
 
       try {
         // Act
-        await progressiveHttpProxy.deleteAndUpdate(urlToDelete, 'keyname', updateFn);
+        await progressiveHttpProxy.delete(urlToDelete, 'keyname', updateFn);
       } catch (error) {
         // Assert
         expect(error instanceof HttpError).toBe(true);

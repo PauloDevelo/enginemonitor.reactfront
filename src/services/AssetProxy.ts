@@ -51,7 +51,7 @@ class AssetProxy implements IAssetProxy {
     }
 
     deleteAsset = async (idAsset: string): Promise<AssetModel> => {
-      await progressiveHttpProxy.deleteAndUpdate<AssetModel>(this.baseUrl + idAsset, 'asset', updateAsset);
+      await progressiveHttpProxy.delete<AssetModel>(this.baseUrl + idAsset);
 
       await equipmentProxy.onAssetDeleted(idAsset);
       await imageProxy.onEntityDeleted(idAsset);

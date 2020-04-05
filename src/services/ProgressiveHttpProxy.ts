@@ -57,13 +57,11 @@ export interface ISyncHttpProxy{
     postAndUpdate<T>(url: string, keyName:string, dataToPost:T, update?:(date:T)=>T, checkReadOnlyCredentials?: boolean):Promise<T>;
 
     /**
-     * This function excute the http delete query and call the update function in the returned data.
+     * This function execute the http delete query and call the update function in the returned data.
      * In offline mode, this function will add an action in the history.
      * @param url The delete query url
-     * @param keyName The field name that contain the data to return.
-     * @param update The function that will update the data before returning it to the callee
      */
-    deleteAndUpdate<T>(url: string, keyName: string, update?:(data:T)=>T):Promise<void>;
+    delete<T>(url: string):Promise<void>;
 
     /**
      * This function returns an array of T element and update the array in the user storage if online.
@@ -146,7 +144,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
     return dataToPost;
   }
 
-  async deleteAndUpdate<T>(url: string, keyName: string, update?:(data:T)=>T):Promise<void> {
+  async delete<T>(url: string):Promise<void> {
     this.checkUserCredentialForPostingOrDeleting();
 
     const addDeleteAction = () => {
@@ -156,10 +154,7 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
 
     if (await onlineManager.isOnlineAndSynced()) {
       try {
-        const deletedEntity = (await httpProxy.deleteReq(url, { timeout: timeouts.delete }))[keyName];
-        if (update) {
-          update(deletedEntity);
-        }
+        await httpProxy.deleteReq(url, { timeout: timeouts.delete });
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
           addDeleteAction();

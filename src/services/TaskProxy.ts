@@ -60,7 +60,7 @@ class TaskProxy implements ITaskProxy {
     }
 
     deleteTask = async (equipmentId: string, taskId: string): Promise<TaskModel> => {
-      await progressiveHttpProxy.deleteAndUpdate<TaskModel>(`${this.baseUrl + equipmentId}/${taskId}`, 'task', updateTask);
+      await progressiveHttpProxy.delete<TaskModel>(`${this.baseUrl + equipmentId}/${taskId}`);
 
       const removedTask = await storageService.removeItemInArray<TaskModel>(this.baseUrl + equipmentId, taskId);
       await entryProxy.onTaskDeleted(equipmentId, taskId);
@@ -77,7 +77,7 @@ class TaskProxy implements ITaskProxy {
       }
 
       if (forceToLookUpInStorage) {
-        return storageService.getArray(this.baseUrl + equipmentId);
+        return progressiveHttpProxy.getArrayFromStorage({ url: this.baseUrl + equipmentId, init: updateTask });
       }
 
       const tasks:TaskModel[] = await progressiveHttpProxy.getArrayOnlineFirst({

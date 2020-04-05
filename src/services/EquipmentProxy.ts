@@ -67,7 +67,7 @@ class EquipmentProxy implements IEquipmentProxy {
       const assetId = assetManager.getCurrentAsset()?._uiId;
       const deleteUrl = `${this.getBaseUrl(assetId)}${idEquipment}`;
 
-      await progressiveHttpProxy.deleteAndUpdate<EquipmentModel>(deleteUrl, 'equipment', updateEquipment);
+      await progressiveHttpProxy.delete<EquipmentModel>(deleteUrl);
 
       await entryProxy.onEquipmentDeleted(idEquipment);
       await taskProxy.onEquipmentDeleted(idEquipment);
