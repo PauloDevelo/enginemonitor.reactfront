@@ -24,14 +24,14 @@ describe('Test AssetManager', () => {
   });
 
   describe('getCurrentAsset', () => {
-    it('Should return undefined before logging in the user', () => {
+    it('Should return null before logging in the user', () => {
       // Arrange
 
       // Act
       const currentAsset = assetManager.getCurrentAsset();
 
       // Assert
-      expect(currentAsset).toBeUndefined();
+      expect(currentAsset).toBeNull();
     });
 
     it('Should return undefined after logging in a user who does not have any asset yet', async () => {
@@ -78,7 +78,7 @@ describe('Test AssetManager', () => {
       expect(currentAsset).toEqual(asset1);
     });
 
-    it('Should return undefined after the user logged out.', async () => {
+    it('Should return null after the user logged out.', async () => {
       // Arrange
       const asset1 = {
         _uiId: 'asset_01', name: 'Arbutus', brand: 'Aluminum & Technics', modelBrand: 'Heliotrop', manufactureDate: new Date(2019, 6, 10),
@@ -102,7 +102,7 @@ describe('Test AssetManager', () => {
 
       // Assert
       expect(assetProxy.fetchAssets).toBeCalledTimes(1);
-      expect(currentAsset).toBeUndefined();
+      expect(currentAsset).toBeNull();
     });
   });
 });

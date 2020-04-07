@@ -39,7 +39,7 @@ class TaskProxy implements ITaskProxy {
       assetManager.registerOnCurrentAssetChanged(this.updateBaseUrl);
     }
 
-    updateBaseUrl = (asset: AssetModel | undefined) => {
+    updateBaseUrl = (asset: AssetModel | undefined | null) => {
       this.baseUrl = `${process.env.REACT_APP_API_URL_BASE}tasks/${asset?._uiId}/`;
     }
 

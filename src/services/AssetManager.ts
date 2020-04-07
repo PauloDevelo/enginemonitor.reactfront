@@ -3,24 +3,26 @@ import userContext from './UserContext';
 // eslint-disable-next-line no-unused-vars
 import { AssetModel, UserModel, UserCredentials } from '../types/Types';
 
+export type AssetListener = (asset: AssetModel|undefined|null) => void;
+
 export interface IAssetManager{
     getUserCredentials(): UserCredentials | undefined;
 
-    getCurrentAsset(): AssetModel | undefined;
+    getCurrentAsset(): AssetModel | undefined | null;
     setCurrentAsset(asset: AssetModel): Promise<void>;
 
     onAssetsChanged(assets: AssetModel[]): Promise<void>;
 
-    registerOnCurrentAssetChanged(listener: (asset: AssetModel|undefined) => void):void;
-    unregisterOnCurrentAssetChanged(listenerToRemove: (asset: AssetModel|undefined) => void):void;
+    registerOnCurrentAssetChanged(listener: AssetListener):void;
+    unregisterOnCurrentAssetChanged(listenerToRemove: AssetListener):void;
 }
 
 class AssetManager implements IAssetManager {
-    private listeners: ((asset: AssetModel | undefined) => void)[] = [];
+    private listeners: AssetListener[] = [];
 
-    private assets: AssetModel[] = [];
+    private assets: AssetModel[]|null = [];
 
-    private currentAsset: AssetModel|undefined = undefined;
+    private currentAsset: AssetModel|undefined|null = null;
 
     private credentials:UserCredentials | undefined = undefined;
 
@@ -34,35 +36,37 @@ class AssetManager implements IAssetManager {
         const { default: assetProxy } = await import('./AssetProxy');
         await this.onAssetsChanged(await assetProxy.fetchAssets());
       } else {
-        await this.onAssetsChanged([]);
+        await this.onAssetsChanged(null);
       }
     }
 
-    getCurrentAsset = (): AssetModel | undefined => this.currentAsset
+    getCurrentAsset = (): AssetModel | undefined | null => this.currentAsset
 
     getUserCredentials = (): UserCredentials | undefined => this.credentials
 
-    setCurrentAsset = async (asset: AssetModel | undefined) => {
+    setCurrentAsset = async (asset: AssetModel | undefined | null) => {
       this.currentAsset = asset;
       await this.updateUserCredentials(this.currentAsset);
       this.listeners.map((listener) => listener(this.currentAsset));
     }
 
-    onAssetsChanged = async (assets: AssetModel[]): Promise<void> => {
+    onAssetsChanged = async (assets: AssetModel[] | null): Promise<void> => {
       this.assets = assets;
-      await this.setCurrentAsset(this.assets.length > 0 ? this.assets[0] : undefined);
+
+      // eslint-disable-next-line no-nested-ternary
+      await this.setCurrentAsset(this.assets === null ? null : (this.assets.length > 0 ? this.assets[0] : undefined));
     }
 
-    registerOnCurrentAssetChanged = (listener: (asset: AssetModel|undefined) => void):void => {
+    registerOnCurrentAssetChanged = (listener: AssetListener):void => {
       this.listeners.push(listener);
     }
 
-    unregisterOnCurrentAssetChanged = (listenerToRemove: (asset: AssetModel|undefined) => void):void => {
+    unregisterOnCurrentAssetChanged = (listenerToRemove: AssetListener):void => {
       this.listeners = this.listeners.filter((listener) => listener !== listenerToRemove);
     }
 
-    private updateUserCredentials = async (newCurrentAsset: AssetModel | undefined) => {
-      if (newCurrentAsset === undefined) {
+    private updateUserCredentials = async (newCurrentAsset: AssetModel | undefined | null) => {
+      if (newCurrentAsset === undefined || newCurrentAsset === null) {
         this.credentials = undefined;
         return;
       }

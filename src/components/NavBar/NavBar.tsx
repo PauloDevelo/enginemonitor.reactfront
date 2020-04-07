@@ -45,13 +45,13 @@ const NavBar = ({ onLoggedOut }:Props) => {
   const [assetEditionModalVisibility, setAssetEditionModalVisibility] = useState(false);
   const [offline, setOffline] = useState(onlineManager.isOfflineModeActivated());
 
-  const [currentAsset, setCurrentAsset] = useState<AssetModel | undefined>(undefined);
+  const [currentAsset, setCurrentAsset] = useState<AssetModel | undefined | null>(undefined);
   const [titleNavBar, setTitleNavBar] = useState('');
 
   useEffect(() => {
-    const onCurrentAssetChanged = (asset: AssetModel | undefined) => {
+    const onCurrentAssetChanged = (asset: AssetModel | undefined | null) => {
       setCurrentAsset(asset);
-      setTitleNavBar(asset === undefined ? '' : asset.name);
+      setTitleNavBar(asset ? asset.name : '');
     };
 
     assetManager.registerOnCurrentAssetChanged(onCurrentAssetChanged);
@@ -127,7 +127,7 @@ const NavBar = ({ onLoggedOut }:Props) => {
               <DropdownMenu right>
                 <DropdownItem header>
                   <Switch onChange={offlineSwitch} checked={offline} className="react-switch" onColor="#28a745" height={20} width={40} />
-&nbsp;Offline mode
+                  &nbsp;Offline mode
                 </DropdownItem>
                 <DropDownConnectionStateItem />
                 <DropdownItem divider />

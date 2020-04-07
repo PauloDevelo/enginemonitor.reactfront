@@ -36,8 +36,8 @@ class EquipmentManager implements IEquipmentManager {
     }
 
     // eslint-disable-next-line no-unused-vars
-    private onCurrentAssetChanged = async (currentAsset: AssetModel | undefined) => {
-      if (currentAsset !== undefined) {
+    private onCurrentAssetChanged = async (currentAsset: AssetModel | undefined | null) => {
+      if (currentAsset) {
         const { default: equipmentProxy } = await import('./EquipmentProxy');
         this.onEquipmentsChanged(await equipmentProxy.fetchEquipments({ assetId: currentAsset._uiId }));
       } else {

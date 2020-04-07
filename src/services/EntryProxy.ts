@@ -66,7 +66,7 @@ class EntryProxy implements IEntryProxy, IUserStorageListener {
       this.inMemory = {};
     }
 
-    updateBaseUrl = (asset: AssetModel | undefined) => {
+    updateBaseUrl = (asset: AssetModel | undefined | null) => {
       this.baseUrl = `${process.env.REACT_APP_API_URL_BASE}entries/${asset?._uiId}/`;
     }
 
