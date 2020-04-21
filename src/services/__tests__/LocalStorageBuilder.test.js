@@ -1,3 +1,4 @@
+import log from 'loglevel';
 import localStorageBuilder, { LocalStorageBuilderException } from '../LocalStorageBuilder';
 
 import storageService from '../StorageService';
@@ -149,9 +150,11 @@ describe('Test LocalStorageBuilder', () => {
     expect(imageProxy.fetchImages.mock.calls[0][0]).toEqual({ parentUiId: asset1._uiId, cancelTimeout: true });
     expect(imageProxy.fetchImages.mock.calls[1][0]).toEqual({ parentUiId: asset2._uiId, cancelTimeout: true });
 
-    expect(userProxy.getCredentials).toHaveBeenCalledTimes(2);
+    expect(userProxy.getCredentials).toHaveBeenCalledTimes(3);
     expect(userProxy.getCredentials.mock.calls[0][0]).toEqual({ assetUiId: asset1._uiId });
     expect(userProxy.getCredentials.mock.calls[1][0]).toEqual({ assetUiId: asset2._uiId });
+    expect(userProxy.getCredentials.mock.calls[2][0]).toEqual({ assetUiId: asset1._uiId });
+
 
     expect(guestLinkProxy.getGuestLinks).toHaveBeenCalledTimes(2);
     expect(guestLinkProxy.getGuestLinks.mock.calls[0][0]).toEqual(asset1._uiId);

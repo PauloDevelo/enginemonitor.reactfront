@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import userContext from './UserContext';
 import analytics from '../helpers/AnalyticsHelper';
 
@@ -60,7 +61,12 @@ class AssetManager implements IAssetManager {
 
       let newCurrentAsset: AssetModel | undefined | null = null;
       if (this.assets !== null) {
-        newCurrentAsset = this.assets.length > 0 ? this.assets[0] : undefined;
+        const currentAssetUiId = _.get(this.currentAsset, '_uiId');
+        if (currentAssetUiId) {
+          newCurrentAsset = _.find(this.assets, (asset) => asset._uiId === currentAssetUiId);
+        } else {
+          newCurrentAsset = _.first(this.assets);
+        }
       }
 
       await this.setCurrentAsset(newCurrentAsset, false);
