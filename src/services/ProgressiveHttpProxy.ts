@@ -2,6 +2,7 @@
 
 // eslint-disable-next-line no-unused-vars
 import { CancelToken } from 'axios';
+import log from 'loglevel';
 import HttpError from '../http/HttpError';
 // eslint-disable-next-line no-unused-vars
 import { ImageModel } from '../types/Types';
@@ -13,6 +14,7 @@ import actionManager, { Action, ActionType } from './ActionManager';
 import storageService from './StorageService';
 import userContext from './UserContext';
 import assetManager from './AssetManager';
+import analytics from '../helpers/AnalyticsHelper';
 
 const timeouts = {
   postImage: 5000,
@@ -101,6 +103,8 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
         return image;
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
+          log.warn(`timeout for the post image ${createImageUrl}`);
+          analytics.httpRequestTimeout({ requestType: 'post_image', url: createImageUrl, timeout: timeouts.postImage });
           await addCreateImageAction();
         } else {
           throw reason;
@@ -132,6 +136,8 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
         return update ? update(savedData) : savedData;
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
+          log.warn(`timeout for the post ${url}`);
+          analytics.httpRequestTimeout({ requestType: 'post', url, timeout: timeouts.post });
           await addPostAction();
         } else {
           throw reason;
@@ -157,6 +163,8 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
         await httpProxy.deleteReq(url, { timeout: timeouts.delete });
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
+          log.warn(`timeout for the delete ${url}`);
+          analytics.httpRequestTimeout({ requestType: 'delete', url, timeout: timeouts.delete });
           addDeleteAction();
         } else {
           throw reason;
@@ -171,8 +179,9 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
     url, keyName, init, cancelToken, cancelTimeout,
   }: GetOnlineRequest<T>): Promise<T[]> {
     if (await onlineManager.isOnlineAndSynced()) {
+      const timeout = await this.getGetTimeout(url, cancelTimeout);
       try {
-        const array = (await httpProxy.get(url, { cancelToken, timeout: (await this.getGetTimeout(url, cancelTimeout)) }))[keyName] as T[];
+        const array = (await httpProxy.get(url, { cancelToken, timeout }))[keyName] as T[];
 
         const initArray = init ? array.map(init) : array;
 
@@ -181,6 +190,8 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
         return initArray;
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
+          log.warn(`timeout for the get ${url}`);
+          analytics.httpRequestTimeout({ requestType: 'get', url, timeout });
           return this.getArrayFromStorage<T>({ url, init });
         }
         throw reason;
@@ -197,8 +208,9 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
 
   async getOnlineFirst<T>(url: string, keyName:string, init?:(model:T) => T, cancelToken: CancelToken | undefined = undefined): Promise<T> {
     if (await onlineManager.isOnlineAndSynced()) {
+      const timeout = await this.getGetTimeout(url);
       try {
-        const item = (await httpProxy.get(url, { cancelToken, timeout: (await this.getGetTimeout(url)) }))[keyName] as T;
+        const item = (await httpProxy.get(url, { cancelToken, timeout }))[keyName] as T;
         const updatedItem = init ? init(item) : item;
 
         storageService.setItem<T>(url, updatedItem);
@@ -206,6 +218,8 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
         return updatedItem;
       } catch (reason) {
         if (reason instanceof HttpError && reason.didConnectionAbort()) {
+          log.warn(`timeout for the get ${url}`);
+          analytics.httpRequestTimeout({ requestType: 'get', url, timeout });
           return this.getFromStorage<T>(url, init);
         }
         throw reason;
