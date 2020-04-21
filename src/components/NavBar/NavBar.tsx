@@ -139,7 +139,7 @@ const NavBar = ({ onLoggedOut }:Props) => {
                 {!user?.forbidUploadingImage && (
                 <DropdownItem divider />
                 )}
-                <DropdownItem onClick={localStorageBuilder.tryToRun}>
+                <DropdownItem onClick={() => localStorageBuilder.tryToRun()}>
                   <FontAwesomeIcon icon={faSyncAlt} />
                   {' '}
                   <FormattedMessage {...navBarMsg.rebuildLocalStorage} />

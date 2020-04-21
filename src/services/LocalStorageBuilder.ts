@@ -21,11 +21,12 @@ import {
 } from '../types/Types';
 
 import { convertUrlImageIntoDataUrl } from '../helpers/ImageHelper';
+import analytics from '../helpers/AnalyticsHelper';
 
 export class LocalStorageBuilderException extends Error {}
 
 class LocalStorageBuilder extends TaskWithProgress {
-    run = async (): Promise<void> => {
+    run = async (isUserInteraction: boolean): Promise<void> => {
       if (storageService.isUserStorageOpened() === false) {
         throw new LocalStorageBuilderException('storageNotOpenedYet');
       }
@@ -34,6 +35,7 @@ class LocalStorageBuilder extends TaskWithProgress {
         throw new LocalStorageBuilderException('actionErrorBecauseOffline');
       }
 
+      analytics.rebuildStorage(isUserInteraction);
       return this.rebuildLocalStorage();
     }
 

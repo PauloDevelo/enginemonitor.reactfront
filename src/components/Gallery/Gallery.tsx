@@ -21,6 +21,7 @@ import imageProxy from '../../services/ImageProxy';
 import useFetcher from '../../hooks/Fetcher';
 import storageService from '../../services/StorageService';
 import './Gallery.css';
+import analytics from '../../helpers/AnalyticsHelper';
 
 type Props = {
     parentUiId: string
@@ -51,6 +52,7 @@ function Gallery({ parentUiId }: Props) {
   }, []);
 
   const onClickThumbnail = useCallback((newIndex: number) => {
+    analytics.clickThumbnail();
     setIndex(newIndex);
     setOpen(true);
   }, []);
@@ -135,8 +137,14 @@ function Gallery({ parentUiId }: Props) {
           nextSrc={images[(index + 1) % images.length].url}
           prevSrc={images[(index + images.length - 1) % images.length].url}
           onCloseRequest={() => setOpen(false)}
-          onMovePrevRequest={() => setIndex((index + images.length - 1) % images.length)}
-          onMoveNextRequest={() => setIndex((index + 1) % images.length)}
+          onMovePrevRequest={() => {
+            setIndex((index + images.length - 1) % images.length);
+            analytics.previousImage();
+          }}
+          onMoveNextRequest={() => {
+            setIndex((index + 1) % images.length);
+            analytics.nextImage();
+          }}
           toolbarButtons={additionalActions}
           imageCaption={images[index].description}
           imageTitle={images[index].title}

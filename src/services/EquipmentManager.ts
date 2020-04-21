@@ -1,5 +1,7 @@
 import assetManager from './AssetManager';
 
+import analytics from '../helpers/AnalyticsHelper';
+
 // eslint-disable-next-line no-unused-vars
 import { AssetModel, EquipmentModel } from '../types/Types';
 
@@ -49,9 +51,13 @@ class EquipmentManager implements IEquipmentManager {
 
     getCurrentEquipment = (): EquipmentModel | undefined => this.currentEquipment
 
-    setCurrentEquipment = (equipment: EquipmentModel | undefined) => {
+    setCurrentEquipment = (equipment: EquipmentModel | undefined, isUserInteraction: boolean = true) => {
       this.currentEquipment = equipment;
       this.currentEquipmentListeners.map((listener) => listener(this.currentEquipment));
+
+      if (isUserInteraction) {
+        analytics.selectContent('equipment');
+      }
     }
 
     private onEquipmentsChanged = (equipments: EquipmentModel[], newCurrentEquipment?: EquipmentModel): void => {
@@ -59,15 +65,15 @@ class EquipmentManager implements IEquipmentManager {
       this.equipmentsListeners.map((listener) => listener(this.equipments));
 
       if (newCurrentEquipment !== undefined) {
-        this.setCurrentEquipment(newCurrentEquipment);
+        this.setCurrentEquipment(newCurrentEquipment, false);
       } else if (this.getCurrentEquipment() === undefined) {
-        this.setCurrentEquipment(this.equipments.length > 0 ? this.equipments[0] : undefined);
+        this.setCurrentEquipment(this.equipments.length > 0 ? this.equipments[0] : undefined, false);
       } else {
         const currentEquipmentIndex = this.equipments.findIndex((eq) => eq._uiId === this.getCurrentEquipment()?._uiId);
         if (currentEquipmentIndex === -1) {
-          this.setCurrentEquipment(this.equipments.length > 0 ? this.equipments[0] : undefined);
+          this.setCurrentEquipment(this.equipments.length > 0 ? this.equipments[0] : undefined, false);
         } else {
-          this.setCurrentEquipment(this.equipments[currentEquipmentIndex]);
+          this.setCurrentEquipment(this.equipments[currentEquipmentIndex], false);
         }
       }
     }
@@ -75,6 +81,7 @@ class EquipmentManager implements IEquipmentManager {
     onEquipmentDeleted = (equipmentToDelete: EquipmentModel): void => {
       const newEquipmentList = this.equipments.filter((equipmentInfo) => equipmentInfo._uiId !== equipmentToDelete._uiId);
       this.onEquipmentsChanged(newEquipmentList);
+      analytics.deleteContent('equipment');
     }
 
     onEquipmentSaved = (equipmentSaved: EquipmentModel): void => {
@@ -83,8 +90,10 @@ class EquipmentManager implements IEquipmentManager {
       const equipmentToAddOrUpdate = { ...equipmentSaved };
       if (index === -1) {
         this.equipments.push(equipmentToAddOrUpdate);
+        analytics.addContent('equipment');
       } else {
         this.equipments[index] = equipmentToAddOrUpdate;
+        analytics.saveContent('equipment');
       }
 
       this.onEquipmentsChanged(this.equipments, equipmentToAddOrUpdate);

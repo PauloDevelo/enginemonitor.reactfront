@@ -8,6 +8,7 @@ import actionManager, { Action } from './ActionManager';
 // eslint-disable-next-line no-unused-vars
 import storageService, { IUserStorageListener } from './StorageService';
 import onlineManager from './OnlineManager';
+import analytics from '../helpers/AnalyticsHelper';
 
 export class SyncServiceException extends Error {}
 
@@ -19,14 +20,14 @@ class SyncService extends TaskWithProgress implements IUserStorageListener {
     actionManager.registerOnActionManagerChanged(this.onActionManagerChanged);
   }
 
-  onIsOnlineChanged = async (online: boolean): Promise<void> => ((online && storageService.isUserStorageOpened() ? this.tryToRun() : Promise.resolve()))
+  onIsOnlineChanged = async (online: boolean): Promise<void> => ((online && storageService.isUserStorageOpened() ? this.tryToRun(false) : Promise.resolve()))
 
   async onUserStorageOpened(): Promise<void> {
     if ((await onlineManager.isOnline()) === false) {
       return Promise.resolve();
     }
 
-    return this.tryToRun();
+    return this.tryToRun(false);
   }
 
   onUserStorageClosed = async (): Promise<void> => {}
@@ -40,7 +41,7 @@ class SyncService extends TaskWithProgress implements IUserStorageListener {
     return this.triggerTaskProgressChanged();
   }
 
-  run = async (): Promise<void> => {
+  run = async (isUserInteraction: boolean): Promise<void> => {
     if (storageService.isUserStorageOpened() === false) {
       throw new SyncServiceException('storageNotOpenedYet');
     }
@@ -49,10 +50,12 @@ class SyncService extends TaskWithProgress implements IUserStorageListener {
       throw new SyncServiceException('actionErrorBecauseOffline');
     }
 
+    analytics.syncStorage(isUserInteraction);
     return this.syncStorage();
   }
 
   cancel = () => {
+    analytics.cancelSyncStorage();
     actionManager.cancelAction();
   }
 

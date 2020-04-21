@@ -3,6 +3,7 @@ import httpProxy from './HttpProxy';
 import progressiveHttpProxy from './ProgressiveHttpProxy';
 import HttpError from '../http/HttpError';
 import onlineManager from './OnlineManager';
+import analytics from '../helpers/AnalyticsHelper';
 
 import storageService from './StorageService';
 
@@ -37,14 +38,20 @@ class UserProxy implements IUserProxy {
     // ///////////////////User/////////////////////////
     signup = async (newUser: UserModel): Promise<void> => {
       await httpProxy.post(this.baseUrl, { user: newUser });
+
+      analytics.sendEngagementEvent('sign_up');
     }
 
     sendVerificationEmail = async (email: string): Promise<void> => {
       await httpProxy.post(`${this.baseUrl}verificationemail`, { email });
+
+      analytics.sendEngagementEvent('send_verification_email');
     }
 
     resetPassword = async (email: string, password: string): Promise<void> => {
       await httpProxy.post(`${this.baseUrl}resetpassword`, { email, newPassword: password });
+
+      analytics.sendEngagementEvent('reset_password');
     }
 
     authenticate = async (authInfo: AuthInfo):Promise<UserModel> => {
@@ -62,6 +69,8 @@ class UserProxy implements IUserProxy {
         storageService.openUserStorage(user);
         userContext.onUserChanged(user);
 
+        analytics.sendEngagementEvent('login', { method: 'email_password' });
+
         return user;
       }
 
@@ -74,6 +83,8 @@ class UserProxy implements IUserProxy {
       httpProxy.setConfig(undefined);
       await storageService.closeUserStorage();
       await userContext.onUserChanged(undefined);
+
+      analytics.sendEngagementEvent('logout');
     }
 
     getCredentials = async ({ assetUiId }: {assetUiId: string}): Promise<UserCredentials> => progressiveHttpProxy.getOnlineFirst<UserCredentials>(`${this.baseUrl}credentials/${assetUiId}`, 'credentials')
@@ -99,6 +110,9 @@ class UserProxy implements IUserProxy {
 
           await storageService.openUserStorage(rememberedUser);
           await userContext.onUserChanged(rememberedUser);
+
+          analytics.sendEngagementEvent('login', { method: 'storage' });
+
           return rememberedUser;
         }
       }

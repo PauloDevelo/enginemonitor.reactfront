@@ -25,7 +25,8 @@ const messages = {
 const { language } = navigator;
 const shortLanguage = navigator.language.split(/[-_]/)[0]; // language without region code
 
-log.setLevel('trace', false);
+log.setLevel(process.env.REACT_APP_LOG_LEVEL, false);
+log.info(`NODE_ENV=${process.env.NODE_ENV}`);
 
 ReactDOM.render(
   <BrowserRouter>

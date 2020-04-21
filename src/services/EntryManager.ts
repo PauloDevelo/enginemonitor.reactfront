@@ -4,6 +4,7 @@ import _ from 'lodash';
 import log from 'loglevel';
 import equipmentManager from './EquipmentManager';
 import taskManager from './TaskManager';
+import analytics from '../helpers/AnalyticsHelper';
 
 // eslint-disable-next-line no-unused-vars
 import { EntryModel, EquipmentModel } from '../types/Types';
@@ -63,7 +64,6 @@ class EntryManager implements IEntryManager {
         return;
       }
 
-
       const { default: entryProxy } = await import('./EntryProxy');
 
       if (this.cancelFetch !== undefined) {
@@ -101,10 +101,14 @@ class EntryManager implements IEntryManager {
 
     getCurrentEntry = (): EntryModel | undefined => this.currentEntry
 
-    setCurrentEntry = (entry: EntryModel | undefined) => {
+    setCurrentEntry = (entry: EntryModel | undefined, isUserInteraction: boolean = true) => {
       this.currentEntry = entry;
       this.isCurrentEntryChangingFlag = false;
       this.currentEntryListeners.map((listener) => listener(this.currentEntry));
+
+      if (isUserInteraction) {
+        analytics.selectContent('entry');
+      }
     }
 
     isCurrentEntryChanging = () => this.isCurrentEntryChangingFlag
@@ -117,15 +121,15 @@ class EntryManager implements IEntryManager {
       this.equipmentEntriesListeners.map((listener) => listener(this.entries));
 
       if (newCurrentEntry !== undefined) {
-        this.setCurrentEntry(newCurrentEntry);
+        this.setCurrentEntry(newCurrentEntry, false);
       } else if (this.getCurrentEntry() === undefined) {
-        this.setCurrentEntry(this.entries.length > 0 ? this.entries[0] : undefined);
+        this.setCurrentEntry(this.entries.length > 0 ? this.entries[0] : undefined, false);
       } else {
         const currentEntryIndex = this.entries.findIndex((eq) => eq._uiId === this.getCurrentEntry()?._uiId);
         if (currentEntryIndex === -1) {
-          this.setCurrentEntry(this.entries.length > 0 ? this.entries[0] : undefined);
+          this.setCurrentEntry(this.entries.length > 0 ? this.entries[0] : undefined, false);
         } else {
-          this.setCurrentEntry(this.entries[currentEntryIndex]);
+          this.setCurrentEntry(this.entries[currentEntryIndex], false);
         }
       }
     }
@@ -138,6 +142,7 @@ class EntryManager implements IEntryManager {
       const newEntryList = this.entries.filter((entry) => entry._uiId !== entryToDelete._uiId);
       this.onEntriesChanged(newEntryList);
       taskManager.refreshTasks();
+      analytics.deleteContent('entry');
     }
 
     onEntrySaved = (entrySaved: EntryModel): void => {
@@ -146,8 +151,10 @@ class EntryManager implements IEntryManager {
       const entryToAddOrUpdate = { ...entrySaved };
       if (index === -1) {
         this.entries.push(entryToAddOrUpdate);
+        analytics.addContent('entry');
       } else {
         this.entries[index] = entryToAddOrUpdate;
+        analytics.saveContent('entry');
       }
 
       this.onEntriesChanged(this.entries.concat([]), entryToAddOrUpdate);

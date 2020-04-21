@@ -1,5 +1,6 @@
 import * as log from 'loglevel';
 import uuidv1 from 'uuid/v1.js';
+import analytics from '../helpers/AnalyticsHelper';
 
 import httpProxy from './HttpProxy';
 import progressiveHttpProxy from './ProgressiveHttpProxy';
@@ -51,6 +52,8 @@ class GuestLinkProxy implements IGuestLinkProxy {
 
       await storageService.updateArray(this.getGuestLinksUrl(assetUiId), guestlink);
 
+      analytics.share();
+
       return guestlink;
     }
 
@@ -65,7 +68,7 @@ class GuestLinkProxy implements IGuestLinkProxy {
 
       const { guestlink }:{ guestlink:GuestLinkModel } = await httpProxy.deleteReq(`${this.baseUrl}${guestLinkUiId}`);
       await storageService.removeItemInArray(this.getGuestLinksUrl(assetUiId), guestlink._uiId);
-
+      analytics.unshare();
       return guestlink;
     }
 

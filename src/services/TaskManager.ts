@@ -3,6 +3,8 @@ import { CancelTokenSource } from 'axios';
 import log from 'loglevel';
 import equipmentManager from './EquipmentManager';
 
+import analytics from '../helpers/AnalyticsHelper';
+
 // eslint-disable-next-line no-unused-vars
 import { TaskModel, EquipmentModel } from '../types/Types';
 
@@ -96,10 +98,14 @@ class TaskManager implements ITaskManager {
 
     getCurrentTask = (): TaskModel | undefined => this.currentTask
 
-    setCurrentTask = (task: TaskModel | undefined) => {
+    setCurrentTask = (task: TaskModel | undefined, isUserInteraction: boolean = true) => {
       this.currentTask = task;
       this.isCurrentTaskChangingFlag = false;
       this.currentTaskListeners.map((listener) => listener(this.currentTask));
+
+      if (isUserInteraction) {
+        analytics.selectContent('task');
+      }
     }
 
     isCurrentTaskChanging = () => this.isCurrentTaskChangingFlag
@@ -119,15 +125,15 @@ class TaskManager implements ITaskManager {
       this.tasksListeners.map((listener) => listener(this.tasks));
 
       if (newCurrentTask !== undefined) {
-        this.setCurrentTask(newCurrentTask);
+        this.setCurrentTask(newCurrentTask, false);
       } else if (this.getCurrentTask() === undefined) {
-        this.setCurrentTask(this.tasks.length > 0 ? this.tasks[0] : undefined);
+        this.setCurrentTask(this.tasks.length > 0 ? this.tasks[0] : undefined, false);
       } else {
         const currentTaskIndex = this.tasks.findIndex((eq) => eq._uiId === this.getCurrentTask()?._uiId);
         if (currentTaskIndex === -1) {
-          this.setCurrentTask(this.tasks.length > 0 ? this.tasks[0] : undefined);
+          this.setCurrentTask(this.tasks.length > 0 ? this.tasks[0] : undefined, false);
         } else {
-          this.setCurrentTask(this.tasks[currentTaskIndex]);
+          this.setCurrentTask(this.tasks[currentTaskIndex], false);
         }
       }
     }
@@ -139,6 +145,7 @@ class TaskManager implements ITaskManager {
 
       const newTaskList = this.tasks.filter((taskInfo) => taskInfo._uiId !== taskToDelete._uiId);
       this.onTasksChanged(newTaskList);
+      analytics.deleteContent('task');
     }
 
     onTaskSaved = (taskSaved: TaskModel): void => {
@@ -147,8 +154,10 @@ class TaskManager implements ITaskManager {
       const taskToAddOrUpdate = { ...taskSaved };
       if (index === -1) {
         this.tasks.push(taskToAddOrUpdate);
+        analytics.addContent('task');
       } else {
         this.tasks[index] = taskToAddOrUpdate;
+        analytics.saveContent('task');
       }
 
       this.onTasksChanged(this.tasks.concat([]), taskToAddOrUpdate);

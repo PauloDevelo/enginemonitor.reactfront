@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [2.14.0] - 2020-04-21
 -Add google analytics
 -Add a file for the android app in order to hide the address bar.
 -Make imageProxy fetch function faster with a inMemory object
@@ -43,7 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 
-[unreleased]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.7...integration
+[unreleased]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.14.0...integration
+[2.14.0]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.7...v2.14.0
 [2.13.7]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.6...v2.13.7
 [2.13.6]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.5...v2.13.6
 [2.13.5]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.4...v2.13.5

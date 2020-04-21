@@ -405,7 +405,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
                               <DropDownConnectionStateItem>
                                 <DropdownItem
                                   disabled={true}
-                                  onClick={[MockFunction]}
+                                  onClick={[Function]}
                                   tag="button"
                                   toggle={true}
                                 >
@@ -572,7 +572,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
                                 />
                               </DropdownItem>
                               <DropdownItem
-                                onClick={[MockFunction]}
+                                onClick={[Function]}
                                 tag="button"
                                 toggle={true}
                               >

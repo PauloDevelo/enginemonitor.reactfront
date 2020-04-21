@@ -1,6 +1,7 @@
 import actionManager from './ActionManager';
 
 import httpProxy from './HttpProxy';
+import analytics from '../helpers/AnalyticsHelper';
 
 export interface IOnlineManager {
     isOnlineAndSynced(): Promise<boolean>;
@@ -62,6 +63,7 @@ class OnlineManager implements IOnlineManager {
     setOfflineMode(offlineMode: boolean): void {
       this.offlineModeActivated = offlineMode;
       this.isOnline().then((isOnline) => this.setIsOnline(isOnline));
+      analytics.setOffLineMode(offlineMode);
     }
 
     onUserStorageClosed = async (): Promise<void> => {}

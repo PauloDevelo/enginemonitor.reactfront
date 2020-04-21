@@ -1,4 +1,5 @@
 import userContext from './UserContext';
+import analytics from '../helpers/AnalyticsHelper';
 
 // eslint-disable-next-line no-unused-vars
 import { AssetModel, UserModel, UserCredentials } from '../types/Types';
@@ -44,17 +45,25 @@ class AssetManager implements IAssetManager {
 
     getUserCredentials = (): UserCredentials | undefined => this.credentials
 
-    setCurrentAsset = async (asset: AssetModel | undefined | null) => {
+    setCurrentAsset = async (asset: AssetModel | undefined | null, isUserInteraction: boolean = true) => {
       this.currentAsset = asset;
       await this.updateUserCredentials(this.currentAsset);
       this.listeners.map((listener) => listener(this.currentAsset));
+
+      if (isUserInteraction) {
+        analytics.selectContent('asset');
+      }
     }
 
     onAssetsChanged = async (assets: AssetModel[] | null): Promise<void> => {
       this.assets = assets;
 
-      // eslint-disable-next-line no-nested-ternary
-      await this.setCurrentAsset(this.assets === null ? null : (this.assets.length > 0 ? this.assets[0] : undefined));
+      let newCurrentAsset: AssetModel | undefined | null = null;
+      if (this.assets !== null) {
+        newCurrentAsset = this.assets.length > 0 ? this.assets[0] : undefined;
+      }
+
+      await this.setCurrentAsset(newCurrentAsset, false);
     }
 
     registerOnCurrentAssetChanged = (listener: AssetListener):void => {

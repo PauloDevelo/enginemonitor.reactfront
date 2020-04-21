@@ -38,9 +38,9 @@ export abstract class TaskWithProgress {
 
   private listeners: (TaskWithProgressListener)[] = [];
 
-  tryToRun = async (): Promise<void> => {
+  tryToRun = async (isUserInteraction: boolean = true): Promise<void> => {
     try {
-      await this.run();
+      await this.run(isUserInteraction);
     } catch (error) {
       errorService.addError(error);
     }
@@ -48,7 +48,7 @@ export abstract class TaskWithProgress {
     return Promise.resolve();
   }
 
-  protected abstract run(): Promise<void>;
+  protected abstract run(isUserInteraction: boolean): Promise<void>;
 
   abstract cancel(): void;
 

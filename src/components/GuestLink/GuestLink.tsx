@@ -19,6 +19,7 @@ import jsonMessages from './GuestLink.messages.json';
 import { AssetModel, GuestLinkModel } from '../../types/Types';
 
 import guestLinkProxy from '../../services/GuestLinkProxy';
+import analytics from '../../helpers/AnalyticsHelper';
 
 const guestLinkMsg = defineMessages(jsonMessages);
 
@@ -78,6 +79,7 @@ const GuestLink = ({ asset, onError, className }:Type) => {
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     event.target.select();
     setCopied(document.execCommand('copy'));
+    analytics.copyShareLink();
 
     if (timer.current) {
       clearTimeout(timer.current);

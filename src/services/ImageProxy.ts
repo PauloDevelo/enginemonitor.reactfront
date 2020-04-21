@@ -3,6 +3,8 @@ import { CancelToken } from 'axios';
 import _ from 'lodash';
 import progressiveHttpProxy from './ProgressiveHttpProxy';
 
+import analytics from '../helpers/AnalyticsHelper';
+
 // eslint-disable-next-line no-unused-vars
 import storageService, { IUserStorageListener } from './StorageService';
 
@@ -90,6 +92,7 @@ class ImageProxy implements IImageProxy, IUserStorageListener {
       this.inMemory[createImageUrl] = updateImages;
 
       userContext.onImageAdded(savedImage.sizeInByte);
+      analytics.addContent('image');
       return savedImage;
     }
 
@@ -98,6 +101,7 @@ class ImageProxy implements IImageProxy, IUserStorageListener {
 
       const updatedImages = await storageService.updateArray(this.baseUrl + updatedImage.parentUiId, updatedImage);
       this.inMemory[this.baseUrl + updatedImage.parentUiId] = updatedImages;
+      analytics.saveContent('image');
 
       return updatedImage;
     };
@@ -106,6 +110,7 @@ class ImageProxy implements IImageProxy, IUserStorageListener {
       await progressiveHttpProxy.delete<ImageModel>(`${this.baseUrl + image.parentUiId}/${image._uiId}`);
       const deletedImage = await this.removeImageFromStorage(image);
       userContext.onImageRemoved(deletedImage.sizeInByte);
+      analytics.deleteContent('image');
 
       return deletedImage;
     }
