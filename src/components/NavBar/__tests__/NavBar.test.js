@@ -31,8 +31,6 @@ jest.mock('../../../services/OnlineManager');
 jest.mock('../../../services/LocalStorageBuilder');
 
 describe('Component NavBar', () => {
-  const onLoggedOut = jest.fn();
-
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('test was not wrapped in act(...)');
@@ -80,15 +78,13 @@ describe('Component NavBar', () => {
     assetProxy.fetchAssets.mockRestore();
     assetProxy.existAsset.mockRestore();
 
-    onLoggedOut.mockReset();
-
     localStorageBuilder.tryToRun.mockRestore();
   });
 
   it('should render the navbar even when the user is still undefined', async () => {
     // Arrange
     // Act
-    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar /></IntlProvider>);
     await updateWrapper(wrapper);
 
     // Assert
@@ -107,7 +103,7 @@ describe('Component NavBar', () => {
     // Arrange
     localStorageBuilder.tryToRun.mockImplementation(async () => {});
 
-    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar /></IntlProvider>);
     await updateWrapper(wrapper);
 
     const dropdownItemRebuildLocalStorage = wrapper.find('DropdownItem').at(5);
@@ -122,7 +118,7 @@ describe('Component NavBar', () => {
 
   it('should open the modal about when the user click on the about button', async () => {
     // Arrange
-    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar /></IntlProvider>);
     await updateWrapper(wrapper);
 
     const dropdownItemAbout = wrapper.find('DropdownItem').at(9);
@@ -138,7 +134,7 @@ describe('Component NavBar', () => {
 
   it('should toggle the navbar when the user click on the navbar button', async () => {
     // Arrange
-    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar /></IntlProvider>);
     await updateWrapper(wrapper);
 
     const navBarButton = wrapper.find('NavbarToggler');
@@ -154,7 +150,7 @@ describe('Component NavBar', () => {
 
   it('should re-render the navbar when the user changed', async () => {
     // Arrange
-    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar /></IntlProvider>);
     await updateWrapper(wrapper);
 
     const user = {
@@ -187,7 +183,7 @@ describe('Component NavBar', () => {
 
   it('should re-render the navbar when the user add an image', async () => {
     // Arrange
-    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar /></IntlProvider>);
     await updateWrapper(wrapper);
 
     const user = {
@@ -222,7 +218,7 @@ describe('Component NavBar', () => {
 
   it('should re-render the navbar when the user removed an image', async () => {
     // Arrange
-    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar /></IntlProvider>);
     await updateWrapper(wrapper);
 
     const user = {
@@ -259,7 +255,7 @@ describe('Component NavBar', () => {
     // Arrange
     jest.spyOn(userProxy, 'logout').mockImplementation(() => userContext.onUserChanged(undefined));
 
-    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar onLoggedOut={onLoggedOut} /></IntlProvider>);
+    const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar /></IntlProvider>);
     await updateWrapper(wrapper);
 
     const user = {
@@ -293,6 +289,5 @@ describe('Component NavBar', () => {
     expect(imageFolderGauge.props()).toEqual({ storageSizeInMB: 0, storageSizeLimitInMB: 0 });
 
     expect(userProxy.logout).toHaveBeenCalledTimes(1);
-    expect(onLoggedOut).toHaveBeenCalledTimes(1);
   });
 });

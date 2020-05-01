@@ -11,9 +11,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
   textComponent={Symbol(react.fragment)}
   timeZone="Asia/Kuala_Lumpur"
 >
-  <Memo(NavBar)
-    onLoggedOut={[MockFunction]}
-  >
+  <Memo(NavBar)>
     <Navbar
       color="dark"
       dark={true}
@@ -654,7 +652,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
                                 />
                               </DropdownItem>
                               <DropdownItem
-                                onClick={[Function]}
+                                onClick={[MockFunction]}
                                 tag="button"
                                 toggle={true}
                               >
