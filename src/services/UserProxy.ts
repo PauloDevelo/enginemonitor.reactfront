@@ -117,6 +117,7 @@ class UserProxy implements IUserProxy {
         }
       }
 
+      await userContext.onUserChanged(undefined);
       return undefined;
     }
 

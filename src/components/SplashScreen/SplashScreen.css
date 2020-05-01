@@ -12,3 +12,21 @@
   overflow-x: hidden;
   background-color: white;
 }
+
+@-webkit-keyframes fadeout{
+  0%{opacity:1;visibility:visible;}
+  99%{opacity:0;}
+  100%{opacity:0;visibility: hidden;}
+}
+.fadeout {
+  -webkit-animation:fadeout 0.5s linear;
+  visibility:hidden;
+}
+
+@-webkit-keyframes fadein{
+  0%{opacity:0;visibility:visible;}
+  100%{opacity:1;}
+}
+.fadein {
+  -webkit-animation:fadein 0.5s linear;
+}

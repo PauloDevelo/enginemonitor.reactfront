@@ -29,7 +29,6 @@ import jsonMessages from './Login.messages.json';
 const loginmsg = defineMessages(jsonMessages);
 
 type Props = {
-onLoggedIn: (user:UserModel) => void,
 visible: boolean,
 className?: string,
 toggleModalSignup: () => void
@@ -57,7 +56,7 @@ errors?: any
 }
 
 const ModalLogin = ({
-  onLoggedIn, visible, className, toggleModalSignup,
+  visible, className, toggleModalSignup,
 }: Props) => {
   const [user, setUser] = useState<AuthInfo>({ email: '', password: '', remember: false });
   const [state, setState] = useState<StateType>({ state: LoginState.Started });
@@ -87,9 +86,8 @@ const ModalLogin = ({
     setUser(newUser);
 
     try {
-      const authenticatedUser = await userProxy.authenticate(newUser);
-      setState({ state: LoginState.LoggedIn });
-      onLoggedIn(authenticatedUser);
+      await userProxy.authenticate(newUser);
+      setState({ state: LoginState.Started });
     } catch (errors) {
       if (errors instanceof HttpError) {
         const newLoginErrors = errors.data;

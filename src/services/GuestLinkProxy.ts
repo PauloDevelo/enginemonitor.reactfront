@@ -73,15 +73,15 @@ class GuestLinkProxy implements IGuestLinkProxy {
     }
 
     tryGetAndSetUserFromNiceKey = async (niceKey: string):Promise<UserModel | undefined> => {
+      let user: UserModel | undefined;
+
       if (await onlineManager.isOnline()) {
         try {
-          const { user }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}nicekey/${niceKey}`);
+          user = (await httpProxy.get(`${this.baseUrl}nicekey/${niceKey}`)).user;
           if (user) {
             this.setHttpProxyAuthentication(user);
 
             await storageService.openUserStorage(user);
-            await userContext.onUserChanged(user);
-            return user;
           }
         } catch (error) {
           log.error(error.message);
@@ -90,7 +90,9 @@ class GuestLinkProxy implements IGuestLinkProxy {
         log.error('Impossible to connect on the back end.');
       }
 
-      return undefined;
+      await userContext.onUserChanged(user);
+
+      return user;
     }
 
     private getGuestLinksUrl = (assetUiId: string) => `${this.baseUrl}asset/${assetUiId}`;
