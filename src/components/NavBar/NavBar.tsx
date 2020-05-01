@@ -32,12 +32,8 @@ import jsonMessages from './NavBar.messages.json';
 
 const navBarMsg = defineMessages(jsonMessages);
 
-type Props = {
-    user?: UserModel,
-    onLoggedOut: ()=>void,
-};
 
-const NavBar = ({ onLoggedOut }:Props) => {
+const NavBar = () => {
   const currentUser = userContext.getCurrentUser();
   const [user, setUser] = useState<UserModel | undefined>(currentUser);
   const [userImageFolderSize, setUserImageFolderSize] = useState(currentUser !== undefined ? currentUser.imageFolderSizeInByte : 0);
@@ -57,7 +53,7 @@ const NavBar = ({ onLoggedOut }:Props) => {
     assetManager.registerOnCurrentAssetChanged(onCurrentAssetChanged);
 
     return () => assetManager.unregisterOnCurrentAssetChanged(onCurrentAssetChanged);
-  });
+  }, []);
 
   const [isOpened, setIsOpened] = useState(false);
   const toggle = useCallback(() => {
@@ -81,11 +77,6 @@ const NavBar = ({ onLoggedOut }:Props) => {
       userContext.unregisterOnUserStorageSizeChanged(onUserImageFolderSizeChanged);
     };
   }, [onUserChanged, onUserImageFolderSizeChanged]);
-
-  const logout = useCallback(() => {
-    userProxy.logout();
-    onLoggedOut();
-  }, [onLoggedOut]);
 
   const offlineSwitch = useCallback((isOffline: boolean):void => {
     setOffline(isOffline);
@@ -145,7 +136,7 @@ const NavBar = ({ onLoggedOut }:Props) => {
                   <FormattedMessage {...navBarMsg.rebuildLocalStorage} />
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem onClick={logout}>
+                <DropdownItem onClick={userProxy.logout}>
                   <FontAwesomeIcon icon={faSignOutAlt} />
                   {' '}
                   <FormattedMessage {...navBarMsg.signout} />

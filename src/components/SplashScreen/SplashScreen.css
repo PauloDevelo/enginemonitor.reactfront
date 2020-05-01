@@ -1,0 +1,32 @@
+.overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  background-color: white;
+}
+
+@-webkit-keyframes fadeout{
+  0%{opacity:1;visibility:visible;}
+  99%{opacity:0;}
+  100%{opacity:0;visibility: hidden;}
+}
+.fadeout {
+  -webkit-animation:fadeout 0.5s linear;
+  visibility:hidden;
+}
+
+@-webkit-keyframes fadein{
+  0%{opacity:0;visibility:visible;}
+  100%{opacity:1;}
+}
+.fadein {
+  -webkit-animation:fadein 0.5s linear;
+}
