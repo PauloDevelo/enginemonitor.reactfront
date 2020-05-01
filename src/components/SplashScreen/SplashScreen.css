@@ -30,3 +30,7 @@
 .fadein {
   -webkit-animation:fadein 0.5s linear;
 }
+
+.hidden {
+  visibility:hidden;
+}
