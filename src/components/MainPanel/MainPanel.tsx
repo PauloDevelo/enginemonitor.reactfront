@@ -163,7 +163,7 @@ export default function MainPanel() {
 
       <ModalLogin
         key="ModalLogin"
-        visible={!user}
+        visible={user === undefined}
         className="modal-dialog-centered"
         toggleModalSignup={toggleModalSignup}
       />
