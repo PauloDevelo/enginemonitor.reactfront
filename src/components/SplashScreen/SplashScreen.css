@@ -1,0 +1,14 @@
+.overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  background-color: white;
+}

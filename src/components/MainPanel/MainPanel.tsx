@@ -1,5 +1,5 @@
 import React, {
-  useEffect, useState, useCallback, useRef,
+  useEffect, useState, useCallback, useRef, Fragment,
 } from 'react';
 
 import { useParams } from 'react-router-dom';
@@ -15,7 +15,9 @@ import ModalSignup from '../ModalSignup/ModalSignup';
 import NavBar from '../NavBar/NavBar';
 import TaskProgressBar from '../TaskProgressBar/TaskProgressBar';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
-import CacheBuster from '../CacheBuster/CacheBuster';
+import SplashScreen from '../SplashScreen/SplashScreen';
+
+import useCacheBuster from '../../hooks/CacheBuster';
 
 import localStorageBuilder from '../../services/LocalStorageBuilder';
 import syncService from '../../services/SyncService';
@@ -38,6 +40,9 @@ import
 import ModalEditAsset from '../ModalEditAsset/ModalEditAsset';
 
 export default function MainPanel() {
+  const { loading } = useCacheBuster();
+
+
   const [user, setUser] = useState<UserModel | undefined | null>(null);
   const [currentAsset, setCurrentAsset] = useState<AssetModel | undefined | null>(null);
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -96,71 +101,67 @@ export default function MainPanel() {
   const toggleModalSignup = useCallback(() => setModalSignupVisible((prevModalSignupVisible) => !prevModalSignupVisible), []);
   const logOut = useCallback(() => setUser(undefined), []);
 
+  const components = [];
+
+  if (loading || user === undefined || currentAsset === null || modalSignupVisible) {
+    components.push(<SplashScreen key="SplashScreen" />);
+  }
+
+  if (user === undefined) {
+    components.push(<ModalLogin
+      key="ModalLogin"
+      visible={!user}
+      onLoggedIn={setUser}
+      className="modal-dialog-centered"
+      toggleModalSignup={toggleModalSignup}
+    />);
+  }
+
+  if (user && currentAsset === undefined) {
+    components.push(<ModalEditAsset
+      key="ModalEditAsset"
+      asset={createDefaultAsset()}
+      visible={user && currentAsset === undefined}
+      className="modal-dialog-centered"
+    />);
+  }
+
+  if (modalSignupVisible) {
+    components.push(<ModalSignup
+      key="SignupModal"
+      visible={modalSignupVisible}
+      toggle={toggleModalSignup}
+      className="modal-dialog-centered"
+    />);
+  }
+
   const panelClassNames = 'p-2 m-2 border border-secondary rounded shadow';
-
-  return (
-    <CacheBuster>
-      {({ loading, isLatestVersion, refreshCacheAndReload }:any) => {
-        if (loading) return null;
-        if (!loading && !isLatestVersion) {
-          // You can decide how and when you want to force reload
-          refreshCacheAndReload();
-        }
-
-        return (
-          <>
-            <>
-              <NavBar onLoggedOut={logOut} />
-              <div className="appBody mb-2">
-                <div className="wrapperColumn">
-                  <EquipmentsInfo className={`${panelClassNames} columnHeader`} />
-                  <TaskTabPanes
-                    className={`${panelClassNames} columnBody`}
-                    changeCurrentTask={onClickTaskTable}
-                  />
-                </div>
-                <div className="wrapperColumn">
-                  <CardTaskDetails
-                    callBackRef={cardTaskDetailDomCallBack}
-                    className={`${panelClassNames} columnHeader`}
-                  />
-                  <HistoryTaskTable
-                    className={`${panelClassNames} columnBody lastBlock`}
-                  />
-                </div>
-              </div>
-              <TaskProgressBar taskWithProgress={syncService} title="syncInProgress" color="warning" className="bottomright" />
-              <TaskProgressBar taskWithProgress={localStorageBuilder} title="rebuildInProgress" color="success" className="bottomright" />
-              <ErrorAlert error={error} onDismiss={dismissError} className="verytop bottomright" timeoutInMs={5000} />
-            </>
-
-            {user === undefined && (
-            <ModalLogin
-              visible={!user}
-              onLoggedIn={setUser}
-              className="modal-dialog-centered"
-              toggleModalSignup={toggleModalSignup}
-            />
-            )}
-
-            {user && currentAsset === undefined && (
-            <ModalEditAsset
-              asset={createDefaultAsset()}
-              visible={user && currentAsset === undefined}
-              className="modal-dialog-centered"
-            />
-            )}
-
-            {modalSignupVisible && (
-            <ModalSignup
-              visible={modalSignupVisible}
-              toggle={toggleModalSignup}
-              className="modal-dialog-centered"
-            />
-            )}
-          </>
-        );
-      }}
-    </CacheBuster>
+  components.push(
+    <Fragment key="MainPanel">
+      <NavBar onLoggedOut={logOut} />
+      <div className="appBody mb-2">
+        <div className="wrapperColumn">
+          <EquipmentsInfo className={`${panelClassNames} columnHeader`} />
+          <TaskTabPanes
+            className={`${panelClassNames} columnBody`}
+            changeCurrentTask={onClickTaskTable}
+          />
+        </div>
+        <div className="wrapperColumn">
+          <CardTaskDetails
+            callBackRef={cardTaskDetailDomCallBack}
+            className={`${panelClassNames} columnHeader`}
+          />
+          <HistoryTaskTable
+            className={`${panelClassNames} columnBody lastBlock`}
+          />
+        </div>
+      </div>
+      <TaskProgressBar taskWithProgress={syncService} title="syncInProgress" color="warning" className="bottomright" />
+      <TaskProgressBar taskWithProgress={localStorageBuilder} title="rebuildInProgress" color="success" className="bottomright" />
+      <ErrorAlert error={error} onDismiss={dismissError} className="verytop bottomright" timeoutInMs={5000} />
+    </Fragment>,
   );
+
+  return (<>{components}</>);
 }
