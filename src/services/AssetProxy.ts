@@ -8,7 +8,7 @@ import equipmentProxy from './EquipmentProxy';
 
 import { updateAsset } from '../helpers/AssetHelper';
 // eslint-disable-next-line no-unused-vars
-import { AssetModel } from '../types/Types';
+import { AssetModel, extractAssetModel } from '../types/Types';
 import imageProxy from './ImageProxy';
 import userContext from './UserContext';
 import HttpError from '../http/HttpError';
@@ -44,7 +44,7 @@ class AssetProxy implements IAssetProxy {
 
     createOrSaveAsset = async (assetToSave: AssetModel):Promise<AssetModel> => {
       this.checkAssetCreationCredential();
-      const updatedAsset = await progressiveHttpProxy.postAndUpdate<AssetModel>(this.baseUrl + assetToSave._uiId, 'asset', assetToSave, updateAsset, false);
+      const updatedAsset = await progressiveHttpProxy.postAndUpdate<AssetModel>(this.baseUrl + assetToSave._uiId, 'asset', extractAssetModel(assetToSave), updateAsset, false);
       const updatedAssets = await storageService.updateArray(this.baseUrl, updatedAsset);
       await assetManager.onAssetsChanged(updatedAssets);
       return updatedAsset;

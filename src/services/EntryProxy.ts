@@ -8,7 +8,7 @@ import storageService, { IUserStorageListener } from './StorageService';
 
 import { updateEntry } from '../helpers/EntryHelper';
 // eslint-disable-next-line no-unused-vars
-import { EntryModel, AssetModel } from '../types/Types';
+import { EntryModel, AssetModel, extractEntryModel } from '../types/Types';
 import imageProxy from './ImageProxy';
 
 import assetManager from './AssetManager';
@@ -82,7 +82,7 @@ class EntryProxy implements IEntryProxy, IUserStorageListener {
     createOrSaveEntry = async (equipmentId: string, taskId: string | undefined, newEntry: EntryModel): Promise<EntryModel> => {
       const taskIdStr = taskId === undefined ? '-' : taskId;
 
-      const updatedNewEntry = await progressiveHttpProxy.postAndUpdate(`${this.getBaseEntryUrl(equipmentId)}/${taskIdStr}/${newEntry._uiId}`, 'entry', newEntry, updateEntry);
+      const updatedNewEntry = await progressiveHttpProxy.postAndUpdate(`${this.getBaseEntryUrl(equipmentId)}/${taskIdStr}/${newEntry._uiId}`, 'entry', extractEntryModel(newEntry), updateEntry);
 
       const updatedEntries = await storageService.updateArray(this.getBaseEntryUrl(equipmentId), updatedNewEntry);
       this.inMemory[this.getBaseEntryUrl(equipmentId)] = updatedEntries;

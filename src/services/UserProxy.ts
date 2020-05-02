@@ -7,8 +7,10 @@ import analytics from '../helpers/AnalyticsHelper';
 
 import storageService from './StorageService';
 
-// eslint-disable-next-line no-unused-vars
-import { UserModel, AuthInfo, UserCredentials } from '../types/Types';
+import {
+  // eslint-disable-next-line no-unused-vars
+  UserModel, AuthInfo, UserCredentials, extractUserModel,
+} from '../types/Types';
 import userContext from './UserContext';
 
 type Config = {
@@ -63,7 +65,7 @@ class UserProxy implements IUserProxy {
         this.setHttpProxyAuthentication(user);
 
         if (authInfo.remember) {
-          storageService.setGlobalItem('currentUser', user);
+          storageService.setGlobalItem('currentUser', extractUserModel(user));
         }
 
         storageService.openUserStorage(user);
@@ -99,7 +101,7 @@ class UserProxy implements IUserProxy {
             try {
               const { user: currentUser }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}current`);
               if (currentUser) {
-                storageService.setGlobalItem('currentUser', currentUser);
+                storageService.setGlobalItem('currentUser', extractUserModel(currentUser));
                 this.setHttpProxyAuthentication(currentUser);
                 rememberedUser = currentUser;
               }
