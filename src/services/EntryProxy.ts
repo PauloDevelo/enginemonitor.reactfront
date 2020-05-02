@@ -8,7 +8,7 @@ import storageService, { IUserStorageListener } from './StorageService';
 
 import { updateEntry } from '../helpers/EntryHelper';
 // eslint-disable-next-line no-unused-vars
-import { EntryModel, AssetModel } from '../types/Types';
+import { EntryModel, AssetModel, extractEntryModel } from '../types/Types';
 import imageProxy from './ImageProxy';
 
 import assetManager from './AssetManager';
@@ -31,7 +31,7 @@ export interface IEntryProxy{
     fetchEntries(props: FetchEntriesProps):Promise<EntryModel[]>;
     fetchAllEntries(props: FetchAllEntriesProps):Promise<EntryModel[]>;
 
-    getStoredEntries(equipmentId: string, taskId: string | undefined):Promise<EntryModel[]>;
+    getStoredEntries(equipmentId: string, taskId?: string):Promise<EntryModel[]>;
 
     existEntry(equipmentId: string, entryId: string | undefined):Promise<boolean>;
 
@@ -82,10 +82,10 @@ class EntryProxy implements IEntryProxy, IUserStorageListener {
     createOrSaveEntry = async (equipmentId: string, taskId: string | undefined, newEntry: EntryModel): Promise<EntryModel> => {
       const taskIdStr = taskId === undefined ? '-' : taskId;
 
-      const updatedNewEntry = await progressiveHttpProxy.postAndUpdate(`${this.getBaseEntryUrl(equipmentId)}/${taskIdStr}/${newEntry._uiId}`, 'entry', newEntry, updateEntry);
+      const updatedNewEntry = await progressiveHttpProxy.postAndUpdate(`${this.getBaseEntryUrl(equipmentId)}/${taskIdStr}/${newEntry._uiId}`, 'entry', extractEntryModel(newEntry), updateEntry);
 
       const updatedEntries = await storageService.updateArray(this.getBaseEntryUrl(equipmentId), updatedNewEntry);
-      this.inMemory[this.getBaseEntryUrl(equipmentId)] = updatedEntries;
+      this.inMemory[this.getBaseEntryUrl(equipmentId)] = updatedEntries.map(updateEntry);
 
       return updatedNewEntry;
     }
@@ -116,7 +116,12 @@ class EntryProxy implements IEntryProxy, IUserStorageListener {
       if (equipmentId === undefined) { return []; }
 
       if (forceToLookUpInStorage) {
-        return _.get(this.inMemory, this.getBaseEntryUrl(equipmentId), []);
+        const storedEntries = _.get(this.inMemory, this.getBaseEntryUrl(equipmentId), null);
+        if (storedEntries !== null) {
+          return storedEntries;
+        }
+
+        throw new Error(`The entries for ${equipmentId} are not stored yet ...`);
       }
 
       const entries = await progressiveHttpProxy.getArrayOnlineFirst<EntryModel>({
@@ -140,7 +145,7 @@ class EntryProxy implements IEntryProxy, IUserStorageListener {
         return false;
       }
 
-      const allEntries = await this.fetchAllEntries({ equipmentId, forceToLookUpInStorage: true });
+      const allEntries = await this.getStoredEntries(equipmentId);
 
       return allEntries.findIndex((entry) => entry._uiId === entryId) !== -1;
     }
@@ -165,7 +170,7 @@ class EntryProxy implements IEntryProxy, IUserStorageListener {
 
     private removeEntryInStorage = async (equipmentUiId: string, entryUiId: string): Promise<EntryModel> => {
       const entryDeleted = updateEntry(await storageService.removeItemInArray<EntryModel>(this.getBaseEntryUrl(equipmentUiId), entryUiId));
-      _.remove(this.inMemory[this.getBaseEntryUrl(equipmentUiId)], (entry) => entry._uiId !== entryDeleted._uiId);
+      _.remove(this.inMemory[this.getBaseEntryUrl(equipmentUiId)], (entry) => entry._uiId === entryDeleted._uiId);
 
       await imageProxy.onEntityDeleted(entryUiId);
 

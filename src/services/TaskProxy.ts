@@ -10,7 +10,7 @@ import storageService from './StorageService';
 
 import { updateTask, updateRealtimeFields } from '../helpers/TaskHelper';
 // eslint-disable-next-line no-unused-vars
-import { TaskModel, AssetModel } from '../types/Types';
+import { TaskModel, AssetModel, extractTaskModel } from '../types/Types';
 
 import assetManager from './AssetManager';
 import HttpError from '../http/HttpError';
@@ -52,7 +52,7 @@ class TaskProxy implements ITaskProxy {
         }
       }
 
-      const updatedTask = await progressiveHttpProxy.postAndUpdate<TaskModel>(`${this.baseUrl + equipmentId}/${newTask._uiId}`, 'task', newTask, updateTask);
+      const updatedTask = await progressiveHttpProxy.postAndUpdate<TaskModel>(`${this.baseUrl + equipmentId}/${newTask._uiId}`, 'task', extractTaskModel(newTask), updateTask);
 
       await storageService.updateArray(this.baseUrl + equipmentId, updatedTask);
 

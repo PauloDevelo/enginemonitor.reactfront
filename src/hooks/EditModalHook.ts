@@ -5,7 +5,7 @@ export default function useEditModal<T>(initialData: T) {
   const [editModalVisibility, setEditModalVisibility] = useState(false);
 
   const toggleModal = () => {
-    setEditModalVisibility(!editModalVisibility);
+    setEditModalVisibility((prevEditModalVisibility) => !prevEditModalVisibility);
   };
 
   const displayData = (dataToDisplay: T) => {

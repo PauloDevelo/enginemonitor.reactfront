@@ -1,6 +1,17 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/prefer-default-export */
 
+function extract<T>(properties: Record<keyof T, true>) {
+  return function<TActual extends T> (value: TActual) {
+    const result = {} as T;
+    // eslint-disable-next-line no-restricted-syntax
+    for (const property of Object.keys(properties) as Array<keyof T>) {
+      result[property] = value[property];
+    }
+    return result;
+  };
+}
+
 export enum AgeAcquisitionType{
   time = 0,
   manualEntry=1,
@@ -20,7 +31,7 @@ export interface UserCredentials{
 
 export interface EntityModel{
     _uiId:string,
-    name: string
+    name: string,
 }
 
 export interface GuestLinkModel extends EntityModel {
@@ -35,6 +46,17 @@ export interface EquipmentModel extends EntityModel {
     ageAcquisitionType: AgeAcquisitionType,
     ageUrl: string
 }
+
+export const extractEquipmentModel = extract<EquipmentModel>({
+  _uiId: true,
+  name: true,
+  brand: true,
+  model: true,
+  age: true,
+  installation: true,
+  ageAcquisitionType: true,
+  ageUrl: true,
+});
 
 export enum TaskLevel{
 done=1,
@@ -51,6 +73,17 @@ export interface TaskModel extends EntityModel {
     level: TaskLevel
 }
 
+export const extractTaskModel = extract<TaskModel>({
+  _uiId: true,
+  name: true,
+  periodInMonth: true,
+  description: true,
+  nextDueDate: true,
+  usagePeriodInHour: true,
+  usageInHourLeft: true,
+  level: true,
+});
+
 export interface EntryModel extends EntityModel {
     date: Date,
     age: number,
@@ -60,11 +93,30 @@ export interface EntryModel extends EntityModel {
     ack: boolean
 }
 
+export const extractEntryModel = extract<EntryModel>({
+  _uiId: true,
+  name: true,
+  date: true,
+  age: true,
+  remarks: true,
+  equipmentUiId: true,
+  taskUiId: true,
+  ack: true,
+});
+
 export interface AssetModel extends EntityModel {
     brand: string;
     manufactureDate: Date;
     modelBrand: string;
 }
+
+export const extractAssetModel = extract<AssetModel>({
+  _uiId: true,
+  name: true,
+  brand: true,
+  manufactureDate: true,
+  modelBrand: true,
+});
 
 export interface UserModel extends EntityModel {
     email: string,
@@ -77,6 +129,20 @@ export interface UserModel extends EntityModel {
     forbidCreatingAsset: boolean,
     token: string,
 }
+
+export const extractUserModel = extract<UserModel>({
+  _uiId: true,
+  name: true,
+  email: true,
+  password: true,
+  firstname: true,
+  imageFolderSizeInByte: true,
+  imageFolderSizeLimitInByte: true,
+  imageFolder: true,
+  forbidUploadingImage: true,
+  forbidCreatingAsset: true,
+  token: true,
+});
 
 export type AuthInfo = {
     email: string,
@@ -92,3 +158,13 @@ export interface ImageModel extends EntityModel {
     description:string,
     sizeInByte:number
 }
+export const extractImageModel = extract<ImageModel>({
+  _uiId: true,
+  name: true,
+  url: true,
+  thumbnailUrl: true,
+  parentUiId: true,
+  title: true,
+  description: true,
+  sizeInByte: true,
+});

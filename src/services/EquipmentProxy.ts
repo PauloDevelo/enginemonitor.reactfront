@@ -8,7 +8,7 @@ import entryProxy from './EntryProxy';
 
 import { updateEquipment } from '../helpers/EquipmentHelper';
 // eslint-disable-next-line no-unused-vars
-import { EquipmentModel } from '../types/Types';
+import { EquipmentModel, extractEquipmentModel } from '../types/Types';
 import imageProxy from './ImageProxy';
 
 import assetManager from './AssetManager';
@@ -57,7 +57,7 @@ class EquipmentProxy implements IEquipmentProxy {
 
       const assetId = assetManager.getCurrentAsset()?._uiId;
       const postUrl: string = `${this.getBaseUrl(assetId)}${equipmentToSave._uiId}`;
-      const updatedEquipment = await progressiveHttpProxy.postAndUpdate<EquipmentModel>(postUrl, 'equipment', equipmentToSave, updateEquipment);
+      const updatedEquipment = await progressiveHttpProxy.postAndUpdate<EquipmentModel>(postUrl, 'equipment', extractEquipmentModel(equipmentToSave), updateEquipment);
 
       await storageService.updateArray(this.getBaseUrl(assetId), updatedEquipment);
       return updatedEquipment;
