@@ -31,7 +31,7 @@ export interface IEntryProxy{
     fetchEntries(props: FetchEntriesProps):Promise<EntryModel[]>;
     fetchAllEntries(props: FetchAllEntriesProps):Promise<EntryModel[]>;
 
-    getStoredEntries(equipmentId: string, taskId: string | undefined):Promise<EntryModel[]>;
+    getStoredEntries(equipmentId: string, taskId?: string):Promise<EntryModel[]>;
 
     existEntry(equipmentId: string, entryId: string | undefined):Promise<boolean>;
 
@@ -116,7 +116,12 @@ class EntryProxy implements IEntryProxy, IUserStorageListener {
       if (equipmentId === undefined) { return []; }
 
       if (forceToLookUpInStorage) {
-        return _.get(this.inMemory, this.getBaseEntryUrl(equipmentId), []);
+        const storedEntries = _.get(this.inMemory, this.getBaseEntryUrl(equipmentId), null);
+        if (storedEntries !== null) {
+          return storedEntries;
+        }
+
+        throw new Error(`The entries for ${equipmentId} are not stored yet ...`);
       }
 
       const entries = await progressiveHttpProxy.getArrayOnlineFirst<EntryModel>({
@@ -140,7 +145,7 @@ class EntryProxy implements IEntryProxy, IUserStorageListener {
         return false;
       }
 
-      const allEntries = await this.fetchAllEntries({ equipmentId, forceToLookUpInStorage: true });
+      const allEntries = await this.getStoredEntries(equipmentId);
 
       return allEntries.findIndex((entry) => entry._uiId === entryId) !== -1;
     }
