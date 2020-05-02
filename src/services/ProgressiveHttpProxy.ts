@@ -21,7 +21,7 @@ const timeouts = {
   post: 2000,
   delete: 2000,
   get: 2000,
-  notStoredGet: 10000,
+  notStoredGet: 0,
 };
 
 export interface GetRequest<T>{
