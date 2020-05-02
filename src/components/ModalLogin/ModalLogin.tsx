@@ -20,7 +20,7 @@ import HttpError from '../../http/HttpError';
 import userProxy from '../../services/UserProxy';
 
 // eslint-disable-next-line no-unused-vars
-import { AuthInfo, UserModel } from '../../types/Types';
+import { AuthInfo } from '../../types/Types';
 
 import '../../style/transition.css';
 
