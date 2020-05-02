@@ -85,7 +85,7 @@ class EntryProxy implements IEntryProxy, IUserStorageListener {
       const updatedNewEntry = await progressiveHttpProxy.postAndUpdate(`${this.getBaseEntryUrl(equipmentId)}/${taskIdStr}/${newEntry._uiId}`, 'entry', extractEntryModel(newEntry), updateEntry);
 
       const updatedEntries = await storageService.updateArray(this.getBaseEntryUrl(equipmentId), updatedNewEntry);
-      this.inMemory[this.getBaseEntryUrl(equipmentId)] = updatedEntries;
+      this.inMemory[this.getBaseEntryUrl(equipmentId)] = updatedEntries.map(updateEntry);
 
       return updatedNewEntry;
     }
@@ -165,7 +165,7 @@ class EntryProxy implements IEntryProxy, IUserStorageListener {
 
     private removeEntryInStorage = async (equipmentUiId: string, entryUiId: string): Promise<EntryModel> => {
       const entryDeleted = updateEntry(await storageService.removeItemInArray<EntryModel>(this.getBaseEntryUrl(equipmentUiId), entryUiId));
-      _.remove(this.inMemory[this.getBaseEntryUrl(equipmentUiId)], (entry) => entry._uiId !== entryDeleted._uiId);
+      _.remove(this.inMemory[this.getBaseEntryUrl(equipmentUiId)], (entry) => entry._uiId === entryDeleted._uiId);
 
       await imageProxy.onEntityDeleted(entryUiId);
 
