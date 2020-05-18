@@ -755,6 +755,27 @@ exports[`Component NavBar should render the navbar even when the user is still u
                                   </FormattedMessage>
                                 </button>
                               </DropdownItem>
+                              <DropdownItem
+                                onClick={[Function]}
+                                tag="button"
+                                toggle={true}
+                              >
+                                <button
+                                  className="dropdown-item"
+                                  onClick={[Function]}
+                                  role="menuitem"
+                                  tabIndex="0"
+                                  type="button"
+                                >
+                                  <FormattedMessage
+                                    defaultMessage="Privacy policy"
+                                    id="privacyPolicy"
+                                    values={Object {}}
+                                  >
+                                    Privacy policy
+                                  </FormattedMessage>
+                                </button>
+                              </DropdownItem>
                             </div>
                           </DropdownMenu>
                         </li>
@@ -768,6 +789,40 @@ exports[`Component NavBar should render the navbar even when the user is still u
         </Collapse>
       </nav>
     </Navbar>
+    <PrivacyPolicyModal
+      className="modal-dialog-centered"
+      toggle={[Function]}
+      visible={false}
+    >
+      <Modal
+        autoFocus={true}
+        backdrop={true}
+        backdropTransition={
+          Object {
+            "mountOnEnter": true,
+            "timeout": 150,
+          }
+        }
+        centered={false}
+        className="modal-dialog-centered"
+        fade={true}
+        isOpen={false}
+        keyboard={true}
+        modalTransition={
+          Object {
+            "timeout": 300,
+          }
+        }
+        onClosed={[Function]}
+        onOpened={[Function]}
+        returnFocusAfterClose={true}
+        role="dialog"
+        scrollable={false}
+        toggle={[Function]}
+        unmountOnClose={true}
+        zIndex={1050}
+      />
+    </PrivacyPolicyModal>
   </Memo(NavBar)>
 </IntlProvider>
 `;

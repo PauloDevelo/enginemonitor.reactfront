@@ -89,6 +89,8 @@
   "orevery": " or every ",
   "password": "Password",
   "passwordsHaveToBeIdentical": "The passwords are different. Please re-type the passwords.",
+  "privacyPolicy": "Privacy policy",
+  "privacyTitle": "Privacy Policy for Equipment Maintenance",
   "rebuildInProgress": "Local storage rebuild in progress...",
   "rebuildLocalStorage": "Rebuild local storage",
   "remarks": "Remarks",

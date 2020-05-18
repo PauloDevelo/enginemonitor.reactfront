@@ -16,6 +16,10 @@
     "defaultMessage": "Online",
     "id": "online"
   },
+  "privacyPolicy": {
+    "defaultMessage": "Privacy policy",
+    "id": "privacyPolicy"
+  },
   "rebuildLocalStorage": {
     "defaultMessage": "Rebuild local storage",
     "id": "rebuildLocalStorage"
