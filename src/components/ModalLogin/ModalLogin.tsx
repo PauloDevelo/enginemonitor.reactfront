@@ -129,7 +129,7 @@ const ModalLogin = ({
           {state.infoMsg && <Alerts error={state.infoMsg} color="success" />}
           {state.errors && <Alerts errors={state.errors} />}
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter className="without-horizontal-bar">
           <Button onClick={toggleModalSignup} color="warning" className="d-block mx-auto"><FormattedMessage {...loginmsg.signup} /></Button>
           {state.state === LoginState.WrongPassword && <Button onClick={resetPasswordModalHook.toggleModal} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.resetPassword} /></Button>}
           {state.state === LoginState.NotVerified && <Button onClick={sendVerificationEmail} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.sendVerification} /></Button>}
