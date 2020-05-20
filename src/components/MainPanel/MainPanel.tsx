@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 
 import { useParams } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 import { scrollTo } from '../../helpers/Helpers';
 
@@ -76,9 +77,17 @@ export default function MainPanel() {
     const refreshCurrentUser = async (niceKeyToGetTheGuest: string | undefined) => {
       if (niceKeyToGetTheGuest) {
         await guestLinkProxy.tryGetAndSetUserFromNiceKey(niceKeyToGetTheGuest);
-      } else {
-        await userProxy.tryGetAndSetMemorizedUser();
+        return;
       }
+
+      const authUser = Cookies.getJSON('authUser');
+      if (authUser !== null && authUser !== undefined) {
+        await userProxy.setUser(authUser as UserModel);
+        Cookies.remove('authUser');
+        return;
+      }
+
+      await userProxy.tryGetAndSetMemorizedUser();
     };
 
     refreshCurrentUser(niceKey);

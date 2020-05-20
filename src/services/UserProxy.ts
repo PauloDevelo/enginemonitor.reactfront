@@ -32,6 +32,7 @@ export interface IUserProxy{
      * If it can read a user, it will set the token for the http authentication, it will open the user storage, and it will signal a user has been set thanks to the user context.
      */
     tryGetAndSetMemorizedUser():Promise<UserModel | undefined>;
+    setUser(user: UserModel): Promise<void>;
 }
 
 class UserProxy implements IUserProxy {
@@ -121,6 +122,30 @@ class UserProxy implements IUserProxy {
 
       await userContext.onUserChanged(undefined);
       return undefined;
+    }
+
+    setUser = async (newUser: UserModel): Promise<void> => {
+      this.setHttpProxyAuthentication(newUser);
+
+      let currentUser = newUser;
+      if (await onlineManager.isOnline()) {
+        try {
+          const { user: updatedUser }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}current`);
+          if (updatedUser) {
+            storageService.setGlobalItem('currentUser', extractUserModel(updatedUser));
+            this.setHttpProxyAuthentication(updatedUser);
+
+            currentUser = updatedUser;
+          }
+        } catch (error) {
+          log.error(error.message);
+        }
+      }
+
+      await storageService.openUserStorage(currentUser);
+      await userContext.onUserChanged(currentUser);
+
+      analytics.sendEngagementEvent('login', { method: 'cookie' });
     }
 
     setHttpProxyAuthentication = ({ token }: UserModel) => {
