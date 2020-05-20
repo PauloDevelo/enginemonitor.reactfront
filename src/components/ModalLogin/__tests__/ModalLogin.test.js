@@ -1,6 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
+import { IntlProvider } from 'react-intl';
+
 // eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
 
@@ -18,8 +20,8 @@ jest.mock('localforage');
 describe('ModalLogin', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
-    ignoredMessages.push('[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.');
     ignoredMessages.push('a test was not wrapped in act');
+    ignoredMessages.push('Missing message');
   });
 
   afterEach(() => {
@@ -38,7 +40,7 @@ describe('ModalLogin', () => {
   };
 
 
-  it('should render the ModalLogin', async () => {
+  it('should render the ModalLogin', async (done) => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -46,7 +48,7 @@ describe('ModalLogin', () => {
     });
 
     // Act
-    const modalLogin = mount(<ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
+    const modalLogin = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} /></IntlProvider>);
     await updateWrapper(modalLogin);
 
     // Assert
@@ -55,9 +57,10 @@ describe('ModalLogin', () => {
 
     const alerts = modalLogin.find('Alerts');
     expect(alerts.length).toBe(0);
+    done();
   });
 
-  it('should authenticate with the value input', async () => {
+  it('should authenticate with the value input', async (done) => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -66,7 +69,7 @@ describe('ModalLogin', () => {
 
     jest.spyOn(userProxy, 'authenticate').mockImplementation(() => Promise.resolve(user));
 
-    const modalLogin = mount(<ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
+    const modalLogin = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} /></IntlProvider>);
     await updateWrapper(modalLogin);
 
     // Act
@@ -85,9 +88,10 @@ describe('ModalLogin', () => {
     expect(modalLogin.find('ModalFooter').find('Button').length).toBe(2);
     const alerts = modalLogin.find('Alerts');
     expect(alerts.length).toBe(0);
+    done();
   });
 
-  it('should display the button to resend the verification email because the user is not verified', async () => {
+  it('should display the button to resend the verification email because the user is not verified', async (done) => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -96,7 +100,7 @@ describe('ModalLogin', () => {
 
     jest.spyOn(userProxy, 'authenticate').mockImplementation(() => Promise.reject(new HttpError({ email: 'needVerification' })));
 
-    const modalLogin = mount(<ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
+    const modalLogin = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} /></IntlProvider>);
     await updateWrapper(modalLogin);
 
     const myForm = modalLogin.find('Memo(MyForm)');
@@ -116,9 +120,10 @@ describe('ModalLogin', () => {
     expect(modalLogin.find('ModalFooter').find('Button').length).toBe(3);
     const alerts = modalLogin.find('Alerts');
     expect(alerts.length).toBe(1);
+    done();
   });
 
-  it('should call the sendVerificationEmail because the user clicked on the button to resend the verification email', async () => {
+  it('should call the sendVerificationEmail because the user clicked on the button to resend the verification email', async (done) => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -128,7 +133,7 @@ describe('ModalLogin', () => {
     jest.spyOn(userProxy, 'authenticate').mockImplementation(() => Promise.reject(new HttpError({ email: 'needVerification' })));
     jest.spyOn(userProxy, 'sendVerificationEmail').mockImplementation(() => Promise.resolve());
 
-    const modalLogin = mount(<ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
+    const modalLogin = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} /></IntlProvider>);
     await updateWrapper(modalLogin);
 
     const myForm = modalLogin.find('Memo(MyForm)');
@@ -148,9 +153,10 @@ describe('ModalLogin', () => {
     // Assert
     expect(userProxy.sendVerificationEmail).toHaveBeenCalledTimes(1);
     expect(userProxy.sendVerificationEmail.mock.calls[0][0]).toEqual('paulodevelo@lovestreet.com');
+    done();
   });
 
-  it('should display the button to reset the password because the user set an incorrect password', async () => {
+  it('should display the button to reset the password because the user set an incorrect password', async (done) => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -159,7 +165,7 @@ describe('ModalLogin', () => {
 
     jest.spyOn(userProxy, 'authenticate').mockImplementation(() => Promise.reject(new HttpError({ password: 'invalid' })));
 
-    const modalLogin = mount(<ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
+    const modalLogin = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} /></IntlProvider>);
     await updateWrapper(modalLogin);
 
     const myForm = modalLogin.find('Memo(MyForm)');
@@ -182,9 +188,10 @@ describe('ModalLogin', () => {
 
     expect(modalLogin.find('ModalPasswordReset').length).toBe(1);
     expect(modalLogin.find('ModalPasswordReset').props().visible).toBe(false);
+    done();
   });
 
-  it('should display the Modal to reset the password because the user clicked on the button to reset the password', async () => {
+  it('should display the Modal to reset the password because the user clicked on the button to reset the password', async (done) => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -193,7 +200,7 @@ describe('ModalLogin', () => {
 
     jest.spyOn(userProxy, 'authenticate').mockImplementation(() => Promise.reject(new HttpError({ password: 'invalid' })));
 
-    const modalLogin = mount(<ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
+    const modalLogin = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} /></IntlProvider>);
     await updateWrapper(modalLogin);
 
     const myForm = modalLogin.find('Memo(MyForm)');
@@ -213,9 +220,10 @@ describe('ModalLogin', () => {
     // Assert
     expect(modalLogin.find('ModalPasswordReset').length).toBe(1);
     expect(modalLogin.find('ModalPasswordReset').props().visible).toBe(true);
+    done();
   });
 
-  it('should display an alert message when an unexpected error occurs during the authentication', async () => {
+  it('should display an alert message when an unexpected error occurs during the authentication', async (done) => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -224,7 +232,7 @@ describe('ModalLogin', () => {
 
     jest.spyOn(userProxy, 'authenticate').mockImplementation(() => Promise.reject(new HttpError({ error: 'Network error' })));
 
-    const modalLogin = mount(<ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
+    const modalLogin = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} /></IntlProvider>);
     await updateWrapper(modalLogin);
 
     const myForm = modalLogin.find('Memo(MyForm)');
@@ -247,16 +255,17 @@ describe('ModalLogin', () => {
 
     expect(modalLogin.find('ModalPasswordReset').length).toBe(1);
     expect(modalLogin.find('ModalPasswordReset').props().visible).toBe(false);
+    done();
   });
 
-  it('should call the toggleModalSignup when clicking on the signup button', async () => {
+  it('should call the toggleModalSignup when clicking on the signup button', async (done) => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
       signupVisible = !signupVisible;
     });
 
-    const modalLogin = mount(<ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} />);
+    const modalLogin = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalLogin visible className="modal-dialog-centered" toggleModalSignup={toggleModalSignup} /></IntlProvider>);
     await updateWrapper(modalLogin);
 
     const signupButton = modalLogin.find('ModalFooter').find('Button').at(0);
@@ -272,5 +281,6 @@ describe('ModalLogin', () => {
     expect(alerts.length).toBe(0);
 
     expect(toggleModalSignup).toBeCalledTimes(1);
+    done();
   });
 });
