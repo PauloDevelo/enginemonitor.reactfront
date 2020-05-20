@@ -1,6 +1,6 @@
 {
   "loginWithGoogle": {
-    "defaultMessage": "Login with Google",
+    "defaultMessage": "Sign in with Google",
     "description": "Button login with google",
     "id": "loginWithGoogle"
   }
