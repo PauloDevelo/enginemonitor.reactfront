@@ -1,0 +1,7 @@
+{
+  "loginWithGoogle": {
+    "defaultMessage": "Login with Google",
+    "description": "Button login with google",
+    "id": "loginWithGoogle"
+  }
+}
