@@ -58,6 +58,7 @@
   "invalid": "is invalid",
   "isrequired": "is required",
   "login": "Login",
+  "loginWithGoogle": "Sign in with Google",
   "loginerror": "Error:",
   "loginfailed": "Login failed",
   "manualEntryType": "With a manual input",
@@ -86,6 +87,7 @@
   "notonline": "Offline",
   "ok": "OK",
   "online": "Online",
+  "or": "OR",
   "orevery": " or every ",
   "password": "Password",
   "passwordsHaveToBeIdentical": "The passwords are different. Please re-type the passwords.",
@@ -128,7 +130,5 @@
   "usagePeriodInHour": "Period in usage hour",
   "userExceedStorageLimit": "User exceeded the storage limit. Remove some images before adding new images.",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
-  "yes": "Yes",
-  "loginWithGoogle": "Sign in with Google",
-  "or": "OR"
+  "yes": "Yes"
 }

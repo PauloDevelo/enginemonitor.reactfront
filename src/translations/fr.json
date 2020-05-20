@@ -58,6 +58,7 @@
   "invalid": "est invalide.",
   "isrequired": "est requis",
   "login": "Login",
+  "loginWithGoogle": "Se connecter avec Google",
   "loginerror": "Erreur :",
   "loginfailed": "Le login a échoué",
   "manualEntryType": "En la saisissant manuellement",
@@ -86,6 +87,7 @@
   "notonline": "Hors ligne",
   "ok": "OK",
   "online": "En ligne",
+  "or": "OU",
   "orevery": " ou tous les ",
   "password": "Mot de passe",
   "passwordsHaveToBeIdentical": "Les mots de passe sont différents. Veuillez les retapper.",
@@ -128,7 +130,5 @@
   "usagePeriodInHour": "Période en heure à l'usage",
   "userExceedStorageLimit": "Vous avez dépassé la limite du stockage qui vous a été attribué. Veuillez supprimer des images avant d'en rajouter.",
   "yearperiod": "{year, plural, one {# année} other {# années}}",
-  "yes": "Oui",
-  "loginWithGoogle": "Se connecter avec Google",
-  "or": "OU"
+  "yes": "Oui"
 }

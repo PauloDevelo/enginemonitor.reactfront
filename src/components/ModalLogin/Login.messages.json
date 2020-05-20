@@ -59,6 +59,11 @@
     "description": "Label",
     "id": "name"
   },
+  "or": {
+    "defaultMessage": "OR",
+    "description": "horizontal separation line title",
+    "id": "or"
+  },
   "password": {
     "defaultMessage": "Password",
     "description": "Label",
@@ -83,10 +88,5 @@
     "defaultMessage": "Signup",
     "description": "Button signup",
     "id": "signup"
-  },
-  "or": {
-    "defaultMessage": "OR",
-    "description": "horizontal separation line title",
-    "id": "or"
   }
 }
