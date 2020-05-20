@@ -15,6 +15,8 @@ import * as serviceWorker from './serviceWorker.js';
 import messagesFr from './translations/fr.json';
 import messagesEn from './translations/en.json';
 
+import './fonts/Roboto-Medium.ttf';
+
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({ dsn: 'https://9b118304a0fe422f94456016f2aa6993@sentry.io/3533569' });
 }
