@@ -2,13 +2,16 @@
   display: flex;
   background-color: #4285F4;
   border-radius: 2px;
+  border: none;
+  color: #fff;
   height: 36px;
   cursor: pointer;
   text-decoration: none;
 }
 
 .button:hover {
-  background-color: #4285F4;
+  text-decoration: none;
+  box-shadow: 0 0 3px 3px rgba(66,133,244,.3);
 }
 
 .button:active {
