@@ -129,5 +129,6 @@
   "userExceedStorageLimit": "User exceeded the storage limit. Remove some images before adding new images.",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
   "yes": "Yes",
-  "loginWithGoogle": "Login with Google"
+  "loginWithGoogle": "Sign in with Google",
+  "or": "OR"
 }

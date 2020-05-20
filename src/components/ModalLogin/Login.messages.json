@@ -83,5 +83,10 @@
     "defaultMessage": "Signup",
     "description": "Button signup",
     "id": "signup"
+  },
+  "or": {
+    "defaultMessage": "OR",
+    "description": "horizontal separation line title",
+    "id": "or"
   }
 }

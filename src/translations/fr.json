@@ -129,5 +129,6 @@
   "userExceedStorageLimit": "Vous avez dépassé la limite du stockage qui vous a été attribué. Veuillez supprimer des images avant d'en rajouter.",
   "yearperiod": "{year, plural, one {# année} other {# années}}",
   "yes": "Oui",
-  "loginWithGoogle": "Se connecter avec Google"
+  "loginWithGoogle": "Se connecter avec Google",
+  "or": "OU"
 }

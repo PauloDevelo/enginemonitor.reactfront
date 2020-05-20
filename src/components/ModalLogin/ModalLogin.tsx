@@ -14,6 +14,7 @@ import MyForm from '../Form/MyForm';
 import MyInput from '../Form/MyInput';
 import Alerts from '../Alerts/Alerts';
 import ActionButton from '../ActionButton/ActionButton';
+import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton';
 
 import HttpError from '../../http/HttpError';
 
@@ -22,6 +23,7 @@ import userProxy from '../../services/UserProxy';
 // eslint-disable-next-line no-unused-vars
 import { AuthInfo } from '../../types/Types';
 
+import './ModalLogin.css';
 import '../../style/transition.css';
 
 import jsonMessages from './Login.messages.json';
@@ -132,6 +134,10 @@ const ModalLogin = ({
           {state.state === LoginState.WrongPassword && <Button onClick={resetPasswordModalHook.toggleModal} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.resetPassword} /></Button>}
           {state.state === LoginState.NotVerified && <Button onClick={sendVerificationEmail} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.sendVerification} /></Button>}
           <ActionButton type="submit" form="formLogin" color="success" className="d-block mx-auto" message={loginmsg.login} isActing={state.state === LoginState.IsLoggingIn} />
+        </ModalFooter>
+        <ModalFooter className="without-horizontal-bar">
+          <h4><span><FormattedMessage {...loginmsg.or} /></span></h4>
+          <GoogleLoginButton className="mx-auto" />
         </ModalFooter>
       </Modal>
       <ModalPasswordReset toggle={resetPasswordModalHook.toggleModal} visible={resetPasswordModalHook.editModalVisibility} data={resetPasswordModalHook.data} className="modal-dialog-centered" />
