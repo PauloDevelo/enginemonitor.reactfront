@@ -1,4 +1,6 @@
 import * as log from 'loglevel';
+import Cookies from 'js-cookie';
+
 import httpProxy from './HttpProxy';
 import progressiveHttpProxy from './ProgressiveHttpProxy';
 import HttpError from '../http/HttpError';
@@ -32,7 +34,7 @@ export interface IUserProxy{
      * If it can read a user, it will set the token for the http authentication, it will open the user storage, and it will signal a user has been set thanks to the user context.
      */
     tryGetAndSetMemorizedUser():Promise<UserModel | undefined>;
-    setUser(user: UserModel): Promise<void>;
+    tryGetAndSetMemorizedUserFromCookie(): Promise<boolean>;
 }
 
 class UserProxy implements IUserProxy {
@@ -124,15 +126,27 @@ class UserProxy implements IUserProxy {
       return undefined;
     }
 
-    setUser = async (newUser: UserModel): Promise<void> => {
-      this.setHttpProxyAuthentication(newUser);
+    tryGetAndSetMemorizedUserFromCookie = async (): Promise<boolean> => {
+      const authUser = Cookies.getJSON('authUser');
 
-      let currentUser = newUser;
+      if (!authUser) {
+        return Promise.resolve(false);
+      }
+
+      const rememberMe = await storageService.getGlobalItem<boolean>('rememberMe');
+      log.debug(rememberMe);
+      Cookies.remove('authUser');
+
+      this.setHttpProxyAuthentication(authUser);
+
+      let currentUser = authUser;
       if (await onlineManager.isOnline()) {
         try {
           const { user: updatedUser }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}current`);
           if (updatedUser) {
-            storageService.setGlobalItem('currentUser', extractUserModel(updatedUser));
+            if (rememberMe) {
+              storageService.setGlobalItem('currentUser', extractUserModel(updatedUser));
+            }
             this.setHttpProxyAuthentication(updatedUser);
 
             currentUser = updatedUser;
@@ -146,6 +160,8 @@ class UserProxy implements IUserProxy {
       await userContext.onUserChanged(currentUser);
 
       analytics.sendEngagementEvent('login', { method: 'cookie' });
+
+      return Promise.resolve(true);
     }
 
     setHttpProxyAuthentication = ({ token }: UserModel) => {

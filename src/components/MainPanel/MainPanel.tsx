@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 
 import { useParams } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 import { scrollTo } from '../../helpers/Helpers';
 
@@ -80,10 +79,7 @@ export default function MainPanel() {
         return;
       }
 
-      const authUser = Cookies.getJSON('authUser');
-      if (authUser !== null && authUser !== undefined) {
-        await userProxy.setUser(authUser as UserModel);
-        Cookies.remove('authUser');
+      if (await userProxy.tryGetAndSetMemorizedUserFromCookie()) {
         return;
       }
 

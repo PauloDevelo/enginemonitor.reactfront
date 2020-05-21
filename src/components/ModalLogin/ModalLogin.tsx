@@ -19,6 +19,7 @@ import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton';
 import HttpError from '../../http/HttpError';
 
 import userProxy from '../../services/UserProxy';
+import storageService from '../../services/StorageService';
 
 // eslint-disable-next-line no-unused-vars
 import { AuthInfo } from '../../types/Types';
@@ -60,14 +61,29 @@ errors?: any
 const ModalLogin = ({
   visible, className, toggleModalSignup,
 }: Props) => {
+  const [rememberMe, setRememberMe] = useState<boolean | undefined>(undefined);
   const [user, setUser] = useState<AuthInfo>({ email: '', password: '', remember: false });
   const [state, setState] = useState<StateType>({ state: LoginState.Started });
 
   const resetPasswordModalHook = useEditModal({ email: '', newPassword1: '', newPassword2: '' });
 
   useEffect(() => {
+    storageService.getGlobalItem<boolean>('rememberMe').then((rememberMeValue) => {
+      setRememberMe(rememberMeValue);
+    });
+  }, []);
+
+  useEffect(() => {
     setState({ state: LoginState.Started });
   }, [resetPasswordModalHook.editModalVisibility]);
+
+  useEffect(() => {
+    if (rememberMe !== undefined) {
+      setUser((previousUser) => ({ ...previousUser, remember: rememberMe! }));
+      storageService.setGlobalItem('rememberMe', rememberMe);
+    }
+  }, [rememberMe]);
+
 
   const sendVerificationEmail = async () => {
     setState({ state: LoginState.IsLoggingIn });
@@ -84,11 +100,16 @@ const ModalLogin = ({
   };
 
   const handleSubmit = async (newUser:AuthInfo) => {
+    const currentUser = { ...newUser };
+    if (rememberMe !== undefined) {
+      currentUser.remember = rememberMe;
+    }
+
     setState({ state: LoginState.IsLoggingIn });
-    setUser(newUser);
+    setUser(currentUser);
 
     try {
-      await userProxy.authenticate(newUser);
+      await userProxy.authenticate(currentUser);
       setState({ state: LoginState.Started });
     } catch (errors) {
       if (errors instanceof HttpError) {
@@ -122,7 +143,6 @@ const ModalLogin = ({
           <MyForm submit={handleSubmit} id="formLogin" initialData={user}>
             <MyInput name="email" label={loginmsg.email} type="email" required />
             <MyInput name="password" label={loginmsg.password} type="password" required />
-            <MyInput name="remember" label={loginmsg.remember} type="checkbox" />
           </MyForm>
           )}
           {state.state === LoginState.IsLoggingIn && <Spinner size="sm" color="secondary" />}
@@ -138,6 +158,9 @@ const ModalLogin = ({
         <ModalFooter className="without-horizontal-bar">
           <h4><span><FormattedMessage {...loginmsg.or} /></span></h4>
           <GoogleLoginButton className="mx-auto" />
+        </ModalFooter>
+        <ModalFooter>
+          <MyInput name="remember" label={loginmsg.remember} type="checkbox" onChanged={setRememberMe} checked={rememberMe} />
         </ModalFooter>
       </Modal>
       <ModalPasswordReset toggle={resetPasswordModalHook.toggleModal} visible={resetPasswordModalHook.editModalVisibility} data={resetPasswordModalHook.data} className="modal-dialog-centered" />
