@@ -15,6 +15,7 @@ import MyInput from '../Form/MyInput';
 import Alerts from '../Alerts/Alerts';
 import ActionButton from '../ActionButton/ActionButton';
 import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton';
+import HorizontalSeparationWithTitle from '../HorizontalSeparationWithTitle/HorizontalSeparationWithTitle';
 
 import HttpError from '../../http/HttpError';
 
@@ -156,7 +157,7 @@ const ModalLogin = ({
           <ActionButton type="submit" form="formLogin" color="success" className="d-block mx-auto" message={loginmsg.login} isActing={state.state === LoginState.IsLoggingIn} />
         </ModalFooter>
         <ModalFooter className="without-horizontal-bar">
-          <h4><span><FormattedMessage {...loginmsg.or} /></span></h4>
+          <HorizontalSeparationWithTitle title={loginmsg.or} />
           <GoogleLoginButton className="mx-auto" />
         </ModalFooter>
         <ModalFooter>

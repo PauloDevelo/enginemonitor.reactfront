@@ -5,8 +5,6 @@ import {
 
 import { FormattedMessage, defineMessages } from 'react-intl';
 
-import global from '../../global';
-
 import jsonMessages from './PrivacyPolicyModal.messages.json';
 
 const privacyMsg = defineMessages(jsonMessages);
@@ -26,8 +24,6 @@ const PrivacyPolicyModal = ({ visible = true, className, toggle }: Props) => (
       <Media body>
         <Media heading>
           <FormattedMessage {...privacyMsg.title} />
-          &nbsp;v
-          {global.getAppVersion()}
         </Media>
       </Media>
     </ModalHeader>
