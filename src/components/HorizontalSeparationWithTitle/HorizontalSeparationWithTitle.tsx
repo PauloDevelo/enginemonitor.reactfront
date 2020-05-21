@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { FormattedMessage } from 'react-intl';
+// eslint-disable-next-line no-unused-vars
+import { FormattedMessage, MessageDescriptor } from 'react-intl';
 
 import './HorizontalSeparationWithTitle.css';
 
-const HorizontalSeparationWithTitle = ({ title }: {title: any}) => (
+const HorizontalSeparationWithTitle = ({ title }: {title: MessageDescriptor}) => (
   <h4 className="with-horizontal-line"><span><FormattedMessage {...title} /></span></h4>
 );
 
