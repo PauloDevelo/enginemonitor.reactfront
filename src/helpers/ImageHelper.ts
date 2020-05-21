@@ -1,5 +1,5 @@
 import * as log from 'loglevel';
-import uuidv1 from 'uuid/v1';
+import { v4 as uuidv4 } from 'uuid';
 
 import Resizer from 'react-image-file-resizer';
 import { create } from 'exif-parser';
@@ -144,7 +144,7 @@ export const convertUrlImageIntoDataUrl = (urlImage: string):Promise<string> => 
 });
 
 export const createImageModel = (parentUiId: string):ImageModel => {
-  const uiid = uuidv1();
+  const uiid = uuidv4();
   return ({
     _uiId: uiid,
     name: `${parentUiId}.jpeg`,
