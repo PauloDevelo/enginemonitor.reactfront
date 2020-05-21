@@ -154,7 +154,9 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                     <div
                       class="without-horizontal-bar modal-footer"
                     >
-                      <h4>
+                      <h4
+                        class="with-horizontal-line"
+                      >
                         <span>
                           OR
                         </span>
@@ -336,7 +338,9 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                       <div
                         class="without-horizontal-bar modal-footer"
                       >
-                        <h4>
+                        <h4
+                          class="with-horizontal-line"
+                        >
                           <span>
                             OR
                           </span>
@@ -870,18 +874,30 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                         <div
                           className="without-horizontal-bar modal-footer"
                         >
-                          <h4>
-                            <span>
-                              <FormattedMessage
-                                defaultMessage="OR"
-                                description="horizontal separation line title"
-                                id="or"
-                                values={Object {}}
-                              >
-                                OR
-                              </FormattedMessage>
-                            </span>
-                          </h4>
+                          <HorizontalSeparationWithTitle
+                            title={
+                              Object {
+                                "defaultMessage": "OR",
+                                "description": "horizontal separation line title",
+                                "id": "or",
+                              }
+                            }
+                          >
+                            <h4
+                              className="with-horizontal-line"
+                            >
+                              <span>
+                                <FormattedMessage
+                                  defaultMessage="OR"
+                                  description="horizontal separation line title"
+                                  id="or"
+                                  values={Object {}}
+                                >
+                                  OR
+                                </FormattedMessage>
+                              </span>
+                            </h4>
+                          </HorizontalSeparationWithTitle>
                           <injectIntl(GoogleLoginButton)
                             className="mx-auto"
                           >
