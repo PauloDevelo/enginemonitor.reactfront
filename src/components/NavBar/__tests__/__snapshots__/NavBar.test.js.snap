@@ -769,7 +769,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
                                 >
                                   <FormattedMessage
                                     defaultMessage="Privacy policy"
-                                    id="privacyPolicy"
+                                    id="privacyPolicyMenu"
                                     values={Object {}}
                                   >
                                     Privacy policy

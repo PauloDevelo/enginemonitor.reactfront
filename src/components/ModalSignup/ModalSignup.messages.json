@@ -1,0 +1,63 @@
+{
+  "alreadyexisting": {
+    "defaultMessage": "already exist",
+    "description": "Error message",
+    "id": "alreadyexisting"
+  },
+  "cancel": {
+    "defaultMessage": "Cancel",
+    "description": "Button cancel",
+    "id": "cancel"
+  },
+  "email": {
+    "defaultMessage": "Email",
+    "description": "Label",
+    "id": "email"
+  },
+  "firstname": {
+    "defaultMessage": "Firstname",
+    "description": "Label",
+    "id": "firstname"
+  },
+  "invalid": {
+    "defaultMessage": "is invalid",
+    "description": "Error message",
+    "id": "invalid"
+  },
+  "isrequired": {
+    "defaultMessage": "is required",
+    "description": "Error message",
+    "id": "isrequired"
+  },
+  "modalSignupTitle": {
+    "defaultMessage": "Signup",
+    "description": "Modal title",
+    "id": "modalSignupTitle"
+  },
+  "name": {
+    "defaultMessage": "Last Name",
+    "description": "Label",
+    "id": "name"
+  },
+
+  "password": {
+    "defaultMessage": "Password",
+    "description": "Label",
+    "id": "password"
+  },
+  "signup": {
+    "defaultMessage": "Signup",
+    "description": "Button signup",
+    "id": "signup"
+  },
+  "privacyPolicyAcceptance": {
+    "defaultMessage": "By checking thix box, you expressly confirm the acceptance of our {privatePolicyLink}",
+    "description": "Button signup",
+    "id": "privacyPolicyAcceptance"
+  },
+  "privacyPolicy": {
+    "defaultMessage": "privacy policy",
+    "description": "Button signup",
+    "id": "privacyPolicy"
+  }
+}

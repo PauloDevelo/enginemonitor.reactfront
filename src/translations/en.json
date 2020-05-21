@@ -130,5 +130,7 @@
   "usagePeriodInHour": "Period in usage hour",
   "userExceedStorageLimit": "User exceeded the storage limit. Remove some images before adding new images.",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
-  "yes": "Yes"
+  "yes": "Yes",
+  "privacyPolicyAcceptance": "By checking thix box, you expressly confirm the acceptance of our {privatePolicyLink}",
+  "privacyPolicy": "privacy policy"
 }
