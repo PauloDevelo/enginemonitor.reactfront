@@ -18,7 +18,7 @@
   },
   "privacyPolicy": {
     "defaultMessage": "Privacy policy",
-    "id": "privacyPolicy"
+    "id": "privacyPolicyMenu"
   },
   "rebuildLocalStorage": {
     "defaultMessage": "Rebuild local storage",
