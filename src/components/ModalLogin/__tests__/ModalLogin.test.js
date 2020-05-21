@@ -74,7 +74,7 @@ describe('ModalLogin', () => {
 
     // Act
     const myForm = modalLogin.find('Memo(MyForm)');
-    const inputs = myForm.find('input');
+    const inputs = modalLogin.find('input');
     inputs.at(0).simulate('change', { target: { value: 'paulodevelo@lovestreet.com' } });
     inputs.at(1).simulate('change', { target: { value: 'mypassword' } });
     inputs.at(2).simulate('change', { target: { type: 'checkbox', checked: true } });
@@ -104,7 +104,7 @@ describe('ModalLogin', () => {
     await updateWrapper(modalLogin);
 
     const myForm = modalLogin.find('Memo(MyForm)');
-    const inputs = myForm.find('input');
+    const inputs = modalLogin.find('input');
     inputs.at(0).simulate('change', { target: { value: 'paulodevelo@lovestreet.com' } });
     inputs.at(1).simulate('change', { target: { value: 'mypassword' } });
     inputs.at(2).simulate('change', { target: { type: 'checkbox', checked: true } });
@@ -137,7 +137,7 @@ describe('ModalLogin', () => {
     await updateWrapper(modalLogin);
 
     const myForm = modalLogin.find('Memo(MyForm)');
-    const inputs = myForm.find('input');
+    const inputs = modalLogin.find('input');
     inputs.at(0).simulate('change', { target: { value: 'paulodevelo@lovestreet.com' } });
     inputs.at(1).simulate('change', { target: { value: 'mypassword' } });
     inputs.at(2).simulate('change', { target: { type: 'checkbox', checked: true } });
@@ -169,7 +169,7 @@ describe('ModalLogin', () => {
     await updateWrapper(modalLogin);
 
     const myForm = modalLogin.find('Memo(MyForm)');
-    const inputs = myForm.find('input');
+    const inputs = modalLogin.find('input');
     inputs.at(0).simulate('change', { target: { value: 'paulodevelo@lovestreet.com' } });
     inputs.at(1).simulate('change', { target: { value: 'mypassword' } });
     inputs.at(2).simulate('change', { target: { type: 'checkbox', checked: true } });
@@ -204,7 +204,7 @@ describe('ModalLogin', () => {
     await updateWrapper(modalLogin);
 
     const myForm = modalLogin.find('Memo(MyForm)');
-    const inputs = myForm.find('input');
+    const inputs = modalLogin.find('input');
     inputs.at(0).simulate('change', { target: { value: 'paulodevelo@lovestreet.com' } });
     inputs.at(1).simulate('change', { target: { value: 'mypassword' } });
     inputs.at(2).simulate('change', { target: { type: 'checkbox', checked: true } });
@@ -236,7 +236,7 @@ describe('ModalLogin', () => {
     await updateWrapper(modalLogin);
 
     const myForm = modalLogin.find('Memo(MyForm)');
-    const inputs = myForm.find('input');
+    const inputs = modalLogin.find('input');
     inputs.at(0).simulate('change', { target: { value: 'paulodevelo@lovestreet.com' } });
     inputs.at(1).simulate('change', { target: { value: 'mypassword' } });
     inputs.at(2).simulate('change', { target: { type: 'checkbox', checked: true } });

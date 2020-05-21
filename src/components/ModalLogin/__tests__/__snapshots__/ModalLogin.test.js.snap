@@ -132,22 +132,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                             value=""
                           />
                         </div>
-                        <div
-                          class="form-group form-check form-check-inline"
-                        >
-                          <label
-                            class="form-check-label"
-                          >
-                            Remember me
-                             
-                            <input
-                              class="form-check-input"
-                              name="remember"
-                              type="checkbox"
-                              value=""
-                            />
-                          </label>
-                        </div>
                       </form>
                     </div>
                     <div
@@ -211,6 +195,25 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                           Sign in with Google
                         </div>
                       </a>
+                    </div>
+                    <div
+                      class="modal-footer"
+                    >
+                      <div
+                        class="form-group form-check form-check-inline"
+                      >
+                        <label
+                          class="form-check-label"
+                        >
+                          Remember me
+                           
+                          <input
+                            class="form-check-input"
+                            name="remember"
+                            type="checkbox"
+                          />
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -311,22 +314,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                               value=""
                             />
                           </div>
-                          <div
-                            class="form-group form-check form-check-inline"
-                          >
-                            <label
-                              class="form-check-label"
-                            >
-                              Remember me
-                               
-                              <input
-                                class="form-check-input"
-                                name="remember"
-                                type="checkbox"
-                                value=""
-                              />
-                            </label>
-                          </div>
                         </form>
                       </div>
                       <div
@@ -390,6 +377,25 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                             Sign in with Google
                           </div>
                         </a>
+                      </div>
+                      <div
+                        class="modal-footer"
+                      >
+                        <div
+                          class="form-group form-check form-check-inline"
+                        >
+                          <label
+                            class="form-check-label"
+                          >
+                            Remember me
+                             
+                            <input
+                              class="form-check-input"
+                              name="remember"
+                              type="checkbox"
+                            />
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -603,22 +609,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                         value=""
                                       />
                                     </div>
-                                    <div
-                                      class="form-group form-check form-check-inline"
-                                    >
-                                      <label
-                                        class="form-check-label"
-                                      >
-                                        Remember me
-                                         
-                                        <input
-                                          class="form-check-input"
-                                          name="remember"
-                                          type="checkbox"
-                                          value=""
-                                        />
-                                      </label>
-                                    </div>
                                   </form>,
                                 }
                               }
@@ -796,85 +786,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                     </div>
                                   </FormGroup>
                                 </Memo()>
-                                <Memo()
-                                  checked={false}
-                                  handleChange={[Function]}
-                                  key=".2"
-                                  label={
-                                    Object {
-                                      "defaultMessage": "Remember me",
-                                      "description": "Label",
-                                      "id": "remember",
-                                    }
-                                  }
-                                  name="remember"
-                                  type="checkbox"
-                                  validationTrigger={0}
-                                >
-                                  <FormGroup
-                                    check={true}
-                                    className="form-group"
-                                    inline={true}
-                                    tag="div"
-                                  >
-                                    <div
-                                      className="form-group form-check form-check-inline"
-                                    >
-                                      <Label
-                                        check={true}
-                                        tag="label"
-                                        widths={
-                                          Array [
-                                            "xs",
-                                            "sm",
-                                            "md",
-                                            "lg",
-                                            "xl",
-                                          ]
-                                        }
-                                      >
-                                        <label
-                                          className="form-check-label"
-                                        >
-                                          <FormattedMessage
-                                            defaultMessage="Remember me"
-                                            description="Label"
-                                            id="remember"
-                                            values={Object {}}
-                                          >
-                                            Remember me
-                                          </FormattedMessage>
-                                           
-                                          <Input
-                                            checked={false}
-                                            innerRef={
-                                              Object {
-                                                "current": <input
-                                                  class="form-check-input"
-                                                  name="remember"
-                                                  type="checkbox"
-                                                  value=""
-                                                />,
-                                              }
-                                            }
-                                            invalid={false}
-                                            name="remember"
-                                            onChange={[Function]}
-                                            type="checkbox"
-                                          >
-                                            <input
-                                              checked={false}
-                                              className="form-check-input"
-                                              name="remember"
-                                              onChange={[Function]}
-                                              type="checkbox"
-                                            />
-                                          </Input>
-                                        </label>
-                                      </Label>
-                                    </div>
-                                  </FormGroup>
-                                </Memo()>
                               </form>
                             </Form>
                           </Memo(MyForm)>
@@ -1047,6 +958,87 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                               </a>
                             </GoogleLoginButton>
                           </injectIntl(GoogleLoginButton)>
+                        </div>
+                      </ModalFooter>
+                      <ModalFooter
+                        tag="div"
+                      >
+                        <div
+                          className="modal-footer"
+                        >
+                          <Memo()
+                            label={
+                              Object {
+                                "defaultMessage": "Remember me",
+                                "description": "Label",
+                                "id": "remember",
+                              }
+                            }
+                            name="remember"
+                            onChanged={[Function]}
+                            type="checkbox"
+                          >
+                            <FormGroup
+                              check={true}
+                              className="form-group"
+                              inline={true}
+                              tag="div"
+                            >
+                              <div
+                                className="form-group form-check form-check-inline"
+                              >
+                                <Label
+                                  check={true}
+                                  tag="label"
+                                  widths={
+                                    Array [
+                                      "xs",
+                                      "sm",
+                                      "md",
+                                      "lg",
+                                      "xl",
+                                    ]
+                                  }
+                                >
+                                  <label
+                                    className="form-check-label"
+                                  >
+                                    <FormattedMessage
+                                      defaultMessage="Remember me"
+                                      description="Label"
+                                      id="remember"
+                                      values={Object {}}
+                                    >
+                                      Remember me
+                                    </FormattedMessage>
+                                     
+                                    <Input
+                                      innerRef={
+                                        Object {
+                                          "current": <input
+                                            class="form-check-input"
+                                            name="remember"
+                                            type="checkbox"
+                                          />,
+                                        }
+                                      }
+                                      invalid={false}
+                                      name="remember"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    >
+                                      <input
+                                        className="form-check-input"
+                                        name="remember"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                    </Input>
+                                  </label>
+                                </Label>
+                              </div>
+                            </FormGroup>
+                          </Memo()>
                         </div>
                       </ModalFooter>
                     </div>
