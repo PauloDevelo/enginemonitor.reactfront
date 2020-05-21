@@ -11,7 +11,7 @@ import jsonMessages from './GoogleLoginButton.messages.json';
 
 const msg = defineMessages(jsonMessages);
 
-const GoogleLoginButton = ({ intl, className }: {intl: IntlShape, className: string | undefined}) => {
+const GoogleLoginButton = ({ intl, className }: {intl: IntlShape, className: string | undefined }) => {
   const buttonText = intl.formatMessage(msg.loginWithGoogle);
 
   return (
