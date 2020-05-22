@@ -20,7 +20,9 @@ min?: number,
 max?: number,
 required?: boolean,
 readOnly?: boolean,
-children?: JSX.Element[] | JSX.Element
+children?: JSX.Element[] | JSX.Element,
+value?: string | number,
+checked?: boolean
 };
 
 const MyInput = React.memo(({

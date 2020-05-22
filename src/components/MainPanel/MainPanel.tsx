@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 
 import { scrollTo } from '../../helpers/Helpers';
 
+import PrivacyPolicyAcceptance from '../PrivacyPolicyAcceptance/PrivacyPolicyAcceptance';
 import TaskTabPanes from '../TaskTabPanes/TaskTabPanes';
 import EquipmentsInfo from '../EquipmentInfo/EquipmentsInfo';
 import HistoryTaskTable from '../HistoryTaskTable/HistoryTaskTable';
@@ -76,9 +77,14 @@ export default function MainPanel() {
     const refreshCurrentUser = async (niceKeyToGetTheGuest: string | undefined) => {
       if (niceKeyToGetTheGuest) {
         await guestLinkProxy.tryGetAndSetUserFromNiceKey(niceKeyToGetTheGuest);
-      } else {
-        await userProxy.tryGetAndSetMemorizedUser();
+        return;
       }
+
+      if (await userProxy.tryGetAndSetMemorizedUserFromCookie()) {
+        return;
+      }
+
+      await userProxy.tryGetAndSetMemorizedUser();
     };
 
     refreshCurrentUser(niceKey);
@@ -167,6 +173,8 @@ export default function MainPanel() {
         className="modal-dialog-centered"
         toggleModalSignup={toggleModalSignup}
       />
+
+      <PrivacyPolicyAcceptance />
     </>
   );
 }

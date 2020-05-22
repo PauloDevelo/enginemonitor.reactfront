@@ -1,5 +1,5 @@
 import * as log from 'loglevel';
-import uuidv1 from 'uuid/v1.js';
+import { v4 as uuidv4 } from 'uuid';
 import analytics from '../helpers/AnalyticsHelper';
 
 import httpProxy from './HttpProxy';
@@ -46,7 +46,7 @@ class GuestLinkProxy implements IGuestLinkProxy {
       this.checkUserCredentialForPostingOrDeleting();
 
       const data = {
-        guestLinkUiId: uuidv1(), guestUiId: uuidv1(), nameGuestLink, assetUiId,
+        guestLinkUiId: uuidv4(), guestUiId: uuidv4(), nameGuestLink, assetUiId,
       };
       const { guestlink } = await httpProxy.post(this.baseUrl, data);
 

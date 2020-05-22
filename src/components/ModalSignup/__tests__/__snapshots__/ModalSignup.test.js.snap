@@ -166,6 +166,29 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                           value=""
                         />
                       </div>
+                      <div
+                        class="form-group form-check form-check-inline"
+                      >
+                        <label
+                          class="form-check-label"
+                        >
+                          By checking thix box, you expressly confirm the acceptance of our 
+                          <button
+                            class="btn btn-link"
+                            type="button"
+                          >
+                            privacy policy
+                          </button>
+                           
+                          <input
+                            class="form-check-input"
+                            name="privacyPolicyAccepted"
+                            required=""
+                            type="checkbox"
+                            value=""
+                          />
+                        </label>
+                      </div>
                     </form>
                   </div>
                   <div
@@ -328,6 +351,29 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                             type="password"
                             value=""
                           />
+                        </div>
+                        <div
+                          class="form-group form-check form-check-inline"
+                        >
+                          <label
+                            class="form-check-label"
+                          >
+                            By checking thix box, you expressly confirm the acceptance of our 
+                            <button
+                              class="btn btn-link"
+                              type="button"
+                            >
+                              privacy policy
+                            </button>
+                             
+                            <input
+                              class="form-check-input"
+                              name="privacyPolicyAccepted"
+                              required=""
+                              type="checkbox"
+                              value=""
+                            />
+                          </label>
                         </div>
                       </form>
                     </div>
@@ -533,6 +579,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                               "imageFolderSizeLimitInByte": 0,
                               "name": "",
                               "password": "",
+                              "privacyPolicyAccepted": false,
                               "token": "",
                             }
                           }
@@ -614,6 +661,29 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                       type="password"
                                       value=""
                                     />
+                                  </div>
+                                  <div
+                                    class="form-group form-check form-check-inline"
+                                  >
+                                    <label
+                                      class="form-check-label"
+                                    >
+                                      By checking thix box, you expressly confirm the acceptance of our 
+                                      <button
+                                        class="btn btn-link"
+                                        type="button"
+                                      >
+                                        privacy policy
+                                      </button>
+                                       
+                                      <input
+                                        class="form-check-input"
+                                        name="privacyPolicyAccepted"
+                                        required=""
+                                        type="checkbox"
+                                        value=""
+                                      />
+                                    </label>
                                   </div>
                                 </form>,
                               }
@@ -956,6 +1026,139 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                   </div>
                                 </FormGroup>
                               </Memo()>
+                              <Memo()
+                                checked={false}
+                                handleChange={[Function]}
+                                key=".4"
+                                label={
+                                  Object {
+                                    "defaultMessage": "By checking thix box, you expressly confirm the acceptance of our {privatePolicyLink}",
+                                    "description": "Button signup",
+                                    "id": "privacyPolicyAcceptance",
+                                    "values": Object {
+                                      "privatePolicyLink": <Button
+                                        color="link"
+                                        onClick={[Function]}
+                                        tag="button"
+                                      >
+                                        <FormattedMessage
+                                          defaultMessage="privacy policy"
+                                          description="Button signup"
+                                          id="privacyPolicy"
+                                          values={Object {}}
+                                        />
+                                      </Button>,
+                                    },
+                                  }
+                                }
+                                name="privacyPolicyAccepted"
+                                required={true}
+                                type="checkbox"
+                                validationTrigger={0}
+                              >
+                                <FormGroup
+                                  check={true}
+                                  className="form-group"
+                                  inline={true}
+                                  tag="div"
+                                >
+                                  <div
+                                    className="form-group form-check form-check-inline"
+                                  >
+                                    <Label
+                                      check={true}
+                                      tag="label"
+                                      widths={
+                                        Array [
+                                          "xs",
+                                          "sm",
+                                          "md",
+                                          "lg",
+                                          "xl",
+                                        ]
+                                      }
+                                    >
+                                      <label
+                                        className="form-check-label"
+                                      >
+                                        <FormattedMessage
+                                          defaultMessage="By checking thix box, you expressly confirm the acceptance of our {privatePolicyLink}"
+                                          description="Button signup"
+                                          id="privacyPolicyAcceptance"
+                                          values={
+                                            Object {
+                                              "privatePolicyLink": <Button
+                                                color="link"
+                                                onClick={[Function]}
+                                                tag="button"
+                                              >
+                                                <FormattedMessage
+                                                  defaultMessage="privacy policy"
+                                                  description="Button signup"
+                                                  id="privacyPolicy"
+                                                  values={Object {}}
+                                                />
+                                              </Button>,
+                                            }
+                                          }
+                                        >
+                                          By checking thix box, you expressly confirm the acceptance of our 
+                                          <Button
+                                            color="link"
+                                            onClick={[Function]}
+                                            tag="button"
+                                          >
+                                            <button
+                                              aria-label={null}
+                                              className="btn btn-link"
+                                              onClick={[Function]}
+                                              type="button"
+                                            >
+                                              <FormattedMessage
+                                                defaultMessage="privacy policy"
+                                                description="Button signup"
+                                                id="privacyPolicy"
+                                                values={Object {}}
+                                              >
+                                                privacy policy
+                                              </FormattedMessage>
+                                            </button>
+                                          </Button>
+                                        </FormattedMessage>
+                                         
+                                        <Input
+                                          checked={false}
+                                          innerRef={
+                                            Object {
+                                              "current": <input
+                                                class="form-check-input"
+                                                name="privacyPolicyAccepted"
+                                                required=""
+                                                type="checkbox"
+                                                value=""
+                                              />,
+                                            }
+                                          }
+                                          invalid={false}
+                                          name="privacyPolicyAccepted"
+                                          onChange={[Function]}
+                                          required={true}
+                                          type="checkbox"
+                                        >
+                                          <input
+                                            checked={false}
+                                            className="form-check-input"
+                                            name="privacyPolicyAccepted"
+                                            onChange={[Function]}
+                                            required={true}
+                                            type="checkbox"
+                                          />
+                                        </Input>
+                                      </label>
+                                    </Label>
+                                  </div>
+                                </FormGroup>
+                              </Memo()>
                             </form>
                           </Form>
                         </Memo(MyForm)>
@@ -1077,5 +1280,39 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
       </Portal>
     </Portal>
   </Modal>
+  <PrivacyPolicyModal
+    className="modal-dialog-centered"
+    toggle={[Function]}
+    visible={false}
+  >
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      className="modal-dialog-centered"
+      fade={true}
+      isOpen={false}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      returnFocusAfterClose={true}
+      role="dialog"
+      scrollable={false}
+      toggle={[Function]}
+      unmountOnClose={true}
+      zIndex={1050}
+    />
+  </PrivacyPolicyModal>
 </ModalSignup>
 `;

@@ -15,6 +15,7 @@ import DropDownConnectionStateItem from './DropDownConnectionStateItem';
 import ModalAbout from '../ModalAbout/ModalAbout';
 import ModalEditAsset from '../ModalEditAsset/ModalEditAsset';
 import ImageFolderGauge from './ImageFolderGauge';
+import PrivacyPolicyModal from '../PrivacyPolicyModal/PrivacyPolicyModal';
 
 import userProxy from '../../services/UserProxy';
 import onlineManager from '../../services/OnlineManager';
@@ -38,6 +39,7 @@ const NavBar = () => {
   const [user, setUser] = useState<UserModel | undefined>(currentUser);
   const [userImageFolderSize, setUserImageFolderSize] = useState(currentUser !== undefined ? currentUser.imageFolderSizeInByte : 0);
   const [aboutVisible, setAboutVisibility] = useState(false);
+  const [privacyPolicyVisibility, setPrivacyPolicyVisibility] = useState(false);
   const [assetEditionModalVisibility, setAssetEditionModalVisibility] = useState(false);
   const [offline, setOffline] = useState(onlineManager.isOfflineModeActivated());
 
@@ -85,6 +87,10 @@ const NavBar = () => {
 
   const toggleAbout = useCallback(() => {
     setAboutVisibility((prevAboutVisibility) => !prevAboutVisibility);
+  }, []);
+
+  const togglePrivacyPolicyContent = useCallback(() => {
+    setPrivacyPolicyVisibility((prevPrivacyPolicyVisibility) => !prevPrivacyPolicyVisibility);
   }, []);
 
   const toggleAssetEditionModal = useCallback(() => {
@@ -145,12 +151,16 @@ const NavBar = () => {
                 <DropdownItem onClick={toggleAbout}>
                   <FormattedMessage {...navBarMsg.about} />
                 </DropdownItem>
+                <DropdownItem onClick={togglePrivacyPolicyContent}>
+                  <FormattedMessage {...navBarMsg.privacyPolicy} />
+                </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
         </Collapse>
       </Navbar>
       {aboutVisible && <ModalAbout visible={aboutVisible} toggle={toggleAbout} className="modal-dialog-centered" />}
+      <PrivacyPolicyModal visible={privacyPolicyVisibility} toggle={togglePrivacyPolicyContent} className="modal-dialog-centered" />
 
       {currentAsset && (
         <ModalEditAsset

@@ -1,22 +1,25 @@
-import { EquipmentModel, AgeAcquisitionType } from "../types/Types";
-import uuidv1 from 'uuid/v1';
+import { v4 as uuidv4 } from 'uuid';
 
-export function createDefaultEquipment(): EquipmentModel{
-	const uuid = uuidv1();
+// eslint-disable-next-line no-unused-vars
+import { EquipmentModel, AgeAcquisitionType } from '../types/Types';
 
-	return {
-		_uiId: uuid,
-		name: "",
-		brand: "",
-		model: "",
-		age: 0,
-		installation: new Date(),
-		ageAcquisitionType: AgeAcquisitionType.manualEntry,
-		ageUrl: ""
-	}
+export function createDefaultEquipment(): EquipmentModel {
+  const uuid = uuidv4();
+
+  return {
+    _uiId: uuid,
+    name: '',
+    brand: '',
+    model: '',
+    age: 0,
+    installation: new Date(),
+    ageAcquisitionType: AgeAcquisitionType.manualEntry,
+    ageUrl: '',
+  };
 }
 
-export function updateEquipment(equipment: EquipmentModel): EquipmentModel{
-    equipment.installation = new Date(equipment.installation);
-    return equipment;
+export function updateEquipment(equipment: EquipmentModel): EquipmentModel {
+  // eslint-disable-next-line no-param-reassign
+  equipment.installation = new Date(equipment.installation);
+  return equipment;
 }

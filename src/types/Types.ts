@@ -128,6 +128,7 @@ export interface UserModel extends EntityModel {
     forbidUploadingImage: boolean,
     forbidCreatingAsset: boolean,
     token: string,
+    privacyPolicyAccepted: boolean,
 }
 
 export const extractUserModel = extract<UserModel>({
@@ -142,6 +143,7 @@ export const extractUserModel = extract<UserModel>({
   forbidUploadingImage: true,
   forbidCreatingAsset: true,
   token: true,
+  privacyPolicyAccepted: true,
 });
 
 export type AuthInfo = {

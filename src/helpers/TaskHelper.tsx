@@ -1,4 +1,4 @@
-import uuidv1 from 'uuid/v1.js';
+import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment';
 import log from 'loglevel';
 
@@ -12,7 +12,7 @@ import entryProxy from '../services/EntryProxy';
 import equipmentProxy from '../services/EquipmentProxy';
 
 export function createDefaultTask(equipment: EquipmentModel): TaskModel {
-  const uuid = uuidv1();
+  const uuid = uuidv4();
   return {
     _uiId: uuid,
     name: '',

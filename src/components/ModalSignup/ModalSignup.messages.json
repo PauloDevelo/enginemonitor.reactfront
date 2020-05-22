@@ -29,60 +29,30 @@
     "description": "Error message",
     "id": "isrequired"
   },
-  "login": {
-    "defaultMessage": "Login",
-    "description": "Label",
-    "id": "login"
-  },
-  "loginerror": {
-    "defaultMessage": "Error: ",
-    "description": "Error message",
-    "id": "loginerror"
-  },
-  "loginfailed": {
-    "defaultMessage": "Login failed",
-    "description": "Login failed",
-    "id": "loginfailed"
-  },
   "modalSignupTitle": {
     "defaultMessage": "Signup",
     "description": "Modal title",
     "id": "modalSignupTitle"
-  },
-  "modaltitle": {
-    "defaultMessage": "Login with an existing account",
-    "description": "Modal title",
-    "id": "modalLogintitle"
   },
   "name": {
     "defaultMessage": "Last Name",
     "description": "Label",
     "id": "name"
   },
-  "or": {
-    "defaultMessage": "OR",
-    "description": "horizontal separation line title",
-    "id": "or"
-  },
   "password": {
     "defaultMessage": "Password",
     "description": "Label",
     "id": "password"
   },
-  "remember": {
-    "defaultMessage": "Remember me",
-    "description": "Label",
-    "id": "remember"
+  "privacyPolicy": {
+    "defaultMessage": "privacy policy",
+    "description": "Button signup",
+    "id": "privacyPolicy"
   },
-  "resetPassword": {
-    "defaultMessage": "Reset password",
-    "description": "Button title",
-    "id": "resetPassword"
-  },
-  "sendVerification": {
-    "defaultMessage": "Send Verification",
-    "description": "Button title",
-    "id": "sendVerification"
+  "privacyPolicyAcceptance": {
+    "defaultMessage": "By checking thix box, you expressly confirm the acceptance of our {privatePolicyLink}",
+    "description": "Button signup",
+    "id": "privacyPolicyAcceptance"
   },
   "signup": {
     "defaultMessage": "Signup",

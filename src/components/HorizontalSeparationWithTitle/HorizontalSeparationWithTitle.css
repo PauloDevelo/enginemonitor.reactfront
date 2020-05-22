@@ -1,0 +1,14 @@
+h4.with-horizontal-line {
+  height: 30px;
+  width: 100%; 
+  text-align: center; 
+  border-top: 1px solid #dee2e6; 
+  line-height: 0.1em;
+  margin: 10px 0 20px; 
+} 
+
+h4.with-horizontal-line span { 
+   background:#fff; 
+   padding:0 10px; 
+   color: #dee2e6;
+}
