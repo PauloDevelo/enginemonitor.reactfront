@@ -39,25 +39,24 @@
     "description": "Label",
     "id": "name"
   },
-
   "password": {
     "defaultMessage": "Password",
     "description": "Label",
     "id": "password"
   },
-  "signup": {
-    "defaultMessage": "Signup",
+  "privacyPolicy": {
+    "defaultMessage": "privacy policy",
     "description": "Button signup",
-    "id": "signup"
+    "id": "privacyPolicy"
   },
   "privacyPolicyAcceptance": {
     "defaultMessage": "By checking thix box, you expressly confirm the acceptance of our {privatePolicyLink}",
     "description": "Button signup",
     "id": "privacyPolicyAcceptance"
   },
-  "privacyPolicy": {
-    "defaultMessage": "privacy policy",
+  "signup": {
+    "defaultMessage": "Signup",
     "description": "Button signup",
-    "id": "privacyPolicy"
+    "id": "signup"
   }
 }

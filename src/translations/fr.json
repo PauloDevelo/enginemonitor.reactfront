@@ -2,6 +2,7 @@
   "about": "A propos",
   "aboutMsg": "Fait avec Amour par Paul Torruella",
   "aboutTitle": "Equipment Maintenance",
+  "accept": "Accepter",
   "ack": "Acquitter",
   "ackDate": "Date de réalisation",
   "ackOption": "Acquitter la tache",
@@ -91,6 +92,11 @@
   "orevery": " ou tous les ",
   "password": "Mot de passe",
   "passwordsHaveToBeIdentical": "Les mots de passe sont différents. Veuillez les retapper.",
+  "privacyPolicy": "règles de confidentialité",
+  "privacyPolicyAcceptance": "En cochant cette case, vous adhérez explicitement aux {privatePolicyLink}",
+  "privacyPolicyAcceptanceUsingAWindow1": "Nous utilisons des technologies tel que cookies et local storage, et nous traitons vos données personnelles, tel que addresses IP, nom et email afin de personnaliser le contenu en se basant sur vos données personnelles et vos préférences.",
+  "privacyPolicyAcceptanceUsingAWindow2": "Cela nous permet aussi de mesurer les performances de l'application web.",
+  "privacyPolicyAcceptanceUsingAWindow3": "Cliquer ci-dessous pour accepter l'utilisation de ces technologies et le traitement de vos données personnelles pour ces besoins. Vous pouvez à tout moment consulter les {privatePolicyLink} dans le menu utilisateur.",
   "privacyPolicyMenu": "Règles de confidentialité",
   "privacyTitle": "Règles de confidentialité pour l'application Equipment Maintenance",
   "rebuildInProgress": "Stockage local en reconstruction ...",
@@ -130,7 +136,5 @@
   "usagePeriodInHour": "Période en heure à l'usage",
   "userExceedStorageLimit": "Vous avez dépassé la limite du stockage qui vous a été attribué. Veuillez supprimer des images avant d'en rajouter.",
   "yearperiod": "{year, plural, one {# année} other {# années}}",
-  "yes": "Oui",
-  "privacyPolicyAcceptance": "En cochant cette case, vous adhérez explicitement aux {privatePolicyLink}",
-  "privacyPolicy": "règles de confidentialité"
+  "yes": "Oui"
 }
