@@ -1,7 +1,7 @@
 {
   "homepage": ".",
   "name": "enginemonitor.reactfront",
-  "version": "2.14.9",
+  "version": "2.14.10",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
