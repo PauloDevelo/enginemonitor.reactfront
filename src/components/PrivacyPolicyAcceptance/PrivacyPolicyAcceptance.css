@@ -8,3 +8,7 @@
 .very-top {
   z-index: 1050
 }
+
+.small-padding{
+  padding: 0.75rem;
+}

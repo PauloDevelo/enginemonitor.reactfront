@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -Add an analytics event for the http request timeouts
 -Use Sentry only in production
 -Add a splashscreen to make the start nicer and more "under controled"
--Add a privacy policy
+-Add a privacy policy in english and in french
 -Add google authentication support
 -Add a popup to get the user acceptance for the privacy policy in order to use the web application
 

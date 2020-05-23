@@ -818,6 +818,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
         returnFocusAfterClose={true}
         role="dialog"
         scrollable={false}
+        size="lg"
         toggle={[Function]}
         unmountOnClose={true}
         zIndex={1050}
