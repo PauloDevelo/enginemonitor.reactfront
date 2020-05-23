@@ -1309,6 +1309,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
       returnFocusAfterClose={true}
       role="dialog"
       scrollable={false}
+      size="lg"
       toggle={[Function]}
       unmountOnClose={true}
       zIndex={1050}
