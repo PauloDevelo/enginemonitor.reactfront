@@ -26,7 +26,7 @@ const ArticleCollapsable = ({ title, className, children }: Props) => {
       <a href="_blank" onClick={toggle}><h3 className={className}>{title}</h3></a>
       <Collapse isOpen={collapse}>
         <Card>
-          <CardBody>
+          <CardBody className="small-padding">
             {children}
           </CardBody>
         </Card>
