@@ -94,6 +94,7 @@
   "passwordsHaveToBeIdentical": "The passwords are different. Please re-type the passwords.",
   "privacyPolicy": "privacy policy",
   "privacyPolicyAcceptance": "By checking thix box, you expressly confirm the acceptance of our {privatePolicyLink}",
+  "privacyPolicyAcceptanceInLoginModal": "By browsing this website, you accept the {privatePolicyLink}.",
   "privacyPolicyAcceptanceUsingAWindow1": "This site uses cookies for analytics only. There are no ads. By continuing to browse this site, you agree to this use.",
   "privacyPolicyAcceptanceUsingAWindow2": "You can learn more about the {privatePolicyLink} and access it in the user menu at any time.",
   "privacyPolicyMenu": "Privacy policy",
@@ -135,6 +136,5 @@
   "usagePeriodInHour": "Period in usage hour",
   "userExceedStorageLimit": "User exceeded the storage limit. Remove some images before adding new images.",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
-  "yes": "Yes",
-  "privacyPolicyAcceptanceInLoginModal": "By browsing this website, you accept the {privatePolicyLink}."
+  "yes": "Yes"
 }

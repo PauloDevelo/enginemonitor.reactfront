@@ -94,6 +94,7 @@
   "passwordsHaveToBeIdentical": "Les mots de passe sont différents. Veuillez les retapper.",
   "privacyPolicy": "politique de confidentialité",
   "privacyPolicyAcceptance": "En cochant cette case, vous adhérez explicitement à la {privatePolicyLink}",
+  "privacyPolicyAcceptanceInLoginModal": "En naviguant sur ce site, vous acceptez la {privatePolicyLink}.",
   "privacyPolicyAcceptanceUsingAWindow1": "Ce site utilise des cookies pour l’analytique seulement. Il n'y a pas de pub. En continuant à naviguer sur ce site, vous acceptez cette utilisation.",
   "privacyPolicyAcceptanceUsingAWindow2": "Vous pouvez à tout moment consulter la {privatePolicyLink} dans le menu utilisateur.",
   "privacyPolicyMenu": "Politique de confidentialité",
@@ -135,6 +136,5 @@
   "usagePeriodInHour": "Période en heure à l'usage",
   "userExceedStorageLimit": "Vous avez dépassé la limite du stockage qui vous a été attribué. Veuillez supprimer des images avant d'en rajouter.",
   "yearperiod": "{year, plural, one {# année} other {# années}}",
-  "yes": "Oui",
-  "privacyPolicyAcceptanceInLoginModal": "En naviguant sur ce site, vous acceptez la {privatePolicyLink}."
+  "yes": "Oui"
 }
