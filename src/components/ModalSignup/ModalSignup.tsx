@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import {
-  Button, Modal, ModalHeader, ModalBody, ModalFooter,
+  Button, Modal, ModalHeader, ModalBody, ModalFooter, Badge,
 } from 'reactstrap';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -39,7 +39,10 @@ const ModalSignup = ({ visible, className, toggle }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const togglePrivacyPolicyContent = useCallback(() => {
+  const togglePrivacyPolicyContent = useCallback((event?: React.MouseEvent) => {
+    if (event) {
+      event.preventDefault();
+    }
     setPrivacyPolicyVisibility((prevPrivacyPolicyVisibility) => !prevPrivacyPolicyVisibility);
   }, []);
 
@@ -72,7 +75,7 @@ const ModalSignup = ({ visible, className, toggle }: Props) => {
   const privacyPolicyAcceptanceLabel = {
     ...loginMsg.privacyPolicyAcceptance,
     values: {
-      privatePolicyLink: <Button color="link" onClick={togglePrivacyPolicyContent}><FormattedMessage {...loginMsg.privacyPolicy} /></Button>,
+      privatePolicyLink: <a href="privacypolicy" onClick={togglePrivacyPolicyContent}><FormattedMessage {...loginMsg.privacyPolicy} /></a>,
     },
   };
 

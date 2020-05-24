@@ -94,9 +94,8 @@
   "passwordsHaveToBeIdentical": "Les mots de passe sont différents. Veuillez les retapper.",
   "privacyPolicy": "politique de confidentialité",
   "privacyPolicyAcceptance": "En cochant cette case, vous adhérez explicitement à la {privatePolicyLink}",
-  "privacyPolicyAcceptanceUsingAWindow1": "Nous utilisons des technologies tel que cookies et local storage, et nous traitons vos données personnelles, tel que addresses IP, nom et email afin de personnaliser le contenu en se basant sur vos données personnelles et vos préférences.",
-  "privacyPolicyAcceptanceUsingAWindow2": "Cela nous permet aussi de mesurer les performances de l'application web.",
-  "privacyPolicyAcceptanceUsingAWindow3": "Cliquer ci-dessous pour accepter l'utilisation de ces technologies et le traitement de vos données personnelles pour ces besoins. Vous pouvez à tout moment consulter les {privatePolicyLink} dans le menu utilisateur.",
+  "privacyPolicyAcceptanceUsingAWindow1": "Ce site utilise des cookies pour l’analytique seulement. Il n'y a pas de pub. En continuant à naviguer sur ce site, vous acceptez cette utilisation.",
+  "privacyPolicyAcceptanceUsingAWindow2": "Vous pouvez à tout moment consulter la {privatePolicyLink} dans le menu utilisateur.",
   "privacyPolicyMenu": "Politique de confidentialité",
   "privacyTitle": "Politique de confidentialité pour l'application Equipment Maintenance",
   "rebuildInProgress": "Stockage local en reconstruction ...",
@@ -136,5 +135,6 @@
   "usagePeriodInHour": "Période en heure à l'usage",
   "userExceedStorageLimit": "Vous avez dépassé la limite du stockage qui vous a été attribué. Veuillez supprimer des images avant d'en rajouter.",
   "yearperiod": "{year, plural, one {# année} other {# années}}",
-  "yes": "Oui"
+  "yes": "Oui",
+  "privacyPolicyAcceptanceInLoginModal": "En naviguant sur ce site, vous acceptez la {privatePolicyLink}."
 }

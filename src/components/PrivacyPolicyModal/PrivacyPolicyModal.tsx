@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Button, Modal, ModalHeader, ModalBody, ModalFooter, Media,
+  Button, Modal, ModalHeader, ModalFooter, Media,
 } from 'reactstrap';
 
 import { FormattedMessage, defineMessages } from 'react-intl';
