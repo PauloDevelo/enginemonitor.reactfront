@@ -23,6 +23,7 @@ describe('ModalSignup', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('a test was not wrapped in act');
+    ignoredMessages.push('Missing message:');
   });
 
   afterEach(() => {
@@ -39,6 +40,7 @@ describe('ModalSignup', () => {
     imageFolderSizeLimitInByte: 0,
     imageFolder: '',
     forbidCreatingAsset: false,
+    forbidSelfDelete: false,
     forbidUploadingImage: false,
     token: '',
     privacyPolicyAccepted: true,
