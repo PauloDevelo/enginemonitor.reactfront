@@ -173,12 +173,11 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                           class="form-check-label"
                         >
                           By checking thix box, you expressly confirm the acceptance of our 
-                          <button
-                            class="btn btn-link"
-                            type="button"
+                          <a
+                            href="privacypolicy"
                           >
                             privacy policy
-                          </button>
+                          </a>
                            
                           <input
                             class="form-check-input"
@@ -359,12 +358,11 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                             class="form-check-label"
                           >
                             By checking thix box, you expressly confirm the acceptance of our 
-                            <button
-                              class="btn btn-link"
-                              type="button"
+                            <a
+                              href="privacypolicy"
                             >
                               privacy policy
-                            </button>
+                            </a>
                              
                             <input
                               class="form-check-input"
@@ -669,12 +667,11 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                       class="form-check-label"
                                     >
                                       By checking thix box, you expressly confirm the acceptance of our 
-                                      <button
-                                        class="btn btn-link"
-                                        type="button"
+                                      <a
+                                        href="privacypolicy"
                                       >
                                         privacy policy
-                                      </button>
+                                      </a>
                                        
                                       <input
                                         class="form-check-input"
@@ -1036,10 +1033,9 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                     "description": "Button signup",
                                     "id": "privacyPolicyAcceptance",
                                     "values": Object {
-                                      "privatePolicyLink": <Button
-                                        color="link"
+                                      "privatePolicyLink": <a
+                                        href="privacypolicy"
                                         onClick={[Function]}
-                                        tag="button"
                                       >
                                         <FormattedMessage
                                           defaultMessage="privacy policy"
@@ -1047,7 +1043,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                           id="privacyPolicy"
                                           values={Object {}}
                                         />
-                                      </Button>,
+                                      </a>,
                                     },
                                   }
                                 }
@@ -1087,10 +1083,9 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                           id="privacyPolicyAcceptance"
                                           values={
                                             Object {
-                                              "privatePolicyLink": <Button
-                                                color="link"
+                                              "privatePolicyLink": <a
+                                                href="privacypolicy"
                                                 onClick={[Function]}
-                                                tag="button"
                                               >
                                                 <FormattedMessage
                                                   defaultMessage="privacy policy"
@@ -1098,32 +1093,24 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                                   id="privacyPolicy"
                                                   values={Object {}}
                                                 />
-                                              </Button>,
+                                              </a>,
                                             }
                                           }
                                         >
                                           By checking thix box, you expressly confirm the acceptance of our 
-                                          <Button
-                                            color="link"
+                                          <a
+                                            href="privacypolicy"
                                             onClick={[Function]}
-                                            tag="button"
                                           >
-                                            <button
-                                              aria-label={null}
-                                              className="btn btn-link"
-                                              onClick={[Function]}
-                                              type="button"
+                                            <FormattedMessage
+                                              defaultMessage="privacy policy"
+                                              description="Button signup"
+                                              id="privacyPolicy"
+                                              values={Object {}}
                                             >
-                                              <FormattedMessage
-                                                defaultMessage="privacy policy"
-                                                description="Button signup"
-                                                id="privacyPolicy"
-                                                values={Object {}}
-                                              >
-                                                privacy policy
-                                              </FormattedMessage>
-                                            </button>
-                                          </Button>
+                                              privacy policy
+                                            </FormattedMessage>
+                                          </a>
                                         </FormattedMessage>
                                          
                                         <Input
