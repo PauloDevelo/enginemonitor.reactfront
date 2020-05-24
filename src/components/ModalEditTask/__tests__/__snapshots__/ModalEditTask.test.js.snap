@@ -1024,7 +1024,6 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                         >
                           <Button
                             color="success"
-                            disabled={false}
                             form="createTaskForm"
                             tag="button"
                             type="submit"
@@ -1032,7 +1031,6 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                             <button
                               aria-label={null}
                               className="btn btn-success"
-                              disabled={false}
                               form="createTaskForm"
                               onClick={[Function]}
                               type="submit"

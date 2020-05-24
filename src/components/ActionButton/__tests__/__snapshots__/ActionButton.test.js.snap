@@ -70,14 +70,12 @@ exports[`Component ActionButton should render as a simple button enable with the
 >
   <Button
     color="danger"
-    disabled={false}
     tag="button"
     type="button"
   >
     <button
       aria-label={null}
       className="btn btn-danger"
-      disabled={false}
       onClick={[Function]}
       type="button"
     >

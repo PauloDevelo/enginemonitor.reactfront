@@ -823,6 +823,39 @@ exports[`Component NavBar should render the navbar even when the user is still u
         unmountOnClose={true}
         zIndex={1050}
       />
+      <DeleteUserModal
+        isOpen={false}
+        onUserDeleted={[Function]}
+        toggle={[Function]}
+      >
+        <Modal
+          autoFocus={true}
+          backdrop={true}
+          backdropTransition={
+            Object {
+              "mountOnEnter": true,
+              "timeout": 150,
+            }
+          }
+          centered={false}
+          fade={true}
+          isOpen={false}
+          keyboard={true}
+          modalTransition={
+            Object {
+              "timeout": 300,
+            }
+          }
+          onClosed={[Function]}
+          onOpened={[Function]}
+          returnFocusAfterClose={true}
+          role="dialog"
+          scrollable={false}
+          toggle={[Function]}
+          unmountOnClose={true}
+          zIndex={1050}
+        />
+      </DeleteUserModal>
     </PrivacyPolicyModal>
   </Memo(NavBar)>
 </IntlProvider>
