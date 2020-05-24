@@ -65,7 +65,7 @@ export default function PrivacyPolicyAcceptance() {
   const privacyPolicyAcceptanceLine2 = {
     ...msg.privacyPolicyAcceptanceUsingAWindow2,
     values: {
-      privatePolicyLink: <a href="_" onClick={togglePrivacyPolicyContent}><FormattedMessage {...msg.privacyPolicy} /></a>,
+      privatePolicyLink: <a href="privacypolicy" onClick={togglePrivacyPolicyContent}><FormattedMessage {...msg.privacyPolicy} /></a>,
     },
   };
 
