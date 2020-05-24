@@ -66,6 +66,13 @@ export interface ISyncHttpProxy{
     delete<T>(url: string):Promise<void>;
 
     /**
+     * This function execute the http delete query and call the update function in the returned data.
+     * In offline mode, this function will throw an exception.
+     * @param url The delete query url
+     */
+    deleteOnlyOnline<T>(url: string):Promise<void>;
+
+    /**
      * This function returns an array of T element and update the array in the user storage if online.
      * If in offline mode, we will get the array from the user storage.
      * @param url the get query url
@@ -148,6 +155,24 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
     }
 
     return dataToPost;
+  }
+
+  async deleteOnlyOnline<T>(url: string):Promise<void> {
+    // this.checkUserCredentialForPostingOrDeleting();
+
+    if (await onlineManager.isOnline()) {
+      try {
+        await httpProxy.deleteReq(url);
+      } catch (reason) {
+        if (reason instanceof HttpError && reason.didConnectionAbort()) {
+          log.warn(`timeout for the delete ${url}`);
+          analytics.httpRequestTimeout({ requestType: 'delete', url, timeout: timeouts.delete });
+        }
+        throw reason;
+      }
+    } else {
+      throw new HttpError('offline');
+    }
   }
 
   async delete<T>(url: string):Promise<void> {
