@@ -128,5 +128,10 @@
     "defaultMessage": "Usage Period in hour",
     "description": "Label",
     "id": "usagePeriodInHour"
+  },
+  "offline": {
+    "defaultMessage": "You need to be online to perform this operation",
+    "description": "Error message",
+    "id": "offline"
   }
 }
