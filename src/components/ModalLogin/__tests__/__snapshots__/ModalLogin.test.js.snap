@@ -217,6 +217,19 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                         </label>
                       </div>
                     </div>
+                    <div
+                      class="without-horizontal-bar modal-footer"
+                    >
+                      <small>
+                        By browsing this website, you accept the 
+                        <a
+                          href="privacypolicy"
+                        >
+                          privacy policy
+                        </a>
+                        .
+                      </small>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -400,6 +413,19 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                             />
                           </label>
                         </div>
+                      </div>
+                      <div
+                        class="without-horizontal-bar modal-footer"
+                      >
+                        <small>
+                          By browsing this website, you accept the 
+                          <a
+                            href="privacypolicy"
+                          >
+                            privacy policy
+                          </a>
+                          .
+                        </small>
                       </div>
                     </div>
                   </div>
@@ -1057,6 +1083,53 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                           </Memo()>
                         </div>
                       </ModalFooter>
+                      <ModalFooter
+                        className="without-horizontal-bar"
+                        tag="div"
+                      >
+                        <div
+                          className="without-horizontal-bar modal-footer"
+                        >
+                          <small>
+                            <FormattedMessage
+                              defaultMessage="By browsing this website, you accept the {privatePolicyLink}."
+                              description="Message at the bottom of the login window"
+                              id="privacyPolicyAcceptanceInLoginModal"
+                              values={
+                                Object {
+                                  "privatePolicyLink": <a
+                                    href="privacypolicy"
+                                    onClick={[Function]}
+                                  >
+                                    <FormattedMessage
+                                      defaultMessage="privacy policy"
+                                      description="label of the privacy policy link"
+                                      id="privacyPolicy"
+                                      values={Object {}}
+                                    />
+                                  </a>,
+                                }
+                              }
+                            >
+                              By browsing this website, you accept the 
+                              <a
+                                href="privacypolicy"
+                                onClick={[Function]}
+                              >
+                                <FormattedMessage
+                                  defaultMessage="privacy policy"
+                                  description="label of the privacy policy link"
+                                  id="privacyPolicy"
+                                  values={Object {}}
+                                >
+                                  privacy policy
+                                </FormattedMessage>
+                              </a>
+                              .
+                            </FormattedMessage>
+                          </small>
+                        </div>
+                      </ModalFooter>
                     </div>
                   </div>
                 </div>
@@ -1146,6 +1219,41 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
         zIndex={1050}
       />
     </ModalPasswordReset>
+    <PrivacyPolicyModal
+      className="modal-dialog-centered"
+      toggle={[Function]}
+      visible={false}
+    >
+      <Modal
+        autoFocus={true}
+        backdrop={true}
+        backdropTransition={
+          Object {
+            "mountOnEnter": true,
+            "timeout": 150,
+          }
+        }
+        centered={false}
+        className="modal-dialog-centered"
+        fade={true}
+        isOpen={false}
+        keyboard={true}
+        modalTransition={
+          Object {
+            "timeout": 300,
+          }
+        }
+        onClosed={[Function]}
+        onOpened={[Function]}
+        returnFocusAfterClose={true}
+        role="dialog"
+        scrollable={false}
+        size="lg"
+        toggle={[Function]}
+        unmountOnClose={true}
+        zIndex={1050}
+      />
+    </PrivacyPolicyModal>
   </ModalLogin>
 </IntlProvider>
 `;

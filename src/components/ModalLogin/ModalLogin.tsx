@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
-  Button, Modal, ModalHeader, ModalBody, ModalFooter, Spinner,
+  Button, Modal, ModalHeader, ModalBody, ModalFooter, Spinner, Badge,
 } from 'reactstrap';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +9,7 @@ import { FormattedMessage, defineMessages } from 'react-intl';
 
 import useEditModal from '../../hooks/EditModalHook';
 
+import PrivacyPolicyModal from '../PrivacyPolicyModal/PrivacyPolicyModal';
 import ModalPasswordReset from '../ModalPasswordReset/ModalPasswordReset';
 import MyForm from '../Form/MyForm';
 import MyInput from '../Form/MyInput';
@@ -85,6 +86,15 @@ const ModalLogin = ({
     }
   }, [rememberMe]);
 
+  const [privacyPolicyVisibility, setPrivacyPolicyVisibility] = useState(false);
+
+  const togglePrivacyPolicyContent = useCallback((event? : React.MouseEvent) => {
+    if (event !== undefined) {
+      event.preventDefault();
+    }
+
+    setPrivacyPolicyVisibility((prevPrivacyPolicyVisibility) => !prevPrivacyPolicyVisibility);
+  }, []);
 
   const sendVerificationEmail = async () => {
     setState({ state: LoginState.IsLoggingIn });
@@ -131,6 +141,13 @@ const ModalLogin = ({
     }
   };
 
+  const privacyPolicyAcceptanceLabel = {
+    ...loginmsg.privacyPolicyAcceptance,
+    values: {
+      privatePolicyLink: <a href="privacypolicy" onClick={togglePrivacyPolicyContent}><FormattedMessage {...loginmsg.privacyPolicy} /></a>,
+    },
+  };
+
   return (
     <>
       <Modal isOpen={visible && state.state !== LoginState.LoggedIn} className={className} fade>
@@ -163,8 +180,12 @@ const ModalLogin = ({
         <ModalFooter>
           <MyInput name="remember" label={loginmsg.remember} type="checkbox" onChanged={setRememberMe} checked={rememberMe} />
         </ModalFooter>
+        <ModalFooter className="without-horizontal-bar">
+          <small><FormattedMessage {...privacyPolicyAcceptanceLabel} /></small>
+        </ModalFooter>
       </Modal>
       <ModalPasswordReset toggle={resetPasswordModalHook.toggleModal} visible={resetPasswordModalHook.editModalVisibility} data={resetPasswordModalHook.data} className="modal-dialog-centered" />
+      <PrivacyPolicyModal visible={privacyPolicyVisibility} toggle={togglePrivacyPolicyContent} className="modal-dialog-centered" />
     </>
   );
 };

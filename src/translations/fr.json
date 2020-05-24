@@ -135,5 +135,6 @@
   "usagePeriodInHour": "Période en heure à l'usage",
   "userExceedStorageLimit": "Vous avez dépassé la limite du stockage qui vous a été attribué. Veuillez supprimer des images avant d'en rajouter.",
   "yearperiod": "{year, plural, one {# année} other {# années}}",
-  "yes": "Oui"
+  "yes": "Oui",
+  "privacyPolicyAcceptanceInLoginModal": "En naviguant sur ce site, vous acceptez la {privatePolicyLink}."
 }
