@@ -18,6 +18,7 @@ export function createDefaultUser(): UserModel {
     imageFolderSizeInByte: 0,
     imageFolderSizeLimitInByte: 0,
     forbidUploadingImage: false,
+    forbidSelfDelete: false,
     forbidCreatingAsset: false,
     token: '',
     privacyPolicyAccepted: false,
