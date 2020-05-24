@@ -35,7 +35,7 @@ const PrivacyPolicyModalBodyFr = () => (
         </li>
       </ul>
     </ArticleCollapsable>
-    <ArticleCollapsable className="level-1" title="Principes généraux en matière de collecte et de traitement de données">
+    <ArticleCollapsable className="level-1" title="Principes généraux sur la collecte et le traitement de données">
       <span>Conformément aux dispositions de l'article 5 du Règlement européen 2016/679, la collecte et le traitement des données des utilisateurs du site respectent les principes suivants :</span>
       <ul>
         <li>
@@ -77,7 +77,7 @@ const PrivacyPolicyModalBodyFr = () => (
         </li>
       </ul>
     </ArticleCollapsable>
-    <ArticleCollapsable className="level-1" title="Données à caractère personnel collectées et traitées dans le cadre de la navigation sur le site">
+    <ArticleCollapsable className="level-1" title="Les données personnelles collectées et traitées dans Equipment Maintenance">
       <ArticleCollapsable className="level-2" title="Données collectées et traitées et mode de collecte">
         <span>
           Sur le site web
@@ -141,7 +141,7 @@ const PrivacyPolicyModalBodyFr = () => (
         <span>Les données collectées et traitées par le site sont exclusivement hébergées et traitées en France.</span>
       </ArticleCollapsable>
     </ArticleCollapsable>
-    <ArticleCollapsable className="level-1" title="Responsable du traitement des données et délégué à la protection des données">
+    <ArticleCollapsable className="level-1" title="Les responsables des données personnelles">
       <ArticleCollapsable className="level-2" title="Le responsable du traitement des données et le délégué à la protection des données">
         <span>
           Le responsable du traitement des données et le délégué à la protection des données à caractère personnel est

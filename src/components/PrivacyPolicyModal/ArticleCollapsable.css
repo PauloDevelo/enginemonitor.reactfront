@@ -19,3 +19,17 @@
 .small-padding{
   padding: 0.75rem;
 }
+
+a.badge-light.active {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(248,249,250,.5);
+}
+
+a.badge-light.active {
+  color: #212529;
+  background-color: #dae0e5;
+}
+
+a.badge.active {
+  text-decoration: none;
+}

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Collapse,
   Card,
   CardBody,
+  Badge,
 } from 'reactstrap';
 
 import './ArticleCollapsable.css';
@@ -21,9 +22,20 @@ const ArticleCollapsable = ({ title, className, children }: Props) => {
     setCollapse(!collapse);
   };
 
+  const [badgeClassName, setBadgeClassName] = useState('');
+
+  useEffect(() => {
+    if (collapse) {
+      setBadgeClassName('active');
+    } else {
+      setBadgeClassName('');
+    }
+  }, [collapse]);
+
+
   return (
     <>
-      <a href="_blank" onClick={toggle}><h3 className={className}>{title}</h3></a>
+      <h3 className={className}><Badge className={badgeClassName} color="light" href="_blank" onClick={toggle}>{title}</Badge></h3>
       <Collapse isOpen={collapse}>
         <Card>
           <CardBody className="small-padding">
