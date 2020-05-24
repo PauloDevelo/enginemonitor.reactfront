@@ -193,7 +193,7 @@ const PrivacyPolicyModalBodyFr = ({ deleteAllUserData }: Props) => (
         <p>
           Il peut aussi demander la suppression des données le concernant, en cliquant sur le bouton ci-dessous:
         </p>
-        <Button color="danger" onClick={deleteAllUserData}>Supprimer toutes mes données ...</Button>
+        <Button size="sm" color="danger" onClick={deleteAllUserData}>Supprimer toutes mes données ...</Button>
       </ArticleCollapsable>
       <ArticleCollapsable className="level-2" title="Droit à la portabilité des données">
         <span>
@@ -223,7 +223,12 @@ const PrivacyPolicyModalBodyFr = ({ deleteAllUserData }: Props) => (
         <span>Il est rappelé à l'utilisateur qu'il peut organiser quel doit être le devenir de ses données collectées et traitées s'il décède, conformément à la loi n°2016-1321 du 7 octobre 2016.</span>
       </ArticleCollapsable>
       <ArticleCollapsable className="level-2" title="Droit de saisir l'autorité de contrôle compétente">
-        <span>Dans le cas où le responsable du traitement des données décide de ne pas répondre à la demande de l'utilisateur, et que l'utilisateur souhaite contester cette décision, ou, s'il pense qu'il est porté atteinte à l'un des droits énumérés ci-dessus, il est en droit de saisir la CNIL (Commission Nationale de l'Informatique et des Libertés, https://www.cnil.fr) ou tout juge compétent.</span>
+        <span>
+          Dans le cas où le responsable du traitement des données décide de ne pas répondre à la demande de l'utilisateur, et que l'utilisateur souhaite contester cette décision, ou, s'il pense qu'il est porté atteinte à l'un des droits énumérés ci-dessus, il est en droit de saisir la CNIL (Commission Nationale de l'Informatique et des Libertés,
+          {' '}
+          <a href="https://www.cnil.fr">https://www.cnil.fr</a>
+          ) ou tout juge compétent.
+        </span>
       </ArticleCollapsable>
     </ArticleCollapsable>
     <ArticleCollapsable className="level-1" title='Utilisation des fichiers "Cookies"'>
