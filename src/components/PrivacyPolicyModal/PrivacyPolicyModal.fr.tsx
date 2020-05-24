@@ -2,17 +2,16 @@ import React from 'react';
 import {
   ModalBody,
   Table,
+  Button,
 } from 'reactstrap';
 
 import ArticleCollapsable from './ArticleCollapsable';
 
 type Props = {
-visible?: boolean;
-className?: string;
-toggle?: ()=>void;
+  deleteAllUserData: ()=>void;
 }
 
-const PrivacyPolicyModalBodyFr = () => (
+const PrivacyPolicyModalBodyFr = ({ deleteAllUserData }: Props) => (
   <ModalBody>
 
     <ArticleCollapsable className="level-1" title="Préambule">
@@ -188,26 +187,13 @@ const PrivacyPolicyModalBodyFr = () => (
       <br />
       <br />
       <ArticleCollapsable className="level-2" title="Droit d'accès, de rectification et droit à l'effacement">
-        <span>
+        <p>
           L'utilisateur peut prendre connaissance, mettre à jour, modifier les données le concernant en utilisant les moyens mis à disposition sur le site en se connectant à son espace personnel.
-          <br />
-          <br />
-          Il peut aussi demander la suppression des données le concernant, en envoyant un email au responsable de traitement des données personnelles, en précisant:
-          <ul>
-            <li>
-              son nom
-            </li>
-            <li>
-              prénom
-            </li>
-            <li>
-              email
-            </li>
-            <li>
-              l'objet de sa demande
-            </li>
-          </ul>
-        </span>
+        </p>
+        <p>
+          Il peut aussi demander la suppression des données le concernant, en cliquant sur le bouton ci-dessous:
+        </p>
+        <Button color="danger" onClick={deleteAllUserData}>Supprimer toutes mes données ...</Button>
       </ArticleCollapsable>
       <ArticleCollapsable className="level-2" title="Droit à la portabilité des données">
         <span>
