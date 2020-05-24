@@ -109,6 +109,11 @@
     "description": "Error message",
     "id": "needVerification"
   },
+  "offline": {
+    "defaultMessage": "You need to be online to perform this operation",
+    "description": "Error message",
+    "id": "offline"
+  },
   "password": {
     "defaultMessage": "Password",
     "description": "Label",
@@ -128,10 +133,5 @@
     "defaultMessage": "Usage Period in hour",
     "description": "Label",
     "id": "usagePeriodInHour"
-  },
-  "offline": {
-    "defaultMessage": "You need to be online to perform this operation",
-    "description": "Error message",
-    "id": "offline"
   }
 }
