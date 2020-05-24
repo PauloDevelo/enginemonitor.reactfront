@@ -10,19 +10,14 @@
     "id": "privacyPolicy"
   },
   "privacyPolicyAcceptanceUsingAWindow1": {
-    "defaultMessage": "We use technologies, such as cookies and local storage, and we process personal data, such as IP addresses to personalize content based on your personal data and preference.",
+    "defaultMessage": "This site uses cookies for analytics only. There are no ads. By continuing to browse this site, you agree to this use.",
     "description": "Text block 1",
     "id": "privacyPolicyAcceptanceUsingAWindow1"
   },
   "privacyPolicyAcceptanceUsingAWindow2": {
-    "defaultMessage": "It also allows us to measure the performance of the web application.",
+    "defaultMessage": "You can learn more about the {privatePolicyLink} and access it in the user menu at any time.",
     "description": "Text block 2",
     "id": "privacyPolicyAcceptanceUsingAWindow2"
-  },
-  "privacyPolicyAcceptanceUsingAWindow3": {
-    "defaultMessage": "Click below to consent to the use of this technology and the processing of your personal data for these purposes. You can still access the {privatePolicyLink} in the user menu.",
-    "description": "Text block 3",
-    "id": "privacyPolicyAcceptanceUsingAWindow3"
   },
   "privacyPolicyMenu": {
     "defaultMessage": "Privacy policy",

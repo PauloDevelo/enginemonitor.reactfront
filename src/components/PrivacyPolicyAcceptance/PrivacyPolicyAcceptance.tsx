@@ -53,8 +53,8 @@ export default function PrivacyPolicyAcceptance() {
     setPrivacyPolicyVisibility((prevPrivacyPolicyVisibility) => !prevPrivacyPolicyVisibility);
   }, []);
 
-  const privacyPolicyAcceptanceLine3 = {
-    ...msg.privacyPolicyAcceptanceUsingAWindow3,
+  const privacyPolicyAcceptanceLine2 = {
+    ...msg.privacyPolicyAcceptanceUsingAWindow2,
     values: {
       privatePolicyLink: <a href="_" onClick={togglePrivacyPolicyContent}><FormattedMessage {...msg.privacyPolicy} /></a>,
     },
@@ -62,20 +62,14 @@ export default function PrivacyPolicyAcceptance() {
 
   return (
     <>
-      {alertPrivacyPolicyVisibility && <div className="modal-backdrop fade show" />}
-      <Toast isOpen={alertPrivacyPolicyVisibility} className="fixed-position-bottom-right very-top">
-        <ToastHeader icon="warning"><FormattedMessage {...msg.privacyPolicyMenu} /></ToastHeader>
+      <Toast isOpen={alertPrivacyPolicyVisibility} className="fixed-position-bottom-right">
+        <ToastHeader icon="warning" toggle={acceptPrivacyPolicy}><FormattedMessage {...msg.privacyPolicyMenu} /></ToastHeader>
         <ToastBody>
           <FormattedMessage {...msg.privacyPolicyAcceptanceUsingAWindow1} />
           <br />
-          <FormattedMessage {...msg.privacyPolicyAcceptanceUsingAWindow2} />
           <br />
-          <br />
-          <FormattedMessage {...privacyPolicyAcceptanceLine3} />
+          <FormattedMessage {...privacyPolicyAcceptanceLine2} />
         </ToastBody>
-        <ModalFooter>
-          <Button color="success" onClick={acceptPrivacyPolicy}><FormattedMessage {...msg.accept} /></Button>
-        </ModalFooter>
       </Toast>
       <PrivacyPolicyModal visible={privacyPolicyVisibility} toggle={togglePrivacyPolicyContent} className="modal-dialog-centered" />
     </>
