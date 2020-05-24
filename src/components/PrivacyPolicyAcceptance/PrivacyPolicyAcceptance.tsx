@@ -3,8 +3,10 @@ import React, {
 } from 'react';
 
 import {
-  Toast, ToastHeader, ToastBody, Button, ModalFooter,
+  Toast, ToastHeader, ToastBody,
 } from 'reactstrap';
+
+import moment from 'moment';
 
 import { FormattedMessage, defineMessages } from 'react-intl';
 
@@ -17,29 +19,36 @@ import jsonMessages from './PrivacyPolicyAcceptance.messages.json';
 
 import './PrivacyPolicyAcceptance.css';
 
+
 const msg = defineMessages(jsonMessages);
 
 
 export default function PrivacyPolicyAcceptance() {
-  const [alertPrivacyPolicyVisibility, setAlertPrivacyPolicyVisibility] = useState(false);
+  const [alertPrivacyPolicyVisibility, setAlertPrivacyPolicyVisibility] = useState<boolean>(false);
 
   useEffect(() => {
     const userStorageListener:IUserStorageListener = {
       onUserStorageOpened: async (): Promise<void> => {
-        storageService.getItem<boolean>('privacyPolicyAccepted').then((privacyPolicyAcceptedValue) => {
-          setAlertPrivacyPolicyVisibility(!privacyPolicyAcceptedValue);
+        storageService.getItem<string>('privacyPolicyAccepted').then((privacyPolicyAcceptedValue) => {
+          const acceptanceLimit = moment().subtract(3, 'month');
+          const lastAcceptanceDate = privacyPolicyAcceptedValue ? moment(privacyPolicyAcceptedValue, moment.ISO_8601, true) : undefined;
+          const alertPrivacyPolicyVisibilityValue = lastAcceptanceDate === undefined || lastAcceptanceDate.isValid() === false || lastAcceptanceDate.isBefore(acceptanceLimit);
+          setAlertPrivacyPolicyVisibility(alertPrivacyPolicyVisibilityValue);
         });
       },
       onUserStorageClosed: async (): Promise<void> => {
-
+        setAlertPrivacyPolicyVisibility(false);
       },
     };
 
     storageService.registerUserStorageListener(userStorageListener);
+
+    return () => storageService.unregisterUserStorageListener(userStorageListener);
   }, []);
 
   const acceptPrivacyPolicy = useCallback(() => {
-    storageService.setItem<boolean>('privacyPolicyAccepted', true);
+    const now = moment().toISOString();
+    storageService.setItem('privacyPolicyAccepted', now);
     setAlertPrivacyPolicyVisibility(false);
   }, []);
 
