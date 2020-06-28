@@ -123,6 +123,9 @@ const PrivacyPolicyModalBodyFr = ({ deleteAllUserData }: Props) => (
       </ArticleCollapsable>
       <ArticleCollapsable className="level-2" title="Durée de conservation">
         <span>Le responsable du traitement conservera dans ses systèmes informatiques du site et dans des conditions raisonnables de sécurité l'ensemble des données collectées aussi longtemps que l'utilisateur sera inscrit dans l'application.</span>
+        <br />
+        <br />
+        <span>Cependant, si l'utilisateur n'utilise pas l'application Equipment Maintenance pour une période de plus de 365 jours, son compte utilisateur et toutes ces données seront supprimées de la base de donnée d'Ecogium après avoir été averti par email au préalabable.</span>
       </ArticleCollapsable>
       <ArticleCollapsable className="level-2" title="Transmission des données à des tiers">
         <span>Les données à caractère personnel collectées par le site ne sont transmises à aucun tiers, et ne sont traitées que par Ecogium, l'éditeur du site.</span>
