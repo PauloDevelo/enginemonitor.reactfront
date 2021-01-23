@@ -4,6 +4,7 @@ import storageService from '../StorageService';
 import userProxy from '../UserProxy';
 import onlineManager from '../OnlineManager';
 import assetProxy from '../AssetProxy';
+import HttpError from '../../http/HttpError';
 
 jest.mock('../HttpProxy');
 jest.mock('../StorageService');
@@ -112,6 +113,47 @@ describe('Test UserProxy', () => {
       expect(httpProxy.get).toHaveBeenCalledTimes(1);
       expect(httpProxy.setConfig).toHaveBeenCalledTimes(1);
       expect(storageService.openUserStorage).toHaveBeenCalledTimes(1);
+    });
+
+    it('when online but the backend detects the user token is expired , it should return undefined and it should remove the config into the httpProxy', async () => {
+      // arrange
+      const user = {
+        email: 'test@axios',
+        firstname: 'jest',
+        name: 'react',
+        token: 'jwt',
+      };
+
+      onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
+      httpProxy.get.mockImplementation(async () => {
+        const error = new Error('an error happened');
+        error.response = { data: { errors: { error: { status: 401 } } } };
+        error.message = 'an error happened';
+        let data = { message: error.message };
+        if (error.response) {
+          if (error.response.data) {
+            if (error.response.data.errors) {
+              data = error.response.data.errors;
+            } else {
+              data = error.response.data;
+            }
+          }
+        }
+
+        throw new HttpError(data, error);
+      });
+
+      storageService.getGlobalItem.mockImplementation((key) => Promise.resolve(key === 'currentUser' ? user : null));
+      storageService.existGlobalItem.mockImplementation(async (key) => Promise.resolve(key === 'currentUser'));
+
+      // act
+      const fetchedUser = await userProxy.tryGetAndSetMemorizedUser();
+
+      // assert
+      expect(fetchedUser).toEqual(undefined);
+      expect(httpProxy.get).toHaveBeenCalledTimes(1);
+      expect(httpProxy.setConfig).toHaveBeenCalledTimes(1);
+      expect(storageService.openUserStorage).toHaveBeenCalledTimes(0);
     });
 
     it('when there the user is not authenticated, it should return undefined and it should remove the config into the httpProxy', async () => {

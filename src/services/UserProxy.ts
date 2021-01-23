@@ -1,5 +1,6 @@
 import * as log from 'loglevel';
 import Cookies from 'js-cookie';
+import _ from 'lodash';
 
 import httpProxy from './HttpProxy';
 import progressiveHttpProxy from './ProgressiveHttpProxy';
@@ -102,7 +103,8 @@ class UserProxy implements IUserProxy {
 
           if (await onlineManager.isOnline()) {
             try {
-              const { user: currentUser }:{ user:UserModel | undefined } = await httpProxy.get(`${this.baseUrl}current`);
+              const response = await httpProxy.get(`${this.baseUrl}current`);
+              const { user: currentUser }:{ user:UserModel | undefined } = response;
               if (currentUser) {
                 storageService.setGlobalItem('currentUser', extractUserModel(currentUser));
                 this.setHttpProxyAuthentication(currentUser);
@@ -110,6 +112,14 @@ class UserProxy implements IUserProxy {
               }
             } catch (error) {
               log.error(error.message);
+              if (error instanceof HttpError) {
+                const httpError = error as HttpError;
+                const httpErrorCode = _.get(httpError, 'data.error.status');
+                if (httpErrorCode === 401) {
+                  await userContext.onUserChanged(undefined);
+                  return undefined;
+                }
+              }
             }
           }
 
