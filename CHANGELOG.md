@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+-Change the localforage to INDEXEDDB to be compatible with firefox
 -Update a axios because of a critical update
 -Fix a bug when the token is expired
 -Refresh the managers' in memory object after rebuilding the storage.
