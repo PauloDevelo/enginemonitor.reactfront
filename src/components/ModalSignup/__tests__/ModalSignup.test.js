@@ -40,7 +40,6 @@ describe('ModalSignup', () => {
     imageFolderSizeLimitInByte: 0,
     imageFolder: '',
     forbidCreatingAsset: false,
-    forbidSelfDelete: false,
     forbidUploadingImage: false,
     token: '',
     privacyPolicyAccepted: true,

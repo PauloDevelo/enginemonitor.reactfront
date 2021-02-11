@@ -581,7 +581,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                 "email": "",
                                 "firstname": "",
                                 "forbidCreatingAsset": false,
-                                "forbidSelfDelete": false,
                                 "forbidUploadingImage": false,
                                 "imageFolder": "",
                                 "imageFolderSizeInByte": 0,
