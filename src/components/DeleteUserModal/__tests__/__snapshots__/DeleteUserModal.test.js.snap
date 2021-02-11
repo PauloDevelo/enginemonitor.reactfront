@@ -1,0 +1,495 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DeleteUserModal Should not call onUserDeleted when loaded 1`] = `
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+>
+  <DeleteUserModal
+    isOpen={true}
+    onUserDeleted={[MockFunction]}
+    toggle={[Function]}
+  >
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      fade={true}
+      isOpen={true}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      returnFocusAfterClose={true}
+      role="dialog"
+      scrollable={false}
+      toggle={[Function]}
+      unmountOnClose={true}
+      zIndex={1050}
+    >
+      <Portal
+        node={
+          <div
+            style="position: relative; z-index: 1050; display: block;"
+            tabindex="-1"
+          >
+            <div
+              class=""
+            >
+              <div
+                class="modal fade"
+                role="dialog"
+                style="display: block;"
+                tabindex="-1"
+              >
+                <div
+                  class="modal-dialog"
+                  role="document"
+                >
+                  <div
+                    class="modal-content"
+                  >
+                    <div
+                      class="modal-header"
+                    >
+                      <h5
+                        class="modal-title"
+                      >
+                        Deletion of all the user's data
+                      </h5>
+                      <button
+                        aria-label="Close"
+                        class="close"
+                        type="button"
+                      >
+                        <span
+                          aria-hidden="true"
+                        >
+                          ×
+                        </span>
+                      </button>
+                    </div>
+                    <div
+                      class="modal-body"
+                    >
+                      <p>
+                        All the data you input in Equipment Maintenance website will be deleted. It includes your asset, equipments, tasks, and entries and all the images you might have uploaded. 
+                      </p>
+                      <p>
+                        After the deletion, you will be logged out from Equipment Maintenance and you won't be able to reconnect.
+                      </p>
+                      <p>
+                        If you want to keep proceeding, please type yes below:
+                      </p>
+                      <input
+                        class="form-control"
+                        placeholder="Type yes to confirm the deletion"
+                        type="text"
+                      />
+                      <br />
+                    </div>
+                    <div
+                      class="modal-footer"
+                    >
+                      <button
+                        class="btn btn-danger disabled"
+                        disabled=""
+                        type="button"
+                      >
+                        Delete all the user's data
+                      </button>
+                      <button
+                        class="btn btn-secondary"
+                        type="button"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="modal-backdrop fade"
+              />
+            </div>
+          </div>
+        }
+      >
+        <Portal
+          containerInfo={
+            <div
+              style="position: relative; z-index: 1050; display: block;"
+              tabindex="-1"
+            >
+              <div
+                class=""
+              >
+                <div
+                  class="modal fade"
+                  role="dialog"
+                  style="display: block;"
+                  tabindex="-1"
+                >
+                  <div
+                    class="modal-dialog"
+                    role="document"
+                  >
+                    <div
+                      class="modal-content"
+                    >
+                      <div
+                        class="modal-header"
+                      >
+                        <h5
+                          class="modal-title"
+                        >
+                          Deletion of all the user's data
+                        </h5>
+                        <button
+                          aria-label="Close"
+                          class="close"
+                          type="button"
+                        >
+                          <span
+                            aria-hidden="true"
+                          >
+                            ×
+                          </span>
+                        </button>
+                      </div>
+                      <div
+                        class="modal-body"
+                      >
+                        <p>
+                          All the data you input in Equipment Maintenance website will be deleted. It includes your asset, equipments, tasks, and entries and all the images you might have uploaded. 
+                        </p>
+                        <p>
+                          After the deletion, you will be logged out from Equipment Maintenance and you won't be able to reconnect.
+                        </p>
+                        <p>
+                          If you want to keep proceeding, please type yes below:
+                        </p>
+                        <input
+                          class="form-control"
+                          placeholder="Type yes to confirm the deletion"
+                          type="text"
+                        />
+                        <br />
+                      </div>
+                      <div
+                        class="modal-footer"
+                      >
+                        <button
+                          class="btn btn-danger disabled"
+                          disabled=""
+                          type="button"
+                        >
+                          Delete all the user's data
+                        </button>
+                        <button
+                          class="btn btn-secondary"
+                          type="button"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="modal-backdrop fade"
+                />
+              </div>
+            </div>
+          }
+        >
+          <div
+            className=""
+          >
+            <Fade
+              appear={true}
+              baseClass="fade"
+              baseClassActive="show"
+              className="modal"
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={false}
+              onClick={[Function]}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              role="dialog"
+              style={
+                Object {
+                  "display": "block",
+                }
+              }
+              tabIndex="-1"
+              tag="div"
+              timeout={300}
+              unmountOnExit={false}
+            >
+              <Transition
+                appear={true}
+                enter={true}
+                exit={true}
+                in={true}
+                mountOnEnter={false}
+                onEnter={[Function]}
+                onEntered={[Function]}
+                onEntering={[Function]}
+                onExit={[Function]}
+                onExited={[Function]}
+                onExiting={[Function]}
+                timeout={300}
+                unmountOnExit={false}
+              >
+                <div
+                  className="modal fade"
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  onKeyUp={[Function]}
+                  onMouseDown={[Function]}
+                  role="dialog"
+                  style={
+                    Object {
+                      "display": "block",
+                    }
+                  }
+                  tabIndex="-1"
+                >
+                  <div
+                    className="modal-dialog"
+                    role="document"
+                  >
+                    <div
+                      className="modal-content"
+                    >
+                      <ModalHeader
+                        charCode={215}
+                        closeAriaLabel="Close"
+                        tag="h5"
+                        toggle={[Function]}
+                        wrapTag="div"
+                      >
+                        <div
+                          className="modal-header"
+                        >
+                          <h5
+                            className="modal-title"
+                          >
+                            <FormattedMessage
+                              defaultMessage="Deletion of all the user's data"
+                              description="Title of the delete user modal"
+                              id="deleteUserModalTitle"
+                              values={Object {}}
+                            >
+                              Deletion of all the user's data
+                            </FormattedMessage>
+                          </h5>
+                          <button
+                            aria-label="Close"
+                            className="close"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <span
+                              aria-hidden="true"
+                            >
+                              ×
+                            </span>
+                          </button>
+                        </div>
+                      </ModalHeader>
+                      <ModalBody
+                        tag="div"
+                      >
+                        <div
+                          className="modal-body"
+                        >
+                          <p>
+                            <FormattedMessage
+                              defaultMessage="All the data you input in Equipment Maintenance website will be deleted. It includes your asset, equipments, tasks, and entries and all the images you might have uploaded. "
+                              description="Confirmation message before deleting the user"
+                              id="deleteUserConfirmationMessage1"
+                              values={Object {}}
+                            >
+                              All the data you input in Equipment Maintenance website will be deleted. It includes your asset, equipments, tasks, and entries and all the images you might have uploaded. 
+                            </FormattedMessage>
+                          </p>
+                          <p>
+                            <FormattedMessage
+                              defaultMessage="After the deletion, you will be logged out from Equipment Maintenance and you won't be able to reconnect."
+                              description="Confirmation message before deleting the user"
+                              id="deleteUserConfirmationMessage2"
+                              values={Object {}}
+                            >
+                              After the deletion, you will be logged out from Equipment Maintenance and you won't be able to reconnect.
+                            </FormattedMessage>
+                          </p>
+                          <p>
+                            <FormattedMessage
+                              defaultMessage="If you want to keep proceeding, please type yes below:"
+                              description="Confirmation message before deleting the user"
+                              id="deleteUserConfirmationMessage3"
+                              values={Object {}}
+                            >
+                              If you want to keep proceeding, please type yes below:
+                            </FormattedMessage>
+                          </p>
+                          <Input
+                            onChange={[Function]}
+                            placeholder="Type yes to confirm the deletion"
+                            type="text"
+                          >
+                            <input
+                              className="form-control"
+                              onChange={[Function]}
+                              placeholder="Type yes to confirm the deletion"
+                              type="text"
+                            />
+                          </Input>
+                          <br />
+                          <Alerts />
+                        </div>
+                      </ModalBody>
+                      <ModalFooter
+                        tag="div"
+                      >
+                        <div
+                          className="modal-footer"
+                        >
+                          <ActionButton
+                            action={[Function]}
+                            color="danger"
+                            disabled={true}
+                            isActing={false}
+                            message={
+                              Object {
+                                "defaultMessage": "Delete all the user's data",
+                                "description": "Delete button",
+                                "id": "deleteUserData",
+                              }
+                            }
+                          >
+                            <Button
+                              color="danger"
+                              disabled={true}
+                              onClick={[Function]}
+                              tag="button"
+                              type="button"
+                            >
+                              <button
+                                aria-label={null}
+                                className="btn btn-danger disabled"
+                                disabled={true}
+                                onClick={[Function]}
+                                type="button"
+                              >
+                                <FormattedMessage
+                                  defaultMessage="Delete all the user's data"
+                                  description="Delete button"
+                                  id="deleteUserData"
+                                  values={Object {}}
+                                >
+                                  Delete all the user's data
+                                </FormattedMessage>
+                              </button>
+                            </Button>
+                          </ActionButton>
+                          <Button
+                            color="secondary"
+                            onClick={[Function]}
+                            tag="button"
+                          >
+                            <button
+                              aria-label={null}
+                              className="btn btn-secondary"
+                              onClick={[Function]}
+                              type="button"
+                            >
+                              <FormattedMessage
+                                defaultMessage="Cancel"
+                                description="Cancel button"
+                                id="cancel"
+                                values={Object {}}
+                              >
+                                Cancel
+                              </FormattedMessage>
+                            </button>
+                          </Button>
+                        </div>
+                      </ModalFooter>
+                    </div>
+                  </div>
+                </div>
+              </Transition>
+            </Fade>
+            <Fade
+              appear={true}
+              baseClass="fade"
+              baseClassActive="show"
+              className="modal-backdrop"
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={true}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              tag="div"
+              timeout={150}
+              unmountOnExit={false}
+            >
+              <Transition
+                appear={true}
+                enter={true}
+                exit={true}
+                in={true}
+                mountOnEnter={true}
+                onEnter={[Function]}
+                onEntered={[Function]}
+                onEntering={[Function]}
+                onExit={[Function]}
+                onExited={[Function]}
+                onExiting={[Function]}
+                timeout={150}
+                unmountOnExit={false}
+              >
+                <div
+                  className="modal-backdrop fade"
+                />
+              </Transition>
+            </Fade>
+          </div>
+        </Portal>
+      </Portal>
+    </Modal>
+  </DeleteUserModal>
+</IntlProvider>
+`;
