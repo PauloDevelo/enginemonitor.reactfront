@@ -12,8 +12,6 @@ import Alerts from '../Alerts/Alerts';
 import HttpError from '../../http/HttpError';
 import userProxy from '../../services/UserProxy';
 
-// eslint-disable-next-line no-unused-vars
-
 import '../../style/transition.css';
 
 import jsonMessages from './DeleteUserModal.messages.json';
