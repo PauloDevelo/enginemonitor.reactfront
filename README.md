@@ -1,5 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Status of integration branch ![integration environment for github](https://github.com/PauloDevelo/enginemonitor.reactfront/workflows/CI/badge.svg?branch=integration)
 ## Available Scripts
 
 In the project directory, you can run:
