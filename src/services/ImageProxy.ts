@@ -9,7 +9,7 @@ import analytics from '../helpers/AnalyticsHelper';
 import storageService, { IUserStorageListener } from './StorageService';
 
 // eslint-disable-next-line no-unused-vars
-import { ImageModel } from '../types/Types';
+import { ImageModel, extractImageModel } from '../types/Types';
 import { blobToDataURL } from '../helpers/ImageHelper';
 
 import userContext from './UserContext';
@@ -86,7 +86,7 @@ class ImageProxy implements IImageProxy, IUserStorageListener {
 
       const createImageUrl = this.baseUrl + imgToSave.parentUiId;
 
-      const savedImage: ImageModel = await progressiveHttpProxy.postNewImage(createImageUrl, imgToSave, blobImage, thumbnail);
+      const savedImage: ImageModel = await progressiveHttpProxy.postNewImage(createImageUrl, extractImageModel(imgToSave), blobImage, thumbnail);
 
       const updateImages = await storageService.updateArray(createImageUrl, savedImage);
       this.inMemory[createImageUrl] = updateImages;
@@ -97,7 +97,7 @@ class ImageProxy implements IImageProxy, IUserStorageListener {
     }
 
     updateImage = async (imageToSave: ImageModel):Promise<ImageModel> => {
-      const updatedImage = await progressiveHttpProxy.postAndUpdate(`${this.baseUrl + imageToSave.parentUiId}/${imageToSave._uiId}`, 'image', imageToSave, (image) => image);
+      const updatedImage = await progressiveHttpProxy.postAndUpdate(`${this.baseUrl + imageToSave.parentUiId}/${imageToSave._uiId}`, 'image', extractImageModel(imageToSave), (image) => image);
 
       const updatedImages = await storageService.updateArray(this.baseUrl + updatedImage.parentUiId, updatedImage);
       this.inMemory[this.baseUrl + updatedImage.parentUiId] = updatedImages;

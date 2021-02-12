@@ -59,10 +59,25 @@
     "description": "Label",
     "id": "name"
   },
+  "or": {
+    "defaultMessage": "OR",
+    "description": "horizontal separation line title",
+    "id": "or"
+  },
   "password": {
     "defaultMessage": "Password",
     "description": "Label",
     "id": "password"
+  },
+  "privacyPolicy": {
+    "defaultMessage": "privacy policy",
+    "description": "label of the privacy policy link",
+    "id": "privacyPolicy"
+  },
+  "privacyPolicyAcceptance": {
+    "defaultMessage": "By browsing this website, you accept the {privatePolicyLink}.",
+    "description": "Message at the bottom of the login window",
+    "id": "privacyPolicyAcceptanceInLoginModal"
   },
   "remember": {
     "defaultMessage": "Remember me",

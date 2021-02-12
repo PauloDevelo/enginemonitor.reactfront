@@ -22,6 +22,7 @@ import {
 
 import { convertUrlImageIntoDataUrl } from '../helpers/ImageHelper';
 import analytics from '../helpers/AnalyticsHelper';
+import assetManager from './AssetManager';
 
 export class LocalStorageBuilderException extends Error {}
 
@@ -44,6 +45,7 @@ class LocalStorageBuilder extends TaskWithProgress {
     }
 
     private rebuildLocalStorage = async (): Promise<void> => {
+      let assets: AssetModel[] = [];
       try {
         const storageVersion = await storageService.getStorageVersion();
 
@@ -52,7 +54,7 @@ class LocalStorageBuilder extends TaskWithProgress {
         await actionManager.writeActionsInStorage();
         await storageService.setStorageVersion(storageVersion);
 
-        const assets = await assetProxy.fetchAssets({ cancelTimeout: true });
+        assets = await assetProxy.fetchAssets({ cancelTimeout: true });
 
         this.taskProgress.init(assets.length);
         await this.triggerTaskProgressChanged();
@@ -64,6 +66,13 @@ class LocalStorageBuilder extends TaskWithProgress {
       } finally {
         this.taskProgress.isRunning = false;
         await this.triggerTaskProgressChanged();
+
+        const isOfflineMode = onlineManager.isOfflineModeActivated();
+
+        onlineManager.setOfflineMode(true);
+        assetManager.onAssetsChanged(assets);
+
+        onlineManager.setOfflineMode(isOfflineMode);
       }
     }
 

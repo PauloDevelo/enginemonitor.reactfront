@@ -15,6 +15,7 @@ import DropDownConnectionStateItem from './DropDownConnectionStateItem';
 import ModalAbout from '../ModalAbout/ModalAbout';
 import ModalEditAsset from '../ModalEditAsset/ModalEditAsset';
 import ImageFolderGauge from './ImageFolderGauge';
+import PrivacyPolicyModal from '../PrivacyPolicyModal/PrivacyPolicyModal';
 
 import userProxy from '../../services/UserProxy';
 import onlineManager from '../../services/OnlineManager';
@@ -32,16 +33,13 @@ import jsonMessages from './NavBar.messages.json';
 
 const navBarMsg = defineMessages(jsonMessages);
 
-type Props = {
-    user?: UserModel,
-    onLoggedOut: ()=>void,
-};
 
-const NavBar = ({ onLoggedOut }:Props) => {
+const NavBar = () => {
   const currentUser = userContext.getCurrentUser();
   const [user, setUser] = useState<UserModel | undefined>(currentUser);
   const [userImageFolderSize, setUserImageFolderSize] = useState(currentUser !== undefined ? currentUser.imageFolderSizeInByte : 0);
   const [aboutVisible, setAboutVisibility] = useState(false);
+  const [privacyPolicyVisibility, setPrivacyPolicyVisibility] = useState(false);
   const [assetEditionModalVisibility, setAssetEditionModalVisibility] = useState(false);
   const [offline, setOffline] = useState(onlineManager.isOfflineModeActivated());
 
@@ -57,7 +55,7 @@ const NavBar = ({ onLoggedOut }:Props) => {
     assetManager.registerOnCurrentAssetChanged(onCurrentAssetChanged);
 
     return () => assetManager.unregisterOnCurrentAssetChanged(onCurrentAssetChanged);
-  });
+  }, []);
 
   const [isOpened, setIsOpened] = useState(false);
   const toggle = useCallback(() => {
@@ -82,11 +80,6 @@ const NavBar = ({ onLoggedOut }:Props) => {
     };
   }, [onUserChanged, onUserImageFolderSizeChanged]);
 
-  const logout = useCallback(() => {
-    userProxy.logout();
-    onLoggedOut();
-  }, [onLoggedOut]);
-
   const offlineSwitch = useCallback((isOffline: boolean):void => {
     setOffline(isOffline);
     onlineManager.setOfflineMode(isOffline);
@@ -94,6 +87,10 @@ const NavBar = ({ onLoggedOut }:Props) => {
 
   const toggleAbout = useCallback(() => {
     setAboutVisibility((prevAboutVisibility) => !prevAboutVisibility);
+  }, []);
+
+  const togglePrivacyPolicyContent = useCallback(() => {
+    setPrivacyPolicyVisibility((prevPrivacyPolicyVisibility) => !prevPrivacyPolicyVisibility);
   }, []);
 
   const toggleAssetEditionModal = useCallback(() => {
@@ -145,7 +142,7 @@ const NavBar = ({ onLoggedOut }:Props) => {
                   <FormattedMessage {...navBarMsg.rebuildLocalStorage} />
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem onClick={logout}>
+                <DropdownItem onClick={userProxy.logout}>
                   <FontAwesomeIcon icon={faSignOutAlt} />
                   {' '}
                   <FormattedMessage {...navBarMsg.signout} />
@@ -154,12 +151,16 @@ const NavBar = ({ onLoggedOut }:Props) => {
                 <DropdownItem onClick={toggleAbout}>
                   <FormattedMessage {...navBarMsg.about} />
                 </DropdownItem>
+                <DropdownItem onClick={togglePrivacyPolicyContent}>
+                  <FormattedMessage {...navBarMsg.privacyPolicy} />
+                </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
         </Collapse>
       </Navbar>
       {aboutVisible && <ModalAbout visible={aboutVisible} toggle={toggleAbout} className="modal-dialog-centered" />}
+      <PrivacyPolicyModal visible={privacyPolicyVisibility} toggle={togglePrivacyPolicyContent} className="modal-dialog-centered" />
 
       {currentAsset && (
         <ModalEditAsset

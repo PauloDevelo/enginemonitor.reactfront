@@ -1,4 +1,4 @@
-import uuidv1 from 'uuid/v1';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   // eslint-disable-next-line no-unused-vars
@@ -7,7 +7,7 @@ import {
 
 // eslint-disable-next-line import/prefer-default-export
 export function createDefaultUser(): UserModel {
-  const uid = uuidv1();
+  const uid = uuidv4();
   return {
     _uiId: uid,
     firstname: '',
@@ -20,5 +20,6 @@ export function createDefaultUser(): UserModel {
     forbidUploadingImage: false,
     forbidCreatingAsset: false,
     token: '',
+    privacyPolicyAccepted: false,
   };
 }

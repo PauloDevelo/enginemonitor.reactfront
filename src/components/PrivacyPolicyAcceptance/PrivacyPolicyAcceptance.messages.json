@@ -1,0 +1,27 @@
+{
+  "accept": {
+    "defaultMessage": "Accept",
+    "description": "Accept Button",
+    "id": "accept"
+  },
+  "privacyPolicy": {
+    "defaultMessage": "privacy policy",
+    "description": "label of the privacy policy link",
+    "id": "privacyPolicy"
+  },
+  "privacyPolicyAcceptanceUsingAWindow1": {
+    "defaultMessage": "This site uses cookies for analytics only. There are no ads. By continuing to browse this site, you agree to this use.",
+    "description": "Text block 1",
+    "id": "privacyPolicyAcceptanceUsingAWindow1"
+  },
+  "privacyPolicyAcceptanceUsingAWindow2": {
+    "defaultMessage": "You can learn more about the {privatePolicyLink} and access it in the user menu at any time.",
+    "description": "Text block 2",
+    "id": "privacyPolicyAcceptanceUsingAWindow2"
+  },
+  "privacyPolicyMenu": {
+    "defaultMessage": "Privacy policy",
+    "description": "title of the toast displayed",
+    "id": "privacyPolicyMenu"
+  }
+}

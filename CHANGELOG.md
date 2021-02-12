@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.14.16] - 2021-02-12
+-Change the localforage to INDEXEDDB to be compatible with firefox
+-Update a axios because of a critical update
+-Fix a bug when the token is expired
+-Refresh the managers' in memory object after rebuilding the storage.
+-Add an analytics event for the http request timeouts
+-Use Sentry only in production
+-Add a splashscreen to make the start nicer and more "under controled"
+-Add a privacy policy in english and in french
+-Add google authentication support
+-Add a popup to get the user acceptance for the privacy policy in order to use the web application
+-Add an informative message of the privacy policy in the login and signup modals
+
 ## [2.14.0] - 2020-04-21
 -Add google analytics
 -Add a file for the android app in order to hide the address bar.
@@ -44,8 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-
-[unreleased]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.14.0...integration
+[unreleased]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.14.16...integration
+[2.16.0]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.14.0...v2.14.16
 [2.14.0]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.7...v2.14.0
 [2.13.7]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.6...v2.13.7
 [2.13.6]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.5...v2.13.6

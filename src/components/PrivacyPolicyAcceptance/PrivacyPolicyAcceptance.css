@@ -1,0 +1,16 @@
+.fixed-position-bottom-right{
+	position: fixed;
+  right: 8px;
+  bottom: 8px;
+}
+
+.fixed-position-centered{
+	position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.very-top {
+  z-index: 1050
+}

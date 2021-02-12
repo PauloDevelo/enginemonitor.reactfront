@@ -1,0 +1,35 @@
+.level-1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.level-2 {
+  font-size: 1.25rem;
+  font-weight: 450;
+  line-height: 1;
+}
+
+.level-3 {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.small-padding{
+  padding: 0.75rem;
+}
+
+a.badge-light.active {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(248,249,250,.5);
+}
+
+a.badge-light.active {
+  color: #212529;
+  background-color: #dae0e5;
+}
+
+a.badge.active {
+  text-decoration: none;
+}

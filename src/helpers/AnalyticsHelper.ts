@@ -2,8 +2,14 @@ import log from 'loglevel';
 import onlineManager from '../services/OnlineManager';
 
 export type EventName = 'login' | 'logout' | 'sign_up' | 'reset_password' | 'send_verification_email';
-type ActionName = EventName | 'select_content' | 'delete_content' | 'add_content' | 'save_content' | 'click_thumbnail' | 'next' | 'previous' | 'share' | 'unshare' | 'copy_share_link' | 'rebuild_storage' | 'sync_storage' | 'cancel_sync_storage' | 'set_offline';
+type ActionName = EventName | 'select_content' | 'delete_content' | 'add_content' | 'save_content' | 'click_thumbnail' | 'next' | 'previous' | 'share' | 'unshare' | 'copy_share_link' | 'rebuild_storage' | 'sync_storage' | 'cancel_sync_storage' | 'set_offline' | 'timeout';
 export type ContentType = 'asset' | 'equipment' | 'task' | 'entry' | 'image';
+
+export interface HttpRequestTimeoutProps {
+  requestType: 'get' | 'post' | 'post_image' | 'delete';
+  url: string;
+  timeout: number;
+}
 
 export interface IAnalytics{
   sendEngagementEvent(eventName: EventName, props?: object): void;
@@ -26,6 +32,8 @@ export interface IAnalytics{
   cancelSyncStorage(): void;
 
   setOffLineMode(offlineMode: boolean): void;
+
+  httpRequestTimeout(httpRequestTimeoutProps: HttpRequestTimeoutProps): void;
 }
 
 class Analytics implements IAnalytics {
@@ -104,6 +112,11 @@ class Analytics implements IAnalytics {
     const gTagProps = { event_category: 'engagement', event_label: offlineMode ? 'offline' : 'online' };
     this.sendEvent('set_offline', gTagProps);
   }
+
+  httpRequestTimeout = (httpRequestTimeoutProps: HttpRequestTimeoutProps): void => {
+    const gTagProps = { event_category: 'timeout', event_label: httpRequestTimeoutProps.requestType, ...httpRequestTimeoutProps };
+    this.sendEvent('timeout', gTagProps);
+  };
 
   private sendEvent = (actionName: ActionName, gTagProps: object) => {
     if (process.env.NODE_ENV === 'production') {

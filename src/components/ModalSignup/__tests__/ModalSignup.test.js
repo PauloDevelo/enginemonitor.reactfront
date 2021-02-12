@@ -1,10 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
+import { IntlProvider } from 'react-intl';
+
 // eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
 
-import uuidv1 from 'uuid/v1';
+import { v4 as uuidv4 } from 'uuid';
 import ignoredMessages from '../../../testHelpers/MockConsole';
 
 import userProxy from '../../../services/UserProxy';
@@ -15,13 +17,13 @@ import HttpError from '../../../http/HttpError';
 
 jest.mock('../../../services/UserProxy');
 jest.mock('localforage');
-jest.mock('uuid/v1');
+jest.mock('uuid');
 
 describe('ModalSignup', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
-    ignoredMessages.push('[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.');
     ignoredMessages.push('a test was not wrapped in act');
+    ignoredMessages.push('Missing message:');
   });
 
   afterEach(() => {
@@ -40,16 +42,17 @@ describe('ModalSignup', () => {
     forbidCreatingAsset: false,
     forbidUploadingImage: false,
     token: '',
+    privacyPolicyAccepted: true,
   };
 
   it('should render the ModalSignup', async () => {
     // Arrange
-    uuidv1.mockImplementation(() => 'user_01');
+    uuidv4.mockImplementation(() => 'user_01');
 
     const toggle = jest.fn();
 
     // Act
-    const modalSignup = mount(<ModalSignup visible toggle={toggle} />);
+    const modalSignup = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalSignup visible toggle={toggle} /></IntlProvider>);
     await updateWrapper(modalSignup);
 
     // Assert
@@ -62,11 +65,11 @@ describe('ModalSignup', () => {
 
   it('should close the modal if the user click Cancel', async () => {
     // Arrange
-    uuidv1.mockImplementation(() => 'user_01');
+    uuidv4.mockImplementation(() => 'user_01');
 
     const toggle = jest.fn();
 
-    const modalSignup = mount(<ModalSignup visible toggle={toggle} />);
+    const modalSignup = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalSignup visible toggle={toggle} /></IntlProvider>);
     await updateWrapper(modalSignup);
 
     const cancelButton = modalSignup.find('ModalFooter').find('Button').at(1);
@@ -85,12 +88,12 @@ describe('ModalSignup', () => {
 
   it('should call signup with all the data input when the user click on signup', async () => {
     // Arrange
-    uuidv1.mockImplementation(() => user._uiId);
+    uuidv4.mockImplementation(() => user._uiId);
 
     const toggle = jest.fn();
     jest.spyOn(userProxy, 'signup').mockImplementation(() => Promise.resolve());
 
-    const modalSignup = mount(<ModalSignup visible toggle={toggle} />);
+    const modalSignup = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalSignup visible toggle={toggle} /></IntlProvider>);
     await updateWrapper(modalSignup);
 
     const myForm = modalSignup.find('Memo(MyForm)');
@@ -99,6 +102,7 @@ describe('ModalSignup', () => {
     inputs.at(1).simulate('change', { target: { value: user.firstname } });
     inputs.at(2).simulate('change', { target: { value: user.email } });
     inputs.at(3).simulate('change', { target: { value: user.password } });
+    inputs.at(4).simulate('change', { target: { checked: user.privacyPolicyAccepted } });
     await updateWrapper(modalSignup);
 
     // Act
@@ -119,12 +123,12 @@ describe('ModalSignup', () => {
 
   it('should display an error if an error occurs during signup', async () => {
     // Arrange
-    uuidv1.mockImplementation(() => user._uiId);
+    uuidv4.mockImplementation(() => user._uiId);
 
     const toggle = jest.fn();
     jest.spyOn(userProxy, 'signup').mockImplementation(() => Promise.reject(new HttpError({ email: 'alreadyexisting' })));
 
-    const modalSignup = mount(<ModalSignup visible toggle={toggle} />);
+    const modalSignup = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalSignup visible toggle={toggle} /></IntlProvider>);
     await updateWrapper(modalSignup);
 
     const myForm = modalSignup.find('Memo(MyForm)');
@@ -133,6 +137,7 @@ describe('ModalSignup', () => {
     inputs.at(1).simulate('change', { target: { value: user.firstname } });
     inputs.at(2).simulate('change', { target: { value: user.email } });
     inputs.at(3).simulate('change', { target: { value: user.password } });
+    inputs.at(4).simulate('change', { target: { checked: user.privacyPolicyAccepted } });
     await updateWrapper(modalSignup);
 
     // Act

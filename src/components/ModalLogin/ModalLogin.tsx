@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter, Spinner,
 } from 'reactstrap';
@@ -9,19 +9,24 @@ import { FormattedMessage, defineMessages } from 'react-intl';
 
 import useEditModal from '../../hooks/EditModalHook';
 
+import PrivacyPolicyModal from '../PrivacyPolicyModal/PrivacyPolicyModal';
 import ModalPasswordReset from '../ModalPasswordReset/ModalPasswordReset';
 import MyForm from '../Form/MyForm';
 import MyInput from '../Form/MyInput';
 import Alerts from '../Alerts/Alerts';
 import ActionButton from '../ActionButton/ActionButton';
+import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton';
+import HorizontalSeparationWithTitle from '../HorizontalSeparationWithTitle/HorizontalSeparationWithTitle';
 
 import HttpError from '../../http/HttpError';
 
 import userProxy from '../../services/UserProxy';
+import storageService from '../../services/StorageService';
 
 // eslint-disable-next-line no-unused-vars
-import { AuthInfo, UserModel } from '../../types/Types';
+import { AuthInfo } from '../../types/Types';
 
+import './ModalLogin.css';
 import '../../style/transition.css';
 
 import jsonMessages from './Login.messages.json';
@@ -29,7 +34,6 @@ import jsonMessages from './Login.messages.json';
 const loginmsg = defineMessages(jsonMessages);
 
 type Props = {
-onLoggedIn: (user:UserModel) => void,
 visible: boolean,
 className?: string,
 toggleModalSignup: () => void
@@ -57,16 +61,40 @@ errors?: any
 }
 
 const ModalLogin = ({
-  onLoggedIn, visible, className, toggleModalSignup,
+  visible, className, toggleModalSignup,
 }: Props) => {
+  const [rememberMe, setRememberMe] = useState<boolean | undefined>(undefined);
   const [user, setUser] = useState<AuthInfo>({ email: '', password: '', remember: false });
   const [state, setState] = useState<StateType>({ state: LoginState.Started });
 
   const resetPasswordModalHook = useEditModal({ email: '', newPassword1: '', newPassword2: '' });
 
   useEffect(() => {
+    storageService.getGlobalItem<boolean>('rememberMe').then((rememberMeValue) => {
+      setRememberMe(rememberMeValue);
+    });
+  }, []);
+
+  useEffect(() => {
     setState({ state: LoginState.Started });
   }, [resetPasswordModalHook.editModalVisibility]);
+
+  useEffect(() => {
+    if (rememberMe !== undefined) {
+      setUser((previousUser) => ({ ...previousUser, remember: rememberMe! }));
+      storageService.setGlobalItem('rememberMe', rememberMe);
+    }
+  }, [rememberMe]);
+
+  const [privacyPolicyVisibility, setPrivacyPolicyVisibility] = useState(false);
+
+  const togglePrivacyPolicyContent = useCallback((event? : React.MouseEvent) => {
+    if (event !== undefined) {
+      event.preventDefault();
+    }
+
+    setPrivacyPolicyVisibility((prevPrivacyPolicyVisibility) => !prevPrivacyPolicyVisibility);
+  }, []);
 
   const sendVerificationEmail = async () => {
     setState({ state: LoginState.IsLoggingIn });
@@ -83,13 +111,17 @@ const ModalLogin = ({
   };
 
   const handleSubmit = async (newUser:AuthInfo) => {
+    const currentUser = { ...newUser };
+    if (rememberMe !== undefined) {
+      currentUser.remember = rememberMe;
+    }
+
     setState({ state: LoginState.IsLoggingIn });
-    setUser(newUser);
+    setUser(currentUser);
 
     try {
-      const authenticatedUser = await userProxy.authenticate(newUser);
-      setState({ state: LoginState.LoggedIn });
-      onLoggedIn(authenticatedUser);
+      await userProxy.authenticate(currentUser);
+      setState({ state: LoginState.Started });
     } catch (errors) {
       if (errors instanceof HttpError) {
         const newLoginErrors = errors.data;
@@ -109,6 +141,13 @@ const ModalLogin = ({
     }
   };
 
+  const privacyPolicyAcceptanceLabel = {
+    ...loginmsg.privacyPolicyAcceptance,
+    values: {
+      privatePolicyLink: <a href="privacypolicy" onClick={togglePrivacyPolicyContent}><FormattedMessage {...loginmsg.privacyPolicy} /></a>,
+    },
+  };
+
   return (
     <>
       <Modal isOpen={visible && state.state !== LoginState.LoggedIn} className={className} fade>
@@ -122,21 +161,31 @@ const ModalLogin = ({
           <MyForm submit={handleSubmit} id="formLogin" initialData={user}>
             <MyInput name="email" label={loginmsg.email} type="email" required />
             <MyInput name="password" label={loginmsg.password} type="password" required />
-            <MyInput name="remember" label={loginmsg.remember} type="checkbox" />
           </MyForm>
           )}
           {state.state === LoginState.IsLoggingIn && <Spinner size="sm" color="secondary" />}
           {state.infoMsg && <Alerts error={state.infoMsg} color="success" />}
           {state.errors && <Alerts errors={state.errors} />}
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter className="without-horizontal-bar">
           <Button onClick={toggleModalSignup} color="warning" className="d-block mx-auto"><FormattedMessage {...loginmsg.signup} /></Button>
           {state.state === LoginState.WrongPassword && <Button onClick={resetPasswordModalHook.toggleModal} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.resetPassword} /></Button>}
           {state.state === LoginState.NotVerified && <Button onClick={sendVerificationEmail} color="secondary" className="d-block mx-auto"><FormattedMessage {...loginmsg.sendVerification} /></Button>}
           <ActionButton type="submit" form="formLogin" color="success" className="d-block mx-auto" message={loginmsg.login} isActing={state.state === LoginState.IsLoggingIn} />
         </ModalFooter>
+        <ModalFooter className="without-horizontal-bar">
+          <HorizontalSeparationWithTitle title={loginmsg.or} />
+          <GoogleLoginButton className="mx-auto" />
+        </ModalFooter>
+        <ModalFooter>
+          <MyInput name="remember" label={loginmsg.remember} type="checkbox" onChanged={setRememberMe} checked={rememberMe} />
+        </ModalFooter>
+        <ModalFooter className="without-horizontal-bar">
+          <small><FormattedMessage {...privacyPolicyAcceptanceLabel} /></small>
+        </ModalFooter>
       </Modal>
       <ModalPasswordReset toggle={resetPasswordModalHook.toggleModal} visible={resetPasswordModalHook.editModalVisibility} data={resetPasswordModalHook.data} className="modal-dialog-centered" />
+      <PrivacyPolicyModal visible={privacyPolicyVisibility} toggle={togglePrivacyPolicyContent} className="modal-dialog-centered" />
     </>
   );
 };

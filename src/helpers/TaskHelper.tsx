@@ -1,5 +1,7 @@
-import uuidv1 from 'uuid/v1.js';
+import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment';
+import log from 'loglevel';
+
 import {
   // eslint-disable-next-line no-unused-vars
   TaskModel, EquipmentModel, AgeAcquisitionType, EntryModel, TaskLevel, TaskTodo,
@@ -10,7 +12,7 @@ import entryProxy from '../services/EntryProxy';
 import equipmentProxy from '../services/EquipmentProxy';
 
 export function createDefaultTask(equipment: EquipmentModel): TaskModel {
-  const uuid = uuidv1();
+  const uuid = uuidv4();
   return {
     _uiId: uuid,
     name: '',
@@ -173,9 +175,14 @@ export async function updateRealtimeFields(equipmentId:string, task: TaskModel):
 
   // The order of these 3 function calls is important since they might rely on the result computed in the function called before.
   const updatedTask = { ...task };
-  updatedTask.nextDueDate = await getNextDueDate(equipment, updatedTask);
-  updatedTask.usageInHourLeft = await getTimeInHourLeft(equipment, updatedTask);
-  updatedTask.level = await getLevel(equipment, updatedTask);
+
+  try {
+    updatedTask.nextDueDate = await getNextDueDate(equipment, updatedTask);
+    updatedTask.usageInHourLeft = await getTimeInHourLeft(equipment, updatedTask);
+    updatedTask.level = await getLevel(equipment, updatedTask);
+  } catch (error) {
+    log.warn(error.message);
+  }
 
   return updatedTask;
 }

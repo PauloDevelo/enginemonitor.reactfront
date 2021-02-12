@@ -1564,7 +1564,6 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                           >
                             <Button
                               color="success"
-                              disabled={false}
                               form="imageEditForm"
                               tag="button"
                               type="submit"
@@ -1572,7 +1571,6 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                               <button
                                 aria-label={null}
                                 className="btn btn-success"
-                                disabled={false}
                                 form="imageEditForm"
                                 onClick={[Function]}
                                 type="submit"

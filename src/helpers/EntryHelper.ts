@@ -1,4 +1,4 @@
-import uuidv1 from 'uuid/v1.js';
+import { v4 as uuidv4 } from 'uuid';
 import timeService from '../services/TimeService';
 
 import {
@@ -7,7 +7,7 @@ import {
 } from '../types/Types';
 
 export function createDefaultEntry(equipment:EquipmentModel, task: TaskModel | undefined): EntryModel {
-  const uuid = uuidv1();
+  const uuid = uuidv4();
   let defaultAge = -1;
   if (equipment.ageAcquisitionType !== AgeAcquisitionType.time) {
     defaultAge = equipment.age;

@@ -1,6 +1,6 @@
 import * as log from 'loglevel';
 import { useState, useEffect } from 'react';
-import global from '../../global';
+import global from '../global';
 
 // version from response - first param, local version second param
 const semverGreaterThan = (versionA: string, versionB: string): boolean => {
@@ -19,30 +19,30 @@ const semverGreaterThan = (versionA: string, versionB: string): boolean => {
   return false;
 };
 
-const CacheBuster = (props: any) => {
+export const refreshCacheAndReload = async (): Promise<void> => {
+  log.info('Clearing cache and hard reloading...');
+  if (caches) {
+    // Service worker cache should be cleared with caches.delete()
+    const names = await caches.keys();
+
+    const deletionsPromise:Promise<boolean>[] = [];
+    names.forEach((name) => {
+      log.info(`delete ${name}`);
+      deletionsPromise.push(caches.delete(name));
+    });
+
+    await Promise.all(deletionsPromise);
+  }
+
+  log.info('hard reload');
+  window.location.reload(true);
+};
+
+const useCacheBuster = () => {
   const [state, setState] = useState({
     loading: true,
     isLatestVersion: false,
   });
-
-  const refreshCacheAndReload = async (): Promise<void> => {
-    log.info('Clearing cache and hard reloading...');
-    if (caches) {
-      // Service worker cache should be cleared with caches.delete()
-      const names = await caches.keys();
-
-      const deletionsPromise:Promise<boolean>[] = [];
-      names.forEach((name) => {
-        log.info(`delete ${name}`);
-        deletionsPromise.push(caches.delete(name));
-      });
-
-      await Promise.all(deletionsPromise);
-    }
-
-    log.info('hard reload');
-    window.location.reload(true);
-  };
 
   useEffect(() => {
     fetch('/meta.json', { cache: 'no-store' })
@@ -66,7 +66,14 @@ const CacheBuster = (props: any) => {
       });
   }, []);
 
-  return props.children({ loading: state.loading, isLatestVersion: state.isLatestVersion, refreshCacheAndReload });
+  useEffect(() => {
+    if (!state.loading && !state.isLatestVersion) {
+      // You can decide how and when you want to force reload
+      refreshCacheAndReload();
+    }
+  }, [state]);
+
+  return { loading: state.loading, isLatestVersion: state.isLatestVersion };
 };
 
-export default CacheBuster;
+export default useCacheBuster;

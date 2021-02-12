@@ -11,9 +11,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
   textComponent={Symbol(react.fragment)}
   timeZone="Asia/Kuala_Lumpur"
 >
-  <Memo(NavBar)
-    onLoggedOut={[MockFunction]}
-  >
+  <Memo(NavBar)>
     <Navbar
       color="dark"
       dark={true}
@@ -654,7 +652,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
                                 />
                               </DropdownItem>
                               <DropdownItem
-                                onClick={[Function]}
+                                onClick={[MockFunction]}
                                 tag="button"
                                 toggle={true}
                               >
@@ -757,6 +755,27 @@ exports[`Component NavBar should render the navbar even when the user is still u
                                   </FormattedMessage>
                                 </button>
                               </DropdownItem>
+                              <DropdownItem
+                                onClick={[Function]}
+                                tag="button"
+                                toggle={true}
+                              >
+                                <button
+                                  className="dropdown-item"
+                                  onClick={[Function]}
+                                  role="menuitem"
+                                  tabIndex="0"
+                                  type="button"
+                                >
+                                  <FormattedMessage
+                                    defaultMessage="Privacy policy"
+                                    id="privacyPolicyMenu"
+                                    values={Object {}}
+                                  >
+                                    Privacy policy
+                                  </FormattedMessage>
+                                </button>
+                              </DropdownItem>
                             </div>
                           </DropdownMenu>
                         </li>
@@ -770,6 +789,74 @@ exports[`Component NavBar should render the navbar even when the user is still u
         </Collapse>
       </nav>
     </Navbar>
+    <PrivacyPolicyModal
+      className="modal-dialog-centered"
+      toggle={[Function]}
+      visible={false}
+    >
+      <Modal
+        autoFocus={true}
+        backdrop={true}
+        backdropTransition={
+          Object {
+            "mountOnEnter": true,
+            "timeout": 150,
+          }
+        }
+        centered={false}
+        className="modal-dialog-centered"
+        fade={true}
+        isOpen={false}
+        keyboard={true}
+        modalTransition={
+          Object {
+            "timeout": 300,
+          }
+        }
+        onClosed={[Function]}
+        onOpened={[Function]}
+        returnFocusAfterClose={true}
+        role="dialog"
+        scrollable={false}
+        size="lg"
+        toggle={[Function]}
+        unmountOnClose={true}
+        zIndex={1050}
+      />
+      <DeleteUserModal
+        isOpen={false}
+        onUserDeleted={[Function]}
+        toggle={[Function]}
+      >
+        <Modal
+          autoFocus={true}
+          backdrop={true}
+          backdropTransition={
+            Object {
+              "mountOnEnter": true,
+              "timeout": 150,
+            }
+          }
+          centered={false}
+          fade={true}
+          isOpen={false}
+          keyboard={true}
+          modalTransition={
+            Object {
+              "timeout": 300,
+            }
+          }
+          onClosed={[Function]}
+          onOpened={[Function]}
+          returnFocusAfterClose={true}
+          role="dialog"
+          scrollable={false}
+          toggle={[Function]}
+          unmountOnClose={true}
+          zIndex={1050}
+        />
+      </DeleteUserModal>
+    </PrivacyPolicyModal>
   </Memo(NavBar)>
 </IntlProvider>
 `;

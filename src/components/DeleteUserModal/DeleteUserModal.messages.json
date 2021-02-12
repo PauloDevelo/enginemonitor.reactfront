@@ -1,0 +1,37 @@
+{
+  "cancel": {
+    "defaultMessage": "Cancel",
+    "description": "Cancel button",
+    "id": "cancel"
+  },
+  "confirmationMessage1": {
+    "defaultMessage": "All the data you input in Equipment Maintenance website will be deleted. It includes your asset, equipments, tasks, and entries and all the images you might have uploaded. ",
+    "description": "Confirmation message before deleting the user",
+    "id": "deleteUserConfirmationMessage1"
+  },
+  "confirmationMessage2": {
+    "defaultMessage": "After the deletion, you will be logged out from Equipment Maintenance and you won't be able to reconnect.",
+    "description": "Confirmation message before deleting the user",
+    "id": "deleteUserConfirmationMessage2"
+  },
+  "confirmationMessage3": {
+    "defaultMessage": "If you want to keep proceeding, please type yes below:",
+    "description": "Confirmation message before deleting the user",
+    "id": "deleteUserConfirmationMessage3"
+  },
+  "delete": {
+    "defaultMessage": "Delete all the user's data",
+    "description": "Delete button",
+    "id": "deleteUserData"
+  },
+  "placeHolder": {
+    "defaultMessage": "Type yes to confirm the deletion",
+    "description": "Place holder",
+    "id": "deleteUserConfirmationPlaceHolder"
+  },
+  "title": {
+    "defaultMessage": "Deletion of all the user's data",
+    "description": "Title of the delete user modal",
+    "id": "deleteUserModalTitle"
+  }
+}
