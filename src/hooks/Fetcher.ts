@@ -31,6 +31,8 @@ export default function useFetcher<T, P>({ fetchPromise, fetchProps, cancellatio
     const extendedFetchProps = { cancelToken: cancelTokenSourceRef.current.token, ...fetchProps };
 
     return fetchPromise(extendedFetchProps);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchPromise, cancelTokenSourceRef, ...Object.values(fetchProps)]);
 
   const {
