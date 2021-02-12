@@ -58,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 [unreleased]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.14.16...integration
-[2.16.0]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.14.0...v2.14.16
+[2.14.16]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.14.0...v2.14.16
 [2.14.0]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.7...v2.14.0
 [2.13.7]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.6...v2.13.7
 [2.13.6]: https://github.com/PauloDevelo/enginemonitor.reactfront/compare/v2.13.5...v2.13.6
