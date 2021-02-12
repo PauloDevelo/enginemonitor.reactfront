@@ -526,17 +526,21 @@ exports[`Component NavBar should render the navbar even when the user is still u
                                     storageSizeLimitInMB={0}
                                   >
                                     <Progress
+                                      barStyle={Object {}}
                                       color="danger"
                                       max={0}
+                                      min={0}
+                                      style={Object {}}
                                       tag="div"
                                       value={0}
                                     >
                                       <div
                                         className="progress"
+                                        style={Object {}}
                                       >
                                         <div
                                           aria-valuemax={0}
-                                          aria-valuemin="0"
+                                          aria-valuemin={0}
                                           aria-valuenow={0}
                                           className="progress-bar bg-danger"
                                           role="progressbar"
@@ -805,6 +809,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
         }
         centered={false}
         className="modal-dialog-centered"
+        container="body"
         fade={true}
         isOpen={false}
         keyboard={true}
@@ -820,6 +825,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
         scrollable={false}
         size="lg"
         toggle={[Function]}
+        trapFocus={false}
         unmountOnClose={true}
         zIndex={1050}
       />
@@ -838,6 +844,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
             }
           }
           centered={false}
+          container="body"
           fade={true}
           isOpen={false}
           keyboard={true}
@@ -852,6 +859,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
           role="dialog"
           scrollable={false}
           toggle={[Function]}
+          trapFocus={false}
           unmountOnClose={true}
           zIndex={1050}
         />

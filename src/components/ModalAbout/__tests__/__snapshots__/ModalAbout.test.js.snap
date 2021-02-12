@@ -15,6 +15,7 @@ exports[`Modal About should render a modal about 1`] = `
       }
     }
     centered={false}
+    container="body"
     fade={true}
     isOpen={true}
     keyboard={true}
@@ -29,6 +30,7 @@ exports[`Modal About should render a modal about 1`] = `
     role="dialog"
     scrollable={false}
     toggle={[MockFunction]}
+    trapFocus={false}
     unmountOnClose={true}
     zIndex={1050}
   >

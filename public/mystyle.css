@@ -24,8 +24,14 @@ a.active.nav-link {
 }
 
 .nav-link {
+	color: #212529;
 	cursor: pointer;
 	padding: .2rem 0.5rem !important;
+}
+
+.nav-link:hover {
+	color: #212529;
+	font-weight: 500;
 }
 
 .clickable{

@@ -41,6 +41,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
       }
     }
     centered={false}
+    container="body"
     fade={true}
     isOpen={true}
     keyboard={true}
@@ -55,6 +56,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
     role="dialog"
     scrollable={false}
     toggle={[Function]}
+    trapFocus={false}
     unmountOnClose={true}
     zIndex={1050}
   >
@@ -134,6 +136,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                           Name
                         </label>
                         <input
+                          aria-invalid="false"
                           class="form-control form-control"
                           name="name"
                           required=""
@@ -151,6 +154,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                           Period in usage hour
                         </label>
                         <input
+                          aria-invalid="false"
                           class="form-control form-control"
                           min="0"
                           name="usagePeriodInHour"
@@ -168,6 +172,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                           Period in month
                         </label>
                         <input
+                          aria-invalid="false"
                           class="form-control form-control"
                           min="1"
                           name="periodInMonth"
@@ -186,6 +191,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                           Description
                         </label>
                         <textarea
+                          aria-invalid="false"
                           class="form-control form-control"
                           name="description"
                           required=""
@@ -304,6 +310,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                             Name
                           </label>
                           <input
+                            aria-invalid="false"
                             class="form-control form-control"
                             name="name"
                             required=""
@@ -321,6 +328,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                             Period in usage hour
                           </label>
                           <input
+                            aria-invalid="false"
                             class="form-control form-control"
                             min="0"
                             name="usagePeriodInHour"
@@ -338,6 +346,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                             Period in month
                           </label>
                           <input
+                            aria-invalid="false"
                             class="form-control form-control"
                             min="1"
                             name="periodInMonth"
@@ -356,6 +365,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                             Description
                           </label>
                           <textarea
+                            aria-invalid="false"
                             class="form-control form-control"
                             name="description"
                             required=""
@@ -594,6 +604,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                       Name
                                     </label>
                                     <input
+                                      aria-invalid="false"
                                       class="form-control form-control"
                                       name="name"
                                       required=""
@@ -611,6 +622,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                       Period in usage hour
                                     </label>
                                     <input
+                                      aria-invalid="false"
                                       class="form-control form-control"
                                       min="0"
                                       name="usagePeriodInHour"
@@ -628,6 +640,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                       Period in month
                                     </label>
                                     <input
+                                      aria-invalid="false"
                                       class="form-control form-control"
                                       min="1"
                                       name="periodInMonth"
@@ -646,6 +659,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                       Description
                                     </label>
                                     <textarea
+                                      aria-invalid="false"
                                       class="form-control form-control"
                                       name="description"
                                       required=""
@@ -721,6 +735,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                       innerRef={
                                         Object {
                                           "current": <input
+                                            aria-invalid="false"
                                             class="form-control form-control"
                                             name="name"
                                             required=""
@@ -737,6 +752,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                       value="Vidange"
                                     >
                                       <input
+                                        aria-invalid={false}
                                         className="form-control form-control"
                                         name="name"
                                         onChange={[Function]}
@@ -803,6 +819,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                       innerRef={
                                         Object {
                                           "current": <input
+                                            aria-invalid="false"
                                             class="form-control form-control"
                                             min="0"
                                             name="usagePeriodInHour"
@@ -819,6 +836,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                       value="500"
                                     >
                                       <input
+                                        aria-invalid={false}
                                         className="form-control form-control"
                                         min={0}
                                         name="usagePeriodInHour"
@@ -886,6 +904,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                       innerRef={
                                         Object {
                                           "current": <input
+                                            aria-invalid="false"
                                             class="form-control form-control"
                                             min="1"
                                             name="periodInMonth"
@@ -904,6 +923,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                       value="12"
                                     >
                                       <input
+                                        aria-invalid={false}
                                         className="form-control form-control"
                                         min={1}
                                         name="periodInMonth"
@@ -971,6 +991,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                       innerRef={
                                         Object {
                                           "current": <textarea
+                                            aria-invalid="false"
                                             class="form-control form-control"
                                             name="description"
                                             required=""
@@ -987,6 +1008,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
                                       value="Changer l'huile"
                                     >
                                       <textarea
+                                        aria-invalid={false}
                                         className="form-control form-control"
                                         name="description"
                                         onChange={[Function]}
@@ -1171,6 +1193,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
       }
       centered={false}
       className="modal-dialog-centered"
+      container="body"
       fade={true}
       isOpen={false}
       keyboard={true}
@@ -1185,6 +1208,7 @@ exports[`ModalEditTask should render 3 buttons (cancel/save/delete) when we edit
       role="dialog"
       scrollable={false}
       toggle={[Function]}
+      trapFocus={false}
       unmountOnClose={true}
       zIndex={1050}
     />

@@ -201,6 +201,7 @@ exports[`Component Gallery should render 0 thumbnails since this test delete all
         }
       }
       centered={false}
+      container="body"
       fade={true}
       isOpen={false}
       keyboard={true}
@@ -215,6 +216,7 @@ exports[`Component Gallery should render 0 thumbnails since this test delete all
       role="dialog"
       scrollable={false}
       toggle={[Function]}
+      trapFocus={false}
       unmountOnClose={true}
       zIndex={1050}
     />
@@ -251,6 +253,7 @@ exports[`Component Gallery should render 0 thumbnails since this test delete all
         }
         centered={false}
         className="modal-dialog-centered"
+        container="body"
         fade={true}
         isOpen={false}
         keyboard={true}
@@ -265,6 +268,7 @@ exports[`Component Gallery should render 0 thumbnails since this test delete all
         role="dialog"
         scrollable={false}
         toggle={[Function]}
+        trapFocus={false}
         unmountOnClose={true}
         zIndex={1050}
       />
@@ -780,6 +784,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
         }
       }
       centered={false}
+      container="body"
       fade={true}
       isOpen={true}
       keyboard={true}
@@ -794,6 +799,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
       role="dialog"
       scrollable={false}
       toggle={[Function]}
+      trapFocus={false}
       unmountOnClose={true}
       zIndex={1050}
     >
@@ -893,6 +899,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                             Title
                           </label>
                           <input
+                            aria-invalid="false"
                             class="form-control form-control"
                             name="title"
                             type="text"
@@ -909,6 +916,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                             Description
                           </label>
                           <input
+                            aria-invalid="false"
                             class="form-control form-control"
                             name="description"
                             type="text"
@@ -1046,6 +1054,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                               Title
                             </label>
                             <input
+                              aria-invalid="false"
                               class="form-control form-control"
                               name="title"
                               type="text"
@@ -1062,6 +1071,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                               Description
                             </label>
                             <input
+                              aria-invalid="false"
                               class="form-control form-control"
                               name="description"
                               type="text"
@@ -1352,6 +1362,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                                         Title
                                       </label>
                                       <input
+                                        aria-invalid="false"
                                         class="form-control form-control"
                                         name="title"
                                         type="text"
@@ -1368,6 +1379,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                                         Description
                                       </label>
                                       <input
+                                        aria-invalid="false"
                                         class="form-control form-control"
                                         name="description"
                                         type="text"
@@ -1440,6 +1452,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                                         innerRef={
                                           Object {
                                             "current": <input
+                                              aria-invalid="false"
                                               class="form-control form-control"
                                               name="title"
                                               type="text"
@@ -1453,6 +1466,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                                         type="text"
                                       >
                                         <input
+                                          aria-invalid={false}
                                           className="form-control form-control"
                                           name="title"
                                           onChange={[Function]}
@@ -1515,6 +1529,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                                         innerRef={
                                           Object {
                                             "current": <input
+                                              aria-invalid="false"
                                               class="form-control form-control"
                                               name="description"
                                               type="text"
@@ -1528,6 +1543,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
                                         type="text"
                                       >
                                         <input
+                                          aria-invalid={false}
                                           className="form-control form-control"
                                           name="description"
                                           onChange={[Function]}
@@ -1711,6 +1727,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
         }
         centered={false}
         className="modal-dialog-centered"
+        container="body"
         fade={true}
         isOpen={false}
         keyboard={true}
@@ -1725,6 +1742,7 @@ exports[`Component Gallery should render 4 thumbnails since we added an image 1`
         role="dialog"
         scrollable={false}
         toggle={[Function]}
+        trapFocus={false}
         unmountOnClose={true}
         zIndex={1050}
       />
@@ -3749,6 +3767,7 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
         }
       }
       centered={false}
+      container="body"
       fade={true}
       isOpen={false}
       keyboard={true}
@@ -3763,6 +3782,7 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
       role="dialog"
       scrollable={false}
       toggle={[Function]}
+      trapFocus={false}
       unmountOnClose={true}
       zIndex={1050}
     />
@@ -3799,6 +3819,7 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
         }
         centered={false}
         className="modal-dialog-centered"
+        container="body"
         fade={true}
         isOpen={false}
         keyboard={true}
@@ -3813,6 +3834,7 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
         role="dialog"
         scrollable={false}
         toggle={[Function]}
+        trapFocus={false}
         unmountOnClose={true}
         zIndex={1050}
       />
@@ -4245,6 +4267,7 @@ exports[`Component Gallery should render a list of image using the thumbnail url
         }
       }
       centered={false}
+      container="body"
       fade={true}
       isOpen={false}
       keyboard={true}
@@ -4259,6 +4282,7 @@ exports[`Component Gallery should render a list of image using the thumbnail url
       role="dialog"
       scrollable={false}
       toggle={[Function]}
+      trapFocus={false}
       unmountOnClose={true}
       zIndex={1050}
     />
@@ -4295,6 +4319,7 @@ exports[`Component Gallery should render a list of image using the thumbnail url
         }
         centered={false}
         className="modal-dialog-centered"
+        container="body"
         fade={true}
         isOpen={false}
         keyboard={true}
@@ -4309,6 +4334,7 @@ exports[`Component Gallery should render a list of image using the thumbnail url
         role="dialog"
         scrollable={false}
         toggle={[Function]}
+        trapFocus={false}
         unmountOnClose={true}
         zIndex={1050}
       />
@@ -4537,6 +4563,7 @@ exports[`Component Gallery should render a spinner the time to get the answer fr
         }
       }
       centered={false}
+      container="body"
       fade={true}
       isOpen={false}
       keyboard={true}
@@ -4551,6 +4578,7 @@ exports[`Component Gallery should render a spinner the time to get the answer fr
       role="dialog"
       scrollable={false}
       toggle={[Function]}
+      trapFocus={false}
       unmountOnClose={true}
       zIndex={1050}
     />
@@ -4587,6 +4615,7 @@ exports[`Component Gallery should render a spinner the time to get the answer fr
         }
         centered={false}
         className="modal-dialog-centered"
+        container="body"
         fade={true}
         isOpen={false}
         keyboard={true}
@@ -4601,6 +4630,7 @@ exports[`Component Gallery should render a spinner the time to get the answer fr
         role="dialog"
         scrollable={false}
         toggle={[Function]}
+        trapFocus={false}
         unmountOnClose={true}
         zIndex={1050}
       />
@@ -7090,6 +7120,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
         }
       }
       centered={false}
+      container="body"
       fade={true}
       isOpen={false}
       keyboard={true}
@@ -7104,6 +7135,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
       role="dialog"
       scrollable={false}
       toggle={[Function]}
+      trapFocus={false}
       unmountOnClose={true}
       zIndex={1050}
     />
@@ -7140,6 +7172,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
         }
         centered={false}
         className="modal-dialog-centered"
+        container="body"
         fade={true}
         isOpen={false}
         keyboard={true}
@@ -7154,6 +7187,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
         role="dialog"
         scrollable={false}
         toggle={[Function]}
+        trapFocus={false}
         unmountOnClose={true}
         zIndex={1050}
       />

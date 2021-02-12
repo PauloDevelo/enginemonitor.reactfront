@@ -51,6 +51,7 @@ exports[`MyInput of type checkox should render as expected 1`] = `
             innerRef={
               Object {
                 "current": <input
+                  aria-invalid="false"
                   class="form-check-input"
                   name="name"
                   required=""
@@ -65,6 +66,7 @@ exports[`MyInput of type checkox should render as expected 1`] = `
             type="checkbox"
           >
             <input
+              aria-invalid={false}
               className="form-check-input"
               name="name"
               onChange={[Function]}
@@ -133,6 +135,7 @@ exports[`MyInput of type checkox with an error should render as expected 1`] = `
             innerRef={
               Object {
                 "current": <input
+                  aria-invalid="true"
                   class="is-invalid form-check-input"
                   name="name"
                   required=""
@@ -147,6 +150,7 @@ exports[`MyInput of type checkox with an error should render as expected 1`] = `
             type="checkbox"
           >
             <input
+              aria-invalid={true}
               checked={false}
               className="is-invalid form-check-input"
               name="name"
@@ -223,6 +227,7 @@ exports[`MyInput of type text should render as expected 1`] = `
         innerRef={
           Object {
             "current": <input
+              aria-invalid="false"
               class="form-control form-control"
               name="name"
               required=""
@@ -237,6 +242,7 @@ exports[`MyInput of type text should render as expected 1`] = `
         type="text"
       >
         <input
+          aria-invalid={false}
           className="form-control form-control"
           name="name"
           onChange={[Function]}
@@ -302,6 +308,7 @@ exports[`MyInput of type text with an error should render as expected 1`] = `
         innerRef={
           Object {
             "current": <input
+              aria-invalid="true"
               class="form-control is-invalid form-control"
               name="name"
               required=""
@@ -316,6 +323,7 @@ exports[`MyInput of type text with an error should render as expected 1`] = `
         type="text"
       >
         <input
+          aria-invalid={true}
           className="form-control is-invalid form-control"
           name="name"
           onChange={[Function]}

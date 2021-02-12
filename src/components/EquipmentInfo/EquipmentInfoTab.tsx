@@ -38,7 +38,7 @@ function EquipmentInfoTab({ equipment, displayEquipment }: Props) {
           <span className="font-weight-bold">
             {equipment.age}
             {' '}
-h
+            h
             {' '}
           </span>
           )}

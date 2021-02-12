@@ -529,6 +529,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                         }
                       }
                       centered={false}
+                      container="body"
                       fade={true}
                       isOpen={false}
                       keyboard={true}
@@ -543,6 +544,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                       role="dialog"
                       scrollable={false}
                       toggle={[Function]}
+                      trapFocus={false}
                       unmountOnClose={true}
                       zIndex={1050}
                     />
@@ -579,6 +581,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                         }
                         centered={false}
                         className="modal-dialog-centered"
+                        container="body"
                         fade={true}
                         isOpen={false}
                         keyboard={true}
@@ -593,6 +596,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                         role="dialog"
                         scrollable={false}
                         toggle={[Function]}
+                        trapFocus={false}
                         unmountOnClose={true}
                         zIndex={1050}
                       />
@@ -920,6 +924,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                         }
                       }
                       centered={false}
+                      container="body"
                       fade={true}
                       isOpen={false}
                       keyboard={true}
@@ -934,6 +939,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                       role="dialog"
                       scrollable={false}
                       toggle={[Function]}
+                      trapFocus={false}
                       unmountOnClose={true}
                       zIndex={1050}
                     />
@@ -970,6 +976,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                         }
                         centered={false}
                         className="modal-dialog-centered"
+                        container="body"
                         fade={true}
                         isOpen={false}
                         keyboard={true}
@@ -984,6 +991,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                         role="dialog"
                         scrollable={false}
                         toggle={[Function]}
+                        trapFocus={false}
                         unmountOnClose={true}
                         zIndex={1050}
                       />
@@ -1311,6 +1319,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                         }
                       }
                       centered={false}
+                      container="body"
                       fade={true}
                       isOpen={false}
                       keyboard={true}
@@ -1325,6 +1334,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                       role="dialog"
                       scrollable={false}
                       toggle={[Function]}
+                      trapFocus={false}
                       unmountOnClose={true}
                       zIndex={1050}
                     />
@@ -1361,6 +1371,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                         }
                         centered={false}
                         className="modal-dialog-centered"
+                        container="body"
                         fade={true}
                         isOpen={false}
                         keyboard={true}
@@ -1375,6 +1386,7 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                         role="dialog"
                         scrollable={false}
                         toggle={[Function]}
+                        trapFocus={false}
                         unmountOnClose={true}
                         zIndex={1050}
                       />

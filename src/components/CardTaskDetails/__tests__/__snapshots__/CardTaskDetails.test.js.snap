@@ -462,6 +462,7 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                                 }
                               }
                               centered={false}
+                              container="body"
                               fade={true}
                               isOpen={false}
                               keyboard={true}
@@ -476,6 +477,7 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                               role="dialog"
                               scrollable={false}
                               toggle={[Function]}
+                              trapFocus={false}
                               unmountOnClose={true}
                               zIndex={1050}
                             />
@@ -512,6 +514,7 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                                 }
                                 centered={false}
                                 className="modal-dialog-centered"
+                                container="body"
                                 fade={true}
                                 isOpen={false}
                                 keyboard={true}
@@ -526,6 +529,7 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                                 role="dialog"
                                 scrollable={false}
                                 toggle={[Function]}
+                                trapFocus={false}
                                 unmountOnClose={true}
                                 zIndex={1050}
                               />
@@ -701,6 +705,7 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
           }
           centered={false}
           className="modal-dialog-centered"
+          container="body"
           fade={true}
           isOpen={false}
           keyboard={true}
@@ -715,6 +720,7 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
           role="dialog"
           scrollable={false}
           toggle={[Function]}
+          trapFocus={false}
           unmountOnClose={true}
           zIndex={1050}
         />
@@ -751,6 +757,7 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
             }
             centered={false}
             className="modal-dialog-centered"
+            container="body"
             fade={true}
             isOpen={false}
             keyboard={true}
@@ -765,6 +772,7 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
             role="dialog"
             scrollable={false}
             toggle={[Function]}
+            trapFocus={false}
             unmountOnClose={true}
             zIndex={1050}
           />
@@ -1168,6 +1176,7 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                                 }
                               }
                               centered={false}
+                              container="body"
                               fade={true}
                               isOpen={false}
                               keyboard={true}
@@ -1182,6 +1191,7 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                               role="dialog"
                               scrollable={false}
                               toggle={[Function]}
+                              trapFocus={false}
                               unmountOnClose={true}
                               zIndex={1050}
                             />
@@ -1218,6 +1228,7 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                                 }
                                 centered={false}
                                 className="modal-dialog-centered"
+                                container="body"
                                 fade={true}
                                 isOpen={false}
                                 keyboard={true}
@@ -1232,6 +1243,7 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                                 role="dialog"
                                 scrollable={false}
                                 toggle={[Function]}
+                                trapFocus={false}
                                 unmountOnClose={true}
                                 zIndex={1050}
                               />
@@ -1407,6 +1419,7 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
           }
           centered={false}
           className="modal-dialog-centered"
+          container="body"
           fade={true}
           isOpen={false}
           keyboard={true}
@@ -1421,6 +1434,7 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
           role="dialog"
           scrollable={false}
           toggle={[Function]}
+          trapFocus={false}
           unmountOnClose={true}
           zIndex={1050}
         />
@@ -1457,6 +1471,7 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
             }
             centered={false}
             className="modal-dialog-centered"
+            container="body"
             fade={true}
             isOpen={false}
             keyboard={true}
@@ -1471,6 +1486,7 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
             role="dialog"
             scrollable={false}
             toggle={[Function]}
+            trapFocus={false}
             unmountOnClose={true}
             zIndex={1050}
           />

@@ -52,7 +52,7 @@ const Img = ({
   const loadImg = useCallback(async () => {
     const keys = await storage.keys();
     if (keys.includes(src)) {
-      const base64Image = await storage.getItem<string>(src);
+      const base64Image = await storage.getItem<string>(src) as string;
       setSource(base64Image);
       setState({ isLoaded: true, isLoading: false });
     } else {

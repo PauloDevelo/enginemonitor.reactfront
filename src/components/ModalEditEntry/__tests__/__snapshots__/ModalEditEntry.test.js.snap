@@ -53,6 +53,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
       }
     }
     centered={false}
+    container="body"
     fade={true}
     isOpen={true}
     keyboard={true}
@@ -67,6 +68,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
     role="dialog"
     scrollable={false}
     toggle={[Function]}
+    trapFocus={false}
     unmountOnClose={true}
     zIndex={1050}
   >
@@ -145,6 +147,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                           Acknowledge the task
                            
                           <input
+                            aria-invalid="false"
                             checked=""
                             class="form-check-input"
                             name="ack"
@@ -163,6 +166,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                           Name
                         </label>
                         <input
+                          aria-invalid="false"
                           class="form-control form-control"
                           name="name"
                           required=""
@@ -180,6 +184,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                           Date
                         </label>
                         <input
+                          aria-invalid="false"
                           class="form-control form-control"
                           name="date"
                           required=""
@@ -197,6 +202,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                           Equipment Age
                         </label>
                         <input
+                          aria-invalid="false"
                           class="form-control form-control"
                           min="0"
                           name="age"
@@ -215,6 +221,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                           Remarks
                         </label>
                         <textarea
+                          aria-invalid="false"
                           class="form-control form-control"
                           name="remarks"
                           required=""
@@ -413,6 +420,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                             Acknowledge the task
                              
                             <input
+                              aria-invalid="false"
                               checked=""
                               class="form-check-input"
                               name="ack"
@@ -431,6 +439,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                             Name
                           </label>
                           <input
+                            aria-invalid="false"
                             class="form-control form-control"
                             name="name"
                             required=""
@@ -448,6 +457,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                             Date
                           </label>
                           <input
+                            aria-invalid="false"
                             class="form-control form-control"
                             name="date"
                             required=""
@@ -465,6 +475,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                             Equipment Age
                           </label>
                           <input
+                            aria-invalid="false"
                             class="form-control form-control"
                             min="0"
                             name="age"
@@ -483,6 +494,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                             Remarks
                           </label>
                           <textarea
+                            aria-invalid="false"
                             class="form-control form-control"
                             name="remarks"
                             required=""
@@ -805,6 +817,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       Acknowledge the task
                                        
                                       <input
+                                        aria-invalid="false"
                                         checked=""
                                         class="form-check-input"
                                         name="ack"
@@ -823,6 +836,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       Name
                                     </label>
                                     <input
+                                      aria-invalid="false"
                                       class="form-control form-control"
                                       name="name"
                                       required=""
@@ -840,6 +854,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       Date
                                     </label>
                                     <input
+                                      aria-invalid="false"
                                       class="form-control form-control"
                                       name="date"
                                       required=""
@@ -857,6 +872,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       Equipment Age
                                     </label>
                                     <input
+                                      aria-invalid="false"
                                       class="form-control form-control"
                                       min="0"
                                       name="age"
@@ -875,6 +891,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       Remarks
                                     </label>
                                     <textarea
+                                      aria-invalid="false"
                                       class="form-control form-control"
                                       name="remarks"
                                       required=""
@@ -949,6 +966,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                           innerRef={
                                             Object {
                                               "current": <input
+                                                aria-invalid="false"
                                                 checked=""
                                                 class="form-check-input"
                                                 name="ack"
@@ -963,6 +981,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                           type="checkbox"
                                         >
                                           <input
+                                            aria-invalid={false}
                                             checked={true}
                                             className="form-check-input"
                                             name="ack"
@@ -1030,6 +1049,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       innerRef={
                                         Object {
                                           "current": <input
+                                            aria-invalid="false"
                                             class="form-control form-control"
                                             name="name"
                                             required=""
@@ -1046,6 +1066,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       value="vidange"
                                     >
                                       <input
+                                        aria-invalid={false}
                                         className="form-control form-control"
                                         name="name"
                                         onChange={[Function]}
@@ -1112,6 +1133,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       innerRef={
                                         Object {
                                           "current": <input
+                                            aria-invalid="false"
                                             class="form-control form-control"
                                             name="date"
                                             required=""
@@ -1128,6 +1150,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       value="2019-10-24"
                                     >
                                       <input
+                                        aria-invalid={false}
                                         className="form-control form-control"
                                         name="date"
                                         onChange={[Function]}
@@ -1195,6 +1218,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       innerRef={
                                         Object {
                                           "current": <input
+                                            aria-invalid="false"
                                             class="form-control form-control"
                                             min="0"
                                             name="age"
@@ -1213,6 +1237,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       value="400"
                                     >
                                       <input
+                                        aria-invalid={false}
                                         className="form-control form-control"
                                         min={0}
                                         name="age"
@@ -1280,6 +1305,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       innerRef={
                                         Object {
                                           "current": <textarea
+                                            aria-invalid="false"
                                             class="form-control form-control"
                                             name="remarks"
                                             required=""
@@ -1296,6 +1322,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                       value="oil was clean"
                                     >
                                       <textarea
+                                        aria-invalid={false}
                                         className="form-control form-control"
                                         name="remarks"
                                         onChange={[Function]}
@@ -1528,6 +1555,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                 }
                               }
                               centered={false}
+                              container="body"
                               fade={true}
                               isOpen={false}
                               keyboard={true}
@@ -1542,6 +1570,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                               role="dialog"
                               scrollable={false}
                               toggle={[Function]}
+                              trapFocus={false}
                               unmountOnClose={true}
                               zIndex={1050}
                             />
@@ -1578,6 +1607,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                 }
                                 centered={false}
                                 className="modal-dialog-centered"
+                                container="body"
                                 fade={true}
                                 isOpen={false}
                                 keyboard={true}
@@ -1592,6 +1622,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                                 role="dialog"
                                 scrollable={false}
                                 toggle={[Function]}
+                                trapFocus={false}
                                 unmountOnClose={true}
                                 zIndex={1050}
                               />
@@ -1769,6 +1800,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
       }
       centered={false}
       className="modal-dialog-centered"
+      container="body"
       fade={true}
       isOpen={false}
       keyboard={true}
@@ -1783,6 +1815,7 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
       role="dialog"
       scrollable={false}
       toggle={[Function]}
+      trapFocus={false}
       unmountOnClose={true}
       zIndex={1050}
     />

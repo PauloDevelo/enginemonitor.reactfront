@@ -25,6 +25,7 @@ exports[`DeleteUserModal Should not call onUserDeleted when loaded 1`] = `
         }
       }
       centered={false}
+      container="body"
       fade={true}
       isOpen={true}
       keyboard={true}
@@ -39,6 +40,7 @@ exports[`DeleteUserModal Should not call onUserDeleted when loaded 1`] = `
       role="dialog"
       scrollable={false}
       toggle={[Function]}
+      trapFocus={false}
       unmountOnClose={true}
       zIndex={1050}
     >

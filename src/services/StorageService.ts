@@ -130,7 +130,13 @@ class StorageService implements IStorageService {
       }
 
       try {
-        return localforage.getItem(key);
+        const item = await localforage.getItem<T>(key);
+
+        if (item === null) {
+          throw new Error(`The key ${key} doesn't exist in the global storage`);
+        }
+
+        return item;
       } catch (error) {
         log.error(error);
         throw error;
@@ -199,6 +205,10 @@ class StorageService implements IStorageService {
 
       const items = await this.getUserStorage().getItem<T[]>(key);
 
+      if (items === null) {
+        throw new Error(`There is nothing to remove in ${key}.`);
+      }
+
       const newItems = items.filter((i) => i._uiId !== itemId);
       const removedItem = items.find((i) => i._uiId === itemId);
 
@@ -228,7 +238,13 @@ class StorageService implements IStorageService {
         throw new Error('The key should be truthy');
       }
 
-      return this.getUserStorage().getItem<T>(key);
+      const item = await this.getUserStorage().getItem<T>(key);
+
+      if (item === null) {
+        throw new Error(`There is nothing in the storage for ${key}.`);
+      }
+
+      return item;
     }
 
     async existItem(key: string): Promise<boolean> {
