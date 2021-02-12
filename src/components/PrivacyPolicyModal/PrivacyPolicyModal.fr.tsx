@@ -2,17 +2,16 @@ import React from 'react';
 import {
   ModalBody,
   Table,
+  Button,
 } from 'reactstrap';
 
 import ArticleCollapsable from './ArticleCollapsable';
 
 type Props = {
-visible?: boolean;
-className?: string;
-toggle?: ()=>void;
+  deleteAllUserData: ()=>void;
 }
 
-const PrivacyPolicyModalBodyFr = () => (
+const PrivacyPolicyModalBodyFr = ({ deleteAllUserData }: Props) => (
   <ModalBody>
 
     <ArticleCollapsable className="level-1" title="Préambule">
@@ -35,7 +34,7 @@ const PrivacyPolicyModalBodyFr = () => (
         </li>
       </ul>
     </ArticleCollapsable>
-    <ArticleCollapsable className="level-1" title="Principes généraux en matière de collecte et de traitement de données">
+    <ArticleCollapsable className="level-1" title="Principes généraux sur la collecte et le traitement de données">
       <span>Conformément aux dispositions de l'article 5 du Règlement européen 2016/679, la collecte et le traitement des données des utilisateurs du site respectent les principes suivants :</span>
       <ul>
         <li>
@@ -77,7 +76,7 @@ const PrivacyPolicyModalBodyFr = () => (
         </li>
       </ul>
     </ArticleCollapsable>
-    <ArticleCollapsable className="level-1" title="Données à caractère personnel collectées et traitées dans le cadre de la navigation sur le site">
+    <ArticleCollapsable className="level-1" title="Les données personnelles collectées et traitées dans Equipment Maintenance">
       <ArticleCollapsable className="level-2" title="Données collectées et traitées et mode de collecte">
         <span>
           Sur le site web
@@ -124,6 +123,9 @@ const PrivacyPolicyModalBodyFr = () => (
       </ArticleCollapsable>
       <ArticleCollapsable className="level-2" title="Durée de conservation">
         <span>Le responsable du traitement conservera dans ses systèmes informatiques du site et dans des conditions raisonnables de sécurité l'ensemble des données collectées aussi longtemps que l'utilisateur sera inscrit dans l'application.</span>
+        <br />
+        <br />
+        <span>Cependant, si l'utilisateur n'utilise pas l'application Equipment Maintenance pour une période de plus de 365 jours, son compte utilisateur et toutes ces données seront supprimées de la base de donnée d'Ecogium après avoir été averti par email au préalabable.</span>
       </ArticleCollapsable>
       <ArticleCollapsable className="level-2" title="Transmission des données à des tiers">
         <span>Les données à caractère personnel collectées par le site ne sont transmises à aucun tiers, et ne sont traitées que par Ecogium, l'éditeur du site.</span>
@@ -141,7 +143,7 @@ const PrivacyPolicyModalBodyFr = () => (
         <span>Les données collectées et traitées par le site sont exclusivement hébergées et traitées en France.</span>
       </ArticleCollapsable>
     </ArticleCollapsable>
-    <ArticleCollapsable className="level-1" title="Responsable du traitement des données et délégué à la protection des données">
+    <ArticleCollapsable className="level-1" title="Les responsables des données personnelles">
       <ArticleCollapsable className="level-2" title="Le responsable du traitement des données et le délégué à la protection des données">
         <span>
           Le responsable du traitement des données et le délégué à la protection des données à caractère personnel est
@@ -188,26 +190,13 @@ const PrivacyPolicyModalBodyFr = () => (
       <br />
       <br />
       <ArticleCollapsable className="level-2" title="Droit d'accès, de rectification et droit à l'effacement">
-        <span>
+        <p>
           L'utilisateur peut prendre connaissance, mettre à jour, modifier les données le concernant en utilisant les moyens mis à disposition sur le site en se connectant à son espace personnel.
-          <br />
-          <br />
-          Il peut aussi demander la suppression des données le concernant, en envoyant un email au responsable de traitement des données personnelles, en précisant:
-          <ul>
-            <li>
-              son nom
-            </li>
-            <li>
-              prénom
-            </li>
-            <li>
-              email
-            </li>
-            <li>
-              l'objet de sa demande
-            </li>
-          </ul>
-        </span>
+        </p>
+        <p>
+          Il peut aussi demander la suppression des données le concernant, en cliquant sur le bouton ci-dessous:
+        </p>
+        <Button size="sm" color="danger" onClick={deleteAllUserData}>Supprimer toutes mes données ...</Button>
       </ArticleCollapsable>
       <ArticleCollapsable className="level-2" title="Droit à la portabilité des données">
         <span>
@@ -237,7 +226,12 @@ const PrivacyPolicyModalBodyFr = () => (
         <span>Il est rappelé à l'utilisateur qu'il peut organiser quel doit être le devenir de ses données collectées et traitées s'il décède, conformément à la loi n°2016-1321 du 7 octobre 2016.</span>
       </ArticleCollapsable>
       <ArticleCollapsable className="level-2" title="Droit de saisir l'autorité de contrôle compétente">
-        <span>Dans le cas où le responsable du traitement des données décide de ne pas répondre à la demande de l'utilisateur, et que l'utilisateur souhaite contester cette décision, ou, s'il pense qu'il est porté atteinte à l'un des droits énumérés ci-dessus, il est en droit de saisir la CNIL (Commission Nationale de l'Informatique et des Libertés, https://www.cnil.fr) ou tout juge compétent.</span>
+        <span>
+          Dans le cas où le responsable du traitement des données décide de ne pas répondre à la demande de l'utilisateur, et que l'utilisateur souhaite contester cette décision, ou, s'il pense qu'il est porté atteinte à l'un des droits énumérés ci-dessus, il est en droit de saisir la CNIL (Commission Nationale de l'Informatique et des Libertés,
+          {' '}
+          <a href="https://www.cnil.fr">https://www.cnil.fr</a>
+          ) ou tout juge compétent.
+        </span>
       </ArticleCollapsable>
     </ArticleCollapsable>
     <ArticleCollapsable className="level-1" title='Utilisation des fichiers "Cookies"'>

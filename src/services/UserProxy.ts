@@ -29,6 +29,7 @@ export interface IUserProxy{
     authenticate (authInfo: AuthInfo):Promise<UserModel>;
     logout(): Promise<void>;
     getCredentials({ assetUiId }: {assetUiId: string}): Promise<UserCredentials>;
+    deleteUser(): Promise<void>;
 
     /**
      * This function tries to get a user stored in the global storage due to the remember me feature.
@@ -81,6 +82,14 @@ class UserProxy implements IUserProxy {
       }
 
       throw new HttpError({ loginerror: 'loginfailed' });
+    }
+
+    deleteUser = async (): Promise<void> => {
+      await progressiveHttpProxy.deleteOnlyOnline<UserModel>(this.baseUrl);
+
+      await storageService.getUserStorage().clear();
+      await storageService.removeGlobalItem('rememberMe');
+      await storageService.removeGlobalItem('currentUser');
     }
 
     logout = async (): Promise<void> => {

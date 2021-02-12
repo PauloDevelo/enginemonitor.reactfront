@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  Button, Modal, ModalHeader, ModalBody, ModalFooter, Spinner, Badge,
+  Button, Modal, ModalHeader, ModalBody, ModalFooter, Spinner,
 } from 'reactstrap';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

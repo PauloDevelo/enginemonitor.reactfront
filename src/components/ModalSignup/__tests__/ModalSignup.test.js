@@ -1,6 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
+import { IntlProvider } from 'react-intl';
+
 // eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
 
@@ -20,8 +22,8 @@ jest.mock('uuid');
 describe('ModalSignup', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
-    ignoredMessages.push('[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.');
     ignoredMessages.push('a test was not wrapped in act');
+    ignoredMessages.push('Missing message:');
   });
 
   afterEach(() => {
@@ -50,7 +52,7 @@ describe('ModalSignup', () => {
     const toggle = jest.fn();
 
     // Act
-    const modalSignup = mount(<ModalSignup visible toggle={toggle} />);
+    const modalSignup = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalSignup visible toggle={toggle} /></IntlProvider>);
     await updateWrapper(modalSignup);
 
     // Assert
@@ -67,7 +69,7 @@ describe('ModalSignup', () => {
 
     const toggle = jest.fn();
 
-    const modalSignup = mount(<ModalSignup visible toggle={toggle} />);
+    const modalSignup = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalSignup visible toggle={toggle} /></IntlProvider>);
     await updateWrapper(modalSignup);
 
     const cancelButton = modalSignup.find('ModalFooter').find('Button').at(1);
@@ -91,7 +93,7 @@ describe('ModalSignup', () => {
     const toggle = jest.fn();
     jest.spyOn(userProxy, 'signup').mockImplementation(() => Promise.resolve());
 
-    const modalSignup = mount(<ModalSignup visible toggle={toggle} />);
+    const modalSignup = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalSignup visible toggle={toggle} /></IntlProvider>);
     await updateWrapper(modalSignup);
 
     const myForm = modalSignup.find('Memo(MyForm)');
@@ -126,7 +128,7 @@ describe('ModalSignup', () => {
     const toggle = jest.fn();
     jest.spyOn(userProxy, 'signup').mockImplementation(() => Promise.reject(new HttpError({ email: 'alreadyexisting' })));
 
-    const modalSignup = mount(<ModalSignup visible toggle={toggle} />);
+    const modalSignup = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalSignup visible toggle={toggle} /></IntlProvider>);
     await updateWrapper(modalSignup);
 
     const myForm = modalSignup.find('Memo(MyForm)');

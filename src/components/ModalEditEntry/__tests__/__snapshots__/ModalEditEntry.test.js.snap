@@ -1622,7 +1622,6 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                         >
                           <Button
                             color="success"
-                            disabled={false}
                             form="editEntryForm"
                             tag="button"
                             type="submit"
@@ -1630,7 +1629,6 @@ exports[`ModalEditEntry should render 3 buttons (cancel/save/delete) when we edi
                             <button
                               aria-label={null}
                               className="btn btn-success"
-                              disabled={false}
                               form="editEntryForm"
                               onClick={[Function]}
                               type="submit"

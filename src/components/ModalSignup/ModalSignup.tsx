@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import {
-  Button, Modal, ModalHeader, ModalBody, ModalFooter, Badge,
+  Button, Modal, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
