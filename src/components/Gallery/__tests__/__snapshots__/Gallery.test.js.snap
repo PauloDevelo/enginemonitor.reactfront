@@ -2331,6 +2331,7 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
             >
               <div
                 aria-label="Lightbox"
+                aria-modal="true"
                 class="ReactModal__Content ReactModal__Content--after-open"
                 role="dialog"
                 style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; background: rgb(255, 255, 255); overflow: hidden; border-radius: 0; outline: none; padding: 0px; background-color: transparent;"
@@ -2606,12 +2607,15 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
       ariaHideApp={true}
       bodyOpenClassName="ReactModal__Body--open"
       closeTimeoutMS={0}
+      contentElement={[Function]}
       contentLabel="Lightbox"
       isOpen={true}
       onAfterOpen={[Function]}
       onRequestClose={[Function]}
+      overlayElement={[Function]}
       parentSelector={[Function]}
       portalClassName="ReactModalPortal"
+      preventScroll={false}
       role="dialog"
       shouldCloseOnEsc={true}
       shouldCloseOnOverlayClick={true}
@@ -2648,6 +2652,7 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
             >
               <div
                 aria-label="Lightbox"
+                aria-modal="true"
                 class="ReactModal__Content ReactModal__Content--after-open"
                 role="dialog"
                 style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; background: rgb(255, 255, 255); overflow: hidden; border-radius: 0; outline: none; padding: 0px; background-color: transparent;"
@@ -2945,6 +2950,7 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
                 >
                   <div
                     aria-label="Lightbox"
+                    aria-modal="true"
                     class="ReactModal__Content ReactModal__Content--after-open"
                     role="dialog"
                     style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; background: rgb(255, 255, 255); overflow: hidden; border-radius: 0; outline: none; padding: 0px; background-color: transparent;"
@@ -3220,6 +3226,7 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
           ariaHideApp={true}
           bodyOpenClassName="ReactModal__Body--open"
           closeTimeoutMS={0}
+          contentElement={[Function]}
           contentLabel="Lightbox"
           defaultStyles={
             Object {
@@ -3250,8 +3257,10 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
           isOpen={true}
           onAfterOpen={[Function]}
           onRequestClose={[Function]}
+          overlayElement={[Function]}
           parentSelector={[Function]}
           portalClassName="ReactModalPortal"
+          preventScroll={false}
           role="dialog"
           shouldCloseOnEsc={true}
           shouldCloseOnOverlayClick={true}
@@ -3295,6 +3304,7 @@ exports[`Component Gallery should render Lightbox when we click on a thumbnail 1
           >
             <div
               aria-label="Lightbox"
+              aria-modal={true}
               className="ReactModal__Content ReactModal__Content--after-open"
               onClick={[Function]}
               onKeyDown={[Function]}
@@ -5121,6 +5131,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
             >
               <div
                 aria-label="Lightbox"
+                aria-modal="true"
                 class="ReactModal__Content ReactModal__Content--after-open"
                 role="dialog"
                 style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; background: rgb(255, 255, 255); overflow: hidden; border-radius: 0; outline: none; padding: 0px; background-color: transparent;"
@@ -5405,6 +5416,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
             >
               <div
                 aria-label="Lightbox"
+                aria-modal="true"
                 class="ReactModal__Content ReactModal__Content--after-open"
                 role="dialog"
                 style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; background: rgb(255, 255, 255); overflow: hidden; border-radius: 0; outline: none; padding: 0px; background-color: transparent;"
@@ -5680,12 +5692,15 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
       ariaHideApp={true}
       bodyOpenClassName="ReactModal__Body--open"
       closeTimeoutMS={0}
+      contentElement={[Function]}
       contentLabel="Lightbox"
       isOpen={true}
       onAfterOpen={[Function]}
       onRequestClose={[Function]}
+      overlayElement={[Function]}
       parentSelector={[Function]}
       portalClassName="ReactModalPortal"
+      preventScroll={false}
       role="dialog"
       shouldCloseOnEsc={true}
       shouldCloseOnOverlayClick={true}
@@ -5722,6 +5737,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
             >
               <div
                 aria-label="Lightbox"
+                aria-modal="true"
                 class="ReactModal__Content ReactModal__Content--after-open"
                 role="dialog"
                 style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; background: rgb(255, 255, 255); overflow: hidden; border-radius: 0; outline: none; padding: 0px; background-color: transparent;"
@@ -6014,6 +6030,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
                 >
                   <div
                     aria-label="Lightbox"
+                    aria-modal="true"
                     class="ReactModal__Content ReactModal__Content--after-open"
                     role="dialog"
                     style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; background: rgb(255, 255, 255); overflow: hidden; border-radius: 0; outline: none; padding: 0px; background-color: transparent;"
@@ -6298,6 +6315,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
                 >
                   <div
                     aria-label="Lightbox"
+                    aria-modal="true"
                     class="ReactModal__Content ReactModal__Content--after-open"
                     role="dialog"
                     style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; background: rgb(255, 255, 255); overflow: hidden; border-radius: 0; outline: none; padding: 0px; background-color: transparent;"
@@ -6573,6 +6591,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
           ariaHideApp={true}
           bodyOpenClassName="ReactModal__Body--open"
           closeTimeoutMS={0}
+          contentElement={[Function]}
           contentLabel="Lightbox"
           defaultStyles={
             Object {
@@ -6603,8 +6622,10 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
           isOpen={true}
           onAfterOpen={[Function]}
           onRequestClose={[Function]}
+          overlayElement={[Function]}
           parentSelector={[Function]}
           portalClassName="ReactModalPortal"
+          preventScroll={false}
           role="dialog"
           shouldCloseOnEsc={true}
           shouldCloseOnOverlayClick={true}
@@ -6648,6 +6669,7 @@ exports[`Component Gallery should render with 2 thumbnails since this test delet
           >
             <div
               aria-label="Lightbox"
+              aria-modal={true}
               className="ReactModal__Content ReactModal__Content--after-open"
               onClick={[Function]}
               onKeyDown={[Function]}
