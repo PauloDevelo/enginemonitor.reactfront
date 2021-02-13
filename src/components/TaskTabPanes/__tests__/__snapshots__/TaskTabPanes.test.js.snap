@@ -53,7 +53,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                       defaultMessage="Maintenance tasks"
                       description="Tab title"
                       id="taskTable"
-                      values={Object {}}
                     >
                       Maintenance tasks
                     </FormattedMessage>
@@ -92,7 +91,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                       defaultMessage="History"
                       description="Tab title"
                       id="equipementHistory"
-                      values={Object {}}
                     >
                       History
                     </FormattedMessage>
@@ -165,7 +163,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                 defaultMessage="Task list"
                 description="Panel title"
                 id="tasklistTitle"
-                values={Object {}}
               >
                 Task list
               </FormattedMessage>
@@ -773,7 +770,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                           defaultMessage="Task name"
                                                           description="Task name header"
                                                           id="taskname"
-                                                          values={Object {}}
                                                         >
                                                           Task name
                                                         </FormattedMessage>
@@ -892,7 +888,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                           defaultMessage="Status"
                                                           description="Label"
                                                           id="status"
-                                                          values={Object {}}
                                                         >
                                                           Status
                                                         </FormattedMessage>
@@ -1005,7 +1000,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                           defaultMessage="To do"
                                                           description="To do header"
                                                           id="todo"
-                                                          values={Object {}}
                                                         >
                                                           To do
                                                         </FormattedMessage>
@@ -1559,7 +1553,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                           defaultMessage="Should be done the "
                                                           description="Sentence"
                                                           id="shouldbedone"
-                                                          values={Object {}}
                                                         >
                                                           Should be done the 
                                                         </FormattedMessage>
@@ -2098,7 +2091,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                           defaultMessage="Should be done the "
                                                           description="Sentence"
                                                           id="shouldbedone"
-                                                          values={Object {}}
                                                         >
                                                           Should be done the 
                                                         </FormattedMessage>
@@ -2297,7 +2289,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                     defaultMessage="Task name"
                                                     description="Task name header"
                                                     id="taskname"
-                                                    values={Object {}}
                                                   >
                                                     Task name
                                                   </FormattedMessage>
@@ -2385,7 +2376,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                     defaultMessage="Status"
                                                     description="Label"
                                                     id="status"
-                                                    values={Object {}}
                                                   >
                                                     Status
                                                   </FormattedMessage>
@@ -2467,7 +2457,6 @@ exports[`TaskTabPanes should render a TaskTabPanes with the task table selected 
                                                     defaultMessage="To do"
                                                     description="To do header"
                                                     id="todo"
-                                                    values={Object {}}
                                                   >
                                                     To do
                                                   </FormattedMessage>

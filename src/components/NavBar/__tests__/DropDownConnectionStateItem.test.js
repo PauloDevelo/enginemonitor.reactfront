@@ -1,4 +1,5 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { mount } from 'enzyme';
 
 // eslint-disable-next-line no-unused-vars
@@ -20,7 +21,7 @@ jest.mock('../../../services/OnlineManager');
 describe('DropDownConnectionStateItem', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
-    ignoredMessages.push('Could not find required `intl` object.');
+    ignoredMessages.push('MISSING_TRANSLATION');
     ignoredMessages.push('a test was not wrapped in act');
   });
 
@@ -57,7 +58,11 @@ describe('DropDownConnectionStateItem', () => {
       actionManager.countAction.mockImplementation(() => nbAction);
 
       // Act
-      const dropDownConnectionStateItemWrapper = mount(<DropDownConnectionStateItem />);
+      const dropDownConnectionStateItemWrapper = mount(
+        <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+          <DropDownConnectionStateItem />
+        </IntlProvider>,
+      );
       await updateWrapper(dropDownConnectionStateItemWrapper);
 
       // Assert

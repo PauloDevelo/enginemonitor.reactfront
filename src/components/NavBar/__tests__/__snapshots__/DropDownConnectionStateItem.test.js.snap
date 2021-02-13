@@ -1,414 +1,454 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DropDownConnectionStateItem Render Should render when the app is online false and nb action is 0 as expected  1`] = `
-<DropDownConnectionStateItem>
-  <DropdownItem
-    disabled={true}
-    onClick={[Function]}
-    tag="button"
-    toggle={true}
-  >
-    <button
-      className="disabled dropdown-item"
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
+>
+  <DropDownConnectionStateItem>
+    <DropdownItem
       disabled={true}
       onClick={[Function]}
-      tabIndex="-1"
-      type="button"
+      tag="button"
+      toggle={true}
     >
-      <ConnectionStateIcon
-        isOnline={false}
-        isSynced={true}
+      <button
+        className="disabled dropdown-item"
+        disabled={true}
+        onClick={[Function]}
+        tabIndex="-1"
+        type="button"
       >
-        <FontAwesomeIcon
-          border={false}
-          className=""
-          fixedWidth={false}
-          flip={null}
-          icon={
-            Object {
-              "icon": Array [
-                512,
-                512,
-                Array [],
-                "f05e",
-                "M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z",
-              ],
-              "iconName": "ban",
-              "prefix": "fas",
-            }
-          }
-          inverse={false}
-          listItem={false}
-          mask={null}
-          pull={null}
-          pulse={false}
-          rotation={null}
-          size={null}
-          spin={false}
-          swapOpacity={false}
-          symbol={false}
-          title=""
-          transform={null}
+        <ConnectionStateIcon
+          isOnline={false}
+          isSynced={true}
         >
-          <svg
-            aria-hidden="true"
-            className="svg-inline--fa fa-ban fa-w-16 "
-            data-icon="ban"
-            data-prefix="fas"
-            focusable="false"
-            role="img"
-            style={Object {}}
-            viewBox="0 0 512 512"
-            xmlns="http://www.w3.org/2000/svg"
+          <FontAwesomeIcon
+            border={false}
+            className=""
+            fixedWidth={false}
+            flip={null}
+            icon={
+              Object {
+                "icon": Array [
+                  512,
+                  512,
+                  Array [],
+                  "f05e",
+                  "M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z",
+                ],
+                "iconName": "ban",
+                "prefix": "fas",
+              }
+            }
+            inverse={false}
+            listItem={false}
+            mask={null}
+            pull={null}
+            pulse={false}
+            rotation={null}
+            size={null}
+            spin={false}
+            swapOpacity={false}
+            symbol={false}
+            title=""
+            transform={null}
           >
-            <path
-              d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"
-              fill="currentColor"
+            <svg
+              aria-hidden="true"
+              className="svg-inline--fa fa-ban fa-w-16 "
+              data-icon="ban"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
               style={Object {}}
-            />
-          </svg>
-        </FontAwesomeIcon>
-      </ConnectionStateIcon>
-       
-      <Memo(ConnectionStateMessage)
-        isOnline={false}
-        isSynced={true}
-      >
-        <FormattedMessage
-          defaultMessage="Disconnected"
-          id="notonline"
-          values={Object {}}
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"
+                fill="currentColor"
+                style={Object {}}
+              />
+            </svg>
+          </FontAwesomeIcon>
+        </ConnectionStateIcon>
+         
+        <Memo(ConnectionStateMessage)
+          isOnline={false}
+          isSynced={true}
         >
-          Disconnected
-        </FormattedMessage>
-      </Memo(ConnectionStateMessage)>
-      (
-      <NbActionPending>
-        <FormattedMessage
-          defaultMessage="{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}"
-          description="Nb action pending"
-          id="nbAction"
-          values={
-            Object {
-              "nbAction": 0,
+          <FormattedMessage
+            defaultMessage="Disconnected"
+            id="notonline"
+          >
+            Disconnected
+          </FormattedMessage>
+        </Memo(ConnectionStateMessage)>
+        (
+        <NbActionPending>
+          <FormattedMessage
+            defaultMessage="{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}"
+            description="Nb action pending"
+            id="nbAction"
+            values={
+              Object {
+                "nbAction": 0,
+              }
             }
-          }
-        >
-          synced
-        </FormattedMessage>
-      </NbActionPending>
-      )
-    </button>
-  </DropdownItem>
-</DropDownConnectionStateItem>
+          >
+            synced
+          </FormattedMessage>
+        </NbActionPending>
+        )
+      </button>
+    </DropdownItem>
+  </DropDownConnectionStateItem>
+</IntlProvider>
 `;
 
 exports[`DropDownConnectionStateItem Render Should render when the app is online false and nb action is 5 as expected  1`] = `
-<DropDownConnectionStateItem>
-  <DropdownItem
-    disabled={true}
-    onClick={[Function]}
-    tag="button"
-    toggle={true}
-  >
-    <button
-      className="disabled dropdown-item"
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
+>
+  <DropDownConnectionStateItem>
+    <DropdownItem
       disabled={true}
       onClick={[Function]}
-      tabIndex="-1"
-      type="button"
+      tag="button"
+      toggle={true}
     >
-      <ConnectionStateIcon
-        isOnline={false}
-        isSynced={false}
+      <button
+        className="disabled dropdown-item"
+        disabled={true}
+        onClick={[Function]}
+        tabIndex="-1"
+        type="button"
       >
-        <FontAwesomeIcon
-          border={false}
-          className=""
-          fixedWidth={false}
-          flip={null}
-          icon={
-            Object {
-              "icon": Array [
-                512,
-                512,
-                Array [],
-                "f05e",
-                "M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z",
-              ],
-              "iconName": "ban",
-              "prefix": "fas",
-            }
-          }
-          inverse={false}
-          listItem={false}
-          mask={null}
-          pull={null}
-          pulse={false}
-          rotation={null}
-          size={null}
-          spin={false}
-          swapOpacity={false}
-          symbol={false}
-          title=""
-          transform={null}
+        <ConnectionStateIcon
+          isOnline={false}
+          isSynced={false}
         >
-          <svg
-            aria-hidden="true"
-            className="svg-inline--fa fa-ban fa-w-16 "
-            data-icon="ban"
-            data-prefix="fas"
-            focusable="false"
-            role="img"
-            style={Object {}}
-            viewBox="0 0 512 512"
-            xmlns="http://www.w3.org/2000/svg"
+          <FontAwesomeIcon
+            border={false}
+            className=""
+            fixedWidth={false}
+            flip={null}
+            icon={
+              Object {
+                "icon": Array [
+                  512,
+                  512,
+                  Array [],
+                  "f05e",
+                  "M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z",
+                ],
+                "iconName": "ban",
+                "prefix": "fas",
+              }
+            }
+            inverse={false}
+            listItem={false}
+            mask={null}
+            pull={null}
+            pulse={false}
+            rotation={null}
+            size={null}
+            spin={false}
+            swapOpacity={false}
+            symbol={false}
+            title=""
+            transform={null}
           >
-            <path
-              d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"
-              fill="currentColor"
+            <svg
+              aria-hidden="true"
+              className="svg-inline--fa fa-ban fa-w-16 "
+              data-icon="ban"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
               style={Object {}}
-            />
-          </svg>
-        </FontAwesomeIcon>
-      </ConnectionStateIcon>
-       
-      <Memo(ConnectionStateMessage)
-        isOnline={false}
-        isSynced={false}
-      >
-        <FormattedMessage
-          defaultMessage="Disconnected"
-          id="notonline"
-          values={Object {}}
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"
+                fill="currentColor"
+                style={Object {}}
+              />
+            </svg>
+          </FontAwesomeIcon>
+        </ConnectionStateIcon>
+         
+        <Memo(ConnectionStateMessage)
+          isOnline={false}
+          isSynced={false}
         >
-          Disconnected
-        </FormattedMessage>
-      </Memo(ConnectionStateMessage)>
-      (
-      <NbActionPending>
-        <FormattedMessage
-          defaultMessage="{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}"
-          description="Nb action pending"
-          id="nbAction"
-          values={
-            Object {
-              "nbAction": 5,
+          <FormattedMessage
+            defaultMessage="Disconnected"
+            id="notonline"
+          >
+            Disconnected
+          </FormattedMessage>
+        </Memo(ConnectionStateMessage)>
+        (
+        <NbActionPending>
+          <FormattedMessage
+            defaultMessage="{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}"
+            description="Nb action pending"
+            id="nbAction"
+            values={
+              Object {
+                "nbAction": 5,
+              }
             }
-          }
-        >
-          5 actions to sync
-        </FormattedMessage>
-      </NbActionPending>
-      )
-    </button>
-  </DropdownItem>
-</DropDownConnectionStateItem>
+          >
+            5 actions to sync
+          </FormattedMessage>
+        </NbActionPending>
+        )
+      </button>
+    </DropdownItem>
+  </DropDownConnectionStateItem>
+</IntlProvider>
 `;
 
 exports[`DropDownConnectionStateItem Render Should render when the app is online true and nb action is 0 as expected  1`] = `
-<DropDownConnectionStateItem>
-  <DropdownItem
-    disabled={true}
-    onClick={[Function]}
-    tag="button"
-    toggle={true}
-  >
-    <button
-      className="disabled dropdown-item"
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
+>
+  <DropDownConnectionStateItem>
+    <DropdownItem
       disabled={true}
       onClick={[Function]}
-      tabIndex="-1"
-      type="button"
+      tag="button"
+      toggle={true}
     >
-      <ConnectionStateIcon
-        isOnline={true}
-        isSynced={true}
+      <button
+        className="disabled dropdown-item"
+        disabled={true}
+        onClick={[Function]}
+        tabIndex="-1"
+        type="button"
       >
-        <FontAwesomeIcon
-          border={false}
-          className=""
-          fixedWidth={false}
-          flip={null}
-          icon={
-            Object {
-              "icon": Array [
-                384,
-                512,
-                Array [],
-                "f1e6",
-                "M320,32a32,32,0,0,0-64,0v96h64Zm48,128H16A16,16,0,0,0,0,176v32a16,16,0,0,0,16,16H32v32A160.07,160.07,0,0,0,160,412.8V512h64V412.8A160.07,160.07,0,0,0,352,256V224h16a16,16,0,0,0,16-16V176A16,16,0,0,0,368,160ZM128,32a32,32,0,0,0-64,0v96h64Z",
-              ],
-              "iconName": "plug",
-              "prefix": "fas",
-            }
-          }
-          inverse={false}
-          listItem={false}
-          mask={null}
-          pull={null}
-          pulse={false}
-          rotation={null}
-          size={null}
-          spin={false}
-          swapOpacity={false}
-          symbol={false}
-          title=""
-          transform={null}
+        <ConnectionStateIcon
+          isOnline={true}
+          isSynced={true}
         >
-          <svg
-            aria-hidden="true"
-            className="svg-inline--fa fa-plug fa-w-12 "
-            data-icon="plug"
-            data-prefix="fas"
-            focusable="false"
-            role="img"
-            style={Object {}}
-            viewBox="0 0 384 512"
-            xmlns="http://www.w3.org/2000/svg"
+          <FontAwesomeIcon
+            border={false}
+            className=""
+            fixedWidth={false}
+            flip={null}
+            icon={
+              Object {
+                "icon": Array [
+                  384,
+                  512,
+                  Array [],
+                  "f1e6",
+                  "M320,32a32,32,0,0,0-64,0v96h64Zm48,128H16A16,16,0,0,0,0,176v32a16,16,0,0,0,16,16H32v32A160.07,160.07,0,0,0,160,412.8V512h64V412.8A160.07,160.07,0,0,0,352,256V224h16a16,16,0,0,0,16-16V176A16,16,0,0,0,368,160ZM128,32a32,32,0,0,0-64,0v96h64Z",
+                ],
+                "iconName": "plug",
+                "prefix": "fas",
+              }
+            }
+            inverse={false}
+            listItem={false}
+            mask={null}
+            pull={null}
+            pulse={false}
+            rotation={null}
+            size={null}
+            spin={false}
+            swapOpacity={false}
+            symbol={false}
+            title=""
+            transform={null}
           >
-            <path
-              d="M320,32a32,32,0,0,0-64,0v96h64Zm48,128H16A16,16,0,0,0,0,176v32a16,16,0,0,0,16,16H32v32A160.07,160.07,0,0,0,160,412.8V512h64V412.8A160.07,160.07,0,0,0,352,256V224h16a16,16,0,0,0,16-16V176A16,16,0,0,0,368,160ZM128,32a32,32,0,0,0-64,0v96h64Z"
-              fill="currentColor"
+            <svg
+              aria-hidden="true"
+              className="svg-inline--fa fa-plug fa-w-12 "
+              data-icon="plug"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
               style={Object {}}
-            />
-          </svg>
-        </FontAwesomeIcon>
-      </ConnectionStateIcon>
-       
-      <Memo(ConnectionStateMessage)
-        isOnline={true}
-        isSynced={true}
-      >
-        <FormattedMessage
-          defaultMessage="Online"
-          id="online"
-          values={Object {}}
+              viewBox="0 0 384 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M320,32a32,32,0,0,0-64,0v96h64Zm48,128H16A16,16,0,0,0,0,176v32a16,16,0,0,0,16,16H32v32A160.07,160.07,0,0,0,160,412.8V512h64V412.8A160.07,160.07,0,0,0,352,256V224h16a16,16,0,0,0,16-16V176A16,16,0,0,0,368,160ZM128,32a32,32,0,0,0-64,0v96h64Z"
+                fill="currentColor"
+                style={Object {}}
+              />
+            </svg>
+          </FontAwesomeIcon>
+        </ConnectionStateIcon>
+         
+        <Memo(ConnectionStateMessage)
+          isOnline={true}
+          isSynced={true}
         >
-          Online
-        </FormattedMessage>
-      </Memo(ConnectionStateMessage)>
-      (
-      <NbActionPending>
-        <FormattedMessage
-          defaultMessage="{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}"
-          description="Nb action pending"
-          id="nbAction"
-          values={
-            Object {
-              "nbAction": 0,
+          <FormattedMessage
+            defaultMessage="Online"
+            id="online"
+          >
+            Online
+          </FormattedMessage>
+        </Memo(ConnectionStateMessage)>
+        (
+        <NbActionPending>
+          <FormattedMessage
+            defaultMessage="{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}"
+            description="Nb action pending"
+            id="nbAction"
+            values={
+              Object {
+                "nbAction": 0,
+              }
             }
-          }
-        >
-          synced
-        </FormattedMessage>
-      </NbActionPending>
-      )
-    </button>
-  </DropdownItem>
-</DropDownConnectionStateItem>
+          >
+            synced
+          </FormattedMessage>
+        </NbActionPending>
+        )
+      </button>
+    </DropdownItem>
+  </DropDownConnectionStateItem>
+</IntlProvider>
 `;
 
 exports[`DropDownConnectionStateItem Render Should render when the app is online true and nb action is 3 as expected  1`] = `
-<DropDownConnectionStateItem>
-  <DropdownItem
-    disabled={false}
-    onClick={[Function]}
-    tag="button"
-    toggle={true}
-  >
-    <button
-      className="dropdown-item"
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
+>
+  <DropDownConnectionStateItem>
+    <DropdownItem
       disabled={false}
       onClick={[Function]}
-      role="menuitem"
-      tabIndex="0"
-      type="button"
+      tag="button"
+      toggle={true}
     >
-      <ConnectionStateIcon
-        isOnline={true}
-        isSynced={false}
+      <button
+        className="dropdown-item"
+        disabled={false}
+        onClick={[Function]}
+        role="menuitem"
+        tabIndex="0"
+        type="button"
       >
-        <FontAwesomeIcon
-          border={false}
-          className=""
-          fixedWidth={false}
-          flip={null}
-          icon={
-            Object {
-              "icon": Array [
-                384,
-                512,
-                Array [],
-                "f1e6",
-                "M320,32a32,32,0,0,0-64,0v96h64Zm48,128H16A16,16,0,0,0,0,176v32a16,16,0,0,0,16,16H32v32A160.07,160.07,0,0,0,160,412.8V512h64V412.8A160.07,160.07,0,0,0,352,256V224h16a16,16,0,0,0,16-16V176A16,16,0,0,0,368,160ZM128,32a32,32,0,0,0-64,0v96h64Z",
-              ],
-              "iconName": "plug",
-              "prefix": "fas",
-            }
-          }
-          inverse={false}
-          listItem={false}
-          mask={null}
-          pull={null}
-          pulse={false}
-          rotation={null}
-          size={null}
-          spin={false}
-          swapOpacity={false}
-          symbol={false}
-          title=""
-          transform={null}
+        <ConnectionStateIcon
+          isOnline={true}
+          isSynced={false}
         >
-          <svg
-            aria-hidden="true"
-            className="svg-inline--fa fa-plug fa-w-12 "
-            data-icon="plug"
-            data-prefix="fas"
-            focusable="false"
-            role="img"
-            style={Object {}}
-            viewBox="0 0 384 512"
-            xmlns="http://www.w3.org/2000/svg"
+          <FontAwesomeIcon
+            border={false}
+            className=""
+            fixedWidth={false}
+            flip={null}
+            icon={
+              Object {
+                "icon": Array [
+                  384,
+                  512,
+                  Array [],
+                  "f1e6",
+                  "M320,32a32,32,0,0,0-64,0v96h64Zm48,128H16A16,16,0,0,0,0,176v32a16,16,0,0,0,16,16H32v32A160.07,160.07,0,0,0,160,412.8V512h64V412.8A160.07,160.07,0,0,0,352,256V224h16a16,16,0,0,0,16-16V176A16,16,0,0,0,368,160ZM128,32a32,32,0,0,0-64,0v96h64Z",
+                ],
+                "iconName": "plug",
+                "prefix": "fas",
+              }
+            }
+            inverse={false}
+            listItem={false}
+            mask={null}
+            pull={null}
+            pulse={false}
+            rotation={null}
+            size={null}
+            spin={false}
+            swapOpacity={false}
+            symbol={false}
+            title=""
+            transform={null}
           >
-            <path
-              d="M320,32a32,32,0,0,0-64,0v96h64Zm48,128H16A16,16,0,0,0,0,176v32a16,16,0,0,0,16,16H32v32A160.07,160.07,0,0,0,160,412.8V512h64V412.8A160.07,160.07,0,0,0,352,256V224h16a16,16,0,0,0,16-16V176A16,16,0,0,0,368,160ZM128,32a32,32,0,0,0-64,0v96h64Z"
-              fill="currentColor"
+            <svg
+              aria-hidden="true"
+              className="svg-inline--fa fa-plug fa-w-12 "
+              data-icon="plug"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
               style={Object {}}
-            />
-          </svg>
-        </FontAwesomeIcon>
-      </ConnectionStateIcon>
-       
-      <Memo(ConnectionStateMessage)
-        isOnline={true}
-        isSynced={false}
-      >
-        <FormattedMessage
-          defaultMessage="Synchronize"
-          id="syncAction"
-          values={Object {}}
+              viewBox="0 0 384 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M320,32a32,32,0,0,0-64,0v96h64Zm48,128H16A16,16,0,0,0,0,176v32a16,16,0,0,0,16,16H32v32A160.07,160.07,0,0,0,160,412.8V512h64V412.8A160.07,160.07,0,0,0,352,256V224h16a16,16,0,0,0,16-16V176A16,16,0,0,0,368,160ZM128,32a32,32,0,0,0-64,0v96h64Z"
+                fill="currentColor"
+                style={Object {}}
+              />
+            </svg>
+          </FontAwesomeIcon>
+        </ConnectionStateIcon>
+         
+        <Memo(ConnectionStateMessage)
+          isOnline={true}
+          isSynced={false}
         >
-          Synchronize
-        </FormattedMessage>
-      </Memo(ConnectionStateMessage)>
-      (
-      <NbActionPending>
-        <FormattedMessage
-          defaultMessage="{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}"
-          description="Nb action pending"
-          id="nbAction"
-          values={
-            Object {
-              "nbAction": 3,
+          <FormattedMessage
+            defaultMessage="Synchronize"
+            id="syncAction"
+          >
+            Synchronize
+          </FormattedMessage>
+        </Memo(ConnectionStateMessage)>
+        (
+        <NbActionPending>
+          <FormattedMessage
+            defaultMessage="{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}"
+            description="Nb action pending"
+            id="nbAction"
+            values={
+              Object {
+                "nbAction": 3,
+              }
             }
-          }
-        >
-          3 actions to sync
-        </FormattedMessage>
-      </NbActionPending>
-      )
-    </button>
-  </DropdownItem>
-</DropDownConnectionStateItem>
+          >
+            3 actions to sync
+          </FormattedMessage>
+        </NbActionPending>
+        )
+      </button>
+    </DropdownItem>
+  </DropDownConnectionStateItem>
+</IntlProvider>
 `;

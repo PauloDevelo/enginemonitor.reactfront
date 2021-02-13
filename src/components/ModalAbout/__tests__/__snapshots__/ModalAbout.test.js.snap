@@ -1,132 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Modal About should render a modal about 1`] = `
-<ModalAbout
-  toggle={[MockFunction]}
-  visible={true}
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
-  <Modal
-    autoFocus={true}
-    backdrop={true}
-    backdropTransition={
-      Object {
-        "mountOnEnter": true,
-        "timeout": 150,
-      }
-    }
-    centered={false}
-    container="body"
-    fade={true}
-    isOpen={true}
-    keyboard={true}
-    modalTransition={
-      Object {
-        "timeout": 300,
-      }
-    }
-    onClosed={[Function]}
-    onOpened={[Function]}
-    returnFocusAfterClose={true}
-    role="dialog"
-    scrollable={false}
+  <ModalAbout
     toggle={[MockFunction]}
-    trapFocus={false}
-    unmountOnClose={true}
-    zIndex={1050}
+    visible={true}
   >
-    <Portal
-      node={
-        <div
-          style="position: relative; z-index: 1050; display: block;"
-          tabindex="-1"
-        >
-          <div
-            class=""
-          >
-            <div
-              class="modal fade"
-              role="dialog"
-              style="display: block;"
-              tabindex="-1"
-            >
-              <div
-                class="modal-dialog"
-                role="document"
-              >
-                <div
-                  class="modal-content"
-                >
-                  <div
-                    class="modal-header"
-                  >
-                    <h5
-                      class="modal-title"
-                    >
-                      <div
-                        class="media-left"
-                      >
-                        <img
-                          alt="Equipment Maintenance icon"
-                          class="media-object"
-                          src="./images/engine48.png"
-                        />
-                      </div>
-                      <div
-                        class="media-body"
-                      >
-                        <h4
-                          class="media-heading"
-                        >
-                          Equipment Maintenance
-                           v
-                          2.9.12
-                        </h4>
-                        Made with love by Paul Torruella
-                      </div>
-                    </h5>
-                    <button
-                      aria-label="Close"
-                      class="close"
-                      type="button"
-                    >
-                      <span
-                        aria-hidden="true"
-                      >
-                        ×
-                      </span>
-                    </button>
-                  </div>
-                  <div
-                    class="modal-body"
-                  >
-                    <form
-                      class=""
-                      id="aboutForm"
-                    />
-                  </div>
-                  <div
-                    class="modal-footer"
-                  >
-                    <button
-                      class="btn btn-success"
-                      form="aboutForm"
-                      type="submit"
-                    >
-                      OK
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="modal-backdrop fade"
-            />
-          </div>
-        </div>
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
       }
+      centered={false}
+      container="body"
+      fade={true}
+      isOpen={true}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      returnFocusAfterClose={true}
+      role="dialog"
+      scrollable={false}
+      toggle={[MockFunction]}
+      trapFocus={false}
+      unmountOnClose={true}
+      zIndex={1050}
     >
       <Portal
-        containerInfo={
+        node={
           <div
             style="position: relative; z-index: 1050; display: block;"
             tabindex="-1"
@@ -216,144 +135,59 @@ exports[`Modal About should render a modal about 1`] = `
           </div>
         }
       >
-        <div
-          className=""
-        >
-          <Fade
-            appear={true}
-            baseClass="fade"
-            baseClassActive="show"
-            className="modal"
-            enter={true}
-            exit={true}
-            in={true}
-            mountOnEnter={false}
-            onClick={[Function]}
-            onEnter={[Function]}
-            onEntered={[Function]}
-            onEntering={[Function]}
-            onExit={[Function]}
-            onExited={[Function]}
-            onExiting={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            onMouseDown={[Function]}
-            role="dialog"
-            style={
-              Object {
-                "display": "block",
-              }
-            }
-            tabIndex="-1"
-            tag="div"
-            timeout={300}
-            unmountOnExit={false}
-          >
-            <Transition
-              appear={true}
-              enter={true}
-              exit={true}
-              in={true}
-              mountOnEnter={false}
-              onEnter={[Function]}
-              onEntered={[Function]}
-              onEntering={[Function]}
-              onExit={[Function]}
-              onExited={[Function]}
-              onExiting={[Function]}
-              timeout={300}
-              unmountOnExit={false}
+        <Portal
+          containerInfo={
+            <div
+              style="position: relative; z-index: 1050; display: block;"
+              tabindex="-1"
             >
               <div
-                className="modal fade"
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                onKeyUp={[Function]}
-                onMouseDown={[Function]}
-                role="dialog"
-                style={
-                  Object {
-                    "display": "block",
-                  }
-                }
-                tabIndex="-1"
+                class=""
               >
                 <div
-                  className="modal-dialog"
-                  role="document"
+                  class="modal fade"
+                  role="dialog"
+                  style="display: block;"
+                  tabindex="-1"
                 >
                   <div
-                    className="modal-content"
+                    class="modal-dialog"
+                    role="document"
                   >
-                    <ModalHeader
-                      charCode={215}
-                      closeAriaLabel="Close"
-                      tag="h5"
-                      toggle={[MockFunction]}
-                      wrapTag="div"
+                    <div
+                      class="modal-content"
                     >
                       <div
-                        className="modal-header"
+                        class="modal-header"
                       >
                         <h5
-                          className="modal-title"
+                          class="modal-title"
                         >
-                          <Media
-                            left={true}
+                          <div
+                            class="media-left"
                           >
-                            <div
-                              className="media-left"
-                            >
-                              <Media
-                                alt="Equipment Maintenance icon"
-                                object={true}
-                                src="./images/engine48.png"
-                              >
-                                <img
-                                  alt="Equipment Maintenance icon"
-                                  className="media-object"
-                                  src="./images/engine48.png"
-                                />
-                              </Media>
-                            </div>
-                          </Media>
-                          <Media
-                            body={true}
+                            <img
+                              alt="Equipment Maintenance icon"
+                              class="media-object"
+                              src="./images/engine48.png"
+                            />
+                          </div>
+                          <div
+                            class="media-body"
                           >
-                            <div
-                              className="media-body"
+                            <h4
+                              class="media-heading"
                             >
-                              <Media
-                                heading={true}
-                              >
-                                <h4
-                                  className="media-heading"
-                                >
-                                  <FormattedMessage
-                                    defaultMessage="Equipment Maintenance"
-                                    id="aboutTitle"
-                                    values={Object {}}
-                                  >
-                                    Equipment Maintenance
-                                  </FormattedMessage>
-                                   v
-                                  2.9.12
-                                </h4>
-                              </Media>
-                              <FormattedMessage
-                                defaultMessage="Made with love by Paul Torruella"
-                                id="aboutMsg"
-                                values={Object {}}
-                              >
-                                Made with love by Paul Torruella
-                              </FormattedMessage>
-                            </div>
-                          </Media>
+                              Equipment Maintenance
+                               v
+                              2.9.12
+                            </h4>
+                            Made with love by Paul Torruella
+                          </div>
                         </h5>
                         <button
                           aria-label="Close"
-                          className="close"
-                          onClick={[MockFunction]}
+                          class="close"
                           type="button"
                         >
                           <span
@@ -363,81 +197,238 @@ exports[`Modal About should render a modal about 1`] = `
                           </span>
                         </button>
                       </div>
-                    </ModalHeader>
-                    <ModalBody
-                      tag="div"
-                    >
                       <div
-                        className="modal-body"
+                        class="modal-body"
                       >
-                        <Form
+                        <form
+                          class=""
                           id="aboutForm"
-                          tag="form"
-                        >
-                          <form
-                            className=""
-                            id="aboutForm"
-                          />
-                        </Form>
+                        />
                       </div>
-                    </ModalBody>
-                    <ModalFooter
-                      tag="div"
-                    >
                       <div
-                        className="modal-footer"
+                        class="modal-footer"
                       >
-                        <Button
-                          color="success"
+                        <button
+                          class="btn btn-success"
                           form="aboutForm"
-                          onClick={[MockFunction]}
-                          tag="button"
                           type="submit"
                         >
-                          <button
-                            aria-label={null}
-                            className="btn btn-success"
-                            form="aboutForm"
-                            onClick={[Function]}
-                            type="submit"
-                          >
-                            <FormattedMessage
-                              defaultMessage="OK"
-                              id="ok"
-                              values={Object {}}
-                            >
-                              OK
-                            </FormattedMessage>
-                          </button>
-                        </Button>
+                          OK
+                        </button>
                       </div>
-                    </ModalFooter>
+                    </div>
                   </div>
                 </div>
+                <div
+                  class="modal-backdrop fade"
+                />
               </div>
-            </Transition>
-          </Fade>
-          <Fade
-            appear={true}
-            baseClass="fade"
-            baseClassActive="show"
-            className="modal-backdrop"
-            enter={true}
-            exit={true}
-            in={true}
-            mountOnEnter={true}
-            onEnter={[Function]}
-            onEntered={[Function]}
-            onEntering={[Function]}
-            onExit={[Function]}
-            onExited={[Function]}
-            onExiting={[Function]}
-            tag="div"
-            timeout={150}
-            unmountOnExit={false}
+            </div>
+          }
+        >
+          <div
+            className=""
           >
-            <Transition
+            <Fade
               appear={true}
+              baseClass="fade"
+              baseClassActive="show"
+              className="modal"
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={false}
+              onClick={[Function]}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              role="dialog"
+              style={
+                Object {
+                  "display": "block",
+                }
+              }
+              tabIndex="-1"
+              tag="div"
+              timeout={300}
+              unmountOnExit={false}
+            >
+              <Transition
+                appear={true}
+                enter={true}
+                exit={true}
+                in={true}
+                mountOnEnter={false}
+                onEnter={[Function]}
+                onEntered={[Function]}
+                onEntering={[Function]}
+                onExit={[Function]}
+                onExited={[Function]}
+                onExiting={[Function]}
+                timeout={300}
+                unmountOnExit={false}
+              >
+                <div
+                  className="modal fade"
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  onKeyUp={[Function]}
+                  onMouseDown={[Function]}
+                  role="dialog"
+                  style={
+                    Object {
+                      "display": "block",
+                    }
+                  }
+                  tabIndex="-1"
+                >
+                  <div
+                    className="modal-dialog"
+                    role="document"
+                  >
+                    <div
+                      className="modal-content"
+                    >
+                      <ModalHeader
+                        charCode={215}
+                        closeAriaLabel="Close"
+                        tag="h5"
+                        toggle={[MockFunction]}
+                        wrapTag="div"
+                      >
+                        <div
+                          className="modal-header"
+                        >
+                          <h5
+                            className="modal-title"
+                          >
+                            <Media
+                              left={true}
+                            >
+                              <div
+                                className="media-left"
+                              >
+                                <Media
+                                  alt="Equipment Maintenance icon"
+                                  object={true}
+                                  src="./images/engine48.png"
+                                >
+                                  <img
+                                    alt="Equipment Maintenance icon"
+                                    className="media-object"
+                                    src="./images/engine48.png"
+                                  />
+                                </Media>
+                              </div>
+                            </Media>
+                            <Media
+                              body={true}
+                            >
+                              <div
+                                className="media-body"
+                              >
+                                <Media
+                                  heading={true}
+                                >
+                                  <h4
+                                    className="media-heading"
+                                  >
+                                    <FormattedMessage
+                                      defaultMessage="Equipment Maintenance"
+                                      id="aboutTitle"
+                                    >
+                                      Equipment Maintenance
+                                    </FormattedMessage>
+                                     v
+                                    2.9.12
+                                  </h4>
+                                </Media>
+                                <FormattedMessage
+                                  defaultMessage="Made with love by Paul Torruella"
+                                  id="aboutMsg"
+                                >
+                                  Made with love by Paul Torruella
+                                </FormattedMessage>
+                              </div>
+                            </Media>
+                          </h5>
+                          <button
+                            aria-label="Close"
+                            className="close"
+                            onClick={[MockFunction]}
+                            type="button"
+                          >
+                            <span
+                              aria-hidden="true"
+                            >
+                              ×
+                            </span>
+                          </button>
+                        </div>
+                      </ModalHeader>
+                      <ModalBody
+                        tag="div"
+                      >
+                        <div
+                          className="modal-body"
+                        >
+                          <Form
+                            id="aboutForm"
+                            tag="form"
+                          >
+                            <form
+                              className=""
+                              id="aboutForm"
+                            />
+                          </Form>
+                        </div>
+                      </ModalBody>
+                      <ModalFooter
+                        tag="div"
+                      >
+                        <div
+                          className="modal-footer"
+                        >
+                          <Button
+                            color="success"
+                            form="aboutForm"
+                            onClick={[MockFunction]}
+                            tag="button"
+                            type="submit"
+                          >
+                            <button
+                              aria-label={null}
+                              className="btn btn-success"
+                              form="aboutForm"
+                              onClick={[Function]}
+                              type="submit"
+                            >
+                              <FormattedMessage
+                                defaultMessage="OK"
+                                id="ok"
+                              >
+                                OK
+                              </FormattedMessage>
+                            </button>
+                          </Button>
+                        </div>
+                      </ModalFooter>
+                    </div>
+                  </div>
+                </div>
+              </Transition>
+            </Fade>
+            <Fade
+              appear={true}
+              baseClass="fade"
+              baseClassActive="show"
+              className="modal-backdrop"
               enter={true}
               exit={true}
               in={true}
@@ -448,17 +439,34 @@ exports[`Modal About should render a modal about 1`] = `
               onExit={[Function]}
               onExited={[Function]}
               onExiting={[Function]}
+              tag="div"
               timeout={150}
               unmountOnExit={false}
             >
-              <div
-                className="modal-backdrop fade"
-              />
-            </Transition>
-          </Fade>
-        </div>
+              <Transition
+                appear={true}
+                enter={true}
+                exit={true}
+                in={true}
+                mountOnEnter={true}
+                onEnter={[Function]}
+                onEntered={[Function]}
+                onEntering={[Function]}
+                onExit={[Function]}
+                onExited={[Function]}
+                onExiting={[Function]}
+                timeout={150}
+                unmountOnExit={false}
+              >
+                <div
+                  className="modal-backdrop fade"
+                />
+              </Transition>
+            </Fade>
+          </div>
+        </Portal>
       </Portal>
-    </Portal>
-  </Modal>
-</ModalAbout>
+    </Modal>
+  </ModalAbout>
+</IntlProvider>
 `;

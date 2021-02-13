@@ -1,4 +1,5 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { mount } from 'enzyme';
 // eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
@@ -43,7 +44,7 @@ describe('Component GalleryComponent', () => {
 
   beforeAll(() => {
     ignoredMessages.length = 0;
-    ignoredMessages.push('[React Intl] Could not find required `intl` object.');
+    ignoredMessages.push('[@formatjs/intl Error MISSING_TRANSLATION]');
     ignoredMessages.push('a test was not wrapped in act');
   });
 
@@ -68,7 +69,11 @@ describe('Component GalleryComponent', () => {
     const addImage = jest.fn();
 
     // Act
-    const galleryComponent = mount(<GalleryComponent parentUiId={parentUiId} isLoading images={[]} onClickThumbnail={onClickThumbnail} addImage={addImage} />);
+    const galleryComponent = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GalleryComponent parentUiId={parentUiId} isLoading images={[]} onClickThumbnail={onClickThumbnail} addImage={addImage} />
+      </IntlProvider>,
+    );
 
     // Assert
     const loading = galleryComponent.find('Loading');
@@ -86,7 +91,11 @@ describe('Component GalleryComponent', () => {
     const addImage = jest.fn();
 
     // Act
-    const galleryComponent = mount(<GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} />);
+    const galleryComponent = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} />
+      </IntlProvider>,
+    );
 
     // Assert
     const thumbnails = galleryComponent.find('Memo(Thumbnail)');
@@ -106,7 +115,11 @@ describe('Component GalleryComponent', () => {
     const onClickThumbnail = jest.fn();
     const addImage = jest.fn();
 
-    const galleryComponent = mount(<GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} />);
+    const galleryComponent = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GalleryComponent parentUiId={parentUiId} images={images} onClickThumbnail={onClickThumbnail} addImage={addImage} />
+      </IntlProvider>,
+    );
 
     const thumbnails = galleryComponent.find('Memo(Thumbnail)');
 

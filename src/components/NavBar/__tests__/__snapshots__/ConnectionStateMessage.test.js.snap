@@ -1,61 +1,101 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ConnectionStateMessage Render should display the connection when isOnline is false and the application is synced false 1`] = `
-<Memo(ConnectionStateMessage)
-  isOnline={false}
-  isSynced={false}
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
-  <FormattedMessage
-    defaultMessage="Disconnected"
-    id="notonline"
-    values={Object {}}
+  <Memo(ConnectionStateMessage)
+    isOnline={false}
+    isSynced={false}
   >
-    Disconnected
-  </FormattedMessage>
-</Memo(ConnectionStateMessage)>
+    <FormattedMessage
+      defaultMessage="Disconnected"
+      id="notonline"
+    >
+      Disconnected
+    </FormattedMessage>
+  </Memo(ConnectionStateMessage)>
+</IntlProvider>
 `;
 
 exports[`ConnectionStateMessage Render should display the connection when isOnline is false and the application is synced true 1`] = `
-<Memo(ConnectionStateMessage)
-  isOnline={false}
-  isSynced={true}
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
-  <FormattedMessage
-    defaultMessage="Disconnected"
-    id="notonline"
-    values={Object {}}
+  <Memo(ConnectionStateMessage)
+    isOnline={false}
+    isSynced={true}
   >
-    Disconnected
-  </FormattedMessage>
-</Memo(ConnectionStateMessage)>
+    <FormattedMessage
+      defaultMessage="Disconnected"
+      id="notonline"
+    >
+      Disconnected
+    </FormattedMessage>
+  </Memo(ConnectionStateMessage)>
+</IntlProvider>
 `;
 
 exports[`ConnectionStateMessage Render should display the connection when isOnline is true and the application is synced false 1`] = `
-<Memo(ConnectionStateMessage)
-  isOnline={true}
-  isSynced={false}
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
-  <FormattedMessage
-    defaultMessage="Synchronize"
-    id="syncAction"
-    values={Object {}}
+  <Memo(ConnectionStateMessage)
+    isOnline={true}
+    isSynced={false}
   >
-    Synchronize
-  </FormattedMessage>
-</Memo(ConnectionStateMessage)>
+    <FormattedMessage
+      defaultMessage="Synchronize"
+      id="syncAction"
+    >
+      Synchronize
+    </FormattedMessage>
+  </Memo(ConnectionStateMessage)>
+</IntlProvider>
 `;
 
 exports[`ConnectionStateMessage Render should display the connection when isOnline is true and the application is synced true 1`] = `
-<Memo(ConnectionStateMessage)
-  isOnline={true}
-  isSynced={true}
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
-  <FormattedMessage
-    defaultMessage="Online"
-    id="online"
-    values={Object {}}
+  <Memo(ConnectionStateMessage)
+    isOnline={true}
+    isSynced={true}
   >
-    Online
-  </FormattedMessage>
-</Memo(ConnectionStateMessage)>
+    <FormattedMessage
+      defaultMessage="Online"
+      id="online"
+    >
+      Online
+    </FormattedMessage>
+  </Memo(ConnectionStateMessage)>
+</IntlProvider>
 `;

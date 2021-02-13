@@ -83,6 +83,7 @@ describe('Test EntryManager', () => {
 
   beforeAll(() => {
     ignoredMessages.length = 0;
+    ignoredMessages.push('ENOTFOUND');
     entryManager.registerOnCurrentEntryChanged(currentEntryListener);
     entryManager.registerOnEquipmentEntriesChanged(entriesListener);
   });

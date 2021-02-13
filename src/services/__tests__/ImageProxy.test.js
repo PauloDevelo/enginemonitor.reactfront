@@ -3,6 +3,8 @@ import localforage from 'localforage';
 import httpProxy from '../HttpProxy';
 import HttpError from '../../http/HttpError';
 
+import ignoredMessages from '../../testHelpers/MockConsole';
+
 import storageService from '../StorageService';
 import userContext from '../UserContext';
 import onlineManager from '../OnlineManager';
@@ -67,6 +69,11 @@ describe('Test ImageProxy', () => {
   function resetMockActionManager() {
     actionManager.addAction.mockReset();
   }
+
+  beforeAll(() => {
+    ignoredMessages.length = 0;
+    ignoredMessages.push('timeout');
+  });
 
   beforeEach(() => {
     assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));

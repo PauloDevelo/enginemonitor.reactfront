@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { mount } from 'enzyme';
 import ignoredMessages from '../../../testHelpers/MockConsole';
 
@@ -12,7 +12,7 @@ describe('Component NbActionPending', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('test was not wrapped in act(...)');
-    ignoredMessages.push('[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.');
+    ignoredMessages.push('MISSING_TRANSLATION');
   });
 
   it('should render a specific message when there is no action to sync', () => {
@@ -20,7 +20,11 @@ describe('Component NbActionPending', () => {
     actionManager.countAction.mockImplementation(() => 0);
 
     // Act
-    const wrapper = mount(<NbActionPending />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <NbActionPending />
+      </IntlProvider>,
+    );
 
     return Promise
       .resolve(wrapper)
@@ -41,7 +45,11 @@ describe('Component NbActionPending', () => {
     actionManager.countAction.mockImplementation(() => resp);
 
     // Act
-    const wrapper = mount(<NbActionPending />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <NbActionPending />
+      </IntlProvider>,
+    );
 
     return Promise
       .resolve(wrapper)
@@ -62,7 +70,11 @@ describe('Component NbActionPending', () => {
     actionManager.countAction.mockImplementation(() => resp);
 
     // Act
-    const wrapper = mount(<NbActionPending />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <NbActionPending />
+      </IntlProvider>,
+    );
 
     return Promise
       .resolve(wrapper)

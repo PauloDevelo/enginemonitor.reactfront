@@ -53,7 +53,6 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
               defaultMessage="installed on "
               description="label"
               id="installedOn"
-              values={Object {}}
             >
               installed on 
             </FormattedMessage>
@@ -161,7 +160,6 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
                     defaultMessage="Gallery"
                     description="Gallery title"
                     id="gallerytitle"
-                    values={Object {}}
                   >
                     Gallery
                   </FormattedMessage>

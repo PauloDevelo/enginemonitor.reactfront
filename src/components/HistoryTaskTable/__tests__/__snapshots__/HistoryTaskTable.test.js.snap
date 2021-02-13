@@ -22,7 +22,6 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
             defaultMessage="Task history"
             description="Title"
             id="taskHistoryTitle"
-            values={Object {}}
           >
             Task history
           </FormattedMessage>
@@ -826,7 +825,6 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                       defaultMessage="Realisation date"
                                                       description="Colum header"
                                                       id="ackDate"
-                                                      values={Object {}}
                                                     >
                                                       Realisation date
                                                     </FormattedMessage>
@@ -964,7 +962,6 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                       defaultMessage="Done after"
                                                       description="Colum header"
                                                       id="doneAfterColumHeader"
-                                                      values={Object {}}
                                                     >
                                                       Done after
                                                     </FormattedMessage>
@@ -1283,7 +1280,6 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                       defaultMessage="Remarks"
                                                       description="Colum header"
                                                       id="remarks"
-                                                      values={Object {}}
                                                     >
                                                       Remarks
                                                     </FormattedMessage>
@@ -4807,7 +4803,6 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 defaultMessage="Realisation date"
                                                 description="Colum header"
                                                 id="ackDate"
-                                                values={Object {}}
                                               >
                                                 Realisation date
                                               </FormattedMessage>
@@ -4909,7 +4904,6 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 defaultMessage="Done after"
                                                 description="Colum header"
                                                 id="doneAfterColumHeader"
-                                                values={Object {}}
                                               >
                                                 Done after
                                               </FormattedMessage>
@@ -5156,7 +5150,6 @@ exports[`HistoryTaskTable Should render all the entries with the correct classna
                                                 defaultMessage="Remarks"
                                                 description="Colum header"
                                                 id="remarks"
-                                                values={Object {}}
                                               >
                                                 Remarks
                                               </FormattedMessage>
@@ -5212,7 +5205,6 @@ exports[`HistoryTaskTable Should render an empty table even when the task is und
             defaultMessage="Task history"
             description="Title"
             id="taskHistoryTitle"
-            values={Object {}}
           >
             Task history
           </FormattedMessage>
@@ -5656,7 +5648,6 @@ exports[`HistoryTaskTable Should render an empty table even when the task is und
                                                       defaultMessage="Realisation date"
                                                       description="Colum header"
                                                       id="ackDate"
-                                                      values={Object {}}
                                                     >
                                                       Realisation date
                                                     </FormattedMessage>
@@ -5794,7 +5785,6 @@ exports[`HistoryTaskTable Should render an empty table even when the task is und
                                                       defaultMessage="Done after"
                                                       description="Colum header"
                                                       id="doneAfterColumHeader"
-                                                      values={Object {}}
                                                     >
                                                       Done after
                                                     </FormattedMessage>
@@ -6113,7 +6103,6 @@ exports[`HistoryTaskTable Should render an empty table even when the task is und
                                                       defaultMessage="Remarks"
                                                       description="Colum header"
                                                       id="remarks"
-                                                      values={Object {}}
                                                     >
                                                       Remarks
                                                     </FormattedMessage>
@@ -6385,7 +6374,6 @@ exports[`HistoryTaskTable Should render an empty table even when the task is und
                                                 defaultMessage="Realisation date"
                                                 description="Colum header"
                                                 id="ackDate"
-                                                values={Object {}}
                                               >
                                                 Realisation date
                                               </FormattedMessage>
@@ -6487,7 +6475,6 @@ exports[`HistoryTaskTable Should render an empty table even when the task is und
                                                 defaultMessage="Done after"
                                                 description="Colum header"
                                                 id="doneAfterColumHeader"
-                                                values={Object {}}
                                               >
                                                 Done after
                                               </FormattedMessage>
@@ -6734,7 +6721,6 @@ exports[`HistoryTaskTable Should render an empty table even when the task is und
                                                 defaultMessage="Remarks"
                                                 description="Colum header"
                                                 id="remarks"
-                                                values={Object {}}
                                               >
                                                 Remarks
                                               </FormattedMessage>
@@ -6790,7 +6776,6 @@ exports[`HistoryTaskTable Should render render the loading spinner while loading
             defaultMessage="Task history"
             description="Title"
             id="taskHistoryTitle"
-            values={Object {}}
           >
             Task history
           </FormattedMessage>

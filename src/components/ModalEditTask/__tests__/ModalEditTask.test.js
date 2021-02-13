@@ -1,4 +1,5 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { mount } from 'enzyme';
 
 // eslint-disable-next-line no-unused-vars
@@ -16,7 +17,7 @@ jest.mock('localforage');
 describe('ModalEditTask', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
-    ignoredMessages.push('[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.');
+    ignoredMessages.push('MISSING_TRANSLATION');
     ignoredMessages.push('a test was not wrapped in act');
   });
 
@@ -60,12 +61,16 @@ describe('ModalEditTask', () => {
     });
 
     // Act
-    const modalEditTask = mount(<ModalEditTask equipment={equipment} task={task} visible={isVisible} onTaskSaved={onTaskSaved} onTaskDeleted={onTaskDeleted} toggle={toggleFn} />);
+    const modalEditTask = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditTask equipment={equipment} task={task} visible={isVisible} onTaskSaved={onTaskSaved} onTaskDeleted={onTaskDeleted} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     await updateWrapper(modalEditTask);
 
     // Assert
     expect(modalEditTask).toMatchSnapshot();
-    expect(modalEditTask.props().visible).toBe(true);
+    expect(modalEditTask.find('ModalEditTask').props().visible).toBe(true);
     expect(modalEditTask.find('ModalFooter').find('Button').length).toBe(3);
   });
 
@@ -81,11 +86,15 @@ describe('ModalEditTask', () => {
     });
 
     // Act
-    const modalEditTask = mount(<ModalEditTask equipment={equipment} task={task} visible={isVisible} onTaskSaved={onTaskSaved} onTaskDeleted={onTaskDeleted} toggle={toggleFn} />);
+    const modalEditTask = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditTask equipment={equipment} task={task} visible={isVisible} onTaskSaved={onTaskSaved} onTaskDeleted={onTaskDeleted} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     await updateWrapper(modalEditTask);
 
     // Assert
-    expect(modalEditTask.props().visible).toBe(true);
+    expect(modalEditTask.find('ModalEditTask').props().visible).toBe(true);
     expect(modalEditTask.find('ModalFooter').find('Button').length).toBe(2);
   });
 
@@ -101,7 +110,11 @@ describe('ModalEditTask', () => {
       isVisible = !isVisible;
     });
 
-    const modalEditTask = mount(<ModalEditTask equipment={equipment} task={task} visible={isVisible} onTaskSaved={onTaskSaved} onTaskDeleted={onTaskDeleted} toggle={toggleFn} />);
+    const modalEditTask = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditTask equipment={equipment} task={task} visible={isVisible} onTaskSaved={onTaskSaved} onTaskDeleted={onTaskDeleted} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     await updateWrapper(modalEditTask);
     const myForm = modalEditTask.find('Memo(MyForm)');
 
@@ -126,7 +139,11 @@ describe('ModalEditTask', () => {
       isVisible = !isVisible;
     });
 
-    const modalEditTask = mount(<ModalEditTask equipment={equipment} task={task} visible={isVisible} onTaskSaved={onTaskSaved} onTaskDeleted={onTaskDeleted} toggle={toggleFn} />);
+    const modalEditTask = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditTask equipment={equipment} task={task} visible={isVisible} onTaskSaved={onTaskSaved} onTaskDeleted={onTaskDeleted} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     await updateWrapper(modalEditTask);
     const cancelButton = modalEditTask.find('ModalFooter').find('Button').at(1);
 
@@ -149,7 +166,11 @@ describe('ModalEditTask', () => {
       isVisible = !isVisible;
     });
 
-    const modalEditTask = mount(<ModalEditTask equipment={equipment} task={task} visible={isVisible} onTaskSaved={onTaskSaved} onTaskDeleted={onTaskDeleted} toggle={toggleFn} />);
+    const modalEditTask = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditTask equipment={equipment} task={task} visible={isVisible} onTaskSaved={onTaskSaved} onTaskDeleted={onTaskDeleted} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     await updateWrapper(modalEditTask);
     const deleteButton = modalEditTask.find('ModalFooter').find('Button').at(2);
 
@@ -174,7 +195,11 @@ describe('ModalEditTask', () => {
       isVisible = !isVisible;
     });
 
-    const modalEditTask = mount(<ModalEditTask equipment={equipment} task={task} visible={isVisible} onTaskSaved={onTaskSaved} onTaskDeleted={onTaskDeleted} toggle={toggleFn} />);
+    const modalEditTask = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditTask equipment={equipment} task={task} visible={isVisible} onTaskSaved={onTaskSaved} onTaskDeleted={onTaskDeleted} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     await updateWrapper(modalEditTask);
     const deleteButton = modalEditTask.find('ModalFooter').find('Button').at(2);
 
@@ -207,7 +232,11 @@ describe('ModalEditTask', () => {
       isVisible = !isVisible;
     });
 
-    const modalEditTask = mount(<ModalEditTask equipment={equipment} task={task} visible={isVisible} onTaskSaved={onTaskSaved} onTaskDeleted={onTaskDeleted} toggle={toggleFn} />);
+    const modalEditTask = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditTask equipment={equipment} task={task} visible={isVisible} onTaskSaved={onTaskSaved} onTaskDeleted={onTaskDeleted} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     await updateWrapper(modalEditTask);
     const deleteButton = modalEditTask.find('ModalFooter').find('Button').at(2);
 

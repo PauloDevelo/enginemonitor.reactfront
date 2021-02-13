@@ -1,7 +1,8 @@
-
 import React from 'react';
 import { mount } from 'enzyme';
+import { IntlProvider } from 'react-intl';
 
+// eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
 import global from '../../../global';
 
@@ -17,7 +18,7 @@ describe('Modal About', () => {
     ignoredMessages.length = 0;
     ignoredMessages.push('test was not wrapped in act(...)');
     ignoredMessages.push('Please update the following components: ReactImageLightbox');
-    ignoredMessages.push('[React Intl] Could not find required `intl` object.');
+    ignoredMessages.push('Error: [@formatjs/intl Error MISSING_TRANSLATION]');
   });
 
   beforeEach(() => {
@@ -34,7 +35,7 @@ describe('Modal About', () => {
     const toggle = jest.fn();
 
     // Act
-    const modalAbout = mount(<ModalAbout visible toggle={toggle} />);
+    const modalAbout = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ModalAbout visible toggle={toggle} /></IntlProvider>);
 
     // Assert
     expect(modalAbout).toMatchSnapshot();

@@ -52,6 +52,7 @@ describe('Test TaskManager', () => {
 
   beforeAll(() => {
     ignoredMessages.length = 0;
+    ignoredMessages.push('ENOTFOUND');
     taskManager.registerOnCurrentTaskChanged(currentTaskListener);
     taskManager.registerOnTasksChanged(tasksListener);
   });

@@ -1,4 +1,5 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { mount } from 'enzyme';
 
 import TaskProgressBar from '../TaskProgressBar';
@@ -14,7 +15,7 @@ describe('Test TaskProgressBar', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('a test was not wrapped in act');
-    ignoredMessages.push('Could not find required `intl` object.');
+    ignoredMessages.push('[@formatjs/intl Error MISSING_TRANSLATION]');
   });
 
   it('should hide the TaskProgressBar when the task is stopped', async () => {
@@ -59,7 +60,11 @@ describe('Test TaskProgressBar', () => {
       remaining: 0,
     }));
 
-    const syncAlertWrapper = mount(<TaskProgressBar taskWithProgress={syncService} color="warning" title="syncInProgress" />);
+    const syncAlertWrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <TaskProgressBar taskWithProgress={syncService} color="warning" title="syncInProgress" />
+      </IntlProvider>,
+    );
     await updateWrapper(syncAlertWrapper);
 
     // Act
@@ -88,7 +93,11 @@ describe('Test TaskProgressBar', () => {
       remaining: 0,
     }));
 
-    const syncAlertWrapper = mount(<TaskProgressBar taskWithProgress={syncService} color="warning" title="syncInProgress" />);
+    const syncAlertWrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <TaskProgressBar taskWithProgress={syncService} color="warning" title="syncInProgress" />
+      </IntlProvider>,
+    );
     await updateWrapper(syncAlertWrapper);
 
     await syncAlertNotifier({

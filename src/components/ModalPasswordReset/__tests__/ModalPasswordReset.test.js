@@ -1,4 +1,5 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { mount } from 'enzyme';
 
 // eslint-disable-next-line no-unused-vars
@@ -18,7 +19,7 @@ jest.mock('localforage');
 describe('ModalPasswordReset', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
-    ignoredMessages.push('[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.');
+    ignoredMessages.push('MISSING_TRANSLATION');
     ignoredMessages.push('a test was not wrapped in act');
   });
 
@@ -33,7 +34,11 @@ describe('ModalPasswordReset', () => {
     const toggle = jest.fn();
 
     // Act
-    const modalPasswordReset = mount(<ModalPasswordReset visible toggle={toggle} data={data} />);
+    const modalPasswordReset = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalPasswordReset visible toggle={toggle} data={data} />
+      </IntlProvider>,
+    );
     await updateWrapper(modalPasswordReset);
 
     // Assert
@@ -48,7 +53,11 @@ describe('ModalPasswordReset', () => {
     // Arrange
     const toggle = jest.fn();
 
-    const modalPasswordReset = mount(<ModalPasswordReset visible toggle={toggle} data={data} />);
+    const modalPasswordReset = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalPasswordReset visible toggle={toggle} data={data} />
+      </IntlProvider>,
+    );
     await updateWrapper(modalPasswordReset);
 
     const cancelButton = modalPasswordReset.find('ModalFooter').find('Button').at(1);
@@ -71,7 +80,11 @@ describe('ModalPasswordReset', () => {
     const toggle = jest.fn();
     jest.spyOn(userProxy, 'resetPassword').mockImplementation(() => Promise.resolve());
 
-    const modalPasswordReset = mount(<ModalPasswordReset visible toggle={toggle} data={data} />);
+    const modalPasswordReset = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalPasswordReset visible toggle={toggle} data={data} />
+      </IntlProvider>,
+    );
     await updateWrapper(modalPasswordReset);
 
     const myForm = modalPasswordReset.find('Memo(MyForm)');
@@ -110,7 +123,11 @@ describe('ModalPasswordReset', () => {
     const toggle = jest.fn();
     jest.spyOn(userProxy, 'resetPassword').mockImplementation(() => Promise.resolve());
 
-    const modalPasswordReset = mount(<ModalPasswordReset visible toggle={toggle} data={data} />);
+    const modalPasswordReset = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalPasswordReset visible toggle={toggle} data={data} />
+      </IntlProvider>,
+    );
     await updateWrapper(modalPasswordReset);
 
     const myForm = modalPasswordReset.find('Memo(MyForm)');
@@ -140,7 +157,11 @@ describe('ModalPasswordReset', () => {
     const toggle = jest.fn();
     jest.spyOn(userProxy, 'resetPassword').mockImplementation(() => Promise.reject(new HttpError({ error: 'network error' })));
 
-    const modalPasswordReset = mount(<ModalPasswordReset visible toggle={toggle} data={data} />);
+    const modalPasswordReset = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalPasswordReset visible toggle={toggle} data={data} />
+      </IntlProvider>,
+    );
     await updateWrapper(modalPasswordReset);
 
     const myForm = modalPasswordReset.find('Memo(MyForm)');

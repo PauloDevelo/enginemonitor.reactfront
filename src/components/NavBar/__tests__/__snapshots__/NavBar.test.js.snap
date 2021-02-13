@@ -39,7 +39,6 @@ exports[`Component NavBar should render the navbar even when the user is still u
               <FormattedMessage
                 defaultMessage="Today, "
                 id="today"
-                values={Object {}}
               >
                 Today, 
               </FormattedMessage>
@@ -476,7 +475,6 @@ exports[`Component NavBar should render the navbar even when the user is still u
                                       <FormattedMessage
                                         defaultMessage="Online"
                                         id="online"
-                                        values={Object {}}
                                       >
                                         Online
                                       </FormattedMessage>
@@ -638,7 +636,6 @@ exports[`Component NavBar should render the navbar even when the user is still u
                                   <FormattedMessage
                                     defaultMessage="Rebuild local storage"
                                     id="rebuildLocalStorage"
-                                    values={Object {}}
                                   >
                                     Rebuild local storage
                                   </FormattedMessage>
@@ -721,7 +718,6 @@ exports[`Component NavBar should render the navbar even when the user is still u
                                     defaultMessage="Signout"
                                     description="Menu"
                                     id="signout"
-                                    values={Object {}}
                                   >
                                     Signout
                                   </FormattedMessage>
@@ -753,7 +749,6 @@ exports[`Component NavBar should render the navbar even when the user is still u
                                   <FormattedMessage
                                     defaultMessage="About"
                                     id="about"
-                                    values={Object {}}
                                   >
                                     About
                                   </FormattedMessage>
@@ -774,7 +769,6 @@ exports[`Component NavBar should render the navbar even when the user is still u
                                   <FormattedMessage
                                     defaultMessage="Privacy policy"
                                     id="privacyPolicyMenu"
-                                    values={Object {}}
                                   >
                                     Privacy policy
                                   </FormattedMessage>

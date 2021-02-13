@@ -560,7 +560,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                               defaultMessage="Signup"
                               description="Modal title"
                               id="modalSignupTitle"
-                              values={Object {}}
                             >
                               Signup
                             </FormattedMessage>
@@ -766,7 +765,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                             defaultMessage="Last Name"
                                             description="Label"
                                             id="name"
-                                            values={Object {}}
                                           >
                                             Last Name
                                           </FormattedMessage>
@@ -850,7 +848,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                             defaultMessage="Firstname"
                                             description="Label"
                                             id="firstname"
-                                            values={Object {}}
                                           >
                                             Firstname
                                           </FormattedMessage>
@@ -934,7 +931,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                             defaultMessage="Email"
                                             description="Label"
                                             id="email"
-                                            values={Object {}}
                                           >
                                             Email
                                           </FormattedMessage>
@@ -1018,7 +1014,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                             defaultMessage="Password"
                                             description="Label"
                                             id="password"
-                                            values={Object {}}
                                           >
                                             Password
                                           </FormattedMessage>
@@ -1076,7 +1071,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                             defaultMessage="privacy policy"
                                             description="Button signup"
                                             id="privacyPolicy"
-                                            values={Object {}}
                                           />
                                         </a>,
                                       },
@@ -1126,7 +1120,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                                     defaultMessage="privacy policy"
                                                     description="Button signup"
                                                     id="privacyPolicy"
-                                                    values={Object {}}
                                                   />
                                                 </a>,
                                               }
@@ -1135,13 +1128,13 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                             By checking thix box, you expressly confirm the acceptance of our 
                                             <a
                                               href="privacypolicy"
+                                              key=".1"
                                               onClick={[Function]}
                                             >
                                               <FormattedMessage
                                                 defaultMessage="privacy policy"
                                                 description="Button signup"
                                                 id="privacyPolicy"
-                                                values={Object {}}
                                               >
                                                 privacy policy
                                               </FormattedMessage>
@@ -1224,7 +1217,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                   defaultMessage="Signup"
                                   description="Button signup"
                                   id="signup"
-                                  values={Object {}}
                                 >
                                   Signup
                                 </FormattedMessage>
@@ -1246,7 +1238,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                 defaultMessage="Cancel"
                                 description="Button cancel"
                                 id="cancel"
-                                values={Object {}}
                               >
                                 Cancel
                               </FormattedMessage>

@@ -580,7 +580,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                               defaultMessage="Login with an existing account"
                               description="Modal title"
                               id="modalLogintitle"
-                              values={Object {}}
                             >
                               Login with an existing account
                             </FormattedMessage>
@@ -706,7 +705,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                             defaultMessage="Email"
                                             description="Label"
                                             id="email"
-                                            values={Object {}}
                                           >
                                             Email
                                           </FormattedMessage>
@@ -790,7 +788,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                             defaultMessage="Password"
                                             description="Label"
                                             id="password"
-                                            values={Object {}}
                                           >
                                             Password
                                           </FormattedMessage>
@@ -858,7 +855,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                 defaultMessage="Signup"
                                 description="Button signup"
                                 id="signup"
-                                values={Object {}}
                               >
                                 Signup
                               </FormattedMessage>
@@ -896,7 +892,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                   defaultMessage="Login"
                                   description="Label"
                                   id="login"
-                                  values={Object {}}
                                 >
                                   Login
                                 </FormattedMessage>
@@ -929,7 +924,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                   defaultMessage="OR"
                                   description="horizontal separation line title"
                                   id="or"
-                                  values={Object {}}
                                 >
                                   OR
                                 </FormattedMessage>
@@ -943,9 +937,12 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                               className="mx-auto"
                               intl={
                                 Object {
+                                  "__addMessages": [Function],
                                   "defaultFormats": Object {},
                                   "defaultLocale": "en",
+                                  "defaultRichTextElements": undefined,
                                   "formatDate": [Function],
+                                  "formatDateTimeRange": [Function],
                                   "formatDateToParts": [Function],
                                   "formatDisplayName": [Function],
                                   "formatList": [Function],
@@ -971,6 +968,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                   "onError": [Function],
                                   "textComponent": Symbol(react.fragment),
                                   "timeZone": "Asia/Kuala_Lumpur",
+                                  "wrapRichTextChunksInFragment": undefined,
                                 }
                               }
                             >
@@ -1061,7 +1059,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                       defaultMessage="Remember me"
                                       description="Label"
                                       id="remember"
-                                      values={Object {}}
                                     >
                                       Remember me
                                     </FormattedMessage>
@@ -1119,7 +1116,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                       defaultMessage="privacy policy"
                                       description="label of the privacy policy link"
                                       id="privacyPolicy"
-                                      values={Object {}}
                                     />
                                   </a>,
                                 }
@@ -1128,13 +1124,13 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                               By browsing this website, you accept the 
                               <a
                                 href="privacypolicy"
+                                key=".1"
                                 onClick={[Function]}
                               >
                                 <FormattedMessage
                                   defaultMessage="privacy policy"
                                   description="label of the privacy policy link"
                                   id="privacyPolicy"
-                                  values={Object {}}
                                 >
                                   privacy policy
                                 </FormattedMessage>

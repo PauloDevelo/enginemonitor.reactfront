@@ -6,6 +6,8 @@ import actionManager, { ActionType } from '../ActionManager';
 import assetManager from '../AssetManager';
 import userContext from '../UserContext';
 
+import ignoredMessages from '../../testHelpers/MockConsole';
+
 import { createDefaultUser } from '../../helpers/UserHelper';
 import { createImageModel, base64ToBlob } from '../../helpers/ImageHelper';
 import progressiveHttpProxy from '../ProgressiveHttpProxy';
@@ -42,6 +44,11 @@ describe('Test ProgressiveHttpProxy', () => {
   function resetMockActionManager() {
     actionManager.addAction.mockReset();
   }
+
+  beforeAll(() => {
+    ignoredMessages.length = 0;
+    ignoredMessages.push('timeout');
+  });
 
   beforeEach(() => {
     assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
@@ -159,7 +166,6 @@ describe('Test ProgressiveHttpProxy', () => {
       }
     });
   });
-
 
   describe('postAndUpdate', () => {
     const postAndUpdateItems = [
@@ -328,7 +334,6 @@ describe('Test ProgressiveHttpProxy', () => {
     });
   });
 
-
   describe('getOnlineFirst', () => {
     const getItemOnlineFirstItems = [
       {
@@ -421,7 +426,6 @@ describe('Test ProgressiveHttpProxy', () => {
       }
     });
   });
-
 
   describe('getArrayOnlineFirst', () => {
     const getArrayOnlineFirstItems = [

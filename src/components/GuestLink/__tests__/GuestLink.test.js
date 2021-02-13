@@ -1,6 +1,8 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { mount } from 'enzyme';
 
+// eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
 
 import ignoredMessages from '../../../testHelpers/MockConsole';
@@ -20,7 +22,7 @@ describe('Component GuestLink', () => {
 
   beforeAll(() => {
     ignoredMessages.length = 0;
-    ignoredMessages.push('[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.');
+    ignoredMessages.push('Error: [@formatjs/intl Error MISSING_TRANSLATION]');
     ignoredMessages.push('a test was not wrapped in act');
   });
 
@@ -42,7 +44,11 @@ describe('Component GuestLink', () => {
     });
 
     // Act
-    const wrapper = mount(<GuestLink asset={asset} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GuestLink asset={asset} />
+      </IntlProvider>,
+    );
     await updateWrapper(wrapper);
 
     // Assert
@@ -62,7 +68,11 @@ describe('Component GuestLink', () => {
     const onError = jest.fn();
 
     // Act
-    const wrapper = mount(<GuestLink asset={asset} onError={onError} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GuestLink asset={asset} onError={onError} />
+      </IntlProvider>,
+    );
     await updateWrapper(wrapper);
 
     // Assert
@@ -94,7 +104,11 @@ describe('Component GuestLink', () => {
       throw new Error('unexpected assed ui id');
     });
 
-    const wrapper = mount(<GuestLink asset={asset} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GuestLink asset={asset} />
+      </IntlProvider>,
+    );
     await updateWrapper(wrapper);
 
     const button = wrapper.find('Button');
@@ -129,7 +143,11 @@ describe('Component GuestLink', () => {
       throw new Error('unexpected exception');
     });
 
-    const wrapper = mount(<GuestLink asset={asset} onError={onError} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GuestLink asset={asset} onError={onError} />
+      </IntlProvider>,
+    );
     await updateWrapper(wrapper);
 
     const button = wrapper.find('Button');
@@ -168,7 +186,11 @@ describe('Component GuestLink', () => {
       throw new Error('unexpected assed ui id');
     });
 
-    const wrapper = mount(<GuestLink asset={asset} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GuestLink asset={asset} />
+      </IntlProvider>,
+    );
     await updateWrapper(wrapper);
 
     const button = wrapper.find('Button');
@@ -200,12 +222,15 @@ describe('Component GuestLink', () => {
       throw new Error('unexpected assed ui id');
     });
 
-
     guestLinkProxy.removeGuestLink.mockImplementation(async () => {
       throw new Error('unexpected error');
     });
 
-    const wrapper = mount(<GuestLink asset={asset} onError={onError} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GuestLink asset={asset} onError={onError} />
+      </IntlProvider>,
+    );
     await updateWrapper(wrapper);
 
     const button = wrapper.find('Button');
@@ -246,7 +271,11 @@ describe('Component GuestLink', () => {
       throw new Error('unexpected assed ui id');
     });
 
-    const wrapper = mount(<GuestLink asset={asset} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GuestLink asset={asset} />
+      </IntlProvider>,
+    );
     await updateWrapper(wrapper);
 
     const input = wrapper.find('Input');

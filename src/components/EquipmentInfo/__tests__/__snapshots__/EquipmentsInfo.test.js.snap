@@ -254,7 +254,6 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                       defaultMessage="installed on "
                       description="label"
                       id="installedOn"
-                      values={Object {}}
                     >
                       installed on 
                     </FormattedMessage>
@@ -362,7 +361,6 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                             defaultMessage="Gallery"
                             description="Gallery title"
                             id="gallerytitle"
-                            values={Object {}}
                           >
                             Gallery
                           </FormattedMessage>
@@ -649,7 +647,6 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                       defaultMessage="installed on "
                       description="label"
                       id="installedOn"
-                      values={Object {}}
                     >
                       installed on 
                     </FormattedMessage>
@@ -757,7 +754,6 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                             defaultMessage="Gallery"
                             description="Gallery title"
                             id="gallerytitle"
-                            values={Object {}}
                           >
                             Gallery
                           </FormattedMessage>
@@ -1044,7 +1040,6 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                       defaultMessage="installed on "
                       description="label"
                       id="installedOn"
-                      values={Object {}}
                     >
                       installed on 
                     </FormattedMessage>
@@ -1152,7 +1147,6 @@ exports[`EquipmentsInfo Should render a equipment tabs with the first equipment 
                             defaultMessage="Gallery"
                             description="Gallery title"
                             id="gallerytitle"
-                            values={Object {}}
                           >
                             Gallery
                           </FormattedMessage>

@@ -191,7 +191,6 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                                   defaultMessage="To do every "
                                   description="Sentence"
                                   id="tobedonemonth"
-                                  values={Object {}}
                                 >
                                   To do every 
                                 </FormattedMessage>
@@ -204,7 +203,6 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                                   defaultMessage=" or every "
                                   description="Sentence"
                                   id="orevery"
-                                  values={Object {}}
                                 >
                                    or every 
                                 </FormattedMessage>
@@ -276,7 +274,6 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                                     defaultMessage="Gallery"
                                     description="Gallery title"
                                     id="gallerytitle"
-                                    values={Object {}}
                                   >
                                     Gallery
                                   </FormattedMessage>
@@ -636,7 +633,6 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                     defaultMessage="Should be done in "
                     description="Sentence"
                     id="shouldbedonein1"
-                    values={Object {}}
                   >
                     Should be done in 
                   </FormattedMessage>
@@ -648,7 +644,6 @@ exports[`CardTaskDetails Should render the task 1 details 1`] = `
                     defaultMessage=" equipment or "
                     description="Sentence"
                     id="shouldbedonein2"
-                    values={Object {}}
                   >
                      equipment or 
                   </FormattedMessage>
@@ -905,7 +900,6 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                                   defaultMessage="To do every "
                                   description="Sentence"
                                   id="tobedonemonth"
-                                  values={Object {}}
                                 >
                                   To do every 
                                 </FormattedMessage>
@@ -918,7 +912,6 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                                   defaultMessage=" or every "
                                   description="Sentence"
                                   id="orevery"
-                                  values={Object {}}
                                 >
                                    or every 
                                 </FormattedMessage>
@@ -990,7 +983,6 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                                     defaultMessage="Gallery"
                                     description="Gallery title"
                                     id="gallerytitle"
-                                    values={Object {}}
                                   >
                                     Gallery
                                   </FormattedMessage>
@@ -1350,7 +1342,6 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                     defaultMessage="Should have been done "
                     description="Sentence"
                     id="shouldhavebeendonein"
-                    values={Object {}}
                   >
                     Should have been done 
                   </FormattedMessage>
@@ -1362,7 +1353,6 @@ exports[`CardTaskDetails Should render the task 2 details 1`] = `
                     defaultMessage=" equipment ago or "
                     description="Sentence"
                     id="shouldhavebeendonein2"
-                    values={Object {}}
                   >
                      equipment ago or 
                   </FormattedMessage>

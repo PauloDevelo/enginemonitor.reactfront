@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { mount } from 'enzyme';
 import { IntlProvider } from 'react-intl';
@@ -34,7 +33,7 @@ describe('Component NavBar', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('test was not wrapped in act(...)');
-    ignoredMessages.push('[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.');
+    ignoredMessages.push('MISSING_TRANSLATION');
     ignoredMessages.push('Missing message:');
   });
 
@@ -161,7 +160,6 @@ describe('Component NavBar', () => {
       imageFolderSizeInByte: 1000,
       imageFolderSizeLimitInByte: 10000,
     };
-
 
     // Act
     userContext.onUserChanged(user);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { mount } from 'enzyme';
 
 import ignoredMessages from '../../../testHelpers/MockConsole';
@@ -8,7 +9,7 @@ import MyNavItem from '../MyNavItem';
 describe('MyNavItem', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
-    ignoredMessages.push('[React Intl] Could not find required `intl` object.');
+    ignoredMessages.push('[@formatjs/intl Error MISSING_TRANSLATION]');
   });
 
   beforeEach(() => {
@@ -19,7 +20,11 @@ describe('MyNavItem', () => {
     const message = { id: 'tooltip', defaultMessage: 'hello world', description: 'a tooltip' };
 
     // Act
-    const wrapper = mount(<MyNavItem label={message} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <MyNavItem label={message} />
+      </IntlProvider>,
+    );
 
     // Assert
     expect(wrapper).toMatchSnapshot();
@@ -30,7 +35,11 @@ describe('MyNavItem', () => {
     const message = { id: 'tooltip', defaultMessage: 'hello world', description: 'a tooltip' };
     const activeFunc = jest.fn();
 
-    const wrapper = mount(<MyNavItem label={message} activeFunc={activeFunc} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <MyNavItem label={message} activeFunc={activeFunc} />
+      </IntlProvider>,
+    );
 
     // Act
     wrapper.find('NavLink').simulate('click');

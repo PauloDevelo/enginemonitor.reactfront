@@ -1,4 +1,5 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { mount } from 'enzyme';
 
 // eslint-disable-next-line no-unused-vars
@@ -48,7 +49,7 @@ describe('Component Gallery', () => {
     ignoredMessages.length = 0;
     ignoredMessages.push('test was not wrapped in act(...)');
     ignoredMessages.push('Please update the following components: ReactImageLightbox');
-    ignoredMessages.push('[React Intl] Could not find required `intl` object.');
+    ignoredMessages.push('MISSING_TRANSLATION');
     ignoredMessages.push('Warning: unstable_flushDiscreteUpdates: Cannot flush updates when React is already rendering.');
     ignoredMessages.push('cssClass');
     ignoredMessages.push('react-html5-camera-photo info');
@@ -78,7 +79,11 @@ describe('Component Gallery', () => {
     // Arrange
 
     // Act
-    const gallery = mount(<Gallery parentUiId={parentUiId} />);
+    const gallery = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <Gallery parentUiId={parentUiId} />
+      </IntlProvider>,
+    );
 
     // Assert
     const loading = gallery.find('Loading');
@@ -92,7 +97,11 @@ describe('Component Gallery', () => {
     // Arrange
 
     // Act
-    const gallery = mount(<Gallery parentUiId={parentUiId} />);
+    const gallery = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <Gallery parentUiId={parentUiId} />
+      </IntlProvider>,
+    );
     await updateWrapper(gallery);
 
     // Assert
@@ -108,7 +117,11 @@ describe('Component Gallery', () => {
 
   it('should render Lightbox when we click on a thumbnail', async () => {
     // Arrange
-    const gallery = mount(<Gallery parentUiId={parentUiId} />);
+    const gallery = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <Gallery parentUiId={parentUiId} />
+      </IntlProvider>,
+    );
     await updateWrapper(gallery);
 
     // Act
@@ -127,7 +140,11 @@ describe('Component Gallery', () => {
     // Arrange
     imageProxy.deleteImage.mockResolvedValue(images[0]);
 
-    const gallery = mount(<Gallery parentUiId={parentUiId} />);
+    const gallery = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <Gallery parentUiId={parentUiId} />
+      </IntlProvider>,
+    );
     await updateWrapper(gallery);
 
     const galleryComponent = gallery.find('Memo(GalleryComponent)');
@@ -151,7 +168,11 @@ describe('Component Gallery', () => {
     // Arrange
     imageProxy.deleteImage.mockImplementation((imageToDelete) => Promise.resolve(imageToDelete));
 
-    const gallery = mount(<Gallery parentUiId={parentUiId} />);
+    const gallery = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <Gallery parentUiId={parentUiId} />
+      </IntlProvider>,
+    );
     await updateWrapper(gallery);
 
     const galleryComponent = gallery.find('Memo(GalleryComponent)');
@@ -186,7 +207,11 @@ describe('Component Gallery', () => {
       _uiId: 'dfc66510-f5f3-11e9-b3b1-f7086d79fbcb',
     };
 
-    const gallery = mount(<Gallery parentUiId={parentUiId} />);
+    const gallery = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <Gallery parentUiId={parentUiId} />
+      </IntlProvider>,
+    );
     await updateWrapper(gallery);
 
     const galleryComponent = gallery.find('Memo(GalleryComponent)');

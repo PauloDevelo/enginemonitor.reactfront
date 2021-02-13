@@ -24,6 +24,7 @@ describe('Test AsseProxy', () => {
 
   beforeAll(() => {
     ignoredMessages.length = 0;
+    ignoredMessages.push('timeout');
     ignoredMessages.push('The function AssetProxy.existAsset expects a non null and non undefined asset id.');
   });
 
