@@ -29,7 +29,6 @@ if (process.env.NODE_ENV === 'test') {
   initialisation = Promise.resolve();
 }
 
-
 export interface IUserStorageListener{
     onUserStorageOpened(): Promise<void>;
     onUserStorageClosed(): Promise<void>;
@@ -43,6 +42,7 @@ export interface IStorageService{
     setGlobalItem<T>(key: string, value: T): Promise<T>;
     removeGlobalItem(key: string): Promise<void>;
     getGlobalItem<T>(key: string): Promise<T>;
+    tryGetGlobalItem<T>(key: string, fallBackValue: T): Promise<T>;
 
     isUserStorageOpened(): boolean;
     openUserStorage(user: UserModel): Promise<void>;
@@ -134,6 +134,26 @@ class StorageService implements IStorageService {
 
         if (item === null) {
           throw new Error(`The key ${key} doesn't exist in the global storage`);
+        }
+
+        return item;
+      } catch (error) {
+        log.error(error);
+        throw error;
+      }
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    async tryGetGlobalItem<T>(key: string, fallBackValue: T): Promise<T> {
+      if (!key) {
+        throw new Error('The key should be truthy');
+      }
+
+      try {
+        const item = await localforage.getItem<T>(key);
+
+        if (item === null) {
+          return fallBackValue;
         }
 
         return item;
