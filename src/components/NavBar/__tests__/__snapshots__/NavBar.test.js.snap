@@ -373,6 +373,7 @@ exports[`Component NavBar should render the navbar even when the user is still u
                                         }
                                       />
                                       <input
+                                        aria-checked={false}
                                         checked={false}
                                         disabled={false}
                                         onBlur={[Function]}
