@@ -70,9 +70,13 @@ const ModalLogin = ({
   const resetPasswordModalHook = useEditModal({ email: '', newPassword1: '', newPassword2: '' });
 
   useEffect(() => {
-    storageService.getGlobalItem<boolean>('rememberMe').then((rememberMeValue) => {
-      setRememberMe(rememberMeValue);
-    });
+    storageService.getGlobalItem<boolean>('rememberMe')
+      .then((rememberMeValue) => {
+        setRememberMe(rememberMeValue);
+      })
+      .catch(() => {
+        setRememberMe(false);
+      });
   }, []);
 
   useEffect(() => {
