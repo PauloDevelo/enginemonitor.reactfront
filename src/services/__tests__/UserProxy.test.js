@@ -50,8 +50,7 @@ describe('Test UserProxy', () => {
 
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(false));
 
-      storageService.getGlobalItem.mockImplementation((key) => Promise.resolve(key === 'currentUser' ? user : null));
-      storageService.existGlobalItem.mockImplementation(async (key) => Promise.resolve(key === 'currentUser'));
+      storageService.tryGetGlobalItem.mockImplementation((key, fallBackValue) => Promise.resolve(key === 'currentUser' ? user : fallBackValue));
 
       // act
       const fetchedUser = await userProxy.tryGetAndSetMemorizedUser();
@@ -75,8 +74,7 @@ describe('Test UserProxy', () => {
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       httpProxy.get.mockImplementation(async () => Promise.resolve({ user }));
 
-      storageService.getGlobalItem.mockImplementation((key) => Promise.resolve(key === 'currentUser' ? user : null));
-      storageService.existGlobalItem.mockImplementation(async (key) => Promise.resolve(key === 'currentUser'));
+      storageService.tryGetGlobalItem.mockImplementation((key, fallBackValue) => Promise.resolve(key === 'currentUser' ? user : fallBackValue));
 
       // act
       const fetchedUser = await userProxy.tryGetAndSetMemorizedUser();
@@ -102,8 +100,7 @@ describe('Test UserProxy', () => {
         throw new Error('an error happened');
       });
 
-      storageService.getGlobalItem.mockImplementation((key) => Promise.resolve(key === 'currentUser' ? user : null));
-      storageService.existGlobalItem.mockImplementation(async (key) => Promise.resolve(key === 'currentUser'));
+      storageService.tryGetGlobalItem.mockImplementation((key, fallBackValue) => Promise.resolve(key === 'currentUser' ? user : fallBackValue));
 
       // act
       const fetchedUser = await userProxy.tryGetAndSetMemorizedUser();
@@ -143,8 +140,7 @@ describe('Test UserProxy', () => {
         throw new HttpError(data, error);
       });
 
-      storageService.getGlobalItem.mockImplementation((key) => Promise.resolve(key === 'currentUser' ? user : null));
-      storageService.existGlobalItem.mockImplementation(async (key) => Promise.resolve(key === 'currentUser'));
+      storageService.tryGetGlobalItem.mockImplementation((key, fallBackValue) => Promise.resolve(key === 'currentUser' ? user : fallBackValue));
 
       // act
       const fetchedUser = await userProxy.tryGetAndSetMemorizedUser();
@@ -156,9 +152,9 @@ describe('Test UserProxy', () => {
       expect(storageService.openUserStorage).toHaveBeenCalledTimes(0);
     });
 
-    it('when there the user is not authenticated, it should return undefined and it should remove the config into the httpProxy', async () => {
+    it('when the user is not authenticated, it should return undefined and it should remove the config into the httpProxy', async () => {
       // arrange
-      storageService.existGlobalItem.mockImplementation(async () => Promise.resolve(false));
+      storageService.tryGetGlobalItem.mockImplementation((key, fallBackValue) => Promise.resolve(key === 'currentUser' ? fallBackValue : fallBackValue));
       jest.spyOn(httpProxy, 'setConfig');
       jest.spyOn(storageService, 'openUserStorage');
 
