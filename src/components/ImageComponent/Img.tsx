@@ -66,17 +66,8 @@ const Img = ({
   const unloadImg = useCallback(() => {
     if (image.current) {
       image.current.onload = null;
-
       // abort any current downloads https://github.com/mbrevda/react-image/pull/223
       image.current.src = '';
-
-      try {
-        delete image.current.src;
-      } catch (e) {
-        // On Safari in Strict mode this will throw an exception,
-        //  - https://github.com/mbrevda/react-image/issues/187
-        // We don't need to do anything about it.
-      }
       image.current = undefined;
     }
   }, []);

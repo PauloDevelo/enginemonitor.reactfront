@@ -71,6 +71,8 @@ describe('DropDownConnectionStateItem', () => {
       expect(actionManager.registerOnActionManagerChanged).toBeCalledTimes(2);
 
       dropDownConnectionStateItemWrapper.unmount();
+      await updateWrapper(dropDownConnectionStateItemWrapper);
+
       expect(onlineManager.unregisterIsOnlineListener).toBeCalledTimes(1);
       expect(actionManager.unregisterOnActionManagerChanged).toBeCalledTimes(2);
       done();
