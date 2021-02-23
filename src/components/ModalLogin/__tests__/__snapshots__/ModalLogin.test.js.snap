@@ -937,7 +937,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                               className="mx-auto"
                               intl={
                                 Object {
-                                  "__addMessages": [Function],
                                   "defaultFormats": Object {},
                                   "defaultLocale": "en",
                                   "defaultRichTextElements": undefined,
