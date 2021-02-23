@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as log from 'loglevel';
 import Cookies from 'js-cookie';
 import _ from 'lodash';
@@ -105,40 +106,38 @@ class UserProxy implements IUserProxy {
     getCredentials = async ({ assetUiId }: {assetUiId: string}): Promise<UserCredentials> => progressiveHttpProxy.getOnlineFirst<UserCredentials>(`${this.baseUrl}credentials/${assetUiId}`, 'credentials')
 
     tryGetAndSetMemorizedUser = async ():Promise<UserModel | undefined> => {
-      if (await storageService.existGlobalItem('currentUser')) {
-        let rememberedUser = await storageService.getGlobalItem<UserModel>('currentUser');
-        if (rememberedUser) {
-          this.setHttpProxyAuthentication(rememberedUser);
+      let rememberedUser = await storageService.tryGetGlobalItem<UserModel | undefined>('currentUser', undefined);
+      if (rememberedUser) {
+        this.setHttpProxyAuthentication(rememberedUser);
 
-          if (await onlineManager.isOnline()) {
-            try {
-              const response = await httpProxy.get(`${this.baseUrl}current`);
-              const { user: currentUser }:{ user:UserModel | undefined } = response;
-              if (currentUser) {
-                storageService.setGlobalItem('currentUser', extractUserModel(currentUser));
-                this.setHttpProxyAuthentication(currentUser);
-                rememberedUser = currentUser;
-              }
-            } catch (error) {
-              log.error(error.message);
-              if (error instanceof HttpError) {
-                const httpError = error as HttpError;
-                const httpErrorCode = _.get(httpError, 'data.error.status');
-                if (httpErrorCode === 401) {
-                  await userContext.onUserChanged(undefined);
-                  return undefined;
-                }
+        if (await onlineManager.isOnline()) {
+          try {
+            const response = await httpProxy.get(`${this.baseUrl}current`);
+            const { user: currentUser }:{ user:UserModel | undefined } = response;
+            if (currentUser) {
+              storageService.setGlobalItem('currentUser', extractUserModel(currentUser));
+              this.setHttpProxyAuthentication(currentUser);
+              rememberedUser = currentUser;
+            }
+          } catch (error) {
+            log.error(error.message);
+            if (error instanceof HttpError) {
+              const httpError = error as HttpError;
+              const httpErrorCode = _.get(httpError, 'data.error.status');
+              if (httpErrorCode === 401) {
+                await userContext.onUserChanged(undefined);
+                return undefined;
               }
             }
           }
-
-          await storageService.openUserStorage(rememberedUser);
-          await userContext.onUserChanged(rememberedUser);
-
-          analytics.sendEngagementEvent('login', { method: 'storage' });
-
-          return rememberedUser;
         }
+
+        await storageService.openUserStorage(rememberedUser);
+        await userContext.onUserChanged(rememberedUser);
+
+        analytics.sendEngagementEvent('login', { method: 'storage' });
+
+        return rememberedUser;
       }
 
       await userContext.onUserChanged(undefined);
@@ -152,7 +151,7 @@ class UserProxy implements IUserProxy {
         return Promise.resolve(false);
       }
 
-      const rememberMe = await storageService.getGlobalItem<boolean>('rememberMe');
+      const rememberMe = await storageService.tryGetGlobalItem<boolean>('rememberMe', false);
       log.debug(rememberMe);
       Cookies.remove('authUser');
 

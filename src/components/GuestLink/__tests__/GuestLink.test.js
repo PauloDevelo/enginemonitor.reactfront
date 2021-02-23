@@ -1,6 +1,8 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { mount } from 'enzyme';
 
+// eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
 
 import ignoredMessages from '../../../testHelpers/MockConsole';
@@ -20,7 +22,7 @@ describe('Component GuestLink', () => {
 
   beforeAll(() => {
     ignoredMessages.length = 0;
-    ignoredMessages.push('[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.');
+    ignoredMessages.push('Error: [@formatjs/intl Error MISSING_TRANSLATION]');
     ignoredMessages.push('a test was not wrapped in act');
   });
 
@@ -30,7 +32,7 @@ describe('Component GuestLink', () => {
     guestLinkProxy.removeGuestLink.mockRestore();
   });
 
-  it('should try to get the link when the component loads and then display it', async (done) => {
+  it('should try to get the link when the component loads and then display it', async () => {
     // Arrange
     const guestLink = { _uiId: 'uiidforthefrontend', name: 'guest', niceKey: 'thisisanicekey' };
     guestLinkProxy.getGuestLinks.mockImplementation(async (assetUiId) => {
@@ -42,18 +44,20 @@ describe('Component GuestLink', () => {
     });
 
     // Act
-    const wrapper = mount(<GuestLink asset={asset} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GuestLink asset={asset} />
+      </IntlProvider>,
+    );
     await updateWrapper(wrapper);
 
     // Assert
     expect(guestLinkProxy.getGuestLinks).toBeCalledTimes(1);
     const input = wrapper.find('Input');
     expect(input.get(0).props.value).toBe(`http://test/${guestLink.niceKey}`);
-
-    done();
   });
 
-  it('should display a empty link if guestLinkProxy.getGuestLinks throw an exception', async (done) => {
+  it('should display a empty link if guestLinkProxy.getGuestLinks throw an exception', async () => {
     // Arrange
     guestLinkProxy.getGuestLinks.mockImplementation(async () => {
       throw new Error('unexpected assed ui id');
@@ -62,7 +66,11 @@ describe('Component GuestLink', () => {
     const onError = jest.fn();
 
     // Act
-    const wrapper = mount(<GuestLink asset={asset} onError={onError} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GuestLink asset={asset} onError={onError} />
+      </IntlProvider>,
+    );
     await updateWrapper(wrapper);
 
     // Assert
@@ -71,11 +79,9 @@ describe('Component GuestLink', () => {
     expect(input.get(0).props.value).toBe('');
 
     expect(onError).toBeCalledTimes(0);
-
-    done();
   });
 
-  it('should try to create a guest link when clicking on the button and when there is no guest link created yet', async (done) => {
+  it('should try to create a guest link when clicking on the button and when there is no guest link created yet', async () => {
     // Arrange
     guestLinkProxy.getGuestLinks.mockImplementation(async (assetUiId) => {
       if (assetUiId === asset._uiId) {
@@ -94,7 +100,11 @@ describe('Component GuestLink', () => {
       throw new Error('unexpected assed ui id');
     });
 
-    const wrapper = mount(<GuestLink asset={asset} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GuestLink asset={asset} />
+      </IntlProvider>,
+    );
     await updateWrapper(wrapper);
 
     const button = wrapper.find('Button');
@@ -109,11 +119,9 @@ describe('Component GuestLink', () => {
 
     const input = wrapper.find('Input');
     expect(input.get(0).props.value).toBe(`http://test/${newGuestLink.niceKey}`);
-
-    done();
   });
 
-  it('should call onError when creating a guest link fails', async (done) => {
+  it('should call onError when creating a guest link fails', async () => {
     // Arrange
     const onError = jest.fn();
 
@@ -129,7 +137,11 @@ describe('Component GuestLink', () => {
       throw new Error('unexpected exception');
     });
 
-    const wrapper = mount(<GuestLink asset={asset} onError={onError} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GuestLink asset={asset} onError={onError} />
+      </IntlProvider>,
+    );
     await updateWrapper(wrapper);
 
     const button = wrapper.find('Button');
@@ -145,11 +157,9 @@ describe('Component GuestLink', () => {
     const input = wrapper.find('Input');
     expect(input.get(0).props.value).toBe('');
     expect(onError).toBeCalledTimes(1);
-
-    done();
   });
 
-  it('should try to delete a guest link when clicking on the button because there is already a guest link created', async (done) => {
+  it('should try to delete a guest link when clicking on the button because there is already a guest link created', async () => {
     // Arrange
     const guestLink = { _uiId: 'uiidforthefrontend', name: 'guest', niceKey: 'thisisanicekey' };
     guestLinkProxy.getGuestLinks.mockImplementation(async (assetUiId) => {
@@ -168,7 +178,11 @@ describe('Component GuestLink', () => {
       throw new Error('unexpected assed ui id');
     });
 
-    const wrapper = mount(<GuestLink asset={asset} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GuestLink asset={asset} />
+      </IntlProvider>,
+    );
     await updateWrapper(wrapper);
 
     const button = wrapper.find('Button');
@@ -183,11 +197,9 @@ describe('Component GuestLink', () => {
 
     const input = wrapper.find('Input');
     expect(input.get(0).props.value).toBe('');
-
-    done();
   });
 
-  it('should call onError when delete throws an unexpected error.', async (done) => {
+  it('should call onError when delete throws an unexpected error.', async () => {
     // Arrange
     const onError = jest.fn();
 
@@ -200,12 +212,15 @@ describe('Component GuestLink', () => {
       throw new Error('unexpected assed ui id');
     });
 
-
     guestLinkProxy.removeGuestLink.mockImplementation(async () => {
       throw new Error('unexpected error');
     });
 
-    const wrapper = mount(<GuestLink asset={asset} onError={onError} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GuestLink asset={asset} onError={onError} />
+      </IntlProvider>,
+    );
     await updateWrapper(wrapper);
 
     const button = wrapper.find('Button');
@@ -221,11 +236,9 @@ describe('Component GuestLink', () => {
 
     const input = wrapper.find('Input');
     expect(input.get(0).props.value).toBe(`http://test/${guestLink.niceKey}`);
-
-    done();
   });
 
-  it('should copy the link in the clipboard when the guest link input gets the focus', async (done) => {
+  it('should copy the link in the clipboard when the guest link input gets the focus', async () => {
     // Arrange
     let lastCommand;
     document.execCommand = (command) => {
@@ -246,7 +259,11 @@ describe('Component GuestLink', () => {
       throw new Error('unexpected assed ui id');
     });
 
-    const wrapper = mount(<GuestLink asset={asset} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <GuestLink asset={asset} />
+      </IntlProvider>,
+    );
     await updateWrapper(wrapper);
 
     const input = wrapper.find('Input');
@@ -257,7 +274,5 @@ describe('Component GuestLink', () => {
 
     // Assert
     expect(lastCommand).toBe('copy');
-
-    done();
   });
 });

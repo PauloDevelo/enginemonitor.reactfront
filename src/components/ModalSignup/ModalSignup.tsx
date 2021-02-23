@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React, { useState, useCallback } from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter,
@@ -27,6 +28,7 @@ const loginMsg = defineMessages(jsonMessages);
 
 type Props = {
 visible: boolean,
+// eslint-disable-next-line react/require-default-props
 className?: string,
 toggle: () => void
 }

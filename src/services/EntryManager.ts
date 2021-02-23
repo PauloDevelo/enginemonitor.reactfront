@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
 import { CancelTokenSource } from 'axios';
 import _ from 'lodash';
 import log from 'loglevel';
@@ -6,7 +6,6 @@ import equipmentManager from './EquipmentManager';
 import taskManager from './TaskManager';
 import analytics from '../helpers/AnalyticsHelper';
 
-// eslint-disable-next-line no-unused-vars
 import { EntryModel, EquipmentModel } from '../types/Types';
 
 import httpProxy from './HttpProxy';
@@ -54,7 +53,6 @@ class EntryManager implements IEntryManager {
       equipmentManager.registerOnCurrentEquipmentChanged(this.onCurrentEquipmentChanged);
     }
 
-    // eslint-disable-next-line no-unused-vars
     private onCurrentEquipmentChanged = async (currentEquipment: EquipmentModel | undefined) => {
       this.isCurrentEntryChangingFlag = true;
       this.areEntriesLoadingFlag = true;

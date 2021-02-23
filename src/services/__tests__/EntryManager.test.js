@@ -83,6 +83,7 @@ describe('Test EntryManager', () => {
 
   beforeAll(() => {
     ignoredMessages.length = 0;
+    ignoredMessages.push('ENOTFOUND');
     entryManager.registerOnCurrentEntryChanged(currentEntryListener);
     entryManager.registerOnEquipmentEntriesChanged(entriesListener);
   });
@@ -101,7 +102,7 @@ describe('Test EntryManager', () => {
   });
 
   describe('getCurrentEntry', () => {
-    it('Should return undefined before setting the current equipment', async (done) => {
+    it('Should return undefined before setting the current equipment', async () => {
       // Arrange
       entryProxy.fetchAllEntries.mockImplementation(() => Promise.resolve([]));
 
@@ -114,10 +115,9 @@ describe('Test EntryManager', () => {
       // Assert
       expect(entryProxy.fetchAllEntries).toBeCalledTimes(0);
       expect(currentEntry).toBeUndefined();
-      done();
     });
 
-    it('Should return undefined after setting a current equipment which does not have any entry yet', async (done) => {
+    it('Should return undefined after setting a current equipment which does not have any entry yet', async () => {
       // Arrange
       entryProxy.fetchAllEntries.mockImplementation(() => Promise.resolve([]));
 
@@ -130,10 +130,9 @@ describe('Test EntryManager', () => {
       // Assert
       expect(entryProxy.fetchAllEntries).toBeCalledTimes(1);
       expect(currentEntry).toBeUndefined();
-      done();
     });
 
-    it('Should return the oldest entry after setting the current equipment', async (done) => {
+    it('Should return the oldest entry after setting the current equipment', async () => {
       // Arrange
       entryProxy.fetchAllEntries.mockImplementation(async () => Promise.resolve([entry2, entry1]));
 
@@ -146,10 +145,9 @@ describe('Test EntryManager', () => {
       // Assert
       expect(entryProxy.fetchAllEntries).toBeCalledTimes(1);
       expect(currentEntry).toEqual(entry2);
-      done();
     });
 
-    it('Should return undefined when the current equipment becomes undefined.', async (done) => {
+    it('Should return undefined when the current equipment becomes undefined.', async () => {
       // Arrange
       entryProxy.fetchAllEntries.mockImplementation(async () => Promise.resolve([entry2, entry1]));
 
@@ -165,12 +163,11 @@ describe('Test EntryManager', () => {
       // Assert
       expect(entryProxy.fetchAllEntries).toBeCalledTimes(1);
       expect(currentEntry).toEqual(undefined);
-      done();
     });
   });
 
   describe('setCurrentEntry', () => {
-    it('Should notify the listeners when the current entry changed', async (done) => {
+    it('Should notify the listeners when the current entry changed', async () => {
       // Arrange
 
       // Act
@@ -179,10 +176,9 @@ describe('Test EntryManager', () => {
       // Assert
       expect(currentEntryListener).toBeCalledTimes(1);
       expect(currentEntryListener.mock.calls[0][0]).toBe(entry1);
-      done();
     });
 
-    it('Should notify the listeners when the current entry changed', async (done) => {
+    it('Should notify the listeners when the current entry changed', async () => {
       // Arrange
       const anotherListener = jest.fn();
       entryManager.registerOnCurrentEntryChanged(anotherListener);
@@ -195,10 +191,9 @@ describe('Test EntryManager', () => {
       expect(anotherListener.mock.calls[0][0]).toBe(entry1);
 
       entryManager.unregisterOnCurrentEntryChanged(anotherListener);
-      done();
     });
 
-    it('Should not notify the unregister listener when the current entry changed', async (done) => {
+    it('Should not notify the unregister listener when the current entry changed', async () => {
       // Arrange
       const anotherListener = jest.fn();
       entryManager.registerOnCurrentEntryChanged(anotherListener);
@@ -212,13 +207,11 @@ describe('Test EntryManager', () => {
       // Assert
       expect(anotherListener).toBeCalledTimes(1);
       expect(anotherListener.mock.calls[0][0]).toBe(entry1);
-
-      done();
     });
   });
 
   describe('getEquipmentEntries', () => {
-    it('should return the entries fetched and sorted by date', async (done) => {
+    it('should return the entries fetched and sorted by date', async () => {
       // Arrange
       entryProxy.fetchAllEntries.mockImplementation(async () => Promise.resolve([entry2, entry3, entry1]));
 
@@ -233,12 +226,11 @@ describe('Test EntryManager', () => {
       expect(entries[0]).toBe(entry3);
       expect(entries[1]).toBe(entry2);
       expect(entries[2]).toBe(entry1);
-      done();
     });
   });
 
   describe('getTaskEntries', () => {
-    it('should return the entries related to the current task and sorted by date', async (done) => {
+    it('should return the entries related to the current task and sorted by date', async () => {
       // Arrange
       entryProxy.fetchAllEntries.mockImplementation(async () => Promise.resolve([entry2, entry3, entry1]));
 
@@ -253,10 +245,9 @@ describe('Test EntryManager', () => {
       expect(entries.length).toBe(2);
       expect(entries[0]).toBe(entry2);
       expect(entries[1]).toBe(entry1);
-      done();
     });
 
-    it('should return the empty entry array when the current task is undefined', async (done) => {
+    it('should return the empty entry array when the current task is undefined', async () => {
       // Arrange
       entryProxy.fetchAllEntries.mockImplementation(async () => Promise.resolve([entry2, entry3, entry1]));
 
@@ -269,12 +260,11 @@ describe('Test EntryManager', () => {
 
       // Assert
       expect(entries.length).toBe(0);
-      done();
     });
   });
 
   describe('onEntryDeleted', () => {
-    it('should remove the entry from the list and it should notify the listeners', async (done) => {
+    it('should remove the entry from the list and it should notify the listeners', async () => {
       // Arrange
       entryProxy.fetchAllEntries.mockImplementation(async () => Promise.resolve([entry2, entry3, entry1]));
 
@@ -291,10 +281,9 @@ describe('Test EntryManager', () => {
       expect(entries.length).toBe(2);
       expect(entries.includes(entry1)).toBe(false);
       expect(entriesListener).toBeCalledTimes(2);
-      done();
     });
 
-    it('should not notify the unregistered listeners', async (done) => {
+    it('should not notify the unregistered listeners', async () => {
       // Arrange
       entryProxy.fetchAllEntries.mockImplementation(async () => Promise.resolve([entry2, entry3, entry1]));
 
@@ -314,10 +303,9 @@ describe('Test EntryManager', () => {
       expect(entries.length).toBe(2);
       expect(entries.includes(entry1)).toBe(false);
       expect(entriesListener).toBeCalledTimes(2);
-      done();
     });
 
-    it('should change the current entry when the current entry is deleted', async (done) => {
+    it('should change the current entry when the current entry is deleted', async () => {
       // Arrange
       entryProxy.fetchAllEntries.mockImplementation(async () => Promise.resolve([entry2, entry3, entry1]));
 
@@ -331,12 +319,11 @@ describe('Test EntryManager', () => {
 
       // Assert
       expect(entryManager.getCurrentEntry()).toBe(entry3);
-      done();
     });
   });
 
   describe('onEntrySaved', () => {
-    it('should add the entry in the list and it should notify the listeners', async (done) => {
+    it('should add the entry in the list and it should notify the listeners', async () => {
       // Arrange
       entryProxy.fetchAllEntries.mockImplementation(async () => Promise.resolve([entry2, entry1]));
 
@@ -351,10 +338,9 @@ describe('Test EntryManager', () => {
       expect(entries.length).toBe(3);
       expect(entries[0]).toEqual(entry3);
       expect(entriesListener).toBeCalledTimes(2);
-      done();
     });
 
-    it('should update the entry from the list and it should notify the listeners', async (done) => {
+    it('should update the entry from the list and it should notify the listeners', async () => {
       // Arrange
       entryProxy.fetchAllEntries.mockImplementation(async () => Promise.resolve([entry2, entry1]));
 
@@ -372,12 +358,11 @@ describe('Test EntryManager', () => {
       expect(entries.length).toBe(2);
       expect(entries[1]).toEqual(copyEntry1);
       expect(entriesListener).toBeCalledTimes(2);
-      done();
     });
   });
 
   describe('areEntriesLoading', () => {
-    it('should be true when fetching the entries', async (done) => {
+    it('should be true when fetching the entries', async () => {
       // Arrange
       entryProxy.fetchAllEntries.mockImplementation(async () => {
         await sleep(500);
@@ -395,10 +380,9 @@ describe('Test EntryManager', () => {
       // Assert
       expect(areEntriesLoading1).toBe(true);
       expect(areEntriesLoading2).toBe(false);
-      done();
     });
 
-    it('should be false after fetching the tasks unsuccessfully', async (done) => {
+    it('should be false after fetching the tasks unsuccessfully', async () => {
       // Arrange
       entryProxy.fetchAllEntries.mockImplementation(async () => {
         await sleep(500);
@@ -416,7 +400,6 @@ describe('Test EntryManager', () => {
       // Assert
       expect(areEntriesLoading1).toBe(true);
       expect(areEntriesLoading2).toBe(false);
-      done();
     });
   });
 });

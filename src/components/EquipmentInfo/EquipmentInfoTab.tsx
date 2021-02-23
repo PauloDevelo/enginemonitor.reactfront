@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/require-default-props */
+// eslint-disable-next-line no-use-before-define
 import React, { useCallback } from 'react';
 import { Button, TabPane } from 'reactstrap';
 
@@ -38,7 +41,7 @@ function EquipmentInfoTab({ equipment, displayEquipment }: Props) {
           <span className="font-weight-bold">
             {equipment.age}
             {' '}
-h
+            h
             {' '}
           </span>
           )}

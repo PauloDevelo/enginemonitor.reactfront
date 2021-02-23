@@ -25,6 +25,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
         }
       }
       centered={false}
+      container="body"
       fade={true}
       isOpen={true}
       keyboard={true}
@@ -39,6 +40,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
       role="dialog"
       scrollable={false}
       toggle={[Function]}
+      trapFocus={false}
       unmountOnClose={true}
       zIndex={1050}
     >
@@ -118,6 +120,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                             Last Name
                           </label>
                           <input
+                            aria-invalid="false"
                             class="form-control form-control"
                             name="name"
                             required=""
@@ -135,6 +138,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                             Firstname
                           </label>
                           <input
+                            aria-invalid="false"
                             class="form-control form-control"
                             name="firstname"
                             required=""
@@ -152,6 +156,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                             Email
                           </label>
                           <input
+                            aria-invalid="false"
                             class="form-control form-control"
                             name="email"
                             required=""
@@ -169,6 +174,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                             Password
                           </label>
                           <input
+                            aria-invalid="false"
                             class="form-control form-control"
                             name="password"
                             required=""
@@ -190,6 +196,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                             </a>
                              
                             <input
+                              aria-invalid="false"
                               class="form-check-input"
                               name="privacyPolicyAccepted"
                               required=""
@@ -303,6 +310,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                               Last Name
                             </label>
                             <input
+                              aria-invalid="false"
                               class="form-control form-control"
                               name="name"
                               required=""
@@ -320,6 +328,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                               Firstname
                             </label>
                             <input
+                              aria-invalid="false"
                               class="form-control form-control"
                               name="firstname"
                               required=""
@@ -337,6 +346,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                               Email
                             </label>
                             <input
+                              aria-invalid="false"
                               class="form-control form-control"
                               name="email"
                               required=""
@@ -354,6 +364,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                               Password
                             </label>
                             <input
+                              aria-invalid="false"
                               class="form-control form-control"
                               name="password"
                               required=""
@@ -375,6 +386,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                               </a>
                                
                               <input
+                                aria-invalid="false"
                                 class="form-check-input"
                                 name="privacyPolicyAccepted"
                                 required=""
@@ -548,7 +560,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                               defaultMessage="Signup"
                               description="Modal title"
                               id="modalSignupTitle"
-                              values={Object {}}
                             >
                               Signup
                             </FormattedMessage>
@@ -612,6 +623,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                         Last Name
                                       </label>
                                       <input
+                                        aria-invalid="false"
                                         class="form-control form-control"
                                         name="name"
                                         required=""
@@ -629,6 +641,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                         Firstname
                                       </label>
                                       <input
+                                        aria-invalid="false"
                                         class="form-control form-control"
                                         name="firstname"
                                         required=""
@@ -646,6 +659,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                         Email
                                       </label>
                                       <input
+                                        aria-invalid="false"
                                         class="form-control form-control"
                                         name="email"
                                         required=""
@@ -663,6 +677,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                         Password
                                       </label>
                                       <input
+                                        aria-invalid="false"
                                         class="form-control form-control"
                                         name="password"
                                         required=""
@@ -684,6 +699,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                         </a>
                                          
                                         <input
+                                          aria-invalid="false"
                                           class="form-check-input"
                                           name="privacyPolicyAccepted"
                                           required=""
@@ -749,7 +765,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                             defaultMessage="Last Name"
                                             description="Label"
                                             id="name"
-                                            values={Object {}}
                                           >
                                             Last Name
                                           </FormattedMessage>
@@ -760,6 +775,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                         innerRef={
                                           Object {
                                             "current": <input
+                                              aria-invalid="false"
                                               class="form-control form-control"
                                               name="name"
                                               required=""
@@ -776,6 +792,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                         value=""
                                       >
                                         <input
+                                          aria-invalid={false}
                                           className="form-control form-control"
                                           name="name"
                                           onChange={[Function]}
@@ -831,7 +848,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                             defaultMessage="Firstname"
                                             description="Label"
                                             id="firstname"
-                                            values={Object {}}
                                           >
                                             Firstname
                                           </FormattedMessage>
@@ -842,6 +858,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                         innerRef={
                                           Object {
                                             "current": <input
+                                              aria-invalid="false"
                                               class="form-control form-control"
                                               name="firstname"
                                               required=""
@@ -858,6 +875,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                         value=""
                                       >
                                         <input
+                                          aria-invalid={false}
                                           className="form-control form-control"
                                           name="firstname"
                                           onChange={[Function]}
@@ -913,7 +931,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                             defaultMessage="Email"
                                             description="Label"
                                             id="email"
-                                            values={Object {}}
                                           >
                                             Email
                                           </FormattedMessage>
@@ -924,6 +941,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                         innerRef={
                                           Object {
                                             "current": <input
+                                              aria-invalid="false"
                                               class="form-control form-control"
                                               name="email"
                                               required=""
@@ -940,6 +958,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                         value=""
                                       >
                                         <input
+                                          aria-invalid={false}
                                           className="form-control form-control"
                                           name="email"
                                           onChange={[Function]}
@@ -995,7 +1014,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                             defaultMessage="Password"
                                             description="Label"
                                             id="password"
-                                            values={Object {}}
                                           >
                                             Password
                                           </FormattedMessage>
@@ -1006,6 +1024,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                         innerRef={
                                           Object {
                                             "current": <input
+                                              aria-invalid="false"
                                               class="form-control form-control"
                                               name="password"
                                               required=""
@@ -1022,6 +1041,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                         value=""
                                       >
                                         <input
+                                          aria-invalid={false}
                                           className="form-control form-control"
                                           name="password"
                                           onChange={[Function]}
@@ -1051,7 +1071,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                             defaultMessage="privacy policy"
                                             description="Button signup"
                                             id="privacyPolicy"
-                                            values={Object {}}
                                           />
                                         </a>,
                                       },
@@ -1101,7 +1120,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                                     defaultMessage="privacy policy"
                                                     description="Button signup"
                                                     id="privacyPolicy"
-                                                    values={Object {}}
                                                   />
                                                 </a>,
                                               }
@@ -1110,13 +1128,13 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                             By checking thix box, you expressly confirm the acceptance of our 
                                             <a
                                               href="privacypolicy"
+                                              key=".1"
                                               onClick={[Function]}
                                             >
                                               <FormattedMessage
                                                 defaultMessage="privacy policy"
                                                 description="Button signup"
                                                 id="privacyPolicy"
-                                                values={Object {}}
                                               >
                                                 privacy policy
                                               </FormattedMessage>
@@ -1128,6 +1146,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                             innerRef={
                                               Object {
                                                 "current": <input
+                                                  aria-invalid="false"
                                                   class="form-check-input"
                                                   name="privacyPolicyAccepted"
                                                   required=""
@@ -1143,6 +1162,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                             type="checkbox"
                                           >
                                             <input
+                                              aria-invalid={false}
                                               checked={false}
                                               className="form-check-input"
                                               name="privacyPolicyAccepted"
@@ -1197,7 +1217,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                   defaultMessage="Signup"
                                   description="Button signup"
                                   id="signup"
-                                  values={Object {}}
                                 >
                                   Signup
                                 </FormattedMessage>
@@ -1219,7 +1238,6 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
                                 defaultMessage="Cancel"
                                 description="Button cancel"
                                 id="cancel"
-                                values={Object {}}
                               >
                                 Cancel
                               </FormattedMessage>
@@ -1291,6 +1309,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
         }
         centered={false}
         className="modal-dialog-centered"
+        container="body"
         fade={true}
         isOpen={false}
         keyboard={true}
@@ -1306,6 +1325,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
         scrollable={false}
         size="lg"
         toggle={[Function]}
+        trapFocus={false}
         unmountOnClose={true}
         zIndex={1050}
       />
@@ -1324,6 +1344,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
             }
           }
           centered={false}
+          container="body"
           fade={true}
           isOpen={false}
           keyboard={true}
@@ -1338,6 +1359,7 @@ exports[`ModalSignup should render the ModalSignup 1`] = `
           role="dialog"
           scrollable={false}
           toggle={[Function]}
+          trapFocus={false}
           unmountOnClose={true}
           zIndex={1050}
         />

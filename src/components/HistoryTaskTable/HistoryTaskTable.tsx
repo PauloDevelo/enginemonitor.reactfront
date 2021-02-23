@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+// eslint-disable-next-line no-use-before-define
 import React, {
   useEffect, useState, useCallback,
 } from 'react';
@@ -44,6 +45,7 @@ import imageProxy from '../../services/ImageProxy';
 const messages = defineMessages(jsonMessages);
 
 type Props = {
+    // eslint-disable-next-line react/require-default-props
     className?: string
 }
 

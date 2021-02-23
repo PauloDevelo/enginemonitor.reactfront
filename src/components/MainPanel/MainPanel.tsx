@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React, {
   useEffect, useState, useCallback, useRef, Fragment,
 } from 'react';
@@ -41,6 +42,10 @@ import
 import ModalEditAsset from '../ModalEditAsset/ModalEditAsset';
 import userContext from '../../services/UserContext';
 
+type Params = {
+  niceKey: string | undefined;
+}
+
 export default function MainPanel() {
   const { loading } = useCacheBuster();
 
@@ -48,7 +53,7 @@ export default function MainPanel() {
   const [user, setUser] = useState<UserModel | undefined | null>(null);
   const [currentAsset, setCurrentAsset] = useState<AssetModel | undefined | null>(null);
   const [error, setError] = useState<Error | undefined>(undefined);
-  const { niceKey } = useParams();
+  const { niceKey } = useParams<Params>();
 
   const onListErrorChanged = (errors: Error[]) => {
     if (errors.length > 0) {

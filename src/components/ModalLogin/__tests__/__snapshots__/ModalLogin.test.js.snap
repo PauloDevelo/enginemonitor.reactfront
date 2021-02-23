@@ -27,6 +27,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
       }
       centered={false}
       className="modal-dialog-centered"
+      container="body"
       fade={true}
       isOpen={true}
       keyboard={true}
@@ -40,6 +41,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
       returnFocusAfterClose={true}
       role="dialog"
       scrollable={false}
+      trapFocus={false}
       unmountOnClose={true}
       zIndex={1050}
     >
@@ -108,6 +110,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                             Email
                           </label>
                           <input
+                            aria-invalid="false"
                             class="form-control form-control"
                             name="email"
                             required=""
@@ -125,6 +128,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                             Password
                           </label>
                           <input
+                            aria-invalid="false"
                             class="form-control form-control"
                             name="password"
                             required=""
@@ -210,6 +214,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                           Remember me
                            
                           <input
+                            aria-invalid="false"
                             class="form-check-input"
                             name="remember"
                             type="checkbox"
@@ -305,6 +310,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                               Email
                             </label>
                             <input
+                              aria-invalid="false"
                               class="form-control form-control"
                               name="email"
                               required=""
@@ -322,6 +328,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                               Password
                             </label>
                             <input
+                              aria-invalid="false"
                               class="form-control form-control"
                               name="password"
                               required=""
@@ -407,6 +414,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                             Remember me
                              
                             <input
+                              aria-invalid="false"
                               class="form-check-input"
                               name="remember"
                               type="checkbox"
@@ -572,7 +580,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                               defaultMessage="Login with an existing account"
                               description="Modal title"
                               id="modalLogintitle"
-                              values={Object {}}
                             >
                               Login with an existing account
                             </FormattedMessage>
@@ -615,6 +622,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                         Email
                                       </label>
                                       <input
+                                        aria-invalid="false"
                                         class="form-control form-control"
                                         name="email"
                                         required=""
@@ -632,6 +640,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                         Password
                                       </label>
                                       <input
+                                        aria-invalid="false"
                                         class="form-control form-control"
                                         name="password"
                                         required=""
@@ -696,7 +705,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                             defaultMessage="Email"
                                             description="Label"
                                             id="email"
-                                            values={Object {}}
                                           >
                                             Email
                                           </FormattedMessage>
@@ -707,6 +715,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                         innerRef={
                                           Object {
                                             "current": <input
+                                              aria-invalid="false"
                                               class="form-control form-control"
                                               name="email"
                                               required=""
@@ -723,6 +732,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                         value=""
                                       >
                                         <input
+                                          aria-invalid={false}
                                           className="form-control form-control"
                                           name="email"
                                           onChange={[Function]}
@@ -778,7 +788,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                             defaultMessage="Password"
                                             description="Label"
                                             id="password"
-                                            values={Object {}}
                                           >
                                             Password
                                           </FormattedMessage>
@@ -789,6 +798,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                         innerRef={
                                           Object {
                                             "current": <input
+                                              aria-invalid="false"
                                               class="form-control form-control"
                                               name="password"
                                               required=""
@@ -805,6 +815,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                         value=""
                                       >
                                         <input
+                                          aria-invalid={false}
                                           className="form-control form-control"
                                           name="password"
                                           onChange={[Function]}
@@ -844,7 +855,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                 defaultMessage="Signup"
                                 description="Button signup"
                                 id="signup"
-                                values={Object {}}
                               >
                                 Signup
                               </FormattedMessage>
@@ -882,7 +892,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                   defaultMessage="Login"
                                   description="Label"
                                   id="login"
-                                  values={Object {}}
                                 >
                                   Login
                                 </FormattedMessage>
@@ -915,7 +924,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                   defaultMessage="OR"
                                   description="horizontal separation line title"
                                   id="or"
-                                  values={Object {}}
                                 >
                                   OR
                                 </FormattedMessage>
@@ -931,7 +939,9 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                 Object {
                                   "defaultFormats": Object {},
                                   "defaultLocale": "en",
+                                  "defaultRichTextElements": undefined,
                                   "formatDate": [Function],
+                                  "formatDateTimeRange": [Function],
                                   "formatDateToParts": [Function],
                                   "formatDisplayName": [Function],
                                   "formatList": [Function],
@@ -957,6 +967,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                   "onError": [Function],
                                   "textComponent": Symbol(react.fragment),
                                   "timeZone": "Asia/Kuala_Lumpur",
+                                  "wrapRichTextChunksInFragment": undefined,
                                 }
                               }
                             >
@@ -1047,7 +1058,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                       defaultMessage="Remember me"
                                       description="Label"
                                       id="remember"
-                                      values={Object {}}
                                     >
                                       Remember me
                                     </FormattedMessage>
@@ -1056,6 +1066,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                       innerRef={
                                         Object {
                                           "current": <input
+                                            aria-invalid="false"
                                             class="form-check-input"
                                             name="remember"
                                             type="checkbox"
@@ -1068,6 +1079,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                       type="checkbox"
                                     >
                                       <input
+                                        aria-invalid={false}
                                         className="form-check-input"
                                         name="remember"
                                         onChange={[Function]}
@@ -1103,7 +1115,6 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                                       defaultMessage="privacy policy"
                                       description="label of the privacy policy link"
                                       id="privacyPolicy"
-                                      values={Object {}}
                                     />
                                   </a>,
                                 }
@@ -1112,13 +1123,13 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
                               By browsing this website, you accept the 
                               <a
                                 href="privacypolicy"
+                                key=".1"
                                 onClick={[Function]}
                               >
                                 <FormattedMessage
                                   defaultMessage="privacy policy"
                                   description="label of the privacy policy link"
                                   id="privacyPolicy"
-                                  values={Object {}}
                                 >
                                   privacy policy
                                 </FormattedMessage>
@@ -1199,6 +1210,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
         }
         centered={false}
         className="modal-dialog-centered"
+        container="body"
         fade={true}
         isOpen={false}
         keyboard={true}
@@ -1213,6 +1225,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
         role="dialog"
         scrollable={false}
         toggle={[Function]}
+        trapFocus={false}
         unmountOnClose={true}
         zIndex={1050}
       />
@@ -1233,6 +1246,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
         }
         centered={false}
         className="modal-dialog-centered"
+        container="body"
         fade={true}
         isOpen={false}
         keyboard={true}
@@ -1248,6 +1262,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
         scrollable={false}
         size="lg"
         toggle={[Function]}
+        trapFocus={false}
         unmountOnClose={true}
         zIndex={1050}
       />
@@ -1266,6 +1281,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
             }
           }
           centered={false}
+          container="body"
           fade={true}
           isOpen={false}
           keyboard={true}
@@ -1280,6 +1296,7 @@ exports[`ModalLogin should render the ModalLogin 1`] = `
           role="dialog"
           scrollable={false}
           toggle={[Function]}
+          trapFocus={false}
           unmountOnClose={true}
           zIndex={1050}
         />

@@ -48,7 +48,7 @@ class StorageUpdaterService implements IStorageUpdaterService {
     const updateEntryPromises = equipments.map(async (equipment) => {
       try {
         const entries = await entryProxy.getStoredEntries(equipment._uiId);
-        const updatedEntries = entries.map((entry) => ({ ack: true, ...entry }));
+        const updatedEntries = entries.map((entry) => ({ ...entry, ack: true }));
         await storageService.setItem(entryProxy.getBaseEntryUrl(equipment._uiId), updatedEntries);
         log.info(`The entries for the equipment ${equipment._uiId} are updated`);
       } catch (error) {

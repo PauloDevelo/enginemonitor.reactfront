@@ -1,8 +1,6 @@
-
 import { mount } from 'enzyme';
 import React from 'react';
 import ignoredMessages from '../../../testHelpers/MockConsole';
-
 
 import EquipmentInfoNavItem from '../EquipmentInfoNavItem';
 

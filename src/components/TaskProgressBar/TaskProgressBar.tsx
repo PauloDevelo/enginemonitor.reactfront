@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React, { useEffect, useState } from 'react';
 
 import { Alert, Progress } from 'reactstrap';
@@ -15,6 +16,7 @@ type Type = {
     taskWithProgress: TaskWithProgress,
     title: 'syncInProgress' | 'rebuildInProgress',
     color: string,
+    // eslint-disable-next-line react/require-default-props
     className?: string,
 }
 
@@ -38,7 +40,7 @@ const TaskProgressBar = ({
       <div className="text-center"><FormattedMessage {...titles[title]} /></div>
       <Progress animated color={color} value={(syncContext.remaining * 100) / syncContext.total}>
         {syncContext.remaining}
-/
+        /
         {syncContext.total}
       </Progress>
     </Alert>

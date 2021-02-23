@@ -3,6 +3,8 @@ import localforage from 'localforage';
 import httpProxy from '../HttpProxy';
 import HttpError from '../../http/HttpError';
 
+import ignoredMessages from '../../testHelpers/MockConsole';
+
 import storageService from '../StorageService';
 import userContext from '../UserContext';
 import onlineManager from '../OnlineManager';
@@ -58,6 +60,7 @@ describe('Test ImageProxy', () => {
   function resetMockUserContext() {
     userContext.onImageRemoved.mockReset();
     userContext.onImageAdded.mockReset();
+    userContext.getCurrentUser.mockReset();
   }
 
   function resetMockSyncService() {
@@ -68,8 +71,14 @@ describe('Test ImageProxy', () => {
     actionManager.addAction.mockReset();
   }
 
+  beforeAll(() => {
+    ignoredMessages.length = 0;
+    ignoredMessages.push('timeout');
+  });
+
   beforeEach(() => {
     assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
+    userContext.getCurrentUser.mockImplementation(() => user);
   });
 
   afterEach(async () => {

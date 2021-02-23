@@ -102,13 +102,14 @@ describe('Test StorageService', () => {
   });
 
   describe('getItem', () => {
-    it('When we try to get an item from an undefined|null key, it should throw an exception', async (done) => {
+    it('When we try to get an item from an undefined|null key, it should throw an exception', async () => {
       try {
         // Act
         await storageService.getItem(undefined);
       } catch (error) {
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
     it('When we get an unknwon item, it should return undefined', async () => {
@@ -133,13 +134,14 @@ describe('Test StorageService', () => {
   });
 
   describe('setItem', () => {
-    it('When we try to set an item from an undefined|null key, it should throw an exception', async (done) => {
+    it('When we try to set an item from an undefined|null key, it should throw an exception', async () => {
       try {
         // Act
         await storageService.setItem(undefined, 'hello');
       } catch (error) {
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
     it('When we set an undefined item, it should erase the item and return undefined', async () => {
@@ -185,17 +187,18 @@ describe('Test StorageService', () => {
   });
 
   describe('getArray', () => {
-    it('When we try to get an array from an undefined|null key, it should throw an exception', async (done) => {
+    it('When we try to get an array from an undefined|null key, it should throw an exception', async () => {
       try {
         // Act
         await storageService.getArray(undefined);
       } catch (error) {
         // Assert
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
-    it('When we get an existing array, it should get it', async (done) => {
+    it('When we get an existing array, it should get it', async () => {
       // Arrange
       const data1 = { value: 'Ni Hao from Shenzhen' };
       const data2 = { value: 'Bonjour de Paris' };
@@ -209,10 +212,9 @@ describe('Test StorageService', () => {
 
       // Assert
       expect(storedArray).toEqual(array);
-      done();
     });
 
-    it('When we get an non existing array, it should returned undefined', async (done) => {
+    it('When we get an non existing array, it should returned undefined', async () => {
       // Arrange
       await storageService.setItem(key, undefined);
 
@@ -221,12 +223,11 @@ describe('Test StorageService', () => {
 
       // Assert
       expect(storedArray).toEqual([]);
-      done();
     });
   });
 
   describe('updateArray', () => {
-    it('When we try to update an array from an undefined|null key, it should throw an exception', async (done) => {
+    it('When we try to update an array from an undefined|null key, it should throw an exception', async () => {
       try {
         // Arrange
         const newData = { _uiId: 'uid_data2', name: 'data2', value: 'Good morning from London' };
@@ -235,11 +236,12 @@ describe('Test StorageService', () => {
         await storageService.updateArray(undefined, newData);
       } catch (error) {
         // Assert
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
-    it('When we try to update an array with an undefined element, it should throw an exception', async (done) => {
+    it('When we try to update an array with an undefined element, it should throw an exception', async () => {
       try {
         // Arrange
         const newData = undefined;
@@ -248,11 +250,12 @@ describe('Test StorageService', () => {
         await storageService.updateArray(key, newData);
       } catch (error) {
         // Assert
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
-    it('When updating an array of entity, the element passed in parameter should replace the stored item based on its _uiId', async (done) => {
+    it('When updating an array of entity, the element passed in parameter should replace the stored item based on its _uiId', async () => {
       // Arrange
       const data1 = { _uiId: 'uid_data1', name: 'data1', value: 'Ni Hao from Shenzhen' };
       const data2 = { _uiId: 'uid_data2', name: 'data2', value: 'Bonjour de Paris' };
@@ -271,10 +274,9 @@ describe('Test StorageService', () => {
 
       const storedData2 = storedArray.find((i) => i._uiId === newData2._uiId);
       expect(storedData2).toEqual(newData2);
-      done();
     });
 
-    it('When updating an non existing array of entity, the element passed in parameter should become the first element of this new array', async (done) => {
+    it('When updating an non existing array of entity, the element passed in parameter should become the first element of this new array', async () => {
       // Arrange
       await storageService.setItem(key, undefined);
 
@@ -289,10 +291,9 @@ describe('Test StorageService', () => {
 
       const storedData = storedArray.find((i) => i._uiId === newData._uiId);
       expect(storedData).toEqual(newData);
-      done();
     });
 
-    it('When updating an array of entity, with a new element passed in parameter, it should be added in the array', async (done) => {
+    it('When updating an array of entity, with a new element passed in parameter, it should be added in the array', async () => {
       // Arrange
       const data1 = { _uiId: 'uid_data1', name: 'data1', value: 'Ni Hao from Shenzhen' };
       const data2 = { _uiId: 'uid_data2', name: 'data2', value: 'Bonjour de Paris' };
@@ -311,12 +312,11 @@ describe('Test StorageService', () => {
 
       const storedData = storedArray.find((i) => i._uiId === newData._uiId);
       expect(storedData).toEqual(newData);
-      done();
     });
   });
 
   describe('removeItemInArray', () => {
-    it('When we try to remove an item in an array from an undefined|null key, it should throw an exception', async (done) => {
+    it('When we try to remove an item in an array from an undefined|null key, it should throw an exception', async () => {
       try {
         // Arrange
 
@@ -324,11 +324,12 @@ describe('Test StorageService', () => {
         await storageService.removeItemInArray(undefined, 'uid_data2');
       } catch (error) {
         // Assert
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
-    it('When we try to remove an item in an array with an undefined element, it should throw an exception', async (done) => {
+    it('When we try to remove an item in an array with an undefined element, it should throw an exception', async () => {
       try {
         // Arrange
 
@@ -336,11 +337,12 @@ describe('Test StorageService', () => {
         await storageService.removeItemInArray(key, undefined);
       } catch (error) {
         // Assert
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
-    it('When removing an item from an array, it should remove this item in the array', async (done) => {
+    it('When removing an item from an array, it should remove this item in the array', async () => {
       // Arrange
       const data1 = { _uiId: 'uid_data1', name: 'data1', value: 'Ni Hao from Shenzhen' };
       const data2 = { _uiId: 'uid_data2', name: 'data2', value: 'Bonjour de Paris' };
@@ -357,10 +359,9 @@ describe('Test StorageService', () => {
 
       const storedData2 = storedArray.find((i) => i._uiId === data2._uiId);
       expect(storedData2).toBeUndefined();
-      done();
     });
 
-    it('When removing an non existing item in an array of entity, it should throw an exception', async (done) => {
+    it('When removing an non existing item in an array of entity, it should throw an exception', async () => {
       // Arrange
       const data1 = { _uiId: 'uid_data1', name: 'data1', value: 'Ni Hao from Shenzhen' };
       const data2 = { _uiId: 'uid_data2', name: 'data2', value: 'Bonjour de Paris' };
@@ -374,8 +375,9 @@ describe('Test StorageService', () => {
         await storageService.removeItemInArray(key, 'uid_data4');
       } catch (error) {
         // Assert
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
   });
 });

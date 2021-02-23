@@ -25,6 +25,7 @@ exports[`DeleteUserModal Should not call onUserDeleted when loaded 1`] = `
         }
       }
       centered={false}
+      container="body"
       fade={true}
       isOpen={true}
       keyboard={true}
@@ -39,6 +40,7 @@ exports[`DeleteUserModal Should not call onUserDeleted when loaded 1`] = `
       role="dialog"
       scrollable={false}
       toggle={[Function]}
+      trapFocus={false}
       unmountOnClose={true}
       zIndex={1050}
     >
@@ -304,7 +306,6 @@ exports[`DeleteUserModal Should not call onUserDeleted when loaded 1`] = `
                               defaultMessage="Deletion of all the user's data"
                               description="Title of the delete user modal"
                               id="deleteUserModalTitle"
-                              values={Object {}}
                             >
                               Deletion of all the user's data
                             </FormattedMessage>
@@ -334,7 +335,6 @@ exports[`DeleteUserModal Should not call onUserDeleted when loaded 1`] = `
                               defaultMessage="All the data you input in Equipment Maintenance website will be deleted. It includes your asset, equipments, tasks, and entries and all the images you might have uploaded. "
                               description="Confirmation message before deleting the user"
                               id="deleteUserConfirmationMessage1"
-                              values={Object {}}
                             >
                               All the data you input in Equipment Maintenance website will be deleted. It includes your asset, equipments, tasks, and entries and all the images you might have uploaded. 
                             </FormattedMessage>
@@ -344,7 +344,6 @@ exports[`DeleteUserModal Should not call onUserDeleted when loaded 1`] = `
                               defaultMessage="After the deletion, you will be logged out from Equipment Maintenance and you won't be able to reconnect."
                               description="Confirmation message before deleting the user"
                               id="deleteUserConfirmationMessage2"
-                              values={Object {}}
                             >
                               After the deletion, you will be logged out from Equipment Maintenance and you won't be able to reconnect.
                             </FormattedMessage>
@@ -354,7 +353,6 @@ exports[`DeleteUserModal Should not call onUserDeleted when loaded 1`] = `
                               defaultMessage="If you want to keep proceeding, please type yes below:"
                               description="Confirmation message before deleting the user"
                               id="deleteUserConfirmationMessage3"
-                              values={Object {}}
                             >
                               If you want to keep proceeding, please type yes below:
                             </FormattedMessage>
@@ -412,7 +410,6 @@ exports[`DeleteUserModal Should not call onUserDeleted when loaded 1`] = `
                                   defaultMessage="Delete all the user's data"
                                   description="Delete button"
                                   id="deleteUserData"
-                                  values={Object {}}
                                 >
                                   Delete all the user's data
                                 </FormattedMessage>
@@ -434,7 +431,6 @@ exports[`DeleteUserModal Should not call onUserDeleted when loaded 1`] = `
                                 defaultMessage="Cancel"
                                 description="Cancel button"
                                 id="cancel"
-                                values={Object {}}
                               >
                                 Cancel
                               </FormattedMessage>

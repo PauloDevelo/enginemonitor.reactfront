@@ -53,7 +53,6 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
               defaultMessage="installed on "
               description="label"
               id="installedOn"
-              values={Object {}}
             >
               installed on 
             </FormattedMessage>
@@ -161,7 +160,6 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
                     defaultMessage="Gallery"
                     description="Gallery title"
                     id="gallerytitle"
-                    values={Object {}}
                   >
                     Gallery
                   </FormattedMessage>
@@ -328,6 +326,7 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
                 }
               }
               centered={false}
+              container="body"
               fade={true}
               isOpen={false}
               keyboard={true}
@@ -342,6 +341,7 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
               role="dialog"
               scrollable={false}
               toggle={[Function]}
+              trapFocus={false}
               unmountOnClose={true}
               zIndex={1050}
             />
@@ -378,6 +378,7 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
                 }
                 centered={false}
                 className="modal-dialog-centered"
+                container="body"
                 fade={true}
                 isOpen={false}
                 keyboard={true}
@@ -392,6 +393,7 @@ exports[`EquipmentInfoTab Should render an equipment 1`] = `
                 role="dialog"
                 scrollable={false}
                 toggle={[Function]}
+                trapFocus={false}
                 unmountOnClose={true}
                 zIndex={1050}
               />

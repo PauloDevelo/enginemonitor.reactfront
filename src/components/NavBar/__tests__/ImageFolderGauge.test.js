@@ -19,7 +19,7 @@ describe('ImageFolderGauge', () => {
     ignoredMessages.push('Could not find required `intl` object.');
   });
 
-  afterEach(async () => {
+  afterEach(() => {
   });
 
   const imageFolderStatus = [
@@ -29,7 +29,7 @@ describe('ImageFolderGauge', () => {
   ];
 
   describe.each(imageFolderStatus)('Render', ({ storageSizeInMB, storageSizeLimitInMB }) => {
-    it(`should display the image gauge when ${storageSizeInMB} Mb are used over ${storageSizeLimitInMB}`, async (done) => {
+    it(`should display the image gauge when ${storageSizeInMB} Mb are used over ${storageSizeLimitInMB}`, (done) => {
       // Arrange
 
       // Act

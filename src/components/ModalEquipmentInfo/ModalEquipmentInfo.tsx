@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
+// eslint-disable-next-line no-use-before-define
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter,
@@ -32,6 +34,7 @@ onEquipmentInfoSaved: (equipment: EquipmentModel) => void,
 onEquipmentDeleted: (equipment: EquipmentModel) => void,
 visible: boolean,
 toggle: () => void,
+// eslint-disable-next-line react/require-default-props
 className?: string
 }
 
@@ -50,7 +53,6 @@ const ModalEquipmentInfo = ({
       onDeleteCallBack: onEquipmentDeleted,
     },
   );
-
 
   const [isCreation, setIsCreation] = useState(false);
 

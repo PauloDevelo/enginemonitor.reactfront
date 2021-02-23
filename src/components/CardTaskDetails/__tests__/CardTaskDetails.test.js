@@ -17,7 +17,7 @@ describe('CardTaskDetails', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
     ignoredMessages.push('test was not wrapped in act(...)');
-    ignoredMessages.push('[React Intl Error MISSING_TRANSLATION]');
+    ignoredMessages.push('MISSING_TRANSLATION');
   });
 
   const equipment = {

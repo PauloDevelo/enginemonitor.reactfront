@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React, {
   useCallback, useState, useEffect,
 } from 'react';
@@ -32,7 +33,6 @@ import './NavBar.css';
 import jsonMessages from './NavBar.messages.json';
 
 const navBarMsg = defineMessages(jsonMessages);
-
 
 const NavBar = () => {
   const currentUser = userContext.getCurrentUser();

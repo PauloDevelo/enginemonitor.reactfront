@@ -6,6 +6,8 @@ import actionManager, { ActionType } from '../ActionManager';
 import assetManager from '../AssetManager';
 import userContext from '../UserContext';
 
+import ignoredMessages from '../../testHelpers/MockConsole';
+
 import { createDefaultUser } from '../../helpers/UserHelper';
 import { createImageModel, base64ToBlob } from '../../helpers/ImageHelper';
 import progressiveHttpProxy from '../ProgressiveHttpProxy';
@@ -42,6 +44,11 @@ describe('Test ProgressiveHttpProxy', () => {
   function resetMockActionManager() {
     actionManager.addAction.mockReset();
   }
+
+  beforeAll(() => {
+    ignoredMessages.length = 0;
+    ignoredMessages.push('timeout');
+  });
 
   beforeEach(() => {
     assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
@@ -129,7 +136,7 @@ describe('Test ProgressiveHttpProxy', () => {
       });
     });
 
-    it('should bubble up unexpected exception from the post query', async (done) => {
+    it('should bubble up unexpected exception from the post query', async () => {
       // Arrange
       const imageToCreate = createImageModel('parentUiId');
       imageToCreate.name = 'my first image';
@@ -155,11 +162,11 @@ describe('Test ProgressiveHttpProxy', () => {
         expect(error.message).toBe('An unexpected exception');
         expect(httpProxy.postImage).toBeCalledTimes(1);
         expect(actionManager.addAction).toBeCalledTimes(0);
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
   });
-
 
   describe('postAndUpdate', () => {
     const postAndUpdateItems = [
@@ -176,7 +183,7 @@ describe('Test ProgressiveHttpProxy', () => {
     describe.each(postAndUpdateItems)('postAndUpdate', ({
       throwAnHttpConnAborted, isOnlineAndSync, addActionNbCall, expectedHttpPostCall,
     }) => {
-      it('shoud call the http proxy or add the expected action in action manager', async (done) => {
+      it('shoud call the http proxy or add the expected action in action manager', async () => {
         // Arrange
         const dataToPost = { data: 'some data' };
         const urlToPost = 'an_url';
@@ -215,11 +222,10 @@ describe('Test ProgressiveHttpProxy', () => {
           expect(actionManager.addAction.mock.calls[0][0].type).toStrictEqual(ActionType.Post);
           expect(actionManager.addAction.mock.calls[0][0].data.keyname).toStrictEqual(dataToPost);
         }
-        done();
       });
     });
 
-    it('shoud bubble up unexpected exception from httpProxy', async (done) => {
+    it('shoud bubble up unexpected exception from httpProxy', async () => {
       // Arrange
       const dataToPost = { data: 'some data' };
       const urlToPost = 'an_url';
@@ -241,8 +247,9 @@ describe('Test ProgressiveHttpProxy', () => {
         expect(error.message).toBe('unexpected error');
         expect(httpProxy.post).toBeCalledTimes(1);
         expect(actionManager.addAction).toBeCalledTimes(0);
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
   });
 
@@ -261,7 +268,7 @@ describe('Test ProgressiveHttpProxy', () => {
     describe.each(deleteAndUpdateItems)('deleteAndUpdate', ({
       throwAnHttpConnAborted, isOnlineAndSync, addActionNbCall, expectedHttpDeleteCall,
     }) => {
-      it('shoud call the http proxy or add the expected action in action manager', async (done) => {
+      it('shoud call the http proxy or add the expected action in action manager', async () => {
         // Arrange
         const dataToDelete = { data: 'some data' };
         const urlToDelete = 'an_url';
@@ -298,11 +305,10 @@ describe('Test ProgressiveHttpProxy', () => {
           expect(actionManager.addAction.mock.calls[0][0].key).toStrictEqual(urlToDelete);
           expect(actionManager.addAction.mock.calls[0][0].type).toStrictEqual(ActionType.Delete);
         }
-        done();
       });
     });
 
-    it('should bubble up unexpected exception', async (done) => {
+    it('should bubble up unexpected exception', async () => {
       // Arrange
       const urlToDelete = 'an_url';
       const updateFn = jest.fn((data) => data);
@@ -323,11 +329,11 @@ describe('Test ProgressiveHttpProxy', () => {
         expect(error.message).toBe('Unexpected exception');
         expect(httpProxy.deleteReq).toBeCalledTimes(1);
         expect(actionManager.addAction).toBeCalledTimes(0);
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
   });
-
 
   describe('getOnlineFirst', () => {
     const getItemOnlineFirstItems = [
@@ -344,7 +350,7 @@ describe('Test ProgressiveHttpProxy', () => {
     describe.each(getItemOnlineFirstItems)('getOnlineFirst', ({
       throwAnHttpConnAborted, isOnlineAndSync, keyname, expectedGetItemCall, expectedHttpGetCall, expectedSetItemCall,
     }) => {
-      it('shoud call the http proxy or call the storageService', async (done) => {
+      it('shoud call the http proxy or call the storageService', async () => {
         // Arrange
         const dataToGet = { data: 'some data' };
         const urlToGet = 'an_url';
@@ -389,11 +395,10 @@ describe('Test ProgressiveHttpProxy', () => {
         if (expectedGetItemCall > 0) {
           expect(storageService.getItem.mock.calls[0][0]).toStrictEqual(urlToGet);
         }
-        done();
       });
     });
 
-    it('shoud bubble up unexpected exception', async (done) => {
+    it('shoud bubble up unexpected exception', async () => {
       // Arrange
       const dataToGet = { data: 'some data' };
       const urlToGet = 'an_url';
@@ -417,11 +422,11 @@ describe('Test ProgressiveHttpProxy', () => {
         expect(httpProxy.get).toBeCalledTimes(1);
         expect(storageService.setItem).toBeCalledTimes(0);
         expect(storageService.getItem).toBeCalledTimes(0);
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
   });
-
 
   describe('getArrayOnlineFirst', () => {
     const getArrayOnlineFirstItems = [
@@ -486,7 +491,7 @@ describe('Test ProgressiveHttpProxy', () => {
       });
     });
 
-    it('should bubble up the exception', async (done) => {
+    it('should bubble up the exception', async () => {
       // Arrange
       const urlToGet = 'an_url';
 
@@ -502,8 +507,9 @@ describe('Test ProgressiveHttpProxy', () => {
       } catch (error) {
         // Assert
         expect(error.message).toEqual('An unexpected error');
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
   });
 
@@ -514,7 +520,7 @@ describe('Test ProgressiveHttpProxy', () => {
       assetManager.getUserCredentials.mockImplementation(() => ({ readonly: true }));
     });
 
-    it('shoud just throw an exception http with a credential error when calling postandupdate', async (done) => {
+    it('shoud just throw an exception http with a credential error when calling postandupdate', async () => {
       // Arrange
       const dataToPost = { data: 'some data' };
       const urlToPost = 'an_url';
@@ -536,11 +542,12 @@ describe('Test ProgressiveHttpProxy', () => {
 
         expect(httpProxy.post).toBeCalledTimes(0);
         expect(actionManager.addAction).toBeCalledTimes(0);
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
-    it('shoud just throw an exception http with a credential error when calling deleteAndUpdate', async (done) => {
+    it('shoud just throw an exception http with a credential error when calling deleteAndUpdate', async () => {
       // Arrange
       const dataToDelete = { data: 'some data' };
       const urlToDelete = 'an_url';
@@ -566,11 +573,12 @@ describe('Test ProgressiveHttpProxy', () => {
 
         expect(httpProxy.deleteReq).toBeCalledTimes(0);
         expect(actionManager.addAction).toBeCalledTimes(0);
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
-    it('shoud just throw an exception http with a credential error when calling postNewImage', async (done) => {
+    it('shoud just throw an exception http with a credential error when calling postNewImage', async () => {
       // Arrange
       const imageToCreate = createImageModel('parentUiId');
       imageToCreate.name = 'my first image';
@@ -596,8 +604,9 @@ describe('Test ProgressiveHttpProxy', () => {
 
         expect(httpProxy.postImage).toBeCalledTimes(0);
         expect(actionManager.addAction).toBeCalledTimes(0);
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
   });
 });

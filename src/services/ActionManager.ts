@@ -1,23 +1,19 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-classes-per-file */
 import * as log from 'loglevel';
-// eslint-disable-next-line no-unused-vars
 import { CancelTokenSource } from 'axios';
 import httpProxy from './HttpProxy';
 
-// eslint-disable-next-line no-unused-vars
 import storageService, { IUserStorageListener } from './StorageService';
-// eslint-disable-next-line no-unused-vars
 import { ImageModel } from '../types/Types';
 
 import { dataURItoBlob } from '../helpers/ImageHelper';
 import HttpError from '../http/HttpError';
 
+// eslint-disable-next-line no-shadow
 export enum ActionType{
-    // eslint-disable-next-line no-unused-vars
     Post,
-    // eslint-disable-next-line no-unused-vars
     Delete,
-    // eslint-disable-next-line no-unused-vars
     CreateImage,
 }
 
@@ -61,11 +57,11 @@ class ActionManager implements IActionManager, IUserStorageListener {
       }
     }
 
-    registerOnActionManagerChanged(listener: (actionCounter: number) => void):void{
+    registerOnActionManagerChanged(listener: (actionCounter: number) => void):void {
       this.listeners.push(listener);
     }
 
-    unregisterOnActionManagerChanged(listenerToRemove: (actionCounter: number) => void):void{
+    unregisterOnActionManagerChanged(listenerToRemove: (actionCounter: number) => void):void {
       this.listeners = this.listeners.filter((listener) => listener !== listenerToRemove);
     }
 

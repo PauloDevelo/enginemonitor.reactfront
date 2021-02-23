@@ -1,4 +1,5 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { mount } from 'enzyme';
 import ignoredMessages from '../../../testHelpers/MockConsole';
 
@@ -14,13 +15,17 @@ const defaultMessage = {
 describe('MyInput', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
-    ignoredMessages.push('[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.');
+    ignoredMessages.push('MISSING_TRANSLATION');
   });
 
   it('of type text should render as expected', () => {
     // Arrange
 
-    const wrapper = mount(<MyInput name="name" label={defaultMessage} type="text" required />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <MyInput name="name" label={defaultMessage} type="text" required />
+      </IntlProvider>,
+    );
 
     // Assert
     expect(wrapper).toMatchSnapshot();
@@ -33,9 +38,14 @@ describe('MyInput', () => {
 
   it('of type text with an error should render as expected', async () => {
     // Arrange
-    const wrapper = mount(<MyInput name="name" label={defaultMessage} type="text" required validationTrigger={0} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <MyInput name="name" label={defaultMessage} type="text" required validationTrigger={0} />
+      </IntlProvider>,
+    );
+
     const newProps = {
-      name: 'name', label: defaultMessage, type: 'text', required: true, validationTrigger: 1,
+      children: <MyInput name="name" label={defaultMessage} type="text" required validationTrigger={1} checked={false} />,
     };
 
     // Act
@@ -50,7 +60,11 @@ describe('MyInput', () => {
   it('of type checkox should render as expected', () => {
     // Arrange
 
-    const wrapper = mount(<MyInput name="name" label={defaultMessage} type="checkbox" required />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <MyInput name="name" label={defaultMessage} type="checkbox" required />
+      </IntlProvider>,
+    );
 
     // Assert
     expect(wrapper).toMatchSnapshot();
@@ -63,13 +77,14 @@ describe('MyInput', () => {
 
   it('of type checkox with an error should render as expected', async () => {
     // Arrange
-    const newprops = {
-      name: 'name', label: defaultMessage, type: 'checkbox', required: true, validationTrigger: 1,
-    };
-    const wrapper = mount(<MyInput name="name" label={defaultMessage} type="checkbox" required validationTrigger={0} checked={false} />);
+    const wrapper = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <MyInput name="name" label={defaultMessage} type="checkbox" required validationTrigger={0} checked={false} />
+      </IntlProvider>,
+    );
 
     // Act
-    wrapper.setProps(newprops);
+    wrapper.setProps({ children: <MyInput name="name" label={defaultMessage} type="checkbox" required validationTrigger={1} checked={false} /> });
     await updateWrapper(wrapper);
 
     // Assert

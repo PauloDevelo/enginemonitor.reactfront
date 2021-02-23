@@ -1,5 +1,6 @@
 import * as log from 'loglevel';
 import 'bootstrap/dist/css/bootstrap.min.css';
+// eslint-disable-next-line no-use-before-define
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IntlProvider } from 'react-intl';
@@ -10,7 +11,6 @@ import './index.css';
 import * as Sentry from '@sentry/browser';
 import App from './components/App/App';
 import * as serviceWorker from './serviceWorker.js';
-
 
 import messagesFr from './translations/fr.json';
 import messagesEn from './translations/en.json';

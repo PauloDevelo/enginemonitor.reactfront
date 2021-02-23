@@ -1,4 +1,5 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable react/require-default-props */
+// eslint-disable-next-line no-use-before-define
 import React, {
   useRef, useState, useEffect, useCallback,
 } from 'react';
@@ -6,6 +7,7 @@ import React, {
 type Props = {
   loader: any,
   src: string,
+  // eslint-disable-next-line no-undef
   storage: LocalForage,
   alt?: string,
   onClick?:()=>void,
@@ -13,6 +15,7 @@ type Props = {
   style?: any,
 }
 
+// eslint-disable-next-line no-undef
 export const canvasImageSourceToDataURL = (img: CanvasImageSource) => {
   const canvas = document.createElement('canvas');
   canvas.width = img.width as number;
@@ -52,7 +55,7 @@ const Img = ({
   const loadImg = useCallback(async () => {
     const keys = await storage.keys();
     if (keys.includes(src)) {
-      const base64Image = await storage.getItem<string>(src);
+      const base64Image = await storage.getItem<string>(src) as string;
       setSource(base64Image);
       setState({ isLoaded: true, isLoading: false });
     } else {
@@ -66,17 +69,8 @@ const Img = ({
   const unloadImg = useCallback(() => {
     if (image.current) {
       image.current.onload = null;
-
       // abort any current downloads https://github.com/mbrevda/react-image/pull/223
       image.current.src = '';
-
-      try {
-        delete image.current.src;
-      } catch (e) {
-        // On Safari in Strict mode this will throw an exception,
-        //  - https://github.com/mbrevda/react-image/issues/187
-        // We don't need to do anything about it.
-      }
       image.current = undefined;
     }
   }, []);

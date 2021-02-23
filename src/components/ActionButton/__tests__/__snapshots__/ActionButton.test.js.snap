@@ -1,93 +1,113 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Component ActionButton should render as a simple button disable with the danger color and a spinner 1`] = `
-<ActionButton
-  color="danger"
-  isActing={true}
-  message={
-    Object {
-      "defaultMessage": "defaultMessage",
-      "description": "description",
-      "id": "message",
-    }
-  }
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
-  <Button
+  <ActionButton
     color="danger"
-    disabled={true}
-    tag="button"
-    type="button"
+    isActing={true}
+    message={
+      Object {
+        "defaultMessage": "defaultMessage",
+        "description": "description",
+        "id": "message",
+      }
+    }
   >
-    <button
-      aria-label={null}
-      className="btn btn-danger disabled"
+    <Button
+      color="danger"
       disabled={true}
-      onClick={[Function]}
+      tag="button"
       type="button"
     >
-      <FormattedMessage
-        defaultMessage="defaultMessage"
-        description="description"
-        id="message"
-        values={Object {}}
+      <button
+        aria-label={null}
+        className="btn btn-danger disabled"
+        disabled={true}
+        onClick={[Function]}
+        type="button"
       >
-        defaultMessage
-      </FormattedMessage>
-       
-      <Spinner
-        color="secondary"
-        size="sm"
-        tag="div"
-        type="border"
-      >
-        <div
-          className="spinner-border-sm spinner-border text-secondary"
-          role="status"
+        <FormattedMessage
+          defaultMessage="defaultMessage"
+          description="description"
+          id="message"
         >
-          <span
-            className="sr-only"
+          defaultMessage
+        </FormattedMessage>
+         
+        <Spinner
+          color="secondary"
+          size="sm"
+          tag="div"
+          type="border"
+        >
+          <div
+            className="spinner-border-sm spinner-border text-secondary"
+            role="status"
           >
-            Loading...
-          </span>
-        </div>
-      </Spinner>
-    </button>
-  </Button>
-</ActionButton>
+            <span
+              className="sr-only"
+            >
+              Loading...
+            </span>
+          </div>
+        </Spinner>
+      </button>
+    </Button>
+  </ActionButton>
+</IntlProvider>
 `;
 
 exports[`Component ActionButton should render as a simple button enable with the danger color and without a spinner 1`] = `
-<ActionButton
-  color="danger"
-  isActing={false}
-  message={
-    Object {
-      "defaultMessage": "defaultMessage",
-      "description": "description",
-      "id": "message",
-    }
-  }
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
-  <Button
+  <ActionButton
     color="danger"
-    tag="button"
-    type="button"
+    isActing={false}
+    message={
+      Object {
+        "defaultMessage": "defaultMessage",
+        "description": "description",
+        "id": "message",
+      }
+    }
   >
-    <button
-      aria-label={null}
-      className="btn btn-danger"
-      onClick={[Function]}
+    <Button
+      color="danger"
+      tag="button"
       type="button"
     >
-      <FormattedMessage
-        defaultMessage="defaultMessage"
-        description="description"
-        id="message"
-        values={Object {}}
+      <button
+        aria-label={null}
+        className="btn btn-danger"
+        onClick={[Function]}
+        type="button"
       >
-        defaultMessage
-      </FormattedMessage>
-    </button>
-  </Button>
-</ActionButton>
+        <FormattedMessage
+          defaultMessage="defaultMessage"
+          description="description"
+          id="message"
+        >
+          defaultMessage
+        </FormattedMessage>
+      </button>
+    </Button>
+  </ActionButton>
+</IntlProvider>
 `;

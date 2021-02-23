@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React, { useState, useCallback } from 'react';
 import { Nav } from 'reactstrap';
 
@@ -7,7 +8,6 @@ import TaskTable from '../TaskTable/TaskTable';
 import EquipmentHistoryTable from '../EquipmentHistoryTable/EquipmentHistoryTable';
 import MyNavItem from './MyNavItem';
 
-// eslint-disable-next-line no-unused-vars
 import { TaskModel } from '../../types/Types';
 
 import jsonMessages from './TaskTabPanes.messages.json';
@@ -15,7 +15,9 @@ import jsonMessages from './TaskTabPanes.messages.json';
 const taskTabPanesMsg = defineMessages(jsonMessages);
 
 type Props = {
+    // eslint-disable-next-line react/require-default-props
     className?: string,
+    // eslint-disable-next-line no-unused-vars
     changeCurrentTask: (task: TaskModel) => void,
 };
 

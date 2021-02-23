@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/require-default-props */
+// eslint-disable-next-line no-use-before-define
 import React, {
   useState, useRef, useEffect, useMemo, useCallback,
 } from 'react';
@@ -20,6 +23,7 @@ min?: number,
 max?: number,
 required?: boolean,
 readOnly?: boolean,
+// eslint-disable-next-line no-undef
 children?: JSX.Element[] | JSX.Element,
 value?: string | number,
 checked?: boolean

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React, { useState, useEffect } from 'react';
 import { Progress } from 'reactstrap';
 
@@ -32,10 +33,10 @@ const ImageFolderGauge = ({ storageSizeInMB, storageSizeLimitInMB }:Props) => {
     <Progress color={color} value={storageSizeInMB} max={storageSizeLimitInMB}>
       {formatMbInCurrentCulture(storageSizeInMB)}
       {' '}
-of
+      of
       {' '}
       {formatMbInCurrentCulture(storageSizeLimitInMB)}
-MB
+      MB
     </Progress>
   );
 };

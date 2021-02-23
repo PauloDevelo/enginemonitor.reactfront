@@ -1,6 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import * as log from 'loglevel';
 
+// eslint-disable-next-line no-use-before-define
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
@@ -549,6 +550,7 @@ class ReactImageLightbox extends Component {
   /**
    * Handle user keyboard actions
    */
+  // eslint-disable-next-line react/sort-comp
   handleKeyInput(event) {
     event.stopPropagation();
 
@@ -1331,7 +1333,7 @@ class ReactImageLightbox extends Component {
       }
 
       // support IE 9 and 11
-      const hasTrueValue = object => Object.keys(object).some((key) => object[key]);
+      const hasTrueValue = (object) => Object.keys(object).some((key) => object[key]);
 
       // when error on one of the loads then push custom error stuff
       if (bestImageInfo === null && hasTrueValue(loadErrorStatus)) {

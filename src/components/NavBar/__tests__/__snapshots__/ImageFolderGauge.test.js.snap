@@ -6,17 +6,21 @@ exports[`ImageFolderGauge Render should display the image gauge when 35 Mb are u
   storageSizeLimitInMB={100}
 >
   <Progress
+    barStyle={Object {}}
     color="success"
     max={100}
+    min={0}
+    style={Object {}}
     tag="div"
     value={35}
   >
     <div
       className="progress"
+      style={Object {}}
     >
       <div
         aria-valuemax={100}
-        aria-valuemin="0"
+        aria-valuemin={0}
         aria-valuenow={35}
         className="progress-bar bg-success"
         role="progressbar"
@@ -44,17 +48,21 @@ exports[`ImageFolderGauge Render should display the image gauge when 60 Mb are u
   storageSizeLimitInMB={100}
 >
   <Progress
+    barStyle={Object {}}
     color="warning"
     max={100}
+    min={0}
+    style={Object {}}
     tag="div"
     value={60}
   >
     <div
       className="progress"
+      style={Object {}}
     >
       <div
         aria-valuemax={100}
-        aria-valuemin="0"
+        aria-valuemin={0}
         aria-valuenow={60}
         className="progress-bar bg-warning"
         role="progressbar"
@@ -82,17 +90,21 @@ exports[`ImageFolderGauge Render should display the image gauge when 85 Mb are u
   storageSizeLimitInMB={100}
 >
   <Progress
+    barStyle={Object {}}
     color="danger"
     max={100}
+    min={0}
+    style={Object {}}
     tag="div"
     value={85}
   >
     <div
       className="progress"
+      style={Object {}}
     >
       <div
         aria-valuemax={100}
-        aria-valuemin="0"
+        aria-valuemin={0}
         aria-valuenow={85}
         className="progress-bar bg-danger"
         role="progressbar"

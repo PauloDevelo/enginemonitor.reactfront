@@ -2,7 +2,6 @@ import axios from 'axios';
 import localforage from 'localforage';
 import ignoredMessages from '../../testHelpers/MockConsole';
 
-
 import httpProxy from '../HttpProxy';
 import storageService from '../StorageService';
 
@@ -64,12 +63,11 @@ describe('Test ActionManager', () => {
     await storageService.removeItem('my_thumbnail_url');
     await storageService.removeItem('my_image_url');
 
-
     clearMockHttpProxy();
   });
 
   describe('addAction', () => {
-    it('when adding 2 actions, we should get 2 actions in the action list.', async (done) => {
+    it('when adding 2 actions, we should get 2 actions in the action list.', async () => {
       // Arrange
 
       // Act
@@ -82,12 +80,11 @@ describe('Test ActionManager', () => {
       expect(listener.mock.calls[1][0]).toEqual(2);
 
       expect(actionManager.countAction()).toBe(2);
-      done();
     });
   });
 
   describe('getNextActionToPerform', () => {
-    it('When adding 2 actions, getNextActionToPerform should return the first added action.', async (done) => {
+    it('When adding 2 actions, getNextActionToPerform should return the first added action.', async () => {
       // Arrange
       await actionManager.addAction(actionToAdd1);
       await actionManager.addAction(actionToAdd2);
@@ -105,10 +102,9 @@ describe('Test ActionManager', () => {
       expect(actions.length).toBe(2);
       expect(actions[0]).toEqual(actionToAdd1);
       expect(actions[1]).toEqual(actionToAdd2);
-      done();
     });
 
-    it('When there is no action to perform, getNextActionToPerform should throw an exception.', async (done) => {
+    it('When there is no action to perform, getNextActionToPerform should throw an exception.', async () => {
       try {
         // Arrange
 
@@ -118,7 +114,6 @@ describe('Test ActionManager', () => {
         expect(listener).toHaveBeenCalledTimes(0);
         expect(ex).toBeInstanceOf(NoActionPendingError);
         expect(ex.message).toEqual("There isn't pending action anymore");
-        done();
       }
     });
   });
@@ -161,7 +156,7 @@ describe('Test ActionManager', () => {
       expect(actions.length).toBe(0);
     });
 
-    it('Should throw a NoActionPending exception', async (done) => {
+    it('Should throw a NoActionPending exception', async () => {
       // Arrange
       listener.mockReset();
 
@@ -179,8 +174,10 @@ describe('Test ActionManager', () => {
 
         const actions = await storageService.getArray('history');
         expect(actions.length).toBe(0);
-        done();
+        return;
       }
+
+      expect(true).toBeFalsy();
     });
   });
 
@@ -249,7 +246,7 @@ describe('Test ActionManager', () => {
       expect(httpProxy.post.mock.calls[0][2].timeout).toBeUndefined();
     });
 
-    it('when performing a failing post action it should bubble up', async (done) => {
+    it('when performing a failing post action it should bubble up', async () => {
       // Arrange
       httpProxy.post.mockImplementation(async () => {
         throw new Error('unexpected error');
@@ -261,8 +258,9 @@ describe('Test ActionManager', () => {
       } catch (error) {
         // Assert
         expect(error.message).toEqual('unexpected error');
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
     it('when performing a delete action, it should call the httpProxy.delete function with the correct params', async () => {
@@ -326,7 +324,7 @@ describe('Test ActionManager', () => {
       expect(httpProxy.deleteReq).toBeCalledTimes(1);
     });
 
-    it('when performing a delete action that fails the exception should bubble up', async (done) => {
+    it('when performing a delete action that fails the exception should bubble up', async () => {
       // Arrange
       httpProxy.deleteReq.mockImplementation(async () => {
         throw new Error('Unexpected exception');
@@ -343,11 +341,12 @@ describe('Test ActionManager', () => {
       } catch (error) {
         // Assert
         expect(error.message).toEqual('Unexpected exception');
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
-    it('when performing a create image action, it should call the httpProxy.postImage function with the correct params', async (done) => {
+    it('when performing a create image action, it should call the httpProxy.postImage function with the correct params', async () => {
       // Arrange
       httpProxy.postImage.mockImplementation(async () => {});
 
@@ -380,10 +379,9 @@ describe('Test ActionManager', () => {
       expect(httpProxy.postImage.mock.calls[0][0]).toEqual(actionToCreateImage.key);
       expect(httpProxy.postImage.mock.calls[0][1]).toEqual(actionToCreateImage.data);
       expect(httpProxy.postImage.mock.calls[0][4].timeout).toBeUndefined();
-      done();
     });
 
-    it('when performing a failing create image action, the exception should bubble up', async (done) => {
+    it('when performing a failing create image action, the exception should bubble up', async () => {
       // Arrange
       httpProxy.postImage.mockImplementation(async () => {
         throw new Error('Unexpected error');
@@ -417,11 +415,12 @@ describe('Test ActionManager', () => {
       } catch (error) {
         // Assert
         expect(error.message).toEqual('Unexpected error');
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
-    it('when performing a create image action although the urls are not in the storage anymore, it should not call the httpProxy.postImage function', async (done) => {
+    it('when performing a create image action although the urls are not in the storage anymore, it should not call the httpProxy.postImage function', async () => {
       // Arrange
       jest.spyOn(httpProxy, 'postImage');
       httpProxy.createCancelTokenSource.mockImplementation(() => ({ token: {} }));
@@ -446,10 +445,9 @@ describe('Test ActionManager', () => {
 
       // Assert
       expect(httpProxy.postImage).toBeCalledTimes(0);
-      done();
     });
 
-    it('when performing a unknown action, it should not call any httpProxy function but throw an exception', async (done) => {
+    it('when performing a unknown action, it should not call any httpProxy function but throw an exception', async () => {
       // Arrange
       jest.spyOn(httpProxy, 'post');
       jest.spyOn(httpProxy, 'deleteReq');
@@ -469,13 +467,14 @@ describe('Test ActionManager', () => {
         expect(httpProxy.post).toHaveBeenCalledTimes(0);
         expect(httpProxy.deleteReq).toHaveBeenCalledTimes(0);
         expect(httpProxy.postImage).toHaveBeenCalledTimes(0);
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
   });
 
   describe('Cancel action', () => {
-    it('should be without consequence to cancel although no action performed', async (done) => {
+    it('should be without consequence to cancel although no action performed', (done) => {
       // Arrange
 
       // Act
@@ -485,7 +484,7 @@ describe('Test ActionManager', () => {
       done();
     });
 
-    it('should be without consequence to cancel the action after the action performed', async (done) => {
+    it('should be without consequence to cancel the action after the action performed', async () => {
       // Arrange
       const action = {
         type: ActionType.Post,
@@ -499,7 +498,6 @@ describe('Test ActionManager', () => {
       actionManager.cancelAction();
 
       // Assert
-      done();
     });
   });
 });

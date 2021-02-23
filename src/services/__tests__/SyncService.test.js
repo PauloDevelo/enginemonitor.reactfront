@@ -1,4 +1,3 @@
-
 // eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
 
@@ -56,7 +55,7 @@ describe('Test SyncService', () => {
   });
 
   describe('synchronize', () => {
-    it('should do nothing if there is no action to sync', async (done) => {
+    it('should do nothing if there is no action to sync', async () => {
       // Arrange
       const syncListener = jest.fn();
       syncService.registerListener(syncListener);
@@ -70,10 +69,9 @@ describe('Test SyncService', () => {
       expect(syncListener.mock.calls[1][0]).toEqual({ isRunning: false, remaining: 0, total: 0 });
 
       syncService.unregisterListener(syncListener);
-      done();
     });
 
-    it('should do nothing if not online', async (done) => {
+    it('should do nothing if not online', async () => {
       // Arrange
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(false));
 
@@ -106,10 +104,9 @@ describe('Test SyncService', () => {
       expect(errorService.addError.mock.calls[0][0].message).toEqual('actionErrorBecauseOffline');
 
       syncService.unregisterListener(syncListener);
-      done();
     });
 
-    it('should do nothing if user storage not opened yet', async (done) => {
+    it('should do nothing if user storage not opened yet', async () => {
       // Arrange
       await storageService.closeUserStorage();
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
@@ -128,10 +125,9 @@ describe('Test SyncService', () => {
       expect(errorService.addError.mock.calls[0][0].message).toEqual('storageNotOpenedYet');
 
       syncService.unregisterListener(syncListener);
-      done();
     });
 
-    it('should perform the action if there is action pending in the correct order', async (done) => {
+    it('should perform the action if there is action pending in the correct order', async () => {
       // Arrange
       const action1 = {
         type: ActionType.Post,
@@ -169,10 +165,9 @@ describe('Test SyncService', () => {
       expect(actionManager.countAction()).toBe(0);
 
       syncService.unregisterListener(syncListener);
-      done();
     });
 
-    it('should perform the action if there is action pending in the correct order but it should stop when an action fails', async (done) => {
+    it('should perform the action if there is action pending in the correct order but it should stop when an action fails', async () => {
       // Arrange
       const action1 = {
         type: ActionType.Post,
@@ -224,7 +219,6 @@ describe('Test SyncService', () => {
       expect(actionManager.countAction()).toBe(1);
 
       syncService.unregisterListener(syncListener);
-      done();
     });
   });
 });

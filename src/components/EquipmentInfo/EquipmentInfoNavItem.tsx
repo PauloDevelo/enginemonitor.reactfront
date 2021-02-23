@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/require-default-props */
+// eslint-disable-next-line no-use-before-define
 import React, { useCallback } from 'react';
 import { NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';

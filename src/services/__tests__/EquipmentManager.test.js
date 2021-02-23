@@ -63,7 +63,7 @@ describe('Test EquipmentManager', () => {
   });
 
   describe('getCurrentEquipment', () => {
-    it('Should return undefined before setting the current asset', () => {
+    it('Should return undefined before setting the current asset', (done) => {
       // Arrange
       equipmentProxy.fetchEquipments.mockImplementation(() => Promise.resolve([]));
 
@@ -73,9 +73,10 @@ describe('Test EquipmentManager', () => {
       // Assert
       expect(equipmentProxy.fetchEquipments).toBeCalledTimes(0);
       expect(currentEquipment).toBeUndefined();
+      done();
     });
 
-    it('Should return undefined after setting a current asset which does not have any equipment yet', async (done) => {
+    it('Should return undefined after setting a current asset which does not have any equipment yet', async () => {
       // Arrange
       equipmentProxy.fetchEquipments.mockImplementation(() => Promise.resolve([]));
 
@@ -88,10 +89,9 @@ describe('Test EquipmentManager', () => {
       // Assert
       expect(equipmentProxy.fetchEquipments).toBeCalledTimes(1);
       expect(currentEquipment).toBeUndefined();
-      done();
     });
 
-    it('Should return the first equipment issued by fetchEquipments after setting the current asset', async (done) => {
+    it('Should return the first equipment issued by fetchEquipments after setting the current asset', async () => {
       // Arrange
       equipmentProxy.fetchEquipments.mockImplementation(async () => Promise.resolve([equipment1, equipment2]));
 
@@ -104,10 +104,9 @@ describe('Test EquipmentManager', () => {
       // Assert
       expect(equipmentProxy.fetchEquipments).toBeCalledTimes(1);
       expect(currentEquipment).toEqual(equipment1);
-      done();
     });
 
-    it('Should return undefined when the current asset is undefined.', async (done) => {
+    it('Should return undefined when the current asset is undefined.', async () => {
       // Arrange
       equipmentProxy.fetchEquipments.mockImplementation(async () => Promise.resolve([equipment1, equipment2]));
 
@@ -123,12 +122,11 @@ describe('Test EquipmentManager', () => {
       // Assert
       expect(equipmentProxy.fetchEquipments).toBeCalledTimes(1);
       expect(currentEquipment).toEqual(undefined);
-      done();
     });
   });
 
   describe('setCurrentEquipment', () => {
-    it('Should notify the listeners when the current equipment changed', async (done) => {
+    it('Should notify the listeners when the current equipment changed', (done) => {
       // Arrange
 
       // Act
@@ -140,7 +138,7 @@ describe('Test EquipmentManager', () => {
       done();
     });
 
-    it('Should notify the listeners when the current equipment changed', async (done) => {
+    it('Should notify the listeners when the current equipment changed', (done) => {
       // Arrange
       const anotherListener = jest.fn();
       equipmentManager.registerOnCurrentEquipmentChanged(anotherListener);
@@ -156,7 +154,7 @@ describe('Test EquipmentManager', () => {
       done();
     });
 
-    it('Should not notify the unregister listener when the current equipment changed', async (done) => {
+    it('Should not notify the unregister listener when the current equipment changed', (done) => {
       // Arrange
       const anotherListener = jest.fn();
       equipmentManager.registerOnCurrentEquipmentChanged(anotherListener);
@@ -177,7 +175,7 @@ describe('Test EquipmentManager', () => {
   });
 
   describe('getEquipments', () => {
-    it('should return the equipments fetched', async (done) => {
+    it('should return the equipments fetched', async () => {
       // Arrange
       equipmentProxy.fetchEquipments.mockImplementation(async () => Promise.resolve([equipment1, equipment2]));
 
@@ -191,12 +189,11 @@ describe('Test EquipmentManager', () => {
       expect(equipments.length).toBe(2);
       expect(equipments[0]).toBe(equipment1);
       expect(equipments[1]).toBe(equipment2);
-      done();
     });
   });
 
   describe('onEquipmentDeleted', () => {
-    it('should remove the equipment from the list and it should notify the listeners', async (done) => {
+    it('should remove the equipment from the list and it should notify the listeners', async () => {
       // Arrange
       equipmentProxy.fetchEquipments.mockImplementation(async () => Promise.resolve([equipment1, equipment2]));
 
@@ -211,10 +208,9 @@ describe('Test EquipmentManager', () => {
       expect(equipments.length).toBe(1);
       expect(equipments[0]).toBe(equipment2);
       expect(equipmentsListener).toBeCalledTimes(2);
-      done();
     });
 
-    it('should not notify the unregistered listeners', async (done) => {
+    it('should not notify the unregistered listeners', async () => {
       // Arrange
       equipmentProxy.fetchEquipments.mockImplementation(async () => Promise.resolve([equipment1, equipment2]));
 
@@ -231,12 +227,11 @@ describe('Test EquipmentManager', () => {
 
       // Assert
       expect(anotherEquipmentsListener).toBeCalledTimes(1);
-      done();
     });
   });
 
   describe('onEquipmentSaved', () => {
-    it('should add the equipment from the list and it should notify the listeners', async (done) => {
+    it('should add the equipment from the list and it should notify the listeners', async () => {
       // Arrange
       equipmentProxy.fetchEquipments.mockImplementation(async () => Promise.resolve([equipment1, equipment2]));
 
@@ -262,10 +257,9 @@ describe('Test EquipmentManager', () => {
       expect(equipments.length).toBe(3);
       expect(equipments[2]).toEqual(equipment3);
       expect(equipmentsListener).toBeCalledTimes(2);
-      done();
     });
 
-    it('should update the equipment from the list and it should notify the listeners', async (done) => {
+    it('should update the equipment from the list and it should notify the listeners', async () => {
       // Arrange
       equipmentProxy.fetchEquipments.mockImplementation(async () => Promise.resolve([equipment1, equipment2]));
 
@@ -283,7 +277,6 @@ describe('Test EquipmentManager', () => {
       expect(equipments.length).toBe(2);
       expect(equipments[0]).toEqual(copyEquipment1);
       expect(equipmentsListener).toBeCalledTimes(2);
-      done();
     });
   });
 });

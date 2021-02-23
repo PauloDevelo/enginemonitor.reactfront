@@ -222,7 +222,7 @@ describe('Test EntryProxy', () => {
       equipmentUiId: parentEquipmentId,
     };
 
-    it('should erase all the entries having this task for parent and the images attached to those entries', async (done) => {
+    it('should erase all the entries having this task for parent and the images attached to those entries', async () => {
       // Arrange
       const entryToDelete = entryToSave;
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
@@ -243,10 +243,9 @@ describe('Test EntryProxy', () => {
       expect(entries).toContainEqual(entryToSaveOrphan);
       expect(imageProxy.onEntityDeleted).toHaveBeenCalledTimes(1);
       expect(imageProxy.onEntityDeleted.mock.calls[0][0]).toEqual(entryToDelete._uiId);
-      done();
     });
 
-    it('should erase all the entries in the memory having this task for parent and the images attached to those entries', async (done) => {
+    it('should erase all the entries in the memory having this task for parent and the images attached to those entries', async () => {
       // Arrange
       const entryToDelete = entryToSave;
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
@@ -267,7 +266,6 @@ describe('Test EntryProxy', () => {
       expect(entries).toContainEqual(entryToSaveOrphan);
       expect(imageProxy.onEntityDeleted).toHaveBeenCalledTimes(1);
       expect(imageProxy.onEntityDeleted.mock.calls[0][0]).toEqual(entryToDelete._uiId);
-      done();
     });
   });
 
@@ -302,7 +300,7 @@ describe('Test EntryProxy', () => {
       equipmentUiId: parentEquipmentId,
     };
 
-    it('should erase all the entries having this equipment for parent and the images attached to those entries', async (done) => {
+    it('should erase all the entries having this equipment for parent and the images attached to those entries', async () => {
       // Arrange
       const entryToDelete = entryToSave;
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
@@ -325,10 +323,9 @@ describe('Test EntryProxy', () => {
       expect(entryUiIdDeleted).toContainEqual(entryToDelete._uiId);
       expect(entryUiIdDeleted).toContainEqual(entryToDelete._uiId);
       expect(entryUiIdDeleted).toContainEqual(entryToDelete._uiId);
-      done();
     });
 
-    it('should erase all the entries having this equipment for parent and the images attached to those entries', async (done) => {
+    it('should erase all the entries having this equipment for parent and the images attached to those entries', async () => {
       // Arrange
       const entryToDelete = entryToSave;
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
@@ -351,7 +348,6 @@ describe('Test EntryProxy', () => {
       expect(entryUiIdDeleted).toContainEqual(entryToDelete._uiId);
       expect(entryUiIdDeleted).toContainEqual(entryToDelete._uiId);
       expect(entryUiIdDeleted).toContainEqual(entryToDelete._uiId);
-      done();
     });
   });
 });

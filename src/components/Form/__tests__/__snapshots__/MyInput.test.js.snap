@@ -1,338 +1,389 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MyInput of type checkox should render as expected 1`] = `
-<Memo()
-  label={
-    Object {
-      "defaultMessage": "Default message",
-      "description": "Label",
-      "id": "defaultId",
-    }
-  }
-  name="name"
-  required={true}
-  type="checkbox"
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
-  <FormGroup
-    check={true}
-    className="form-group"
-    inline={true}
-    tag="div"
+  <Memo()
+    label={
+      Object {
+        "defaultMessage": "Default message",
+        "description": "Label",
+        "id": "defaultId",
+      }
+    }
+    name="name"
+    required={true}
+    type="checkbox"
   >
-    <div
-      className="form-group form-check form-check-inline"
+    <FormGroup
+      check={true}
+      className="form-group"
+      inline={true}
+      tag="div"
     >
-      <Label
-        check={true}
-        tag="label"
-        widths={
-          Array [
-            "xs",
-            "sm",
-            "md",
-            "lg",
-            "xl",
-          ]
-        }
+      <div
+        className="form-group form-check form-check-inline"
       >
-        <label
-          className="form-check-label"
+        <Label
+          check={true}
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
         >
-          <FormattedMessage
-            defaultMessage="Default message"
-            description="Label"
-            id="defaultId"
-            values={Object {}}
+          <label
+            className="form-check-label"
           >
-            Default message
-          </FormattedMessage>
-           
-          <Input
-            innerRef={
-              Object {
-                "current": <input
-                  class="form-check-input"
-                  name="name"
-                  required=""
-                  type="checkbox"
-                />,
+            <FormattedMessage
+              defaultMessage="Default message"
+              description="Label"
+              id="defaultId"
+            >
+              Default message
+            </FormattedMessage>
+             
+            <Input
+              innerRef={
+                Object {
+                  "current": <input
+                    aria-invalid="false"
+                    class="form-check-input"
+                    name="name"
+                    required=""
+                    type="checkbox"
+                  />,
+                }
               }
-            }
-            invalid={false}
-            name="name"
-            onChange={[Function]}
-            required={true}
-            type="checkbox"
-          >
-            <input
-              className="form-check-input"
+              invalid={false}
               name="name"
               onChange={[Function]}
               required={true}
               type="checkbox"
-            />
-          </Input>
-        </label>
-      </Label>
-    </div>
-  </FormGroup>
-</Memo()>
+            >
+              <input
+                aria-invalid={false}
+                className="form-check-input"
+                name="name"
+                onChange={[Function]}
+                required={true}
+                type="checkbox"
+              />
+            </Input>
+          </label>
+        </Label>
+      </div>
+    </FormGroup>
+  </Memo()>
+</IntlProvider>
 `;
 
 exports[`MyInput of type checkox with an error should render as expected 1`] = `
-<Memo()
-  checked={false}
-  label={
-    Object {
-      "defaultMessage": "Default message",
-      "description": "Label",
-      "id": "defaultId",
-    }
-  }
-  name="name"
-  required={true}
-  type="checkbox"
-  validationTrigger={1}
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
-  <FormGroup
-    check={true}
-    className="form-group"
-    inline={true}
-    tag="div"
+  <Memo()
+    checked={false}
+    label={
+      Object {
+        "defaultMessage": "Default message",
+        "description": "Label",
+        "id": "defaultId",
+      }
+    }
+    name="name"
+    required={true}
+    type="checkbox"
+    validationTrigger={1}
   >
-    <div
-      className="form-group form-check form-check-inline"
+    <FormGroup
+      check={true}
+      className="form-group"
+      inline={true}
+      tag="div"
     >
-      <Label
-        check={true}
-        tag="label"
-        widths={
-          Array [
-            "xs",
-            "sm",
-            "md",
-            "lg",
-            "xl",
-          ]
-        }
+      <div
+        className="form-group form-check form-check-inline"
       >
-        <label
-          className="form-check-label"
+        <Label
+          check={true}
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
         >
-          <FormattedMessage
-            defaultMessage="Default message"
-            description="Label"
-            id="defaultId"
-            values={Object {}}
+          <label
+            className="form-check-label"
           >
-            Default message
-          </FormattedMessage>
-           
-          <Input
-            checked={false}
-            innerRef={
-              Object {
-                "current": <input
-                  class="is-invalid form-check-input"
-                  name="name"
-                  required=""
-                  type="checkbox"
-                />,
-              }
-            }
-            invalid={true}
-            name="name"
-            onChange={[Function]}
-            required={true}
-            type="checkbox"
-          >
-            <input
+            <FormattedMessage
+              defaultMessage="Default message"
+              description="Label"
+              id="defaultId"
+            >
+              Default message
+            </FormattedMessage>
+             
+            <Input
               checked={false}
-              className="is-invalid form-check-input"
+              innerRef={
+                Object {
+                  "current": <input
+                    aria-invalid="true"
+                    class="is-invalid form-check-input"
+                    name="name"
+                    required=""
+                    type="checkbox"
+                  />,
+                }
+              }
+              invalid={true}
               name="name"
               onChange={[Function]}
               required={true}
               type="checkbox"
-            />
-          </Input>
-          <FormFeedback
-            tag="div"
-          >
-            <div
-              className="invalid-feedback"
             >
-              Constraints not satisfied
-            </div>
-          </FormFeedback>
-        </label>
-      </Label>
-    </div>
-  </FormGroup>
-</Memo()>
+              <input
+                aria-invalid={true}
+                checked={false}
+                className="is-invalid form-check-input"
+                name="name"
+                onChange={[Function]}
+                required={true}
+                type="checkbox"
+              />
+            </Input>
+            <FormFeedback
+              tag="div"
+            >
+              <div
+                className="invalid-feedback"
+              >
+                Constraints not satisfied
+              </div>
+            </FormFeedback>
+          </label>
+        </Label>
+      </div>
+    </FormGroup>
+  </Memo()>
+</IntlProvider>
 `;
 
 exports[`MyInput of type text should render as expected 1`] = `
-<Memo()
-  label={
-    Object {
-      "defaultMessage": "Default message",
-      "description": "Label",
-      "id": "defaultId",
-    }
-  }
-  name="name"
-  required={true}
-  type="text"
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
-  <FormGroup
-    className="form-group"
-    tag="div"
+  <Memo()
+    label={
+      Object {
+        "defaultMessage": "Default message",
+        "description": "Label",
+        "id": "defaultId",
+      }
+    }
+    name="name"
+    required={true}
+    type="text"
   >
-    <div
-      className="form-group form-group"
+    <FormGroup
+      className="form-group"
+      tag="div"
     >
-      <Label
-        for="name"
-        tag="label"
-        widths={
-          Array [
-            "xs",
-            "sm",
-            "md",
-            "lg",
-            "xl",
-          ]
-        }
+      <div
+        className="form-group form-group"
       >
-        <label
-          className=""
-          htmlFor="name"
-        >
-          <FormattedMessage
-            defaultMessage="Default message"
-            description="Label"
-            id="defaultId"
-            values={Object {}}
-          >
-            Default message
-          </FormattedMessage>
-        </label>
-      </Label>
-      <Input
-        className="form-control"
-        innerRef={
-          Object {
-            "current": <input
-              class="form-control form-control"
-              name="name"
-              required=""
-              type="text"
-            />,
+        <Label
+          for="name"
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
           }
-        }
-        invalid={false}
-        name="name"
-        onChange={[Function]}
-        required={true}
-        type="text"
-      >
-        <input
-          className="form-control form-control"
+        >
+          <label
+            className=""
+            htmlFor="name"
+          >
+            <FormattedMessage
+              defaultMessage="Default message"
+              description="Label"
+              id="defaultId"
+            >
+              Default message
+            </FormattedMessage>
+          </label>
+        </Label>
+        <Input
+          className="form-control"
+          innerRef={
+            Object {
+              "current": <input
+                aria-invalid="false"
+                class="form-control form-control"
+                name="name"
+                required=""
+                type="text"
+              />,
+            }
+          }
+          invalid={false}
           name="name"
           onChange={[Function]}
           required={true}
           type="text"
-        />
-      </Input>
-    </div>
-  </FormGroup>
-</Memo()>
+        >
+          <input
+            aria-invalid={false}
+            className="form-control form-control"
+            name="name"
+            onChange={[Function]}
+            required={true}
+            type="text"
+          />
+        </Input>
+      </div>
+    </FormGroup>
+  </Memo()>
+</IntlProvider>
 `;
 
 exports[`MyInput of type text with an error should render as expected 1`] = `
-<Memo()
-  label={
-    Object {
-      "defaultMessage": "Default message",
-      "description": "Label",
-      "id": "defaultId",
-    }
-  }
-  name="name"
-  required={true}
-  type="text"
-  validationTrigger={1}
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
-  <FormGroup
-    className="form-group"
-    tag="div"
+  <Memo()
+    checked={false}
+    label={
+      Object {
+        "defaultMessage": "Default message",
+        "description": "Label",
+        "id": "defaultId",
+      }
+    }
+    name="name"
+    required={true}
+    type="text"
+    validationTrigger={1}
   >
-    <div
-      className="form-group form-group"
+    <FormGroup
+      className="form-group"
+      tag="div"
     >
-      <Label
-        for="name"
-        tag="label"
-        widths={
-          Array [
-            "xs",
-            "sm",
-            "md",
-            "lg",
-            "xl",
-          ]
-        }
+      <div
+        className="form-group form-group"
       >
-        <label
-          className=""
-          htmlFor="name"
-        >
-          <FormattedMessage
-            defaultMessage="Default message"
-            description="Label"
-            id="defaultId"
-            values={Object {}}
-          >
-            Default message
-          </FormattedMessage>
-        </label>
-      </Label>
-      <Input
-        className="form-control"
-        innerRef={
-          Object {
-            "current": <input
-              class="form-control is-invalid form-control"
-              name="name"
-              required=""
-              type="text"
-            />,
+        <Label
+          for="name"
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
           }
-        }
-        invalid={true}
-        name="name"
-        onChange={[Function]}
-        required={true}
-        type="text"
-      >
-        <input
-          className="form-control is-invalid form-control"
+        >
+          <label
+            className=""
+            htmlFor="name"
+          >
+            <FormattedMessage
+              defaultMessage="Default message"
+              description="Label"
+              id="defaultId"
+            >
+              Default message
+            </FormattedMessage>
+          </label>
+        </Label>
+        <Input
+          checked={false}
+          className="form-control"
+          innerRef={
+            Object {
+              "current": <input
+                aria-invalid="true"
+                class="form-control is-invalid form-control"
+                name="name"
+                required=""
+                type="text"
+              />,
+            }
+          }
+          invalid={true}
           name="name"
           onChange={[Function]}
           required={true}
           type="text"
-        />
-      </Input>
-      <FormFeedback
-        tag="div"
-      >
-        <div
-          className="invalid-feedback"
         >
-          Constraints not satisfied
-        </div>
-      </FormFeedback>
-    </div>
-  </FormGroup>
-</Memo()>
+          <input
+            aria-invalid={true}
+            checked={false}
+            className="form-control is-invalid form-control"
+            name="name"
+            onChange={[Function]}
+            required={true}
+            type="text"
+          />
+        </Input>
+        <FormFeedback
+          tag="div"
+        >
+          <div
+            className="invalid-feedback"
+          >
+            Constraints not satisfied
+          </div>
+        </FormFeedback>
+      </div>
+    </FormGroup>
+  </Memo()>
+</IntlProvider>
 `;

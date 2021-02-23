@@ -1,39 +1,49 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MyNavItem should render a MyNavItem 1`] = `
-<Memo(MyNavItem)
-  label={
-    Object {
-      "defaultMessage": "hello world",
-      "description": "a tooltip",
-      "id": "tooltip",
-    }
-  }
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
 >
-  <NavItem
-    tag="li"
+  <Memo(MyNavItem)
+    label={
+      Object {
+        "defaultMessage": "hello world",
+        "description": "a tooltip",
+        "id": "tooltip",
+      }
+    }
   >
-    <li
-      className="nav-item"
+    <NavItem
+      tag="li"
     >
-      <NavLink
-        tag="a"
+      <li
+        className="nav-item"
       >
-        <a
-          className="nav-link"
-          onClick={[Function]}
+        <NavLink
+          tag="a"
         >
-          <FormattedMessage
-            defaultMessage="hello world"
-            description="a tooltip"
-            id="tooltip"
-            values={Object {}}
+          <a
+            className="nav-link"
+            onClick={[Function]}
           >
-            hello world
-          </FormattedMessage>
-        </a>
-      </NavLink>
-    </li>
-  </NavItem>
-</Memo(MyNavItem)>
+            <FormattedMessage
+              defaultMessage="hello world"
+              description="a tooltip"
+              id="tooltip"
+            >
+              hello world
+            </FormattedMessage>
+          </a>
+        </NavLink>
+      </li>
+    </NavItem>
+  </Memo(MyNavItem)>
+</IntlProvider>
 `;

@@ -1,4 +1,8 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 import * as log from 'loglevel';
+// eslint-disable-next-line no-use-before-define
 import React, { useState, useRef, useCallback } from 'react';
 import { Form } from 'reactstrap';
 

@@ -70,7 +70,7 @@ describe('Test EquipmentProxy', () => {
 
   const onlineModes = [{ isOnline: false }, { isOnline: true }];
   describe('fetchEquipments', () => {
-    it('should get the equipments online first and update the storage', async (done) => {
+    it('should get the equipments online first and update the storage', async () => {
       // Arrange
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
       httpProxy.get.mockImplementation(async (url) => {
@@ -93,11 +93,9 @@ describe('Test EquipmentProxy', () => {
 
       const storedEquipments = await equipmentProxy.getStoredEquipment();
       expect(equipments).toEqual(storedEquipments);
-
-      done();
     });
 
-    it('should get the equipments offline as well', async (done) => {
+    it('should get the equipments offline as well', async () => {
       // Arrange
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
 
@@ -106,7 +104,6 @@ describe('Test EquipmentProxy', () => {
 
       // Assert
       expect(equipments.length).toEqual(0);
-      done();
     });
   });
 
@@ -150,7 +147,7 @@ describe('Test EquipmentProxy', () => {
       });
     });
 
-    it('should throw an exception HTTPError with the correct data when we try to create an equipment with the same name', async (done) => {
+    it('should throw an exception HTTPError with the correct data when we try to create an equipment with the same name', async () => {
       // Arrange
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
       await equipmentProxy.createOrSaveEquipment(equipmentToSave);
@@ -162,11 +159,9 @@ describe('Test EquipmentProxy', () => {
         // Assert
         expect(error).toBeInstanceOf(HttpError);
         expect(error.data).toEqual({ name: 'alreadyexisting' });
-        done();
       }
     });
   });
-
 
   const deleteEquipmentParams = [
     {
@@ -252,7 +247,7 @@ describe('Test EquipmentProxy', () => {
     });
 
     describe.each(onlineModes)('createOrSaveEquipment', ({ isOnline }) => {
-      it(`when ${JSON.stringify({ isOnline })}`, async (done) => {
+      it(`when ${JSON.stringify({ isOnline })}`, async () => {
         // Arrange
         onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(isOnline));
 
@@ -275,8 +270,9 @@ describe('Test EquipmentProxy', () => {
           const equipments = await storageService.getArray(urlFetchEquipment);
           expect(equipments.length).toBe(0);
           expect(actionManager.countAction()).toBe(0);
-          done();
+          return;
         }
+        expect(true).toBeFalsy();
       });
     });
 
@@ -309,7 +305,7 @@ describe('Test EquipmentProxy', () => {
   });
 
   describe('OnAssetDeleted', () => {
-    it('Should delete all the equipments related to this asset', async (done) => {
+    it('Should delete all the equipments related to this asset', async () => {
       // Arrange
       httpProxy.deleteReq.mockImplementation(async () => Promise.resolve({}));
       jest.spyOn(entryProxy, 'onEquipmentDeleted');
@@ -331,7 +327,6 @@ describe('Test EquipmentProxy', () => {
 
       const equipments = await storageService.getArray(urlFetchEquipment);
       expect(equipments.length).toEqual(0);
-      done();
     });
   });
 });

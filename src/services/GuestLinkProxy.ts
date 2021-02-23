@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as log from 'loglevel';
 import { v4 as uuidv4 } from 'uuid';
 import analytics from '../helpers/AnalyticsHelper';
@@ -13,7 +14,6 @@ import { UserModel, GuestLinkModel } from '../types/Types';
 import userContext from './UserContext';
 import assetManager from './AssetManager';
 import HttpError from '../http/HttpError';
-
 
 type Config = {
     headers: {

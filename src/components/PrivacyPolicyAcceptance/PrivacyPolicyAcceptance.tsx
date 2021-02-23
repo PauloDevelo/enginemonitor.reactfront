@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React, {
   useEffect, useState, useCallback,
 } from 'react';
@@ -19,9 +20,7 @@ import jsonMessages from './PrivacyPolicyAcceptance.messages.json';
 
 import './PrivacyPolicyAcceptance.css';
 
-
 const msg = defineMessages(jsonMessages);
-
 
 export default function PrivacyPolicyAcceptance() {
   const [alertPrivacyPolicyVisibility, setAlertPrivacyPolicyVisibility] = useState<boolean>(false);
@@ -29,12 +28,16 @@ export default function PrivacyPolicyAcceptance() {
   useEffect(() => {
     const userStorageListener:IUserStorageListener = {
       onUserStorageOpened: async (): Promise<void> => {
-        storageService.getItem<string>('privacyPolicyAccepted').then((privacyPolicyAcceptedValue) => {
-          const acceptanceLimit = moment().subtract(3, 'month');
-          const lastAcceptanceDate = privacyPolicyAcceptedValue ? moment(privacyPolicyAcceptedValue, moment.ISO_8601, true) : undefined;
-          const alertPrivacyPolicyVisibilityValue = lastAcceptanceDate === undefined || lastAcceptanceDate.isValid() === false || lastAcceptanceDate.isBefore(acceptanceLimit);
-          setAlertPrivacyPolicyVisibility(alertPrivacyPolicyVisibilityValue);
-        });
+        storageService.getItem<string>('privacyPolicyAccepted')
+          .then((privacyPolicyAcceptedValue) => {
+            const acceptanceLimit = moment().subtract(3, 'month');
+            const lastAcceptanceDate = privacyPolicyAcceptedValue ? moment(privacyPolicyAcceptedValue, moment.ISO_8601, true) : undefined;
+            const alertPrivacyPolicyVisibilityValue = lastAcceptanceDate === undefined || lastAcceptanceDate.isValid() === false || lastAcceptanceDate.isBefore(acceptanceLimit);
+            setAlertPrivacyPolicyVisibility(alertPrivacyPolicyVisibilityValue);
+          })
+          .catch(() => {
+            setAlertPrivacyPolicyVisibility(true);
+          });
       },
       onUserStorageClosed: async (): Promise<void> => {
         setAlertPrivacyPolicyVisibility(false);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { mount } from 'enzyme';
 
 // eslint-disable-next-line no-unused-vars
@@ -16,6 +17,7 @@ jest.mock('localforage');
 describe('ModalEditEntry', () => {
   beforeAll(() => {
     ignoredMessages.length = 0;
+    ignoredMessages.push('Error: [@formatjs/intl Error MISSING_TRANSLATION]');
     ignoredMessages.push('[React Intl] Could not find required `intl` object. <IntlProvider> needs to exist in the component ancestry. Using default message as fallback.');
     ignoredMessages.push('a test was not wrapped in act');
   });
@@ -71,12 +73,16 @@ describe('ModalEditEntry', () => {
     });
 
     // Act
-    const modalEditEntry = mount(<ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />);
+    const modalEditEntry = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     await updateWrapper(modalEditEntry);
 
     // Assert
     expect(modalEditEntry).toMatchSnapshot();
-    expect(modalEditEntry.props().visible).toBe(true);
+    expect(modalEditEntry.find('ModalEditEntry').props().visible).toBe(true);
     expect(modalEditEntry.find('ModalFooter').find('Button').length).toBe(3);
   });
 
@@ -92,11 +98,15 @@ describe('ModalEditEntry', () => {
     });
 
     // Act
-    const modalEditEntry = mount(<ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />);
+    const modalEditEntry = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     await updateWrapper(modalEditEntry);
 
     // Assert
-    expect(modalEditEntry.props().visible).toBe(true);
+    expect(modalEditEntry.find('ModalEditEntry').props().visible).toBe(true);
     expect(modalEditEntry.find('ModalFooter').find('Button').length).toBe(2);
   });
 
@@ -117,7 +127,11 @@ describe('ModalEditEntry', () => {
       isVisible = !isVisible;
     });
 
-    const modalEditEntry = mount(<ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />);
+    const modalEditEntry = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     const myForm = modalEditEntry.find('Memo(MyForm)');
 
     // Act
@@ -144,7 +158,11 @@ describe('ModalEditEntry', () => {
       isVisible = !isVisible;
     });
 
-    const modalEditEntry = mount(<ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />);
+    const modalEditEntry = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     const myForm = modalEditEntry.find('Memo(MyForm)');
 
     // Act
@@ -168,7 +186,11 @@ describe('ModalEditEntry', () => {
       isVisible = !isVisible;
     });
 
-    const modalEditEntry = mount(<ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />);
+    const modalEditEntry = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     const cancelButton = modalEditEntry.find('ModalFooter').find('Button').at(1);
 
     // Act
@@ -190,7 +212,11 @@ describe('ModalEditEntry', () => {
       isVisible = !isVisible;
     });
 
-    const modalEditEntry = mount(<ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />);
+    const modalEditEntry = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     const deleteButton = modalEditEntry.find('ModalFooter').find('Button').at(2);
 
     // Act
@@ -214,7 +240,11 @@ describe('ModalEditEntry', () => {
       isVisible = !isVisible;
     });
 
-    const modalEditEntry = mount(<ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />);
+    const modalEditEntry = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     const deleteButton = modalEditEntry.find('ModalFooter').find('Button').at(2);
 
     deleteButton.simulate('click');
@@ -246,7 +276,11 @@ describe('ModalEditEntry', () => {
       isVisible = !isVisible;
     });
 
-    const modalEditEntry = mount(<ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />);
+    const modalEditEntry = mount(
+      <IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur">
+        <ModalEditEntry equipment={equipment} task={task} entry={entry} visible={isVisible} saveEntry={onSavedEntry} deleteEntry={onDeletedEntry} toggle={toggleFn} />
+      </IntlProvider>,
+    );
     const deleteButton = modalEditEntry.find('ModalFooter').find('Button').at(2);
 
     deleteButton.simulate('click');

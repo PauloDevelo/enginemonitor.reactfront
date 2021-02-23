@@ -1,8 +1,8 @@
+/* eslint-disable no-unused-vars */
 import assetManager from './AssetManager';
 
 import analytics from '../helpers/AnalyticsHelper';
 
-// eslint-disable-next-line no-unused-vars
 import { AssetModel, EquipmentModel } from '../types/Types';
 
 export type CurrentEquipmentListener = (equipment: EquipmentModel|undefined) => void;
@@ -37,7 +37,6 @@ class EquipmentManager implements IEquipmentManager {
       assetManager.registerOnCurrentAssetChanged(this.onCurrentAssetChanged);
     }
 
-    // eslint-disable-next-line no-unused-vars
     private onCurrentAssetChanged = async (currentAsset: AssetModel | undefined | null) => {
       if (currentAsset) {
         const { default: equipmentProxy } = await import('./EquipmentProxy');

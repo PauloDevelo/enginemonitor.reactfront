@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { IntlProvider } from 'react-intl';
 
 // eslint-disable-next-line no-unused-vars
 import localforage from 'localforage';
@@ -16,7 +17,7 @@ describe('ConnectionStateMessage', () => {
 
   beforeAll(() => {
     ignoredMessages.length = 0;
-    ignoredMessages.push('Could not find required `intl` object.');
+    ignoredMessages.push('[@formatjs/intl Error MISSING_TRANSLATION]');
   });
 
   afterEach(async () => {
@@ -30,11 +31,11 @@ describe('ConnectionStateMessage', () => {
   ];
 
   describe.each(connectionStates)('Render', ({ isOnline, isSynced }) => {
-    it(`should display the connection when isOnline is ${isOnline} and the application is synced ${isSynced}`, async (done) => {
+    it(`should display the connection when isOnline is ${isOnline} and the application is synced ${isSynced}`, (done) => {
       // Arrange
 
       // Act
-      const connectionStateMessageWrapper = mount(<ConnectionStateMessage isOnline={isOnline} isSynced={isSynced} />);
+      const connectionStateMessageWrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><ConnectionStateMessage isOnline={isOnline} isSynced={isSynced} /></IntlProvider>);
 
       // Assert
       expect(connectionStateMessageWrapper).toMatchSnapshot();

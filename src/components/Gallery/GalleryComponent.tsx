@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+// eslint-disable-next-line no-use-before-define
 import React from 'react';
 import { Label } from 'reactstrap';
 import { FormattedMessage, defineMessages } from 'react-intl';
@@ -10,9 +12,7 @@ import Thumbnail from './Thumbnail';
 import { ImageModel } from '../../types/Types';
 import AddImageFileButton from './AddImageFileButton';
 
-
 import './Gallery.css';
-
 
 import jsonMessages from './Gallery.messages.json';
 

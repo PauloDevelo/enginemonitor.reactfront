@@ -73,7 +73,7 @@ describe('Test LocalStorageBuilder', () => {
     guestLinkProxy.getGuestLinks.mockRestore();
   });
 
-  it('Should throw a LocalStorageBuilderException because the user storage is not opened yet', async (done) => {
+  it('Should throw a LocalStorageBuilderException because the user storage is not opened yet', async () => {
     // Arrange
     storageService.isUserStorageOpened.mockImplementation(() => false);
 
@@ -86,11 +86,12 @@ describe('Test LocalStorageBuilder', () => {
       expect(error.message).toEqual('storageNotOpenedYet');
 
       expect(progressListener).toHaveBeenCalledTimes(0);
-      done();
+      return;
     }
+    expect(true).toBeFalsy();
   });
 
-  it('Should throw a LocalStorageBuilderException because the app is offline', async (done) => {
+  it('Should throw a LocalStorageBuilderException because the app is offline', async () => {
     // Arrange
     onlineManager.isOnline.mockImplementation(async () => Promise.resolve(false));
 
@@ -103,11 +104,12 @@ describe('Test LocalStorageBuilder', () => {
       expect(error.message).toEqual('actionErrorBecauseOffline');
 
       expect(progressListener).toHaveBeenCalledTimes(0);
-      done();
+      return;
     }
+    expect(true).toBeFalsy();
   });
 
-  it('Should clear the storage, set the previous storage version and write again the list of action', async (done) => {
+  it('Should clear the storage, set the previous storage version and write again the list of action', async () => {
     // Arrange
     const storageVersion = 123;
     storageService.getStorageVersion.mockImplementation(async () => Promise.resolve(storageVersion));
@@ -127,11 +129,9 @@ describe('Test LocalStorageBuilder', () => {
     expect(actionManager.writeActionsInStorage).toHaveBeenCalledTimes(1);
 
     expect(progressListener).toHaveBeenCalledTimes(2);
-
-    done();
   });
 
-  it('For all the assets, it should try to get all the equipments, images, credentials and guest links', async (done) => {
+  it('For all the assets, it should try to get all the equipments, images, credentials and guest links', async () => {
     // Arrange
     const asset1 = { _uiId: 'asset_01' };
     const asset2 = { _uiId: 'asset_02' };
@@ -155,7 +155,6 @@ describe('Test LocalStorageBuilder', () => {
     expect(userProxy.getCredentials.mock.calls[1][0]).toEqual({ assetUiId: asset2._uiId });
     expect(userProxy.getCredentials.mock.calls[2][0]).toEqual({ assetUiId: asset1._uiId });
 
-
     expect(guestLinkProxy.getGuestLinks).toHaveBeenCalledTimes(2);
     expect(guestLinkProxy.getGuestLinks.mock.calls[0][0]).toEqual(asset1._uiId);
     expect(guestLinkProxy.getGuestLinks.mock.calls[1][0]).toEqual(asset2._uiId);
@@ -165,8 +164,6 @@ describe('Test LocalStorageBuilder', () => {
     expect(progressListener.mock.calls[1][0]).toEqual({ isRunning: true, total: 2, remaining: 1 });
     expect(progressListener.mock.calls[2][0]).toEqual({ isRunning: true, total: 2, remaining: 0 });
     expect(progressListener.mock.calls[3][0]).toEqual({ isRunning: false, total: 2, remaining: 0 });
-
-    done();
   });
 
   it('For all the equipments, it should try to get all tasks, all entries and images', async () => {

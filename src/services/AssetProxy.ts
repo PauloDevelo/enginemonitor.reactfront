@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as log from 'loglevel';
 import progressiveHttpProxy from './ProgressiveHttpProxy';
 
@@ -7,7 +8,6 @@ import assetManager from './AssetManager';
 import equipmentProxy from './EquipmentProxy';
 
 import { updateAsset } from '../helpers/AssetHelper';
-// eslint-disable-next-line no-unused-vars
 import { AssetModel, extractAssetModel } from '../types/Types';
 import imageProxy from './ImageProxy';
 import userContext from './UserContext';

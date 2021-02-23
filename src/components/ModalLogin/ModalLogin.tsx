@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+// eslint-disable-next-line no-use-before-define
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter, Spinner,
@@ -35,10 +37,12 @@ const loginmsg = defineMessages(jsonMessages);
 
 type Props = {
 visible: boolean,
+// eslint-disable-next-line react/require-default-props
 className?: string,
 toggleModalSignup: () => void
 }
 
+// eslint-disable-next-line no-shadow
 enum LoginState {
 // eslint-disable-next-line no-unused-vars
 Started = 1,
@@ -70,9 +74,10 @@ const ModalLogin = ({
   const resetPasswordModalHook = useEditModal({ email: '', newPassword1: '', newPassword2: '' });
 
   useEffect(() => {
-    storageService.getGlobalItem<boolean>('rememberMe').then((rememberMeValue) => {
-      setRememberMe(rememberMeValue);
-    });
+    storageService.tryGetGlobalItem<boolean>('rememberMe', false)
+      .then((rememberMeValue) => {
+        setRememberMe(rememberMeValue);
+      });
   }, []);
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Media,
@@ -13,6 +14,7 @@ const aboutMsg = defineMessages(jsonMessages);
 
 type Props = {
 visible: boolean;
+// eslint-disable-next-line react/require-default-props
 className?: string;
 toggle: ()=>void;
 }

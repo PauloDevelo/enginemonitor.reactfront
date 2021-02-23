@@ -22,7 +22,6 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
             defaultMessage="Equipment history"
             description="Title"
             id="equipmentHistoryTitle"
-            values={Object {}}
           >
             Equipment history
           </FormattedMessage>
@@ -878,7 +877,6 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                       defaultMessage="Realisation date"
                                                       description="Colum header"
                                                       id="ackDate"
-                                                      values={Object {}}
                                                     >
                                                       Realisation date
                                                     </FormattedMessage>
@@ -1022,7 +1020,6 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                       defaultMessage="Name"
                                                       description="Label"
                                                       id="entryname"
-                                                      values={Object {}}
                                                     >
                                                       Name
                                                     </FormattedMessage>
@@ -1166,7 +1163,6 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                       defaultMessage="Equipment Age"
                                                       description="Colum header"
                                                       id="ageColumHeader"
-                                                      values={Object {}}
                                                     >
                                                       Equipment Age
                                                     </FormattedMessage>
@@ -1485,7 +1481,6 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                       defaultMessage="Remarks"
                                                       description="Colum header"
                                                       id="remarks"
-                                                      values={Object {}}
                                                     >
                                                       Remarks
                                                     </FormattedMessage>
@@ -6919,7 +6914,6 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                 defaultMessage="Realisation date"
                                                 description="Colum header"
                                                 id="ackDate"
-                                                values={Object {}}
                                               >
                                                 Realisation date
                                               </FormattedMessage>
@@ -7027,7 +7021,6 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                 defaultMessage="Name"
                                                 description="Label"
                                                 id="entryname"
-                                                values={Object {}}
                                               >
                                                 Name
                                               </FormattedMessage>
@@ -7135,7 +7128,6 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                 defaultMessage="Equipment Age"
                                                 description="Colum header"
                                                 id="ageColumHeader"
-                                                values={Object {}}
                                               >
                                                 Equipment Age
                                               </FormattedMessage>
@@ -7382,7 +7374,6 @@ exports[`EquipmentHistoryTable Should render all the entries for an equipment 1`
                                                 defaultMessage="Remarks"
                                                 description="Colum header"
                                                 id="remarks"
-                                                values={Object {}}
                                               >
                                                 Remarks
                                               </FormattedMessage>
@@ -7438,7 +7429,6 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
             defaultMessage="Equipment history"
             description="Title"
             id="equipmentHistoryTitle"
-            values={Object {}}
           >
             Equipment history
           </FormattedMessage>
@@ -8004,7 +7994,6 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
                                                       defaultMessage="Realisation date"
                                                       description="Colum header"
                                                       id="ackDate"
-                                                      values={Object {}}
                                                     >
                                                       Realisation date
                                                     </FormattedMessage>
@@ -8148,7 +8137,6 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
                                                       defaultMessage="Name"
                                                       description="Label"
                                                       id="entryname"
-                                                      values={Object {}}
                                                     >
                                                       Name
                                                     </FormattedMessage>
@@ -8292,7 +8280,6 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
                                                       defaultMessage="Equipment Age"
                                                       description="Colum header"
                                                       id="ageColumHeader"
-                                                      values={Object {}}
                                                     >
                                                       Equipment Age
                                                     </FormattedMessage>
@@ -8611,7 +8598,6 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
                                                       defaultMessage="Remarks"
                                                       description="Colum header"
                                                       id="remarks"
-                                                      values={Object {}}
                                                     >
                                                       Remarks
                                                     </FormattedMessage>
@@ -8904,7 +8890,6 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
                                                 defaultMessage="Realisation date"
                                                 description="Colum header"
                                                 id="ackDate"
-                                                values={Object {}}
                                               >
                                                 Realisation date
                                               </FormattedMessage>
@@ -9012,7 +8997,6 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
                                                 defaultMessage="Name"
                                                 description="Label"
                                                 id="entryname"
-                                                values={Object {}}
                                               >
                                                 Name
                                               </FormattedMessage>
@@ -9120,7 +9104,6 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
                                                 defaultMessage="Equipment Age"
                                                 description="Colum header"
                                                 id="ageColumHeader"
-                                                values={Object {}}
                                               >
                                                 Equipment Age
                                               </FormattedMessage>
@@ -9367,7 +9350,6 @@ exports[`EquipmentHistoryTable Should render an empty table even when the equipm
                                                 defaultMessage="Remarks"
                                                 description="Colum header"
                                                 id="remarks"
-                                                values={Object {}}
                                               >
                                                 Remarks
                                               </FormattedMessage>
@@ -9423,7 +9405,6 @@ exports[`EquipmentHistoryTable Should render render the loading spinner while lo
             defaultMessage="Equipment history"
             description="Title"
             id="equipmentHistoryTitle"
-            values={Object {}}
           >
             Equipment history
           </FormattedMessage>
