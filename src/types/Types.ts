@@ -2,6 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 
 function extract<T>(properties: Record<keyof T, true>) {
+  // eslint-disable-next-line func-names
   return function<TActual extends T> (value: TActual) {
     const result = {} as T;
     // eslint-disable-next-line no-restricted-syntax

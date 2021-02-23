@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* istanbul ignore file */
 
 // This optional code is used to register a service worker.
