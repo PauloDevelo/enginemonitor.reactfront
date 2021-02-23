@@ -76,7 +76,7 @@ describe('Test TaskProxy', () => {
   });
 
   describe('fetchTasks', () => {
-    it('should return an empty array if the equipment parent is undefined', async (done) => {
+    it('should return an empty array if the equipment parent is undefined', async () => {
       // Arrange
 
       // Act
@@ -84,10 +84,9 @@ describe('Test TaskProxy', () => {
 
       // Assert
       expect(tasks.length).toBe(0);
-      done();
     });
 
-    it('should return the expected tasks and it should update the realtime fields', async (done) => {
+    it('should return the expected tasks and it should update the realtime fields', async () => {
       // Arrange
       entryProxy.getStoredEntries.mockImplementation(async () => Promise.resolve([]));
       equipmentProxy.getStoredEquipment.mockImplementation(async () => Promise.resolve([{
@@ -135,7 +134,6 @@ describe('Test TaskProxy', () => {
       expect(tasks[1].nextDueDate).not.toBeUndefined();
       expect(tasks[1].usageInHourLeft).not.toBeUndefined();
       expect(tasks[1].level).not.toBeUndefined();
-      done();
     });
   });
 
@@ -149,7 +147,7 @@ describe('Test TaskProxy', () => {
       },
     ];
     describe.each(createOrSaveTaskParams)('createOrSaveTask', (arg) => {
-      it(`When ${JSON.stringify(arg)}`, async (done) => {
+      it(`When ${JSON.stringify(arg)}`, async () => {
         // Arrange
         onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
@@ -175,11 +173,10 @@ describe('Test TaskProxy', () => {
         }
 
         expect(actionManager.countAction()).toBe(arg.expectedNbAction);
-        done();
       });
     });
 
-    it('should throw an httpError if the new task uses an existing name', async (done) => {
+    it('should throw an httpError if the new task uses an existing name', async () => {
       // Arrange
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
       await taskProxy.createOrSaveTask(parentEquipmentId, taskToSave);
@@ -191,11 +188,11 @@ describe('Test TaskProxy', () => {
         // Assert
         expect(error).toBeInstanceOf(HttpError);
         expect(error.data).toEqual({ name: 'alreadyexisting' });
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
   });
-
 
   const deleteTaskParams = [
     {
@@ -206,7 +203,7 @@ describe('Test TaskProxy', () => {
     },
   ];
   describe.each(deleteTaskParams)('deleteTask', (arg) => {
-    it(`When ${JSON.stringify(arg)}`, async (done) => {
+    it(`When ${JSON.stringify(arg)}`, async () => {
       // Arrange
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
@@ -230,7 +227,6 @@ describe('Test TaskProxy', () => {
       expect(tasks.length).toBe(arg.expectedNbTask);
 
       expect(actionManager.countAction()).toBe(arg.expectedNbAction);
-      done();
     });
   });
 
@@ -246,7 +242,7 @@ describe('Test TaskProxy', () => {
     },
   ];
   describe.each(existEquipmentParams)('existEquipment', (arg) => {
-    it(`When ${JSON.stringify(arg)}`, async (done) => {
+    it(`When ${JSON.stringify(arg)}`, async () => {
       // Arrange
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(arg.isOnline));
 
@@ -259,12 +255,11 @@ describe('Test TaskProxy', () => {
 
       // Assert
       expect(isTaskExist).toBe(arg.expectedResult);
-      done();
     });
   });
 
   describe('onEquipmentDeleted', () => {
-    it('should call removeItemInArray, onTaskDeleted for entry proxy and onEntityDeleted for the imageProxy', async (done) => {
+    it('should call removeItemInArray, onTaskDeleted for entry proxy and onEntityDeleted for the imageProxy', async () => {
       // Arrange
       const { getArray, removeItemInArray } = storageService;
 
@@ -320,7 +315,6 @@ describe('Test TaskProxy', () => {
 
       storageService.removeItemInArray = removeItemInArray;
       storageService.getArray = getArray;
-      done();
     });
   });
 });

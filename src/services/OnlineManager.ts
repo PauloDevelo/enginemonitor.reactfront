@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import actionManager from './ActionManager';
 
 import httpProxy from './HttpProxy';
@@ -44,11 +45,11 @@ class OnlineManager implements IOnlineManager {
       setInterval(this.checkBackendReachability, 15000);
     }
 
-    registerIsOnlineListener(listener: (isOnline: boolean) => void):void{
+    registerIsOnlineListener(listener: (isOnline: boolean) => void):void {
       this.listeners.push(listener);
     }
 
-    unregisterIsOnlineListener(listenerToRemove: (isOnline: boolean) => void):void{
+    unregisterIsOnlineListener(listenerToRemove: (isOnline: boolean) => void):void {
       this.listeners = this.listeners.filter((listener) => listener !== listenerToRemove);
     }
 

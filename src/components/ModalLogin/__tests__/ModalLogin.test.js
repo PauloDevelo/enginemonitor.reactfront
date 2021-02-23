@@ -39,8 +39,7 @@ describe('ModalLogin', () => {
     imageFolderSizeLimitInByte: 10000,
   };
 
-
-  it('should render the ModalLogin', async (done) => {
+  it('should render the ModalLogin', async () => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -57,10 +56,9 @@ describe('ModalLogin', () => {
 
     const alerts = modalLogin.find('Alerts');
     expect(alerts.length).toBe(0);
-    done();
   });
 
-  it('should authenticate with the value input', async (done) => {
+  it('should authenticate with the value input', async () => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -88,10 +86,9 @@ describe('ModalLogin', () => {
     expect(modalLogin.find('ModalFooter').find('Button').length).toBe(2);
     const alerts = modalLogin.find('Alerts');
     expect(alerts.length).toBe(0);
-    done();
   });
 
-  it('should display the button to resend the verification email because the user is not verified', async (done) => {
+  it('should display the button to resend the verification email because the user is not verified', async () => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -120,10 +117,9 @@ describe('ModalLogin', () => {
     expect(modalLogin.find('ModalFooter').find('Button').length).toBe(3);
     const alerts = modalLogin.find('Alerts');
     expect(alerts.length).toBe(1);
-    done();
   });
 
-  it('should call the sendVerificationEmail because the user clicked on the button to resend the verification email', async (done) => {
+  it('should call the sendVerificationEmail because the user clicked on the button to resend the verification email', async () => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -153,10 +149,9 @@ describe('ModalLogin', () => {
     // Assert
     expect(userProxy.sendVerificationEmail).toHaveBeenCalledTimes(1);
     expect(userProxy.sendVerificationEmail.mock.calls[0][0]).toEqual('paulodevelo@lovestreet.com');
-    done();
   });
 
-  it('should display the button to reset the password because the user set an incorrect password', async (done) => {
+  it('should display the button to reset the password because the user set an incorrect password', async () => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -188,10 +183,9 @@ describe('ModalLogin', () => {
 
     expect(modalLogin.find('ModalPasswordReset').length).toBe(1);
     expect(modalLogin.find('ModalPasswordReset').props().visible).toBe(false);
-    done();
   });
 
-  it('should display the Modal to reset the password because the user clicked on the button to reset the password', async (done) => {
+  it('should display the Modal to reset the password because the user clicked on the button to reset the password', async () => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -220,10 +214,9 @@ describe('ModalLogin', () => {
     // Assert
     expect(modalLogin.find('ModalPasswordReset').length).toBe(1);
     expect(modalLogin.find('ModalPasswordReset').props().visible).toBe(true);
-    done();
   });
 
-  it('should display an alert message when an unexpected error occurs during the authentication', async (done) => {
+  it('should display an alert message when an unexpected error occurs during the authentication', async () => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -255,10 +248,9 @@ describe('ModalLogin', () => {
 
     expect(modalLogin.find('ModalPasswordReset').length).toBe(1);
     expect(modalLogin.find('ModalPasswordReset').props().visible).toBe(false);
-    done();
   });
 
-  it('should call the toggleModalSignup when clicking on the signup button', async (done) => {
+  it('should call the toggleModalSignup when clicking on the signup button', async () => {
     // Arrange
     let signupVisible = false;
     const toggleModalSignup = jest.fn().mockImplementation(() => {
@@ -281,6 +273,5 @@ describe('ModalLogin', () => {
     expect(alerts.length).toBe(0);
 
     expect(toggleModalSignup).toBeCalledTimes(1);
-    done();
   });
 });

@@ -1,26 +1,25 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
 import { CancelToken } from 'axios';
 import _ from 'lodash';
 import progressiveHttpProxy from './ProgressiveHttpProxy';
 
-// eslint-disable-next-line no-unused-vars
 import storageService, { IUserStorageListener } from './StorageService';
 
 import { updateEntry } from '../helpers/EntryHelper';
-// eslint-disable-next-line no-unused-vars
 import { EntryModel, AssetModel, extractEntryModel } from '../types/Types';
 import imageProxy from './ImageProxy';
 
 import assetManager from './AssetManager';
 
-export interface FetchEntriesProps extends FetchAllEntriesProps{
-    taskId: string|undefined;
-}
 export interface FetchAllEntriesProps{
     equipmentId: string|undefined;
     cancelToken?: CancelToken;
     forceToLookUpInStorage?: boolean;
     cancelTimeout?: boolean;
+}
+
+export interface FetchEntriesProps extends FetchAllEntriesProps{
+  taskId: string|undefined;
 }
 export interface IEntryProxy{
     getBaseEntryUrl(equipmentId?: string): string;

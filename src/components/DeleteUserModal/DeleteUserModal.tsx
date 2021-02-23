@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React, { useState, useCallback } from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter, Input,
@@ -23,6 +24,7 @@ type Props = {
     isOpen: boolean,
     toggle: () => void,
     onUserDeleted: () => void,
+    // eslint-disable-next-line react/require-default-props
     className?: string,
 }
 

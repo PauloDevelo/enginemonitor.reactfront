@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React from 'react';
 import { mount } from 'enzyme';
 import { IntlProvider } from 'react-intl';
@@ -25,7 +26,7 @@ describe('ClocLabel', () => {
     timeService.getUTCDateTime.mockRestore();
   });
 
-  it('should Render the clock as expected', async (done) => {
+  it('should Render the clock as expected', async () => {
     // Arrange utc: 2019-11-24T12:51:00.000Z
     const utcDate = new Date();
     utcDate.setUTCFullYear(2019);
@@ -48,6 +49,5 @@ describe('ClocLabel', () => {
     expect(timeService.getUTCDateTime).toBeCalledTimes(1);
 
     clockLabelWrapper.unmount();
-    done();
   });
 });

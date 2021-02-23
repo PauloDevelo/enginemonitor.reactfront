@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React, {
   // eslint-disable-next-line no-unused-vars
   useState, useEffect, ReactElement, useRef,
@@ -13,6 +14,7 @@ const alertMsg = defineMessages(jsonMessages);
 
 type Props = {
     error: Error | undefined;
+    // eslint-disable-next-line react/require-default-props
     className?: string;
     onDismiss: () => void;
     timeoutInMs: number;
@@ -22,6 +24,7 @@ const ErrorAlert = ({
   error, onDismiss, className, timeoutInMs,
 }:Props) => {
   const [isVisible, setVisible] = useState(error !== undefined);
+  // eslint-disable-next-line no-undef
   const timer = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const clearTimer = () => {

@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
 import { UserModel } from '../types/Types';
 
 export interface IUserContext{
@@ -32,30 +32,30 @@ class UserContext implements IUserContext {
       this.triggerOnUserStorageSizeChanged();
     }
 
-    registerOnUserStorageSizeChanged(listener: (newUserStorageSize: number) => void):void{
+    registerOnUserStorageSizeChanged(listener: (newUserStorageSize: number) => void):void {
       this.userStorageSizeListeners.push(listener);
     }
 
-    unregisterOnUserStorageSizeChanged(listenerToRemove: (newUserStorageSize: number) => void):void{
+    unregisterOnUserStorageSizeChanged(listenerToRemove: (newUserStorageSize: number) => void):void {
       this.userStorageSizeListeners = this.userStorageSizeListeners.filter((listener) => listener !== listenerToRemove);
     }
 
-    registerOnUserChanged(listener: (newUser: UserModel | undefined) => Promise<void>):void{
+    registerOnUserChanged(listener: (newUser: UserModel | undefined) => Promise<void>):void {
       this.userListeners.push(listener);
     }
 
-    unregisterOnUserChanged(listenerToRemove: (newUser: UserModel | undefined) => void):void{
+    unregisterOnUserChanged(listenerToRemove: (newUser: UserModel | undefined) => void):void {
       this.userListeners = this.userListeners.filter((listener) => listener !== listenerToRemove);
     }
 
-    onImageAdded(imageSize: number): void{
+    onImageAdded(imageSize: number): void {
       if (this.user !== undefined) {
         this.user.imageFolderSizeInByte += imageSize;
         this.triggerOnUserStorageSizeChanged();
       }
     }
 
-    onImageRemoved(imageSize: number): void{
+    onImageRemoved(imageSize: number): void {
       if (this.user !== undefined) {
         this.user.imageFolderSizeInByte -= imageSize;
         this.triggerOnUserStorageSizeChanged();

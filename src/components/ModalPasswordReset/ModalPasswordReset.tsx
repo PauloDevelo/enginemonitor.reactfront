@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+// eslint-disable-next-line no-use-before-define
 import React, { useState, useEffect } from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter, Spinner,
@@ -28,11 +30,13 @@ newPassword2?:string
 
 type Props = {
 visible: boolean,
+// eslint-disable-next-line react/require-default-props
 className?: string,
 toggle: () => void,
 data: NewPassword
 };
 
+// eslint-disable-next-line no-shadow
 enum ResetPasswordState {
 // eslint-disable-next-line no-unused-vars
 Started = 1,

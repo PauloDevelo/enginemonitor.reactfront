@@ -66,7 +66,7 @@ describe('Test AsseProxy', () => {
   });
 
   describe('fetchAsset', () => {
-    it('should try to get the asset from the backend when online', async (done) => {
+    it('should try to get the asset from the backend when online', async () => {
       // Arrange
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
       httpProxy.get.mockImplementation((url) => {
@@ -83,10 +83,9 @@ describe('Test AsseProxy', () => {
       // Assert
       expect(httpProxy.get).toHaveBeenCalledTimes(1);
       expect(assets[0]).toEqual(assetToSave);
-      done();
     });
 
-    it('should try to get the asset from the storage when the back end fails to return something', async (done) => {
+    it('should try to get the asset from the storage when the back end fails to return something', async () => {
       // Arrange
       httpProxy.post.mockImplementation((url, data) => Promise.resolve(data));
       await assetProxy.createOrSaveAsset(assetToSave);
@@ -102,10 +101,9 @@ describe('Test AsseProxy', () => {
       // Assert
       expect(httpProxy.get).toHaveBeenCalledTimes(1);
       expect(assets[0]).toEqual(assetToSave);
-      done();
     });
 
-    it('should try to get the asset from the local storage when offline', async (done) => {
+    it('should try to get the asset from the local storage when offline', async () => {
       // Arrange
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(false));
 
@@ -117,10 +115,9 @@ describe('Test AsseProxy', () => {
 
       // Assert
       expect(assets[0]).toEqual(assetToSave);
-      done();
     });
 
-    it('should try to get the asset from the local storage when force to', async (done) => {
+    it('should try to get the asset from the local storage when force to', async () => {
       // Arrange
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
 
@@ -132,7 +129,6 @@ describe('Test AsseProxy', () => {
 
       // Assert
       expect(assets[0]).toEqual(assetToSave);
-      done();
     });
   });
 
@@ -179,7 +175,7 @@ describe('Test AsseProxy', () => {
       });
     });
 
-    it('should throw an httperror exception with credential error when the user is forbid to create an asset', async (done) => {
+    it('should throw an httperror exception with credential error when the user is forbid to create an asset', async () => {
       // Arrange
       user.forbidCreatingAsset = true;
       onlineManager.isOnlineAndSynced.mockImplementation(() => Promise.resolve(true));
@@ -198,7 +194,6 @@ describe('Test AsseProxy', () => {
         const assets = await storageService.getArray(urlFetchAssets);
         expect(assets.length).toBe(0);
         expect(actionManager.countAction()).toBe(0);
-        done();
       }
     });
   });

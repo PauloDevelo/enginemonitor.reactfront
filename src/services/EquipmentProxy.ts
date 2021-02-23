@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as log from 'loglevel';
 import progressiveHttpProxy from './ProgressiveHttpProxy';
 
@@ -7,7 +8,6 @@ import taskProxy from './TaskProxy';
 import entryProxy from './EntryProxy';
 
 import { updateEquipment } from '../helpers/EquipmentHelper';
-// eslint-disable-next-line no-unused-vars
 import { EquipmentModel, extractEquipmentModel } from '../types/Types';
 import imageProxy from './ImageProxy';
 

@@ -1,4 +1,5 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable react/require-default-props */
+// eslint-disable-next-line no-use-before-define
 import React, {
   useRef, useState, useEffect, useCallback,
 } from 'react';
@@ -6,6 +7,7 @@ import React, {
 type Props = {
   loader: any,
   src: string,
+  // eslint-disable-next-line no-undef
   storage: LocalForage,
   alt?: string,
   onClick?:()=>void,
@@ -13,6 +15,7 @@ type Props = {
   style?: any,
 }
 
+// eslint-disable-next-line no-undef
 export const canvasImageSourceToDataURL = (img: CanvasImageSource) => {
   const canvas = document.createElement('canvas');
   canvas.width = img.width as number;

@@ -109,7 +109,7 @@ describe('TaskTable', () => {
     taskManager.areTasksLoading.mockRestore();
   });
 
-  it('Should render the table with te special class name', async (done) => {
+  it('Should render the table with te special class name', async () => {
     // Arrange
     taskManager.getTasks.mockImplementation(() => []);
     taskManager.areTasksLoading.mockImplementation(() => true);
@@ -129,10 +129,9 @@ describe('TaskTable', () => {
     // Assert
     const table = taskTable.find('div').at(0);
     expect(table.props().className).toContain('mySpecialClassName');
-    done();
   });
 
-  it('Should render an empty table if the equipment is undefined', async (done) => {
+  it('Should render an empty table if the equipment is undefined', async () => {
     // Arrange
     const changeCurrentTask = jest.fn();
 
@@ -156,10 +155,9 @@ describe('TaskTable', () => {
     expect(taskManager.onTaskSaved).toBeCalledTimes(0);
     expect(taskManager.setCurrentTask).toBeCalledTimes(0);
     expect(changeCurrentTask).toBeCalledTimes(0);
-    done();
   });
 
-  it('Should render all the tasks sorted by due date', async (done) => {
+  it('Should render all the tasks sorted by due date', async () => {
     // Arrange
     const changeCurrentTask = jest.fn();
 
@@ -183,10 +181,9 @@ describe('TaskTable', () => {
     expect(taskManager.onTaskSaved).toBeCalledTimes(0);
     expect(changeCurrentTask).toBeCalledTimes(0);
     expect(taskManager.setCurrentTask).toBeCalledTimes(0);
-    done();
   });
 
-  it('Should call changeCurrentTask when clicking on any cell', async (done) => {
+  it('Should call changeCurrentTask when clicking on any cell', async () => {
     // Arrange
     const changeCurrentTask = jest.fn();
 
@@ -221,10 +218,9 @@ describe('TaskTable', () => {
         clickCounter++;
       }
     }
-    done();
   });
 
-  it('should display the task edition modal to add a new entry', async (done) => {
+  it('should display the task edition modal to add a new entry', async () => {
     // Arrange
     const changeCurrentTask = jest.fn();
 
@@ -250,10 +246,9 @@ describe('TaskTable', () => {
     expect(editTaskModal.props().visible).toBe(true);
     expect(editTaskModal.props().onTaskSaved).toBe(taskManager.onTaskSaved);
     expect(taskManager.onTaskSaved).toBeCalledTimes(0);
-    done();
   });
 
-  it('it should display only 3 columns since the inner width is lower than 1200px, but after a resize larger than 1200px, it should display 4 columns', async (done) => {
+  it('it should display only 3 columns since the inner width is lower than 1200px, but after a resize larger than 1200px, it should display 4 columns', async () => {
     // Arrange
     window.innerWidth = 1000;
     const changeCurrentTask = jest.fn();
@@ -303,6 +298,5 @@ describe('TaskTable', () => {
     // Assert
     cells = taskTable.find('ClickableCell');
     expect(cells.length).toBe(tasks.length * 3);
-    done();
   });
 });

@@ -1,4 +1,4 @@
-import { useRef, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 
 import { useAsync } from 'react-async';
 // eslint-disable-next-line no-unused-vars
@@ -6,6 +6,7 @@ import { CancelTokenSource } from 'axios';
 import httpProxy from '../services/HttpProxy';
 
 export type AxiosAsyncProps<T, P> = {
+    // eslint-disable-next-line no-unused-vars
     fetchPromise: (props:P) => Promise<T>,
     fetchProps: P,
     cancellationMsg?: string
@@ -31,8 +32,6 @@ export default function useFetcher<T, P>({ fetchPromise, fetchProps, cancellatio
     const extendedFetchProps = { cancelToken: cancelTokenSourceRef.current.token, ...fetchProps };
 
     return fetchPromise(extendedFetchProps);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchPromise, cancelTokenSourceRef, ...Object.values(fetchProps)]);
 
   const {

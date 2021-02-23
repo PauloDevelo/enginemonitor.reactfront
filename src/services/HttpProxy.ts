@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as log from 'loglevel';
 
 // eslint-disable-next-line no-unused-vars

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React from 'react';
 
 import {
@@ -36,7 +37,7 @@ const TaskScheduleText = ({ equipment, task }: Props) => {
         <FormattedMessage {...messages.tobedonemonth} />
         <b>
           {task.usagePeriodInHour}
-     h
+          h
           {' '}
         </b>
         <FormattedMessage {...messages.orevery} />

@@ -1,4 +1,4 @@
-/* eslint-disable max-classes-per-file */
+/* eslint-disable no-unused-vars *//* eslint-disable max-classes-per-file */
 import log from 'loglevel';
 
 import { TaskWithProgress } from './TaskWithProgress';
@@ -41,7 +41,7 @@ class LocalStorageBuilder extends TaskWithProgress {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    cancel(): void{
+    cancel(): void {
     }
 
     private rebuildLocalStorage = async (): Promise<void> => {

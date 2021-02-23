@@ -8,7 +8,6 @@ import {
   MIN_ZOOM_LEVEL,
   ZOOM_BUTTON_INCREMENT_SIZE,
 } from '../constant';
-
 import updateWrapper from '../../../testHelpers/EnzymeHelper';
 
 // Mock the loadStyles static function to avoid
@@ -73,6 +72,7 @@ describe('Lightbox structure', () => {
 
   it('contains custom toolbar buttons when supplied', () => {
     wrapper.setProps({
+      // eslint-disable-next-line jsx-a11y/control-has-associated-label
       toolbarButtons: [<button type="button" className="my-test-button" />],
     });
     expect(wrapper.find('.ril-toolbar__item .my-test-button').length).toEqual(
@@ -119,7 +119,6 @@ describe('Events', () => {
   });
 
   const mockFns = {
-    onAfterOpen: jest.fn(),
     onCloseRequest: jest.fn(),
     onMovePrevRequest: jest.fn(),
     onMoveNextRequest: jest.fn(),
@@ -135,11 +134,6 @@ describe('Events', () => {
   const { zoomOutBtn, zoomInBtn } = wrapper.instance();
   jest.spyOn(zoomOutBtn.current, 'focus');
   jest.spyOn(zoomInBtn.current, 'focus');
-
-  it('Calls onAfterOpen when mounted', () => {
-    expect(mockFns.onAfterOpen).toHaveBeenCalledTimes(1);
-    expect(mockFns.onAfterOpen).toHaveBeenCalledWith();
-  });
 
   it('Calls onMovePrevRequest when left button clicked', () => {
     expect(mockFns.onMovePrevRequest).toHaveBeenCalledTimes(0);

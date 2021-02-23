@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+// eslint-disable-next-line no-use-before-define
 import React, { useState, useCallback } from 'react';
 import {
   Button, Modal, ModalHeader, ModalFooter, Media,
@@ -22,7 +24,6 @@ toggle?: ()=>void;
 const { language } = navigator;
 const shortLanguage = language.split(/[-_]/)[0];
 
-
 const PrivacyPolicyModal = ({ visible = true, className, toggle }: Props) => {
   const [deleteUserModalVis, setDeleteUserModalVis] = useState(false);
 
@@ -41,6 +42,7 @@ const PrivacyPolicyModal = ({ visible = true, className, toggle }: Props) => {
     en: <PrivacyPolicyModalBodyEn deleteAllUserData={() => setDeleteUserModalVis(true)} />,
   };
   const supportedLanguages = Object.keys(privacyPolicyModalBodies);
+  // eslint-disable-next-line no-undef
   const privacyPolicyModalBody = supportedLanguages.includes(shortLanguage) ? (privacyPolicyModalBodies as any)[shortLanguage] as JSX.Element : privacyPolicyModalBodies.en;
 
   return (

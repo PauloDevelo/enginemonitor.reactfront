@@ -1,3 +1,8 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/require-default-props */
+// eslint-disable-next-line no-use-before-define
 import React, { useCallback } from 'react';
 
 import classnames from 'classnames';
@@ -6,6 +11,7 @@ type Props<T> = {
     data: T;
     onDisplayData: (data:T) => void;
     className?: string;
+    // eslint-disable-next-line no-undef
     children?: JSX.Element[] | JSX.Element
 }
 

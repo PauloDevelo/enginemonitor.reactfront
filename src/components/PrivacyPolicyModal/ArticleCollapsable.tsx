@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+// eslint-disable-next-line no-use-before-define
 import React, { useState, useEffect } from 'react';
 import {
   Collapse,
@@ -11,9 +13,9 @@ import './ArticleCollapsable.css';
 type Props = {
   title: string;
   className?: string;
+  // eslint-disable-next-line no-undef
   children?: JSX.Element[] | JSX.Element;
 }
-
 
 const ArticleCollapsable = ({ title, className, children }: Props) => {
   const [collapse, setCollapse] = useState(false);
@@ -31,7 +33,6 @@ const ArticleCollapsable = ({ title, className, children }: Props) => {
       setBadgeClassName('');
     }
   }, [collapse]);
-
 
   return (
     <>

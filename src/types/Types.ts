@@ -12,10 +12,18 @@ function extract<T>(properties: Record<keyof T, true>) {
   };
 }
 
+// eslint-disable-next-line no-shadow
 export enum AgeAcquisitionType{
   time = 0,
   manualEntry=1,
   tracker=2
+}
+
+// eslint-disable-next-line no-shadow
+export enum TaskLevel{
+  done=1,
+  soon=2,
+  todo = 3,
 }
 
 export type TaskTodo = {
@@ -57,12 +65,6 @@ export const extractEquipmentModel = extract<EquipmentModel>({
   ageAcquisitionType: true,
   ageUrl: true,
 });
-
-export enum TaskLevel{
-done=1,
-soon=2,
-todo = 3,
-}
 
 export interface TaskModel extends EntityModel {
     periodInMonth: number,

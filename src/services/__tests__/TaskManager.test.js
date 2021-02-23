@@ -71,7 +71,7 @@ describe('Test TaskManager', () => {
   });
 
   describe('getCurrentTask', () => {
-    it('Should return undefined before setting the current equipment', async (done) => {
+    it('Should return undefined before setting the current equipment', async () => {
       // Arrange
       taskProxy.fetchTasks.mockImplementation(() => Promise.resolve([]));
 
@@ -84,10 +84,9 @@ describe('Test TaskManager', () => {
       // Assert
       expect(taskProxy.fetchTasks).toBeCalledTimes(0);
       expect(currentTask).toBeUndefined();
-      done();
     });
 
-    it('Should return undefined after setting a current equipment which does not have any task yet', async (done) => {
+    it('Should return undefined after setting a current equipment which does not have any task yet', async () => {
       // Arrange
       taskProxy.fetchTasks.mockImplementation(() => Promise.resolve([]));
       equipmentManager.setCurrentEquipment(equipment);
@@ -99,10 +98,9 @@ describe('Test TaskManager', () => {
       // Assert
       expect(taskProxy.fetchTasks).toBeCalledTimes(1);
       expect(currentTask).toBeUndefined();
-      done();
     });
 
-    it('Should return the task which is the next to perform after setting the current equipment', async (done) => {
+    it('Should return the task which is the next to perform after setting the current equipment', async () => {
       // Arrange
       taskProxy.fetchTasks.mockImplementation(async () => Promise.resolve([task2, task1]));
 
@@ -115,10 +113,9 @@ describe('Test TaskManager', () => {
       // Assert
       expect(taskProxy.fetchTasks).toBeCalledTimes(1);
       expect(currentTask).toEqual(task1);
-      done();
     });
 
-    it('Should return undefined when the current equipment is undefined.', async (done) => {
+    it('Should return undefined when the current equipment is undefined.', async () => {
       // Arrange
       taskProxy.fetchTasks.mockImplementation(async () => Promise.resolve([task1, task2]));
 
@@ -134,12 +131,11 @@ describe('Test TaskManager', () => {
       // Assert
       expect(taskProxy.fetchTasks).toBeCalledTimes(1);
       expect(currentTask).toEqual(undefined);
-      done();
     });
   });
 
   describe('setCurrentTask', () => {
-    it('Should notify the listeners when the current task changed', async (done) => {
+    it('Should notify the listeners when the current task changed', async () => {
       // Arrange
 
       // Act
@@ -148,10 +144,9 @@ describe('Test TaskManager', () => {
       // Assert
       expect(currentTaskListener).toBeCalledTimes(1);
       expect(currentTaskListener.mock.calls[0][0]).toBe(task1);
-      done();
     });
 
-    it('Should notify the listeners when the current task changed', async (done) => {
+    it('Should notify the listeners when the current task changed', async () => {
       // Arrange
       const anotherListener = jest.fn();
       taskManager.registerOnCurrentTaskChanged(anotherListener);
@@ -164,10 +159,9 @@ describe('Test TaskManager', () => {
       expect(anotherListener.mock.calls[0][0]).toBe(task1);
 
       taskManager.unregisterOnCurrentTaskChanged(anotherListener);
-      done();
     });
 
-    it('Should not notify the unregister listener when the current task changed', async (done) => {
+    it('Should not notify the unregister listener when the current task changed', async () => {
       // Arrange
       const anotherListener = jest.fn();
       taskManager.registerOnCurrentTaskChanged(anotherListener);
@@ -181,13 +175,11 @@ describe('Test TaskManager', () => {
       // Assert
       expect(anotherListener).toBeCalledTimes(1);
       expect(anotherListener.mock.calls[0][0]).toBe(task1);
-
-      done();
     });
   });
 
   describe('getTasks', () => {
-    it('should return the tasks fetched', async (done) => {
+    it('should return the tasks fetched', async () => {
       // Arrange
       taskProxy.fetchTasks.mockImplementation(async () => Promise.resolve([task1, task2]));
 
@@ -201,10 +193,9 @@ describe('Test TaskManager', () => {
       expect(tasks.length).toBe(2);
       expect(tasks[0]).toBe(task1);
       expect(tasks[1]).toBe(task2);
-      done();
     });
 
-    it('should return the tasks sorted by due date', async (done) => {
+    it('should return the tasks sorted by due date', async () => {
       // Arrange
       const taskTodo = {
         _uiId: 'an_id_created_by_the_front_end_and_for_the_front_end_3',
@@ -242,7 +233,6 @@ describe('Test TaskManager', () => {
       expect(tasks[1]).toBe(taskSoon);
       expect(tasks[2]).toBe(task1);
       expect(tasks[3]).toBe(task2);
-      done();
     });
   });
 
@@ -277,7 +267,7 @@ describe('Test TaskManager', () => {
   });
 
   describe('onTaskDeleted', () => {
-    it('should remove the task from the list and it should notify the listeners', async (done) => {
+    it('should remove the task from the list and it should notify the listeners', async () => {
       // Arrange
       taskProxy.fetchTasks.mockImplementation(async () => Promise.resolve([task1, task2]));
 
@@ -292,10 +282,9 @@ describe('Test TaskManager', () => {
       expect(tasks.length).toBe(1);
       expect(tasks[0]).toBe(task2);
       expect(tasksListener).toBeCalledTimes(2);
-      done();
     });
 
-    it('should not notify the unregistered listeners', async (done) => {
+    it('should not notify the unregistered listeners', async () => {
       // Arrange
       taskProxy.fetchTasks.mockImplementation(async () => Promise.resolve([task1, task2]));
 
@@ -312,10 +301,9 @@ describe('Test TaskManager', () => {
 
       // Assert
       expect(anotherTasksListener).toBeCalledTimes(1);
-      done();
     });
 
-    it('should change the curren task when the current task is delelted', async (done) => {
+    it('should change the curren task when the current task is delelted', async () => {
       // Arrange
       taskProxy.fetchTasks.mockImplementation(async () => Promise.resolve([task1, task2]));
 
@@ -329,12 +317,11 @@ describe('Test TaskManager', () => {
 
       // Assert
       expect(taskManager.getCurrentTask()).toBe(task2);
-      done();
     });
   });
 
   describe('onTaskSaved', () => {
-    it('should add the task from the list and it should notify the listeners', async (done) => {
+    it('should add the task from the list and it should notify the listeners', async () => {
       // Arrange
       taskProxy.fetchTasks.mockImplementation(async () => Promise.resolve([task1, task2]));
 
@@ -360,10 +347,9 @@ describe('Test TaskManager', () => {
       expect(tasks.length).toBe(3);
       expect(tasks[2]).toEqual(task3);
       expect(tasksListener).toBeCalledTimes(2);
-      done();
     });
 
-    it('should update the task from the list and it should notify the listeners', async (done) => {
+    it('should update the task from the list and it should notify the listeners', async () => {
       // Arrange
       taskProxy.fetchTasks.mockImplementation(async () => Promise.resolve([task1, task2]));
 
@@ -381,12 +367,11 @@ describe('Test TaskManager', () => {
       expect(tasks.length).toBe(2);
       expect(tasks[0]).toEqual(copytask1);
       expect(tasksListener).toBeCalledTimes(2);
-      done();
     });
   });
 
   describe('refreshTask', () => {
-    it('should call refresh the task list and notify the listeners', async (done) => {
+    it('should call refresh the task list and notify the listeners', async () => {
       // Arrange
       taskProxy.fetchTasks.mockImplementation(async () => Promise.resolve([task1, task2]));
 
@@ -400,12 +385,11 @@ describe('Test TaskManager', () => {
       // Assert
       expect(tasksListener).toBeCalledTimes(2);
       expect(taskProxy.fetchTasks).toBeCalledTimes(2);
-      done();
     });
   });
 
   describe('areTaskLoading', () => {
-    it('should be true when fetching the tasks', async (done) => {
+    it('should be true when fetching the tasks', async () => {
       // Arrange
       taskProxy.fetchTasks.mockImplementation(async () => {
         await sleep(500);
@@ -423,10 +407,9 @@ describe('Test TaskManager', () => {
       // Assert
       expect(areTasksLoading1).toBe(true);
       expect(areTasksLoading2).toBe(false);
-      done();
     });
 
-    it('should be false after fetching the tasks unsuccessfully', async (done) => {
+    it('should be false after fetching the tasks unsuccessfully', async () => {
       // Arrange
       taskProxy.fetchTasks.mockImplementation(async () => {
         await sleep(500);
@@ -444,7 +427,6 @@ describe('Test TaskManager', () => {
       // Assert
       expect(areTasksLoading1).toBe(true);
       expect(areTasksLoading2).toBe(false);
-      done();
     });
   });
 });

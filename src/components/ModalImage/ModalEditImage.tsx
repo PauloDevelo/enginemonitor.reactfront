@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/require-default-props */
+// eslint-disable-next-line no-use-before-define
 import React from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter,
@@ -23,7 +26,6 @@ import Alerts from '../Alerts/Alerts';
 import ActionButton from '../ActionButton/ActionButton';
 
 import '../../style/transition.css';
-// eslint-disable-next-line no-unused-vars
 import { ImageModel } from '../../types/Types';
 
 import jsonMessages from './ModalEditImage.messages.json';

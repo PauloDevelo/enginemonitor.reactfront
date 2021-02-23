@@ -26,6 +26,7 @@ export function createDefaultEntry(equipment:EquipmentModel, task: TaskModel | u
 }
 
 export function updateEntry(entry: EntryModel): EntryModel {
+  // eslint-disable-next-line no-param-reassign
   entry.date = new Date(entry.date);
   return entry;
 }

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React, { useState, useEffect } from 'react';
 import { DropdownItem } from 'reactstrap';
 
@@ -5,7 +6,6 @@ import { faPlug, faBan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ConnectionStateMessage from './ConnectionStateMessage';
 import NbActionPending from './NbActionPending';
-
 
 import onlineManager from '../../services/OnlineManager';
 import syncService from '../../services/SyncService';

@@ -1,4 +1,5 @@
 /* eslint-disable class-methods-use-this */
+/* eslint-disable no-unused-vars */
 
 // eslint-disable-next-line no-unused-vars
 import { CancelToken } from 'axios';

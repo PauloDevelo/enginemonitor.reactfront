@@ -51,7 +51,7 @@ describe('DropDownConnectionStateItem', () => {
     { isOnline: false, nbAction: 5 },
   ];
   describe.each(states)('Render', ({ isOnline, nbAction }) => {
-    it(`Should render when the app is online ${isOnline} and nb action is ${nbAction} as expected `, async (done) => {
+    it(`Should render when the app is online ${isOnline} and nb action is ${nbAction} as expected `, async () => {
       // Arrange
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(isOnline));
       jest.spyOn(syncService, 'tryToRun');
@@ -75,7 +75,6 @@ describe('DropDownConnectionStateItem', () => {
 
       expect(onlineManager.unregisterIsOnlineListener).toBeCalledTimes(1);
       expect(actionManager.unregisterOnActionManagerChanged).toBeCalledTimes(2);
-      done();
     });
   });
 });

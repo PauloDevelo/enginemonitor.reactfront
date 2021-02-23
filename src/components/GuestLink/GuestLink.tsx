@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+// eslint-disable-next-line no-use-before-define
 import React, {
   useEffect, useState, useCallback, useRef,
 } from 'react';
@@ -15,7 +17,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import jsonMessages from './GuestLink.messages.json';
 
-// eslint-disable-next-line no-unused-vars
 import { AssetModel, GuestLinkModel } from '../../types/Types';
 
 import guestLinkProxy from '../../services/GuestLinkProxy';
@@ -24,13 +25,16 @@ import analytics from '../../helpers/AnalyticsHelper';
 const guestLinkMsg = defineMessages(jsonMessages);
 
 type Type = {
+    // eslint-disable-next-line react/require-default-props
     className?: string
     asset: AssetModel,
+    // eslint-disable-next-line react/require-default-props
     onError?: (error:any) => void
 }
 
 const GuestLink = ({ asset, onError, className }:Type) => {
   const [guestLink, setGuestLink] = useState<GuestLinkModel | undefined>(undefined);
+  // eslint-disable-next-line no-undef
   const timer = useRef<NodeJS.Timeout | undefined>(undefined);
 
   useEffect(() => () => {
@@ -73,7 +77,6 @@ const GuestLink = ({ asset, onError, className }:Type) => {
       }
     }
   }, [asset, onError]);
-
 
   const [copied, setCopied] = useState(false);
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {

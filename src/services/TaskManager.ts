@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 import { CancelTokenSource } from 'axios';
 import log from 'loglevel';

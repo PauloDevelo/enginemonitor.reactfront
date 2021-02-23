@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import log from 'loglevel';
 import onlineManager from '../services/OnlineManager';
 

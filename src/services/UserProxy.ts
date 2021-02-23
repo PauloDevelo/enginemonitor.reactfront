@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as log from 'loglevel';
 import Cookies from 'js-cookie';
 import _ from 'lodash';

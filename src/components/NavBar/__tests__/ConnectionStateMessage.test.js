@@ -31,7 +31,7 @@ describe('ConnectionStateMessage', () => {
   ];
 
   describe.each(connectionStates)('Render', ({ isOnline, isSynced }) => {
-    it(`should display the connection when isOnline is ${isOnline} and the application is synced ${isSynced}`, async (done) => {
+    it(`should display the connection when isOnline is ${isOnline} and the application is synced ${isSynced}`, (done) => {
       // Arrange
 
       // Act

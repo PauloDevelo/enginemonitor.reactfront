@@ -1,8 +1,8 @@
+/* eslint-disable no-unused-vars */
 import _ from 'lodash';
 import userContext from './UserContext';
 import analytics from '../helpers/AnalyticsHelper';
 
-// eslint-disable-next-line no-unused-vars
 import { AssetModel, UserModel, UserCredentials } from '../types/Types';
 
 export type AssetListener = (asset: AssetModel|undefined|null) => void;
@@ -32,7 +32,6 @@ class AssetManager implements IAssetManager {
       userContext.registerOnUserChanged(this.onCurrentUserChanged);
     }
 
-    // eslint-disable-next-line no-unused-vars
     onCurrentUserChanged = async (user: UserModel | undefined) => {
       if (user !== undefined) {
         const { default: assetProxy } = await import('./AssetProxy');

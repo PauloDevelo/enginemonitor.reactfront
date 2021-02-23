@@ -32,7 +32,7 @@ describe('Component GuestLink', () => {
     guestLinkProxy.removeGuestLink.mockRestore();
   });
 
-  it('should try to get the link when the component loads and then display it', async (done) => {
+  it('should try to get the link when the component loads and then display it', async () => {
     // Arrange
     const guestLink = { _uiId: 'uiidforthefrontend', name: 'guest', niceKey: 'thisisanicekey' };
     guestLinkProxy.getGuestLinks.mockImplementation(async (assetUiId) => {
@@ -55,11 +55,9 @@ describe('Component GuestLink', () => {
     expect(guestLinkProxy.getGuestLinks).toBeCalledTimes(1);
     const input = wrapper.find('Input');
     expect(input.get(0).props.value).toBe(`http://test/${guestLink.niceKey}`);
-
-    done();
   });
 
-  it('should display a empty link if guestLinkProxy.getGuestLinks throw an exception', async (done) => {
+  it('should display a empty link if guestLinkProxy.getGuestLinks throw an exception', async () => {
     // Arrange
     guestLinkProxy.getGuestLinks.mockImplementation(async () => {
       throw new Error('unexpected assed ui id');
@@ -81,11 +79,9 @@ describe('Component GuestLink', () => {
     expect(input.get(0).props.value).toBe('');
 
     expect(onError).toBeCalledTimes(0);
-
-    done();
   });
 
-  it('should try to create a guest link when clicking on the button and when there is no guest link created yet', async (done) => {
+  it('should try to create a guest link when clicking on the button and when there is no guest link created yet', async () => {
     // Arrange
     guestLinkProxy.getGuestLinks.mockImplementation(async (assetUiId) => {
       if (assetUiId === asset._uiId) {
@@ -123,11 +119,9 @@ describe('Component GuestLink', () => {
 
     const input = wrapper.find('Input');
     expect(input.get(0).props.value).toBe(`http://test/${newGuestLink.niceKey}`);
-
-    done();
   });
 
-  it('should call onError when creating a guest link fails', async (done) => {
+  it('should call onError when creating a guest link fails', async () => {
     // Arrange
     const onError = jest.fn();
 
@@ -163,11 +157,9 @@ describe('Component GuestLink', () => {
     const input = wrapper.find('Input');
     expect(input.get(0).props.value).toBe('');
     expect(onError).toBeCalledTimes(1);
-
-    done();
   });
 
-  it('should try to delete a guest link when clicking on the button because there is already a guest link created', async (done) => {
+  it('should try to delete a guest link when clicking on the button because there is already a guest link created', async () => {
     // Arrange
     const guestLink = { _uiId: 'uiidforthefrontend', name: 'guest', niceKey: 'thisisanicekey' };
     guestLinkProxy.getGuestLinks.mockImplementation(async (assetUiId) => {
@@ -205,11 +197,9 @@ describe('Component GuestLink', () => {
 
     const input = wrapper.find('Input');
     expect(input.get(0).props.value).toBe('');
-
-    done();
   });
 
-  it('should call onError when delete throws an unexpected error.', async (done) => {
+  it('should call onError when delete throws an unexpected error.', async () => {
     // Arrange
     const onError = jest.fn();
 
@@ -246,11 +236,9 @@ describe('Component GuestLink', () => {
 
     const input = wrapper.find('Input');
     expect(input.get(0).props.value).toBe(`http://test/${guestLink.niceKey}`);
-
-    done();
   });
 
-  it('should copy the link in the clipboard when the guest link input gets the focus', async (done) => {
+  it('should copy the link in the clipboard when the guest link input gets the focus', async () => {
     // Arrange
     let lastCommand;
     document.execCommand = (command) => {
@@ -286,7 +274,5 @@ describe('Component GuestLink', () => {
 
     // Assert
     expect(lastCommand).toBe('copy');
-
-    done();
   });
 });

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React, {
   useEffect, useState, useCallback,
 } from 'react';
@@ -15,19 +16,15 @@ import { withFixedHeader } from '../react-table-factory/withFixedHeader.js';
 import ModalEditTask from '../ModalEditTask/ModalEditTask';
 import Loading from '../Loading/Loading';
 
-
 import {
-  // eslint-disable-next-line no-unused-vars
   getContext, shorten, getTodoValue, createDefaultTask, getBadgeText,
 } from '../../helpers/TaskHelper';
 
-// eslint-disable-next-line no-unused-vars
 import ToDoText from '../ToDoText/TodoText';
 
 import useEditModal from '../../hooks/EditModalHook';
 
 import {
-  // eslint-disable-next-line no-unused-vars
   EquipmentModel, TaskModel, TaskLevel, TaskTodo,
 } from '../../types/Types';
 
@@ -43,7 +40,9 @@ import equipmentManager from '../../services/EquipmentManager';
 const taskTableMsg = defineMessages(jsonMessages);
 
 type Props = {
+  // eslint-disable-next-line no-unused-vars
   changeCurrentTask: (task: TaskModel) => void,
+  // eslint-disable-next-line react/require-default-props
   className?: string
 };
 

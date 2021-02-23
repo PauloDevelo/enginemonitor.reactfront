@@ -48,7 +48,7 @@ describe('Test GuestLinkProxy', () => {
   });
 
   describe('createGuestLink', () => {
-    it('it should throw an exception if not online', async (done) => {
+    it('it should throw an exception if not online', async () => {
       // Arrange
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(false));
 
@@ -59,11 +59,12 @@ describe('Test GuestLinkProxy', () => {
         // Assert
         expect(error instanceof HttpError).toBe(true);
         expect(error.data).toBe('mustBeOnlineForSharedLinkCreation');
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
-    it('it should throw an exception if the user does not enough credentials', async (done) => {
+    it('it should throw an exception if the user does not enough credentials', async () => {
       // Arrange
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       assetManager.getUserCredentials.mockImplementation(() => ({ readonly: true }));
@@ -75,11 +76,12 @@ describe('Test GuestLinkProxy', () => {
         // Assert
         expect(error instanceof HttpError).toBe(true);
         expect(error.data).toEqual({ message: 'credentialError' });
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
-    it('it should post the expected data to the correct url', async (done) => {
+    it('it should post the expected data to the correct url', async () => {
       // Arrange
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
@@ -101,10 +103,9 @@ describe('Test GuestLinkProxy', () => {
       // Assert
       expect(httpProxy.post).toHaveBeenCalledTimes(1);
       expect(guestlink).toEqual({ data: 'somedata' });
-      done();
     });
 
-    it('it should add the new guestlink into the asset guestlink array in the storage', async (done) => {
+    it('it should add the new guestlink into the asset guestlink array in the storage', async () => {
       // Arrange
       const newGuestLink = { data: 'somedata' };
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
@@ -124,12 +125,11 @@ describe('Test GuestLinkProxy', () => {
 
       // Assert
       expect(storageService.updateArray).toHaveBeenCalledTimes(1);
-      done();
     });
   });
 
   describe('getGuestLinks', () => {
-    it('should try to get the guest links for the asset online first', async (done) => {
+    it('should try to get the guest links for the asset online first', async () => {
       // Arrange
       const guestLink = { data: 'somedata' };
 
@@ -151,10 +151,9 @@ describe('Test GuestLinkProxy', () => {
       expect(storageService.setItem).toHaveBeenCalledTimes(1);
       expect(storageService.setItem.mock.calls[0][0]).toEqual(`${process.env.REACT_APP_API_URL_BASE}guestlinks/asset/an_asset_ui_id`);
       expect(guestLinks[0]).toEqual(guestLink);
-      done();
     });
 
-    it('should try to get the guest links from the storage since we are offline or unsynced', async (done) => {
+    it('should try to get the guest links from the storage since we are offline or unsynced', async () => {
       // Arrange
       const guestLink = { data: 'somedata' };
 
@@ -168,12 +167,11 @@ describe('Test GuestLinkProxy', () => {
       expect(storageService.getArray).toHaveBeenCalledTimes(1);
       expect(storageService.getArray.mock.calls[0][0]).toEqual(`${process.env.REACT_APP_API_URL_BASE}guestlinks/asset/an_asset_ui_id`);
       expect(guestLinks[0]).toEqual(guestLink);
-      done();
     });
   });
 
   describe('removeGuestLink', () => {
-    it('it should throw an exception if not online', async (done) => {
+    it('it should throw an exception if not online', async () => {
       // Arrange
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(false));
 
@@ -184,11 +182,12 @@ describe('Test GuestLinkProxy', () => {
         // Assert
         expect(error instanceof HttpError).toBe(true);
         expect(error.data).toBe('mustBeOnlineForSharedLinkDeletion');
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
-    it('it should throw an exception if the user does not have enough credentials', async (done) => {
+    it('it should throw an exception if the user does not have enough credentials', async () => {
       // Arrange
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       assetManager.getUserCredentials.mockImplementation(() => ({ readonly: true }));
@@ -200,11 +199,12 @@ describe('Test GuestLinkProxy', () => {
         // Assert
         expect(error instanceof HttpError).toBe(true);
         expect(error.data).toEqual({ message: 'credentialError' });
-        done();
+        return;
       }
+      expect(true).toBeFalsy();
     });
 
-    it('it should post the expected data to the correct url', async (done) => {
+    it('it should post the expected data to the correct url', async () => {
       // Arrange
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
@@ -223,10 +223,9 @@ describe('Test GuestLinkProxy', () => {
       // Assert
       expect(httpProxy.deleteReq).toHaveBeenCalledTimes(1);
       expect(guestlink).toEqual({ data: 'somedata' });
-      done();
     });
 
-    it('it should remove the guestlink into the asset guestlink array in the storage', async (done) => {
+    it('it should remove the guestlink into the asset guestlink array in the storage', async () => {
       // Arrange
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(true));
       assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
@@ -253,12 +252,11 @@ describe('Test GuestLinkProxy', () => {
       expect(httpProxy.deleteReq).toHaveBeenCalledTimes(1);
       expect(storageService.removeItemInArray).toHaveBeenCalledTimes(1);
       expect(guestlink).toEqual({ _uiId: 'a_guestlink_uiid', data: 'somedata' });
-      done();
     });
   });
 
   describe('tryGetAndSetUserFromNiceKey', () => {
-    it('should return undefined when offline', async (done) => {
+    it('should return undefined when offline', async () => {
       // Arrange
       onlineManager.isOnline.mockImplementation(async () => Promise.resolve(false));
 
@@ -267,10 +265,9 @@ describe('Test GuestLinkProxy', () => {
 
       // Assert
       expect(guest).toBeUndefined();
-      done();
     });
 
-    it('should try to get the guest user when online', async (done) => {
+    it('should try to get the guest user when online', async () => {
       // Arrange
       const guestUser = {
         email: 'test@axios',
@@ -302,8 +299,6 @@ describe('Test GuestLinkProxy', () => {
       expect(httpProxy.setConfig.mock.calls[0][0]).toEqual({ headers: { Authorization: `Token ${guestUser.token}` } });
       expect(storageService.openUserStorage.mock.calls[0][0]).toEqual(guestUser);
       expect(userContext.getCurrentUser()).toEqual(guestUser);
-
-      done();
     });
   });
 });

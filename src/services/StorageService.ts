@@ -1,3 +1,6 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import * as log from 'loglevel';
 import localforage from 'localforage';
 
@@ -95,7 +98,6 @@ class StorageService implements IStorageService {
       }
     }
 
-    // eslint-disable-next-line class-methods-use-this
     async setGlobalItem<T>(key: string, value: T): Promise<T> {
       if (!key) {
         throw new Error('The key should be truthy');
@@ -109,7 +111,6 @@ class StorageService implements IStorageService {
       }
     }
 
-    // eslint-disable-next-line class-methods-use-this
     async removeGlobalItem(key: string): Promise<void> {
       if (!key) {
         throw new Error('The key should be truthy');
@@ -123,7 +124,6 @@ class StorageService implements IStorageService {
       }
     }
 
-    // eslint-disable-next-line class-methods-use-this
     async getGlobalItem<T>(key: string): Promise<T> {
       if (!key) {
         throw new Error('The key should be truthy');
@@ -143,7 +143,6 @@ class StorageService implements IStorageService {
       }
     }
 
-    // eslint-disable-next-line class-methods-use-this
     async tryGetGlobalItem<T>(key: string, fallBackValue: T): Promise<T> {
       if (!key) {
         throw new Error('The key should be truthy');
@@ -163,11 +162,11 @@ class StorageService implements IStorageService {
       }
     }
 
-    registerUserStorageListener(listener: IUserStorageListener): void{
+    registerUserStorageListener(listener: IUserStorageListener): void {
       this.userStorageListeners.push(listener);
     }
 
-    unregisterUserStorageListener(listenerToRemove: IUserStorageListener): void{
+    unregisterUserStorageListener(listenerToRemove: IUserStorageListener): void {
       this.userStorageListeners = this.userStorageListeners.filter((listener) => listener !== listenerToRemove);
     }
 

@@ -60,6 +60,7 @@ describe('Test ImageProxy', () => {
   function resetMockUserContext() {
     userContext.onImageRemoved.mockReset();
     userContext.onImageAdded.mockReset();
+    userContext.getCurrentUser.mockReset();
   }
 
   function resetMockSyncService() {
@@ -77,6 +78,7 @@ describe('Test ImageProxy', () => {
 
   beforeEach(() => {
     assetManager.getUserCredentials.mockImplementation(() => ({ readonly: false }));
+    userContext.getCurrentUser.mockImplementation(() => user);
   });
 
   afterEach(async () => {

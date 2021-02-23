@@ -1,4 +1,5 @@
 /* eslint-disable max-classes-per-file */
+/* eslint-disable no-unused-vars */
 import errorService from './ErrorService';
 
 // eslint-disable-next-line max-classes-per-file
