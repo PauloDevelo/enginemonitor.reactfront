@@ -1,7 +1,7 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable max-len */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap';
@@ -18,6 +18,7 @@ import assetProxy from '../../services/AssetProxy';
 import useEditModalLogic from '../../hooks/EditModalLogicHook';
 
 import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation';
+import ModalSendInvitation from '../ModalSendInvitation/ModalSendInvitation';
 import MyForm from '../Form/MyForm';
 import MyInput from '../Form/MyInput';
 import Alerts from '../Alerts/Alerts';
@@ -54,8 +55,8 @@ const ModalEditAsset = ({
     },
   );
   const [isCreation, setIsCreation] = useState(false);
-
   const [alerts, setAlerts] = useState<any>(undefined);
+  const [modalSendInvitationVisibility, setModalSendInvitationVisibility] = useState(false);
 
   useEffect(() => {
     setAlerts(undefined);
@@ -66,6 +67,10 @@ const ModalEditAsset = ({
       setIsCreation(assetExist === false);
     });
   }, [asset]);
+
+  const toggleModalSendInvitation = useCallback(() => {
+    setModalSendInvitationVisibility((prevVisibility) => !prevVisibility);
+  }, []);
 
   const message = isCreation ? assetMsg.create : assetMsg.save;
 
@@ -91,6 +96,7 @@ const ModalEditAsset = ({
           <Alerts errors={modalLogic.alerts || alerts} />
         </ModalBody>
         <ModalFooter>
+          {!isCreation && <Button color="danger" onClick={toggleModalSendInvitation}><FormattedMessage {...assetMsg.sendOwnershipInvitation} /></Button>}
           <ActionButton type="submit" isActing={modalLogic.isSaving} form="formAsset" color="success" message={message} />
           {toggle && <Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...assetMsg.cancel} /></Button>}
           {!isCreation && hideDeleteButton !== true && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...assetMsg.delete} /></Button>}
@@ -106,6 +112,7 @@ const ModalEditAsset = ({
         message={assetMsg.assetDeleteMsg}
         className="modal-dialog-centered"
       />
+      {modalSendInvitationVisibility && <ModalSendInvitation toggle={toggleModalSendInvitation} visible={modalSendInvitationVisibility} asset={asset} className="modal-dialog-centered" />}
     </>
   );
 };
