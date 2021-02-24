@@ -6,7 +6,6 @@
 
 // import imageProxy from '../../services/ImageProxy';
 
-
 jest.mock('../../services/ImageProxy');
 jest.mock('localforage');
 
@@ -52,7 +51,6 @@ describe('ImageHelper', () => {
   //   });
   // });
 
-
   // it.only('should resize and save the image', async (done) => {
   //   // Arrange
   //   jest.setTimeout(60000);
@@ -65,7 +63,6 @@ describe('ImageHelper', () => {
   //   expect(newImage).not.toBeNull();
   //   done();
   // });
-
 
   // const getBlobFormImage = async (url) => new Promise((resolve, reject) => {
   //   const c = createCanvas();
