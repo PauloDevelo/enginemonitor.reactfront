@@ -15,14 +15,12 @@ function extract<T>(properties: Record<keyof T, boolean>) {
   };
 }
 
-// eslint-disable-next-line no-shadow
 export enum AgeAcquisitionType{
   time = 0,
   manualEntry=1,
   tracker=2
 }
 
-// eslint-disable-next-line no-shadow
 export enum TaskLevel{
   done=1,
   soon=2,

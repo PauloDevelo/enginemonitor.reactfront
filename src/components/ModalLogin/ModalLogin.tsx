@@ -42,7 +42,6 @@ className?: string,
 toggleModalSignup: () => void
 }
 
-// eslint-disable-next-line no-shadow
 enum LoginState {
 // eslint-disable-next-line no-unused-vars
 Started = 1,
