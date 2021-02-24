@@ -43,17 +43,11 @@ toggleModalSignup: () => void
 }
 
 enum LoginState {
-// eslint-disable-next-line no-unused-vars
 Started = 1,
-// eslint-disable-next-line no-unused-vars
 IsLoggingIn,
-// eslint-disable-next-line no-unused-vars
 NotVerified,
-// eslint-disable-next-line no-unused-vars
 WrongPassword,
-// eslint-disable-next-line no-unused-vars
 InError,
-// eslint-disable-next-line no-unused-vars
 LoggedIn,
 }
 
