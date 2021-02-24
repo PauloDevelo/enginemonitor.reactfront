@@ -23,6 +23,8 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": ["error"],
         "react/jsx-filename-extension": "off",
         "no-underscore-dangle": "off",
         "react/jsx-props-no-spreadin": "off",
@@ -47,7 +49,7 @@
     "overrides": [
         {
           "files": [
-            "**/*.test.js"
+            "**/*.test.*"
           ],
           "env": {
             "jest": true

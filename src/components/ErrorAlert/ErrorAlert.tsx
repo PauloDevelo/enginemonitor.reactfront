@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-use-before-define
 import React, {
   // eslint-disable-next-line no-unused-vars
   useState, useEffect, ReactElement, useRef,

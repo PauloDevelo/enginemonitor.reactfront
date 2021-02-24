@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-// eslint-disable-next-line no-use-before-define
+
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 
 export const DefaultRowRenderer = forwardRef((props, ref) => (

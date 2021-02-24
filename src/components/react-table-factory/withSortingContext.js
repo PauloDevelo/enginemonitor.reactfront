@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-use-before-define
 import React, { forwardRef, useContext } from 'react';
 
 import { table, DefaultHeaderCellRenderer, DefaultHeaderCellContentRenderer } from './table.js';

@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-use-before-define
 import React from 'react';
 import { NavItem, NavLink } from 'reactstrap';
 // eslint-disable-next-line no-unused-vars

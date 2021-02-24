@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/require-default-props */
-// eslint-disable-next-line no-use-before-define
+
 import React from 'react';
 
 import classnames from 'classnames';

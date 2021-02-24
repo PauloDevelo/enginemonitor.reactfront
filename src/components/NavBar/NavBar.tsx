@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-use-before-define
 import React, {
   useCallback, useState, useEffect,
 } from 'react';

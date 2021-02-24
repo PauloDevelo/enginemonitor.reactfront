@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-use-before-define
 import React, {
   forwardRef, useRef, useLayoutEffect, useImperativeHandle, useContext, useCallback,
 } from 'react';

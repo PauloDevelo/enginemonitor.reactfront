@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-// eslint-disable-next-line no-use-before-define
+
 import React from 'react';
 import { Label } from 'reactstrap';
 import { FormattedMessage, defineMessages } from 'react-intl';

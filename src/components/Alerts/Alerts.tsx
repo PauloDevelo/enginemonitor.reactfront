@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/require-default-props */
-// eslint-disable-next-line no-use-before-define
 import React from 'react';
 import { FormattedMessage, defineMessages } from 'react-intl';
 import classNames from 'classnames';

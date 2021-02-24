@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-// eslint-disable-next-line no-use-before-define
+
 import React, {
   useRef, useState, useEffect, useCallback,
 } from 'react';

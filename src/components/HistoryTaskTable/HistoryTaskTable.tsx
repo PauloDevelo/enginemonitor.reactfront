@@ -1,6 +1,6 @@
 /* eslint-disable react/no-danger */
 /* eslint-disable max-len */
-// eslint-disable-next-line no-use-before-define
+
 import React, {
   useEffect, useState, useCallback,
 } from 'react';

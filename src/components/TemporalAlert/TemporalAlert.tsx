@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/require-default-props */
-// eslint-disable-next-line no-use-before-define
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Alert } from 'reactstrap';
 

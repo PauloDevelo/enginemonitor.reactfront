@@ -1,5 +1,4 @@
 /* eslint-disable react/require-default-props */
-// eslint-disable-next-line no-use-before-define
 import React from 'react';
 import { Button, Spinner } from 'reactstrap';
 
