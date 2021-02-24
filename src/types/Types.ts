@@ -1,13 +1,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/prefer-default-export */
 
-function extract<T>(properties: Record<keyof T, true>) {
+function extract<T>(properties: Record<keyof T, boolean>) {
   // eslint-disable-next-line func-names
   return function<TActual extends T> (value: TActual) {
     const result = {} as T;
     // eslint-disable-next-line no-restricted-syntax
     for (const property of Object.keys(properties) as Array<keyof T>) {
-      result[property] = value[property];
+      if (properties[property] === true) {
+        result[property] = value[property];
+      }
     }
     return result;
   };

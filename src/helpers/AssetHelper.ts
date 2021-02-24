@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 
-// eslint-disable-next-line no-unused-vars
 import { AssetModel } from '../types/Types';
 import timeService from '../services/TimeService';
 
