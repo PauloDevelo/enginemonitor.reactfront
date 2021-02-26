@@ -62,6 +62,9 @@ const ModalSignup = ({ visible, className, toggle }: Props) => {
       await userProxy.signup(newUser);
       setSignupErrors(undefined);
       setInfoMsg('emailSent');
+      setTimeout(() => {
+        toggle();
+      }, 3000);
     } catch (errors) {
       setIsError(true);
 
