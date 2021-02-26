@@ -4,6 +4,7 @@
 
 .navbar{
     justify-content: flex-end;
+    z-index: 1051;
 }
 
 .navbar-brand{
