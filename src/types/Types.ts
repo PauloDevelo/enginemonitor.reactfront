@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/prefer-default-export */
 
-function extract<T>(properties: Record<keyof T, boolean>) {
+export function extract<T>(properties: Record<keyof T, boolean>) {
   // eslint-disable-next-line func-names
   return function<TActual extends T> (value: TActual) {
     const result = {} as T;
@@ -28,32 +28,32 @@ export enum TaskLevel{
 }
 
 export type TaskTodo = {
-    dueDate: Date,
-    onlyDate: boolean,
-    level: TaskLevel,
-    usageInHourLeft: number | undefined
+  dueDate: Date,
+  onlyDate: boolean,
+  level: TaskLevel,
+  usageInHourLeft: number | undefined
 }
 
 export interface UserCredentials{
-    readonly: boolean
+  readonly: boolean
 }
 
 export interface EntityModel{
-    _uiId:string,
-    name: string,
+  _uiId:string,
+  name: string,
 }
 
 export interface GuestLinkModel extends EntityModel {
-    niceKey: string
+  niceKey: string
 }
 
 export interface EquipmentModel extends EntityModel {
-    brand: string,
-    model: string,
-    age: number,
-    installation: Date,
-    ageAcquisitionType: AgeAcquisitionType,
-    ageUrl: string
+  brand: string,
+  model: string,
+  age: number,
+  installation: Date,
+  ageAcquisitionType: AgeAcquisitionType,
+  ageUrl: string
 }
 
 export const extractEquipmentModel = extract<EquipmentModel>({
@@ -68,12 +68,12 @@ export const extractEquipmentModel = extract<EquipmentModel>({
 });
 
 export interface TaskModel extends EntityModel {
-    periodInMonth: number,
-    description: string,
-    nextDueDate: Date,
-    usagePeriodInHour: number | undefined,
-    usageInHourLeft: number | undefined,
-    level: TaskLevel
+  periodInMonth: number,
+  description: string,
+  nextDueDate: Date,
+  usagePeriodInHour: number | undefined,
+  usageInHourLeft: number | undefined,
+  level: TaskLevel
 }
 
 export const extractTaskModel = extract<TaskModel>({
@@ -88,12 +88,12 @@ export const extractTaskModel = extract<TaskModel>({
 });
 
 export interface EntryModel extends EntityModel {
-    date: Date,
-    age: number,
-    remarks: string,
-    equipmentUiId: string,
-    taskUiId: string | undefined,
-    ack: boolean
+  date: Date,
+  age: number,
+  remarks: string,
+  equipmentUiId: string,
+  taskUiId: string | undefined,
+  ack: boolean
 }
 
 export const extractEntryModel = extract<EntryModel>({
@@ -108,9 +108,9 @@ export const extractEntryModel = extract<EntryModel>({
 });
 
 export interface AssetModel extends EntityModel {
-    brand: string;
-    manufactureDate: Date;
-    modelBrand: string;
+  brand: string;
+  manufactureDate: Date;
+  modelBrand: string;
 }
 
 export const extractAssetModel = extract<AssetModel>({
@@ -122,16 +122,16 @@ export const extractAssetModel = extract<AssetModel>({
 });
 
 export interface UserModel extends EntityModel {
-    email: string,
-    password: string,
-    firstname: string,
-    imageFolderSizeInByte: number,
-    imageFolderSizeLimitInByte: number,
-    imageFolder: string,
-    forbidUploadingImage: boolean,
-    forbidCreatingAsset: boolean,
-    token: string,
-    privacyPolicyAccepted: boolean,
+  email: string,
+  password: string,
+  firstname: string,
+  imageFolderSizeInByte: number,
+  imageFolderSizeLimitInByte: number,
+  imageFolder: string,
+  forbidUploadingImage: boolean,
+  forbidCreatingAsset: boolean,
+  token: string,
+  privacyPolicyAccepted: boolean,
 }
 
 export const extractUserModel = extract<UserModel>({
@@ -150,18 +150,18 @@ export const extractUserModel = extract<UserModel>({
 });
 
 export type AuthInfo = {
-    email: string,
-    password: string,
-    remember: boolean
+  email: string,
+  password: string,
+  remember: boolean
 }
 
 export interface ImageModel extends EntityModel {
-    url: string,
-    thumbnailUrl: string,
-    parentUiId: string,
-    title: string,
-    description:string,
-    sizeInByte:number
+  url: string,
+  thumbnailUrl: string,
+  parentUiId: string,
+  title: string,
+  description:string,
+  sizeInByte:number
 }
 export const extractImageModel = extract<ImageModel>({
   _uiId: true,
