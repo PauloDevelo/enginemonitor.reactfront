@@ -73,6 +73,7 @@ describe('Component NavBar', () => {
     actionManager.countAction.mockRestore();
 
     userProxy.logout.mockRestore();
+    userProxy.getCredentials.mockRestore();
 
     assetProxy.fetchAssets.mockRestore();
     assetProxy.existAsset.mockRestore();
@@ -149,6 +150,8 @@ describe('Component NavBar', () => {
 
   it('should re-render the navbar when the user changed', async () => {
     // Arrange
+    jest.spyOn(userProxy, 'getCredentials').mockImplementation(() => Promise.resolve({ readonly: false }));
+
     const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar /></IntlProvider>);
     await updateWrapper(wrapper);
 
@@ -181,6 +184,8 @@ describe('Component NavBar', () => {
 
   it('should re-render the navbar when the user add an image', async () => {
     // Arrange
+    jest.spyOn(userProxy, 'getCredentials').mockImplementation(() => Promise.resolve({ readonly: false }));
+
     const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar /></IntlProvider>);
     await updateWrapper(wrapper);
 
@@ -216,6 +221,8 @@ describe('Component NavBar', () => {
 
   it('should re-render the navbar when the user removed an image', async () => {
     // Arrange
+    jest.spyOn(userProxy, 'getCredentials').mockImplementation(() => Promise.resolve({ readonly: false }));
+
     const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar /></IntlProvider>);
     await updateWrapper(wrapper);
 
@@ -252,6 +259,7 @@ describe('Component NavBar', () => {
   it('should logout when the user clicks on logout', async () => {
     // Arrange
     jest.spyOn(userProxy, 'logout').mockImplementation(() => userContext.onUserChanged(undefined));
+    jest.spyOn(userProxy, 'getCredentials').mockImplementation(() => Promise.resolve({ readonly: false }));
 
     const wrapper = mount(<IntlProvider locale="en-US" timeZone="Asia/Kuala_Lumpur"><NavBar /></IntlProvider>);
     await updateWrapper(wrapper);
