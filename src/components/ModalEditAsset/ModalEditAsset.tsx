@@ -25,7 +25,8 @@ import Alerts from '../Alerts/Alerts';
 import ActionButton from '../ActionButton/ActionButton';
 import GuestLink from '../GuestLink/GuestLink';
 
-import assetManager from '../../services/AssetManager';
+import userProxy from '../../services/UserProxy';
+import userContext from '../../services/UserContext';
 
 import '../../style/transition.css';
 
@@ -58,19 +59,8 @@ const ModalEditAsset = ({
   );
   const [isCreation, setIsCreation] = useState(false);
   const [alerts, setAlerts] = useState<any>(undefined);
-  const [isReadOnly, setIsReadOnly] = useState(assetManager.getUserCredentials()?.readonly === true);
+  const [isReadOnly, setIsReadOnly] = useState(true);
   const [modalSendInvitationVisibility, setModalSendInvitationVisibility] = useState(false);
-
-  useEffect(() => {
-    const assetListener = () => {
-      setIsReadOnly(assetManager.getUserCredentials()?.readonly === true);
-    };
-    assetManager.registerOnCurrentAssetChanged(assetListener);
-
-    return () => {
-      assetManager.unregisterOnCurrentAssetChanged(assetListener);
-    };
-  }, []);
 
   useEffect(() => {
     setAlerts(undefined);
@@ -79,6 +69,14 @@ const ModalEditAsset = ({
   useEffect(() => {
     assetProxy.existAsset(asset._uiId).then((assetExist) => {
       setIsCreation(assetExist === false);
+
+      if (assetExist) {
+        userProxy.getCredentials({ assetUiId: asset._uiId }).then((userCredentials) => {
+          setIsReadOnly(userCredentials.readonly);
+        });
+      } else {
+        setIsReadOnly(userContext.getCurrentUser()?.forbidCreatingAsset !== false);
+      }
     });
   }, [asset]);
 
