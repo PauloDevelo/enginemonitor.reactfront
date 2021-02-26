@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 -Setup the continuous integration for github ![integration environment for github](https://github.com/PauloDevelo/enginemonitor.reactfront/workflows/CI/badge.svg?branch=integration)
 -Upgrade all the dependencies
+-Add the ownership transfer
+-Close the signup modal after 3sec a successful sign up.
 
 ## [2.14.16] - 2021-02-12
 -Change the localforage to INDEXEDDB to be compatible with firefox
