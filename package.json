@@ -67,6 +67,7 @@
   "devDependencies": {
     "@types/chai": "^4.2.15",
     "@types/classnames": "^2.2.11",
+    "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.20",
     "@types/js-cookie": "^2.2.6",
     "@types/localforage": "0.0.34",
