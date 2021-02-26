@@ -25,6 +25,8 @@ import Alerts from '../Alerts/Alerts';
 import ActionButton from '../ActionButton/ActionButton';
 import GuestLink from '../GuestLink/GuestLink';
 
+import assetManager from '../../services/AssetManager';
+
 import '../../style/transition.css';
 
 // eslint-disable-next-line no-unused-vars
@@ -56,7 +58,19 @@ const ModalEditAsset = ({
   );
   const [isCreation, setIsCreation] = useState(false);
   const [alerts, setAlerts] = useState<any>(undefined);
+  const [isReadOnly, setIsReadOnly] = useState(assetManager.getUserCredentials()?.readonly === true);
   const [modalSendInvitationVisibility, setModalSendInvitationVisibility] = useState(false);
+
+  useEffect(() => {
+    const assetListener = () => {
+      setIsReadOnly(assetManager.getUserCredentials()?.readonly === true);
+    };
+    assetManager.registerOnCurrentAssetChanged(assetListener);
+
+    return () => {
+      assetManager.unregisterOnCurrentAssetChanged(assetListener);
+    };
+  }, []);
 
   useEffect(() => {
     setAlerts(undefined);
@@ -96,8 +110,8 @@ const ModalEditAsset = ({
           <Alerts errors={modalLogic.alerts || alerts} />
         </ModalBody>
         <ModalFooter>
-          {!isCreation && <Button color="danger" onClick={toggleModalSendInvitation}><FormattedMessage {...assetMsg.sendOwnershipInvitation} /></Button>}
-          <ActionButton type="submit" isActing={modalLogic.isSaving} form="formAsset" color="success" message={message} />
+          {!isCreation && !isReadOnly && <Button color="danger" onClick={toggleModalSendInvitation}><FormattedMessage {...assetMsg.sendOwnershipInvitation} /></Button>}
+          {!isReadOnly && <ActionButton type="submit" isActing={modalLogic.isSaving} form="formAsset" color="success" message={message} />}
           {toggle && <Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...assetMsg.cancel} /></Button>}
           {!isCreation && hideDeleteButton !== true && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...assetMsg.delete} /></Button>}
         </ModalFooter>
