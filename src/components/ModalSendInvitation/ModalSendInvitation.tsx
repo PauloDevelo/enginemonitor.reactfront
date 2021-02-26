@@ -69,7 +69,8 @@ const ModalSendInvitation = ({
 
     try {
       await assetProxy.sendOwnershipInvitation(asset, currentInvitation.email);
-      setState({ state: SendingState.Started, infoMsg: 'emailSent' });
+      setState({ state: SendingState.Started, infoMsg: 'invitationSent' });
+      setTimeout(toggle, 3000);
     } catch (errors) {
       if (errors instanceof HttpError) {
         setState({ state: SendingState.InError, errors: errors.data });

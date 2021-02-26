@@ -54,6 +54,11 @@
     "description": "information message",
     "id": "emailSent"
   },
+  "invitationSent": {
+    "defaultMessage": "An email has been sent to the new owner ...",
+    "description": "information message",
+    "id": "invitationSent"
+  },
   "firstname": {
     "defaultMessage": "Firstname",
     "description": "Label",

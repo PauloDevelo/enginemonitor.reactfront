@@ -45,6 +45,7 @@
   "edit": "Editer",
   "email": "Email",
   "emailSent": "Un email a été envoyé. Cliquez sur le lien pour confirmer votre adresse.",
+  "invitationSent": "Un email d'invitation a été envoyé au nouveau propriétaire.",
   "entryDeleteMsg": "Etes vous sure de vouloir supprimer cette entrée ?",
   "entryDeleteTitle": "Suppression d'une entrée",
   "entryname": "Nom",

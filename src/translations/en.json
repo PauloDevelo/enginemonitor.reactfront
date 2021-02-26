@@ -45,6 +45,7 @@
   "edit": "Edit",
   "email": "Email",
   "emailSent": "An email has been sent. Please, confirm your email by clicking on the link.",
+  "invitationSent": "An email has been sent to the new owner ...",
   "entryDeleteMsg": "Are you sure you want to delete this entry?",
   "entryDeleteTitle": "Delete entry",
   "entryname": "Name",
