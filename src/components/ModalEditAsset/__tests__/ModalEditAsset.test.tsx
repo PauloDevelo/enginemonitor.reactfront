@@ -44,7 +44,7 @@ describe('ModalEditAsset', () => {
 
   const asset: AssetModel = {
     _uiId: '853ee383-6598-4b47-aa0e-eb2cb22d535c',
-    manufactureDate: new Date(2021, 1, 26, 17, 28, 14),
+    manufactureDate: new Date(Date.UTC(2021, 1, 26, 17, 28, 14)),
     brand: 'Alu & Tech',
     modelBrand: 'Heliotrope',
     name: 'Arbutus',
