@@ -148,5 +148,7 @@
   "usagePeriodInHour": "Période en heure à l'usage",
   "userExceedStorageLimit": "Vous avez dépassé la limite du stockage qui vous a été attribué. Veuillez supprimer des images avant d'en rajouter.",
   "yearperiod": "{year, plural, one {# année} other {# années}}",
-  "yes": "Oui"
+  "yes": "Oui",
+  "newOwnerEmail": "L'email du nouveau propriétaire",
+  "alreadyregistered": "est déjà utilisé."
 }
