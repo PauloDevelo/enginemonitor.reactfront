@@ -1,0 +1,710 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModalSendInvitation Should render the modal as expected without error 1`] = `
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en-US"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+  timeZone="Asia/Kuala_Lumpur"
+>
+  <ModalSendInvitation
+    asset={
+      Object {
+        "_uiId": "853ee383-6598-4b47-aa0e-eb2cb22d535c",
+        "brand": "Alu & Tech",
+        "manufactureDate": 2021-02-26T17:28:14.000Z,
+        "modelBrand": "Heliotrope",
+        "name": "Arbutus",
+      }
+    }
+    toggle={[MockFunction]}
+    visible={true}
+  >
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      container="body"
+      fade={true}
+      isOpen={true}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      returnFocusAfterClose={true}
+      role="dialog"
+      scrollable={false}
+      trapFocus={false}
+      unmountOnClose={true}
+      zIndex={1050}
+    >
+      <Portal
+        node={
+          <div
+            style="position: relative; z-index: 1050; display: block;"
+            tabindex="-1"
+          >
+            <div
+              class=""
+            >
+              <div
+                class="modal fade"
+                role="dialog"
+                style="display: block;"
+                tabindex="-1"
+              >
+                <div
+                  class="modal-dialog"
+                  role="document"
+                >
+                  <div
+                    class="modal-content"
+                  >
+                    <div
+                      class="modal-header"
+                    >
+                      <h5
+                        class="modal-title"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="svg-inline--fa fa-envelope-open fa-w-16 "
+                          data-icon="envelope-open"
+                          data-prefix="fas"
+                          focusable="false"
+                          role="img"
+                          viewBox="0 0 512 512"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M512 464c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V200.724a48 48 0 0 1 18.387-37.776c24.913-19.529 45.501-35.365 164.2-121.511C199.412 29.17 232.797-.347 256 .003c23.198-.354 56.596 29.172 73.413 41.433 118.687 86.137 139.303 101.995 164.2 121.512A48 48 0 0 1 512 200.724V464zm-65.666-196.605c-2.563-3.728-7.7-4.595-11.339-1.907-22.845 16.873-55.462 40.705-105.582 77.079-16.825 12.266-50.21 41.781-73.413 41.43-23.211.344-56.559-29.143-73.413-41.43-50.114-36.37-82.734-60.204-105.582-77.079-3.639-2.688-8.776-1.821-11.339 1.907l-9.072 13.196a7.998 7.998 0 0 0 1.839 10.967c22.887 16.899 55.454 40.69 105.303 76.868 20.274 14.781 56.524 47.813 92.264 47.573 35.724.242 71.961-32.771 92.263-47.573 49.85-36.179 82.418-59.97 105.303-76.868a7.998 7.998 0 0 0 1.839-10.967l-9.071-13.196z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                         
+                        Send an ownership invitation
+                      </h5>
+                      <button
+                        aria-label="Close"
+                        class="close"
+                        type="button"
+                      >
+                        <span
+                          aria-hidden="true"
+                        >
+                          ×
+                        </span>
+                      </button>
+                    </div>
+                    <div
+                      class="modal-body"
+                    >
+                      You sold your asset and you want to transfer your asset ownership to the new owner. If you input the new owner email address, we will send an invitation by email to register to Equipment Maintenance. Then, the new owner will own your asset automatically.
+                      <br />
+                      <br />
+                      <form
+                        class=""
+                        id="formSendInvitation"
+                        novalidate=""
+                      >
+                        <div
+                          class="form-group form-group"
+                        >
+                          <label
+                            class=""
+                            for="email"
+                          >
+                            Email
+                          </label>
+                          <input
+                            aria-invalid="false"
+                            class="form-control form-control"
+                            name="email"
+                            required=""
+                            type="email"
+                            value=""
+                          />
+                        </div>
+                      </form>
+                    </div>
+                    <div
+                      class="without-horizontal-bar modal-footer"
+                    >
+                      <button
+                        class="d-block mx-auto btn btn-success"
+                        form="formSendInvitation"
+                        type="submit"
+                      >
+                        Send Invitation
+                      </button>
+                      <button
+                        class="btn btn-secondary"
+                        type="button"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="modal-backdrop fade"
+              />
+            </div>
+          </div>
+        }
+      >
+        <Portal
+          containerInfo={
+            <div
+              style="position: relative; z-index: 1050; display: block;"
+              tabindex="-1"
+            >
+              <div
+                class=""
+              >
+                <div
+                  class="modal fade"
+                  role="dialog"
+                  style="display: block;"
+                  tabindex="-1"
+                >
+                  <div
+                    class="modal-dialog"
+                    role="document"
+                  >
+                    <div
+                      class="modal-content"
+                    >
+                      <div
+                        class="modal-header"
+                      >
+                        <h5
+                          class="modal-title"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="svg-inline--fa fa-envelope-open fa-w-16 "
+                            data-icon="envelope-open"
+                            data-prefix="fas"
+                            focusable="false"
+                            role="img"
+                            viewBox="0 0 512 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M512 464c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V200.724a48 48 0 0 1 18.387-37.776c24.913-19.529 45.501-35.365 164.2-121.511C199.412 29.17 232.797-.347 256 .003c23.198-.354 56.596 29.172 73.413 41.433 118.687 86.137 139.303 101.995 164.2 121.512A48 48 0 0 1 512 200.724V464zm-65.666-196.605c-2.563-3.728-7.7-4.595-11.339-1.907-22.845 16.873-55.462 40.705-105.582 77.079-16.825 12.266-50.21 41.781-73.413 41.43-23.211.344-56.559-29.143-73.413-41.43-50.114-36.37-82.734-60.204-105.582-77.079-3.639-2.688-8.776-1.821-11.339 1.907l-9.072 13.196a7.998 7.998 0 0 0 1.839 10.967c22.887 16.899 55.454 40.69 105.303 76.868 20.274 14.781 56.524 47.813 92.264 47.573 35.724.242 71.961-32.771 92.263-47.573 49.85-36.179 82.418-59.97 105.303-76.868a7.998 7.998 0 0 0 1.839-10.967l-9.071-13.196z"
+                              fill="currentColor"
+                            />
+                          </svg>
+                           
+                          Send an ownership invitation
+                        </h5>
+                        <button
+                          aria-label="Close"
+                          class="close"
+                          type="button"
+                        >
+                          <span
+                            aria-hidden="true"
+                          >
+                            ×
+                          </span>
+                        </button>
+                      </div>
+                      <div
+                        class="modal-body"
+                      >
+                        You sold your asset and you want to transfer your asset ownership to the new owner. If you input the new owner email address, we will send an invitation by email to register to Equipment Maintenance. Then, the new owner will own your asset automatically.
+                        <br />
+                        <br />
+                        <form
+                          class=""
+                          id="formSendInvitation"
+                          novalidate=""
+                        >
+                          <div
+                            class="form-group form-group"
+                          >
+                            <label
+                              class=""
+                              for="email"
+                            >
+                              Email
+                            </label>
+                            <input
+                              aria-invalid="false"
+                              class="form-control form-control"
+                              name="email"
+                              required=""
+                              type="email"
+                              value=""
+                            />
+                          </div>
+                        </form>
+                      </div>
+                      <div
+                        class="without-horizontal-bar modal-footer"
+                      >
+                        <button
+                          class="d-block mx-auto btn btn-success"
+                          form="formSendInvitation"
+                          type="submit"
+                        >
+                          Send Invitation
+                        </button>
+                        <button
+                          class="btn btn-secondary"
+                          type="button"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="modal-backdrop fade"
+                />
+              </div>
+            </div>
+          }
+        >
+          <div
+            className=""
+          >
+            <Fade
+              appear={true}
+              baseClass="fade"
+              baseClassActive="show"
+              className="modal"
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={false}
+              onClick={[Function]}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              role="dialog"
+              style={
+                Object {
+                  "display": "block",
+                }
+              }
+              tabIndex="-1"
+              tag="div"
+              timeout={300}
+              unmountOnExit={false}
+            >
+              <Transition
+                appear={true}
+                enter={true}
+                exit={true}
+                in={true}
+                mountOnEnter={false}
+                onEnter={[Function]}
+                onEntered={[Function]}
+                onEntering={[Function]}
+                onExit={[Function]}
+                onExited={[Function]}
+                onExiting={[Function]}
+                timeout={300}
+                unmountOnExit={false}
+              >
+                <div
+                  className="modal fade"
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  onKeyUp={[Function]}
+                  onMouseDown={[Function]}
+                  role="dialog"
+                  style={
+                    Object {
+                      "display": "block",
+                    }
+                  }
+                  tabIndex="-1"
+                >
+                  <div
+                    className="modal-dialog"
+                    role="document"
+                  >
+                    <div
+                      className="modal-content"
+                    >
+                      <ModalHeader
+                        charCode={215}
+                        closeAriaLabel="Close"
+                        tag="h5"
+                        toggle={[MockFunction]}
+                        wrapTag="div"
+                      >
+                        <div
+                          className="modal-header"
+                        >
+                          <h5
+                            className="modal-title"
+                          >
+                            <FontAwesomeIcon
+                              border={false}
+                              className=""
+                              fixedWidth={false}
+                              flip={null}
+                              icon={
+                                Object {
+                                  "icon": Array [
+                                    512,
+                                    512,
+                                    Array [],
+                                    "f2b6",
+                                    "M512 464c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V200.724a48 48 0 0 1 18.387-37.776c24.913-19.529 45.501-35.365 164.2-121.511C199.412 29.17 232.797-.347 256 .003c23.198-.354 56.596 29.172 73.413 41.433 118.687 86.137 139.303 101.995 164.2 121.512A48 48 0 0 1 512 200.724V464zm-65.666-196.605c-2.563-3.728-7.7-4.595-11.339-1.907-22.845 16.873-55.462 40.705-105.582 77.079-16.825 12.266-50.21 41.781-73.413 41.43-23.211.344-56.559-29.143-73.413-41.43-50.114-36.37-82.734-60.204-105.582-77.079-3.639-2.688-8.776-1.821-11.339 1.907l-9.072 13.196a7.998 7.998 0 0 0 1.839 10.967c22.887 16.899 55.454 40.69 105.303 76.868 20.274 14.781 56.524 47.813 92.264 47.573 35.724.242 71.961-32.771 92.263-47.573 49.85-36.179 82.418-59.97 105.303-76.868a7.998 7.998 0 0 0 1.839-10.967l-9.071-13.196z",
+                                  ],
+                                  "iconName": "envelope-open",
+                                  "prefix": "fas",
+                                }
+                              }
+                              inverse={false}
+                              listItem={false}
+                              mask={null}
+                              pull={null}
+                              pulse={false}
+                              rotation={null}
+                              size={null}
+                              spin={false}
+                              swapOpacity={false}
+                              symbol={false}
+                              title=""
+                              transform={null}
+                            >
+                              <svg
+                                aria-hidden="true"
+                                className="svg-inline--fa fa-envelope-open fa-w-16 "
+                                data-icon="envelope-open"
+                                data-prefix="fas"
+                                focusable="false"
+                                role="img"
+                                style={Object {}}
+                                viewBox="0 0 512 512"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M512 464c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V200.724a48 48 0 0 1 18.387-37.776c24.913-19.529 45.501-35.365 164.2-121.511C199.412 29.17 232.797-.347 256 .003c23.198-.354 56.596 29.172 73.413 41.433 118.687 86.137 139.303 101.995 164.2 121.512A48 48 0 0 1 512 200.724V464zm-65.666-196.605c-2.563-3.728-7.7-4.595-11.339-1.907-22.845 16.873-55.462 40.705-105.582 77.079-16.825 12.266-50.21 41.781-73.413 41.43-23.211.344-56.559-29.143-73.413-41.43-50.114-36.37-82.734-60.204-105.582-77.079-3.639-2.688-8.776-1.821-11.339 1.907l-9.072 13.196a7.998 7.998 0 0 0 1.839 10.967c22.887 16.899 55.454 40.69 105.303 76.868 20.274 14.781 56.524 47.813 92.264 47.573 35.724.242 71.961-32.771 92.263-47.573 49.85-36.179 82.418-59.97 105.303-76.868a7.998 7.998 0 0 0 1.839-10.967l-9.071-13.196z"
+                                  fill="currentColor"
+                                  style={Object {}}
+                                />
+                              </svg>
+                            </FontAwesomeIcon>
+                             
+                            <FormattedMessage
+                              defaultMessage="Send an ownership invitation"
+                              description="Modal title"
+                              id="modalSendInvitationtitle"
+                            >
+                              Send an ownership invitation
+                            </FormattedMessage>
+                          </h5>
+                          <button
+                            aria-label="Close"
+                            className="close"
+                            onClick={[MockFunction]}
+                            type="button"
+                          >
+                            <span
+                              aria-hidden="true"
+                            >
+                              ×
+                            </span>
+                          </button>
+                        </div>
+                      </ModalHeader>
+                      <ModalBody
+                        tag="div"
+                      >
+                        <div
+                          className="modal-body"
+                        >
+                          <FormattedMessage
+                            defaultMessage="You sold your asset and you want to transfer your asset ownership to the new owner. If you input the new owner email address, we will send an invitation by email to register to Equipment Maintenance. Then, the new owner will own your asset automatically."
+                            description="Modal title"
+                            id="modalSendInvitationPreambule"
+                          >
+                            You sold your asset and you want to transfer your asset ownership to the new owner. If you input the new owner email address, we will send an invitation by email to register to Equipment Maintenance. Then, the new owner will own your asset automatically.
+                          </FormattedMessage>
+                          <br />
+                          <br />
+                          <Memo(MyForm)
+                            id="formSendInvitation"
+                            initialData={
+                              Object {
+                                "email": "",
+                              }
+                            }
+                            submit={[Function]}
+                          >
+                            <Form
+                              id="formSendInvitation"
+                              innerRef={
+                                Object {
+                                  "current": <form
+                                    class=""
+                                    id="formSendInvitation"
+                                    novalidate=""
+                                  >
+                                    <div
+                                      class="form-group form-group"
+                                    >
+                                      <label
+                                        class=""
+                                        for="email"
+                                      >
+                                        Email
+                                      </label>
+                                      <input
+                                        aria-invalid="false"
+                                        class="form-control form-control"
+                                        name="email"
+                                        required=""
+                                        type="email"
+                                        value=""
+                                      />
+                                    </div>
+                                  </form>,
+                                }
+                              }
+                              noValidate={true}
+                              onSubmit={[Function]}
+                              tag="form"
+                            >
+                              <form
+                                className=""
+                                id="formSendInvitation"
+                                noValidate={true}
+                                onSubmit={[Function]}
+                              >
+                                <Memo()
+                                  handleChange={[Function]}
+                                  key=".0"
+                                  label={
+                                    Object {
+                                      "defaultMessage": "Email",
+                                      "description": "Label",
+                                      "id": "email",
+                                    }
+                                  }
+                                  name="email"
+                                  required={true}
+                                  type="email"
+                                  validationTrigger={0}
+                                  value=""
+                                >
+                                  <FormGroup
+                                    className="form-group"
+                                    tag="div"
+                                  >
+                                    <div
+                                      className="form-group form-group"
+                                    >
+                                      <Label
+                                        for="email"
+                                        tag="label"
+                                        widths={
+                                          Array [
+                                            "xs",
+                                            "sm",
+                                            "md",
+                                            "lg",
+                                            "xl",
+                                          ]
+                                        }
+                                      >
+                                        <label
+                                          className=""
+                                          htmlFor="email"
+                                        >
+                                          <FormattedMessage
+                                            defaultMessage="Email"
+                                            description="Label"
+                                            id="email"
+                                          >
+                                            Email
+                                          </FormattedMessage>
+                                        </label>
+                                      </Label>
+                                      <Input
+                                        className="form-control"
+                                        innerRef={
+                                          Object {
+                                            "current": <input
+                                              aria-invalid="false"
+                                              class="form-control form-control"
+                                              name="email"
+                                              required=""
+                                              type="email"
+                                              value=""
+                                            />,
+                                          }
+                                        }
+                                        invalid={false}
+                                        name="email"
+                                        onChange={[Function]}
+                                        required={true}
+                                        type="email"
+                                        value=""
+                                      >
+                                        <input
+                                          aria-invalid={false}
+                                          className="form-control form-control"
+                                          name="email"
+                                          onChange={[Function]}
+                                          required={true}
+                                          type="email"
+                                          value=""
+                                        />
+                                      </Input>
+                                    </div>
+                                  </FormGroup>
+                                </Memo()>
+                              </form>
+                            </Form>
+                          </Memo(MyForm)>
+                        </div>
+                      </ModalBody>
+                      <ModalFooter
+                        className="without-horizontal-bar"
+                        tag="div"
+                      >
+                        <div
+                          className="without-horizontal-bar modal-footer"
+                        >
+                          <ActionButton
+                            className="d-block mx-auto"
+                            color="success"
+                            form="formSendInvitation"
+                            isActing={false}
+                            message={
+                              Object {
+                                "defaultMessage": "Send Invitation",
+                                "description": "Button title",
+                                "id": "sendInvitation",
+                              }
+                            }
+                            type="submit"
+                          >
+                            <Button
+                              className="d-block mx-auto"
+                              color="success"
+                              form="formSendInvitation"
+                              tag="button"
+                              type="submit"
+                            >
+                              <button
+                                aria-label={null}
+                                className="d-block mx-auto btn btn-success"
+                                form="formSendInvitation"
+                                onClick={[Function]}
+                                type="submit"
+                              >
+                                <FormattedMessage
+                                  defaultMessage="Send Invitation"
+                                  description="Button title"
+                                  id="sendInvitation"
+                                >
+                                  Send Invitation
+                                </FormattedMessage>
+                              </button>
+                            </Button>
+                          </ActionButton>
+                          <Button
+                            color="secondary"
+                            onClick={[Function]}
+                            tag="button"
+                          >
+                            <button
+                              aria-label={null}
+                              className="btn btn-secondary"
+                              onClick={[Function]}
+                              type="button"
+                            >
+                              <FormattedMessage
+                                defaultMessage="Cancel"
+                                description="Button cancel"
+                                id="cancel"
+                              >
+                                Cancel
+                              </FormattedMessage>
+                            </button>
+                          </Button>
+                        </div>
+                      </ModalFooter>
+                    </div>
+                  </div>
+                </div>
+              </Transition>
+            </Fade>
+            <Fade
+              appear={true}
+              baseClass="fade"
+              baseClassActive="show"
+              className="modal-backdrop"
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={true}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              tag="div"
+              timeout={150}
+              unmountOnExit={false}
+            >
+              <Transition
+                appear={true}
+                enter={true}
+                exit={true}
+                in={true}
+                mountOnEnter={true}
+                onEnter={[Function]}
+                onEntered={[Function]}
+                onEntering={[Function]}
+                onExit={[Function]}
+                onExited={[Function]}
+                onExiting={[Function]}
+                timeout={150}
+                unmountOnExit={false}
+              >
+                <div
+                  className="modal-backdrop fade"
+                />
+              </Transition>
+            </Fade>
+          </div>
+        </Portal>
+      </Portal>
+    </Modal>
+  </ModalSendInvitation>
+</IntlProvider>
+`;
