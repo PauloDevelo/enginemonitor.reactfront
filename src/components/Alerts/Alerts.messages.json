@@ -9,6 +9,11 @@
     "description": "Error message",
     "id": "alreadyexisting"
   },
+  "alreadyregistered": {
+    "defaultMessage": "is already registered",
+    "description": "Label",
+    "id": "alreadyregistered"
+  },
   "brand": {
     "defaultMessage": "Brand",
     "description": "Label",
@@ -54,11 +59,6 @@
     "description": "information message",
     "id": "emailSent"
   },
-  "invitationSent": {
-    "defaultMessage": "An email has been sent to the new owner ...",
-    "description": "information message",
-    "id": "invitationSent"
-  },
   "firstname": {
     "defaultMessage": "Firstname",
     "description": "Label",
@@ -68,6 +68,11 @@
     "defaultMessage": "is invalid",
     "description": "Error message",
     "id": "invalid"
+  },
+  "invitationSent": {
+    "defaultMessage": "An email has been sent to the new owner ...",
+    "description": "information message",
+    "id": "invitationSent"
   },
   "isrequired": {
     "defaultMessage": "is required",
@@ -114,6 +119,11 @@
     "description": "Error message",
     "id": "needVerification"
   },
+  "newOwnerEmail": {
+    "defaultMessage": "The new owner email",
+    "description": "Label",
+    "id": "newOwnerEmail"
+  },
   "offline": {
     "defaultMessage": "You need to be online to perform this operation",
     "description": "Error message",
@@ -138,15 +148,5 @@
     "defaultMessage": "Usage Period in hour",
     "description": "Label",
     "id": "usagePeriodInHour"
-  },
-  "newOwnerEmail": {
-    "defaultMessage": "The new owner email",
-    "description": "Label",
-    "id": "newOwnerEmail"
-  },
-  "alreadyregistered": {
-    "defaultMessage": "is already registered",
-    "description": "Label",
-    "id": "alreadyregistered"
   }
 }

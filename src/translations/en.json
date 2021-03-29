@@ -15,6 +15,7 @@
   "ageUrl": "Equipment Age URL",
   "ageUrlToolTip": "Url allowing to get the equipment usage time in hour.",
   "alreadyexisting": "already exist",
+  "alreadyregistered": "is already registered",
   "assetDeleteMsg": "Are you sure you want to delete this asset and all its content (equipments, tasks, entries)?",
   "assetDeleteTitle": "Delete Asset",
   "assetModalCreationTitle": "Asset Creation",
@@ -45,7 +46,6 @@
   "edit": "Edit",
   "email": "Email",
   "emailSent": "An email has been sent. Please, confirm your email by clicking on the link.",
-  "invitationSent": "An email has been sent to the new owner ...",
   "entryDeleteMsg": "Are you sure you want to delete this entry?",
   "entryDeleteTitle": "Delete entry",
   "entryname": "Name",
@@ -65,6 +65,7 @@
   "installDateLabel": "Installation Date",
   "installedOn": "installed on ",
   "invalid": "is invalid",
+  "invitationSent": "An email has been sent to the new owner ...",
   "isrequired": "is required",
   "login": "Login",
   "loginWithGoogle": "Sign in with Google",
@@ -93,6 +94,7 @@
   "name": "Last Name",
   "nbAction": "{nbAction, plural, =0 {synced} one {# action to sync} other {# actions to sync}}",
   "needVerification": "needs to be checked. Please check your emails.",
+  "newOwnerEmail": "The new owner email",
   "newPassword": "New Password",
   "no": "No",
   "notonline": "Offline",
@@ -119,6 +121,7 @@
   "save": "Save",
   "sendInvitation": "Send Invitation",
   "sendVerification": "Resend Check Email",
+  "sendingInvitation": "Sending Invitation",
   "serialPort": "Serial Port",
   "shouldbedone": "Should be done the ",
   "shouldbedonein1": "Should be done in ",
@@ -148,7 +151,5 @@
   "usagePeriodInHour": "Period in usage hour",
   "userExceedStorageLimit": "User exceeded the storage limit. Remove some images before adding new images.",
   "yearperiod": "{year, plural, one {# year} other {# years}}",
-  "yes": "Yes",
-  "newOwnerEmail": "The new owner email",
-  "alreadyregistered": "is already registered"
+  "yes": "Yes"
 }

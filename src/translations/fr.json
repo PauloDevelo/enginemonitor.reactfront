@@ -15,6 +15,7 @@
   "ageUrl": "URL pour récupérer l'age de l'équipment",
   "ageUrlToolTip": "Url permettant de mettre à jour le temps d'utilisation de l'équipement.",
   "alreadyexisting": "existe déjà",
+  "alreadyregistered": "est déjà utilisé.",
   "assetDeleteMsg": "Etes-vous sure de vouloir supprimer ce bien et tout son contenu (equipements, taches, et historique)?",
   "assetDeleteTitle": "Suppression d'un bien",
   "assetModalCreationTitle": "Création d'un bien",
@@ -45,7 +46,6 @@
   "edit": "Editer",
   "email": "Email",
   "emailSent": "Un email a été envoyé. Cliquez sur le lien pour confirmer votre adresse.",
-  "invitationSent": "Un email d'invitation a été envoyé au nouveau propriétaire.",
   "entryDeleteMsg": "Etes vous sure de vouloir supprimer cette entrée ?",
   "entryDeleteTitle": "Suppression d'une entrée",
   "entryname": "Nom",
@@ -65,6 +65,7 @@
   "installDateLabel": "Date d'installation",
   "installedOn": "installé le ",
   "invalid": "est invalide.",
+  "invitationSent": "Un email d'invitation a été envoyé au nouveau propriétaire.",
   "isrequired": "est requis",
   "login": "Login",
   "loginWithGoogle": "Se connecter avec Google",
@@ -93,6 +94,7 @@
   "name": "Nom",
   "nbAction": "{nbAction, plural, =0 {synchronisé} one {# action à synchroniser} other {# actions à synchroniser}}",
   "needVerification": "doit être verifié. Vérifier vos emails.",
+  "newOwnerEmail": "L'email du nouveau propriétaire",
   "newPassword": "Nouveau mot de passe",
   "no": "Non",
   "notonline": "Hors ligne",
@@ -119,6 +121,7 @@
   "save": "Sauver",
   "sendInvitation": "Envoyer l'invitation",
   "sendVerification": "Renvoyer la Vérification",
+  "sendingInvitation": "Envoyer une invitation",
   "serialPort": "Port Série",
   "shouldbedone": "Devrait être fait le ",
   "shouldbedonein1": "Devrait être fait dans ",
@@ -148,7 +151,5 @@
   "usagePeriodInHour": "Période en heure à l'usage",
   "userExceedStorageLimit": "Vous avez dépassé la limite du stockage qui vous a été attribué. Veuillez supprimer des images avant d'en rajouter.",
   "yearperiod": "{year, plural, one {# année} other {# années}}",
-  "yes": "Oui",
-  "newOwnerEmail": "L'email du nouveau propriétaire",
-  "alreadyregistered": "est déjà utilisé."
+  "yes": "Oui"
 }
