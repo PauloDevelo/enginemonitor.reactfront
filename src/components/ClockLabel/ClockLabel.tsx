@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-use-before-define
 import React, { useState, useEffect } from 'react';
 import { FormattedDate, FormattedTime } from 'react-intl';
 

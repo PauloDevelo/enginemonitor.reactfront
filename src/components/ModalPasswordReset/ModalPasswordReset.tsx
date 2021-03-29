@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-// eslint-disable-next-line no-use-before-define
+
 import React, { useState, useEffect } from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter, Spinner,
@@ -36,7 +36,6 @@ toggle: () => void,
 data: NewPassword
 };
 
-// eslint-disable-next-line no-shadow
 enum ResetPasswordState {
 // eslint-disable-next-line no-unused-vars
 Started = 1,

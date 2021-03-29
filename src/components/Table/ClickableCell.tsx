@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
-// eslint-disable-next-line no-use-before-define
+
 import React, { useCallback } from 'react';
 
 import classnames from 'classnames';

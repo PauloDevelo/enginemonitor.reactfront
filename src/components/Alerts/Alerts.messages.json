@@ -9,6 +9,11 @@
     "description": "Error message",
     "id": "alreadyexisting"
   },
+  "alreadyregistered": {
+    "defaultMessage": "is already registered",
+    "description": "Label",
+    "id": "alreadyregistered"
+  },
   "brand": {
     "defaultMessage": "Brand",
     "description": "Label",
@@ -64,6 +69,11 @@
     "description": "Error message",
     "id": "invalid"
   },
+  "invitationSent": {
+    "defaultMessage": "An email has been sent to the new owner ...",
+    "description": "information message",
+    "id": "invitationSent"
+  },
   "isrequired": {
     "defaultMessage": "is required",
     "description": "Error message",
@@ -108,6 +118,11 @@
     "defaultMessage": "needs to be checked. Please check your emails.",
     "description": "Error message",
     "id": "needVerification"
+  },
+  "newOwnerEmail": {
+    "defaultMessage": "The new owner email",
+    "description": "Label",
+    "id": "newOwnerEmail"
   },
   "offline": {
     "defaultMessage": "You need to be online to perform this operation",

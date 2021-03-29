@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-// eslint-disable-next-line no-use-before-define
+
 import React, {
   useEffect, useState, useCallback, useRef,
 } from 'react';

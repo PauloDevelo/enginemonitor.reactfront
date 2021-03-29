@@ -1,7 +1,7 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable max-len */
-// eslint-disable-next-line no-use-before-define
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap';
@@ -18,11 +18,15 @@ import assetProxy from '../../services/AssetProxy';
 import useEditModalLogic from '../../hooks/EditModalLogicHook';
 
 import ModalYesNoConfirmation from '../ModalYesNoConfirmation/ModalYesNoConfirmation';
+import ModalSendInvitation from '../ModalSendInvitation/ModalSendInvitation';
 import MyForm from '../Form/MyForm';
 import MyInput from '../Form/MyInput';
 import Alerts from '../Alerts/Alerts';
 import ActionButton from '../ActionButton/ActionButton';
 import GuestLink from '../GuestLink/GuestLink';
+
+import userProxy from '../../services/UserProxy';
+import userContext from '../../services/UserContext';
 
 import '../../style/transition.css';
 
@@ -54,8 +58,9 @@ const ModalEditAsset = ({
     },
   );
   const [isCreation, setIsCreation] = useState(false);
-
   const [alerts, setAlerts] = useState<any>(undefined);
+  const [isReadOnly, setIsReadOnly] = useState(true);
+  const [modalSendInvitationVisibility, setModalSendInvitationVisibility] = useState(false);
 
   useEffect(() => {
     setAlerts(undefined);
@@ -64,8 +69,20 @@ const ModalEditAsset = ({
   useEffect(() => {
     assetProxy.existAsset(asset._uiId).then((assetExist) => {
       setIsCreation(assetExist === false);
+
+      if (assetExist) {
+        userProxy.getCredentials({ assetUiId: asset._uiId }).then((userCredentials) => {
+          setIsReadOnly(userCredentials.readonly);
+        });
+      } else {
+        setIsReadOnly(userContext.getCurrentUser()?.forbidCreatingAsset !== false);
+      }
     });
   }, [asset]);
+
+  const toggleModalSendInvitation = useCallback(() => {
+    setModalSendInvitationVisibility((prevVisibility) => !prevVisibility);
+  }, []);
 
   const message = isCreation ? assetMsg.create : assetMsg.save;
 
@@ -91,7 +108,8 @@ const ModalEditAsset = ({
           <Alerts errors={modalLogic.alerts || alerts} />
         </ModalBody>
         <ModalFooter>
-          <ActionButton type="submit" isActing={modalLogic.isSaving} form="formAsset" color="success" message={message} />
+          {!isCreation && !isReadOnly && <Button color="danger" onClick={toggleModalSendInvitation}><FormattedMessage {...assetMsg.sendOwnershipInvitation} /></Button>}
+          {!isReadOnly && <ActionButton type="submit" isActing={modalLogic.isSaving} form="formAsset" color="success" message={message} />}
           {toggle && <Button color="secondary" onClick={modalLogic.cancel}><FormattedMessage {...assetMsg.cancel} /></Button>}
           {!isCreation && hideDeleteButton !== true && <Button color="danger" onClick={modalLogic.handleDelete}><FormattedMessage {...assetMsg.delete} /></Button>}
         </ModalFooter>
@@ -106,6 +124,7 @@ const ModalEditAsset = ({
         message={assetMsg.assetDeleteMsg}
         className="modal-dialog-centered"
       />
+      {modalSendInvitationVisibility && <ModalSendInvitation toggle={toggleModalSendInvitation} visible={modalSendInvitationVisibility} asset={asset} className="modal-dialog-centered" />}
     </>
   );
 };

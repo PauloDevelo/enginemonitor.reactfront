@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-// eslint-disable-next-line no-use-before-define
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter, Spinner,
@@ -42,19 +41,12 @@ className?: string,
 toggleModalSignup: () => void
 }
 
-// eslint-disable-next-line no-shadow
 enum LoginState {
-// eslint-disable-next-line no-unused-vars
 Started = 1,
-// eslint-disable-next-line no-unused-vars
 IsLoggingIn,
-// eslint-disable-next-line no-unused-vars
 NotVerified,
-// eslint-disable-next-line no-unused-vars
 WrongPassword,
-// eslint-disable-next-line no-unused-vars
 InError,
-// eslint-disable-next-line no-unused-vars
 LoggedIn,
 }
 

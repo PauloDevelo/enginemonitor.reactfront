@@ -58,5 +58,10 @@
     "defaultMessage": "Save",
     "description": "Button save",
     "id": "save"
+  },
+  "sendOwnershipInvitation": {
+    "defaultMessage": "Change ownership",
+    "description": "Button to change the ownership",
+    "id": "changeOwnership"
   }
 }

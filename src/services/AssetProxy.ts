@@ -19,6 +19,7 @@ export interface FetchAssetProp{
 }
 
 export interface IAssetProxy{
+    sendOwnershipInvitation(asset: AssetModel, newOwnerEmail: string): Promise<string>;
     fetchAssets(props?: FetchAssetProp): Promise<AssetModel[]>;
     createOrSaveAsset(assetToSave: AssetModel):Promise<AssetModel>;
     deleteAsset(idAsset: string): Promise<AssetModel>;
@@ -32,6 +33,8 @@ class AssetProxy implements IAssetProxy {
     private baseUrl:string = `${process.env.REACT_APP_API_URL_BASE}assets/`;
 
     // //////////////Equipment////////////////////////
+    sendOwnershipInvitation = async (asset: AssetModel, newOwnerEmail: string): Promise<string> => progressiveHttpProxy.postAndUpdateOnlyOnline<string>(`${this.baseUrl}changeownership/${asset._uiId}`, 'newOwnerEmail', newOwnerEmail, undefined, true)
+
     fetchAssets = async ({ cancelTimeout, forceToLookUpInStorage }: FetchAssetProp = { cancelTimeout: false, forceToLookUpInStorage: false }): Promise<AssetModel[]> => {
       if (forceToLookUpInStorage) {
         return progressiveHttpProxy.getArrayFromStorage({ url: this.baseUrl, init: updateAsset });

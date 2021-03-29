@@ -1,7 +1,7 @@
 {
   "homepage": ".",
   "name": "enginemonitor.reactfront",
-  "version": "2.14.16",
+  "version": "2.15.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
@@ -65,7 +65,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/chai": "^4.2.15",
     "@types/classnames": "^2.2.11",
+    "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.20",
     "@types/js-cookie": "^2.2.6",
     "@types/localforage": "0.0.34",

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
-// eslint-disable-next-line no-use-before-define
+
 import React from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter,

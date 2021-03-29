@@ -1,0 +1,37 @@
+{
+  "cancel": {
+    "defaultMessage": "Cancel",
+    "description": "Button cancel",
+    "id": "cancel"
+  },
+  "email": {
+    "defaultMessage": "Email",
+    "description": "Label",
+    "id": "email"
+  },
+  "isrequired": {
+    "defaultMessage": "is required",
+    "description": "Error message",
+    "id": "isrequired"
+  },
+  "modaltitle": {
+    "defaultMessage": "Send an ownership invitation",
+    "description": "Modal title",
+    "id": "modalSendInvitationtitle"
+  },
+  "preambule": {
+    "defaultMessage": "You sold your asset and you want to transfer your asset ownership to the new owner. If you input the new owner email address, we will send an invitation by email to register to Equipment Maintenance. Then, the new owner will own your asset automatically.",
+    "description": "Modal title",
+    "id": "modalSendInvitationPreambule"
+  },
+  "sendInvitation": {
+    "defaultMessage": "Send Invitation",
+    "description": "Button title",
+    "id": "sendInvitation"
+  },
+  "sendingInvitation": {
+    "defaultMessage": "Sending Invitation",
+    "description": "Button title",
+    "id": "sendingInvitation"
+  }
+}

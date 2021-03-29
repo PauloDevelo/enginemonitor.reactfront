@@ -1,7 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import * as log from 'loglevel';
 
-// eslint-disable-next-line no-use-before-define
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';

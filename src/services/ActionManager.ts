@@ -10,7 +10,6 @@ import { ImageModel } from '../types/Types';
 import { dataURItoBlob } from '../helpers/ImageHelper';
 import HttpError from '../http/HttpError';
 
-// eslint-disable-next-line no-shadow
 export enum ActionType{
     Post,
     Delete,

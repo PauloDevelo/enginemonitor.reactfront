@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-use-before-define
 import React, { useState, useEffect, useRef } from 'react';
 
 import './SplashScreen.css';

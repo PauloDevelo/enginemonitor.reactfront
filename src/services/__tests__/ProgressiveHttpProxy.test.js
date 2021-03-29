@@ -253,6 +253,80 @@ describe('Test ProgressiveHttpProxy', () => {
     });
   });
 
+  describe('postAndUpdateOnlyOnline', () => {
+    it('shoud call the http proxy', async () => {
+      // Arrange
+      const dataToPost = { data: 'some data' };
+      const urlToPost = 'an_url';
+      const updateFn = jest.fn((data) => data);
+
+      jest.spyOn(httpProxy, 'post').mockImplementation(async (url, data) => Promise.resolve(data));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
+      jest.spyOn(actionManager, 'addAction');
+
+      // Act
+      const dataPosted = await progressiveHttpProxy.postAndUpdateOnlyOnline(urlToPost, 'keyname', dataToPost, updateFn);
+
+      // Assert
+      expect(dataPosted).toStrictEqual(dataToPost);
+
+      expect(httpProxy.post).toBeCalledTimes(1);
+      expect(httpProxy.post.mock.calls[0][0]).toStrictEqual(urlToPost);
+      expect(httpProxy.post.mock.calls[0][1].keyname).toStrictEqual(dataToPost);
+      expect(actionManager.addAction).toBeCalledTimes(0);
+    });
+
+    it('shoud throw an exception because offline', async () => {
+      // Arrange
+      const dataToPost = { data: 'some data' };
+      const urlToPost = 'an_url';
+      const updateFn = jest.fn((data) => data);
+
+      jest.spyOn(httpProxy, 'post').mockImplementation(async (url, data) => Promise.resolve(data));
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(false));
+      jest.spyOn(actionManager, 'addAction');
+
+      // Act
+      try {
+        await progressiveHttpProxy.postAndUpdateOnlyOnline(urlToPost, 'keyname', dataToPost, updateFn);
+      } catch (error) {
+        // Assert
+        expect(error).toBeInstanceOf(HttpError);
+        expect(error.data).toEqual('offline');
+        expect(httpProxy.post).toBeCalledTimes(0);
+        expect(actionManager.addAction).toBeCalledTimes(0);
+        return;
+      }
+      expect(true).toBeFalsy('Because we should pass here');
+    });
+
+    it('shoud bubble up unexpected exception from httpProxy', async () => {
+      // Arrange
+      const dataToPost = { data: 'some data' };
+      const urlToPost = 'an_url';
+      const updateFn = jest.fn((data) => data);
+
+      jest.spyOn(httpProxy, 'post').mockImplementation(async () => {
+        throw new Error('unexpected error');
+      });
+
+      onlineManager.isOnlineAndSynced.mockImplementation(async () => Promise.resolve(true));
+      jest.spyOn(actionManager, 'addAction');
+
+      try {
+        // Act
+        await progressiveHttpProxy.postAndUpdateOnlyOnline(urlToPost, 'keyname', dataToPost, updateFn);
+      } catch (error) {
+        // Assert
+        expect(error.message).toBe('unexpected error');
+        expect(httpProxy.post).toBeCalledTimes(1);
+        expect(actionManager.addAction).toBeCalledTimes(0);
+        return;
+      }
+      expect(true).toBeFalsy();
+    });
+  });
+
   describe('deleteAndUpdate', () => {
     const deleteAndUpdateItems = [
       {

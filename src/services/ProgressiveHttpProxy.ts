@@ -60,6 +60,16 @@ export interface ISyncHttpProxy{
     postAndUpdate<T>(url: string, keyName:string, dataToPost:T, update?:(date:T)=>T, checkReadOnlyCredentials?: boolean):Promise<T>;
 
     /**
+     * This function execute an http post query and call the function update in the element's "keyname" field returned by the query.
+     * In offline mode, this function will throw an exception.
+     * @param url Post url
+     * @param keyName The field name that contains the data to return after calling update on it
+     * @param dataToPost The data to send. The data will be in the field keyname of a container.
+     * @param update Function that will update the returned data before sending it back the the callee.
+     */
+    postAndUpdateOnlyOnline<T>(url: string, keyName:string, dataToPost:T, update?:(date:T)=>T, checkReadOnlyCredentials?: boolean):Promise<T>;
+
+    /**
      * This function execute the http delete query and call the update function in the returned data.
      * In offline mode, this function will add an action in the history.
      * @param url The delete query url
@@ -156,6 +166,31 @@ class ProgressiveHttpProxy implements ISyncHttpProxy {
     }
 
     return dataToPost;
+  }
+
+  async postAndUpdateOnlyOnline<T>(url: string, keyName:string, dataToPost:T, update?:(data:T)=>T, checkReadOnlyCredentials = true):Promise<T> {
+    if (checkReadOnlyCredentials) {
+      this.checkUserCredentialForPostingOrDeleting();
+    }
+
+    const data:any = { [keyName]: dataToPost };
+
+    if (await onlineManager.isOnlineAndSynced()) {
+      try {
+        const savedData = (await httpProxy.post(url, data, { timeout: timeouts.post }))[keyName];
+        return update ? update(savedData) : savedData;
+      } catch (reason) {
+        if (reason instanceof HttpError && reason.didConnectionAbort()) {
+          log.warn(`timeout for the post ${url}`);
+          analytics.httpRequestTimeout({ requestType: 'post', url, timeout: timeouts.post });
+          throw new HttpError('offline');
+        } else {
+          throw reason;
+        }
+      }
+    } else {
+      throw new HttpError('offline');
+    }
   }
 
   async deleteOnlyOnline<T>(url: string):Promise<void> {
