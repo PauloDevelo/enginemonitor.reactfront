@@ -22,4 +22,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# deploy script local cache (npm ci lockfile stamp).deploy-npmci-stamp
+# deploy script local cache (npm ci lockfile stamp)
+.deploy-npmci-stamp
